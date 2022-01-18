@@ -1,0 +1,362 @@
+template(name='rentals')
+    // +map2
+    .ui.stackable.padded.grid
+        .sixteen.wide.column
+            .ui.inline.header rentals
+            .ui.icon.button.add_rental
+                i.plus.icon
+            .ui.inline.header current lat: #{current_lat}, long: #{current_long}
+            .sorting_row
+                if selected_tag_plural
+                    .ui.icon.black.compact.button.clear_picked_tags
+                        i.remove.icon
+                each picked_tags
+                    button.ui.blue.compact.large.button.unselect_tag(tabindex='0')
+                        //- i.remove.icon
+                        | #{this}
+                each tags
+                    button.ui.compact.button.tag_result(tabindex="0" class=result_class title=count) #{title}
+                        //- small #{count}
+            .spacer 
+            if subs_ready
+                if one_rental
+                    each rental_docs
+                        +rental_big_card
+                else
+                    .ui.stackable.four.centered.cards.scrolling
+                        each rental_docs
+                            +rental_card
+                        // unless rental_docs.count
+                        //     .ui.button.request_rental
+                        //         |request
+                        //     each requests
+                        //         .ui.header #{when}
+            else 
+                .ui.center.aligned.basic.segment
+                    i.massive.grey.notched.circle.loading.icon
+            //- +mapgl
+
+template(name='rental_card')
+    .ui.card(class=rental_card_class)
+        a.image.fly_right(href="/rental/#{_id}/") 
+            if image_id
+                img.ui.zoomer.pointer.goto_rental.image(src="{{c.url image_id width=400 height=300 crop='pad'}}")
+            if image_link
+                img.ui.zoomer.pointer.goto_rental.image(src=image_link)
+
+
+        .content
+            a.header.zoomer.fly_right(href="/rental/#{_id}/") 
+                | #{title}
+            div
+            .ui.inline.header 
+                |#{daily_rate}
+                small p/day
+            // if tags
+            //     i.tag.icon
+            // each tags
+            //     a.ui.small.link.black.label.flat_pick_tag.spaced #{this}
+            // .right.floated.meta
+            //     | added #{when}
+            unless anonymous
+                a(href="/user/#{_author_username}")
+                    img.ui.avatar.image(src="{{c.url _author.image_id width=400 height=600 crop='fit'}}")
+                    |#{_author_username}
+template(name='rental_big_card')
+    .ui.fluid.segment
+        .ui.fluid.two.column.grid(class=rental_card_class)
+            .column
+                a.image.fly_right(href="/rental/#{_id}/") 
+                    if image_id
+                        img.ui.zoomer.pointer.goto_rental.image(src="{{c.url image_id width=400 height=300 crop='pad'}}")
+                    if image_link
+                        img.ui.zoomer.pointer.goto_rental.image(src=image_link)
+    
+    
+            .column
+                a.header.zoomer.fly_right(href="/rental/#{_id}/") 
+                    | #{title}
+                div
+                .ui.inline.header 
+                    |#{daily_rate}
+                    small p/day
+                // if tags
+                //     i.tag.icon
+                // each tags
+                //     a.ui.small.link.black.label.flat_pick_tag.spaced #{this}
+                // .right.floated.meta
+                //     | added #{when}
+                unless anonymous
+                    a(href="/user/#{_author_username}")
+                        img.ui.avatar.image(src="{{c.url _author.image_id width=400 height=600 crop='fit'}}")
+                        |#{_author_username}
+                // +quickbuy day_diff=0
+                +quickbuy day_diff=1
+                +quickbuy day_diff=2
+                +quickbuy day_diff=3
+                +quickbuy day_diff=4
+                +quickbuy day_diff=5
+
+
+
+template(name='set_rental_sort_key')
+    .item.set_sort
+        if color
+            .ui.label(class=color) #{label}
+        else 
+            if emoji
+                em(data-emoji=emoji)
+            else if icon
+                i.icon(class=icon)
+            |#{label}
+        
+
+template(name='set_view_mode_rental')
+    .item.set_view
+        i.icon(class=icon)
+        |#{title}
+
+
+template(name='set_rental_limit')
+    .item.set_limit #{amount}
+    
+    
+
+template(name='rental_view')
+    // .ui.header rental view
+    with current_doc
+        .ui.stackable.padded.grid
+            //- img.ui.large.rounded.image(src="{{c.url image width=500 height=500 gravity='face' crop='fill'}}")
+            .three.column.row
+                .column
+                    // .ui.header 
+                    //     small viewing
+                    //     |#{title}
+                    //     small rental
+                    a.ui.big.basic.button.fly_left(href="/rentals" title='shop')
+                        i.left.chevron.icon
+                        +i name='shop' cl='ui inline image'
+                    .ui.big.header #{title}
+                    if can_edit
+                        a.zoomer(href="/rental/#{_id}/edit")
+                            i.pencil.big.circular.icon
+                    div
+                    +text_view key='location' icon='marker' label='location' direct=true
+                    .ui.hidden.divider
+                    if image_id
+                        img.ui.centered.rounded.shadowed.fluid.image(src="{{c.url image_id crop='fit'}}")
+                    if image_link
+                        img.ui.centered.rounded.shadowed.fluid.image(src=image_link)
+ 
+                    .ui.hidden.divider
+                    i.large.tag.icon        
+                    each tags 
+                        a.ui.compact.button.goto_tag
+                            |#{this}
+                    div
+                    .ui.header 
+                        +i name='order-history'
+                        |#{past_order_docs.count}
+                        |past orders
+                    .ui.selection.animated.large.middle.aligned.divided.list
+                        each past_order_docs
+                            .item
+                                .right.floated.content
+                                    a(href="/order/#{_id}")
+                                        i.chevron.right.circular.icon
+                                .content
+                                    a(href="user/#{_author_username}")
+                                        | #{_author_username}
+                                        small for
+                                        |#{order_date}
+                .column
+                    .ui.header #{daily_rate}p/day
+                    //- unless is_author
+                    // .ui.big.green.fluid.button.new_order 
+                    //     i.large.clock.icon
+                    //     small reserve for 
+                    //     strong #{daily_rate}p/day
+                    // +quickbuy day_diff=0
+                    +quickbuy day_diff=1
+                    +quickbuy day_diff=2
+                    +quickbuy day_diff=3
+                    +quickbuy day_diff=4
+                    +quickbuy day_diff=5
+                    div
+                    if description.length
+                        +html_view key='description' label='description' icon='content' direct=true
+                    div
+                    .ui.small.list
+                        .item total earnings
+                        .item rental ranking #orders
+                        .item rental ranking $ earned
+                        .item # different renters
+                        .item avg rental time
+                        .item avg daily earnings
+                        .item avg weekly earnings
+                        .item avg monthly earnings
+                        .item biggest renter
+                        .item predicted payback duration
+                        .item predicted payback date
+                .column
+                    .ui.header 
+                        +i name='clock'
+                        |#{future_order_docs.count}
+                        |future orders
+                    .ui.link.large.divided.middle.aligned.list
+                        each future_order_docs
+                            .item
+                                .right.floated.content
+                                    a(href="/order/#{_id}")
+                                        i.chevron.right.circular.icon
+                                    if can_edit
+                                        i.red.circular.cancel.link.icon.zoomer.cancel_order
+                                .content
+                                    a(href="/user/#{_author_username}")
+                                        img.ui.avatar.image(src="{{c.url _author.image_id width=200 height=200 crop='crop'}}")
+                                        | #{_author_username}
+                                    small for
+                                    |#{order_date}, {{from_now order_date}}
+                    +rental_stats
+                    // +last_viewed
+                    +creation_info
+                    +comments
+template(name='quickbuy')
+    .ui.basic.green.button.buy(class=button_class)
+        i.lightning.icon
+        | #{human_form}
+        small #{from_form}
+        
+
+template(name='rental_edit')
+    with current_doc
+        .ui.stackable.padded.grid
+            .three.column.row
+                .column
+                    .ui.inline.header
+                        small editing
+                        |'#{title}'
+                        small rental
+                    a.ui.big.icon.green.fluid.button(href="/rental/#{_id}/")
+                        i.checkmark.big.icon
+                    +text_edit key='title' icon='header' direct=true
+                    +number_edit key='daily_rate' label='daily rate' icon='exchange' direct=true
+                    .ui.icon.small.red.button.delete_rental_item 
+                        i.trash.icon
+                .column
+                    if in_dev
+                        +print_this
+                    // +boolean_edit key='published' label='published' icon='checkmark'
+                    // +boolean_edit key='anonymous' label='anonymous' icon='visible'
+                    div
+                    a.ui.header.pointer.refresh_gps(href='#') 
+                        |gps coords
+                    .ui.label #{lat}
+                    .ui.label #{long}
+                    // +text_edit key='location' label='location text' icon='marker' direct=true
+                    +html_edit key='description' label='description' icon='content' direct=true
+                .column
+                    +array_edit key='tags' icon='tags' label='tags' direct=true
+                    +array_edit key='location_tags' label='public location tags' icon='marker' direct=true
+                    // +array_edit key='private_location_tags' label='private location tags' icon='marker' direct=true tooltip='for handlers and buyers who are picking up'
+                    +image_edit key='image_id' label='image' direct=true
+                    +image_link_edit key='image_link' label='image link' direct=true
+
+    
+
+
+template(name='user_rentals')
+    .scrolling
+        if is_current_user
+            .ui.button.add_rental
+                i.plus.icon
+                |rental
+        each rentals
+            +profile_rental_item
+
+template(name='profile_rental_item')
+    .ui.segment.grid
+        .row
+            .three.column
+                +image_view key='image' direct=true cl='zoom ui tiny image'
+            .twelve.wide.column
+                .ui.header #{title}
+                a.ui.header.inline.lowercase(href="/rental/#{_id}/")
+                    |#{daily_rate}p/day
+                .ui.small.inline.header #{when}
+                a.ui.button(href="/rental/#{_id}/")
+                    |view
+                    i.right.chevron.icon
+
+
+
+
+template(name='sort_item')
+    .item.set_sort #{label}
+    
+    
+    
+
+                    
+                    
+template(name='last_viewed')
+    i.large.grey.eye.icon
+    .ui.inline.small.header last viewed {{long_date last_viewed_timestamp}}
+    .ui.inline.small.header {{from_now last_viewed_timestamp}}
+                    
+                    
+
+template(name='rental_stats')
+    //- .ui.accordion
+    //-     .title
+    .ui.grey.header.refresh_rental_stats
+        i.line.chart.icon
+        |stats
+    //- .content
+    .ui.big.list
+        .item #{views} views
+        .item #{order_count} orders
+        .item #{total_earnings}p/#{total_rental_hours}hrs total
+        // .item #{average_rental_cost}c / #{average_rental_duration}hrs avg rental
+        //- .item rental ranking # orders
+        //- .item rental ranking $ earned
+        //- .item # different renters
+        //- .item avg daily earnings
+        //- .item avg weekly earnings
+        //- .item avg monthly earnings
+        //- .item biggest renter
+        //- .item predicted payback duration 
+        //- .item predicted payback date 
+    //-     //- .ui.header res slot exists
+    //-     +order_slot_template
+    //- else
+    //-     if is_product_author
+    //-         .ui.button.new_slot
+    //-             |new slot
+        
+    
+template(name='set_date_filter')        
+    .ui.button.set_date_filter(class=date_filter_class)
+        |#{label}
+        
+        
+
+template(name='order_segment')
+    .ui.segment
+        a.ui.small.header.inline.lowercase(href="/order/#{_id}/")
+            small from 
+            |{{cal_time start_datetime}}
+            //- |{{cal_time start_datetime}} [#{start_date}, hour: #{start_hour}]
+            //- |{{long_date start_datetime}}
+            small to 
+            |{{cal_time end_datetime}}
+        //- .ui.inline.header #{_author_username}
+        .ui.inline.header #{author.name}
+        .ui.grey.inline.header #{hour_duration}hrs
+        .ui.grey.inline.header(title='credits')
+            | $#{cost}
+        .ui.small.inline.header #{when} by #{_author_username}
+        a.ui.large.button(href="/order/#{_id}/")
+            |view
+            i.right.chevron.icon
+                

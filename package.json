@@ -1,0 +1,11 @@
+{
+	"dependencies": {
+		"@babel/runtime": "^7.9.2",
+		"bcrypt": "^5.0.1",
+		"ibm-watson": "^5.2.1"
+	},
+	"scripts": {
+		"start": "MONGO_URL=mongodb+srv://daoadmin:daoadminpassword@cluster1-etul3.mongodb.net/riversidedb meteor --settings settings.json",
+		"local": "meteor --settings settings.json"
+	}
+}

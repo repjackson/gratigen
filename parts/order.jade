@@ -1,0 +1,299 @@
+// template(name='order_view')
+//     with current_doc
+//         .ui.stackable.padded.grid
+//             .three.column.row
+//                 .column 
+//                     with order_rental
+//                         a.ui.button.fly_left(href="/rental/#{_id}/")
+//                             img.ui.rounded.image(src="{{c.url image_id width=400 height=400}}")
+//                             i.left.chevron.icon
+//                             .ui.inline.header #{title}
+//                     +image_view key='image' label='image' direct=true
+//                     .ui.header 
+//                         |viewing order
+//                     if complete 
+//                         .ui.large.green.label complete 
+//                     else 
+//                         .ui.large.label ongoing (incomplete)
+//                     +order_events
+//                 .column
+//                     // a.ui.circular.compact.button(href="/food/#{food_id}/")
+//                     //     i.left.chevron.icon
+//                     //     img.ui.avatar.image(src="{{c.url order_rental.image width=200 height=200}}")    
+//                     //     |#{order_rental.title}
+//                     if can_edit
+//                         a.ui.large.circular.icon.button(href="/order/#{_id}/edit")
+//                             i.pencil.large.icon
+//                     .ui.header
+//                         i.clock.icon
+//                         |#{when}
+//                     .ui.header 
+//                         +i name='shop'
+//                         |rental item
+//                     div
+//                     +textarea_view key='description'
+//                     if can_edit
+//                         .ui.basic.red.button.cancel_order
+//                             i.remove.icon
+//                             |cancel
+//                 .column
+//                     +comments
+//                     .ui.header 
+//                         +i name='donate'
+//                         | buyer
+//                         strong #{_author_username}
+//                     with _author
+//                         +user_card
+//                     .ui.header 
+//                         small seller
+//                         strong #{_seller_username}
+//                     .ui.header status: #{status}
+
+
+// template(name='order_events')
+//     .ui.header
+//         i.rss.icon
+//         |order events
+//     .ui.bulleted.list
+//         each log_events
+//             .item #{text} #{when}
+
+    
+    
+    
+    
+// template(name='order_edit')
+//     with current_doc
+//         .ui.stackable.padded.grid
+//             .two.column.row
+//                 .column 
+//                     // a.ui.big.fluid.button(href="/order/#{_id}/" title='save')
+//                     //     i.save.icon
+//                     //     //- +i name='submit-progress--v1'        
+//                     //     .ui.inline.header save draft     
+//                     .ui.header 
+//                         strong #{rental.title}
+//                         small order
+//                     with rental
+//                         .ui.inline.header #{daily_rate}c
+//                             small /day
+//                         |&nbsp;
+//                         |&nbsp;
+//                         +image_view key='image' label='image' direct=true cl='ui rounded image'
+//                     if can_buy
+//                         .ui.header 
+//                             small your balance
+//                             |{{fixed currentUser.credit}} 
+//                         .ui.header
+//                             small
+//                             //- | -  #{cost} 
+//                             | -  #{total_cost} 
+//                         .ui.header
+//                             small balance after purchase
+//                             small = 
+//                             //- small balance after purchase 
+//                             |#{member_balance_after_order}
+//                     else if need_credit
+//                         .ui.header need credit
+//                         .ui.header 
+//                             |{{fixed currentUser.credit}} 
+//                         .ui.header
+//                             small cost
+//                             | #{total_cost} 
+//                         .ui.header
+//                             small balance after purchase
+//                             small = 
+//                             |#{member_balance_after_order}
+//                     unless submitted
+//                         if can_buy
+//                             .ui.big.green.fluid.button.submit_order(class=submit_button_class)
+//                                 |pay
+//                         else if need_credit
+//                             .ui.header #{member_balance_after_order} credit needed to purchase
+//                             .ui.inline.header add 
+//                             .ui.inline.input
+//                                 input.adding_credit(type='number' value=member_balance_after_order) 
+//                             .ui.big.teal.fluid.button.add_credit(class=submit_button_class)
+//                                 i.plus.icon
+//                                 |add credit to reserve
+//                     else
+//                         .ui.header submitted {{ from_now submitted_timestamp }}
+//                         .ui.orange.fluid.button.cancel_order
+//                             i.undo.icon
+//                             |cancel
+//                     img.ui.image(src="{{c.url order_rental.image_id width=200 height=200}}")    
+//                     with order_rental
+//                         a.ui.small.header(href="/rental/#{rental_id}") #{title}
+//                         +image_view key='image' direct=true
+//                         +html_view key='description' direct=true
+//                     .ui.header 
+//                         small your credit: 
+//                         strong #{currentUser.points}pts
+//                     .ui.big.label
+//                         i.sun.icon
+//                         |daily rate: #{rental_daily_rate}p/day
+//                     .ui.header 
+//                         small credit after purchase 
+//                         strong #{points_after_purchase}p
+//                 .column
+//                     +date_edit key='order_date' label='order date' icon='calendar'
+//                     +textarea_edit key='notes' label='notes' direct=true
+//                     .ui.hidden.divider
+//                     if can_complete
+//                         a.ui.large.fluid.green.button.complete_order
+//                             i.checkmark.large.icon   
+//                             |complete order
+//                     else 
+//                         .ui.header not enough points
+//                         a.ui.large.fluid.green.disabled.button
+//                             i.checkmark.large.icon   
+//                             |complete order
+//                     .ui.hidden.divider
+//                     if in_dev 
+//                         +print_this
+//                     if can_delete
+//                         .ui.red.compact.button.delete_order
+//                             i.remove.icon   
+//                             |cancel
+//                     else  
+//                         .ui.red.disabled.button(title='existing orders')
+//                             i.remove.icon   
+//                             | can't cancel  
+
+
+
+
+// template(name='user_orders')
+//     .ui.header 
+//         +i name='order-history'
+//         |user orders
+//     .scrolling
+//         each orders 
+//             +profile_order_item
+
+// template(name='profile_order_item')
+//     .ui.segment.grid
+//         .row
+//             .four.wide.column
+//                 with order_rental
+//                     //- img.ui.mini.image(src=image)
+//                     +image_view key='image' direct=true cl='zoom ui tiny image'
+//             .twelve.wide.column
+//                 .ui.header #{order_rental.title}
+//                 a.ui.small.header.inline.lowercase(href="/order/#{_id}/")
+//                     |#{order_amount}c
+//                 .ui.small.inline.header #{when} by #{_author_username}
+//                 a.ui.button(href="/order/#{_id}/")
+//                     |view
+//                     i.right.chevron.icon
+//                 if is_admin
+//                     +remove_button
+
+
+
+
+// template(name='orders')
+//     .ui.stackable.padded.grid
+//         .four.wide.column
+//             .ui.inline.header 
+//                 +i name='order-history'
+//                 |#{counter}
+//                 |orders
+//             div
+//             // .spacer
+//             .ui.icon.input
+//                 i.search.icon
+//                 input.query(type='text' placeholder='search...')
+//             // .ui.inline.small.header
+//             //     i.marker.icon 
+//             //     |location tags
+//             // each picked_location_tags
+//             //     button.ui.blue.compact.small.button.unpick_location_tag(tabindex='0')
+//             //         //- i.remove.icon
+//             //         | #{this}
+//             // each location_tags
+//             //     button.ui.compact.small.button.pick_location_tag(tabindex="0" class=result_class title=count) #{title}
+//             //         //- small #{count}
+//             div
+//             |sort by
+//             // +set_sort_key key='views' label='views' icon='eye'
+//             // // +set_sort_key key='datetime_available' label='available' icon='clock'
+//             // +set_sort_key key='price' label='price' icon='money'
+//             // +set_sort_key key='_timestamp' label='added' icon='clock'
+//             // +set_sort_key key='comment_count' label='comment count' icon='chat'
+//             // +set_sort_direction
+//             // |&nbsp;
+//             // |&nbsp;
+//             // +limit_menu
+//         .twelve.wide.column
+//             .sorting_row
+//                 .ui.button today
+//                 .ui.button tomorrow
+//                 .ui.button this week
+//                 .ui.button next week
+//                 if selected_tag_plural
+//                     .ui.icon.black.compact.button.clear_picked_tags
+//                         i.remove.icon
+//                 each picked_tags
+//                     button.ui.blue.compact.large.button.unselect_tag(tabindex='0')
+//                         //- i.remove.icon
+//                         | #{this}
+//                 each tags
+//                     button.ui.compact.button.tag_result(tabindex="0" class=result_class title=count) #{title}
+//                         //- small #{count}
+//             .spacer 
+//             if subs_ready     
+//                 .ui.stackable.three.centered.cards.scrolling
+//                     each order_docs
+//                         +order_card
+//                     unless order_docs.count
+//                         .ui.button.request_order
+//                             |request
+//                         each requests
+//                             .ui.header #{when}
+//             else 
+//                 .ui.center.aligned.basic.segment
+//                     i.massive.yellow.notched.circle.loading.icon
+
+
+// template(name='order_card')
+//     .ui.card(class=order_card_class)
+//         a.image.fly_right(href="/order/#{_id}/") 
+//             img.ui.zoomer.pointer.goto_order.image(src="{{c.url image_id width=400 height=300 crop='pad'}}")
+//         .content
+//             a.ui.inline.header.zoomer.fly_right(href="/order/#{_id}/") 
+//                 | #{title}
+//             .ui.inline.header #{daily_rate}p/day
+            
+//             each tags
+//                 a.ui.small.link.label.flat_pick_tag.spaced #{this}
+//             .right.floated.meta
+//                 | #{when}
+//             unless anonymous
+//                 a(href="/user/#{_author_username}")
+//                     img.ui.avatar.image(src="{{c.url _author.image_id width=400 height=600 crop='fit'}}")
+//                     |#{_author_username}
+//             // .ui.label #{inventory} units available
+//             // .ui.label #{order_total} total orders
+//             if order
+//                 +i name='deliver-order' cl='ui avatar image'
+//                 if order_fee
+//                     .ui.inline.header(title='order fee') $#{order_fee}
+//             if open
+//                 +i name='checkmark' cl='ui avatar image'
+//             else 
+//                 i.ban.icon(title='not open to new orders')
+//             // if can_edit
+//             //     a.ui.large.icon.button(href="/order/#{_id}/edit")
+//             //         i.pencil.icon
+//             if location_tags
+//                 i.marker.icon
+//                 each location_tags  
+//                     .ui.label #{this}
+//         //- .ui.bottom.attached.buttons        
+//         //-     .ui.green.button.quickbuy
+//         //-         i.lightning.icon
+//         //-         |buy
+//         //-     a.ui.button(href="/order/#{_id}/")
+//         //-         |view
+//         //-         i.right.chevron.icon

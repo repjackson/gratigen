@@ -1,0 +1,37 @@
+template(name='edit_notecard')
+    with notecard
+        .ui.container
+            .ui.center.aligned.header edit notecard
+            .ui.form
+                .field
+                    label front
+                    textarea#front(rows='3') #{front}
+                .field
+                    label back
+                    textarea#back(rows='3') #{back}
+            .ui.center.aligned.basic.segment
+                a(href="/deck/view/#{deck_id}").ui.huge.green.button save card
+                +delete
+
+
+template(name='notecard_card')
+    .ui.shape
+        .sides
+            .active.side
+                .ui.link.card
+                    .content
+                        .ui.header #{front}
+                    .extra.content
+                        .ui.icon.green.button
+                            i.check.icon
+                        .ui.icon.red.button
+                            i.cancel.icon
+            .side
+                .ui.link.card
+                    .content
+                        .ui.header  #{back}
+                    .extra.content
+                        .ui.icon.green.button
+                            i.check.icon
+                        .ui.icon.red.button
+                            i.cancel.icon

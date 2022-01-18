@@ -1,0 +1,48 @@
+template(name='message_item')
+    .ui.card
+        .content
+            |#{when}
+
+
+
+template(name='message_view')
+    with current_doc
+        .ui.stackable.padded.grid
+            .centered.row 
+                .five.wide.column
+                    a(href="/user/#{_author.username}") 
+                        .ui.header 
+                            i.chevron.up.icon
+                            |sender
+                        img.ui.rounded.small.image(src="{{c.url _author.image_id height=200 width=200 gravity='face' crop='fill'}}")
+                        .ui.header 
+                            |#{_author.name}
+                    a(href="/user/#{recipient.username}")
+                        .ui.header
+                            i.chevron.down.icon
+                            |recipient
+                        img.ui.rounded.small.image(src="{{c.url recipient.image_id height=200 width=200 gravity='face' crop='fill'}}")
+                        .ui.header
+                            |#{recipient.name}
+                .six.wide.column
+                    if can_edit
+                        +remove_button
+                    .ui.header
+                        i.message.icon
+                        |#{amount}pts
+                    .ui.small.header
+                        i.clock.icon
+                        | #{when}
+                    .f12
+                        |#{description}
+                    +image_view key='image_id' label='image' direct=true
+                    div 
+                    if tags
+                        i.tags.icon
+                        each tags 
+                            .ui.big.label #{this}
+                    .spacer
+                    .spacer
+                    +comments
+                    +voting_full
+                    //- +array_view key='location_tags' label='location_tags' direct=true

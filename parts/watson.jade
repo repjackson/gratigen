@@ -1,0 +1,310 @@
+template(name='doc_sentiment') 
+    //- .ui.dividing.header 
+    //-     |sentiment
+    .ui.small.disabled.progress(data-percent=sentiment_score_percent class=sentiment_bar_class)
+        .bar
+        .progress
+    .label
+        |{{ to_percent doc_sentiment_score }}%
+        if is_positive
+            | positive
+        else
+            | negative
+    
+        // |#{doc_sentiment_label}
+        // |#{sentiment_score_percent}
+
+
+template(name='small_sentiment') 
+    .ui.small.disabled.progress(data-percent=sentiment_score_percent class=sentiment_bar_class)
+        .bar
+        .progress
+
+template(name='doc_emotion') 
+    // .ui.dividing.header 
+    //     | emotion
+    with watson.emotion.document.emotion
+        .ui.blue.small.progress(data-percent=sadness_percent title="{{to_percent sadness}}% sadness")
+            .bar
+            .progress
+                .label {{to_percent sadness}}% sadness 
+        .ui.green.small.progress(data-percent=joy_percent title="{{to_percent joy}}% joy")
+            .bar
+            .progress
+                .label {{to_percent joy}}% joy 
+        .ui.small.progress(data-percent=fear_percent title="{{to_percent fear}}% fear")
+            .bar
+            .progress
+                .label {{to_percent fear}}% fear 
+        .ui.yellow.small.progress(data-percent=disgust_percent title="{{to_percent disgust}}% disgust")
+            .bar
+            .progress
+                .label {{to_percent disgust}}% disgust 
+        .ui.orange.small.progress(data-percent="{{to_percent anger}}" title="{{to_percent anger}}% anger")
+            .bar
+            .progress
+                .label {{to_percent anger}}% anger 
+            
+            
+            
+template(name='call_watson')
+    #call_watson.ui.basic.big.button 
+        i.chess.knight.icon
+        |analyze
+        if current_doc.watson 
+            i.green.checkmark.icon
+
+
+
+template(name='call_visual')
+    #call_visual.ui.large.icon.button(title='analyze')
+        i.chess.knight.icon
+
+
+template(name='keywords')
+    .ui.small.grey.header 
+        |#{watson.keywords.length} keywords
+    .ui.four.column.stackable.grid
+        each watson.keywords
+            .ui.column
+                span(class="{{calculated_size 'relevance'}}" title="{{ to_percent relevance }}% relevant") #{text}
+                //- .meta
+                //-     |{{ to_percent relevance }}% relevant |
+                //-     |sentiment: {{ to_percent sentiment.score }}%
+                .description
+                    if emotion
+                        with emotion
+                            span {{ to_percent sadness }}% sadness
+                            .ui.blue.small.disabled.progress(data-percent=sadness_percent title="{{to_percent sadness}}% sadness")
+                                .bar
+                                //- .progress
+                            span {{ to_percent joy }}% joy 
+                            .ui.green.small.disabled.progress(data-percent="{{to_percent joy}}" title="{{to_percent joy}}% joy")
+                                .bar
+                                //- .progress
+                            span {{ to_percent fear }}% fear
+                            //- .progress
+                            .ui.small.disabled.progress(data-percent=fear_percent title="{{to_percent fear}}% fear")
+                                .bar
+                            span {{ to_percent disgust }}% disgust 
+                            .ui.yellow.small.disabled.progress(data-percent=disgust_percent title="{{to_percent disgust}}% disgust")
+                                .bar
+                                    //- .progress
+                            span {{ to_percent anger }}% anger 
+                            .ui.orange.small.disabled.progress(data-percent=anger_percent title="{{to_percent anger}}% anger")
+                                .bar
+                                //- .progress
+
+
+
+
+template(name='entities')
+    .ui.grey.header 
+        |#{watson.entities.length} entities
+    .ui.four.column.stackable.grid
+        each watson.entities
+            .ui.column
+                .ui.small.grey.header #{type}: #{text}
+                if emotion
+                    with emotion
+                        span {{ to_percent sadness }}% sadness
+                        .ui.blue.small.disabled.progress(data-percent="{{to_percent sadness}}" title="{{to_percent sadness}}% sadness")
+                            .bar
+                            .progress
+                        span {{ to_percent joy }}% joy 
+                        .ui.green.small.disabled.progress(data-percent="{{to_percent joy}}" title="{{to_percent joy}}% joy")
+                            .bar
+                            .progress
+                        span {{ to_percent fear }}% fear
+                        //- .progress
+                        .ui.small.disabled.progress(data-percent="{{to_percent fear}}" title="{{to_percent fear}}% fear")
+                            .bar
+                        span {{ to_percent disgust }}% disgust 
+                        .ui.yellow.small.disabled.progress(data-percent="{{to_percent disgust}}" title="{{to_percent disgust}}% disgust")
+                            .bar
+                            .progress
+                        span {{ to_percent anger }}% anger 
+                        .ui.orange.small.disabled.progress(data-percent="{{to_percent anger}}" title="{{to_percent anger}}% anger")
+                            .bar
+                            .progress
+
+
+
+template(name='keyword_list')
+    .ui.small.grey.header 
+        |#{watson_keywords.length} keywords
+    each watson_keywords
+        .ui.large.basic.label #{this}
+        //- span(class="{{calculated_size 'relevance'}}") #{this}
+
+
+
+template(name='concept_list')
+    .ui.small.grey.header 
+        |#{watson_concepts.length} concepts
+    each watson_concepts
+        .ui.large.basic.label #{this}
+
+
+
+template(name='concepts')
+    .ui.small.grey.header 
+        |#{watson.concepts.length} 
+    .large150
+        each watson.concepts
+            div(class="{{calculated_size 'relevance'}}" title="{{to_percent relevance}}% relevant")
+                a(href=dbpedia_resource target='_blank') #{text}
+
+
+template(name='visual_classes')
+    //- .ui.small.grey.header 
+    //-     |#{visual_classes.length} visual classes
+    .ui.list
+        each visual_classes
+            .item
+                div(class="{{calculated_size 'score'}}" title="{{to_percent score}}%") #{class}
+                // small {{to_percent score}}%
+                small #{type_hierarchy}
+
+
+
+template(name='categories')
+    .ui.small.grey.header 
+        |#{watson.categories.length} categories
+    .ui.list
+        each watson.categories
+            .item
+                strong #{label}
+                |{{ to_percent score }}%
+
+
+template(name='semantic_roles')
+    .ui.accordion
+        .title
+            .ui.header #{watson.semantic_roles.length} semantic roles
+                i.dropdown.icon
+        .content
+            +jsonView(json=watson.semantic_roles)
+            //- .ui.list
+            //-     each watson.semantic_roles
+            //-         .item
+            //-             strong #{label}
+            //-             |{{ to_percent score }}%
+
+
+template(name='relations')
+    .ui.accordion
+        .title
+            .ui.inline.header #{watson.relations.length} relations
+            i.dropdown.icon
+        .content    
+            +jsonView(json=watson.relations)
+            //- .ui.list
+            //-     each watson.relations
+            //-         .item
+            //-             strong #{label}
+            //-             |{{ to_percent score }}%
+
+
+
+template(name='personality')
+    if personality
+        h3
+            | #{customer.first_name} personality 
+        each personality.personality
+            h4.ui.small.grey.header
+                |#{name} {{ to_percent percentile }}%
+                .ui.list
+                    //- .item raw score {{ to_percent raw_score }}%
+                    //- .item significant #{significant}
+            .ui.list
+                each children
+                    .item #{name} {{ to_percent percentile }}%
+                    .ui.list
+                        //- .item raw score {{ to_percent raw_score }}%
+                        //- .item significant #{significant}
+        .ui.small.grey.header needs
+        .ui.list
+            each personality.needs
+                .item #{name} {{ to_percent percentile }}%
+                .ui.list
+                    //- .item raw score {{ to_percent raw_score }}%
+                    //- .item significant #{significant}
+        .ui.small.grey.header values
+        .ui.list
+            each personality.values
+                .item #{name} {{ to_percent percentile }}%
+                //- .ui.list
+                //-     .item raw score {{ to_percent raw_score }}%
+                //-     .item significant #{significant}
+        if personality.behavior
+            .title 
+                | behavior
+                i.dropdown.icon
+            .content
+                .ui.list
+                    each personality.behavior
+                        .item #{name} {{ to_percent percentage }}%
+    else
+        // p Not enough words to analyze author personality
+    #call_personality.ui.icon.button(title='analyze personality')
+        i.refresh.icon
+
+
+template(name='consumption_preferences')
+    if personality
+        h3.ui.small.grey.header
+            |#{customer.first_name} preferences
+        each personality.consumption_preferences
+            h3.ui.small.grey.header #{name}
+            .ui.list
+                each consumption_preferences
+                    if score
+                        .item #{name}
+                    else
+                        .disabled.item #{name}
+            // +jsonView(json=personality.consumption_preferences)
+
+
+
+template(name='tone')
+    h3 Tone
+    .ui.horizontal.list
+        each tone.document_tone.tones
+            .item #{tone_id} {{ to_percent score }}%
+    .ui.list
+        each tone.sentences_tone
+            .item
+                span #{sentence_id}
+                span.large120(title="#{sentence_id}") #{text}
+                each tones
+                    .ui.large.label(class="{{calculated_size 'score'}}") &nbsp; #{tone_id} {{ to_percent score }}% 
+    // unless tone                
+    //- #call_tone.ui.icon.button
+    //-     i.refresh.icon
+            // +jsonView(json=tone)
+
+
+
+template(name='watson_view')
+    // +tone
+    +doc_sentiment
+    +doc_emotion
+    +concepts
+    +categories
+    +entities
+    //- +semantic_roles
+    // +keyword_list
+    +keywords
+    +concept_list
+    //- .ui.hidden.divider
+    //- +relations
+    //- if dev
+    //-     .ui.styled.accordion
+    //-         .title 
+    //-             i.code.icon
+    //-             i.dropdown.icon
+    //-         .content
+    //-             +jsonView(json=watson)
+    +personality
+    +consumption_preferences

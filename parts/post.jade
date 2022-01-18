@@ -1,0 +1,196 @@
+template(name='posts')
+    .ui.stackable.padded.grid 
+        .sixteen.wide.column
+            .ui.inline.header 
+                +i name='blog'
+                |posts
+                // if currentUser
+                .ui.icon.button.add_post
+                    i.plus.large.icon
+            each picked_tags
+                a.ui.blue.button.unpick_post_tag
+                    |#{this}
+            each tag_results
+                // if title
+                a.ui.compact.button.pick_post_tag
+                    |#{title} 
+                    // small.ui.grey.text #{count}
+                    
+            .ui.centered.two.stackable.cards
+                each post_docs 
+                    a.ui.card.fly_right(href="/post/#{_id}")
+                        if image_id 
+                            +image_view key='image_id' direct=true
+                        .content
+                            .ui.header #{title}
+                            .smallscroll
+                                |!{content}
+                            .ui.label 
+                                i.user.icon
+                                |#{_author_username}
+                            i.tag.icon
+                            each tags 
+                                .ui.basic.label #{this}
+                            |#{when}
+
+
+template(name='set_post_sort_key')
+    .item.set_sort
+        if color
+            .ui.label(class=color) #{label}
+        else 
+            if emoji
+                em(data-emoji=emoji)
+            else if icon
+                i.icon(class=icon)
+            |#{label}
+        
+        
+                
+template(name='user_posts')
+    .ui.inline.header 
+        +i name='blog'
+        |user posts
+    if is_current_user
+        .ui.basic.icon.button.add_post
+            i.large.plus.icon
+    .ui.padded.stackable.one.column.grid
+        .column
+            .ui.stackable.cards.scrolling
+                each post_docs 
+                    .ui.card
+                        .content
+                            a(href="/post/#{_id}") 
+                                img.ui.image(src="{{c.url image_id width=400 height=300 crop='pad'}}")
+    
+                            .smallscroll 
+                                |!{content}
+                            // |created #{when}
+                            small {{when}}
+                            a.ui.icon.button(href='/post/#{_id}')
+                                i.large.chevron.right.icon
+                            
+        
+        
+
+template(name='set_view_mode_post')
+    .item.set_view
+        i.icon(class=icon)
+        |#{title}
+
+
+// template(name='set_limit')
+    .ui.compact.small.basic.button.set_limit #{amount}
+
+
+
+template(name='post_card')
+    .ui.card.view_post.pointer
+        img.ui.fluid.rounded.image(src="{{c.url image_id height=200 width=400 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+        .content
+            a.ui.header(href="/post/#{_id}") #{title}
+            if private 
+                i.large.lock.icon
+            .ui.small.grey.header #{when}
+            .smallscroll
+                | !{content}
+            // +comments_view_small
+            +author_info
+        
+template(name='post_item')
+    .ui.fluid.segment.view_post.pointer
+        a.ui.header(href="/post/#{_id}") #{title}
+        div
+        .ui.small.grey.inline.header #{when}
+        | #{content}
+        each tags 
+            .ui.basic.small.label #{this}
+        
+
+template(name='post_view')
+    with current_doc
+        .ui.stackable.padded.grid
+            .row 
+                .four.wide.column
+                    a.ui.circular.button.fly_left(href="/posts")
+                        i.chevron.left.big.icon
+                        i.newspaper.big.icon
+                        |posts
+                    // div
+                    // .ui.inline.grey.header {{from_now start_datetime}}
+                    
+                    if can_edit
+                        a.ui.circular.icon.button.edit_post(href="/post/#{_id}/edit" title='edit')
+                            i.big.link.pencil.icon
+                    .ui.segment
+                        .ui.header 
+                            small author
+                        a.ui.header(href="/user/#{_author.username}") 
+                            img.ui.avatar.image(src="{{c.url _author.image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                            |#{_author.username}
+                    .ui.small.grey.header 
+                        i.line.chart.icon
+                        |stats
+                    .ui.list
+                        .item #{views} views
+                    each viewers
+                        .ui.label #{username
+                    +array_view key='tags' label='tags' direct=true
+                    +voting_full
+                    .ui.header #{when}
+                    //- +array_view key='location_tags' label='location_tags' direct=true
+                    +comments
+                .twelve.wide.column.scrolling
+                    .ui.header #{title}
+                    img.ui.rounded.image(src="{{c.url image_id }}" class=currentUser.invert_class)
+                    // a.ui.header(href="/user/#{target.username}")
+                    //     |#{target.username}
+                    |!{content}
+                    div 
+                    .spacer
+                    .spacer
+                    if watson 
+                        +watson_view
+                // .four.wide.column
+                
+                    //- .ui.fluid.green.button.submit
+                    //-     i.checkmark.icon
+                    //-     |submit
+template(name='post_edit')
+    with current_doc
+        .ui.stackable.padded.grid
+            .row 
+                .ten.wide.column
+                    .ui.inline.header 
+                        +icolor name='news' cl='ui image inline pointer'
+                        |edit post
+                    a.ui.icon.green.big.button(href="/post/#{_id}" title='save')
+                        i.checkmark.big.icon
+                    +text_edit key='title' label='title' direct=true
+                    +html_edit key='content' label='content' direct=true
+                .six.wide.column
+                    i.large.link.red.remove.icon.delete_post
+                    .ui.header 
+                        small author
+                        |#{_author.username}
+                    if is_dev
+                        +single_user_edit key='_author_id' label='author' direct=true
+                    +image_edit key='image_id' label='image' direct=true
+                    div 
+                    +array_edit key='tags' label='tags' direct=true icon='tags'
+                    +boolean_edit key='published' icon='visible' direct=true
+                    if is_dev 
+                        +text_edit key='model' label='model' direct=true
+                    +array_edit key='location_tags' label='location_tags' direct=true
+                    unless published
+                        a.ui.fluid.green.button.submit(href="/save")
+                            i.checkmark.icon
+                            |publish
+                    else
+                        .ui.basic.button.unpublish 
+                            |unpublish
+                    .ui.header
+                        |audience
+                    +boolean_edit key='private' label='private' 
+                    if private 
+                        +multi_user_edit key='access_user_ids' label='user picker' direct=true
