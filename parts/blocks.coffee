@@ -92,23 +92,6 @@ if Meteor.isClient
             if confirm 'Confirm remove comment'
                 Docs.remove @_id
 
-    Template.follow.helpers
-        followers: ->
-            Meteor.users.find
-                _id: $in: @follower_ids
-        following: -> @follower_ids and Meteor.userId() in @follower_ids
-    Template.follow.events
-        'click .follow': ->
-            Docs.update @_id,
-                $addToSet:follower_ids:Meteor.userId()
-        'click .unfollow': ->
-            Docs.update @_id,
-                $pull:follower_ids:Meteor.userId()
-
-    Template.set_limit.events
-        'click .set_limit': ->
-            console.log @
-            Session.set('limit', @amount)
 
     Template.set_sort_key.helpers
         sort_button_class: ->

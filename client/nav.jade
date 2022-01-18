@@ -11,6 +11,19 @@ template(name='nav')
             +i name='hand-holding-heart'
             // i.large.home.icon
             span.mobile.hidden gratigen
+        a.icon.item.zoomer(href="/posts")
+            // i.large.inbox.icon
+            +i name='blog'
+            span.mobile.hidden posts
+        a.icon.item.zoomer(href="/users")
+            // i.large.inbox.icon
+            +i name='groups'
+            .mobile.hidden users 
+        a.item.zoomer(href="/rentals")
+            // i.large.inbox.icon
+            +i name='clock'
+            span.mobile.hidden rentals
+            
         // .search.item.zoomer.mobile.hidden(title='search')
         //     .ui.icon.transparent.input
         //         if current_product_search
@@ -19,25 +32,7 @@ template(name='nav')
         //             i.search.large.icon
         //         input.search_products(type='text' autocomplete="off" value=current_product_search)
         .right.menu
-            a.icon.item(href="/inbox")
-                // i.large.inbox.icon
-                +i name='inbox'
-            a.icon.item(href="/chat")
-                // i.large.inbox.icon
-                +i name='chat'
-            // .icon.item 
-            //     i.large.search.icon
             if currentUser
-                if currentUser.admin
-                    a.icon.item(href="/m/model")
-                        // i.large.inbox.icon
-                        +i name='database'
-                    // a.item(href="/admin" title='admin')
-                    //     +i name='shield'
-                a.item.toggle_topbar.mobile.hidden(title='alerts')
-                    // i.wallet.icon
-                    // .ui.avatar.image.bell
-                    +i name='notification'
                 // a.item(href='/user/#{currentUser.username}/credit' class="{{isActiveRoute 'user_credit'}}" title='current wallet balance')
                 // a.item(href="/user/#{currentUser.username}/credit" class="{{isActiveRoute regex='user_credit'}}" title='your credits')
                 a.item(href="/user/#{currentUser.username}" class=user_nav_button_class title=user_nav_button_title)
@@ -66,221 +61,3 @@ template(name='nav')
                     // i.sign.in.large.icon
                     +i name='internal'
                     span.mobile.hidden login
-    .ui.small.attached.borderless.inverted.menu.hscroll
-        a.icon.item.zoomer(href="/posts")
-            // i.large.inbox.icon
-            +i name='blog'
-            span.mobile.hidden posts
-        a.icon.item.zoomer(href="/users")
-            // i.large.inbox.icon
-            +i name='groups'
-            .mobile.hidden users 
-        a.icon.item.zoomer(href="/tasks")
-            // i.large.inbox.icon
-            +i name='tasks'
-            .mobile.hidden tasks 
-        a.icon.item.zoomer(href="/transfers")
-            // i.large.inbox.icon
-            +i name='exchange'
-            span.mobile.hidden transfers
-        a.icon.item.zoomer(href="/trips")
-            // i.large.inbox.icon
-            +i name='bicycle'
-            span.mobile.hidden trips
-        a.icon.item.zoomer(href="/events")
-            // i.large.inbox.icon
-            +i name='calendar'
-            span.mobile.hidden events
-        a.item.zoomer(href="/requests")
-            // i.large.inbox.icon
-            +i name='service-bell'
-            span.mobile.hidden requests
-        a.item.zoomer(href="/rentals")
-            // i.large.inbox.icon
-            +i name='clock'
-            span.mobile.hidden rentals
-        a.icon.item.zoomer(href="/groups")
-            // i.large.inbox.icon
-            +i name='campfire'
-            span.mobile.hidden groups
-        
-                
-
-template(name='my_latest_activity')
-    .ui.grey.header 
-        i.grey.rss.icon
-        |your activity
-    .ui.list
-        each my_latest_activity
-            .item 
-                img.ui.avatar.image(src="{{c.url author.kiosk_photo width=200 height=200 gravity='face' crop='fill'}}")
-                |#{text} #{body}
-                small #{when}
-
-
-template(name='latest_activity')
-    .ui.grey.header 
-        i.grey.rss.icon
-        |all activity
-    .ui.list
-        each latest_activity
-            .item 
-                img.ui.avatar.image(src="{{c.url author.kiosk_photo width=200 height=200 gravity='face' crop='fill'}}")
-                |#{text} #{body} 
-                .ui.label #{log_type}
-                small #{when}
-
-
-
-
-
-template(name='topbar')
-    .ui.fluid.attached.segment.topbar.top.sidebar
-        .ui.middle.aligned.divided.list
-        .ui.list
-            each recent_alerts
-                +recent_alert
-        a.ui.basic.button.item.close_topbar(href="/inbox")
-            i.inbox.icon
-            |inbox
-        
-template(name='recent_alert')        
-    .item.alert
-        .right.floated.content
-            i.eye.link.icon.mark_read(title='mark read')
-        img.ui.avatar.image(src="{{c.url author.image_id height=200 width=200 gravity='face' crop='fill'}}")
-        .content
-            .header
-                |#{description} 
-            .description #{author.name} #{when}
-            
-            
-            
-            
-template(name='walletbar')
-    .ui.right.sidebar.walletbar
-        // +user_credit
-        .ui.header wallet
-        
-template(name='right_sidebar')
-    .ui.right.sidebar.vertical.borderless.inverted.menu.rightbar
-        a.item.toggle_rightbar.no_blink(href="/user/#{currentUser.username}" class="{{isActiveRoute 'user_layout'}}")
-            img.ui.avatar.compact.image(src="{{c.url currentUser.image_id height=200 width=200 gravity='face' crop='fill'}}")
-            |#{currentUser.name}
-        with currentUser
-            a.item.toggle_rightbar(href="/user/#{username}" class="{{isActiveRoute regex='user_dashboard'}}")
-                +i name='dashboard' cl='ui avatar image'
-                // i.dashboard.icon
-                |dashboard
-            a.item.toggle_rightbar(href="/user/#{username}/credit" class="{{isActiveRoute regex='user_credit'}}")
-                +i name='money' cl='ui avatar image'
-                // i.coins.icon
-                |credit
-            a.item.toggle_rightbar(href="/user/#{username}/orders" class="{{isActiveRoute 'user_orders'}}")
-                +i name='check' cl='ui avatar image'
-                |orders
-            a.item.toggle_rightbar(href="/user/#{username}/subscriptions" class="{{isActiveRoute 'user_subscriptions'}}")
-                +i name='clock' cl='ui avatar image'
-                |subscriptions
-            // a.item.toggle_rightbar(href="/user/#{username}/pantry" class="{{isActiveRoute 'user_pantry'}}")
-            //     +i name='cupboard' cl='ui avatar image'
-            //     |pantry
-            a.item.toggle_rightbar(href="/user/#{username}/friends" class="{{isActiveRoute 'user_friends'}}")
-                +i name='friends' cl='ui avatar image'
-                |friends
-            a.item.toggle_rightbar(href="/user/#{username}/cart" class="{{isActiveRoute 'user_cart'}}")
-                +i name='shopping-cart' cl='ui avatar image'
-                |cart
-            a.item.toggle_rightbar(href="/work" class="{{isActiveRoute 'work'}}")
-                +i name='trust' cl='ui avatar image'
-                |work
-            a.item.toggle_rightbar(href="/user/#{username}/trips" class="{{isActiveRoute 'user_trips'}}")
-                +i name='bicycle' cl='ui avatar image'
-                |trips
-        // .ui.divider
-        a.item.toggle_rightbar.no_blink(href="/user/#{currentUser.username}/edit" title='edit your account')
-            +i name='settings' cl='ui avatar image'
-            |settings
-        a.item.logout
-            if is_logging_out
-                i.refresh.loading.icon
-            else
-                +i name='exit-sign' cl='ui avatar image'
-                // i.sign.out.icon
-            |logout
-
-
-
-template(name='left_sidebar')
-    .ui.left.sidebar.vertical.inverted.menu
-        // a.item.toggle_leftbar.no_blink(href="/" class="{{isActiveRoute '/'}}")
-        //     img.ui.avatar.compact.image(src="{{c.url 'one_logo' height=200 width=200 gravity='face' crop='fill'}}")
-        //     |One
-        // a.item.set_member.toggle_leftbar.no_blink(href="/m/member" class="{{isActivePath 'm/member'}}" title='players')
-        a.item.toggle_leftbar.mobile.only(href='/' class="{{isActivePath '/'}}" title='home')
-            +i name='creek'
-            // i.home.icon
-            // img.ui.small.centered.image(src="https://nudefoodsmarket.com/wp-content/uploads/2021/03/logo-smaller-300x87.jpg")
-            | Riverside
-        .search.item(title='search')
-            .ui.icon.input
-                i.search.icon
-                input.search_global(type='text')
-        // else 
-        //     a.item.toggle_leftbar(href='/' class="{{isActivePath '/'}}" title='food')
-        //         // +i name='home'
-        //         img.ui.avatar.image(src="https://www.lefrenchcafeboulder.com/images/logo.svg")
-        a.item.toggle_leftbar(href='/shop' class="{{isActivePath '/shop'}}" title='shop')
-            +i name='shop'
-            | #{product_count} products
-        a.item.toggle_leftbar(href='/ingredients' class="{{isActivePath '/ingredients'}}" title='shop')
-            +i name='ingredients'
-            | #{ingredient_count} ingredients
-        a.item.toggle_leftbar(href='/events' class="{{isActivePath '/events'}}" title='events')
-            +i name='calendar'
-            |events
-        a.item.toggle_leftbar(href='/orders' class="{{isActivePath '/orders'}}" title='orders')
-            +i name='invoice'
-            // i.large.money.icon
-            | orders
-        a.item.toggle_leftbar(href='/requests' class="{{isActivePath '/requests'}}" title='requests')
-            +i name='request-service'
-            // i.large.money.icon
-            | requests
-        a.item.toggle_leftbar(href='/transfers' class="{{isActivePath '/transfers'}}")
-            +i name='donate'
-            | point transfers
-        a.item.toggle_leftbar(href='/recipes' class="{{isActivePath '/recipes'}}")
-            +i name='cookbook'
-            |#{recipe_count} recipes
-        a.item.toggle_leftbar.zoomer(href='/trips' class="{{isActivePath '/trips'}}")
-            +i name='bicycle'
-            |#{recipe_count} trips
-        //         // i.newspaper.icon
-        //         strong.mobile.hidden get involved
-        a.item.toggle_leftbar.zoomer(href='/contact' class="{{isActivePath '/contact'}}" title='news')
-            +i name='phone'
-            | contact
-        a.item.toggle_leftbar.zoomer(href='/posts' class="{{isActivePath '/posts'}}" title='posts')
-            +i name='blog'
-            | #{post_count} posts
-        if is_in_admin
-            a.icon.item.toggle_admin.toggle_leftbar.no_blink
-                |toggle admin
-                if is_admin
-                    i.shield.icon
-                else
-                    i.shield.icon
-            
-        if is_admin
-            .divider
-            a.item.set_model.toggle_leftbar.no_blink(href="/m/model" class="{{isActivePath '/m/model'}}")
-                +i name='shield'
-                |admin
-            a.item.set_user.toggle_leftbar.no_blink(href="/users" class="{{isActiveRoute '/users'}}")
-                +i name='groups'
-                | users
-            a.item.toggle_leftbar.zoomer(href='/orders' class="{{isActivePath '/orders'}}" title='orders')
-                +i name='list'
-                | orders
-                
