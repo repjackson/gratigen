@@ -1,0 +1,271 @@
+template(name='groups')
+    .ui.stackable.padded.grid
+        .sixteen.wide.column
+            .ui.inline.header 
+                +i name='groups'
+                |groups
+            if currentUser
+                a.ui.icon.basic.circular.button.add_group(title='cook')
+                    i.plus.green.large.icon
+            // .ui.left.icon.search.small.input
+            //     i.search.icon.refresh_tags
+            //     input#search_tag.prompt(type='text' autocomplete="off" placeholder='tags')
+            if selected_tag_plural
+                .ui.icon.circular.black.compact.button.clear_picked_tags
+                    i.remove.icon
+            each picked_tags
+                button.ui.blue.compact.circular.small.button.unselect_tag(tabindex='0')
+                    //- i.remove.icon
+                    | #{this}
+            each tags
+                button.ui.circular.compact.small.basic.button.tag_result(tabindex="0" class=result_class title=count) #{title}
+                    //- small #{count}
+            span.sorting_row
+                .ui.icon.input
+                    i.search.icon
+                    input.tag_search(type='text' placeholder='search...')
+                |sort by
+                .ui.compact.small.menu
+                    .ui.simple.dropdown.item
+                        strong #{current_group_sort_label}
+                        i.dropdown.icon
+                        .menu
+                            +set_sort_key key='member_ids' label='$/serving' icon='money'
+                            +set_sort_key key='private' label='available' icon='clock'
+                            +set_sort_key key='_timestamp' label='added' icon='clock'
+                            +set_sort_key key='comment_count' label='comment count' icon='chat'
+                .ui.compact.icon.circular.button.set_sort_direction(title='toggle sort direction')
+                    if sorting_up
+                        i.sort.amount.down.icon
+                    else
+                        i.sort.amount.up.icon
+                |&nbsp;
+                |&nbsp;
+        .sixteen.wide.column
+            .ui.stackable.cards.scrollin
+                each group_docs
+                    +group_card
+
+
+template(name='group_card')
+    .ui.card
+        if image_id
+            a(href="/group/#{_id}")
+                img.ui.image(src="{{c.url image_id width=400 height=400}}")
+        .content
+            a.ui.header(href="/group/#{_id}")
+                |#{title}
+            |#{member_ids.length} members
+            .smallscroll
+                |!{description}
+            //+ismall name='tags' cl='ui inline image'
+            each tags
+                .ui.basic.label #{this}
+            a.zoomer(href="/group/#{_id}")
+                i.chevron.right.large.circular.icon
+            // if is_admin
+            //     .ui.small.header slug: #{slug}
+            if can_edit
+                a.ui.circular.basic.icon.button(href="/group/#{_id}/edit")
+                    i.pencil.blue.icon
+            +print_this
+                    
+
+
+// template(name='group_view')
+//     with current_doc
+//         .ui.stackable.padded.grid
+//             .row
+//                 .four.wide.column 
+//                     a.ui.fluid.basic.button(href="/groups")
+//                         i.left.chevron.icon
+//                         +i name='wrench' cl='ui inline avatar image'
+//                         |groups
+//                     .ui.header view group
+//                     if can_edit
+//                         a.ui.big.icon.button(href="/group/#{_id}/edit")
+//                             i.pencil.large.icon
+//                     +image_view key='image_id' label='image' direct=true
+//                     +voting_full
+//                     +viewing
+//                     +multi_user_view key='member_ids'
+//                     if in_dev 
+//                         +print_this
+//                 .eight.wide.column
+//                     .ui.header #{title} 
+//                     +textarea_view key='description' icon='content' label='description' direct=true
+//                     +array_view key='location_tags' label='location tags' icon='marker' direct=true
+//                     +array_view key='tags' label='tags' icon='tags' direct=true
+//                     +text_view key='contact_info' label='contact info' icon='info' direct=true
+//                     div
+//                     +comments
+//                 .four.wide.column 
+//                     div
+//                     +group_history
+//                     //- +group_subscription
+//                     //- +multi_user_view key='associated_members' label='associated members' icon='groups' direct=true
+
+                    
+                
+template(name='group_history')
+    +ismall name='rss'
+    .ui.inline.header
+        |activity
+    .ui.list
+        each group_events
+            .item #{text} #{when}
+            
+template(name='group_subscription')
+    //- +ismall name='renew-subscription'
+    //- .ui.inline.header
+    //-     |subscription settings
+    .ui.button.subscribe subscribe to updates
+    .ui.list
+        each subscribers
+            .item #{text} #{when}
+            
+template(name='group_reservations')
+    .ui.header
+        +ismall name='invoice'
+        |group reservations
+    .ui.button.new_reservation
+        |new reservation
+    each reservations
+        .ui.segment
+            .ui.header #{when}
+            .ui.header by #{_author_username}
+            +view_button
+            +edit_button
+
+
+template(name='group_edit')
+    with current_doc
+        .ui.stackable.padded.grid
+            .row
+                .four.wide.column
+                    .ui.header 
+                        |edit group
+                    a.ui.big.icon.fluid.green.button(href="/group/#{_id}" title='save')
+                        i.checkmark.large.icon
+                    +remove_button
+                    +image_edit key='image_id' label='image' direct=true
+                .eight.wide.column 
+                    +text_edit key='title' direct=true
+                    +html_edit key='description' label='content' icon='content' direct=true
+                .four.wide.column
+                    +single_user_edit key='leader' label='leader' icon='crown' direct=true
+                    +array_edit key='tags' label='tags' icon='tags' direct=true
+                    +array_edit key='location_tags' label='location tags' icon='marker' direct=true
+                    +text_edit key='contact_info' label='contact info' icon='info' direct=true
+                    +multi_user_edit key='member_ids' label='members' direct=true
+                    +boolean_edit key='private' label='private' direct=true
+                    
+                    
+template(name='group_view')
+    with current_doc
+        .ui.stackable.padded.grid
+            .row
+                .six.wide.center.aligned.column
+                    .ui.header 
+                        if icon
+                            +i name=icon
+                        |#{title}
+                    a.ui.circular.basic.button(href="/groups")
+                        i.left.chevron.icon
+                        i.big.user.circle.icon
+                        // +i name='groups' cl='ui mini inline image'
+                        |groups
+                    if can_edit
+                        a.ui.circular.basic.icon.button(href="/group/#{_id}/edit")
+                            i.setting.large.icon
+                    +image_view key='image_id' icon='image' label='image'
+                    +array_view key='tags' icon='tags'
+                    .spacer
+                    if link
+                        a.ui.basic.circular.button(href=link target='_window')
+                            i.external.icon
+                            |view site
+                        .spacer
+                    div
+                    .spacer
+                    a.ui.compact.basic.circular.button(href=address_link target='_window')
+                        i.marker.icon
+                        |#{address}
+                    +viewing
+                    if in_dev 
+                        +print_this
+                    +multi_user_view key='member_ids' label='members' direct=true
+                        
+                .ten.wide.column
+                    +html_view key='description' icon='content' label='description'
+                    .ui.inline.header 
+                        +i name='crown' cl='ui avatar image'
+                        |leader: 
+                    with leader 
+                        +user_info
+                    // a.ui.basic.button(href="/user/#{leader}")
+                    //     |#{leader}
+                    .ui.header 
+                        +i name='groups'
+                        |#{member_ids.count} members
+                    .ui.large.selection.animated.list
+                        each member_ids
+                            +user_info
+                            // a.item(href="/group/#{_id}/#{username}")
+                            //     img.ui.mini.image(src="{{c.url image_id width=200 height=200}}")
+                            //     .content
+                            //         .header
+                            //             |#{username}
+                    +doc_array_togggle key='member_ids' value=currentUser._id add_label='join' remove_label='joined'
+                    .ui.header 
+                        +i name='rss'
+                        |activity
+                    each log_items
+                        +log_item
+                    .ui.header 
+                        +i name='line-chart'
+                        |stats
+                    i.refresh.link.icon.refresh_group_stats
+                    .ui.large.list
+                        .item #{member_count} members
+                        .item #{meal_count} meals
+                        .item #{dish_count} dishes
+                        .item #{total_credit_exchanged} credits exchanged
+                    +comments
+    
+template(name='user_groups')
+    .scrolling
+        if is_current_user
+            .ui.circular.button.add_group
+                i.plus.icon
+                |group
+        each groups
+            +profile_group_item
+
+template(name='profile_group_item')
+    .ui.segment.grid
+        .row
+            .four.wide.column
+                +image_view key='image_id' direct=true cl='zoom ui tiny image'
+            .twelve.wide.column
+                .ui.header #{title}
+                a.ui.small.header.inline.lowercase(href="/group/#{_id}/")
+                    |#{price_per_serving}c / #{serving_unit}
+                .ui.small.inline.header #{when}
+                a.ui.button(href="/group/#{_id}/")
+                    |view
+                    i.right.chevron.icon
+                if is_admin
+                    +remove_button
+    
+    
+    
+template(name='groups_small')
+    a.ui.header.zoomer(href="/groups")
+        +i name='groups'
+        |groups
+    .ui.selection.animated.list.smallscroll
+        each group_docs
+            a.item(href="/group/#{_id}")
+                img.ui.avatar.image(src="{{c.url image_id width=200 height=200}}")
+                |#{title}

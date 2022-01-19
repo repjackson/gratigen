@@ -301,5 +301,4 @@ Router.route '*', -> @render 'transfers'
 
 # Router.route '/login', -> @render 'login'
 
-Router.route '/', -> @render 'posts'
 # Router.route '/', -> @redirect "/user/#{Meteor.user().username}"
