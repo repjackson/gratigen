@@ -1,4 +1,4 @@
-# nude foods app
+# gratigen
 * front end (client side)
  * fomantic ui, fork of semantic ui, the front end framwork https://fomantic-ui.com/
  * meteor tutorial with blaze front end framework https://blaze-tutorial.meteor.com/
