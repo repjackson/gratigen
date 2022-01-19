@@ -150,7 +150,7 @@ body {
 	max-height:101vh;
 	/*max-height:85vh;*/
 	/* padding-top: 1em; */
-	/*padding-left: 1em;*/
+	padding: 1em;
 }
 .smallscroll{
 	overflow-y:scroll;

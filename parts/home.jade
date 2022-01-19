@@ -50,7 +50,30 @@ template(name='home')
             .ui.header 
                 |resources
         .eight.wide.column
-            .ui.header create request
+            .ui.button create request
+            .ui.basic.button 
+                i.exchange.large.icon
+                |gifts
+            .ui.basic.button 
+                i.bullhorn.large.icon
+                |requests
+            .ui.basic.button 
+                i.hand.holding.large.icon
+                |offers
+            .ui.basic.button 
+                i.project.diagram.large.icon
+                |projects
+            .scrolling
+                each doc_results
+                    .ui.fluid.card 
+                        img.ui.image(src="{{c.url image_id width=400 height=400}}")
+                        .content 
+                            .header #{title}
+                            .description
+                                .ui.label #{model}
+                                .ui.label 
+                                    i.user.icon
+                                    |#{_author_username}
         .four.wide.column
             .ui.header 
                 i.clock.icon
