@@ -49,12 +49,12 @@ if Meteor.isClient
 
     Template.request_card.events
         'click .request_card': ->
-            Router.go "/m/request/#{@_id}/view"
+            Router.go "/request/#{@_id}"
             Docs.update @_id,
                 $inc: views:1
 
 
-    Router.route '/request/:doc_id/view', (->
+    Router.route '/request/:doc_id', (->
         @layout 'layout'
         @render 'request_view'
         ), name:'request_view'
@@ -62,6 +62,8 @@ if Meteor.isClient
    
     Template.request_view.onRendered ->
 
+    Template.request_view.onCreated ->
+        @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
 
     Template.request_view.events
         'click .claim': ->

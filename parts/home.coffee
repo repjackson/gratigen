@@ -26,6 +26,7 @@ if Meteor.isClient
     
     Template.home.helpers 
         doc_results: ->
-            Docs.find {}
+            Docs.find {},
+                sort:_timestamp:-1
         user_docs: ->
             Meteor.users.find {}

@@ -79,7 +79,7 @@ template(name='requests')
 
 
 template(name='request_card')
-    .card.pointer.request_card
+    .card.pointer.request_card.zoomer
         .image
             if youtube_id
                 +youtube_view key='youtube_id' direct=true
@@ -107,34 +107,6 @@ template(name='request_card')
                     |{{from_now completed_timestamp}}
         
 
-template(name='request_item')
-    .ui.fluid.horizontal.card.pointer.request_card
-        if youtube_id
-            .image
-                +youtube_view key='youtube_id' direct=true
-        else if image_id
-            .image
-                img.ui.raw.image(src="{{c.url image_id width=400 height=600 crop='fill'}}" class=currentUser.invert_class)    
-        .content
-            .ui.header
-                |#{title}
-                if complete
-                    i.green.checkmark.icon
-            |!{description}
-            +comments
-        .content
-            |by 
-            if _author.image_id
-                img.ui.avatar.compact.image(src="{{c.url _author.image_id height=200 width=200 gravity='face' crop='fill'}}")
-            |#{_author.name}
-            .ui.big.basic.label
-                |#{point_bounty}pts
-            .ui.small.inline.header status:#{status}
-            if complete
-                .ui.basic.label 
-                    |completed by #{completer.name}
-                    |{{from_now completed_timestamp}}
-        
 
 
 template(name='request_view')
@@ -175,6 +147,9 @@ template(name='request_view')
                         .ui.fluid.green.big.button.claim
                             i.grab.large.icon
                             |claim
+                    if can_edit
+                        a.ui.button(href="/request/#{_id}/edit")
+                            i.large.pencil.icon
                     if claimer
                         .ui.header claimed by
                         a.ui.header(href="/user/#{claimer.name}")
@@ -185,16 +160,16 @@ template(name='request_view')
                                 .ui.button.unclaim
                                     i.undo.icon
                                     |unclaim
-                        if can_edit
-                            div
-                            unless complete
-                                .ui.big.basic.button.mark_complete
-                                    i.checkmark.green.icon
-                                    |mark complete
-                            else 
-                                .ui.big.basic.button.mark_incomplete
-                                    i.undo.orange.icon
-                                    |mark incomplete
+                            if can_edit
+                                div
+                                unless complete
+                                    .ui.big.basic.button.mark_complete
+                                        i.checkmark.green.icon
+                                        |mark complete
+                                else 
+                                    .ui.big.basic.button.mark_incomplete
+                                        i.undo.orange.icon
+                                        |mark incomplete
                         if complete
                             .ui.segment
                                 .ui.header completed by #{completer.name} {{from_now completed_timestamp}}

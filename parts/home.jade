@@ -51,23 +51,25 @@ template(name='home')
                 |resources
         .eight.wide.column
             .ui.button create request
-            .ui.basic.button 
+            .ui.basic.disabled.button 
                 i.exchange.large.icon
                 |gifts
-            .ui.basic.button 
+            .ui.basic.disabled.button 
                 i.bullhorn.large.icon
                 |requests
-            .ui.basic.button 
+            .ui.basic.disabled.button 
                 i.hand.holding.large.icon
                 |offers
-            .ui.basic.button 
+            .ui.basic.disabled.button 
                 i.project.diagram.large.icon
                 |projects
             .scrolling
                 each doc_results
-                    a.ui.fluid.card(href="/#{model}/#{_id}")
+                    a.ui.fluid.card.zoom(href="/#{model}/#{_id}")
                         .content 
-                            .header #{title}
+                            .inline.header #{title}
+                            i.clock.icon
+                            |#{when}
                         img.ui.image(src="{{c.url image_id width=400 height=400}}")
                         .content 
                             .description

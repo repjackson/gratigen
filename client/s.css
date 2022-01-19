@@ -38,6 +38,14 @@ body {
   height:15px !important;
 }
 
+
+.pointer:hover{
+    cursor: pointer !important;
+    -webkit-filter: drop-shadow(10px 10px 10px rgba(250,250,250, 0.5)) !important;
+    filter: drop-shadow(10px 10px 10px rgba(250,250,250, 0.5)) !important;
+}
+
+
 .ui.progress {
   margin: 0px !important;
 }
