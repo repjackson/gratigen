@@ -65,15 +65,21 @@ template(name='home')
                 |projects
             .scrolling
                 each doc_results
-                    .ui.fluid.card 
-                        img.ui.image(src="{{c.url image_id width=400 height=400}}")
+                    a.ui.fluid.card(href="/#{model}/#{_id}")
                         .content 
                             .header #{title}
+                        img.ui.image(src="{{c.url image_id width=400 height=400}}")
+                        .content 
                             .description
+                                if _is 'model' 'post'
+                                    i.newspaper.large.icon
                                 .ui.label #{model}
                                 .ui.label 
                                     i.user.icon
                                     |#{_author_username}
+                                if tags 
+                                    each tags 
+                                        .ui.label #{this}
         .four.wide.column
             .ui.header 
                 i.clock.icon
@@ -81,4 +87,13 @@ template(name='home')
             .ui.header 
                 i.marker.icon
                 |closest allies
-            
+            .ui.list 
+                each user_docs 
+                    .item #{username}
+            .ui.header open requests
+            each open_requests 
+                a.ui.fluid.card(href="/request/#{_id}")
+                    .content 
+                        .header #{title}
+                        .description
+                            .ui.header #{when}

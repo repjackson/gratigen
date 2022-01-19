@@ -222,21 +222,24 @@ template(name='request_edit')
                     +array_edit key='tags' label='tags' icon='tags' direct=true
                     +array_edit key='location_tags' label='location tags' icon='marker' direct=true
                     .ui.header your points: #{currentUser.points}
-                    +number_edit key='point_bounty' label='point bounty' icon='hashtag' min='0' direct=true
+                    +number_edit key='point_offer' label='point offer' icon='hashtag' min='0' direct=true
                     div
-                    .ui.small.header.thin publishing request holds points from your balance and dispenses them when request is marked complete
-                    .ui.inline.header status:
-                    if published
-                        .ui.green.inline.header published
-                    else
-                        .ui.orange.inline.header unpublished
+                    // .ui.small.header.thin publishing request holds points from your balance and dispenses them when request is marked complete
+                    // .ui.inline.header status:
+                    // if published
+                    //     .ui.green.inline.header published
+                    // else
+                    //     .ui.orange.inline.header unpublished
                 .column
-                    if published
-                        .ui.fluid.orange.basic.large.button.unpublish
-                            i.undo.icon
-                            |unpublish
-                    else
-                        .ui.fluid.teal.big.button.publish
-                            i.checkmark.icon
-                            |publish
+                    a.ui.green.fluid.large.button(href="/request/#{_id}")
+                        i.checkmark.icon
+                        |save 
+                    // if published
+                    //     .ui.fluid.orange.basic.large.button.unpublish
+                    //         i.undo.icon
+                    //         |unpublish
+                    // else
+                    //     .ui.fluid.teal.big.button.publish
+                    //         i.checkmark.icon
+                    //         |publish
                             

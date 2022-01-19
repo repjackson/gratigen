@@ -54,6 +54,10 @@ if Meteor.isClient
                 $inc: views:1
 
 
+    Router.route '/request/:doc_id/view', (->
+        @layout 'layout'
+        @render 'request_view'
+        ), name:'request_view'
 
    
     Template.request_view.onRendered ->
@@ -135,7 +139,6 @@ if Meteor.isClient
 
 
 if Meteor.isClient
-    
     Router.route '/request/:doc_id/edit', (->
         @layout 'layout'
         @render 'request_edit'

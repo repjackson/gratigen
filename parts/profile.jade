@@ -24,6 +24,9 @@ template(name='user_layout')
                         a.ui.circular.button(href="/user/#{username}/edit" title='profile settings')
                             i.cog.icon
                             |edit profile
+                        // a.ui.button.logout_other_clients(href="#" title='logout other clients')
+                        //     i.globe.icon
+                        //     |log out other clients
                     else if is_admin
                         a.ui.circular.button(href="/user/#{username}/edit" title='profile settings')
                             +i name='settings' cl='ui avatar image'
@@ -34,14 +37,7 @@ template(name='user_layout')
                         .ui.button.logout
                             i.sign.out.alternate.icon
                             |log out
-                    if admin
-                        .ui.header
-                            i.shield.icon
-                            |admin
                     +array_view key='tags' label='tags' direct=true icon='tags'
-                    a.ui.button.logout_other_clients(href="#" title='logout other clients')
-                        i.globe.icon
-                        |log out other clients
                     if link 
                         a.ui.button(href=link target='_window')
                             |app link

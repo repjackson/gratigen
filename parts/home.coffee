@@ -17,6 +17,7 @@ if Meteor.isClient
         @autorun => @subscribe 'model_docs', 'product', ->
         @autorun => @subscribe 'model_docs', 'task', ->
         @autorun => @subscribe 'model_docs', 'project', ->
+        @autorun => @subscribe 'all_users', ->
         @autorun => @subscribe 'post_facets',
             picked_tags.array()
             Session.get('post_title_filter')
@@ -26,3 +27,5 @@ if Meteor.isClient
     Template.home.helpers 
         doc_results: ->
             Docs.find {}
+        user_docs: ->
+            Meteor.users.find {}
