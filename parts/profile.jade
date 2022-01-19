@@ -134,7 +134,11 @@ template(name='user_dashboard')
                 .ui.large.basic.circular.label() #{flow_volume} volume
                 //- .ui.compact.icon.button.refresh_user_stats(title='refresh stats')
                 //-     i.refresh.icon
-        .four.column.row
+        .three.column.row
+            .column
+                .ui.header groups 
+                .ui.header projects 
+                
             .column
                 // a.ui.inline.header(href="/user/#{username}/credits")
                 .ui.inline.header

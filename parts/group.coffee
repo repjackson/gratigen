@@ -21,6 +21,8 @@ if Meteor.isClient
         @autorun => Meteor.subscribe 'members', Router.current().params.doc_id, ->
         # @autorun => Meteor.subscribe 'group_dishes', Router.current().params.doc_id, ->
     Template.group_view.helpers
+        is_member: ->
+            Meteor.userId() and Meteor.userId() in @member_ids
         # current_group: ->
         #     Docs.findOne
         #         model:'group'
@@ -29,23 +31,24 @@ if Meteor.isClient
     Template.group_view.events
         'click .refresh_group_stats': ->
             Meteor.call 'calc_group_stats', Router.current().params.doc_id, ->
-        # 'click .join': ->
-        #     Docs.update
-        #         model:'group'
-        #         _author_id: Meteor.userId()
-        # 'click .group_leave': ->
-        #     my_group = Docs.findOne
-        #         model:'group'
-        #         _author_id: Meteor.userId()
-        #         ballot_id: Router.current().params.doc_id
-        #     if my_group
-        #         Docs.update my_group._id,
-        #             $set:value:'no'
-        #     else
-        #         Docs.insert
-        #             model:'group'
-        #             ballot_id: Router.current().params.doc_id
-        #             value:'no'
+        'click .join': ->
+            if Meteor.userId()
+                Docs.update @_id, 
+                    $addToSet:
+                        member_ids: Meteor.userId()
+                Meteor.users.update Meteor.userId(),
+                    $addToSet:
+                        group_ids:@_id
+            else 
+                Router.go '/login'
+                
+        'click .group_leave': ->
+            Docs.update @_id, 
+                $pull:
+                    member_ids: Meteor.userId()
+            Meteor.users.update Meteor.userId(),
+                $pull:
+                    group_ids:@_id
 
 
 if Meteor.isServer

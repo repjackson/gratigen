@@ -37,7 +37,10 @@ if Meteor.isClient
                     })
                 else
                     # console.log res
-                    Router.go "/"
+                    $(e.currentTarget).closest('.grid').transition('fly right', 500)                    
+                    Meteor.setTimeout ->
+                        Router.go "/"
+                    , 500
                     # Router.go "/user/#{username}"
 
         'keyup .password, keyup .username': (e,t)->

@@ -196,7 +196,7 @@ template(name='group_view')
                         +print_this
                     +multi_user_view key='member_ids' label='members' direct=true
                         
-                .ten.wide.column
+                .six.wide.column
                     +html_view key='description' icon='content' label='description'
                     .ui.inline.header 
                         +i name='crown' cl='ui avatar image'
@@ -216,7 +216,16 @@ template(name='group_view')
                             //     .content
                             //         .header
                             //             |#{username}
-                    +doc_array_togggle key='member_ids' value=currentUser._id add_label='join' remove_label='joined'
+                .four.wide.column
+                    if is_member
+                        .ui.button.leave(title='click to leave')
+                            i.checkmark.icon
+                            |member
+                    else 
+                        .ui.button.join(title='')
+                            i.user.plus.icon
+                            |join
+                    // +doc_array_togggle key='member_ids' value=currentUser._id add_label='join' remove_label='joined'
                     .ui.header 
                         +i name='rss'
                         |activity

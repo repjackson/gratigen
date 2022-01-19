@@ -314,7 +314,7 @@ if Meteor.isClient
                 $set:published:true
             if confirm 'confirm?'
                 Meteor.call 'send_event', @_id, =>
-                    Router.go "/event/#{@_id}/view"
+                    Router.go "/event/#{@_id}"
 
 
     Template.event_edit.helpers
