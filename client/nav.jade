@@ -8,7 +8,7 @@ template(name='nav')
         // a.icon.item.toggle_leftbar
         //     i.large.bars.icon
         a.header.item.zoomer(href='/' class="{{isActivePath '/'}}" )
-            +i name='hand-holding-heart'
+            +i name='network'
             // i.large.home.icon
             span.mobile.hidden gratigen
         a.icon.item.zoomer(href="/posts")
@@ -19,6 +19,10 @@ template(name='nav')
             // i.large.inbox.icon
             +i name='tasks'
             span.mobile.hidden tasks
+        a.icon.item.zoomer(href="/events")
+            // i.large.inbox.icon
+            +i name='calendar'
+            span.mobile.hidden events
         a.icon.item.zoomer(href="/groups")
             // i.large.inbox.icon
             +i name='groups'

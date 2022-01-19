@@ -2,6 +2,19 @@ template(name='home')
     .ui.stackable.padded.grid
         .four.wide.column
             .ui.header profile
+            a.item(href="/user/#{currentUser.username}" class=user_nav_button_class title=user_nav_button_title)
+                if currentUser.image_id
+                    img.ui.tiny.circular.image(src="{{c.url currentUser.image_id width=200 height=200 gravity='face' crop='fill'}}")
+                else
+                    i.user.icon
+                strong #{currentUser.name}
+                strong #{currentUser.points}p
+                div
+                .ui.inline.header #{currentUser.tagline}
+            
+            .ui.header
+                |#{currentUser.username}
+                
             .ui.header sections
             .ui.list 
                 .item 
@@ -11,7 +24,7 @@ template(name='home')
                     i.home.icon
                     |housing
                 .item 
-                    i.shirt.icon
+                    i.tshirt.icon
                     |clothing
                 .item 
                     i.car.icon
@@ -25,8 +38,24 @@ template(name='home')
                 .item 
                     i.smile.icon
                     |wellness
-                .item education
-                .item art
-                .item community core
+                .item 
+                    i.university.icon
+                    |education
+                .item 
+                    i.paint.brush.icon
+                    |art
+                .item 
+                    i.users.icon
+                    |community core
             .ui.header 
                 |resources
+        .eight.wide.column
+            .ui.header create request
+        .four.wide.column
+            .ui.header 
+                i.clock.icon
+                |activity
+            .ui.header 
+                i.marker.icon
+                |closest allies
+            
