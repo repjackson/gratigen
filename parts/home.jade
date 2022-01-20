@@ -84,6 +84,7 @@ template(name='home')
                                     i.newspaper.large.icon
                                 .ui.label #{model}
                                 .ui.label 
+                                    img.ui.image(src="{{c.url _author.image_id width=400 height=400}}")
                                     i.user.icon
                                     |#{_author_username}
                                 if tags 
@@ -96,9 +97,10 @@ template(name='home')
             .ui.header 
                 i.marker.icon
                 |closest allies
-            .ui.list 
+            .ui.selectable.animated.list 
                 each user_docs 
                     .item 
+                        img.ui.avatar.image(src="{{c.url image_id width=400 height=400}}")
                         |#{username}
                         if tags 
                             each tags 
