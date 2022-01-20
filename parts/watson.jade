@@ -67,7 +67,7 @@ template(name='keywords')
     .ui.four.column.stackable.grid
         each watson.keywords
             .ui.column
-                span(class="{{calculated_size 'relevance'}}" title="{{ to_percent relevance }}% relevant") #{text}
+                .ui.inline.header(class="{{calculated_size 'relevance'}}" title="{{ to_percent relevance }}% relevant") #{text}
                 //- .meta
                 //-     |{{ to_percent relevance }}% relevant |
                 //-     |sentiment: {{ to_percent sentiment.score }}%

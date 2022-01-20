@@ -6,8 +6,8 @@ template(name='users')
                 |users
             +user_cloud
             if currentUser.admin
-                .ui.button.add_user
-                    |add user
+                .ui.icon.basic.circular.button.add_user
+                    i.large.plus.icon
         .sixteen.wide.column
             // +session_set key='view_users' value='grid' icon='th' 
             // +session_set key='view_users' value='list' icon='list'

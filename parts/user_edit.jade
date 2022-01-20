@@ -29,14 +29,16 @@ template(name='user_edit')
                         +text_edit key='last_name' label='last name' direct=true
                         +text_edit key='tagline' label='tagline' direct=true
                         div
-                        .ui.header 
-                            i.envelope.outline.icon
-                            |emails
-                        +emails_edit
+                        // .ui.header 
+                        //     i.envelope.outline.icon
+                        //     |emails
+                        // +emails_edit
+                        +text_edit key='email' label='email' direct=true
                         .ui.hidden.divider
                         +phone_edit key='phone' label='phone' icon='phone' direct=true
                         +html_edit key='description' label='description' direct=true
                 .six.wide.column
+                    +date_edit key='birthday' label='birthday' icon='birthday' direct=true
                     +array_edit key='allergens' label='allergens' icon='no-milk' direct=true
                     +array_edit key='food_dislikes' label='food dislikes' icon='disgusting' direct=true
                     +link_edit key='profile_link' label='profile link' icon='link' direct=true

@@ -55,6 +55,7 @@ template(name='home')
                     |community core
             .ui.header 
                 |resources
+            
         .eight.wide.column
             .ui.button create request
             .ui.basic.disabled.button 
@@ -97,7 +98,11 @@ template(name='home')
                 |closest allies
             .ui.list 
                 each user_docs 
-                    .item #{username}
+                    .item 
+                        |#{username}
+                        if tags 
+                            each tags 
+                                .ui.basic.label #{this}
             .ui.header open requests
             each open_requests 
                 a.ui.fluid.card(href="/request/#{_id}")

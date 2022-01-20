@@ -60,25 +60,24 @@ template(name='user_layout')
                         .ui.small.inline.header #{_id}
                             
                 .twelve.wide.column.scrolling
-                    a.ui.icon.large.button.select_term.no_blink(href="/user/#{username}/" class="{{isActiveRoute 'user_dashboard'}}" title="#{user.username} dashboard")
-                        // i.large.dashboard.icon
-                        +i name='dashboard'
-                        span dashboard
-                    if currentUser
-                        a.ui.large.button.select_term.no_blink(href="/user/#{username}/posts" class="{{isActiveRoute 'user_posts'}}" title="#{user.username} posts")
-                            // i.newspaper.large.icon
-                            +i name='blog'
-                            |#{user_post_count}
-                            span posts
-                        a.ui.icon.large.button.select_term.no_blink(href="/user/#{username}/credits" class="{{isActiveRoute 'user_credits'}}" title="#{user.username} credits")
-                            // i.large.chevron.down.icon
-                            +i name='donate'
-                            span pts received
+                    // a.ui.icon.large.button.select_term.no_blink(href="/user/#{username}/" class="{{isActiveRoute 'user_dashboard'}}" title="#{user.username} dashboard")
+                    //     // i.large.dashboard.icon
+                    //     +i name='dashboard'
+                    //     span dashboard
+                    // if currentUser
+                    //     a.ui.large.button.select_term.no_blink(href="/user/#{username}/posts" class="{{isActiveRoute 'user_posts'}}" title="#{user.username} posts")
+                    //         // i.newspaper.large.icon
+                    //         +i name='blog'
+                    //         |#{user_post_count}
+                    //         span posts
+                    //     a.ui.icon.large.button.select_term.no_blink(href="/user/#{username}/credits" class="{{isActiveRoute 'user_credits'}}" title="#{user.username} credits")
+                    //         // i.large.chevron.down.icon
+                    //         +i name='donate'
+                    //         span pts received
                 
-                    .ui.stackable.grid
-                        // .spacer
-                        .sixteen.wide.column
-                            +yield 
+                    +yield 
+
+
            
 template(name='user_credit')
     .ui.stackable.one.column.padded.grid

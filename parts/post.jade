@@ -16,7 +16,7 @@ template(name='posts')
                     |#{title} 
                     // small.ui.grey.text #{count}
                     
-            .ui.centered.two.stackable.cards
+            .ui.centered.three.stackable.cards
                 each post_docs 
                     a.ui.card.fly_right(href="/post/#{_id}")
                         if image_id 
@@ -183,13 +183,13 @@ template(name='post_edit')
                     if is_dev 
                         +text_edit key='model' label='model' direct=true
                     +array_edit key='location_tags' label='location_tags' direct=true
-                    unless published
-                        a.ui.fluid.green.button.submit(href="/save")
-                            i.checkmark.icon
-                            |publish
-                    else
-                        .ui.basic.button.unpublish 
-                            |unpublish
+                    // unless published
+                    //     a.ui.fluid.green.button.submit(href="/save")
+                    //         i.checkmark.icon
+                    //         |publish
+                    // else
+                    //     .ui.basic.button.unpublish 
+                    //         |unpublish
                     .ui.header
                         |audience
                     +boolean_edit key='private' label='private' 
