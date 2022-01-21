@@ -1,6 +1,6 @@
 template(name='users')
     .ui.padded.stackable.grid
-        .sixteen.wide.column
+        .four.wide.column
             .ui.inline.header
                 +i name='groups'
                 |users
@@ -8,7 +8,7 @@ template(name='users')
             if currentUser.admin
                 .ui.icon.basic.circular.button.add_user
                     i.large.plus.icon
-        .sixteen.wide.column
+        .twelve.wide.column
             // +session_set key='view_users' value='grid' icon='th' 
             // +session_set key='view_users' value='list' icon='list'
             // +session_set key='sort_users_direction' value='-1' icon='chevron down'

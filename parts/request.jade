@@ -178,7 +178,7 @@ template(name='request_view')
 template(name='request_edit')
     with current_doc
         .ui.stackable.padded.grid
-            .three.column.row 
+            .two.column.row 
                 .column
                     .ui.header 
                         small author
@@ -205,9 +205,8 @@ template(name='request_edit')
                     //     .ui.green.inline.header published
                     // else
                     //     .ui.orange.inline.header unpublished
-                .column
                     a.ui.green.fluid.large.button(href="/request/#{_id}")
-                        i.checkmark.icon
+                        i.checkmark.big.icon
                         |save 
                     // if published
                     //     .ui.fluid.orange.basic.large.button.unpublish

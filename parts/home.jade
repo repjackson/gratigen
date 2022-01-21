@@ -16,11 +16,11 @@ template(name='home')
                 .ui.header
                     |#{currentUser.username}
             else 
-                .ui.header welcome to gratigen bitch
+                .ui.header 
+                    |gratigen
                 a.ui.button(href='/login')
                     +i name='internal'
                     |login/join
-                
             .ui.header sections
             .ui.list 
                 .item 
@@ -99,7 +99,7 @@ template(name='home')
                 |closest allies
             .ui.selectable.animated.list 
                 each user_docs 
-                    .item 
+                    a.item.fly_right(href="/user/#{username}")
                         img.ui.avatar.image(src="{{c.url image_id width=400 height=400}}")
                         |#{username}
                         if tags 

@@ -87,6 +87,7 @@ template(name='transfer_view')
                         |!{description}
                     .spacer
                     +image_view key='image_id' label='image' direct=true
+                    +link_view key='link' label='link' icon='link' direct=true
                     div 
                     if tags
                         i.tags.icon
@@ -112,7 +113,7 @@ template(name='transfer_edit')
     with current_doc
         .ui.stackable.padded.grid
             .row 
-                .five.wide.column
+                .six.wide.column
                     .ui.large.fluid.basic.circular.button.cancel_debit
                         i.large.remove.red.icon
                         |cancel
@@ -149,6 +150,7 @@ template(name='transfer_edit')
                 .six.wide.column
                     +html_edit key='description' label='description' direct=true
                     +image_edit key='image_id' label='image' direct=true
+                    +link_edit key='link' label='link' icon='link' direct=true
                     div 
                     div
                     .ui.inline.header
@@ -173,7 +175,7 @@ template(name='transfer_edit')
                             // if image
                             //     img.ui.mini.rounded.inline.image(src="{{c.url image height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                             |#{title}
-                .five.wide.center.aligned.column
+                .four.wide.center.aligned.column
                     .ui.big.header #{amount}pts
                     .ui.big.input
                         input.point_amount(type='number' value=amount min='1' max=point_max)
