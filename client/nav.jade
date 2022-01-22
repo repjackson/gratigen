@@ -29,6 +29,9 @@ template(name='nav')
         a.icon.item.zoomer(href="/requests")
             // i.large.inbox.icon
             +i name='hand-holding-heart'
+        a.icon.item.zoomer(href="/food")
+            // i.large.inbox.icon
+            +i name='food'
         a.icon.item.zoomer(href="/badges")
             // i.large.inbox.icon
             +i name='prize'
@@ -42,14 +45,23 @@ template(name='nav')
             // i.large.inbox.icon
             +i name='chat'
             
-        // .search.item.zoomer.mobile.hidden(title='search')
-        //     .ui.icon.transparent.input
-        //         if current_product_search
-        //             i.remove.large.red.link.icon.clear_search
-        //         else
-        //             i.search.large.icon
-        //         input.search_products(type='text' autocomplete="off" value=current_product_search)
+        .search.item.zoomer.mobile.hidden(title='search')
+            .ui.icon.transparent.input
+                if current_product_search
+                    i.remove.large.red.link.icon.clear_search
+                else
+                    i.search.large.icon
+                input.search_products(type='text' autocomplete="off" value=current_product_search)
         .right.menu
+            if unread_count
+                a.item.alerts.select_term(href="#" class=alert_toggle_class)
+                    i.large.bell.icon
+                    if unread_count
+                        |#{unread_count}
+            else
+                a.icon.item(href="/inbox" class="{{isActiveRoute 'inbox'}}")
+                    i.large.outline.bell.icon
+        
             if currentUser
                 // a.item(href='/user/#{currentUser.username}/credit' class="{{isActiveRoute 'user_credit'}}" title='current wallet balance')
                 // a.item(href="/user/#{currentUser.username}/credit" class="{{isActiveRoute regex='user_credit'}}" title='your credits')
@@ -79,3 +91,27 @@ template(name='nav')
                     // i.sign.in.large.icon
                     +i name='internal'
                     span.mobile.hidden login
+            if session_is 'viewing_alerts'
+                +topbar
+                    
+                    
+                    
+template(name='topbar')
+    .ui.fluid.large.attached.segment
+        .ui.middle.aligned.divided.list
+            each recent_alerts
+                +recent_alert
+        a.ui.icon.attached.basic.button.item.close_topbar(href="/inbox")
+            i.inbox.large.icon
+            |inbox
+        
+template(name='recent_alert')        
+    .item.alert
+        .right.floated.content
+            i.circular.eye.link.large.icon.mark_read(title='mark read')
+        img.ui.avatar.image(src="{{c.url author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+        .content
+            .header
+                |#{description} 
+            .description #{author.name} #{made_when}
+                    

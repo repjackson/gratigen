@@ -1,22 +1,29 @@
 template(name='user_layout')
     +nav
     with current_user
+        img.ui.image.checkin_banner(src="{{c.url image_id2 width=1000 height=1000 crop='fit'}}")
         .ui.stackable.padded.grid
             .row
-                img.ui.image.checkin_banner(src="{{c.url image_id2 width=1000 height=1000 crop='crop'}}")
                 .four.wide.column.scrolling
-                    a.ui.fluid.large.basic.circular.button.fly_left(href='/users')
+                    a.ui.fluid.compact.circular.button.fly_left(href='/users')
                         i.chevron.left.icon
                         +i name='groups'
-                        // |users
-                    a.item(href="/user/#{username}")
+                        |users
+                    .spacer
+                    a.item.mobile.hidden(href="/user/#{username}")
                         img.ui.circular.centered.image(src="{{c.url image_id height=400 width=400 gravity='face' crop='fill'}}")
+                    .ui.center.aligned.header.mobile.hidden
+                        strong #{name}
+                        // strong #{first_name} #{last_name}
+                        | @#{username}        
+                    a.mobile.only(href="/user/#{username}")
+                        img.ui.circular.tiny.inline.image(src="{{c.url image_id height=400 width=400 gravity='face' crop='fill'}}")
+                    .ui.inline.header.mobile.only
+                        strong #{name}
+                        // strong #{first_name} #{last_name}
+                        | @#{username}        
                     // .spacer
                     // a(href="/user/#{username}")
-                    .ui.center.aligned.header
-                        // strong #{name}
-                        strong #{first_name} #{last_name}
-                        | @#{username}        
                     a.ui.inline.header(href="/user/#{username}/credit" title='credit')
                         +i name='coins'
                         |#{user.points}p
@@ -113,6 +120,10 @@ template(name='user_layout')
                         // i.large.hand.holding.heart.icon
                         +i name='hand-holding-heart'
                         span offers
+                    a.ui.large.compact.button(href="/user/#{username}/food" class="{{isActiveRoute 'user_food'}}" title="#{user.username} food")
+                        // i.large.hand.holding.heart.icon
+                        +i name='food'
+                        span food
                     a.ui.large.compact.button(href="/user/#{username}/messages" class="{{isActiveRoute 'user_messages'}}" title="#{user.username} messages")
                         // i.chat.large.icon
                         +i name='chat'
@@ -235,23 +246,6 @@ template(name='user_dashboard')
                 .ui.large.basic.circular.label() #{flow_volume} volume
                 //- .ui.compact.icon.button.refresh_user_stats(title='refresh stats')
                 //-     i.refresh.icon
-                if is_current_user
-                    +boolean_edit key='online' label='online' direct=true
-                    +text_edit key='current_status' label='status' icon='clock' direct=true
-                else 
-                    if online 
-                        .ui.green.large.label 
-                            i.large.checkmark.icon
-                            |online
-                    else
-                        .ui.disabled.large.label 
-                            |offline
-                    if current_status
-                        .ui.small.header(title='status' )
-                            i.grey.clock.icon
-                            |!{current_status}
-                if is_dev
-                    .ui.small.inline.header #{_id}
         .four.column.row
             .column
                 a.ui.inline.header(href="/user/#{username}/credits")

@@ -23,7 +23,16 @@ if Meteor.isClient
             Session.get('post_title_filter')
 
     
-    
+    Template.home.events 
+        'click .check_notifications': ->
+            Notification.requestPermission (result) ->
+                console.log result
+
+        'click .send_notification': ->
+            if Notification.permission is "granted"
+                notification = new Notification("Hi there!")
+
+
     Template.home.helpers 
         doc_results: ->
             Docs.find {},
