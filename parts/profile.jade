@@ -63,7 +63,7 @@ template(name='user_layout')
                             .ui.small.header(title='status' )
                                 i.grey.clock.icon
                                 |!{current_status}
-                    if is_dev
+                    if in_dev
                         .ui.small.inline.header #{_id}
                         if i_have_points
                             .ui.basic.circular.button.send(title='send points')
@@ -88,55 +88,55 @@ template(name='user_layout')
         
                             
                 .twelve.wide.column.scrolling
-                    a.ui.large.compact.button(href="/user/#{username}/" class="{{isActiveRoute 'user_dashboard'}}" title="#{user.username} dashboard")
-                        // i.large.dashboard.icon
+                    a.ui.compact.circular.button(href="/user/#{username}/" class="{{isActiveRoute 'user_dashboard'}}" title="#{user.username} dashboard")
+                        // i.dashboard.icon
                         +i name='dashboard'
-                        span dashboard
-                    a.ui.large.compact.button(href="/user/#{username}/about" class="{{isActiveRoute 'user_about'}}" title="#{user.username} info")
-                        // i.info.large.icon
+                        span.mobile.hidden dashboard
+                    a.ui.compact.circular.button(href="/user/#{username}/about" class="{{isActiveRoute 'user_about'}}" title="#{user.username} info")
+                        // i.info.icon
                         +i name='info'
-                        span about
-                    a.ui.large.compact.button(href="/user/#{username}/credits" class="{{isActiveRoute 'user_credits'}}" title="#{user.username} credits")
-                        // i.large.chevron.down.icon
+                        span.mobile.hidden about
+                    a.ui.compact.circular.button(href="/user/#{username}/credits" class="{{isActiveRoute 'user_credits'}}" title="#{user.username} credits")
+                        // i.chevron.down.icon
                         +i name='chevron-down'
-                        span pts received
-                    a.ui.large.compact.button(href="/user/#{username}/debits" class="{{isActiveRoute 'user_sent'}}" title="#{user.username} sent")
-                        // i.large.gift.icon
+                        span.mobile.hidden pts received
+                    a.ui.compact.circular.button(href="/user/#{username}/debits" class="{{isActiveRoute 'user_sent'}}" title="#{user.username} sent")
+                        // i.gift.icon
                         +i name='gift'
-                        span pts sent
-                    a.ui.large.compact.button(href="/user/#{username}/credit" class="{{isActiveRoute 'user_credit'}}" title="#{user.username} credit")
-                        // i.large.dollar.icon
+                        span.mobile.hidden pts sent
+                    a.ui.compact.circular.button(href="/user/#{username}/credit" class="{{isActiveRoute 'user_credit'}}" title="#{user.username} credit")
+                        // i.dollar.icon
                         +i name='money'
-                        span credit
-                    a.ui.large.compact.button(href="/user/#{username}/events" class="{{isActiveRoute 'user_events'}}" title="#{user.username} events")
-                        // i.calendar.large.icon
+                        span.mobile.hidden credit
+                    a.ui.compact.circular.button(href="/user/#{username}/events" class="{{isActiveRoute 'user_events'}}" title="#{user.username} events")
+                        // i.calendar.icon
                         +i name='calendar'
-                        span events
-                    a.ui.large.compact.button(href="/user/#{username}/requests" class="{{isActiveRoute 'user_requests'}}" title="#{user.username} requests")
-                        // i.large.concierge.bell.icon
+                        span.mobile.hidden events
+                    a.ui.compact.circular.button(href="/user/#{username}/requests" class="{{isActiveRoute 'user_requests'}}" title="#{user.username} requests")
+                        // i.concierge.bell.icon
                         +i name='service-bell'
-                        span requests
-                    a.ui.large.compact.button(href="/user/#{username}/offers" class="{{isActiveRoute 'user_offers'}}" title="#{user.username} offers")
-                        // i.large.hand.holding.heart.icon
+                        span.mobile.hidden requests
+                    a.ui.compact.circular.button(href="/user/#{username}/offers" class="{{isActiveRoute 'user_offers'}}" title="#{user.username} offers")
+                        // i.hand.holding.heart.icon
                         +i name='hand-holding-heart'
-                        span offers
-                    a.ui.large.compact.button(href="/user/#{username}/food" class="{{isActiveRoute 'user_food'}}" title="#{user.username} food")
-                        // i.large.hand.holding.heart.icon
+                        span.mobile.hidden offers
+                    a.ui.compact.circular.button(href="/user/#{username}/food" class="{{isActiveRoute 'user_food'}}" title="#{user.username} food")
+                        // i.hand.holding.heart.icon
                         +i name='food'
-                        span food
-                    a.ui.large.compact.button(href="/user/#{username}/messages" class="{{isActiveRoute 'user_messages'}}" title="#{user.username} messages")
-                        // i.chat.large.icon
+                        span.mobile.hidden food
+                    a.ui.compact.circular.button(href="/user/#{username}/messages" class="{{isActiveRoute 'user_messages'}}" title="#{user.username} messages")
+                        // i.chat.icon
                         +i name='chat'
-                        span chat
-                    a.ui.large.compact.button(href="/user/#{username}/badges" class="{{isActiveRoute 'user_badges'}}" title="#{user.username} badges")
-                        // i.certificate.large.icon
+                        span.mobile.hidden chat
+                    a.ui.compact.circular.button(href="/user/#{username}/badges" class="{{isActiveRoute 'user_badges'}}" title="#{user.username} badges")
+                        // i.certificate.icon
                         +i name='prize'
                         span.mobile.hidden badges
-                    a.ui.large.compact.button(href="/user/#{username}/delivery" class="{{isActiveRoute 'user_delivery'}}" title="#{user.username} badges")
-                        // i.certificate.large.icon
+                    a.ui.compact.circular.button(href="/user/#{username}/delivery" class="{{isActiveRoute 'user_delivery'}}" title="#{user.username} badges")
+                        // i.certificate.icon
                         +i name='car'
                         span.mobile.hidden delivery
-                    a.ui.large.compact.button(href="/user/#{username}/genekeys" class="{{isActiveRoute 'user_genekeys'}}" title="#{user.username} genekeys")
+                    a.ui.compact.circular.button(href="/user/#{username}/genekeys" class="{{isActiveRoute 'user_genekeys'}}" title="#{user.username} genekeys")
                         // i.large.dna.icon
                         +i name='dna'
                         span genekeys

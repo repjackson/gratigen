@@ -2,7 +2,9 @@ template(name='rentals')
     // +map2
     .ui.stackable.padded.grid
         .sixteen.wide.column
-            .ui.inline.header rentals
+            .ui.inline.header 
+                +i name='clock'
+                |rentals
             .ui.icon.button.add_rental
                 i.plus.icon
             .ui.inline.header current lat: #{current_lat}, long: #{current_long}

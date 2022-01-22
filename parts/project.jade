@@ -1,0 +1,89 @@
+template(name='project_card')
+    a.card(href="/project/#{_id}/view")
+        .image
+            if icon 
+                +icolorlg name=icon
+            else
+                img.ui.raw.image(src="{{c.url image_id width=400 height=300 crop='fill'}}")    
+        .content
+            a.ui.header(href="/project/#{_id}/view")
+                |#{location}: #{title}
+            |!{description}
+        
+
+
+template(name='project_view')
+    with current_doc
+        .ui.stackable.padded.grid
+            .centered.middle.aligned.row
+                .four.wide.center.aligned.column
+                    // if can_edit
+                    a(href="/m/project" title='projects')
+                        +icolorlg name='project' cl='ui inline image pointer'
+                .eight.wide.center.aligned.column
+                    if icon
+                        +icolorlg name=icon cl='ui inline image'
+                    else
+                        +icolorlg name='project' cl='ui inline image'
+                    .ui.center.aligned.inline.header 
+                        small viewing project
+                        |#{title}
+                .four.wide.center.aligned.column
+                    if can_edit
+                        a.edit_project(href="/project/#{_id}/edit")
+                            i.big.blue.pencil.icon
+            .row 
+                .four.wide.column
+                    .ui.header
+                        i.marker.icon 
+                        |#{location}
+                    .ui.header 
+                        small leader
+                    a.ui.header(href="/user/#{_author.username}") 
+                        img.ui.avatar.image(src="{{c.url _author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                        |#{_author.username}
+                    +image_view key='image_id' label='image' direct=true
+                .eight.wide.column
+                    +number_view key='bounty' label='bounty' direct=true
+                    +textarea_view key='description' label='description' direct=true
+                    div 
+                    +array_view key='tags' label='tags' direct=true
+                    .spacer
+                    .spacer
+                    +comments
+                    //- +array_view key='location_tags' label='location_tags' direct=true
+                .four.wide.column
+                    .ui.header 
+                        +icon name='project'
+                        |projects
+                    //- .ui.fluid.green.button.submit
+                    //-     i.checkmark.icon
+                    //-     |submit
+template(name='project_edit')
+    with current_doc
+        .ui.stackable.padded.grid
+            .centered.middle.aligned.row 
+                .four.wide.center.aligned.column
+                    a.ui.green.big.icon.button(href="/project/#{_id}/view" title='save')
+                        i.checkmark.big.icon
+                .eight.wide.center.aligned.column
+                    .ui.inline.header 
+                        +icon name='project'
+                        small edit project
+                        |#{title}
+                .four.wide.center.aligned.column
+                    i.link.big.remove.icon.delete_item(title='delete project')
+            .row 
+                .five.wide.column
+                    +text_edit key='title' icon='header' direct=true
+                    +image_edit key='image_id' label='image' direct=true
+                    +text_edit key='location' label='location' icon='marker' direct=true
+                    +icon_edit key='icon' label='icon' direct=true
+                    div 
+                    +array_edit key='tags' label='tags' direct=true
+                .six.wide.column
+                    +textarea_edit key='description' label='description' direct=true
+                    +textarea_edit key='goals' label='goals' direct=true
+                    //- +array_edit key='location_tags' label='location_tags' direct=true
+                .five.wide.column
+                    +boolean_edit key='published' direct=true
