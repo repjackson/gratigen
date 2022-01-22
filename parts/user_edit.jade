@@ -12,6 +12,7 @@ template(name='user_edit')
                         i.checkmark.big.icon
                     .ui.hidden.divider
                     +image_edit key='image_id' icon='picture' title='profile image' direct=true
+                    +image_edit key='image_id2' icon='background picture' title='background image' direct=true
                     if is_current_user
                         +password_edit
                         //- +phone_editor
@@ -50,7 +51,6 @@ template(name='user_edit')
                         +array_edit key='roles' icon='shield' direct=true
                     +array_edit key='tags' label='tags' icon='tags' direct=true
                     +array_edit key='skills' label='skills' icon='wrench' direct=true
-                .sixteen.wide.column
                     +user_edit_genekeys
                     +user_edit_finance
                     +user_edit_badges

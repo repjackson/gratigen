@@ -3,7 +3,7 @@ template(name='user_layout')
     with current_user
         .ui.stackable.padded.grid
             .row
-                //- img.ui.image.checkin_banner(src="{{c.url banner_image width=1000 height=1000 crop='crop'}}")
+                img.ui.image.checkin_banner(src="{{c.url image_id2 width=1000 height=1000 crop='crop'}}")
                 .four.wide.column.scrolling
                     a.ui.fluid.large.basic.circular.button.fly_left(href='/users')
                         i.chevron.left.icon

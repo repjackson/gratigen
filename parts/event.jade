@@ -16,19 +16,19 @@ template(name='events')
                         i.circle.outline.large.icon
                     |past
                 .spacer
-                .ui.stackable.five.cards
+                .ui.stackable.cards
                     each event_docs
                         +event_card
 
 template(name='event_card')
     .ui.card
         if image_id
-            a.image.zoom.pointer.mobile.hidden(href="/event/#{_id}/view")
+            a.image.zoom.pointer.mobile.hidden(href="/event/#{_id}")
                 img.ui.image(src="{{c.url image_id height=500 width=500 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-            a.image.zoom.pointer.mobile.only(href="/event/#{_id}/view")
+            a.image.zoom.pointer.mobile.only(href="/event/#{_id}")
                 img.ui.image(src="{{c.url image_id height=200 width=500 gravity='center' crop='fill'}}" class=currentUser.invert_class)
         .content
-            a.ui.header(href="/event/#{_id}/view") #{title} 
+            a.ui.header(href="/event/#{_id}") #{title} 
             div
             .ui.small.header {{medium_date date}} 
                 if time 
@@ -46,7 +46,7 @@ template(name='event_card')
             strong #{fac.name}
         .content
             |#{event_tickets.count}
-            a(href="/m/event/#{_id}/view" title='ticket purchase required')
+            a(href="/m/event/#{_id}" title='ticket purchase required')
                 i.checkmark.green.link.icon
             | #{going.count}
             each going
@@ -87,7 +87,7 @@ template(name='event_edit')
         .ui.stackable.padded.grid
             .centered.row 
                 .five.wide.column
-                    a.ui.icon.green.big.button.fly_right(href="/event/#{_id}/view" title='save')
+                    a.ui.icon.green.big.button.fly_right(href="/event/#{_id}" title='save')
                         i.checkmark.big.icon
                     .ui.inline.header 
                         +icolor name='tear-off-calendar'
@@ -156,7 +156,6 @@ template(name='event_view')
                         a(href="/events")
                             i.calendar.big.circular.link.icon
                     .ui.large.inline.header #{title}
-                    div
                     if can_edit
                         if published 
                             i.big.eye.green.icon(title='published')
@@ -171,15 +170,15 @@ template(name='event_view')
                     if can_edit
                         a.edit_event(href="/event/#{_id}/edit" title='edit')
                             i.large.blue.link.pencil.circular.icon
-            .three.column.row 
-                .column.scrollin
+            .row 
+                .four.wide.column.scrollin
                     if location 
                         i.large.marker.icon(title='location')
                         |#{location}
                     a(href="{{c.url image_id }}")
                         img.ui.fluid.rounded.image(src="{{c.url image_id }}" class=currentUser.invert_class)
                     .spacer
-                    // a(href="/m/room/#{event_room._id}/view")
+                    // a(href="/m/room/#{event_room._id}")
                     //     img.ui.small.circular.inline.image.pointer.zoom(src="{{c.url event_room.image_id }}" class=currentUser.invert_class)
                     //     .ui.inline.header.pointer.zoom
                     //         |#{event_room.title}
@@ -222,7 +221,7 @@ template(name='event_view')
                     if currentUser
                         +voting_full
                     +array_view key='location_tags' label='location tags' icon='marker' direct=true
-                .column.scrollin
+                .eight.wide.column.scrollin
                     // a.ui.header(href="/user/#{target.username}")
                     //     |#{target.username}
                     // .scrolling
@@ -231,7 +230,7 @@ template(name='event_view')
                     // .spacer
                     // .spacer
                     +comments
-                .column
+                .four.wide.column
                     .ui.inline.large.header 
                         |RSVP
                     if tickets_left
@@ -271,7 +270,7 @@ template(name='event_view')
                             .comment
                                 a.avatar(href="/user/#{_author.username}") 
                                     img(src="{{c.url _author.image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                                a.content(href="/m/ticket/#{_id}/view")
+                                a.content(href="/m/ticket/#{_id}")
                                     a.author(href="/user/#{_author.username}") 
                                         |#{_author.name}
                                     .metadata
@@ -369,12 +368,12 @@ template(name='ticket_view')
                             img.ui.avatar.image(src="{{c.url _author.image_id height=200 width=200 gravity='face' crop='fill'}}")
                             |#{_author.username}
                     .ui.segment
-                        a.ui.inline.header(href="/event/#{event_id}/view")
+                        a.ui.inline.header(href="/event/#{event_id}")
                             i.calendar.icon
                             |event
-                        a(href="/event/#{event_id}/view")
+                        a(href="/event/#{event_id}")
                             img.ui.medium.image(src="{{c.url ticket_event.image_id height=200 width=200 gravity='face' crop='fill'}}")
-                        a.ui.header(href="/event/#{ticket_event._id}/view")
+                        a.ui.header(href="/event/#{ticket_event._id}")
                             |#{ticket_event.title}
                             
                     +number_view key='amount' label='amount' direct=true
