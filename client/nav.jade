@@ -17,36 +17,6 @@ template(name='nav')
         a.icon.item.zoomer(href="/posts")
             // i.large.inbox.icon
             +i name='blog'
-        a.icon.item.zoomer(href="/map")
-            // i.large.inbox.icon
-            +i name='map'
-        a.icon.item.zoomer(href="/tasks")
-            // i.large.inbox.icon
-            +i name='tasks'
-        a.icon.item.zoomer(href="/events")
-            // i.large.inbox.icon
-            +i name='calendar'
-        a.icon.item.zoomer(href="/groups")
-            // i.large.inbox.icon
-            +i name='campfire'
-        a.icon.item.zoomer(href="/requests")
-            // i.large.inbox.icon
-            +i name='hand-holding-heart'
-        a.icon.item.zoomer(href="/food")
-            // i.large.inbox.icon
-            +i name='food'
-        a.icon.item.zoomer(href="/badges")
-            // i.large.inbox.icon
-            +i name='prize'
-        a.icon.item.zoomer(href="/users")
-            // i.large.inbox.icon
-            +i name='groups'
-        a.item.zoomer(href="/rentals")
-            // i.large.inbox.icon
-            +i name='clock'
-        a.item.zoomer(href="/comments")
-            // i.large.inbox.icon
-            +i name='chat'
             
         .search.item.zoomer.mobile.hidden(title='search')
             .ui.icon.transparent.input
@@ -64,7 +34,10 @@ template(name='nav')
             else
                 a.icon.item(href="/inbox" class="{{isActiveRoute 'inbox'}}")
                     i.large.outline.bell.icon
-        
+            a.item.zoomer(href="/comments")
+                // i.large.inbox.icon
+                +i name='chat'
+
             if currentUser
                 // a.item(href='/user/#{currentUser.username}/credit' class="{{isActiveRoute 'user_credit'}}" title='current wallet balance')
                 // a.item(href="/user/#{currentUser.username}/credit" class="{{isActiveRoute regex='user_credit'}}" title='your credits')
@@ -98,8 +71,35 @@ template(name='nav')
                     span.mobile.hidden login
             if session_is 'viewing_alerts'
                 +topbar
-                    
-                    
+    .ui.attached.inverted.small.borderless.menu.hscroll
+        a.icon.item.zoomer(href="/map")
+            // i.large.inbox.icon
+            +i name='map'
+        a.icon.item.zoomer(href="/tasks")
+            // i.large.inbox.icon
+            +i name='tasks'
+        a.icon.item.zoomer(href="/events")
+            // i.large.inbox.icon
+            +i name='calendar'
+        a.icon.item.zoomer(href="/groups")
+            // i.large.inbox.icon
+            +i name='campfire'
+        a.icon.item.zoomer(href="/requests")
+            // i.large.inbox.icon
+            +i name='hand-holding-heart'
+        a.icon.item.zoomer(href="/food")
+            // i.large.inbox.icon
+            +i name='food'
+        a.icon.item.zoomer(href="/badges")
+            // i.large.inbox.icon
+            +i name='prize'
+        a.icon.item.zoomer(href="/users")
+            // i.large.inbox.icon
+            +i name='groups'
+        a.item.zoomer(href="/rentals")
+            // i.large.inbox.icon
+            +i name='clock'
+
                     
 template(name='topbar')
     .ui.fluid.large.attached.segment
