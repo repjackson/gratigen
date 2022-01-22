@@ -16,12 +16,6 @@ template(name='user_layout')
                         strong #{name}
                         // strong #{first_name} #{last_name}
                         | @#{username}        
-                    .ui.button.locate_me
-                        i.marker.icon
-                        |locate me
-                    if current_lat 
-                        .ui.header lat:#{current_lat}
-                        .ui.header lon:#{current_lon}
                     a.mobile.only(href="/user/#{username}")
                         img.ui.circular.tiny.inline.image(src="{{c.url image_id height=400 width=400 gravity='face' crop='fill'}}")
                     .ui.inline.header.mobile.only
@@ -191,7 +185,19 @@ template(name='user_credit')
                                     +remove_button        
                                     
                                     
-                                    
+      
+      
+template(name='locate_me')
+    .ui.segment
+        .ui.button.locate_me
+            // i.marker.icon
+            +i name='marker'
+            |locate me
+        with currentUser
+            if current_lat 
+                .ui.header lat:#{current_lat}
+                .ui.header lon:#{current_lon}
+
                                     
                                     
                     

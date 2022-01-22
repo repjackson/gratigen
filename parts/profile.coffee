@@ -60,6 +60,7 @@ if Meteor.isClient
             Router.go '/login'
             Meteor.logout()
             
+    Template.locate_me.events
         'click .locate_me': ->
             navigator.geolocation.getCurrentPosition (position) =>
                 console.log 'navigator position', position
