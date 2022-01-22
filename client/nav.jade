@@ -11,12 +11,6 @@ template(name='nav')
             +i name='network'
             // i.large.home.icon
             span.mobile.hidden gratigen
-        a.icon.item.zoomer(href="/transfers")
-            // i.large.inbox.icon
-            +i name='exchange'
-        a.icon.item.zoomer(href="/posts")
-            // i.large.inbox.icon
-            +i name='blog'
             
         .search.item.zoomer.mobile.hidden(title='search')
             .ui.icon.transparent.input
@@ -72,28 +66,34 @@ template(name='nav')
             if session_is 'viewing_alerts'
                 +topbar
     .ui.attached.inverted.small.borderless.menu.hscroll
-        a.icon.item.zoomer(href="/map")
+        a.icon.item.zoomer(href="/transfers" class="{{isActiveRoute 'transfers'}}")
+            // i.large.inbox.icon
+            +i name='exchange'
+        a.icon.item.zoomer(href="/posts" class="{{isActiveRoute 'posts'}}")
+            // i.large.inbox.icon
+            +i name='blog'
+        a.icon.disabled.item.zoomer(href="/map")
             // i.large.inbox.icon
             +i name='map'
-        a.icon.item.zoomer(href="/tasks")
+        a.icon.item.zoomer(href="/tasks" class="{{isActiveRoute 'tasks'}}")
             // i.large.inbox.icon
             +i name='tasks'
-        a.icon.item.zoomer(href="/events")
+        a.icon.item.zoomer(href="/events" class="{{isActiveRoute 'events'}}")
             // i.large.inbox.icon
             +i name='calendar'
-        a.icon.item.zoomer(href="/groups")
+        a.icon.item.zoomer(href="/groups" class="{{isActiveRoute 'groups'}}")
             // i.large.inbox.icon
             +i name='campfire'
-        a.icon.item.zoomer(href="/requests")
+        a.icon.item.zoomer(href="/requests" class="{{isActiveRoute 'requests'}}")
             // i.large.inbox.icon
             +i name='hand-holding-heart'
-        a.icon.item.zoomer(href="/food")
+        a.icon.disabled.item.zoomer(href="/food" class="{{isActiveRoute 'food'}}")
             // i.large.inbox.icon
             +i name='food'
-        a.icon.item.zoomer(href="/badges")
+        a.icon.item.zoomer(href="/badges" class="{{isActiveRoute 'badges'}}")
             // i.large.inbox.icon
             +i name='prize'
-        a.icon.item.zoomer(href="/users")
+        a.icon.item.zoomer(href="/users" class="{{isActiveRoute 'users'}}")
             // i.large.inbox.icon
             +i name='groups'
         a.item.zoomer(href="/rentals")
