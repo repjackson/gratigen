@@ -5,6 +5,23 @@ if Meteor.isClient
         ), name:'home'
     
     
+    Template.latest_activity.onCreated ->
+        @autorun => @subscribe 'latest_docs', ->
+    Template.latest_activity.helpers 
+        latest_docs: ->
+            Docs.find {_updated_timestamp:$exists:true},
+                sort:
+                    _updated_timestamp:-1
+                
+if Meteor.isServer
+    Meteor.publish 'latest_docs', ->
+        Docs.find {_updated_timestamp:$exists:true},
+            sort:
+                _updated_timestamp:-1
+        
+    
+    
+if Meteor.isClient
     Template.home.onCreated ->
         @autorun => @subscribe 'post_docs',
             picked_tags.array()

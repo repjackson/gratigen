@@ -25,6 +25,11 @@ Meteor.users.helpers
     # is_tech_admin: ->
     #     @_id in ['vwCi2GTJgvBJN5F6c','Dw2DfanyyteLytajt','LQEJBS6gHo3ibsJFu','YFPxjXCgjhMYEPADS','RWPa8zfANCJsczDcQ']
 
+Docs.after.update( (userId, doc, fieldNames, modifier, options)->
+    Docs.update({_id:doc._id},{$set: _updated_timestamp: Date.now()},{multi:false})
+    # console.log 'doc updated', doc
+    return
+, {fetchPrevious: false})
 
 Docs.before.insert (userId, doc)->
     if Meteor.userId()

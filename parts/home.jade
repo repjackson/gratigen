@@ -2,7 +2,6 @@ template(name='home')
     .ui.stackable.padded.grid
         .four.wide.column
             if currentUser
-                .ui.header profile
                 a.item(href="/user/#{currentUser.username}" class=user_nav_button_class title=user_nav_button_title)
                     if currentUser.image_id
                         img.ui.tiny.circular.image(src="{{c.url currentUser.image_id width=200 height=200 gravity='face' crop='fill'}}")
@@ -61,17 +60,17 @@ template(name='home')
                 |resources
             
         .eight.wide.column
-            .ui.button create request
-            .ui.basic.disabled.button 
+            // .ui.button create request
+            .ui.basic.button 
                 i.exchange.large.icon
                 |gifts
-            .ui.basic.disabled.button 
+            .ui.basic.button 
                 i.bullhorn.large.icon
                 |requests
-            .ui.basic.disabled.button 
+            .ui.basic.button 
                 i.hand.holding.large.icon
                 |offers
-            .ui.basic.disabled.button 
+            .ui.basic.button 
                 i.project.diagram.large.icon
                 |projects
             .scrolling
@@ -86,6 +85,11 @@ template(name='home')
                             .description
                                 if _is 'model' 'post'
                                     i.newspaper.large.icon
+                                if _is 'model' 'rental'
+                                    +i name='clock'
+                                if _is 'model' 'task'
+                                    +i name='tasks'
+                                    // i.newspaper.large.icon
                                 .ui.label #{model}
                                 .ui.label 
                                     img.ui.image(src="{{c.url _author.image_id width=400 height=400}}")
@@ -95,9 +99,8 @@ template(name='home')
                                     each tags 
                                         .ui.label #{this}
         .four.wide.column
-            .ui.header 
-                i.clock.icon
-                |activity
+            +latest_activity
+                
             .ui.header 
                 i.marker.icon
                 |closest allies
@@ -116,3 +119,15 @@ template(name='home')
                         .header #{title}
                         .description
                             .ui.header #{when}
+                            
+                            
+                            
+
+template(name='latest_activity')
+    .ui.header 
+        i.clock.icon
+        |latest activity
+    .ui.selection.animated.list
+        each latest_docs 
+            .item #{title}
+                            
