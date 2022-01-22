@@ -536,17 +536,17 @@ Template.localmap.helpers
     # lat: ()-> Geolocation.latLng().lat
     # lon: ()-> Geolocation.latLng().lon
 
-Template.mapgl.events
-    'click .locate': ->
-        navigator.geolocation.getCurrentPosition (position) =>
-            console.log 'navigator position', position
-            Session.set('current_lat', position.coords.latitude)
-            Session.set('current_long', position.coords.longitude)
+# Template.mapgl.events
+#     'click .locate': ->
+#         navigator.geolocation.getCurrentPosition (position) =>
+#             console.log 'navigator position', position
+#             Session.set('current_lat', position.coords.latitude)
+#             Session.set('current_long', position.coords.longitude)
             
-            console.log 'saving long', position.coords.longitude
-            console.log 'saving lat', position.coords.latitude
+#             console.log 'saving long', position.coords.longitude
+#             console.log 'saving lat', position.coords.latitude
         
-            pos = Geolocation.currentLocation()
+#             pos = Geolocation.currentLocation()
             # user_position_marker = 
             #     Markers.findOne
             #         _author_id: Meteor.userId()

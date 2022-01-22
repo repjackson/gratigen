@@ -60,7 +60,21 @@ if Meteor.isClient
             Router.go '/login'
             Meteor.logout()
             
+        'click .locate_me': ->
+            navigator.geolocation.getCurrentPosition (position) =>
+                console.log 'navigator position', position
+                Session.set('current_lat', position.coords.latitude)
+                Session.set('current_long', position.coords.longitude)
+                Meteor.users.update Meteor.userId(),
+                    $set:
+                        current_lat: position.coords.latitude
+                        current_lon: position.coords.longitude
+                        
+                console.log 'saving long', position.coords.longitude
+                console.log 'saving lat', position.coords.latitude
             
+                pos = Geolocation.currentLocation()
+
             
     Template.topup_button.events
         'click .topup': ->
