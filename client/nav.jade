@@ -74,7 +74,9 @@ template(name='nav')
                     else
                         i.user.icon
                     strong #{currentUser.name}
-                    strong #{currentUser.points}p
+                    strong
+                        |&nbsp;
+                        |(#{currentUser.points}p)
                 // a.icon.item.toggle_rightbar.no_blink
                 //     // .ui.avatar.image
                 //     //     if currentUser.image_id

@@ -19,6 +19,17 @@ if Meteor.isServer
             sort:
                 _updated_timestamp:-1
         
+if Meteor.isClient
+    Template.online_users.onCreated ->
+        @autorun => @subscribe 'online_users', ->
+    Template.online_users.helpers 
+        online_user_docs: ->
+            Meteor.users.find {online:true}
+                
+if Meteor.isServer
+    Meteor.publish 'online_users', ->
+        Meteor.users.find {online:true}
+        
     
     
 if Meteor.isClient

@@ -24,6 +24,7 @@ template(name='home')
             .ui.button.send_notification
                 |send notifications
             .ui.header sections
+            +online_users
             .ui.list 
                 .item 
                     i.food.icon
@@ -97,6 +98,18 @@ template(name='closest_allies')
                 if tags 
                     each tags 
                         .ui.basic.label #{this}
+template(name='online_users')
+    .ui.header 
+        +i name='checkmark'
+        |online users
+    .ui.selectable.animated.list.smallscroll
+        each online_user_docs 
+            a.item.fly_right(href="/user/#{username}")
+                img.ui.avatar.image(src="{{c.url image_id width=400 height=400}}")
+                |#{username}
+                if tags 
+                    each tags 
+                        .ui.basic.label #{this}
 
 template(name='open_requests')
     .ui.header open requests
@@ -142,8 +155,8 @@ template(name='latest_activity')
     .ui.selection.animated.list
         each latest_docs 
             a.item(href="/#{model}/#{_id}") 
+                img.ui.avatar.image(src="{{c.url image_id width=200 height=200 gravity='face' crop='fill'}}")
                 .content
-                    img.ui.avatar.image(src="{{c.url image_id width=200 height=200 gravity='face' crop='fill'}}")
                     .header #{title}
                     .description
                         |{{from_now _updated_timestamp}}

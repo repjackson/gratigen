@@ -1,7 +1,7 @@
 template(name='user_layout')
     +nav
     with current_user
-        img.ui.image.checkin_banner(src="{{c.url image_id2 width=1000 height=1000 crop='fit'}}")
+        img.ui.image.checkin_banner(src="{{c.url image_id2 width=1000 }}")
         .ui.stackable.padded.grid
             .row
                 .four.wide.column.scrolling
@@ -195,8 +195,8 @@ template(name='locate_me')
             |locate me
         with currentUser
             if current_lat 
-                .ui.header lat:#{current_lat}
-                .ui.header lon:#{current_lon}
+                .ui.large.label lat:#{current_lat}
+                .ui.large.label lon:#{current_lon}
 
                                     
                                     
