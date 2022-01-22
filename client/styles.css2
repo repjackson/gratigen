@@ -154,9 +154,6 @@ body {
      border-radius: 10px !important; 
 }
 
-.spacer{
-    height:10px !important;
-}
 
 
 .beer_section {
