@@ -79,54 +79,65 @@ template(name='user_layout')
         
                             
                 .twelve.wide.column.scrolling
-                    a.ui.large.basic.circular.icon.button.select_term.profile_nav_item(href="/user/#{username}/" class="{{isActiveRoute 'user_dashboard'}}" title="#{user.username} dashboard")
-                        i.large.dashboard.icon
+                    a.ui.large.compact.button(href="/user/#{username}/" class="{{isActiveRoute 'user_dashboard'}}" title="#{user.username} dashboard")
+                        // i.large.dashboard.icon
+                        +i name='dashboard'
                         span dashboard
-                    a.ui.large.basic.circular.icon.button.select_term.profile_nav_item(href="/user/#{username}/about" class="{{isActiveRoute 'user_about'}}" title="#{user.username} info")
-                        i.info.large.icon
+                    a.ui.large.compact.button(href="/user/#{username}/about" class="{{isActiveRoute 'user_about'}}" title="#{user.username} info")
+                        // i.info.large.icon
+                        +i name='info'
                         span about
-                    a.ui.large.basic.circular.icon.button.select_term.profile_nav_item(href="/user/#{username}/credits" class="{{isActiveRoute 'user_credits'}}" title="#{user.username} credits")
-                        i.large.chevron.down.icon
+                    a.ui.large.compact.button(href="/user/#{username}/credits" class="{{isActiveRoute 'user_credits'}}" title="#{user.username} credits")
+                        // i.large.chevron.down.icon
+                        +i name='chevron-down'
                         span pts received
-                    a.ui.large.basic.circular.icon.button.select_term.profile_nav_item(href="/user/#{username}/debits" class="{{isActiveRoute 'user_sent'}}" title="#{user.username} sent")
-                        i.large.gift.icon
+                    a.ui.large.compact.button(href="/user/#{username}/debits" class="{{isActiveRoute 'user_sent'}}" title="#{user.username} sent")
+                        // i.large.gift.icon
+                        +i name='gift'
                         span pts sent
-                    a.ui.large.basic.circular.icon.button.select_term.profile_nav_item(href="/user/#{username}/credit" class="{{isActiveRoute 'user_credit'}}" title="#{user.username} credit")
-                        i.large.dollar.icon
+                    a.ui.large.compact.button(href="/user/#{username}/credit" class="{{isActiveRoute 'user_credit'}}" title="#{user.username} credit")
+                        // i.large.dollar.icon
+                        +i name='money'
                         span credit
-                    a.ui.large.basic.circular.icon.button.select_term.profile_nav_item(href="/user/#{username}/events" class="{{isActiveRoute 'user_events'}}" title="#{user.username} events")
-                        i.calendar.large.icon
+                    a.ui.large.compact.button(href="/user/#{username}/events" class="{{isActiveRoute 'user_events'}}" title="#{user.username} events")
+                        // i.calendar.large.icon
+                        +i name='calendar'
                         span events
-                    a.ui.large.basic.circular.icon.button.select_term.profile_nav_item(href="/user/#{username}/requests" class="{{isActiveRoute 'user_requests'}}" title="#{user.username} requests")
-                        i.large.concierge.bell.icon
+                    a.ui.large.compact.button(href="/user/#{username}/requests" class="{{isActiveRoute 'user_requests'}}" title="#{user.username} requests")
+                        // i.large.concierge.bell.icon
+                        +i name='service-bell'
                         span requests
-                    a.ui.large.basic.circular.icon.button.select_term.profile_nav_item(href="/user/#{username}/offers" class="{{isActiveRoute 'user_offers'}}" title="#{user.username} offers")
-                        i.large.hand.holding.heart.icon
+                    a.ui.large.compact.button(href="/user/#{username}/offers" class="{{isActiveRoute 'user_offers'}}" title="#{user.username} offers")
+                        // i.large.hand.holding.heart.icon
+                        +i name='hand-holding-heart'
                         span offers
-                    a.ui.large.basic.circular.icon.button.select_term.profile_nav_item(href="/user/#{username}/messages" class="{{isActiveRoute 'user_messages'}}" title="#{user.username} messages")
-                        i.chat.large.icon
+                    a.ui.large.compact.button(href="/user/#{username}/messages" class="{{isActiveRoute 'user_messages'}}" title="#{user.username} messages")
+                        // i.chat.large.icon
+                        +i name='chat'
                         span chat
-                    a.ui.large.compact.basic.button(href="/user/#{username}/badges" class="{{isActiveRoute 'user_badges'}}" title="#{user.username} badges")
-                        i.certificate.large.icon
+                    a.ui.large.compact.button(href="/user/#{username}/badges" class="{{isActiveRoute 'user_badges'}}" title="#{user.username} badges")
+                        // i.certificate.large.icon
+                        +i name='prize'
                         span.mobile.hidden badges
                     a.ui.large.compact.basic.circular.icon.button(href="/user/#{username}/genekeys" class="{{isActiveRoute 'user_genekeys'}}" title="#{user.username} genekeys")
-                        i.large.dna.icon
-                        // span genekeys
+                        // i.large.dna.icon
+                        +i name='dna'
+                        span genekeys
                     // .spacer
                     // .spacer
                     if is_dev
                         +print_this
-                    // a.ui.icon.large.button.select_term.no_blink(href="/user/#{username}/" class="{{isActiveRoute 'user_dashboard'}}" title="#{user.username} dashboard")
+                    // a.ui.icon.large.button.no_blink(href="/user/#{username}/" class="{{isActiveRoute 'user_dashboard'}}" title="#{user.username} dashboard")
                     //     // i.large.dashboard.icon
                     //     +i name='dashboard'
                     //     span dashboard
                     // if currentUser
-                    //     a.ui.large.button.select_term.no_blink(href="/user/#{username}/posts" class="{{isActiveRoute 'user_posts'}}" title="#{user.username} posts")
+                    //     a.ui.large.button.no_blink(href="/user/#{username}/posts" class="{{isActiveRoute 'user_posts'}}" title="#{user.username} posts")
                     //         // i.newspaper.large.icon
                     //         +i name='blog'
                     //         |#{user_post_count}
                     //         span posts
-                    //     a.ui.icon.large.button.select_term.no_blink(href="/user/#{username}/credits" class="{{isActiveRoute 'user_credits'}}" title="#{user.username} credits")
+                    //     a.ui.icon.large.button.no_blink(href="/user/#{username}/credits" class="{{isActiveRoute 'user_credits'}}" title="#{user.username} credits")
                     //         // i.large.chevron.down.icon
                     //         +i name='donate'
                     //         span pts received
@@ -308,3 +319,74 @@ template(name='user_events')
                     +author_info
                     +creation_info                        
                         
+                        
+                        
+                        
+template(name='user_messages')
+    .ui.center.aligned.header 
+        i.blue.chat.icon
+        |user messages
+    .ui.stackable.two.column.grid
+        .column
+            if currentUser
+                .ui.fluid.icon.big.input
+                    i.rss.link.submit_public_message.icon
+                    input.new_public_message(type='text' placeholder='new public message...')
+            .ui.small.basic.segments
+                each user_public_messages
+                    .ui.segment.raw
+                        .ui.small.inline.header #{body}
+                        // div
+                        +user_list_toggle key='read_by_ids' label='mark read' icon='eye'
+                        if can_edit
+                            +remove_icon
+                        //- div
+                        if is_admin
+                            +boolean_edit key='is_private' label='private' direct=true
+                        +author_info
+                        +creation_info
+                        +voting_small
+        .column
+            if currentUser
+                .ui.fluid.icon.big.input
+                    i.lock.link.submit_private_message.icon
+                    input.new_private_message(type='text' placeholder='new private message...')
+            .ui.small.basic.segments
+                each user_private_messages
+                    .ui.segment.raw
+                        .ui.small.inline.header #{body}
+                        if is_admin
+                            +boolean_edit key='is_private' label='private' direct=true
+                        if can_edit
+                            +remove_icon
+                        //- div
+                        +author_info
+                        +creation_info
+                        +voting_small
+                        
+                        
+template(name='user_tribes')
+    .ui.inline.header
+        +icolor name='campfire'
+        |user tribes
+    if is_current_user
+        a.ui.circular.basic.icon.button(href="/user/#{current_user.username}/edit/tribes")
+            i.pencil.icon
+    .ui.header leader of
+    each user_leader_tribes
+        .ui.segment
+            a.ui.header(href="/m/tribe/#{_id}/view") #{title}
+            if is_current_user
+                +enter_tribe
+    .ui.header member of
+    each user_member_tribes
+        .ui.segment
+            a.ui.header(href="/m/tribe/#{_id}/view") #{title}
+            if is_current_user
+                +enter_tribe
+            
+            
+            
+template(name='enter_tribe')
+    .ui.button.enter
+        |enter tribe                        
