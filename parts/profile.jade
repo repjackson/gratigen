@@ -58,8 +58,64 @@ template(name='user_layout')
                                 |!{current_status}
                     if is_dev
                         .ui.small.inline.header #{_id}
+                        if i_have_points
+                            .ui.basic.circular.button.send(title='send points')
+                                i.red.gift.large.icon
+                                span send pts
+                            // .ui.basic.circular.button.request(title='request points')
+                            //     i.concierge.bell.large.teal.icon
+                            //     span request
+                        else
+                            .ui.disabled.basic.circular.button(title='send points')
+                                i.red.gift.large.icon
+                                span send pts
+                            // .ui.disabled.basic.circular.button(title='request points')
+                            //     i.concierge.bell.teal.icon
+                            //     span request
+                        a.ui.large.compact.basic.circular.icon.button(href="/user/#{username}/messages" class="{{isActiveRoute 'user_messages'}}" title="#{user.username} messages")
+                            i.chat.large.blue.icon
+                            // | message
+        
+        
                             
                 .twelve.wide.column.scrolling
+                    a.ui.large.basic.circular.icon.button.select_term.profile_nav_item(href="/user/#{username}/" class="{{isActiveRoute 'user_dashboard'}}" title="#{user.username} dashboard")
+                        i.large.dashboard.icon
+                        span dashboard
+                    a.ui.large.basic.circular.icon.button.select_term.profile_nav_item(href="/user/#{username}/about" class="{{isActiveRoute 'user_about'}}" title="#{user.username} info")
+                        i.info.large.icon
+                        span about
+                    a.ui.large.basic.circular.icon.button.select_term.profile_nav_item(href="/user/#{username}/credits" class="{{isActiveRoute 'user_credits'}}" title="#{user.username} credits")
+                        i.large.chevron.down.icon
+                        span pts received
+                    a.ui.large.basic.circular.icon.button.select_term.profile_nav_item(href="/user/#{username}/debits" class="{{isActiveRoute 'user_sent'}}" title="#{user.username} sent")
+                        i.large.gift.icon
+                        span pts sent
+                    a.ui.large.basic.circular.icon.button.select_term.profile_nav_item(href="/user/#{username}/credit" class="{{isActiveRoute 'user_credit'}}" title="#{user.username} credit")
+                        i.large.dollar.icon
+                        span credit
+                    a.ui.large.basic.circular.icon.button.select_term.profile_nav_item(href="/user/#{username}/events" class="{{isActiveRoute 'user_events'}}" title="#{user.username} events")
+                        i.calendar.large.icon
+                        span events
+                    a.ui.large.basic.circular.icon.button.select_term.profile_nav_item(href="/user/#{username}/requests" class="{{isActiveRoute 'user_requests'}}" title="#{user.username} requests")
+                        i.large.concierge.bell.icon
+                        span requests
+                    a.ui.large.basic.circular.icon.button.select_term.profile_nav_item(href="/user/#{username}/offers" class="{{isActiveRoute 'user_offers'}}" title="#{user.username} offers")
+                        i.large.hand.holding.heart.icon
+                        span offers
+                    a.ui.large.basic.circular.icon.button.select_term.profile_nav_item(href="/user/#{username}/messages" class="{{isActiveRoute 'user_messages'}}" title="#{user.username} messages")
+                        i.chat.large.icon
+                        span chat
+                    a.ui.large.compact.basic.button(href="/user/#{username}/badges" class="{{isActiveRoute 'user_badges'}}" title="#{user.username} badges")
+                        i.certificate.large.icon
+                        span.mobile.hidden badges
+                    a.ui.large.compact.basic.circular.icon.button(href="/user/#{username}/genekeys" class="{{isActiveRoute 'user_genekeys'}}" title="#{user.username} genekeys")
+                        i.large.dna.icon
+                        // span genekeys
+                    // .spacer
+                    // .spacer
+                    if is_dev
+                        +print_this
                     // a.ui.icon.large.button.select_term.no_blink(href="/user/#{username}/" class="{{isActiveRoute 'user_dashboard'}}" title="#{user.username} dashboard")
                     //     // i.large.dashboard.icon
                     //     +i name='dashboard'
@@ -74,8 +130,7 @@ template(name='user_layout')
                     //         // i.large.chevron.down.icon
                     //         +i name='donate'
                     //         span pts received
-                
-                    +yield 
+                    +yield    
 
 
            
@@ -169,3 +224,87 @@ template(name='user_dashboard')
                 .medscroll.ui.segments
                     each user_debits
                         +user_debit_segment
+                        
+                        
+template(name='user_friend_button')
+    if is_friend
+        .ui.blue.large.icon.button.unfriend(title='unfriend')
+            i.checkmark.large.icon
+    else
+        .ui.large.icon.button.friend(title='friend')
+            i.user.plus.large.icon
+                        
+                        
+                        
+                        
+template(name='user_badges')
+    .ui.center.aligned.header 
+        +i name='prize'
+        |user badges
+    .ui.small.centered.five.stackable.cards
+        each user_badges
+            a.ui.card(href="/badge/#{_id}")
+                +icolorlg name=icon cl='ui fluid image'
+                .content
+                    .ui.header #{location}: #{title}
+                        
+                        
+template(name='user_events')  
+    .ui.header 
+        +i name='calendar'
+        |user events
+    each user_events
+        .ui.segment
+            .ui.small.header #{date} #{start_time}
+            div
+            +user_list_toggle key='read_by_ids' label='mark read' icon='eye'
+            if can_edit
+                +remove_button
+            //- div
+            +author_info
+            +creation_info
+    .ui.segment
+        .ui.header.pointer.toggle_maybe
+            i.question.orange.icon
+            |maybe
+        if session_is 'view_maybe'
+            each user_maybe_events
+                .ui.segment
+                    a.ui.inline.header(href="/event/#{_id}/") #{title} 
+                    .ui.small.inline.header #{date} #{start_time}
+                    +author_info
+                    +creation_info
+    .ui.segment
+        .ui.header.pointer
+            i.checkmark.icon
+            |went
+        if session_is 'view_maybe'
+            each user_maybe_events
+                .ui.segment
+                    a.ui.inline.header(href="/event/#{_id}/") #{title} 
+                    .ui.small.inline.header #{date} #{start_time}
+                    +author_info
+                    +creation_info
+    .ui.segment
+        .ui.header.pointer
+            i.green.checkmark.icon
+            |going
+        if session_is 'view_maybe'
+            each user_maybe_events
+                .ui.segment
+                    a.ui.inline.header(href="/event/#{_id}/") #{title} 
+                    .ui.small.inline.header #{date} #{start_time}
+                    +author_info
+                    +creation_info
+    .ui.segment
+        .ui.header.pointer
+            i.chess.king.icon
+            |hosted
+        if session_is 'view_maybe'
+            each user_maybe_events
+                .ui.segment
+                    a.ui.inline.header(href="/event/#{_id}/") #{title} 
+                    .ui.small.inline.header #{date} #{start_time}
+                    +author_info
+                    +creation_info                        
+                        

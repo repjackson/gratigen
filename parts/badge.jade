@@ -1,197 +1,148 @@
 template(name='badges')
-    .ui.stackable.padded.grid 
-        .sixteen.wide.column
-            .ui.inline.header 
-                +i name='blog'
-                |badges
-                // if currentUser
-                .ui.icon.button.add_badge
-                    i.plus.large.icon
-            each picked_tags
-                a.ui.blue.button.unpick_badge_tag
-                    |#{this}
-            each tag_results
-                // if title
-                a.ui.compact.button.pick_badge_tag
-                    |#{title} 
-                    // small.ui.grey.text #{count}
+    .ui.stackable.padded.grid
+        .row
+            .four.wide.column
+                .ui.inline.header
+                    i.certificate.icon
+                    |badges
+                .ui.icon.button.add_bug 
+                    i.plus.icon
+                // .ui.header 
+                //     i.grey.users.icon
+                //     |members
+                // each members 
+                //     if image_id
+                //         a(href="/user/#{username}")
+                //             img.ui.tiny.pointer.inline.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}")
+            .twelve.wide.column
+                // .ui.segment
+                //     .ui.big.fluid.input
+                //         input(type='text' placeholder='write something...')
+                .ui.stackable.cards
+                    each badges 
+                        +badge_card
                     
-            .ui.centered.three.stackable.cards
-                each badge_docs 
-                    a.ui.card.fly_right(href="/badge/#{_id}")
-                        if image_id 
-                            +image_view key='image_id' direct=true
-                        .content
-                            .ui.header #{title}
-                            .smallscroll
-                                |!{content}
-                            .ui.label 
-                                i.user.icon
-                                |#{_author_username}
-                            i.tag.icon
-                            each tags 
-                                .ui.basic.label #{this}
-                            |#{when}
 
-
-template(name='set_badge_sort_key')
-    .item.set_sort
-        if color
-            .ui.label(class=color) #{label}
-        else 
-            if emoji
-                em(data-emoji=emoji)
-            else if icon
-                i.icon(class=icon)
-            |#{label}
-        
-        
-                
-template(name='user_badges')
-    .ui.inline.header 
-        +i name='blog'
-        |user badges
-    if is_current_user
-        .ui.basic.icon.button.add_badge
-            i.large.plus.icon
-    .ui.padded.stackable.one.column.grid
-        .column
-            .ui.stackable.cards.scrolling
-                each badge_docs 
-                    .ui.card
-                        .content
-                            a(href="/badge/#{_id}") 
-                                img.ui.image(src="{{c.url image_id width=400 height=300 crop='pad'}}")
-    
-                            .smallscroll 
-                                |!{content}
-                            // |created #{when}
-                            small {{when}}
-                            a.ui.icon.button(href='/badge/#{_id}')
-                                i.large.chevron.right.icon
-                            
-        
-        
-
-template(name='set_view_mode_badge')
-    .item.set_view
-        i.icon(class=icon)
-        |#{title}
-
-
-// template(name='set_limit')
-    .ui.compact.small.basic.button.set_limit #{amount}
 
 
 
 template(name='badge_card')
-    .ui.card.view_badge.pointer
-        img.ui.fluid.rounded.image(src="{{c.url image_id height=200 width=400 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+    a.card(href="/badge/#{_id}")
+        .image
+            img.ui.raw.image(src="{{c.url image_id width=400 height=300 crop='fill'}}")    
         .content
-            a.ui.header(href="/badge/#{_id}") #{title}
-            if private 
-                i.large.lock.icon
-            .ui.small.grey.header #{when}
-            .smallscroll
-                | !{content}
-            // +comments_view_small
-            +author_info
-        
-template(name='badge_item')
-    .ui.fluid.segment.view_badge.pointer
-        a.ui.header(href="/badge/#{_id}") #{title}
-        div
-        .ui.small.grey.inline.header #{when}
-        | #{content}
-        each tags 
-            .ui.basic.small.label #{this}
-        
+            .ui.header
+                |#{title}
+            // i.marker.icon
+            // |#{location} 
+            |!{description}
+            each badgers
+                img.ui.avatar.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}" title=name)
+                // |#{name}
+
 
 template(name='badge_view')
     with current_doc
-        .ui.stackable.grid
+        .ui.stackable.padded.grid
+            .row
+                .sixteen.wide.column
+                    // if can_edit
+                    a.ui.icon.button(href="/badges")
+                        i.big.certificate.icon
+                    +i name=icon cl='ui inline image'
+                    .ui.center.aligned.inline.header 
+                        small viewing badge: 
+                        |#{title}
+                    if can_edit
+                        a.ui.icon.button.edit_badge(href="/badge/#{_id}/edit")
+                            i.big.pencil.big.icon
             .row 
-                .four.wide.column
-                    .ui.basic.segment
-                        .ui.header #{title}
-                        a.ui.circular.button.fly_left(href="/badges")
-                            i.chevron.left.big.icon
-                            i.newspaper.big.icon
-                            |badges
-                        // div
-                        // .ui.inline.grey.header {{from_now start_datetime}}
-                        
-                        if can_edit
-                            a.ui.circular.icon.button.edit_badge(href="/badge/#{_id}/edit" title='edit')
-                                i.big.link.pencil.icon
-                        .ui.segment
-                            .ui.header 
-                                small author
-                            a.ui.header(href="/user/#{_author.username}") 
-                                img.ui.avatar.image(src="{{c.url _author.image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                                |#{_author.username}
-                        .ui.small.grey.header 
-                            i.line.chart.icon
-                            |stats
-                        .ui.list
-                            .item #{views} views
-                        each viewers
-                            .ui.label #{username
-                        +array_view key='tags' label='tags' direct=true
-                        +voting_full
-                        .ui.header #{when}
-                        //- +array_view key='location_tags' label='location_tags' direct=true
-                        +comments
-                .twelve.wide.column.scrolling
-                    img.ui.image(src="{{c.url image_id }}" class=currentUser.invert_class)
-                    // a.ui.header(href="/user/#{target.username}")
-                    //     |#{target.username}
-                    |!{content}
+                .eight.wide.column
+                    .ui.header 
+                        small author
+                    a.ui.header(href="/user/#{_author.username}") 
+                        img.ui.avatar.image(src="{{c.url _author.image_id height=200 width=200 gravity='face' crop='fill'}}")
+                        |#{_author.username}
+                            
+                    +number_view key='bounty' label='bounty' direct=true
+                    +textarea_view key='description' label='description' direct=true
+                    +image_view key='image_id' label='image' direct=true
                     div 
+                    +array_view key='tags' label='tags' direct=true
                     .spacer
                     .spacer
-                    if watson 
-                        +watson_view
-                // .four.wide.column
-                
-                    //- .ui.fluid.green.button.submit
-                    //-     i.checkmark.icon
-                    //-     |submit
+                    +comments
+                    //- +array_view key='location_tags' label='location_tags' direct=true
+                .eight.wide.column
+                    .ui.header 
+                        |badgers
+                    each badgers
+                        a.ui.basic.button(href="/user/#{username}") 
+                            img.ui.avatar.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}")
+                            |#{name}
+        
+                    // .ui.header 
+                    //     +honey_badger
+                    //     |honey badgers
+                    // each honey_badgers
+                    //     a.ui.basic.button(href="/user/#{username}") 
+                    //         img.ui.avatar.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}")
+                    //         |#{name}
+                    // //- .ui.fluid.green.button.submit
+                    // //-     i.checkmark.icon
+                    // //-     |submit
+
 template(name='badge_edit')
     with current_doc
         .ui.stackable.padded.grid
-            .row 
-                .ten.wide.column
-                    .ui.inline.header 
-                        +icolor name='news' cl='ui image inline pointer'
-                        |edit badge
-                    a.ui.icon.green.big.button(href="/badge/#{_id}" title='save')
+            .centered.middle.aligned.row 
+                .sixteen.wide.column
+                    a.ui.green.cicular.icon.button(href="/badge/#{_id}" title='save')
                         i.checkmark.big.icon
-                    +text_edit key='title' label='title' direct=true
-                    +html_edit key='content' label='content' direct=true
-                .six.wide.column
-                    i.large.link.red.remove.icon.delete_badge
-                    .ui.header 
-                        small author
-                        |#{_author.username}
-                    if is_dev
-                        +single_user_edit key='_author_id' label='author' direct=true
+                    .ui.inline.header
+                        small edit badge
+                        |#{title}
+                    i.remove.circular.link.icon.delete_item
+            .row 
+                .eight.wide.column
+                    +text_edit key='title' icon='header' direct=true
+                    +slug_edit key='slug' icon='slug' direct=true
+                    // +text_edit key='location' label='location' icon='marker' direct=true
+                    +i_edit key='icon' label='icon' direct=true
+                    +textarea_edit key='description' label='description' direct=true
                     +image_edit key='image_id' label='image' direct=true
                     div 
-                    +array_edit key='tags' label='tags' direct=true icon='tags'
-                    +boolean_edit key='published' icon='visible' direct=true
-                    if is_dev 
-                        +text_edit key='model' label='model' direct=true
-                    +array_edit key='location_tags' label='location_tags' direct=true
-                    // unless published
-                    //     a.ui.fluid.green.button.submit(href="/save")
-                    //         i.checkmark.icon
-                    //         |publish
-                    // else
-                    //     .ui.basic.button.unpublish 
-                    //         |unpublish
+                    +array_edit key='tags' label='tags' direct=true
+                    //- +array_edit key='location_tags' label='location_tags' direct=true
+                .eight.wide.column
+                    // +boolean_edit key='published' direct=true
                     .ui.header
-                        |audience
-                    +boolean_edit key='private' label='private' 
-                    if private 
-                        +multi_user_edit key='access_user_ids' label='user picker' direct=true
+                        +icolor name='badger'
+                        |badgers
+                    each badgers
+                        a.ui.compact.button(href="/user/#{username}") 
+                            img.ui.avatar.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}")
+                            |#{name}
+                        i.remove.link.icon.remove_badger
+                    .ui.segment
+                        .ui.small.header add badgers
+                        each unselected_badgers
+                            .ui.basic.circular.compact.button.add_badger
+                                img.ui.avatar.circular.compact.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}")
+                                |#{name}
+                    
+                    // .ui.header
+                    //     +honey_badger
+                    //     |honey badgers
+                    // each honey_badgers
+                    //     a.ui.compact.button(href="/user/#{username}") 
+                    //         img.ui.avatar.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}")
+                    //         |#{name}
+                    //     i.remove.link.icon.remove_honey_badger
+                    // .ui.segment
+                    //     .ui.small.header add honey badgers
+                    //     each unselected_honey_badgers
+                    //         .ui.basic.button.add_honey_badger
+                    //             img.ui.avatar.compact.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}")
+                    //             |#{name}
+                    
