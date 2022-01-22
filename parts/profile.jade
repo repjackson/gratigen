@@ -75,6 +75,8 @@ template(name='user_layout')
                         a.ui.large.compact.basic.circular.icon.button(href="/user/#{username}/messages" class="{{isActiveRoute 'user_messages'}}" title="#{user.username} messages")
                             i.chat.large.blue.icon
                             // | message
+                    if is_dev
+                        +print_this
         
         
                             
@@ -119,28 +121,12 @@ template(name='user_layout')
                         // i.certificate.large.icon
                         +i name='prize'
                         span.mobile.hidden badges
-                    a.ui.large.compact.basic.circular.icon.button(href="/user/#{username}/genekeys" class="{{isActiveRoute 'user_genekeys'}}" title="#{user.username} genekeys")
+                    a.ui.large.compact.button(href="/user/#{username}/genekeys" class="{{isActiveRoute 'user_genekeys'}}" title="#{user.username} genekeys")
                         // i.large.dna.icon
                         +i name='dna'
                         span genekeys
                     // .spacer
                     // .spacer
-                    if is_dev
-                        +print_this
-                    // a.ui.icon.large.button.no_blink(href="/user/#{username}/" class="{{isActiveRoute 'user_dashboard'}}" title="#{user.username} dashboard")
-                    //     // i.large.dashboard.icon
-                    //     +i name='dashboard'
-                    //     span dashboard
-                    // if currentUser
-                    //     a.ui.large.button.no_blink(href="/user/#{username}/posts" class="{{isActiveRoute 'user_posts'}}" title="#{user.username} posts")
-                    //         // i.newspaper.large.icon
-                    //         +i name='blog'
-                    //         |#{user_post_count}
-                    //         span posts
-                    //     a.ui.icon.large.button.no_blink(href="/user/#{username}/credits" class="{{isActiveRoute 'user_credits'}}" title="#{user.username} credits")
-                    //         // i.large.chevron.down.icon
-                    //         +i name='donate'
-                    //         span pts received
                     +yield    
 
 
@@ -390,3 +376,244 @@ template(name='user_tribes')
 template(name='enter_tribe')
     .ui.button.enter
         |enter tribe                        
+        
+        
+        
+template(name='user_sent')  
+    .ui.inline.header 
+        i.send.icon
+        |sent
+    .ui.basic.label #{total_debit_amount}p total sent
+    .ui.basic.label(title='debit count') #{debit_count} gifts sent
+    .ui.basic.label(title='rank') ##{global_debit_count_rank} gift sent rank
+        
+    i.tags.icon(title='credit tags')
+    each debit_tags
+        .ui.basic.circular.label #{title}
+            small #{count}
+        
+    .ui.stackable.cards.scrolling
+        each sent_items
+            .ui.card
+                .content
+                    .header
+                        strong #{amount}pt
+                        | to 
+                        if recipient.profile_image_id
+                            img.ui.avatar.image(src="{{c.url recipient.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                        |#{recipient.shortname}
+                    small #{when}
+                    div
+                    |#{description}
+                    div
+                    each tags
+                        .ui.mini.basic.label #{this}        
+                        
+                        
+                        
+// template(name='user_orders')
+//     .ui.inline.header
+//         +icolor name='orders'
+//         |user orders
+//     if is_current_user
+//         a.ui.circular.basic.icon.button(href="/user/#{current_user.username}/edit/orders")
+//             i.pencil.icon
+//     div
+//     +array_view key='allergens' label='allergens'
+//     +array_view key='orders_likes' label='orders likes'
+//     +array_view key='orders_dislikes' label='orders dislikes'
+//     each orders
+//         +user_order_item
+
+
+
+
+
+
+// template(name='user_order_item')
+//     .ui.segment
+//         a.ui.header(href="/m/order/#{_id}/view") #{when}
+//         if charge 
+//             .ui.header charge
+//         if is_dev
+//             |#{charge.result.id}
+//         .ui.header $#{charge.result.amount}
+//         if can_edit 
+//             unless submitted
+//                 +date_edit key='date' label='date' direct=true
+//                 +text_edit key='notes' label='notes' direct=true
+//                 +key_value_edit key='tiffen_type' value='meat' direct=true
+//                 +key_value_edit key='tiffen_type' value='veggie' direct=true
+//                 .ui.green.button.submit_order
+//                     |submit order
+//             else
+//                 +date_view key='date' label='date' direct=true
+//                 +text_view key='notes' label='notes' direct=true
+//                 .ui.large.label
+//                     |tiffen type: #{tiffen_type}
+//                 +boolean_edit key='delivery' label='add delivery' direct=true                    
+//         if is_dev
+//             +remove_button
+//             +print_this   
+            
+            
+            
+template(name='user_offers')  
+    .ui.center.aligned.header 
+        i.hand.holding.heart.icon
+        |user offers
+    .scrolling
+        each offers
+            .ui.segment
+                a.ui.header(href="/m/offer/#{_id}/view") 
+                    |#{title}
+                div
+                    |$#{usd_price}
+                    |#{point_price}pts
+                div
+                | !{description}
+                div
+                if is_admin
+                    +remove_button
+                    +print_this
+                
+                //- div
+                +author_info
+                +creation_info            
+                
+                
+template(name='user_requests')  
+    .ui.center.aligned.header 
+        i.concierge.bell.icon
+        |#{current_user.name} requests
+    .scrolling
+        each requests
+            .ui.segment
+                a.ui.header(href="/m/request/#{_id}/view") #{bounty}pts: #{title}
+                | !{description}
+                div
+                if is_dev
+                    +remove_button
+                    +print_this
+                +creation_info                
+                
+                
+                
+                
+template(name='user_friends')
+    +user_friend_button
+    .ui.stackable.grid
+        .two.column.row
+            .column
+                .ui.small.header connected to
+                .ui.middle.aligned.selection.animated.large.list
+                    each friends
+                        +user_segment
+            .column
+                .ui.small.header connected by
+                .ui.middle.aligned.selection.animated.large.list
+                    each friends_with
+                        +user_segment
+
+
+template(name='user_segment')
+    a.item(href="/user/#{username}")
+        img.ui.avatar.image(src="{{c.url image_id gravity='face' crop='fit'}}")
+        .content
+            .header
+                |#{name}
+                small $#{credit}
+            .description
+                each tags
+                    .ui.basic.label #{this}
+                
+                
+                
+template(name='user_about')
+    .ui.header 
+        i.info.icon
+        |user info
+    with current_user
+        // a.ui.compact.button(href="{{c.url genekeys_profile }}" target="_window")
+        //     +icon name='dna-helix' cl='ui mini image'
+            
+        //     |view gene keys profile
+        .ui.four.column.stackable.grid
+            .column
+                .ui.small.header What do you hope to receive?
+                .smallscroll
+                    |#{profile_hope_receive}
+            .column
+                .ui.small.header What excites you about being apart of this community?
+                .smallscroll
+                    |#{profile_excites_blurb}
+                .spacer
+            .column
+                .ui.small.header What do you want this community to know about you?
+                .smallscroll
+                    |#{profile_community_blurb}
+            .column
+                .ui.small.header What would you like to contribute (think: superpowers, talents, gifts, resources)?
+                .smallscroll
+                    |#{profile_contribute_blurb}
+        if tags 
+            i.large.tags.icon
+            each tags
+                .ui.basic.large.label
+                    |#{this}
+                // +user_info_tag
+        div
+        // .ui.header 
+        //     i.line.chart.icon
+        //     |levels
+        // each levels
+        //     .ui.basic.label #{this}
+        div
+        .ui.header 
+            |city:
+            |#{city}               
+        div
+        .ui.header 
+            |state:
+            |#{state}               
+        div
+        if is_admin
+            .ui.header 
+                i.shield.icon
+                |roles
+            each roles
+                .ui.label #{this}
+            
+
+template(name='user_info_tag')
+    .ui.basic.tertiary.button 
+        // if term 
+        //     if term.image 
+        img.ui.tiny.image(src=term.image)
+        |#{this}
+        
+        
+        
+template(name='user_genekeys')
+    .ui.header 
+        +icolor name='dna-helix'
+        |user genekeys
+    with current_user
+        if genekeys_link
+            a.ui.basic.button(href=genekeys_link target="_window")
+                |view gene keys link
+        .ui.stackable.three.column.grid
+            .column
+                +image_view key='gene1' label='gene keys 1' icon='dna' direct=true
+            .column
+                +image_view key='gene2' label='gene keys 2' icon='dna' direct=true
+            .column
+                +image_view key='gene3' label='gene keys 3' icon='dna' direct=true
+        |!{genekeys_report}
+
+// template(name='user_info_tag')
+//     .ui.basic.tertiary.button 
+//         if term 
+//             if term.image 
+//                 img.ui.tiny.image(src=term.image)
+//         |#{this}        
