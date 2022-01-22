@@ -349,7 +349,7 @@ if Meteor.isServer
 if Meteor.isClient
     Template.chat_list.onCreated ->
         # @autorun => Meteor.subscribe 'my_chats'
-        @autorun => Meteor.subscribe 'docs', selected_tags.array(), 'chat'
+        @autorun => Meteor.subscribe 'docs', picked_tags.array(), 'chat'
     Template.chat_list_item.onCreated ->
         @autorun => Meteor.subscribe 'classroom_docs', @data._id
         @autorun => Meteor.subscribe 'people_list', @data._id

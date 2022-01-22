@@ -1,6 +1,6 @@
-# # @selected_tags = new ReactiveArray []
+# # @picked_tags = new ReactiveArray []
 
-# # @selected_tags = new ReactiveArray []
+# # @picked_tags = new ReactiveArray []
 
 Router.route '/map2', -> @render 'map2'
 Router.route '/mapgl', -> @render 'mapgl'

@@ -1,5 +1,5 @@
 # if Meteor.isClient
-#     # # @selected_tags = new ReactiveArray []
+#     # # @picked_tags = new ReactiveArray []
     
 #     # Router.route '/map', -> @render 'mapgl'
 #     Router.route '/map', -> @render 'localmap'
@@ -531,7 +531,7 @@
 #     #             # map.on('click', onMapClick);
     
     
-#     # # @selected_tags = new ReactiveArray []
+#     # # @picked_tags = new ReactiveArray []
     
     
     

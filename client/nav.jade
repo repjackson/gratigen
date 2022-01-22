@@ -34,7 +34,7 @@ template(name='nav')
             else
                 a.icon.item(href="/inbox" class="{{isActiveRoute 'inbox'}}")
                     i.large.outline.bell.icon
-            a.item.zoomer(href="/comments")
+            a.item.zoomer(href="/chat" class="{{isActiveRoute 'chat'}}")
                 // i.large.inbox.icon
                 +i name='chat'
 
