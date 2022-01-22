@@ -55,7 +55,7 @@ head
 
     
 template(name='full')
-    // img.ui.fluid.image.(src="{{c.url 'cafe'}}")
+    img.ui.fluid.image.checkin_banner(src="{{c.url 'cafe'}}")
     // +nav
     // #man.ui.bottom.attached.pushable.segment
     //     // +topbar
@@ -68,8 +68,8 @@ template(name='full')
     +footer
     
 template(name='layout')
-    // img.ui.fluid.image.(src="{{c.url 'cafe'}}")
     +nav
+    img.ui.fluid.image.home_banner(src="{{c.url 'frontrange'}}")
     // #main.ui.bottom.attached.pushable.segment
     //     +topbar
     //     +left_sidebar

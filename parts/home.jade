@@ -7,13 +7,11 @@ template(name='home')
                         img.ui.tiny.circular.image(src="{{c.url currentUser.image_id width=200 height=200 gravity='face' crop='fill'}}")
                     else
                         i.user.icon
-                    strong #{currentUser.name}
+                    .ui.inline.header #{currentUser.name}
                     strong #{currentUser.points}p
                     div
                     .ui.inline.header #{currentUser.tagline}
                 
-                .ui.header
-                    |#{currentUser.username}
             else 
                 .ui.header 
                     |gratigen
@@ -75,59 +73,76 @@ template(name='home')
                 |projects
             .scrolling
                 each doc_results
-                    a.ui.fluid.card.zoom(href="/#{model}/#{_id}")
-                        .content 
-                            .inline.header #{title}
-                            i.clock.icon
-                            |#{when}
-                        img.ui.image(src="{{c.url image_id width=400 height=400}}")
-                        .content 
-                            .description
-                                if _is 'model' 'post'
-                                    i.newspaper.large.icon
-                                if _is 'model' 'rental'
-                                    +i name='clock'
-                                if _is 'model' 'task'
-                                    +i name='tasks'
-                                    // i.newspaper.large.icon
-                                .ui.label #{model}
-                                .ui.label 
-                                    img.ui.image(src="{{c.url _author.image_id width=400 height=400}}")
-                                    i.user.icon
-                                    |#{_author_username}
-                                if tags 
-                                    each tags 
-                                        .ui.label #{this}
+                    +home_card
+                    
         .four.wide.column
-            +latest_activity
-                
-            .ui.header 
-                i.marker.icon
-                |closest allies
-            .ui.selectable.animated.list 
-                each user_docs 
-                    a.item.fly_right(href="/user/#{username}")
-                        img.ui.avatar.image(src="{{c.url image_id width=400 height=400}}")
-                        |#{username}
-                        if tags 
-                            each tags 
-                                .ui.basic.label #{this}
-            .ui.header open requests
-            each open_requests 
-                a.ui.fluid.card(href="/request/#{_id}")
-                    .content 
-                        .header #{title}
-                        .description
-                            .ui.header #{when}
+            .ui.segment
+                +latest_activity
+            .ui.segment
+                +closest_allies
+            .ui.segment
+                +open_requests
+            
+            
+template(name='closest_allies')
+    .ui.header 
+        +i name='marker'
+        |closest allies
+    .ui.selectable.animated.list.smallscroll
+        each user_docs 
+            a.item.fly_right(href="/user/#{username}")
+                img.ui.avatar.image(src="{{c.url image_id width=400 height=400}}")
+                |#{username}
+                if tags 
+                    each tags 
+                        .ui.basic.label #{this}
+
+template(name='open_requests')
+    .ui.header open requests
+    each open_requests 
+        a.ui.fluid.card(href="/request/#{_id}")
+            .content 
+                .header #{title}
+                .description
+                    .ui.header #{when}
                             
+template(name='home_card')
+    a.ui.fluid.card.zoom(href="/#{model}/#{_id}")
+        .content 
+            .inline.header 
+                if _is 'model' 'post'
+                    i.newspaper.large.icon
+                if _is 'model' 'rental'
+                    +i name='clock'
+                if _is 'model' 'task'
+                    +i name='tasks'
+                |#{title}
+            i.clock.icon
+            |#{when}
+        img.ui.image(src="{{c.url image_id width=400 height=400}}")
+        .content 
+            .description
+                    // i.newspaper.large.icon
+                .ui.label #{model}
+                .ui.label 
+                    img.ui.image(src="{{c.url _author.image_id width=400 height=400}}")
+                    i.user.icon
+                    |#{_author_username}
+                if tags 
+                    each tags 
+                        .ui.label #{this}
                             
                             
 
 template(name='latest_activity')
     .ui.header 
-        i.clock.icon
+        +i name='clock'
         |latest activity
     .ui.selection.animated.list
         each latest_docs 
-            .item #{title}
-                            
+            a.item(href="/#{model}/#{_id}") 
+                .content
+                    img.ui.avatar.image(src="{{c.url image_id width=200 height=200 gravity='face' crop='fill'}}")
+                    .header #{title}
+                    .description
+                        |{{from_now _updated_timestamp}}

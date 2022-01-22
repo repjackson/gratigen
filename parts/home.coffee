@@ -54,5 +54,6 @@ if Meteor.isClient
         doc_results: ->
             Docs.find {},
                 sort:_timestamp:-1
+    Template.closest_allies.helpers 
         user_docs: ->
             Meteor.users.find {}
