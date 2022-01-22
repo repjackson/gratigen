@@ -76,7 +76,7 @@ Template.registerHelper 'cart_product_docs', ()->
 
 Template.registerHelper 'user_from_id', (id)-> Meteor.users.findOne id
 Template.registerHelper '_is', (key,value)-> @["#{key}"] is value
-Template.registerHelper 'skv_is', (key,value)-> Session.equals(key,value)
+Template.registerHelper 'session_is', (key,value)-> Session.equals(key,value)
 
 Template.registerHelper 'lower', (input) ->
     input.toLowerCase()
@@ -153,8 +153,6 @@ Template.registerHelper 'total_potential_revenue', () ->
 # Template.registerHelper 'servings_available', () ->
 #     @price_per_serving * @servings_amount
 
-Template.registerHelper 'session_is', (key, value)->
-    Session.equals(key, value)
 
 Template.registerHelper 'key_value_is', (key, value)->
     # console.log 'key', key
