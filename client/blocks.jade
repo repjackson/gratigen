@@ -97,11 +97,11 @@ template(name='comments')
                     .ui.header #{body}
                     .meta #{when}
                         |by 
-                        // a(href="/user/#{author.username}") #{author.first_name} #{author.last_name}
-                        // if currentUser
-                            // +voting_small
-                            // if can_edit
-                            //     +remove_button
+                        a(href="/user/#{_author.username}") #{_author.name}
+                        if currentUser
+                            +voting_small
+                            if can_edit
+                                +remove_button
                                 
                                 
 template(name='reviews')

@@ -48,12 +48,12 @@ template(name='groups')
 
 
 template(name='group_card')
-    .ui.card
+    .ui.card.zoomer
         if image_id
-            a(href="/group/#{_id}")
+            a.fly_right(href="/group/#{_id}")
                 img.ui.image(src="{{c.url image_id width=400 height=400}}")
         .content
-            a.ui.header(href="/group/#{_id}")
+            a.ui.header.fly_right(href="/group/#{_id}")
                 |#{title}
             |#{member_ids.length} members
             .smallscroll
