@@ -3,9 +3,9 @@ template(name='badges')
         .row
             .four.wide.column
                 .ui.inline.header
-                    i.certificate.icon
+                    +i name='prize'
                     |badges
-                .ui.icon.button.add_bug 
+                .ui.icon.button.add_badge
                     i.plus.icon
                 // .ui.header 
                 //     i.grey.users.icon
@@ -38,7 +38,7 @@ template(name='badge_card')
             |!{description}
             each badgers
                 img.ui.avatar.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}" title=name)
-                // |#{name}
+                |#{name}
 
 
 template(name='badge_view')
@@ -48,14 +48,15 @@ template(name='badge_view')
                 .sixteen.wide.column
                     // if can_edit
                     a.ui.icon.button(href="/badges")
-                        i.big.certificate.icon
+                        i.chevron.left.icon
+                        +i name='prize'
                     +i name=icon cl='ui inline image'
                     .ui.center.aligned.inline.header 
                         small viewing badge: 
                         |#{title}
                     if can_edit
-                        a.ui.icon.button.edit_badge(href="/badge/#{_id}/edit")
-                            i.big.pencil.big.icon
+                        a.ui.icon.large.button.edit_badge(href="/badge/#{_id}/edit")
+                            i.big.pencil.big.blue.icon
             .row 
                 .eight.wide.column
                     .ui.header 
@@ -75,9 +76,10 @@ template(name='badge_view')
                     //- +array_view key='location_tags' label='location_tags' direct=true
                 .eight.wide.column
                     .ui.header 
+                        +i name='badger'
                         |badgers
                     each badgers
-                        a.ui.basic.button(href="/user/#{username}") 
+                        a.ui.button(href="/user/#{username}") 
                             img.ui.avatar.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}")
                             |#{name}
         
@@ -97,7 +99,7 @@ template(name='badge_edit')
         .ui.stackable.padded.grid
             .centered.middle.aligned.row 
                 .sixteen.wide.column
-                    a.ui.green.cicular.icon.button(href="/badge/#{_id}" title='save')
+                    a.ui.green.cicular.icon.big.button.fly_left(href="/badge/#{_id}" title='save')
                         i.checkmark.big.icon
                     .ui.inline.header
                         small edit badge
@@ -107,17 +109,18 @@ template(name='badge_edit')
                 .eight.wide.column
                     +text_edit key='title' icon='header' direct=true
                     +slug_edit key='slug' icon='slug' direct=true
-                    // +text_edit key='location' label='location' icon='marker' direct=true
-                    +i_edit key='icon' label='icon' direct=true
+                    +icon_edit key='icon' label='icon' direct=true
                     +textarea_edit key='description' label='description' direct=true
                     +image_edit key='image_id' label='image' direct=true
                     div 
                     +array_edit key='tags' label='tags' direct=true
-                    //- +array_edit key='location_tags' label='location_tags' direct=true
+                    +text_edit key='location' label='location' icon='marker' direct=true
+                    +array_edit key='location_tags' label='location_tags' direct=true
+                    +boolean_edit key='published' direct=true
+                    +group_picker
                 .eight.wide.column
-                    // +boolean_edit key='published' direct=true
                     .ui.header
-                        +icolor name='badger'
+                        +i name='badger'
                         |badgers
                     each badgers
                         a.ui.compact.button(href="/user/#{username}") 
