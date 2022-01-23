@@ -103,6 +103,7 @@ Docs.helpers
     when: -> moment(@_timestamp).fromNow()
     ten_tags: -> if @tags then @tags[..10]
     five_tags: -> if @tags then @tags[..4]
+    seven_tags: -> if @tags then @tags[..7]
     three_tags: -> if @tags then @tags[..2]
     is_visible: -> @published in [0,1]
     # is_published: -> @published is 1

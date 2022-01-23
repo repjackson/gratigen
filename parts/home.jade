@@ -78,7 +78,7 @@ template(name='home')
                     +home_card
                     
         .four.wide.column
-            .ui.segment
+            .ui.segment.smallscroll
                 +latest_activity
             .ui.segment
                 +closest_allies
@@ -122,6 +122,8 @@ template(name='open_requests')
                             
 template(name='home_card')
     a.ui.fluid.card.zoom(href="/#{model}/#{_id}")
+        if youtube_id 
+            +youtube_view key='youtube_id' direct=true
         .content 
             .inline.header 
                 if _is 'model' 'post'
@@ -132,6 +134,7 @@ template(name='home_card')
                     +i name='tasks'
                 if _is 'model' 'group'
                     +i name='campfire'
+                // .ui.label #{model}
                 |#{title}
             i.clock.icon
             |#{when}
@@ -139,14 +142,13 @@ template(name='home_card')
         .content 
             .description
                     // i.newspaper.large.icon
-                .ui.label #{model}
-                .ui.label 
+                .ui.image.large.label 
                     img.ui.image(src="{{c.url _author.image_id width=400 height=400}}")
-                    i.user.icon
+                    // i.user.icon
                     |#{_author_username}
                 if tags 
-                    each tags 
-                        .ui.label #{this}
+                    each seven_tags 
+                        .ui.basic.label #{this}
                             
                             
 

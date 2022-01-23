@@ -18,6 +18,7 @@ if Meteor.isServer
         Docs.find {_updated_timestamp:$exists:true},
             sort:
                 _updated_timestamp:-1
+            limit:10
         
 if Meteor.isClient
     Template.online_users.onCreated ->
@@ -63,7 +64,7 @@ if Meteor.isClient
 
     Template.home.helpers 
         doc_results: ->
-            Docs.find {},
+            Docs.find {model:$ne:'comment'},
                 sort:_timestamp:-1
     Template.closest_allies.helpers 
         user_docs: ->
