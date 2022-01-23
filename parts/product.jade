@@ -341,6 +341,38 @@ template(name='product_edit')
                                 
                                 
                                 
+template(name='group_picker')
+    .ui.header 
+        +i name='campfire'
+        |groups
+    // if is_admin
+    .ui.icon.large.input 
+        if group_search_value
+            i.large.red.remove.link.icon.zoomer.clear_search
+        else 
+            i.search.icon
+        input.group_search(type='text' placeholder='search' value=group_search_value)
+    if group_results
+        .ui.selection.link.animated.list
+            each group_results
+                .ui.item.pick_group.zoomer
+                    img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+                    |#{title}
+    // else if group_search_value
+    .ui.button.create_group
+        |add #{group_search_value}
+    
+    if product_groups
+        .ui.header 
+            |#{product_groups.length}
+            |picked groups
+        .ui.list
+            each product_groups
+                .ui.item
+                    |#{title}
+                    i.remove.link.icon.zoomer.remove_group
+
+                            
 template(name='ingredient_picker')
     .ui.header 
         +i name='ingredients'

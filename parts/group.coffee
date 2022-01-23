@@ -7,7 +7,7 @@ Router.route '/group/:doc_id', (->
 
 if Meteor.isClient
     Template.groups_small.onCreated ->
-        @autorun => Meteor.subscribe 'model_docs', 'group', 
+        @autorun => Meteor.subscribe 'model_docs', 'group', ->
     Template.groups_small.helpers
         group_docs: ->
             Docs.find   

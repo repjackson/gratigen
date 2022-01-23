@@ -12,13 +12,13 @@ template(name='nav')
             // i.large.home.icon
             span.mobile.hidden gratigen
             
-        .search.item.zoomer.mobile.hidden(title='search')
-            .ui.icon.transparent.input
-                if current_product_search
-                    i.remove.large.red.link.icon.clear_search
-                else
-                    i.search.large.icon
-                input.search_products(type='text' autocomplete="off" value=current_product_search)
+        // .search.item.zoomer.mobile.hidden(title='search')
+        //     .ui.icon.transparent.input
+        //         if current_product_search
+        //             i.remove.large.red.link.icon.clear_search
+        //         else
+        //             i.search.large.icon
+        //         input.search_products(type='text' autocomplete="off" value=current_product_search)
         .right.menu
             if unread_count
                 a.item.alerts.select_term(href="#" class=alert_toggle_class)
@@ -69,36 +69,47 @@ template(name='nav')
         a.icon.item.zoomer(href="/transfers" class="{{isActiveRoute 'transfers'}}")
             // i.large.inbox.icon
             +i name='exchange'
+            span.mobile.hidden transfers
         a.icon.item.zoomer(href="/posts" class="{{isActiveRoute 'posts'}}")
             // i.large.inbox.icon
             +i name='blog'
-        a.icon.disabled.item.zoomer(href="/map")
+            span.mobile.hidden blog
+        a.icon.disabled.item.zoomer(href="/map" class="{{isActiveRoute 'map'}}")
             // i.large.inbox.icon
             +i name='map'
+            span.mobile.hidden map
         a.icon.item.zoomer(href="/tasks" class="{{isActiveRoute 'tasks'}}")
             // i.large.inbox.icon
             +i name='tasks'
+            span.mobile.hidden tasks
         a.icon.item.zoomer(href="/events" class="{{isActiveRoute 'events'}}")
             // i.large.inbox.icon
             +i name='calendar'
+            span.mobile.hidden events
         a.icon.item.zoomer(href="/groups" class="{{isActiveRoute 'groups'}}")
             // i.large.inbox.icon
             +i name='campfire'
+            span.mobile.hidden groups
         a.icon.item.zoomer(href="/requests" class="{{isActiveRoute 'requests'}}")
             // i.large.inbox.icon
             +i name='hand-holding-heart'
+            span.mobile.hidden requests
         a.icon.disabled.item.zoomer(href="/food" class="{{isActiveRoute 'food'}}")
             // i.large.inbox.icon
             +i name='food'
+            span.mobile.hidden food
         a.icon.item.zoomer(href="/badges" class="{{isActiveRoute 'badges'}}")
             // i.large.inbox.icon
             +i name='prize'
+            span.mobile.hidden badges
         a.icon.item.zoomer(href="/users" class="{{isActiveRoute 'users'}}")
             // i.large.inbox.icon
             +i name='groups'
-        a.item.zoomer(href="/rentals")
+            span.mobile.hidden users
+        a.item.zoomer(href="/rentals" class="{{isActiveRoute 'rentals'}}")
             // i.large.inbox.icon
             +i name='clock'
+            span.mobile.hidden rentals
 
                     
 template(name='topbar')

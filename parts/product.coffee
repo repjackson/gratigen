@@ -451,10 +451,10 @@ if Meteor.isClient
 
 
 if Meteor.isServer 
-    Meteor.publish 'ingredient_search_results', (ingredient_title_queary)->
+    Meteor.publish 'ingredient_search_results', (ingredient_title_query)->
         Docs.find 
             model:'ingredient'
-            title: {$regex:"#{ingredient_title_queary}",$options:'i'}
+            title: {$regex:"#{ingredient_title_query}",$options:'i'}
     Meteor.publish 'product_orders', (product_id)->
         product = Docs.findOne product_id
         # console.log 'finding mishi for', product

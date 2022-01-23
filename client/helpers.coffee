@@ -357,7 +357,7 @@ Template.registerHelper 'editing_doc', () ->
 
 Template.registerHelper 'can_edit', () ->
     if Meteor.user()
-        Meteor.userId() is @_author_id or 'admin' in Meteor.user().roles
+        Meteor.userId() is @_author_id or Meteor.user().admin
     # Meteor.user()
 Template.registerHelper 'publish_when', () -> moment(@publish_date).fromNow()
 Template.registerHelper 'ingredient_products', () -> 

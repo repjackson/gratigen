@@ -125,11 +125,13 @@ template(name='home_card')
         .content 
             .inline.header 
                 if _is 'model' 'post'
-                    i.newspaper.large.icon
+                    +i name='blog'
                 if _is 'model' 'rental'
                     +i name='clock'
                 if _is 'model' 'task'
                     +i name='tasks'
+                if _is 'model' 'group'
+                    +i name='campfire'
                 |#{title}
             i.clock.icon
             |#{when}

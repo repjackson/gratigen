@@ -142,24 +142,26 @@ template(name='group_edit')
     with current_doc
         .ui.stackable.padded.grid
             .row
-                .four.wide.column
+                .five.wide.column
                     .ui.header 
                         |edit group
                     a.ui.big.icon.fluid.green.button(href="/group/#{_id}" title='save')
                         i.checkmark.large.icon
                     +remove_button
                     +image_edit key='image_id' label='image' direct=true
-                .eight.wide.column 
+                    +link_edit key='link' label='link' direct=true
+                .six.wide.column 
                     +text_edit key='title' direct=true
                     +html_edit key='description' label='content' icon='content' direct=true
-                .four.wide.column
+                .five.wide.column
                     +single_user_edit key='leader' label='leader' icon='crown' direct=true
                     +array_edit key='tags' label='tags' icon='tags' direct=true
                     +array_edit key='location_tags' label='location tags' icon='marker' direct=true
                     +text_edit key='contact_info' label='contact info' icon='info' direct=true
                     +multi_user_edit key='member_ids' label='members' direct=true
                     +boolean_edit key='private' label='private' direct=true
-                    
+                    +multi_user_edit key='leader_ids' label='tribe leaders' direct=true
+
                     
 template(name='group_view')
     with current_doc
@@ -172,8 +174,7 @@ template(name='group_view')
                         |#{title}
                     a.ui.circular.basic.button(href="/groups")
                         i.left.chevron.icon
-                        i.big.user.circle.icon
-                        // +i name='groups' cl='ui mini inline image'
+                        +i name='campfire' cl='ui mini inline image'
                         |groups
                     if can_edit
                         a.ui.circular.basic.icon.button(href="/group/#{_id}/edit")
@@ -188,15 +189,18 @@ template(name='group_view')
                         .spacer
                     div
                     .spacer
-                    a.ui.compact.basic.circular.button(href=address_link target='_window')
-                        i.marker.icon
-                        |#{address}
+                    if address
+                        a.ui.compact.basic.circular.button(href=address_link target='_window')
+                            i.marker.icon
+                            |#{address}
                     +viewing
                     if in_dev 
                         +print_this
                     +multi_user_view key='member_ids' label='members' direct=true
-                        
-                .six.wide.column
+                    +group_history
+                    +group_subscription
+
+                .five.wide.column
                     +html_view key='description' icon='content' label='description'
                     .ui.inline.header 
                         +i name='crown' cl='ui avatar image'
@@ -216,7 +220,7 @@ template(name='group_view')
                             //     .content
                             //         .header
                             //             |#{username}
-                .four.wide.column
+                .five.wide.column
                     if is_member
                         .ui.button.leave(title='click to leave')
                             i.checkmark.icon
