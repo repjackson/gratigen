@@ -1,3 +1,29 @@
+template(name='products')
+    .ui.stackable.padded.grid 
+        .four.wide.column
+            .ui.inline.header 
+                +i name='blog'
+                |products
+                // if currentUser
+                +add_model_button model='product'
+            each picked_tags
+                a.ui.blue.button.unpick_product_tag
+                    |#{this}
+            each tag_results
+                // if title
+                a.ui.compact.button.pick_product_tag
+                    |#{title} 
+                    // small.ui.grey.text #{count}
+                    
+        .twelve.wide.column
+            .ui.centered.stackable.cards
+                each product_docs 
+                    +product_card
+                    
+
+
+
+
 template(name='product_view')
     with current_doc
         .ui.stackable.padded.three.column.grid

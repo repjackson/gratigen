@@ -59,7 +59,7 @@ template(name='group_card')
             .smallscroll
                 |!{description}
             //+ismall name='tags' cl='ui inline image'
-            each tags
+            each ten_tags
                 .ui.basic.label #{this}
             a.zoomer(href="/group/#{_id}")
                 i.chevron.right.large.circular.icon
@@ -72,40 +72,6 @@ template(name='group_card')
                     
 
 
-// template(name='group_view')
-//     with current_doc
-//         .ui.stackable.padded.grid
-//             .row
-//                 .four.wide.column 
-//                     a.ui.fluid.basic.button(href="/groups")
-//                         i.left.chevron.icon
-//                         +i name='wrench' cl='ui inline avatar image'
-//                         |groups
-//                     .ui.header view group
-//                     if can_edit
-//                         a.ui.big.icon.button(href="/group/#{_id}/edit")
-//                             i.pencil.large.icon
-//                     +image_view key='image_id' label='image' direct=true
-//                     +voting_full
-//                     +viewing
-//                     +multi_user_view key='member_ids'
-//                     if in_dev 
-//                         +print_this
-//                 .eight.wide.column
-//                     .ui.header #{title} 
-//                     +textarea_view key='description' icon='content' label='description' direct=true
-//                     +array_view key='location_tags' label='location tags' icon='marker' direct=true
-//                     +array_view key='tags' label='tags' icon='tags' direct=true
-//                     +text_view key='contact_info' label='contact info' icon='info' direct=true
-//                     div
-//                     +comments
-//                 .four.wide.column 
-//                     div
-//                     +group_history
-//                     //- +group_subscription
-//                     //- +multi_user_view key='associated_members' label='associated members' icon='groups' direct=true
-
-                    
                 
 template(name='group_history')
     +ismall name='rss'
@@ -142,7 +108,7 @@ template(name='group_edit')
     with current_doc
         .ui.stackable.padded.grid
             .row
-                .five.wide.column
+                .five.wide.column.scrolling
                     .ui.header 
                         |edit group
                     a.ui.big.icon.fluid.green.button(href="/group/#{_id}" title='save')
@@ -150,10 +116,10 @@ template(name='group_edit')
                     +remove_button
                     +image_edit key='image_id' label='image' direct=true
                     +link_edit key='link' label='link' direct=true
-                .six.wide.column 
+                .six.wide.column.scrolling
                     +text_edit key='title' direct=true
                     +html_edit key='description' label='content' icon='content' direct=true
-                .five.wide.column
+                .five.wide.column.scrolling
                     +single_user_edit key='leader' label='leader' icon='crown' direct=true
                     +array_edit key='tags' label='tags' icon='tags' direct=true
                     +array_edit key='location_tags' label='location tags' icon='marker' direct=true
@@ -167,7 +133,7 @@ template(name='group_view')
     with current_doc
         .ui.stackable.padded.grid
             .row
-                .six.wide.center.aligned.column
+                .six.wide.column
                     .ui.header 
                         if icon
                             +i name=icon

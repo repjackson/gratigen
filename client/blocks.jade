@@ -480,9 +480,10 @@ template(name='view_user_button')
         |View
 
 template(name='add_model_button')
-    .ui.icon.button.add(title="add #{model}")
-        i.plus.icon
-        |#{model}
+    .ui.icon.button.add_product(title="add #{model}")
+        i.plus.large.icon
+        if label
+            |#{model}
 
 
             

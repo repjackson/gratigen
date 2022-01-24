@@ -6,9 +6,7 @@ template(name='events')
                     // i.calendar.icon
                     +i name='calendar'
                     |events
-                if currentUser
-                    .ui.circular.basic.icon.button.add_event(title='add event')
-                        i.plus.big.green.icon
+                +add_model_button model='event'
                 .ui.large.basic.circular.button.toggle_past
                     if viewing_past
                         i.checkmark.large.green.icon
@@ -115,7 +113,7 @@ template(name='event_edit')
                     +single_user_edit key='host_id' label='host' icon='shield' direct=true
                     div 
                     +array_edit key='tags' label='tags' icon='red tags' direct=true
-                .ten.wide.column
+                .ten.wide.column.scrolling
                     .ui.header
                         i.users.icon
                         |audience

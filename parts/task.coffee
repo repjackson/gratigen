@@ -20,10 +20,6 @@ if Meteor.isClient
             Session.get('task_title_filter')
 
     Template.tasks.events
-        'click .add_task': ->
-            new_id = Docs.insert 
-                model:'task'
-            Router.go "/task/#{new_id}/edit"    
         'click .pick_task_tag': -> picked_tags.push @title
         'click .unpick_task_tag': -> picked_tags.remove @valueOf()
 

@@ -92,15 +92,7 @@ if Meteor.isClient
                 Session.set('viewing_room_id', null)
             else
                 Session.set('viewing_room_id', @_id)
-        'click .add_event': ->
-            new_id = 
-                Docs.insert 
-                    model:'event'
-                    published:false
-                    # purchased:false
-            Router.go "/event/#{new_id}/edit"
-            
-            
+        
     Template.events.helpers
         rooms: ->
             Docs.find 

@@ -6,8 +6,7 @@ template(name='tasks')
                 +i name='tasks'
                 |tasks
             div
-            if currentUser
-                i.plus.large.link.circular.icon.add_task
+            +add_model_button model='task'
             .ui.inline.small.header 
                 i.user.friends.icon
                 |authors

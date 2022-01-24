@@ -331,7 +331,8 @@ template(name='latest_user_activity')
                 .content
                     .header #{title}
                     .description
-                        |{{from_now _updated_timestamp}}
+                        |{{from_now _updated_timestamp}} 
+                        .ui.basic.label #{model}
 
 
 

@@ -11,7 +11,11 @@ template(name='nav')
             +i name='network'
             // i.large.home.icon
             span.mobile.hidden gratigen
-            
+        a.icon.item.zoomer(href="/users" class="{{isActiveRoute 'users'}}")
+            // i.large.inbox.icon
+            +i name='groups'
+            span.mobile.hidden users
+
         .search.item.zoomer.mobile.hidden(title='search')
             .ui.icon.transparent.input
                 if current_product_search
@@ -66,6 +70,10 @@ template(name='nav')
             if session_is 'viewing_alerts'
                 +topbar
     .ui.attached.inverted.small.borderless.menu.hscroll
+        a.icon.item.zoomer(href="/products" class="{{isActiveRoute 'products'}}")
+            // i.large.inbox.icon
+            +i name='shop'
+            span.mobile.hidden products
         a.icon.item.zoomer(href="/transfers" class="{{isActiveRoute 'transfers'}}")
             // i.large.inbox.icon
             +i name='exchange'
@@ -110,10 +118,6 @@ template(name='nav')
             // i.large.inbox.icon
             +i name='prize'
             span.mobile.hidden badges
-        a.icon.item.zoomer(href="/users" class="{{isActiveRoute 'users'}}")
-            // i.large.inbox.icon
-            +i name='groups'
-            span.mobile.hidden users
         a.item.zoomer(href="/rentals" class="{{isActiveRoute 'rentals'}}")
             // i.large.inbox.icon
             +i name='clock'

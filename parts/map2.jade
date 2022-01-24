@@ -1,85 +1,85 @@
-// template(name='map')
-//     .ui.segment
-//         .ui.header.mapbox map  
-//         // #map
-//         // .ui.fluid.button.refresh
-//         //     i.marker.icon
-//         //     |reload location data
-//         // #mapid
-//         // unless pos
-//         // .ui.one.column.padded.grid
-//         //     .column
-//         //         .ui.center.aligned.header People Near You: #{my_longform} (#{my_category})
-//         //         .ui.four.column.stackable.padded.centered.grid
-//         //             each nearby_people
-//         //                 +nearby_person
-template(name='map2')
-    .ui.padded.grid
-        .sixteen.wide.column
-            .ui.inline.header map
-            .ui.disabled.button.init 
-                i.checkmark.icon
-                |init
-            a.ui.big.button(href='/mapgl')
-                i.globe.icon
-                |map gl
-            i.minus.circular.link.icon.zoomout(title='zoom out')
-            .ui.labeled.input(title='zoom')
-                input.zoom_level(type='number' value=current_zoom_level min='0' max='25')
-            i.plus.circular.link.icon.zoomin(title='zoom in')
+// // template(name='map')
+// //     .ui.segment
+// //         .ui.header.mapbox map  
+// //         // #map
+// //         // .ui.fluid.button.refresh
+// //         //     i.marker.icon
+// //         //     |reload location data
+// //         // #mapid
+// //         // unless pos
+// //         // .ui.one.column.padded.grid
+// //         //     .column
+// //         //         .ui.center.aligned.header People Near You: #{my_longform} (#{my_category})
+// //         //         .ui.four.column.stackable.padded.centered.grid
+// //         //             each nearby_people
+// //         //                 +nearby_person
+// template(name='map2')
+//     .ui.padded.grid
+//         .sixteen.wide.column
+//             .ui.inline.header map
+//             .ui.disabled.button.init 
+//                 i.checkmark.icon
+//                 |init
+//             a.ui.big.button(href='/mapgl')
+//                 i.globe.icon
+//                 |map gl
+//             i.minus.circular.link.icon.zoomout(title='zoom out')
+//             .ui.labeled.input(title='zoom')
+//                 input.zoom_level(type='number' value=current_zoom_level min='0' max='25')
+//             i.plus.circular.link.icon.zoomin(title='zoom in')
                 
-            .ui.button.draw  
-                i.pencil.icon
-                |draw map
-            .ui.button.click_markers  
-                i.marker.icon
-                |clickable markers
-            .ui.button.add_marker  
-                i.plus.icon
-                |add marker
-            .ui.button.find_me  
-                i.marker.icon
-                |find me
-            .ui.button.add_legend
-                |legend
-            .ui.button.add_circle
-                i.circle.icon
-                |circle
-            .ui.button.toggle_moving
-                if can_move
-                    i.chevron.right.icon
-                    |movable
-                else
-                    i.lock.icon
-                    |locked
-            .ui.input
-                input.add_place(type='text' placeholder='add geocoded place')
-            each current_markers
-                .ui.label 
-                    i.remove.icon
-                    |#{this}
-            #map
+//             .ui.button.draw  
+//                 i.pencil.icon
+//                 |draw map
+//             .ui.button.click_markers  
+//                 i.marker.icon
+//                 |clickable markers
+//             .ui.button.add_marker  
+//                 i.plus.icon
+//                 |add marker
+//             .ui.button.find_me  
+//                 i.marker.icon
+//                 |find me
+//             .ui.button.add_legend
+//                 |legend
+//             .ui.button.add_circle
+//                 i.circle.icon
+//                 |circle
+//             .ui.button.toggle_moving
+//                 if can_move
+//                     i.chevron.right.icon
+//                     |movable
+//                 else
+//                     i.lock.icon
+//                     |locked
+//             .ui.input
+//                 input.add_place(type='text' placeholder='add geocoded place')
+//             each current_markers
+//                 .ui.label 
+//                     i.remove.icon
+//                     |#{this}
+//             #map
         
-template(name='mapgl')
-    .ui.segment
-        a.ui.icon.button.locate(title='locate me')
-            i.refresh.large.icon
-            |refresh map
+// template(name='mapgl')
+//     .ui.segment
+//         a.ui.icon.button.locate(title='locate me')
+//             i.refresh.large.icon
+//             |refresh map
 
-    #mapgl
-    .ui.header 
-        |map posts
-    .ui.header 
-        |nearby posts
-    .ui.four.stackable.cards.list
-        each post_docs
-            .card
-                img.ui.image.pick_post.pointer.zoomer(src="{{c.url image_id width=400 height=400}}")
-                .content
-                    a.header.pick_post.zoomer #{title}
-                    .description
-                        .ui.label #{location}
-                        each locaation_tags
-                            .ui.label #{this}
-                        a.ui.compact.button(href="/post/#{_id}")
-                            |view
+//     #mapgl
+//     .ui.header 
+//         |map posts
+//     .ui.header 
+//         |nearby posts
+//     .ui.four.stackable.cards.list
+//         each post_docs
+//             .card
+//                 img.ui.image.pick_post.pointer.zoomer(src="{{c.url image_id width=400 height=400}}")
+//                 .content
+//                     a.header.pick_post.zoomer #{title}
+//                     .description
+//                         .ui.label #{location}
+//                         each locaation_tags
+//                             .ui.label #{this}
+//                         a.ui.compact.button(href="/post/#{_id}")
+//                             |view

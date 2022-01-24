@@ -254,6 +254,16 @@ if Meteor.isClient
     # Template.username_info.helpers
     #     user: -> Meteor.users.findOne username:@valueOf()
 
+    Template.add_model_button.events        
+        'click .add_doc': ->
+            new_id = 
+                Docs.insert 
+                    model:@model
+                    published:false
+                    # purchased:false
+            Router.go "/#{@model}/#{new_id}/edit"
+            
+            
 
 
 
