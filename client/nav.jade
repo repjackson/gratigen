@@ -12,13 +12,13 @@ template(name='nav')
             // i.large.home.icon
             span.mobile.hidden gratigen
             
-        // .search.item.zoomer.mobile.hidden(title='search')
-        //     .ui.icon.transparent.input
-        //         if current_product_search
-        //             i.remove.large.red.link.icon.clear_search
-        //         else
-        //             i.search.large.icon
-        //         input.search_products(type='text' autocomplete="off" value=current_product_search)
+        .search.item.zoomer.mobile.hidden(title='search')
+            .ui.icon.transparent.input
+                if current_product_search
+                    i.remove.large.red.link.icon.clear_search
+                else
+                    i.search.large.icon
+                input.search_site(type='text' autocomplete="off" value=current_product_search)
         .right.menu
             if unread_count
                 a.item.alerts.select_term(href="#" class=alert_toggle_class)
@@ -90,6 +90,14 @@ template(name='nav')
             // i.large.inbox.icon
             +i name='campfire'
             span.mobile.hidden groups
+        a.icon.item.zoomer(href="/services" class="{{isActiveRoute 'services'}}")
+            // i.large.inbox.icon
+            +i name='wrench'
+            span.mobile.hidden services
+        a.icon.item.zoomer(href="/projects" class="{{isActiveRoute 'projects'}}")
+            // i.large.inbox.icon
+            +i name='project'
+            span.mobile.hidden projects
         a.icon.item.zoomer(href="/requests" class="{{isActiveRoute 'requests'}}")
             // i.large.inbox.icon
             +i name='hand-holding-heart'

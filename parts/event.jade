@@ -99,7 +99,7 @@ template(name='event_edit')
                     .ui.header 
                         small author
                         |#{_author.name}
-                    // +slug_edit key='slug' label='slug' icon='slug' direct=true
+                    +slug_edit key='slug' label='slug' icon='slug' direct=true
                     // if reservation_exists
                     //     .ui.header date: #{date}
                     //     .ui.header time: #{time}
@@ -107,7 +107,8 @@ template(name='event_edit')
                     +datetime_edit key='start_datetime' label='start datetime' direct=true
                     +datetime_edit key='end_datetime' label='end datetime' direct=true
                     // +time_edit key='time' label='time' direct=true
-                    // +number_edit key='hour_duration' label='hours' direct=true
+                    +number_edit key='hour_duration' label='hours' direct=true
+                    +text_edit key='location' label='location' direct=true
                     // +range_edit label='time range' direct=true
                     // +single_user_edit key='facilitator_id' label='facilitator' icon='chess king' direct=true
                     // +single_user_edit key='support_id' label='support' icon='chess queen' direct=true
@@ -142,7 +143,7 @@ template(name='reserve_button')
         //     .ui.green.button.buy_slot buy slot #{slot}
         //     .ui.green.button.request_slot request for points
         // else
-        .ui.green.button.reserve_slot reserve slot #{slot}
+        .ui.green.fluid.button.reserve_slot reserve slot #{slot}
         
         
         
@@ -175,8 +176,6 @@ template(name='event_view')
                     if location 
                         i.large.marker.icon(title='location')
                         |#{location}
-                    a(href="{{c.url image_id }}")
-                        img.ui.fluid.rounded.image(src="{{c.url image_id }}" class=currentUser.invert_class)
                     .spacer
                     // a(href="/m/room/#{event_room._id}")
                     //     img.ui.small.circular.inline.image.pointer.zoom(src="{{c.url event_room.image_id }}" class=currentUser.invert_class)
@@ -222,6 +221,8 @@ template(name='event_view')
                         +voting_full
                     +array_view key='location_tags' label='location tags' icon='marker' direct=true
                 .eight.wide.column.scrollin
+                    a(href="{{c.url image_id }}")
+                        img.ui.fluid.rounded.image(src="{{c.url image_id }}" class=currentUser.invert_class)
                     // a.ui.header(href="/user/#{target.username}")
                     //     |#{target.username}
                     // .scrolling
@@ -258,8 +259,8 @@ template(name='event_view')
                                         i.undo.icon
                                         |return
                     unless my_ticket
-                        .ui.green.button.buy_ticket
-                            |buy ticket #{price_points}p
+                        .ui.green.fluid.button.buy_ticket
+                            |buy ticket #{price}p
                     .spacer
                     .spacer
                     .ui.dividing.header
@@ -270,7 +271,7 @@ template(name='event_view')
                             .comment
                                 a.avatar(href="/user/#{_author.username}") 
                                     img(src="{{c.url _author.image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                                a.content(href="/m/ticket/#{_id}")
+                                a.content(href="/order/#{_id}")
                                     a.author(href="/user/#{_author.username}") 
                                         |#{_author.name}
                                     .metadata

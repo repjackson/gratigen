@@ -23,8 +23,8 @@ if Meteor.isClient
     Template.registerHelper 'my_ticket', () ->    
         event = Docs.findOne @_id
         Docs.findOne
-            model:'transaction'
-            transaction_type:'ticket_purchase'
+            model:'order'
+            order_type:'ticket_purchase'
             event_id:@_id
             _author_id:Meteor.userId()
    
@@ -37,8 +37,8 @@ if Meteor.isClient
         event = Docs.findOne @_id
         event_tickets = 
             Docs.find(
-                model:'transaction'
-                transaction_type:'ticket_purchase'
+                model:'order'
+                order_type:'ticket_purchase'
                 event_id: @_id
                 ).fetch()
         going_user_ids = []
@@ -58,8 +58,8 @@ if Meteor.isClient
 
     Template.registerHelper 'event_tickets', () ->
         Docs.find 
-            model:'transaction'
-            transaction_type:'ticket_purchase'
+            model:'order'
+            order_type:'ticket_purchase'
             event_id: Router.current().params.doc_id
 
 
@@ -424,9 +424,8 @@ if Meteor.isClient
         @autorun => Meteor.subscribe 'author_by_doc_id', Router.current().params.doc_id
         # @autorun => Meteor.subscribe 'author_by_doc_slug', Router.current().params.doc_slug
 
-    Template.event_view.onCreated ->
-        @autorun => Meteor.subscribe 'event_tickets', Router.current().params.doc_id
-        @autorun => Meteor.subscribe 'model_docs', 'room'
+        @autorun => Meteor.subscribe 'event_tickets', Router.current().params.doc_id, ->
+        # @autorun => Meteor.subscribe 'model_docs', 'room'
         
         # if Meteor.isDevelopment
         #     pub_key = Meteor.settings.public.stripe_test_publishable
@@ -490,8 +489,8 @@ if Meteor.isClient
             }).then((result)=>
                 if result.value
                     Docs.insert 
-                        model:'transaction'
-                        transaction_type:'ticket_purchase'
+                        model:'order'
+                        order_type:'ticket_purchase'
                         payment_type:'points'
                         is_points:true
                         point_amount:Session.get('point_paying')
@@ -559,18 +558,18 @@ if Meteor.isClient
                     # Session.set('topup_amount',5)
                     # Template.instance().checkout.open
                     instance.checkout.open
-                        name: 'One Boulder One'
+                        name: 'gratigen'
                         # email:Meteor.user().emails[0].address
                         description: "#{@title} ticket purchase"
                         amount: Session.get('usd_paying')*100
             
-                    # Meteor.users.update @_author_id,
-                    #     $inc:credit:@order_price
-                    # Swal.fire(
-                    #     'topup initiated',
-                    #     ''
-                    #     'success'
-                    # )
+                    Meteor.users.update @_author_id,
+                        $inc:credit:@order_price
+                    Swal.fire(
+                        'topup initiated',
+                        ''
+                        'success'
+                    )
             )
 
 
@@ -596,8 +595,8 @@ if Meteor.isClient
         tickets_left: ->
             ticket_count = 
                 Docs.find({ 
-                    model:'transaction'
-                    transaction_type:'ticket_purchase'
+                    model:'order'
+                    # order_type:'ticket_purchase'
                     event_id: Router.current().params.doc_id
                 }).count()
             @max_attendees-ticket_count
@@ -607,8 +606,8 @@ if Meteor.isClient
 if Meteor.isServer
     Meteor.publish 'event_tickets', (event_id)->
         Docs.find
-            model:'transaction'
-            transaction_type:'ticket_purchase'
+            model:'order'
+            order_type:'ticket_purchase'
             event_id:event_id
 
 
@@ -641,3 +640,12 @@ Meteor.methods
                 $pull:
                     going_user_ids: Meteor.userId()
                     not_user_ids: Meteor.userId()
+                    
+                    
+if Meteor.isServer
+    Meteor.publish 'event_tickets', (event_id)->
+        event = Docs.findOne event_id 
+        if event 
+            Docs.find 
+                model:'order'
+                event_id:event_id

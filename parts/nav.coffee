@@ -16,26 +16,26 @@ if Meteor.isClient
                 Session.set 'loading', false
     
         'click .clear_search': -> Session.set('product_query',null)
-        'keyup .search_products': _.throttle((e,t)->
+        'keyup .search_site': _.throttle((e,t)->
             # console.log Router.current().route.getName()
             current_name = Router.current().route.getName()
             # $(e.currentTarget).closest('.input').transition('pulse', 100)
 
             unless current_name is 'shop'
                 Router.go '/shop'
-            query = $('.search_products').val()
+            query = $('.search_site').val()
             Session.set('product_query', query)
             # console.log Session.get('product_query')
             if e.key == "Escape"
                 Session.set('product_query', null)
                 
             if e.which is 13
-                search = $('#product_search').val().trim().toLowerCase()
+                search = $('.search_site').val().trim().toLowerCase()
                 if search.length > 0
                     picked_tags.push search
                     console.log 'search', search
                     # Meteor.call 'log_term', search, ->
-                    $('#product_search').val('')
+                    $('.search_site').val('')
                     Session.set('product_query', null)
                     # # $('#search').val('').blur()
                     # # $( "p" ).blur();
@@ -71,7 +71,7 @@ if Meteor.isClient
         model_docs: ->
             Docs.find 
                 model:'model'
-        current_product_search: -> Session.get('product_query')
+        current_site_search: -> Session.get('product_query')
         unread_count: ->
             unread_count = Docs.find({
                 model:'message'
