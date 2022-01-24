@@ -204,14 +204,8 @@ template(name='locate_me')
 template(name='user_dashboard')
     // +user_about
     // .ui.hidden.divider
+    +latest_user_activity    
     .ui.stackable.grid
-        .row
-            .sixteen.wide.column
-                .ui.inline.header() #{points}pts
-                .ui.big.basic.circular.label() {{to_percent one_ratio}}% one ratio
-                .ui.large.basic.circular.label() #{flow_volume} volume
-                //- .ui.compact.icon.button.refresh_user_stats(title='refresh stats')
-                //-     i.refresh.icon
         .three.column.row
             .column
                 .ui.header groups 
@@ -324,6 +318,20 @@ template(name='user_dashboard')
                                 |#{description}
                                 |{{med_date date}}
                                 |{{long_time time}}
+
+
+template(name='latest_user_activity')
+    .ui.header 
+        +i name='clock'
+        |latest activity
+    .ui.selection.animated.list
+        each latest_user_docs 
+            a.item(href="/#{model}/#{_id}") 
+                img.ui.avatar.image(src="{{c.url image_id width=200 height=200 gravity='face' crop='fill'}}")
+                .content
+                    .header #{title}
+                    .description
+                        |{{from_now _updated_timestamp}}
 
 
 

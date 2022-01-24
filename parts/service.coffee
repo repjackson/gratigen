@@ -1,49 +1,49 @@
 if Meteor.isClient
-    Router.route '/projects', (->
+    Router.route '/services', (->
         @layout 'layout'
-        @render 'projects'
-        ), name:'projects'
-    Router.route '/project/:doc_id/edit', (->
+        @render 'services'
+        ), name:'services'
+    Router.route '/service/:doc_id/edit', (->
         @layout 'layout'
-        @render 'project_edit'
-        ), name:'project_edit'
-    Router.route '/project/:doc_id', (->
+        @render 'service_edit'
+        ), name:'service_edit'
+    Router.route '/service/:doc_id', (->
         @layout 'layout'
-        @render 'project_view'
-        ), name:'project_view'
-    Router.route '/project/:doc_id/view', (->
+        @render 'service_view'
+        ), name:'service_view'
+    Router.route '/service/:doc_id/view', (->
         @layout 'layout'
-        @render 'project_view'
-        ), name:'project_view_long'
+        @render 'service_view'
+        ), name:'service_view_long'
     
     
-    Template.projects.onCreated ->
-        @autorun => @subscribe 'model_docs', 'project', ->
-        # @autorun => @subscribe 'project_docs',
+    Template.services.onCreated ->
+        @autorun => @subscribe 'model_docs', 'service', ->
+        # @autorun => @subscribe 'service_docs',
         #     picked_tags.array()
-        #     Session.get('project_title_filter')
+        #     Session.get('service_title_filter')
 
-        # @autorun => @subscribe 'project_facets',
+        # @autorun => @subscribe 'service_facets',
         #     picked_tags.array()
-        #     Session.get('project_title_filter')
+        #     Session.get('service_title_filter')
 
     
     
-    Template.projects.events
-        'click .add_project': ->
+    Template.services.events
+        'click .add_service': ->
             new_id = 
                 Docs.insert 
-                    model:'project'
-            Router.go "/project/#{new_id}/edit"
+                    model:'service'
+            Router.go "/service/#{new_id}/edit"
             
             
             
-    Template.projects.helpers
+    Template.services.helpers
         picked_tags: -> picked_tags.array()
     
-        project_docs: ->
+        service_docs: ->
             Docs.find {
-                model:'project'
+                model:'service'
                 private:$ne:true
             }, sort:_timestamp:-1    
         tag_results: ->
@@ -51,32 +51,35 @@ if Meteor.isClient
                 model:'tag'
             }, sort:_timestamp:-1
 
-    Template.user_projects.onCreated ->
-        @autorun => Meteor.subscribe 'user_projects', Router.current().params.username, ->
-    Template.user_projects.helpers
-        project_docs: ->
+    Template.user_services.onCreated ->
+        @autorun => Meteor.subscribe 'user_services', Router.current().params.username, ->
+    Template.user_services.helpers
+        service_docs: ->
             Docs.find {
-                model:'project'
+                model:'service'
             }, sort:_timestamp:-1    
     
-    Template.project_view.onCreated ->
+    Template.service_view.onCreated ->
         @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
-    Template.project_edit.onCreated ->
+    Template.service_edit.onCreated ->
         @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
-    Template.project_card.onCreated ->
+    Template.service_card.onCreated ->
         @autorun => Meteor.subscribe 'doc_comments', @data._id, ->
 
 
-    Template.project_card.events
-        'click .view_project': ->
-            Router.go "/project/#{@_id}"
+    Template.service_card.events
+        'click .view_service': ->
+            Router.go "/service/#{@_id}"
+    Template.service_item.events
+        'click .view_service': ->
+            Router.go "/service/#{@_id}"
 
-    Template.project_view.events
-        'click .add_project_recipe': ->
+    Template.service_view.events
+        'click .add_service_recipe': ->
             new_id = 
                 Docs.insert 
                     model:'recipe'
-                    project_ids:[@_id]
+                    service_ids:[@_id]
             Router.go "/recipe/#{new_id}/edit"
 
     # Template.favorite_icon_toggle.helpers
@@ -104,10 +107,10 @@ if Meteor.isClient
     #                 $addToSet:favorite_ids:Meteor.userId()
     
     
-    Template.project_edit.events
-        'click .delete_project': ->
+    Template.service_edit.events
+        'click .delete_service': ->
             Swal.fire({
-                title: "delete project?"
+                title: "delete service?"
                 text: "cannot be undone"
                 icon: 'question'
                 confirmButtonText: 'delete'
@@ -121,16 +124,16 @@ if Meteor.isClient
                     Swal.fire(
                         position: 'top-end',
                         icon: 'success',
-                        title: 'project removed',
+                        title: 'service removed',
                         showConfirmButton: false,
                         timer: 1500
                     )
-                    Router.go "/projects"
+                    Router.go "/services"
             )
 
         'click .publish': ->
             Swal.fire({
-                title: "publish project?"
+                title: "publish service?"
                 text: "point bounty will be held from your account"
                 icon: 'question'
                 confirmButtonText: 'publish'
@@ -140,11 +143,11 @@ if Meteor.isClient
                 reverseButtons: true
             }).then((result)=>
                 if result.value
-                    Meteor.call 'publish_project', @_id, =>
+                    Meteor.call 'publish_service', @_id, =>
                         Swal.fire(
                             position: 'bottom-end',
                             icon: 'success',
-                            title: 'project published',
+                            title: 'service published',
                             showConfirmButton: false,
                             timer: 1000
                         )
@@ -152,7 +155,7 @@ if Meteor.isClient
 
         'click .unpublish': ->
             Swal.fire({
-                title: "unpublish project?"
+                title: "unpublish service?"
                 text: "point bounty will be returned to your account"
                 icon: 'question'
                 confirmButtonText: 'unpublish'
@@ -162,28 +165,28 @@ if Meteor.isClient
                 reverseButtons: true
             }).then((result)=>
                 if result.value
-                    Meteor.call 'unpublish_project', @_id, =>
+                    Meteor.call 'unpublish_service', @_id, =>
                         Swal.fire(
                             position: 'bottom-end',
                             icon: 'success',
-                            title: 'project unpublished',
+                            title: 'service unpublished',
                             showConfirmButton: false,
                             timer: 1000
                         )
             )
             
 if Meteor.isServer
-    Meteor.publish 'user_projects', (username)->
+    Meteor.publish 'user_services', (username)->
         user = Meteor.users.findOne username:username
         
         Docs.find 
-            model:'project'
+            model:'service'
             _author_id:user._id
     
-    Meteor.publish 'project_count', (
+    Meteor.publish 'service_count', (
         picked_tags
         picked_sections
-        project_query
+        service_query
         view_vegan
         view_gf
         )->
@@ -191,7 +194,7 @@ if Meteor.isServer
     
         # console.log picked_tags
         self = @
-        match = {model:'project'}
+        match = {model:'service'}
         if picked_tags.length > 0
             match.ingredients = $all: picked_tags
             # sort = 'price_per_serving'
@@ -206,17 +209,17 @@ if Meteor.isServer
             match.vegan = true
         if view_gf
             match.gluten_free = true
-        if project_query and project_query.length > 1
-            console.log 'searching project_query', project_query
-            match.title = {$regex:"#{project_query}", $options: 'i'}
-        Counts.publish this, 'project_counter', Docs.find(match)
+        if service_query and service_query.length > 1
+            console.log 'searching service_query', service_query
+            match.title = {$regex:"#{service_query}", $options: 'i'}
+        Counts.publish this, 'service_counter', Docs.find(match)
         return undefined
 
 
 if Meteor.isClient
-    Template.project_card.onCreated ->
+    Template.service_card.onCreated ->
         # @autorun => Meteor.subscribe 'model_docs', 'food'
-    Template.project_card.events
+    Template.service_card.events
         'click .quickbuy': ->
             console.log @
             Session.set('quickbuying_id', @_id)
@@ -240,8 +243,8 @@ if Meteor.isClient
         # 'click .view_card': ->
         #     $('.container_')
 
-    Template.project_card.helpers
-        project_card_class: ->
+    Template.service_card.helpers
+        service_card_class: ->
             # if Session.get('quickbuying_id')
             #     if Session.equals('quickbuying_id', @_id)
             #         'raised'

@@ -39,8 +39,27 @@ if Meteor.isClient
         Meteor.setTimeout ->
             $('.button').popup()
         , 2000
-
-
+        
+        
+    Template.latest_user_activity.onCreated ->
+        @autorun => @subscribe 'latest_docs', ->
+    Template.latest_user_activity.helpers 
+        latest_user_docs: ->
+            Docs.find {
+                _updated_timestamp:$exists:true
+                _author_username:Router.current().params.username
+            },
+                sort:
+                    _updated_timestamp:-1
+                
+if Meteor.isServer
+    Meteor.publish 'latest_docs', ->
+        Docs.find {_updated_timestamp:$exists:true},
+            sort:
+                _updated_timestamp:-1
+            limit:10
+        
+if Meteor.isClient
     # Template.user_section.helpers
     #     user_section_template: ->
     #         "user_#{Router.current().params.group}"
