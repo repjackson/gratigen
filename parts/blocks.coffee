@@ -171,6 +171,211 @@ if Meteor.isServer
         # else console.log 'no product slug', product
         
         
+        
+if Meteor.isClient
+    Template.role_picker.onCreated ->
+        @autorun => @subscribe 'role_search_results', Session.get('role_search'), ->
+        @autorun => @subscribe 'model_docs', 'role', ->
+    Template.role_picker.helpers
+        role_results: ->
+            Docs.find 
+                model:'role'
+                title: {$regex:"#{Session.get('role_search')}",$options:'i'}
+                
+        product_roles: ->
+            product = Docs.findOne Router.current().params.doc_id
+            Docs.find 
+                # model:'role'
+                _id:$in:product.role_ids
+        role_search_value: ->
+            Session.get('role_search')
+        
+    Template.role_picker.events
+        'click .clear_search': (e,t)->
+            Session.set('role_search', null)
+            t.$('.role_search').val('')
+
+            
+        'click .remove_role': (e,t)->
+            if confirm "remove #{@title} role?"
+                Docs.update Router.current().params.doc_id,
+                    $pull:
+                        role_ids:@_id
+                        role_titles:@title
+        'click .pick_role': (e,t)->
+            Docs.update Router.current().params.doc_id,
+                $addToSet:
+                    role_ids:@_id
+                    role_titles:@title
+            Session.set('role_search',null)
+            t.$('.role_search').val('')
+                    
+        'keyup .role_search': (e,t)->
+            # if e.which is '13'
+            val = t.$('.role_search').val()
+            console.log val
+            Session.set('role_search', val)
+
+        'click .create_role': ->
+            new_id = 
+                Docs.insert 
+                    model:'role'
+                    title:Session.get('role_search')
+            Router.go "/role/#{new_id}/edit"
+
+
+if Meteor.isServer 
+    Meteor.publish 'role_search_results', (title_query)->
+        Docs.find 
+            model:'role'
+            title: {$regex:"#{title_query}",$options:'i'}
+    Meteor.publish 'product_orders', (product_id)->
+        product = Docs.findOne product_id
+        # console.log 'finding mishi for', product
+        if product.slug 
+            Docs.find 
+                model:'order'
+                _product:product.slug
+        # else console.log 'no product slug', product
+        
+        
+        
+        
+        
+if Meteor.isClient
+    Template.badge_picker.onCreated ->
+        @autorun => @subscribe 'badge_search_results', Session.get('badge_search'), ->
+        @autorun => @subscribe 'model_docs', 'badge', ->
+    Template.badge_picker.helpers
+        badge_results: ->
+            Docs.find 
+                model:'badge'
+                title: {$regex:"#{Session.get('badge_search')}",$options:'i'}
+                
+        product_badges: ->
+            product = Docs.findOne Router.current().params.doc_id
+            Docs.find 
+                # model:'badge'
+                _id:$in:product.badge_ids
+        badge_search_value: ->
+            Session.get('badge_search')
+        
+    Template.badge_picker.events
+        'click .clear_search': (e,t)->
+            Session.set('badge_search', null)
+            t.$('.badge_search').val('')
+
+            
+        'click .remove_badge': (e,t)->
+            if confirm "remove #{@title} badge?"
+                Docs.update Router.current().params.doc_id,
+                    $pull:
+                        badge_ids:@_id
+                        badge_titles:@title
+        'click .pick_badge': (e,t)->
+            Docs.update Router.current().params.doc_id,
+                $addToSet:
+                    badge_ids:@_id
+                    badge_titles:@title
+            Session.set('badge_search',null)
+            t.$('.badge_search').val('')
+                    
+        'keyup .badge_search': (e,t)->
+            # if e.which is '13'
+            val = t.$('.badge_search').val()
+            console.log val
+            Session.set('badge_search', val)
+
+        'click .create_badge': ->
+            new_id = 
+                Docs.insert 
+                    model:'badge'
+                    title:Session.get('badge_search')
+            Router.go "/badge/#{new_id}/edit"
+
+
+if Meteor.isServer 
+    Meteor.publish 'badge_search_results', (badge_title_queary)->
+        Docs.find 
+            model:'badge'
+            title: {$regex:"#{title_query}",$options:'i'}
+    Meteor.publish 'product_orders', (product_id)->
+        product = Docs.findOne product_id
+        # console.log 'finding mishi for', product
+        if product.slug 
+            Docs.find 
+                model:'order'
+                _product:product.slug
+        # else console.log 'no product slug', product
+        
+        
+if Meteor.isClient
+    Template.task_picker.onCreated ->
+        @autorun => @subscribe 'task_search_results', Session.get('task_search'), ->
+        @autorun => @subscribe 'model_docs', 'task', ->
+    Template.task_picker.helpers
+        task_results: ->
+            Docs.find 
+                model:'task'
+                title: {$regex:"#{Session.get('task_search')}",$options:'i'}
+                
+        product_tasks: ->
+            product = Docs.findOne Router.current().params.doc_id
+            Docs.find 
+                # model:'task'
+                _id:$in:product.task_ids
+        task_search_value: ->
+            Session.get('task_search')
+        
+    Template.task_picker.events
+        'click .clear_search': (e,t)->
+            Session.set('task_search', null)
+            t.$('.task_search').val('')
+
+            
+        'click .remove_task': (e,t)->
+            if confirm "remove #{@title} task?"
+                Docs.update Router.current().params.doc_id,
+                    $pull:
+                        task_ids:@_id
+                        task_titles:@title
+        'click .pick_task': (e,t)->
+            Docs.update Router.current().params.doc_id,
+                $addToSet:
+                    task_ids:@_id
+                    task_titles:@title
+            Session.set('task_search',null)
+            t.$('.task_search').val('')
+                    
+        'keyup .task_search': (e,t)->
+            # if e.which is '13'
+            val = t.$('.task_search').val()
+            console.log val
+            Session.set('task_search', val)
+
+        'click .create_task': ->
+            new_id = 
+                Docs.insert 
+                    model:'task'
+                    title:Session.get('task_search')
+            Router.go "/task/#{new_id}/edit"
+
+
+if Meteor.isServer 
+    Meteor.publish 'task_search_results', (task_title_queary)->
+        Docs.find 
+            model:'task'
+            title: {$regex:"#{title_query}",$options:'i'}
+    Meteor.publish 'product_orders', (product_id)->
+        product = Docs.findOne product_id
+        # console.log 'finding mishi for', product
+        if product.slug 
+            Docs.find 
+                model:'order'
+                _product:product.slug
+        # else console.log 'no product slug', product
+        
+        
 if Meteor.isClient
     Template.voting.events
         'click .upvote': (e,t)->
@@ -264,8 +469,16 @@ if Meteor.isClient
             Router.go "/#{@model}/#{new_id}/edit"
             
             
+    Template.search_input.events
+        'keyup .search_input': (e,t)->
+            search_value = $(e.currentTarget).closest('.search_input').val().trim()
+            if search_value.length > 1
+                console.log 'searching', search_value
+                Session.set('search_value', search_value)
 
-
+    Template.search_input.helpers
+        search_input_class: ->
+            if Session.get('search_value') then 'large active circular' else 'small'
 
     # Template.user_info.onCreated ->
     #     @autorun => Meteor.subscribe 'user_from_id', @data

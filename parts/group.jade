@@ -4,9 +4,7 @@ template(name='groups')
             .ui.inline.header 
                 +i name='campfire'
                 |groups
-            if currentUser
-                a.ui.icon.basic.circular.button.add_group(title='cook')
-                    i.plus.green.large.icon
+            +add_model_button model='group'
             // .ui.left.icon.search.small.input
             //     i.search.icon.refresh_tags
             //     input#search_tag.prompt(type='text' autocomplete="off" placeholder='tags')

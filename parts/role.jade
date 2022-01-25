@@ -1,29 +1,29 @@
-template(name='projects')
+template(name='roles')
     .ui.stackable.padded.grid 
         .four.wide.column
             .ui.inline.header 
                 +i name='blog'
-                |projects
+                |roles
                 // if currentUser
-                .ui.icon.button.add_project
+                .ui.icon.button.add_role
                     i.plus.large.icon
             each picked_tags
-                a.ui.blue.button.unpick_project_tag
+                a.ui.blue.button.unpick_role_tag
                     |#{this}
             each tag_results
                 // if title
-                a.ui.compact.button.pick_project_tag
+                a.ui.compact.button.pick_role_tag
                     |#{title} 
                     // small.ui.grey.text #{count}
                     
         .twelve.wide.column
             .ui.centered.stackable.cards
-                each project_docs 
-                    +project_card
+                each role_docs 
+                    +role_card
                     
                     
-template(name='project_card')
-    a.ui.card.fly_right(href="/project/#{_id}")
+template(name='role_card')
+    a.ui.card.fly_right(href="/role/#{_id}")
         if youtube_id 
             +youtube_view key='youtube_id' direct=true
         if image_id 
@@ -45,10 +45,9 @@ template(name='project_card')
                 |#{when}
             // +comments_view_small
             +author_info
-            +array_view key='role_titles' label='roles' icon='shield' direct=true
 
 
-template(name='set_project_sort_key')
+template(name='set_role_sort_key')
     .item.set_sort
         if color
             .ui.label(class=color) #{label}
@@ -61,33 +60,33 @@ template(name='set_project_sort_key')
         
         
                 
-template(name='user_projects')
+template(name='user_roles')
     .ui.inline.header 
         +i name='blog'
-        |user projects
+        |user roles
     if is_current_user
-        .ui.basic.icon.button.add_project
+        .ui.basic.icon.button.add_role
             i.large.plus.icon
     .ui.padded.stackable.one.column.grid
         .column
             .ui.stackable.cards.scrolling
-                each project_docs 
+                each role_docs 
                     .ui.card
                         .content
-                            a(href="/project/#{_id}") 
+                            a(href="/role/#{_id}") 
                                 img.ui.image(src="{{c.url image_id width=400 height=300 crop='pad'}}")
     
                             .smallscroll 
                                 |!{content}
                             // |created #{when}
                             small {{when}}
-                            a.ui.icon.button(href='/project/#{_id}')
+                            a.ui.icon.button(href='/role/#{_id}')
                                 i.large.chevron.right.icon
                             
         
         
 
-template(name='set_view_mode_project')
+template(name='set_view_mode_role')
     .item.set_view
         i.icon(class=icon)
         |#{title}
@@ -99,23 +98,32 @@ template(name='set_view_mode_project')
 
 
         
+template(name='role_item')
+    .ui.fluid.segment.view_role.pointer
+        a.ui.header(href="/role/#{_id}") #{title}
+        div
+        .ui.small.grey.inline.header #{when}
+        | #{content}
+        each tags 
+            .ui.basic.small.label #{this}
+        
 
-template(name='project_view')
+template(name='role_view')
     with current_doc
         .ui.stackable.grid
             .row 
                 .four.wide.column
                     .ui.basic.segment
                         .ui.header #{title}
-                        a.ui.circular.button.fly_left(href="/projects")
+                        a.ui.circular.button.fly_left(href="/roles")
                             i.chevron.left.big.icon
                             i.newspaper.big.icon
-                            |projects
+                            |roles
                         // div
                         // .ui.inline.grey.header {{from_now start_datetime}}
                         
                         if can_edit
-                            a.ui.circular.icon.button.edit_project(href="/project/#{_id}/edit" title='edit')
+                            a.ui.circular.icon.button.edit_role(href="/role/#{_id}/edit" title='edit')
                                 i.big.link.pencil.icon
                         .ui.segment
                             .ui.header 
@@ -131,18 +139,7 @@ template(name='project_view')
                         each viewers
                             .ui.label #{username}
                         +array_view key='tags' label='tags' direct=true
-                        +array_view key='role_titles' label='roles' icon='shield' direct=true
-                        +array_view key='task_titles' label='tasks' icon='tasks' direct=true
-                        .ui.header 
-                            +i name='tasks'
-                            |task ids (children)
-                        each task_ids
-                            +child_task
-                            a.ui.large.label(href="/task/#{this}") #{this}
-                        .ui.header dynamic
-                        each child_tasks
-                            +child_task
-                            // a.ui.large.label(href="/task/#{this}") #{this}
+                        +array_view key='badge_titles' label='badges' direct=true
                         +voting_full
                         .ui.header #{when}
                         //- +array_view key='location_tags' label='location_tags' direct=true
@@ -166,27 +163,23 @@ template(name='project_view')
                     
                     
                     
-template(name='child_task')
-    .ui.header #{title}
-                    
-                    
-template(name='project_edit')
+template(name='role_edit')
     with current_doc
         .ui.stackable.padded.grid
             .row 
                 .ten.wide.column
                     .ui.inline.header 
                         +icolor name='news' cl='ui image inline pointer'
-                        |edit project
-                    a.ui.icon.green.big.button(href="/project/#{_id}" title='save')
+                        |edit role
+                    a.ui.icon.green.big.button(href="/role/#{_id}" title='save')
                         i.checkmark.big.icon
                     +text_edit key='title' label='title' direct=true
                     +html_edit key='content' label='content' direct=true
                     +youtube_edit key='youtube_id' label='youtube id' direct=true
-                    // +array_edit key='roles' label='roles' icon='shield' direct=true
-                .six.wide.column.scrolling
-                    // +array_edit key='tasks' label='tasks'
-                    i.large.link.red.remove.icon.delete_project
+                .six.wide.column
+                    .ui.header required badges
+                    +badge_picker
+                    i.large.link.red.remove.icon.delete_role
                     .ui.header 
                         small author
                         |#{_author.username}
@@ -212,6 +205,3 @@ template(name='project_edit')
                     if private 
                         +multi_user_edit key='access_user_ids' label='user picker' direct=true
                     +group_picker
-                    +role_picker
-                    +task_picker
-                    

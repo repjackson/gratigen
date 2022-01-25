@@ -28,6 +28,7 @@ template(name='users')
             if currentUser.admin
                 .ui.icon.basic.circular.button.add_user
                     i.large.plus.icon
+            +search_input
         .twelve.wide.column.scrolling
             +session_set key='view_mode' value='cards' icon='cards' 
             +session_set key='view_mode' value='list' icon='list'

@@ -11,7 +11,9 @@ template(name='session_key_value_edit')
             // i.icon(class=icon)
         |#{label}
 
-
+template(name='search_input')
+    .ui.input(class=search_input_class)
+        input.search_input(type='text' placeholder='search....')
 template(name='sort_direction_button')
 
 template(name='limit_menu')
@@ -462,6 +464,106 @@ template(name='edit_button')
         |edit
 
 
+template(name='role_picker')
+    .ui.header 
+        +i name='shield'
+        | roles
+    // if is_admin
+    .ui.icon.large.input 
+        if role_search_value
+            i.large.red.remove.link.icon.zoomer.clear_search
+        else 
+            i.search.icon
+        input.role_search(type='text' placeholder='search' value=role_search_value)
+    if role_results
+        .ui.selection.link.animated.list
+            each role_results
+                .ui.item.pick_role.zoomer
+                    img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+                    |#{title}
+    // else if role_search_value
+    .ui.button.create_role
+        |add #{role_search_value}
+    
+    if product_roles
+        .ui.header 
+            |#{product_roles.length}
+            |picked roles
+        .ui.list
+            each product_roles
+                .ui.item
+                    img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+                    |#{title}
+                    i.remove.link.icon.zoomer.remove_role
+                    
+                    
+template(name='task_picker')
+    .ui.header 
+        +i name='tasks'
+        | tasks
+    // if is_admin
+    .ui.icon.large.input 
+        if task_search_value
+            i.large.red.remove.link.icon.zoomer.clear_search
+        else 
+            i.search.icon
+        input.task_search(type='text' placeholder='search' value=task_search_value)
+    if task_results
+        .ui.selection.link.animated.list
+            each task_results
+                .ui.item.pick_task.zoomer
+                    img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+                    |#{title}
+    // else if task_search_value
+    .ui.button.create_task
+        |add #{task_search_value}
+    
+    if product_tasks
+        .ui.header 
+            |#{product_tasks.length}
+            |picked tasks
+        .ui.list
+            each product_tasks
+                .ui.item
+                    img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+                    |#{title}
+                    i.remove.link.icon.zoomer.remove_task
+                    
+                    
+template(name='badge_picker')
+    .ui.header 
+        +i name='shield'
+        | badges
+    // if is_admin
+    .ui.icon.large.input 
+        if badge_search_value
+            i.large.red.remove.link.icon.zoomer.clear_search
+        else 
+            i.search.icon
+        input.badge_search(type='text' placeholder='search' value=badge_search_value)
+    if badge_results
+        .ui.selection.link.animated.list
+            each badge_results
+                .ui.item.pick_badge.zoomer
+                    img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+                    |#{title}
+    // else if badge_search_value
+    .ui.button.create_badge
+        |add #{badge_search_value}
+    
+    if product_badges
+        .ui.header 
+            |#{product_badges.length}
+            |picked badges
+        .ui.list
+            each product_badges
+                .ui.item
+                    img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+                    |#{title}
+                    i.remove.link.icon.zoomer.remove_badge
+
+
+
 template(name='save_button')
     a.ui.button.large.icon.save(title='Save' href="/m/#{model}/#{_id}/view")
         i.checkmark.icon
@@ -480,10 +582,11 @@ template(name='view_user_button')
         |View
 
 template(name='add_model_button')
-    .ui.icon.button.add_product(title="add #{model}")
-        i.plus.large.icon
-        if label
-            |#{model}
+    if currentUser
+        .ui.icon.button.add_product(title="add #{model}")
+            i.plus.large.icon
+            if label
+                |#{model}
 
 
             

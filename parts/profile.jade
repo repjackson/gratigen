@@ -138,7 +138,7 @@ template(name='user_layout')
                         span.mobile.hidden delivery
                     a.ui.compact.circular.button(href="/user/#{username}/genekeys" class="{{isActiveRoute 'user_genekeys'}}" title="#{user.username} genekeys")
                         // i.large.dna.icon
-                        +i name='dna'
+                        +i name='dna-helix'
                         span genekeys
                     .spacer
                     .spacer
@@ -208,7 +208,9 @@ template(name='user_dashboard')
     .ui.stackable.grid
         .three.column.row
             .column
-                .ui.header groups 
+                .ui.header 
+                    +i name='campfire'    
+                    |groups 
                 .ui.header projects 
                 
             .column
@@ -255,7 +257,7 @@ template(name='user_dashboard')
         .four.column.row
             .column
                 a.ui.inline.header(href="/user/#{username}/credits")
-                    i.chevron.down.large.icon
+                    +i name='chevron-down'
                     |#{total_credit_amount}p
                     // |received
                     small(title='received count') (#{credit_count}x) 
@@ -269,7 +271,7 @@ template(name='user_dashboard')
                         +user_credit_segment
             .column
                 a.ui.inline.spaced.header(href="/user/#{username}/debits")
-                    i.chevron.up.icon
+                    +i name='chevron-up'
                     |#{total_debit_amount}p
                     // |sent
                     small(title='debit count') (#{debit_count}x)
@@ -285,7 +287,7 @@ template(name='user_dashboard')
                         +user_debit_segment
             .column
                 a.ui.inline.spaced.header(href="/user/#{username}/requests")
-                    i.concierge.bell.icon
+                    +i name='service-bell'
                     |requests
                 .ui.small.header (#{total_fulfilled_amount}p total fulfilled)
                 .ui.small.header (#{fulfilled_count}p total fulfilled count)
@@ -303,7 +305,7 @@ template(name='user_dashboard')
                                     |completed by #{completer.name}
             .column
                 a.ui.inline.spaced.header(href="/user/#{username}/events")
-                    i.calendar.icon
+                    +i name='calendar'
                     |events
                 .medscroll
                     each user_event_tickets

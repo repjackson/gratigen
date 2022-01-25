@@ -309,14 +309,15 @@ Template.array_edit.events
                 t.$('.new_element').val('')
 
     'click .remove_element': (e,t)->
-        $(e.currentTarget).closest('.touch_element').transition('slide left', 1000)
+        # $(e.currentTarget).closest('.touch_element').transition('slide left', 1000)
 
         element = @valueOf()
+        console.log element
         field = Template.currentData()
-        if field.direct
-            parent = Template.parentData()
-        else
-            parent = Template.parentData(5)
+        parent = Template.parentData()
+        # if field.direct
+        # else
+        #     parent = Template.parentData(5)
 
         doc = Docs.findOne parent._id
         user = Meteor.users.findOne parent._id

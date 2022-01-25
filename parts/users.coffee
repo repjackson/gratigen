@@ -2,7 +2,7 @@ if Meteor.isClient
     Router.route '/users', -> @render 'users'
 
     Template.users.onCreated ->
-        Session.setDefault 'view_mode', 'cards'
+        Session.setDefault 'view_mode', 'cards', ->
         # @autorun -> Meteor.subscribe('users')
         @autorun => Meteor.subscribe 'user_search', Session.get('username_query')
     Template.users.helpers

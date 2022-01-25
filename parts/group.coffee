@@ -14,7 +14,6 @@ if Meteor.isClient
                 model:'group'
                 
                 
-                
     Template.group_view.onCreated ->
         @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
         # @autorun => Meteor.subscribe 'children', 'group_update', Router.current().params.doc_id

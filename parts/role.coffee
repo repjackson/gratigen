@@ -1,49 +1,49 @@
 if Meteor.isClient
-    Router.route '/projects', (->
+    Router.route '/roles', (->
         @layout 'layout'
-        @render 'projects'
-        ), name:'projects'
-    Router.route '/project/:doc_id/edit', (->
+        @render 'roles'
+        ), name:'roles'
+    Router.route '/role/:doc_id/edit', (->
         @layout 'layout'
-        @render 'project_edit'
-        ), name:'project_edit'
-    Router.route '/project/:doc_id', (->
+        @render 'role_edit'
+        ), name:'role_edit'
+    Router.route '/role/:doc_id', (->
         @layout 'layout'
-        @render 'project_view'
-        ), name:'project_view'
-    Router.route '/project/:doc_id/view', (->
+        @render 'role_view'
+        ), name:'role_view'
+    Router.route '/role/:doc_id/view', (->
         @layout 'layout'
-        @render 'project_view'
-        ), name:'project_view_long'
+        @render 'role_view'
+        ), name:'role_view_long'
     
     
-    Template.projects.onCreated ->
-        @autorun => @subscribe 'model_docs', 'project', ->
-        # @autorun => @subscribe 'project_docs',
+    Template.roles.onCreated ->
+        @autorun => @subscribe 'model_docs', 'role', ->
+        # @autorun => @subscribe 'role_docs',
         #     picked_tags.array()
-        #     Session.get('project_title_filter')
+        #     Session.get('role_title_filter')
 
-        # @autorun => @subscribe 'project_facets',
+        # @autorun => @subscribe 'role_facets',
         #     picked_tags.array()
-        #     Session.get('project_title_filter')
+        #     Session.get('role_title_filter')
 
     
     
-    Template.projects.events
-        'click .add_project': ->
+    Template.roles.events
+        'click .add_role': ->
             new_id = 
                 Docs.insert 
-                    model:'project'
-            Router.go "/project/#{new_id}/edit"
+                    model:'role'
+            Router.go "/role/#{new_id}/edit"
             
             
             
-    Template.projects.helpers
+    Template.roles.helpers
         picked_tags: -> picked_tags.array()
     
-        project_docs: ->
+        role_docs: ->
             Docs.find {
-                model:'project'
+                model:'role'
                 private:$ne:true
             }, sort:_timestamp:-1    
         tag_results: ->
@@ -51,47 +51,35 @@ if Meteor.isClient
                 model:'tag'
             }, sort:_timestamp:-1
 
-    Template.user_projects.onCreated ->
-        @autorun => Meteor.subscribe 'user_projects', Router.current().params.username, ->
-    Template.user_projects.helpers
-        project_docs: ->
+    Template.user_roles.onCreated ->
+        @autorun => Meteor.subscribe 'user_roles', Router.current().params.username, ->
+    Template.user_roles.helpers
+        role_docs: ->
             Docs.find {
-                model:'project'
+                model:'role'
             }, sort:_timestamp:-1    
     
-    Template.project_view.onCreated ->
+    Template.role_view.onCreated ->
         @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
-        @autorun => Meteor.subscribe 'model_docs', 'task', ->
-    Template.project_edit.onCreated ->
-        @autorun => Meteor.subscribe 'model_docs', 'task', ->
+    Template.role_edit.onCreated ->
         @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
-    Template.project_card.onCreated ->
+    Template.role_card.onCreated ->
         @autorun => Meteor.subscribe 'doc_comments', @data._id, ->
 
-    Template.project_edit.helpers
-        child_tasks: ->
-            Docs.find
-                model:'task'
-                
-                
-    Template.project_view.helpers
-        child_tasks: ->
-            Docs.find
-                model:'task'
-                
-                
-                
-                
-    Template.project_card.events
-        'click .view_project': ->
-            Router.go "/project/#{@_id}"
 
-    Template.project_view.events
-        'click .add_project_recipe': ->
+    Template.role_card.events
+        'click .view_role': ->
+            Router.go "/role/#{@_id}"
+    Template.role_item.events
+        'click .view_role': ->
+            Router.go "/role/#{@_id}"
+
+    Template.role_view.events
+        'click .add_role_recipe': ->
             new_id = 
                 Docs.insert 
                     model:'recipe'
-                    project_ids:[@_id]
+                    role_ids:[@_id]
             Router.go "/recipe/#{new_id}/edit"
 
     # Template.favorite_icon_toggle.helpers
@@ -119,10 +107,10 @@ if Meteor.isClient
     #                 $addToSet:favorite_ids:Meteor.userId()
     
     
-    Template.project_edit.events
-        'click .delete_project': ->
+    Template.role_edit.events
+        'click .delete_role': ->
             Swal.fire({
-                title: "delete project?"
+                title: "delete role?"
                 text: "cannot be undone"
                 icon: 'question'
                 confirmButtonText: 'delete'
@@ -136,16 +124,16 @@ if Meteor.isClient
                     Swal.fire(
                         position: 'top-end',
                         icon: 'success',
-                        title: 'project removed',
+                        title: 'role removed',
                         showConfirmButton: false,
                         timer: 1500
                     )
-                    Router.go "/projects"
+                    Router.go "/roles"
             )
 
         'click .publish': ->
             Swal.fire({
-                title: "publish project?"
+                title: "publish role?"
                 text: "point bounty will be held from your account"
                 icon: 'question'
                 confirmButtonText: 'publish'
@@ -155,11 +143,11 @@ if Meteor.isClient
                 reverseButtons: true
             }).then((result)=>
                 if result.value
-                    Meteor.call 'publish_project', @_id, =>
+                    Meteor.call 'publish_role', @_id, =>
                         Swal.fire(
                             position: 'bottom-end',
                             icon: 'success',
-                            title: 'project published',
+                            title: 'role published',
                             showConfirmButton: false,
                             timer: 1000
                         )
@@ -167,7 +155,7 @@ if Meteor.isClient
 
         'click .unpublish': ->
             Swal.fire({
-                title: "unpublish project?"
+                title: "unpublish role?"
                 text: "point bounty will be returned to your account"
                 icon: 'question'
                 confirmButtonText: 'unpublish'
@@ -177,28 +165,28 @@ if Meteor.isClient
                 reverseButtons: true
             }).then((result)=>
                 if result.value
-                    Meteor.call 'unpublish_project', @_id, =>
+                    Meteor.call 'unpublish_role', @_id, =>
                         Swal.fire(
                             position: 'bottom-end',
                             icon: 'success',
-                            title: 'project unpublished',
+                            title: 'role unpublished',
                             showConfirmButton: false,
                             timer: 1000
                         )
             )
             
 if Meteor.isServer
-    Meteor.publish 'user_projects', (username)->
+    Meteor.publish 'user_roles', (username)->
         user = Meteor.users.findOne username:username
         
         Docs.find 
-            model:'project'
+            model:'role'
             _author_id:user._id
     
-    Meteor.publish 'project_count', (
+    Meteor.publish 'role_count', (
         picked_tags
         picked_sections
-        project_query
+        role_query
         view_vegan
         view_gf
         )->
@@ -206,7 +194,7 @@ if Meteor.isServer
     
         # console.log picked_tags
         self = @
-        match = {model:'project'}
+        match = {model:'role'}
         if picked_tags.length > 0
             match.ingredients = $all: picked_tags
             # sort = 'price_per_serving'
@@ -221,17 +209,17 @@ if Meteor.isServer
             match.vegan = true
         if view_gf
             match.gluten_free = true
-        if project_query and project_query.length > 1
-            console.log 'searching project_query', project_query
-            match.title = {$regex:"#{project_query}", $options: 'i'}
-        Counts.publish this, 'project_counter', Docs.find(match)
+        if role_query and role_query.length > 1
+            console.log 'searching role_query', role_query
+            match.title = {$regex:"#{role_query}", $options: 'i'}
+        Counts.publish this, 'role_counter', Docs.find(match)
         return undefined
 
 
 if Meteor.isClient
-    Template.project_card.onCreated ->
+    Template.role_card.onCreated ->
         # @autorun => Meteor.subscribe 'model_docs', 'food'
-    Template.project_card.events
+    Template.role_card.events
         'click .quickbuy': ->
             console.log @
             Session.set('quickbuying_id', @_id)
@@ -255,8 +243,8 @@ if Meteor.isClient
         # 'click .view_card': ->
         #     $('.container_')
 
-    Template.project_card.helpers
-        project_card_class: ->
+    Template.role_card.helpers
+        role_card_class: ->
             # if Session.get('quickbuying_id')
             #     if Session.equals('quickbuying_id', @_id)
             #         'raised'
