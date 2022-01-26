@@ -116,8 +116,10 @@ if Meteor.isClient
                 
         picked_model: ->
             parent_doc = Docs.findOne Router.current().params.doc_id
-            Docs.find 
-                # model:'model'
+            # _id:parent_doc["#{Template.currentData().model}_id"]
+            console.log Template.currentData().model
+            Docs.findOne
+                # model:Template.currentData().model
                 _id:parent_doc["#{Template.currentData().model}_id"]
         model_search_value: ->
             Session.get('model_search')

@@ -169,7 +169,7 @@ template(name='role_edit')
     with current_doc
         .ui.stackable.padded.grid
             .row 
-                .ten.wide.column
+                .eight.wide.column
                     .ui.inline.header 
                         +icolor name='news' cl='ui image inline pointer'
                         |edit role
@@ -178,12 +178,13 @@ template(name='role_edit')
                     +text_edit key='title' label='title' direct=true
                     +html_edit key='content' label='content' direct=true
                     +youtube_edit key='youtube_id' label='youtube id' direct=true
-                .six.wide.column
+                .eight.wide.column
                     .ui.header required badges
                     +badge_picker
                     .ui.header associated event
                     +event_picker
                     +task_picker
+                    +model_picker model='event' icon='calendar'
                     
                     i.large.link.red.remove.icon.delete_role
                     .ui.header 
