@@ -105,6 +105,69 @@ if Meteor.isClient
 
 
 if Meteor.isClient
+    Template.model_picker.onCreated ->
+        @autorun => @subscribe 'model_search_results', Session.get('model_search'), ->
+        @autorun => @subscribe 'model_docs', @data.model, ->
+    Template.model_picker.helpers
+        model_results: ->
+            Docs.find 
+                model:Template.currentData().model
+                # title: {$regex:"#{Session.get('model_search')}",$options:'i'}
+                
+        picked_model: ->
+            parent_doc = Docs.findOne Router.current().params.doc_id
+            Docs.find 
+                # model:'model'
+                _id:parent_doc["#{Template.currentData().model}_id"]
+        model_search_value: ->
+            Session.get('model_search')
+        
+    Template.model_picker.events
+        'click .clear_search': (e,t)->
+            Session.set('model_search', null)
+            t.$('.model_search').val('')
+
+            
+        'click .remove_model': (e,t)->
+            if confirm "remove #{@title} model?"
+                Docs.update Router.current().params.doc_id,
+                    $unset:
+                        "#{Template.currentData().model}_id":@_id
+                        "#{Template.currentData().model}_title":@title
+        'click .pick_model': (e,t)->
+            Docs.update Router.current().params.doc_id,
+                $set:
+                    "#{Template.currentData().model}_id":@_id
+                    "#{Template.currentData().model}_title":@title
+            Session.set('model_search',null)
+            t.$('.model_search').val('')
+                    
+        'keyup .model_search': (e,t)->
+            # if e.which is '13'
+            val = t.$('.model_search').val()
+            console.log val
+            Session.set('model_search', val)
+
+        'click .create_model': ->
+            new_id = 
+                Docs.insert 
+                    model:'model'
+                    title:Session.get('model_search')
+            Router.go "/model/#{new_id}/edit"
+
+
+if Meteor.isServer 
+    Meteor.publish 'model_search_results', (model_title_queary)->
+        Docs.find 
+            model:'model'
+            title: {$regex:"#{model_title_queary}",$options:'i'}
+        
+        
+
+
+# sdkfjvnkdf
+
+if Meteor.isClient
     Template.group_picker.onCreated ->
         @autorun => @subscribe 'group_search_results', Session.get('group_search'), ->
         @autorun => @subscribe 'model_docs', 'group', ->
@@ -161,14 +224,6 @@ if Meteor.isServer
         Docs.find 
             model:'group'
             title: {$regex:"#{group_title_queary}",$options:'i'}
-    Meteor.publish 'product_orders', (product_id)->
-        product = Docs.findOne product_id
-        # console.log 'finding mishi for', product
-        if product.slug 
-            Docs.find 
-                model:'order'
-                _product:product.slug
-        # else console.log 'no product slug', product
         
         
         
@@ -229,14 +284,6 @@ if Meteor.isServer
         Docs.find 
             model:'role'
             title: {$regex:"#{title_query}",$options:'i'}
-    Meteor.publish 'product_orders', (product_id)->
-        product = Docs.findOne product_id
-        # console.log 'finding mishi for', product
-        if product.slug 
-            Docs.find 
-                model:'order'
-                _product:product.slug
-        # else console.log 'no product slug', product
         
         
         
@@ -299,14 +346,6 @@ if Meteor.isServer
         Docs.find 
             model:'badge'
             title: {$regex:"#{title_query}",$options:'i'}
-    Meteor.publish 'product_orders', (product_id)->
-        product = Docs.findOne product_id
-        # console.log 'finding mishi for', product
-        if product.slug 
-            Docs.find 
-                model:'order'
-                _product:product.slug
-        # else console.log 'no product slug', product
         
         
 if Meteor.isClient
@@ -362,18 +401,10 @@ if Meteor.isClient
 
 
 if Meteor.isServer 
-    Meteor.publish 'task_search_results', (task_title_queary)->
+    Meteor.publish 'task_search_results', (task_title_query)->
         Docs.find 
             model:'task'
             title: {$regex:"#{title_query}",$options:'i'}
-    Meteor.publish 'product_orders', (product_id)->
-        product = Docs.findOne product_id
-        # console.log 'finding mishi for', product
-        if product.slug 
-            Docs.find 
-                model:'order'
-                _product:product.slug
-        # else console.log 'no product slug', product
         
         
 if Meteor.isClient

@@ -464,6 +464,40 @@ template(name='edit_button')
         |edit
 
 
+template(name='model_picker')
+    .ui.header 
+        +i name=icon
+        | #{model} picker
+    // if is_admin
+    .ui.icon.large.input 
+        if model_search_value
+            i.large.red.remove.link.icon.zoomer.clear_search
+        else 
+            i.search.icon
+        input.model_search(type='text' placeholder='search' value=model_search_value)
+    // unless picked_model
+    if model_results
+        .ui.selection.link.animated.list
+            each model_results
+                .ui.item.pick_model
+                    img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+                    |#{title}
+    // else if model_search_value
+    .ui.button.create_model
+        |add #{model_search_value}
+    
+    if picked_model
+        .ui.header 
+            // |#{picked_models.length}
+            |picked model
+        .ui.list
+            with picked_model
+                .ui.item
+                    img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+                    |#{title}
+                    i.remove.link.icon.zoomer.remove_model
+                    
+
 template(name='role_picker')
     .ui.header 
         +i name='shield'
@@ -562,6 +596,37 @@ template(name='badge_picker')
                     |#{title}
                     i.remove.link.icon.zoomer.remove_badge
 
+template(name='event_picker')
+    .ui.header 
+        +i name='shield'
+        | events
+    // if is_admin
+    .ui.icon.large.input 
+        if event_search_value
+            i.large.red.remove.link.icon.zoomer.clear_search
+        else 
+            i.search.icon
+        input.event_search(type='text' placeholder='search' value=event_search_value)
+    if event_results
+        .ui.selection.link.animated.list
+            each event_results
+                .ui.item.pick_event.zoomer
+                    img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+                    |#{title}
+    // else if event_search_value
+    .ui.button.create_event
+        |add #{event_search_value}
+    
+    if product_events
+        .ui.header 
+            |#{product_events.length}
+            |picked events
+        .ui.list
+            each product_events
+                .ui.item
+                    img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+                    |#{title}
+                    i.remove.link.icon.zoomer.remove_event
 
 
 template(name='save_button')

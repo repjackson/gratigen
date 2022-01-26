@@ -144,6 +144,8 @@ template(name='role_view')
                         .ui.header #{when}
                         //- +array_view key='location_tags' label='location_tags' direct=true
                         +comments
+                        
+
                 .twelve.wide.column.scrolling
                     img.ui.image(src="{{c.url image_id }}" class=currentUser.invert_class)
                     // a.ui.header(href="/user/#{target.username}")
@@ -179,6 +181,10 @@ template(name='role_edit')
                 .six.wide.column
                     .ui.header required badges
                     +badge_picker
+                    .ui.header associated event
+                    +event_picker
+                    +task_picker
+                    
                     i.large.link.red.remove.icon.delete_role
                     .ui.header 
                         small author

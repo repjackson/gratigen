@@ -62,6 +62,7 @@ if Meteor.isClient
     Template.project_view.onCreated ->
         @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
         @autorun => Meteor.subscribe 'model_docs', 'task', ->
+        
     Template.project_edit.onCreated ->
         @autorun => Meteor.subscribe 'model_docs', 'task', ->
         @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
@@ -78,7 +79,7 @@ if Meteor.isClient
         child_tasks: ->
             Docs.find
                 model:'task'
-                
+                project_id: Router.current().params.doc_id
                 
                 
                 
