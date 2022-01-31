@@ -344,7 +344,7 @@ if Meteor.isClient
 
 
 if Meteor.isServer 
-    Meteor.publish 'badge_search_results', (badge_title_queary)->
+    Meteor.publish 'badge_search_results', (badge_title_query)->
         Docs.find 
             model:'badge'
             title: {$regex:"#{title_query}",$options:'i'}

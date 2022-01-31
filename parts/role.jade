@@ -181,12 +181,13 @@ template(name='role_edit')
                 .eight.wide.column
                     .ui.header required badges
                     +badge_picker
-                    .ui.header associated event
-                    +event_picker
                     +task_picker
                     +model_picker model='event' icon='calendar'
                     
                     i.large.link.red.remove.icon.delete_role
+                    .ui.header 
+                        small owner - each id should be stored in user account or as nft in crypto wallet.
+                        
                     .ui.header 
                         small author
                         |#{_author.username}
@@ -212,3 +213,5 @@ template(name='role_edit')
                     if private 
                         +multi_user_edit key='access_user_ids' label='user picker' direct=true
                     +group_picker
+                    +array_edit key='skills' label='skills' icon='wrench' direct=true
+                    +model_picker model='skill' icon='wrench'

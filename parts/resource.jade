@@ -1,11 +1,11 @@
-template(name='rentals')
+template(name='resources')
     // +map2
     .ui.stackable.padded.grid
         .sixteen.wide.column
             .ui.inline.header 
                 +i name='clock'
-                |rentals
-            .ui.icon.button.add_rental
+                |resources
+            .ui.icon.button.add_resource
                 i.plus.icon
             .ui.inline.header current lat: #{current_lat}, long: #{current_long}
             .sorting_row
@@ -21,15 +21,15 @@ template(name='rentals')
                         //- small #{count}
             .spacer 
             if subs_ready
-                if one_rental
-                    each rental_docs
-                        +rental_big_card
+                if one_resource
+                    each resource_docs
+                        +resource_big_card
                 else
                     .ui.stackable.four.centered.cards.scrolling
-                        each rental_docs
-                            +rental_card
-                        // unless rental_docs.count
-                        //     .ui.button.request_rental
+                        each resource_docs
+                            +resource_card
+                        // unless resource_docs.count
+                        //     .ui.button.request_resource
                         //         |request
                         //     each requests
                         //         .ui.header #{when}
@@ -38,17 +38,17 @@ template(name='rentals')
                     i.massive.grey.notched.circle.loading.icon
             //- +mapgl
 
-template(name='rental_card')
-    .ui.card(class=rental_card_class)
-        a.image.fly_right(href="/rental/#{_id}/") 
+template(name='resource_card')
+    .ui.card(class=resource_card_class)
+        a.image.fly_right(href="/resource/#{_id}/") 
             if image_id
-                img.ui.zoomer.pointer.goto_rental.image(src="{{c.url image_id width=400 height=300 crop='pad'}}")
+                img.ui.zoomer.pointer.goto_resource.image(src="{{c.url image_id width=400 height=300 crop='pad'}}")
             if image_link
-                img.ui.zoomer.pointer.goto_rental.image(src=image_link)
+                img.ui.zoomer.pointer.goto_resource.image(src=image_link)
 
 
         .content
-            a.header.zoomer.fly_right(href="/rental/#{_id}/") 
+            a.header.zoomer.fly_right(href="/resource/#{_id}/") 
                 | #{title}
             div
             .ui.inline.header 
@@ -64,19 +64,19 @@ template(name='rental_card')
                 a(href="/user/#{_author_username}")
                     img.ui.avatar.image(src="{{c.url _author.image_id width=400 height=600 crop='fit'}}")
                     |#{_author_username}
-template(name='rental_big_card')
+template(name='resource_big_card')
     .ui.fluid.segment
-        .ui.fluid.two.column.grid(class=rental_card_class)
+        .ui.fluid.two.column.grid(class=resource_card_class)
             .column
-                a.image.fly_right(href="/rental/#{_id}/") 
+                a.image.fly_right(href="/resource/#{_id}/") 
                     if image_id
-                        img.ui.zoomer.pointer.goto_rental.image(src="{{c.url image_id width=400 height=300 crop='pad'}}")
+                        img.ui.zoomer.pointer.goto_resource.image(src="{{c.url image_id width=400 height=300 crop='pad'}}")
                     if image_link
-                        img.ui.zoomer.pointer.goto_rental.image(src=image_link)
+                        img.ui.zoomer.pointer.goto_resource.image(src=image_link)
     
     
             .column
-                a.header.zoomer.fly_right(href="/rental/#{_id}/") 
+                a.header.zoomer.fly_right(href="/resource/#{_id}/") 
                     | #{title}
                 div
                 .ui.inline.header 
@@ -101,7 +101,7 @@ template(name='rental_big_card')
 
 
 
-template(name='set_rental_sort_key')
+template(name='set_resource_sort_key')
     .item.set_sort
         if color
             .ui.label(class=color) #{label}
@@ -113,19 +113,19 @@ template(name='set_rental_sort_key')
             |#{label}
         
 
-template(name='set_view_mode_rental')
+template(name='set_view_mode_resource')
     .item.set_view
         i.icon(class=icon)
         |#{title}
 
 
-template(name='set_rental_limit')
+template(name='set_resource_limit')
     .item.set_limit #{amount}
     
     
 
-template(name='rental_view')
-    // .ui.header rental view
+template(name='resource_view')
+    // .ui.header resource view
     with current_doc
         .ui.stackable.padded.grid
             //- img.ui.large.rounded.image(src="{{c.url image width=500 height=500 gravity='face' crop='fill'}}")
@@ -134,14 +134,14 @@ template(name='rental_view')
                     // .ui.header 
                     //     small viewing
                     //     |#{title}
-                    //     small rental
-                    a.ui.compact.button.fly_left(href="/rentals" title='shop')
+                    //     small resource
+                    a.ui.compact.button.fly_left(href="/resources" title='shop')
                         i.left.chevron.icon
                         +i name='clock' cl='ui inline image'
-                        |rentals
+                        |resources
                     .ui.big.header #{title}
                     if can_edit
-                        a.zoomer(href="/rental/#{_id}/edit")
+                        a.zoomer(href="/resource/#{_id}/edit")
                             i.pencil.big.circular.icon
                     div
                     +text_view key='location' icon='marker' label='location' direct=true
@@ -191,10 +191,10 @@ template(name='rental_view')
                     div
                     .ui.small.list
                         .item total earnings
-                        .item rental ranking #orders
-                        .item rental ranking $ earned
+                        .item resource ranking #orders
+                        .item resource ranking $ earned
                         .item # different renters
-                        .item avg rental time
+                        .item avg resource time
                         .item avg daily earnings
                         .item avg weekly earnings
                         .item avg monthly earnings
@@ -220,7 +220,7 @@ template(name='rental_view')
                                         | #{_author_username}
                                     small for
                                     |#{order_date}, {{from_now order_date}}
-                    +rental_stats
+                    +resource_stats
                     // +last_viewed
                     +creation_info
                     +comments
@@ -231,7 +231,7 @@ template(name='quickbuy')
         small #{from_form}
         
 
-template(name='rental_edit')
+template(name='resource_edit')
     with current_doc
         .ui.stackable.padded.grid
             .three.column.row
@@ -239,12 +239,12 @@ template(name='rental_edit')
                     .ui.inline.header
                         small editing
                         |'#{title}'
-                        small rental
-                    a.ui.big.icon.green.fluid.button(href="/rental/#{_id}/")
+                        small resource
+                    a.ui.big.icon.green.fluid.button(href="/resource/#{_id}/")
                         i.checkmark.big.icon
                     +text_edit key='title' icon='header' direct=true
                     +number_edit key='daily_rate' label='daily rate' icon='exchange' direct=true
-                    .ui.icon.small.red.button.delete_rental_item 
+                    .ui.icon.small.red.button.delete_resource_item 
                         i.trash.icon
                 .column
                     if in_dev
@@ -268,26 +268,26 @@ template(name='rental_edit')
     
 
 
-template(name='user_rentals')
+template(name='user_resources')
     .scrolling
         if is_current_user
-            .ui.button.add_rental
+            .ui.button.add_resource
                 i.plus.icon
-                |rental
-        each rentals
-            +profile_rental_item
+                |resource
+        each resources
+            +profile_resource_item
 
-template(name='profile_rental_item')
+template(name='profile_resource_item')
     .ui.segment.grid
         .row
             .three.column
                 +image_view key='image' direct=true cl='zoom ui tiny image'
             .twelve.wide.column
                 .ui.header #{title}
-                a.ui.header.inline.lowercase(href="/rental/#{_id}/")
+                a.ui.header.inline.lowercase(href="/resource/#{_id}/")
                     |#{daily_rate}p/day
                 .ui.small.inline.header #{when}
-                a.ui.button(href="/rental/#{_id}/")
+                a.ui.button(href="/resource/#{_id}/")
                     |view
                     i.right.chevron.icon
 
@@ -309,20 +309,20 @@ template(name='last_viewed')
                     
                     
 
-template(name='rental_stats')
+template(name='resource_stats')
     //- .ui.accordion
     //-     .title
-    .ui.grey.header.refresh_rental_stats
+    .ui.grey.header.refresh_resource_stats
         i.line.chart.icon
         |stats
     //- .content
     .ui.big.list
         .item #{views} views
         .item #{order_count} orders
-        .item #{total_earnings}p/#{total_rental_hours}hrs total
-        // .item #{average_rental_cost}c / #{average_rental_duration}hrs avg rental
-        //- .item rental ranking # orders
-        //- .item rental ranking $ earned
+        .item #{total_earnings}p/#{total_resource_hours}hrs total
+        // .item #{average_resource_cost}c / #{average_resource_duration}hrs avg resource
+        //- .item resource ranking # orders
+        //- .item resource ranking $ earned
         //- .item # different renters
         //- .item avg daily earnings
         //- .item avg weekly earnings

@@ -1,45 +1,45 @@
 if Meteor.isClient
-    Router.route '/rentals', (->
+    Router.route '/resources', (->
         @layout 'layout'
-        @render 'rentals'
-        ), name:'rentals'
+        @render 'resources'
+        ), name:'resources'
 
 
-    Template.rentals.onCreated ->
+    Template.resources.onCreated ->
         Session.setDefault 'view_mode', 'list'
-        Session.setDefault 'rental_sort_key', 'datetime_available'
-        Session.setDefault 'rental_sort_label', 'available'
-        Session.setDefault 'rental_limit', 42
+        Session.setDefault 'resource_sort_key', 'datetime_available'
+        Session.setDefault 'resource_sort_label', 'available'
+        Session.setDefault 'resource_limit', 42
         Session.setDefault 'view_open', true
 
-    Template.rentals.onCreated ->
-        @autorun => @subscribe 'rental_facets',
+    Template.resources.onCreated ->
+        @autorun => @subscribe 'resource_facets',
             picked_tags.array()
             Session.get('current_lat')
             Session.get('current_long')
-            Session.get('rental_limit')
-            Session.get('rental_sort_key')
-            Session.get('rental_sort_direction')
+            Session.get('resource_limit')
+            Session.get('resource_sort_key')
+            Session.get('resource_sort_direction')
 
-        @autorun => @subscribe 'rental_results',
+        @autorun => @subscribe 'resource_results',
             picked_tags.array()
             Session.get('lat')
             Session.get('long')
-            Session.get('rental_limit')
-            Session.get('rental_sort_key')
-            Session.get('rental_sort_direction')
+            Session.get('resource_limit')
+            Session.get('resource_sort_key')
+            Session.get('resource_sort_direction')
     
-    Template.rentals.events
-        'click .add_rental': ->
+    Template.resources.events
+        'click .add_resource': ->
             new_id = 
                 Docs.insert 
-                    model:'rental'
-            Router.go "/rental/#{new_id}/edit"
+                    model:'resource'
+            Router.go "/resource/#{new_id}/edit"
         'click .fly_right': (e,t)->
             console.log 'hi'
             $(e.currentTarget).closest('.grid').transition('fly right', 500)
     
-        'click .request_rental': ->
+        'click .request_resource': ->
             title = prompt "different title than #{Session.get('query')}"
             new_id = 
                 Docs.insert 
@@ -74,8 +74,8 @@ if Meteor.isClient
                     # , 10000
         , 1000)
 
-        'click .calc_rental_count': ->
-            Meteor.call 'calc_rental_count', ->
+        'click .calc_resource_count': ->
+            Meteor.call 'calc_resource_count', ->
 
         # 'keydown #search': _.throttle((e,t)->
         #     if e.which is 8
@@ -88,13 +88,13 @@ if Meteor.isClient
         #             Meteor.call 'search_reddit', picked_tags.array(), ->
         # , 1000)
 
-    Template.rentals.helpers
+    Template.resources.helpers
         query_requests: ->
             Docs.find
                 model:'request'
                 title:Session.get('query')
             
-        counter: -> Counts.get('rental_counter')
+        counter: -> Counts.get('resource_counter')
         tags: -> Results.find({model:'tag'})
         location_tags: -> Results.find({model:'location_tag',title:$nin:picked_location_tags.array()})
         authors: -> Results.find({model:'author'})
@@ -109,12 +109,12 @@ if Meteor.isClient
         picked_tags_plural: -> picked_tags.array().length > 1
         searching: -> Session.get('searching')
 
-        one_rental: ->
-            Docs.find(model:'rental').count() is 1
-        rental_docs: ->
+        one_resource: ->
+            Docs.find(model:'resource').count() is 1
+        resource_docs: ->
             # if picked_tags.array().length > 0
             Docs.find {
-                model: 'rental'
+                model: 'resource'
                 # downvoter_ids:$nin:[Meteor.userId()]
             },
                 sort: "#{Session.get('sort_key')}":parseInt(Session.get('sort_direction'))
@@ -129,7 +129,7 @@ if Meteor.isClient
 
 
 if Meteor.isServer
-    Meteor.publish 'rental_results', (
+    Meteor.publish 'resource_results', (
         picked_tags
         lat=50
         long=100
@@ -143,7 +143,7 @@ if Meteor.isServer
         if doc_sort_direction
             sort_direction = parseInt(doc_sort_direction)
         self = @
-        match = {model:'rental'}
+        match = {model:'resource'}
         if picked_tags.length > 0
             match.tags = $all: picked_tags
             # sort = 'price_per_serving'
@@ -174,7 +174,7 @@ if Meteor.isServer
         #   }
         
 
-        # console.log 'rental match', match
+        # console.log 'resource match', match
         # console.log 'sort key', sort_key
         # console.log 'sort direction', sort_direction
         Docs.find match,
@@ -182,7 +182,7 @@ if Meteor.isServer
             # sort:_timestamp:-1
             limit: limit
 
-    Meteor.publish 'rental_facets', (
+    Meteor.publish 'resource_facets', (
         picked_tags=[]
         lat
         long
@@ -198,7 +198,7 @@ if Meteor.isServer
 
         self = @
         match = {}
-        match.model = 'rental'
+        match.model = 'resource'
         if Meteor.userId()
             match._author_id = $ne:Meteor.userId()
         if picked_tags.length > 0 then match.tags = $all: picked_tags
@@ -242,51 +242,51 @@ if Meteor.isServer
 
 
 if Meteor.isClient
-    Router.route '/rental/:doc_id/', (->
+    Router.route '/resource/:doc_id/', (->
         @layout 'layout'
-        @render 'rental_view'
-        ), name:'rental_view'
-    Router.route '/rental/:doc_id/edit', (->
+        @render 'resource_view'
+        ), name:'resource_view'
+    Router.route '/resource/:doc_id/edit', (->
         @layout 'layout'
-        @render 'rental_edit'
-        ), name:'rental_edit'
+        @render 'resource_edit'
+        ), name:'resource_edit'
 
 
     
-    Template.rental_big_card.onCreated ->
-        @autorun => @subscribe 'rental_orders',@data._id, ->
-    Template.rental_view.onCreated ->
+    Template.resource_big_card.onCreated ->
+        @autorun => @subscribe 'resource_orders',@data._id, ->
+    Template.resource_view.onCreated ->
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
-        @autorun => @subscribe 'rental_orders',Router.current().params.doc_id, ->
-    Template.rental_edit.onCreated ->
+        @autorun => @subscribe 'resource_orders',Router.current().params.doc_id, ->
+    Template.resource_edit.onCreated ->
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
-        @autorun => @subscribe 'rental_orders',Router.current().params.doc_id, ->
-    Template.rental_view.onRendered ->
+        @autorun => @subscribe 'resource_orders',Router.current().params.doc_id, ->
+    Template.resource_view.onRendered ->
         Docs.update Router.current().params.doc_id, 
             $inc:views:1
     
-    Template.rental_view.helpers
+    Template.resource_view.helpers
         future_order_docs: ->
             Docs.find 
                 model:'order'
-                rental_id:Router.current().params.doc_id
+                resource_id:Router.current().params.doc_id
                 
                 
                 
-    Template.rental_card.events
+    Template.resource_card.events
         'click .flat_pick_tag': -> picked_tags.push @valueOf()
         
-    Template.rental_view.events
+    Template.resource_view.events
         'click .new_order': (e,t)->
-            rental = Docs.findOne Router.current().params.doc_id
+            resource = Docs.findOne Router.current().params.doc_id
             new_order_id = Docs.insert
                 model:'order'
-                rental_id: @_id
-                rental_id:rental._id
-                rental_title:rental.title
-                rental_image_id:rental.image_id
-                rental_image_link:rental.image_link
-                rental_daily_rate:rental.daily_rate
+                resource_id: @_id
+                resource_id:resource._id
+                resource_title:resource.title
+                resource_image_id:resource.image_id
+                resource_image_link:resource.image_link
+                resource_daily_rate:resource.daily_rate
             Router.go "/order/#{new_order_id}/edit"
             
         'click .goto_tag': ->
@@ -341,17 +341,17 @@ if Meteor.isClient
                 cancelButtonText: 'cancel'
             }).then((result)=>
                 if result.value
-                    rental = Docs.findOne context._id
+                    resource = Docs.findOne context._id
                     new_order_id = Docs.insert
                         model:'order'
-                        rental_id: rental._id
+                        resource_id: resource._id
                         order_date: tech_form
-                        _seller_username:rental._author_username
-                        rental_id:rental._id
-                        rental_title:rental.title
-                        rental_image_id:rental.image_id
-                        rental_image_link:rental.image_link
-                        rental_daily_rate:rental.daily_rate
+                        _seller_username:resource._author_username
+                        resource_id:resource._id
+                        resource_title:resource.title
+                        resource_image_id:resource.image_id
+                        resource_image_link:resource.image_link
+                        resource_daily_rate:resource.daily_rate
                     Swal.fire(
                         "reserved for #{human_form}",
                         ''
@@ -362,25 +362,25 @@ if Meteor.isClient
             
 
 if Meteor.isServer
-    Meteor.publish 'user_rentals', (username)->
+    Meteor.publish 'user_resources', (username)->
         user = Meteor.users.findOne username:username
         Docs.find
-            model:'rental'
+            model:'resource'
             _author_id: user._id
             
-    Meteor.publish 'rental_orders', (doc_id)->
-        rental = Docs.findOne doc_id
+    Meteor.publish 'resource_orders', (doc_id)->
+        resource = Docs.findOne doc_id
         Docs.find
             model:'order'
-            rental_id:rental._id
+            resource_id:resource._id
             
             
             
             
 if Meteor.isClient
-    Template.rental_stats.events
-        'click .refresh_rental_stats': ->
-            Meteor.call 'refresh_rental_stats', @_id
+    Template.resource_stats.events
+        'click .refresh_resource_stats': ->
+            Meteor.call 'refresh_resource_stats', @_id
 
 
 
@@ -401,10 +401,10 @@ if Meteor.isClient
 
 
 if Meteor.isServer
-    Meteor.publish 'rental_orders_by_id', (rental_id)->
+    Meteor.publish 'resource_orders_by_id', (resource_id)->
         Docs.find
             model:'order'
-            rental_id: rental_id
+            resource_id: resource_id
 
 
     Meteor.publish 'order_by_day', (product_id, month_day)->
@@ -419,14 +419,14 @@ if Meteor.isServer
             product_id:product_id
 
     Meteor.publish 'order_slot', (moment_ob)->
-        rentals_return = []
+        resources_return = []
         for day in [0..6]
             day_number++
             # long_form = moment(now).add(day, 'days').format('dddd MMM Do')
             date_string =  moment(now).add(day, 'days').format('YYYY-MM-DD')
             console.log date_string
-            rentals.return.push date_string
-        rentals_return
+            resources.return.push date_string
+        resources_return
 
         # data.long_form
         # Docs.find
@@ -434,29 +434,29 @@ if Meteor.isServer
 
 
     Meteor.methods
-        refresh_rental_stats: (rental_id)->
-            rental = Docs.findOne rental_id
-            # console.log rental
-            orders = Docs.find({model:'order', rental_id:rental_id})
+        refresh_resource_stats: (resource_id)->
+            resource = Docs.findOne resource_id
+            # console.log resource
+            orders = Docs.find({model:'order', resource_id:resource_id})
             order_count = orders.count()
             total_earnings = 0
-            total_rental_hours = 0
-            average_rental_duration = 0
+            total_resource_hours = 0
+            average_resource_duration = 0
 
             # shortest_order =
             # longest_order =
 
             for res in orders.fetch()
                 total_earnings += parseFloat(res.cost)
-                total_rental_hours += parseFloat(res.hour_duration)
+                total_resource_hours += parseFloat(res.hour_duration)
 
-            average_rental_cost = total_earnings/order_count
-            average_rental_duration = total_rental_hours/order_count
+            average_resource_cost = total_earnings/order_count
+            average_resource_duration = total_resource_hours/order_count
 
-            Docs.update rental_id,
+            Docs.update resource_id,
                 $set:
                     order_count: order_count
                     total_earnings: total_earnings.toFixed(0)
-                    total_rental_hours: total_rental_hours.toFixed(0)
-                    average_rental_cost: average_rental_cost.toFixed(0)
-                    average_rental_duration: average_rental_duration.toFixed(0)
+                    total_resource_hours: total_resource_hours.toFixed(0)
+                    average_resource_cost: average_resource_cost.toFixed(0)
+                    average_resource_duration: average_resource_duration.toFixed(0)
