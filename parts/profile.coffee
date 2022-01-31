@@ -497,7 +497,7 @@ if Meteor.isClient
 
     Template.user_sent.onCreated ->
         # @autorun -> Meteor.subscribe 'user_model_docs', 'debit', Router.current().params.username
-        @autorun => Meteor.subscribe 'user_sent', Router.current().params.username
+        @autorun => Meteor.subscribe 'user_sent', Router.current().params.username, ->
 
     Template.user_sent.events
         'keyup .new_debit': (e,t)->
@@ -528,14 +528,14 @@ if Meteor.isClient
                 _author_id: Router.current().params.user_id
 
 
-if Meteor.isServer
-    Meteor.publish 'user_sent', (username)->
-        user = Meteor.users.findOne username:username
-        Docs.find {
-            model:'debit'
-            _author_id: user._id
-        }, 
-            limit:100            
+# if Meteor.isServer
+    # Meteor.publish 'user_sent', (username)->
+    #     user = Meteor.users.findOne username:username
+    #     Docs.find {
+    #         model:'debit'
+    #         _author_id: user._id
+    #     }, 
+    #         limit:100            
             
             
             

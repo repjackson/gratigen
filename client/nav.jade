@@ -70,10 +70,14 @@ template(name='nav')
             if session_is 'viewing_alerts'
                 +topbar
     .ui.attached.inverted.small.borderless.menu.hscroll
-        a.icon.item.zoomer(href="/products" class="{{isActiveRoute 'products'}}")
+        a.item.zoomer(href="/resources" class="{{isActiveRoute 'resources'}}")
             // i.large.inbox.icon
-            +i name='shop'
-            span.mobile.hidden products
+            +i name='clock'
+            span.mobile.hidden resources
+        // a.icon.item.zoomer(href="/products" class="{{isActiveRoute 'products'}}")
+        //     // i.large.inbox.icon
+        //     +i name='shop'
+        //     span.mobile.hidden products
         a.icon.item.zoomer(href="/transfers" class="{{isActiveRoute 'transfers'}}")
             // i.large.inbox.icon
             +i name='exchange'
@@ -122,10 +126,6 @@ template(name='nav')
             // i.large.inbox.icon
             +i name='prize'
             span.mobile.hidden badges
-        a.item.zoomer(href="/resources" class="{{isActiveRoute 'resources'}}")
-            // i.large.inbox.icon
-            +i name='clock'
-            span.mobile.hidden resources
 
                     
 template(name='topbar')

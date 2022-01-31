@@ -403,7 +403,7 @@ if Meteor.isClient
 
 
 if Meteor.isServer 
-    Meteor.publish 'task_search_results', (task_title_query)->
+    Meteor.publish 'task_search_results', (title_query)->
         Docs.find 
             model:'task'
             title: {$regex:"#{title_query}",$options:'i'}
@@ -493,7 +493,7 @@ if Meteor.isClient
     #     user: -> Meteor.users.findOne username:@valueOf()
 
     Template.add_model_button.events        
-        'click .add_doc': ->
+        'click .add_model_doc': ->
             new_id = 
                 Docs.insert 
                     model:@model
