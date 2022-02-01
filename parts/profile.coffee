@@ -5,7 +5,7 @@ if Meteor.isClient
         ), name:'profile'
 
 
-    Template.layout.onCreated ->
+    Template.profile.onCreated ->
         @autorun -> Meteor.subscribe 'user_from_username', Router.current().params.username, ->
         # @autorun -> Meteor.subscribe 'user_referenced_docs', Router.current().params.username, ->
 if Meteor.isServer 
@@ -15,7 +15,7 @@ if Meteor.isServer
 
 
 if Meteor.isClient 
-    Template.layout.onRendered ->
+    Template.profile.onRendered ->
         Meteor.setTimeout ->
             $('.button').popup()
         , 2000
@@ -44,14 +44,14 @@ if Meteor.isClient
     #     user_section_template: ->
     #         "user_#{Router.current().params.group}"
 
-    Template.layout.helpers
+    Template.profile.helpers
         current_user: ->
             Meteor.users.findOne username:Router.current().params.username
 
         user: ->
             Meteor.users.findOne username:Router.current().params.username
 
-    Template.layout.events
+    Template.profile.events
         'click .logout_other_clients': ->
             Meteor.logoutOtherClients()
 
