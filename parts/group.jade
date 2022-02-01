@@ -141,7 +141,7 @@ template(name='group_view')
                         +i name='campfire' cl='ui mini inline image'
                         |groups
                     if can_edit
-                        a.ui.circular.basic.icon.button(href="/group/#{_id}/edit")
+                        a.ui.circular.basic.icon.button.fly_down(href="/group/#{_id}/edit")
                             i.setting.large.icon
                     +image_view key='image_id' icon='image' label='image'
                     +array_view key='tags' icon='tags'

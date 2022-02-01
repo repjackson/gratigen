@@ -3,29 +3,9 @@ if Meteor.isClient
         @layout 'user_layout'
         @render 'user_dashboard'
         ), name:'profile'
-    Router.route '/user/:username/cart', (->
-        @layout 'user_layout'
-        @render 'cart'
-        ), name:'user_cart'
-    Router.route '/user/:username/about', (->
-        @layout 'user_layout'
-        @render 'user_about'
-        ), name:'user_about'
-    Router.route '/user/:username/credit', (->
-        @layout 'user_layout'
-        @render 'user_credit'
-        ), name:'user_credit'
-    Router.route '/user/:username/orders', (->
-        @layout 'user_layout'
-        @render 'user_orders'
-        ), name:'user_orders'
-    Router.route '/user/:username/products', (->
-        @layout 'user_layout'
-        @render 'user_products'
-        ), name:'user_products'
 
 
-    Template.user_layout.onCreated ->
+    Template.layout.onCreated ->
         @autorun -> Meteor.subscribe 'user_from_username', Router.current().params.username, ->
         # @autorun -> Meteor.subscribe 'user_referenced_docs', Router.current().params.username, ->
 if Meteor.isServer 
@@ -35,7 +15,7 @@ if Meteor.isServer
 
 
 if Meteor.isClient 
-    Template.user_layout.onRendered ->
+    Template.layout.onRendered ->
         Meteor.setTimeout ->
             $('.button').popup()
         , 2000
@@ -64,14 +44,14 @@ if Meteor.isClient
     #     user_section_template: ->
     #         "user_#{Router.current().params.group}"
 
-    Template.user_layout.helpers
+    Template.layout.helpers
         current_user: ->
             Meteor.users.findOne username:Router.current().params.username
 
         user: ->
             Meteor.users.findOne username:Router.current().params.username
 
-    Template.user_layout.events
+    Template.layout.events
         'click .logout_other_clients': ->
             Meteor.logoutOtherClients()
 
@@ -274,7 +254,7 @@ if Meteor.isClient
             
 if Meteor.isClient
     Router.route '/user/:username/dashboard', (->
-        @layout 'user_layout'
+        @layout 'layout'
         @render 'user_dashboard'
         ), name:'user_dashboard'
         
@@ -282,7 +262,7 @@ if Meteor.isClient
         
 if Meteor.isClient
     Router.route '/user/:username/badges', (->
-        @layout 'user_layout'
+        @layout 'layout'
         @render 'user_badges'
         ), name:'user_badges'
     
@@ -336,7 +316,7 @@ if Meteor.isServer
             
 if Meteor.isClient
     Router.route '/user/:username/events', (->
-        @layout 'user_layout'
+        @layout 'layout'
         @render 'user_events'
         ), name:'user_events'
 
@@ -385,7 +365,7 @@ if Meteor.isServer
             
 if Meteor.isClient
     Router.route '/user/:username/messages', (->
-        @layout 'user_layout'
+        @layout 'layout'
         @render 'user_messages'
         ), name:'user_messages'
     
@@ -487,11 +467,11 @@ if Meteor.isServer
             
 if Meteor.isClient
     Router.route '/user/:username/sent', (->
-        @layout 'user_layout'
+        @layout 'layout'
         @render 'user_sent'
         ), name:'user_sent'
     Router.route '/user/:username/debits', (->
-        @layout 'user_layout'
+        @layout 'layout'
         @render 'user_sent'
         ), name:'user_debits'
 
@@ -541,11 +521,11 @@ if Meteor.isClient
             
 # if Meteor.isClient
 #     Router.route '/user/:username/sent', (->
-#         @layout 'user_layout'
+#         @layout 'layout'
 #         @render 'user_sent'
 #         ), name:'user_sent'
 #     Router.route '/user/:username/debits', (->
-#         @layout 'user_layout'
+#         @layout 'layout'
 #         @render 'user_sent'
 #         ), name:'user_debits'
 
@@ -596,7 +576,7 @@ if Meteor.isServer
             
 # if Meteor.isClient
     # Router.route '/user/:username/orders', (->
-    #     @layout 'user_layout'
+    #     @layout 'layout'
     #     @render 'user_orders'
     #     ), name:'user_orders'
 
@@ -641,7 +621,7 @@ if Meteor.isServer
             
 if Meteor.isClient
     Router.route '/user/:username/offers', (->
-        @layout 'user_layout'
+        @layout 'layout'
         @render 'user_offers'
         ), name:'user_offers'
 
@@ -687,7 +667,7 @@ if Meteor.isServer
                                     
 if Meteor.isClient
     Router.route '/user/:username/requests', (->
-        @layout 'user_layout'
+        @layout 'layout'
         @render 'user_requests'
         ), name:'user_requests'
 
@@ -730,7 +710,7 @@ if Meteor.isServer
                                     
 if Meteor.isClient
     Router.route '/user/:username/genekeys', (->
-        @layout 'user_layout'
+        @layout 'layout'
         @render 'user_genekeys'
         ), name:'user_genekeys'
     
@@ -831,7 +811,7 @@ if Meteor.isServer
                                     
 if Meteor.isClient
     Router.route '/user/:username/delivery', (->
-        @layout 'user_layout'
+        @layout 'layout'
         @render 'user_delivery'
         ), name:'user_delivery'
     
@@ -930,7 +910,7 @@ if Meteor.isServer
 
 if Meteor.isClient
     Router.route '/user/:username/credits', (->
-        @layout 'user_layout'
+        @layout 'layout'
         @render 'user_credits'
         ), name:'user_credits'
 
@@ -983,7 +963,7 @@ if Meteor.isServer
             
 if Meteor.isClient
     Router.route '/user/:username/food', (->
-        @layout 'user_layout'
+        @layout 'layout'
         @render 'user_food'
         ), name:'user_food'
     
@@ -1075,7 +1055,7 @@ if Meteor.isServer
             
 if Meteor.isClient
     Router.route '/user/:username/friends', (->
-        @layout 'user_layout'
+        @layout 'layout'
         @render 'user_friends'
         ), name:'user_friends'
     
