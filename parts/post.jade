@@ -143,7 +143,7 @@ template(name='post_view')
                         .ui.header #{when}
                         //- +array_view key='location_tags' label='location_tags' direct=true
                         +comments
-                .twelve.wide.column.scrolling
+                .eight.wide.column.scrolling
                     img.ui.image(src="{{c.url image_id }}" class=currentUser.invert_class)
                     // a.ui.header(href="/user/#{target.username}")
                     //     |#{target.username}
@@ -155,10 +155,13 @@ template(name='post_view')
                     .spacer
                     if watson 
                         +watson_view
-                // .four.wide.column
-                    //- .ui.fluid.green.button.submit
-                    //-     i.checkmark.icon
-                    //-     |submit
+                .four.wide.column
+                    .ui.header read by 
+                    each read_users 
+                        .item #{username}
+                    .ui.fluid.green.button.submit
+                        i.checkmark.icon
+                        |submit
                     
                     
                     

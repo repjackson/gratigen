@@ -148,6 +148,18 @@ template(name='profile')
            
 template(name='user_credit')
     .ui.stackable.one.column.padded.grid
+        .ui.header user credit
+        .ui.large.button.calc_points 
+            |calc points
+        .ui.header 
+            |read docs 
+        .ui.list 
+            each read_docs 
+                .item 
+                    .ui.label #{model}
+                    |#{title}
+            
+            
         if is_current_user
             .column
                 .ui.inline.header

@@ -3,8 +3,22 @@ if Meteor.isClient
         @layout 'profile'
         @render 'user_dashboard'
         ), name:'profile'
+    Router.route '/user/:username/credit', (->
+        @layout 'profile'
+        @render 'user_credit'
+        ), name:'user_credit'
 
 
+    Template.user_credit.onCreated ->
+        @autorun -> Meteor.subscribe 'user_from_username', Router.current().params.username, ->
+        @autorun -> Meteor.subscribe 'user_read_docs', Router.current().params.username, ->
+    
+    Template.user_credit.helpers
+        read_docs: ->
+            user = Meteor.users.findOne username:Router.current().params.username 
+            Docs.find 
+                read_by_user_ids: $in: [user._id]
+    
     Template.profile.onCreated ->
         @autorun -> Meteor.subscribe 'user_from_username', Router.current().params.username, ->
         # @autorun -> Meteor.subscribe 'user_referenced_docs', Router.current().params.username, ->
@@ -12,7 +26,10 @@ if Meteor.isServer
     Meteor.publish 'user_bookmark_docs', ->
         Docs.find 
             _id:$in:Meteor.user().bookmark_ids
-
+    Meteor.publish 'user_read_docs', (username)->
+        user = Meteor.users.findOne username:username
+        Docs.find 
+            read_by_user_ids: $in: [user._id]
 
 if Meteor.isClient 
     Template.profile.onRendered ->

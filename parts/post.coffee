@@ -60,12 +60,22 @@ if Meteor.isClient
     
     Template.post_view.onCreated ->
         @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
+    Template.post_view.onRendered ->
+        Meteor.call 'mark_doc_read', Router.current().params.doc_id, ->
     Template.post_edit.onCreated ->
         @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
     Template.post_card.onCreated ->
         @autorun => Meteor.subscribe 'doc_comments', @data._id, ->
 
+if Meteor.isServer 
+    Meteor.methods 
+        mark_doc_read: (doc_id)->
+            Docs.update doc_id, 
+                $addToSet:read_by_user_ids:Meteor.userId()
+            console.log 'marked doc read'
+            
 
+if Meteor.isClient
     Template.post_card.events
         'click .view_post': ->
             Router.go "/post/#{@_id}"
@@ -73,6 +83,11 @@ if Meteor.isClient
         'click .view_post': ->
             Router.go "/post/#{@_id}"
 
+    Template.post_view.helpers
+        read_users: ->
+            doc = Docs.findOne Router.current().params.doc_id
+            Meteor.users.find 
+                _id:$in:doc.read_by_user_ids
     Template.post_view.events
         'click .add_post_recipe': ->
             new_id = 
