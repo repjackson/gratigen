@@ -35,17 +35,19 @@ if Meteor.isServer
     
 if Meteor.isClient
     Template.home.onCreated ->
-        @autorun => @subscribe 'post_docs',
-            picked_tags.array()
-            Session.get('post_title_filter')
+        # @autorun => @subscribe 'post_docs',
+        #     picked_tags.array()
+        #     Session.get('post_title_filter')
 
-        @autorun => @subscribe 'model_docs', 'post', ->
-        @autorun => @subscribe 'model_docs', 'request', ->
-        @autorun => @subscribe 'model_docs', 'offer', ->
-        @autorun => @subscribe 'model_docs', 'rental', ->
-        @autorun => @subscribe 'model_docs', 'product', ->
-        @autorun => @subscribe 'model_docs', 'task', ->
-        @autorun => @subscribe 'model_docs', 'project', ->
+        # @autorun => @subscribe 'model_docs', 'post', ->
+        # @autorun => @subscribe 'model_docs', 'request', ->
+        # @autorun => @subscribe 'model_docs', 'offer', ->
+        # @autorun => @subscribe 'model_docs', 'rental', ->
+        # @autorun => @subscribe 'model_docs', 'product', ->
+        # @autorun => @subscribe 'model_docs', 'task', ->
+        # @autorun => @subscribe 'model_docs', 'project', ->
+        @autorun => @subscribe 'latest_docs', ->
+        
         @autorun => @subscribe 'all_users', ->
         @autorun => @subscribe 'post_facets',
             picked_tags.array()
@@ -64,8 +66,17 @@ if Meteor.isClient
 
     Template.home.helpers 
         doc_results: ->
-            Docs.find {model:$ne:'comment'},
+            # Docs.find {model:$ne:'comment'},
+            Docs.find {},
                 sort:_timestamp:-1
     Template.closest_allies.helpers 
         user_docs: ->
             Meteor.users.find {}
+
+
+
+if Meteor.isServer 
+    Meteor.publish 'latest_docs', ->
+        Docs.find {},
+            sort:_timestamp:-1
+            limit:20

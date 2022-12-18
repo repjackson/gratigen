@@ -62,16 +62,20 @@ template(name='home')
         .eight.wide.column
             // .ui.button create request
             .ui.basic.button 
-                i.exchange.large.icon
+                +i name='gift'
+                // i.exchange.large.icon
                 |gifts
             .ui.basic.button 
-                i.bullhorn.large.icon
+                // i.bullhorn.large.icon
+                +i name='bullhorn'
                 |requests
             .ui.basic.button 
-                i.hand.holding.large.icon
+                +i name='service'
+                // i.hand.holding.large.icon
                 |offers
             .ui.basic.button 
-                i.project.diagram.large.icon
+                +i name='project'
+                // i.project.diagram.large.icon
                 |projects
             .scrolling
                 each doc_results
