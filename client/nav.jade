@@ -16,13 +16,13 @@ template(name='nav')
             +i name='groups'
             span.mobile.hidden users
 
-        .search.item.zoomer.mobile.hidden(title='search')
-            .ui.icon.transparent.input
-                if current_product_search
-                    i.remove.large.red.link.icon.clear_search
-                else
-                    i.search.large.icon
-                input.search_site(type='text' autocomplete="off" value=current_product_search)
+        // .search.item.zoomer.mobile.hidden(title='search')
+        //     .ui.icon.transparent.input
+        //         if current_product_search
+        //             i.remove.large.red.link.icon.clear_search
+        //         else
+        //             i.search.large.icon
+        //         input.search_site(type='text' autocomplete="off" value=current_product_search)
         .right.menu
             if unread_count
                 a.item.alerts.select_term(href="#" class=alert_toggle_class)
