@@ -61,22 +61,10 @@ template(name='home')
             
         .eight.wide.column
             // .ui.button create request
-            .ui.basic.button 
-                +i name='gift'
-                // i.exchange.large.icon
-                |gifts
-            .ui.basic.button 
-                // i.bullhorn.large.icon
-                +i name='bullhorn'
-                |requests
-            .ui.basic.button 
-                +i name='service'
-                // i.hand.holding.large.icon
-                |offers
-            .ui.basic.button 
-                +i name='project'
-                // i.project.diagram.large.icon
-                |projects
+            +filter_model model='transfer' icon='exchange'
+            +filter_model model='request' icon='bullhorn'
+            +filter_model model='project' icon='project'
+            +filter_model model='comment' icon='comment'
             .scrolling
                 each doc_results
                     +home_card
@@ -88,7 +76,14 @@ template(name='home')
                 +closest_allies
             .ui.segment
                 +open_requests
-            
+           
+           
+template(name='filter_model')
+    .ui.basic.circular.button 
+        +i name=icon
+        // i.exchange.large.icon
+        |#{model}
+
             
 template(name='closest_allies')
     .ui.header 
@@ -138,8 +133,10 @@ template(name='home_card')
                     +i name='tasks'
                 if _is 'model' 'group'
                     +i name='campfire'
+                if _is 'model' 'comment'
+                    +i name='chat'
                 // .ui.label #{model}
-                |#{title}
+                |#{title} #{body}
             i.clock.icon
             |#{when}
         img.ui.image(src="{{c.url image_id width=400 height=400}}")

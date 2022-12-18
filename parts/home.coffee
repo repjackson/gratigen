@@ -13,12 +13,12 @@ if Meteor.isClient
                 sort:
                     _updated_timestamp:-1
                 
-if Meteor.isServer
-    Meteor.publish 'latest_docs', ->
-        Docs.find {_updated_timestamp:$exists:true},
-            sort:
-                _updated_timestamp:-1
-            limit:10
+# if Meteor.isServer
+#     Meteor.publish 'latest_docs', ->
+#         Docs.find {_updated_timestamp:$exists:true},
+#             sort:
+#                 _updated_timestamp:-1
+#             limit:10
         
 if Meteor.isClient
     Template.online_users.onCreated ->
