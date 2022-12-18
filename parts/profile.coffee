@@ -13,6 +13,12 @@ if Meteor.isClient
         @autorun -> Meteor.subscribe 'user_from_username', Router.current().params.username, ->
         @autorun -> Meteor.subscribe 'user_read_docs', Router.current().params.username, ->
     
+    Template.user_credit.events 
+        'click .calc_points': ->
+            Meteor.call 'calc_user_points', Meteor.userId(), ->
+                
+                
+            
     Template.user_credit.helpers
         read_docs: ->
             user = Meteor.users.findOne username:Router.current().params.username 

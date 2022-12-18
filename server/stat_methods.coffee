@@ -82,12 +82,21 @@ Meteor.methods
         console.log 'total credit amount', total_credit_amount
         calculated_user_balance = total_credit_amount-total_debit_amount
 
+        read_doc_count = 
+            Docs.find(
+                read_by_user_ids: $in: [user._id]
+            ).count()
+        console.log 'read user doc count', read_doc_count
+
+
+
+
         Meteor.users.update user_id,
             $set:
                 points:calculated_user_balance
                 total_credit_amount: total_credit_amount
                 total_debit_amount: total_debit_amount
-
+                total_read_docs: read_doc_count
 
 
 
