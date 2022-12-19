@@ -350,11 +350,10 @@ template(name='role_editor')
 template(name='author_info')
     with author
         a.ui.compact.button(href="/user/#{username}")
-            if kiosk_photo
-                img.ui.avatar.image(src="{{c.url kiosk_photo width=100 height=100 gravity='face' crop='fill'}}")
-            else if image_id
-                img.ui.avatar.image(src="{{c.url image_id width=100 height=100 gravity='face' crop='fill'}}")
+            if image_id
+                img.ui.avatar.image(src="{{c.url image_id width=150 height=150 gravity='face' crop='fill'}}")
             |by #{first_name} #{last_name}
+    |added #{when} by #{_author_username}
 
 template(name='creation_info')
     .ui.small.inline.header #{when}

@@ -45,8 +45,6 @@ template(name='resource_card')
                 img.ui.zoomer.pointer.goto_resource.image(src="{{c.url image_id width=400 height=300 crop='pad'}}")
             if image_link
                 img.ui.zoomer.pointer.goto_resource.image(src=image_link)
-
-
         .content
             a.header.zoomer.fly_right(href="/resource/#{_id}/") 
                 | #{title}
@@ -60,10 +58,7 @@ template(name='resource_card')
             //     a.ui.small.link.black.label.flat_pick_tag.spaced #{this}
             // .right.floated.meta
             //     | added #{when}
-            unless anonymous
-                a(href="/user/#{_author_username}")
-                    img.ui.avatar.image(src="{{c.url _author.image_id width=400 height=600 crop='fit'}}")
-                    |#{_author_username}
+            +author_info
 template(name='resource_big_card')
     .ui.fluid.segment
         .ui.fluid.two.column.grid(class=resource_card_class)

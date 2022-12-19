@@ -29,7 +29,6 @@ template(name='users')
                 .ui.icon.basic.circular.button.add_user
                     i.large.plus.icon
             +search_input
-        .twelve.wide.column.scrolling
             +session_set key='view_mode' value='cards' icon='cards' 
             +session_set key='view_mode' value='list' icon='list'
             // +session_set key='sort_users_direction' value='-1' icon='chevron down'
@@ -40,13 +39,14 @@ template(name='users')
             // +session_set key='view_limit' value=10
             // +session_set key='view_limit' value=20
             // +session_set key='view_limit' value=50
+        .twelve.wide.column.scrolling
             .scrolling
                 if session_is 'view_mode' 'cards'
                     .ui.stackable.centered.cards
                         each user_docs
                             +user_card
                 else if session_is 'view_mode' 'list'
-                    .ui.large.list
+                    .ui.large.animated.selection.list
                         each user_docs
                             +user_item
                             div
@@ -106,7 +106,7 @@ template(name='user_card')
             
             
 template(name='user_item')
-    a.item.zoomer.fly_left(href="/user/#{username}")
+    a.item.zoom.fly_left(href="/user/#{username}")
         unless avatar_image_id
             img.ui.avatar.image(class=currentUser.invert_class src="{{c.url image_id width=400 height=300 crop='fill'}}")    
         // if avatar_image_id

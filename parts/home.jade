@@ -1,5 +1,15 @@
 template(name='home')
     .ui.stackable.padded.grid
+        .eight.wide.column
+            // .ui.button create request
+            +filter_model model='resource' icon='car'
+            +filter_model model='transfer' icon='exchange'
+            +filter_model model='request' icon='bullhorn'
+            +filter_model model='project' icon='project'
+            +filter_model model='comment' icon='comment'
+            .scrolling
+                each doc_results
+                    +home_card
         .four.wide.column
             if currentUser
                 a.item(href="/user/#{currentUser.username}" class=user_nav_button_class title=user_nav_button_title)
@@ -59,15 +69,6 @@ template(name='home')
             .ui.header 
                 |resources
             
-        .eight.wide.column
-            // .ui.button create request
-            +filter_model model='transfer' icon='exchange'
-            +filter_model model='request' icon='bullhorn'
-            +filter_model model='project' icon='project'
-            +filter_model model='comment' icon='comment'
-            .scrolling
-                each doc_results
-                    +home_card
                     
         .four.wide.column
             .ui.segment.smallscroll
@@ -79,7 +80,7 @@ template(name='home')
            
            
 template(name='filter_model')
-    .ui.basic.circular.button 
+    .ui.basic.circular.compact.small.button 
         +i name=icon
         // i.exchange.large.icon
         |#{model}
@@ -120,7 +121,7 @@ template(name='open_requests')
                     .ui.header #{when}
                             
 template(name='home_card')
-    a.ui.fluid.card.zoom(href="/#{model}/#{_id}")
+    a.ui.fluid.card.zoomer.fly_left(href="/#{model}/#{_id}")
         if youtube_id 
             +youtube_view key='youtube_id' direct=true
         .content 
