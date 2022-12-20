@@ -13,7 +13,7 @@ body {
 }
 
 
-.invert {
+.inverted {
   filter: invert(.9) !important;
 }
 

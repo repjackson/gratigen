@@ -8,6 +8,7 @@ if Meteor.isClient
         # @autorun => Meteor.subscribe 'my_cart_products'
 
     Template.nav.onRendered ->
+        Session.setDefault('invert_mode', false)
     Template.nav.events
         'click .reset': ->
             # model_slug =  Router.current().params.model_slug
@@ -16,33 +17,33 @@ if Meteor.isClient
                 Session.set 'loading', false
     
         'click .clear_search': -> Session.set('product_query',null)
-        'keyup .search_site': _.throttle((e,t)->
-            # console.log Router.current().route.getName()
-            current_name = Router.current().route.getName()
-            # $(e.currentTarget).closest('.input').transition('pulse', 100)
+        # 'keyup .search_site': _.throttle((e,t)->
+        #     # console.log Router.current().route.getName()
+        #     current_name = Router.current().route.getName()
+        #     # $(e.currentTarget).closest('.input').transition('pulse', 100)
 
-            unless current_name is 'shop'
-                Router.go '/shop'
-            query = $('.search_site').val()
-            Session.set('product_query', query)
-            # console.log Session.get('product_query')
-            if e.key == "Escape"
-                Session.set('product_query', null)
+        #     unless current_name is 'shop'
+        #         Router.go '/shop'
+        #     query = $('.search_site').val()
+        #     Session.set('product_query', query)
+        #     # console.log Session.get('product_query')
+        #     if e.key == "Escape"
+        #         Session.set('product_query', null)
                 
-            if e.which is 13
-                search = $('.search_site').val().trim().toLowerCase()
-                if search.length > 0
-                    picked_tags.push search
-                    console.log 'search', search
-                    # Meteor.call 'log_term', search, ->
-                    $('.search_site').val('')
-                    Session.set('product_query', null)
-                    # # $('#search').val('').blur()
-                    # # $( "p" ).blur();
-                    # Meteor.setTimeout ->
-                    #     Session.set('dummy', !Session.get('dummy'))
-                    # , 10000
-        , 500)
+        #     if e.which is 13
+        #         search = $('.search_site').val().trim().toLowerCase()
+        #         if search.length > 0
+        #             picked_tags.push search
+        #             console.log 'search', search
+        #             # Meteor.call 'log_term', search, ->
+        #             $('.search_site').val('')
+        #             Session.set('product_query', null)
+        #             # # $('#search').val('').blur()
+        #             # # $( "p" ).blur();
+        #             # Meteor.setTimeout ->
+        #             #     Session.set('dummy', !Session.get('dummy'))
+        #             # , 10000
+        # , 500)
     
         'click .alerts': ->
             Session.set('viewing_alerts', !Session.get('viewing_alerts'))
@@ -67,15 +68,13 @@ if Meteor.isClient
         'click .clear_tags': -> picked_tags.clear()
     
         'click .toggle_invert': ->
+            Meteor.users.update Meteor.userId(),
+                $set:
+                    invert_mode:!Meteor.user().invert_mode
             Session.set('invert_mode', !Session.get('invert_mode'))
-            
+            console.log Session.get('invert_mode')
         
     Template.nav.helpers
-        invert_class: ->
-            if Session.get('invert_mode') is true 
-                'invert'
-            else 
-                ''
         model_docs: ->
             Docs.find 
                 model:'model'

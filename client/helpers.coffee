@@ -24,6 +24,15 @@ Template.registerHelper 'order_things',->
         model:'thing'
         order_id:@_id
 
+Template.registerHelper 'invert_class',-> 
+    # if Session.equals('invert_mode',true) 
+    if Meteor.user().invert_mode is true
+        'inverted'
+    else 
+        ''
+    
+
+
 Template.registerHelper 'order_count',-> Counts.get('order_count')
 Template.registerHelper 'product_count',-> Counts.get('product_count')
 Template.registerHelper 'ingredient_count',-> Counts.get('ingredient_count')
