@@ -13,7 +13,7 @@ body {
 }
 
 
-.inverted {
+.darkmode {
   filter: invert(.9) !important;
 }
 

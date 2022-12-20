@@ -866,21 +866,6 @@ template(name='user_credits_small')
                 
                 
                 
-template(name='user_food')
-    .ui.inline.header
-        +icolor name='food'
-        |user food
-    if is_current_user
-        a.ui.circular.basic.icon.button(href="/user/#{current_user.username}/edit/food")
-            i.pencil.icon
-    div
-    +array_view key='allergens' label='allergens'
-    +array_view key='food_likes' label='food likes'
-    +array_view key='food_dislikes' label='food dislikes'
-    each food_orders
-        +food_order_view
-
-
 
 
 

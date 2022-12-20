@@ -1,5 +1,7 @@
 Template.registerHelper 'from_now', (input)-> moment(input).fromNow()
 Template.registerHelper 'cal_time', (input)-> moment(input).calendar()
+Template.registerHelper 'comma', (input) ->
+    input.toLocaleString("en-US")
 
 Template.registerHelper 'parent', () -> Template.parentData()
 Template.registerHelper 'parent_doc', () ->
@@ -24,10 +26,10 @@ Template.registerHelper 'order_things',->
         model:'thing'
         order_id:@_id
 
-Template.registerHelper 'invert_class',-> 
-    # if Session.equals('invert_mode',true) 
-    if Meteor.user().invert_mode is true
-        'inverted'
+Template.registerHelper 'darkmode_class',-> 
+    # if Meteor.user().invert_mode is true
+    if Session.equals('darkmode',true) 
+        'darkmode'
     else 
         ''
     

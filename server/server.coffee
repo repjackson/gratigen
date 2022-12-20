@@ -294,3 +294,56 @@ if Meteor.isServer
                             type: "Point"
                             coordinates: [user.current_long, user.current_lat]
                             $maxDistance: 2000
+
+
+
+Meteor.publish 'agg_emotions', (
+    # group
+    picked_tags
+    dummy
+    # picked_time_tags
+    # selected_location_tags
+    # selected_people_tags
+    # picked_max_emotion
+    # picked_timestamp_tags
+    )->
+    # @unblock()
+    self = @
+    match = {
+        model:'post'
+        # group:group
+        joy_percent:$exists:true
+    }
+        
+    doc_count = Docs.find(match).count()
+    if picked_tags.length > 0 then match.tags = $all:picked_tags
+    # if picked_max_emotion.length > 0 then match.max_emotion_name = $all:picked_max_emotion
+    # if picked_time_tags.length > 0 then match.time_tags = $all:picked_time_tags
+    # if selected_location_tags.length > 0 then match.location_tags = $all:selected_location_tags
+    # if selected_people_tags.length > 0 then match.people_tags = $all:selected_people_tags
+    # if picked_timestamp_tags.length > 0 then match._timestamp_tags = $all:picked_timestamp_tags
+    
+    emotion_avgs = Docs.aggregate [
+        { $match: match }
+        #     # avgAmount: { $avg: { $multiply: [ "$price", "$quantity" ] } },
+        { $group: 
+            _id:null
+            avg_sent_score: { $avg: "$doc_sentiment_score" }
+            avg_joy_score: { $avg: "$joy_percent" }
+            avg_anger_score: { $avg: "$anger_percent" }
+            avg_sadness_score: { $avg: "$sadness_percent" }
+            avg_disgust_score: { $avg: "$disgust_percent" }
+            avg_fear_score: { $avg: "$fear_percent" }
+        }
+    ]
+    emotion_avgs.forEach (res, i) ->
+        self.added 'results', Random.id(),
+            model:'emotion_avg'
+            avg_sent_score: res.avg_sent_score
+            avg_joy_score: res.avg_joy_score
+            avg_anger_score: res.avg_anger_score
+            avg_sadness_score: res.avg_sadness_score
+            avg_disgust_score: res.avg_disgust_score
+            avg_fear_score: res.avg_fear_score
+    self.ready()    
+        
