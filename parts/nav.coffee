@@ -66,8 +66,16 @@ if Meteor.isClient
             
         'click .clear_tags': -> picked_tags.clear()
     
-    
+        'click .toggle_invert': ->
+            Session.set('invert_mode', !Session.get('invert_mode'))
+            
+        
     Template.nav.helpers
+        invert_class: ->
+            if Session.get('invert_mode') is true 
+                'invert'
+            else 
+                ''
         model_docs: ->
             Docs.find 
                 model:'model'

@@ -1,6 +1,6 @@
 template(name='nav')
     // https://fomantic-ui.com/elements/icon.html#/icon
-    #topnav.topnav.ui.attached.borderless.inverted.menu.hscroll
+    #topnav.topnav.ui.attached.borderless.inverted.menu.hscroll.invert_class
         // if is_loading
         //     .icon.item
         //         i.big.loading.grey.refresh.icon.cancel
@@ -15,7 +15,8 @@ template(name='nav')
             // i.large.inbox.icon
             +i name='groups'
             span.mobile.hidden users
-
+        .icon.item.toggle_invert
+            i.lightbulb.icon
         // .search.item.zoomer.mobile.hidden(title='search')
         //     .ui.icon.transparent.input
         //         if current_product_search
