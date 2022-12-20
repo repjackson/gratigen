@@ -28,9 +28,8 @@ template(name='profile')
                         +i name='coins'
                         |#{user.points}p
                     if is_current_user
-                        a.ui.circular.button(href="/user/#{username}/edit" title='profile settings')
-                            i.cog.icon
-                            |edit profile
+                        a.ui.circular.big.icon.button(href="/user/#{username}/edit" title='profile settings')
+                            i.cog.large.icon
                         // a.ui.button.logout_other_clients(href="#" title='logout other clients')
                         //     i.globe.icon
                         //     |log out other clients

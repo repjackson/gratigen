@@ -52,12 +52,12 @@ template(name='resource_card')
             .ui.inline.header 
                 |#{daily_rate}
                 small p/day
-            // if tags
-            //     i.tag.icon
-            // each tags
-            //     a.ui.small.link.black.label.flat_pick_tag.spaced #{this}
-            // .right.floated.meta
-            //     | added #{when}
+            if tags
+                i.tag.icon
+            each tags
+                a.ui.small.link.black.label.flat_pick_tag.spaced #{this}
+            .right.floated.meta
+                | added #{when}
             +author_info
 template(name='resource_big_card')
     .ui.fluid.segment
@@ -77,12 +77,7 @@ template(name='resource_big_card')
                 .ui.inline.header 
                     |#{daily_rate}
                     small p/day
-                // if tags
-                //     i.tag.icon
-                // each tags
-                //     a.ui.small.link.black.label.flat_pick_tag.spaced #{this}
-                // .right.floated.meta
-                //     | added #{when}
+                +array_view key='tags'
                 unless anonymous
                     a(href="/user/#{_author_username}")
                         img.ui.avatar.image(src="{{c.url _author.image_id width=400 height=600 crop='fit'}}")
@@ -244,19 +239,19 @@ template(name='resource_edit')
                 .column
                     if in_dev
                         +print_this
-                    // +boolean_edit key='published' label='published' icon='checkmark'
-                    // +boolean_edit key='anonymous' label='anonymous' icon='visible'
+                    +boolean_edit key='published' label='published' icon='checkmark'
+                    +boolean_edit key='anonymous' label='anonymous' icon='visible'
                     div
                     a.ui.header.pointer.refresh_gps(href='#') 
                         |gps coords
                     .ui.label #{lat}
                     .ui.label #{long}
-                    // +text_edit key='location' label='location text' icon='marker' direct=true
+                    +text_edit key='location' label='location text' icon='marker' direct=true
                     +html_edit key='description' label='description' icon='content' direct=true
                 .column
                     +array_edit key='tags' icon='tags' label='tags' direct=true
                     +array_edit key='location_tags' label='public location tags' icon='marker' direct=true
-                    // +array_edit key='private_location_tags' label='private location tags' icon='marker' direct=true tooltip='for handlers and buyers who are picking up'
+                    +array_edit key='private_location_tags' label='private location tags' icon='marker' direct=true tooltip='for handlers and buyers who are picking up'
                     +image_edit key='image_id' label='image' direct=true
                     +image_link_edit key='image_link' label='image link' direct=true
 
