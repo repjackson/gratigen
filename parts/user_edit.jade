@@ -43,6 +43,7 @@ template(name='user_edit')
                     +array_edit key='allergens' label='allergens' icon='no-milk' direct=true
                     +array_edit key='food_dislikes' label='food dislikes' icon='disgusting' direct=true
                     +link_edit key='profile_link' label='profile link' icon='link' direct=true
+                .six.wide.column
                     if in_dev
                         .ui.header
                             i.shield.icon
@@ -51,10 +52,31 @@ template(name='user_edit')
                         +array_edit key='roles' icon='shield' direct=true
                     +array_edit key='tags' label='tags' icon='tags' direct=true
                     +array_edit key='skills' label='skills' icon='wrench' direct=true
+                .eight.wide.column
                     +user_edit_genekeys
+                .eight.wide.column
                     +user_edit_finance
+                .eight.wide.column
                     +user_edit_badges
-                    
+                .six.wide.column
+                    .ui.header food intolerances 
+                    +array_picker key='food_intolerances' value='Dairy'
+                    +array_picker key='food_intolerances' value='Egg'
+                    +array_picker key='food_intolerances' value='Gluten'
+                    +array_picker key='food_intolerances' value='Grain'
+                    +array_picker key='food_intolerances' value='Peanut'
+                    +array_picker key='food_intolerances' value='Seafood'
+                    +array_picker key='food_intolerances' value='Sesame'
+                    +array_picker key='food_intolerances' value='Shellfish'
+                    +array_picker key='food_intolerances' value='Soy'
+                    +array_picker key='food_intolerances' value='Sulfite'
+                    +array_picker key='food_intolerances' value='Tree Nut'
+                    +array_picker key='food_intolerances' value='Wheat'
+               
+               
+template(name='array_picker')
+    .ui.button.toggle_value
+        |#{value}
                     
 template(name='user_settings')
     .ui.segment

@@ -627,12 +627,12 @@ if Meteor.isServer
 
 
 
-if Meteor.isServer
-    Meteor.publish 'user_orders', (username)->
-        user = Meteor.users.findOne username:username
-        Docs.find
-            model:'order'
-            _author_id:user._id
+# if Meteor.isServer
+#     Meteor.publish 'user_orders', (username)->
+#         user = Meteor.users.findOne username:username
+#         Docs.find
+#             model:'order'
+#             _author_id:user._id
             
             
             

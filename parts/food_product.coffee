@@ -1,40 +1,69 @@
 if Meteor.isClient
-    Router.route '/food/', (->
+    Router.route '/food_products/', (->
         @layout 'layout'
-        @render 'food'
-        ), name:'food'
-    Router.route '/food/:doc_id', (->
+        @render 'food_products'
+        ), name:'food_products'
+    Router.route '/food_product/:doc_id', (->
         @layout 'layout'
-        @render 'food_page'
-        ), name:'food_page'
+        @render 'food_product_page'
+        ), name:'food_product_page'
         
-    @picked_food_tags = new ReactiveArray()
+    @picked_food_product_tags = new ReactiveArray()
     
     
-    Template.food.onRendered ->
+    Template.food_products.onRendered ->
         Meteor.setTimeout ->
             $('.accordion').accordion()
         , 1000
 
-    Template.food.onCreated ->
-        @autorun => Meteor.subscribe 'food_counter', ->
-    Template.food.helpers
-        food_count: -> Counts.get('food_counter') 
-    
+    Template.food_products.onCreated ->
+        @autorun => Meteor.subscribe 'food_product_counter', ->
+    Template.food_products.helpers
+        food_product_count: -> Counts.get('food_product_counter') 
+        viewing_list: -> Session.equals('view_mode', 'list')
+        viewing_cards: -> Sesisn.equals('view_mode', 'cards')
+        one_recipe: -> 
+            # console.log 'hi', Docs.find({model:'recipe'}).count() 
+            Docs.find({
+                model:'recipe', 
+                tags:$in:picked_food_product_tags.array()
+            }).count() is 1
+        two_recipes: -> 
+            # console.log 'hi', Docs.find({model:'recipe'}).count() 
+            Docs.find({
+                model:'recipe', 
+                tags:$in:picked_food_product_tags.array()
+            }).count() is 2
+        one_doc: ->
+            Docs.findOne(model:'recipe')
+        food_product_docs: ->
+            Docs.find 
+                model:'food_product'
+        recipe_docs: ->
+            Docs.find {
+                model:'recipe'
+            }, sort:_timestamp:-1
+            
+        picked_food_product_tags: -> picked_food_product_tags.array()
+        tag_results: ->
+            Results.find()
+        
+            
+
 if Meteor.isServer
-    Meteor.publish 'food_counter', (model)->
+    Meteor.publish 'food_product_counter', (model)->
         # if model 
-        Counts.publish this, 'food_counter', 
+        Counts.publish this, 'food_product_counter', 
             Docs.find({
                 model:'recipe'
             })
         return undefined    # otherwise coffeescript returns a Counts.publish
 
 if Meteor.isClient    
-    Template.agg_food_tag.onCreated ->
+    Template.agg_food_product_tag.onCreated ->
         # console.log @
-        @autorun => @subscribe 'food_tag_image', @data.name,->
-    Template.agg_food_tag.helpers
+        @autorun => @subscribe 'food_product_tag_image', @data.name,->
+    Template.agg_food_product_tag.helpers
         term_image: ->
             # console.log Template.currentData().name
             found = Docs.findOne {
@@ -44,10 +73,10 @@ if Meteor.isClient
             }, sort:ups:-1
             # console.log 'found image', found
             found
-    Template.unpick_food_tag.onCreated ->
+    Template.unpick_food_product_tag.onCreated ->
         # console.log @
-        @autorun => @subscribe 'food_tag_image', @data.name,->
-    Template.unpick_food_tag.helpers
+        @autorun => @subscribe 'food_product_tag_image', @data.name,->
+    Template.unpick_food_product_tag.helpers
         flat_term_image: ->
             # console.log Template.currentData()
             found = Docs.findOne {
@@ -58,15 +87,15 @@ if Meteor.isClient
             # console.log 'found flat image', found.watson.metadata.image
             found.image
 
-    Template.unpick_food_tag.events
+    Template.unpick_food_product_tag.events
         'click .unpick_tag': ->
-            picked_food_tags.remove @valueOf()
+            picked_food_product_tags.remove @valueOf()
             window.speechSynthesis.speak new SpeechSynthesisUtterance "removing #{@valueOf()}"
         
-    Template.agg_food_tag.events
+    Template.agg_food_product_tag.events
         'click .result': (e,t)->
             # Meteor.call 'log_term', @title, ->
-            picked_food_tags.push @name
+            picked_food_product_tags.push @name
             $('#search').val('')
             # Session.set('full_doc_id', null)
             window.speechSynthesis.speak new SpeechSynthesisUtterance @name
@@ -76,28 +105,28 @@ if Meteor.isClient
             Session.set('is_loading', true)
             # Meteor.call 'call_wiki', @name, ->
     
-            # Meteor.call 'call_food', picked_tags.array(), ->
-            Meteor.call 'call_food', @name, ->
+            # Meteor.call 'call_food_product', picked_tags.array(), ->
+            Meteor.call 'call_food_product', @name, ->
                 Session.set('is_loading', false)
                 Session.set('searching', false)
     
-    Template.food_page.onCreated ->
+    Template.food_product_page.onCreated ->
         @autorun => @subscribe 'doc_by_id', Router.current().params.doc_id, ->
-    Template.food.onCreated ->
-        document.title = 'gr food'
+    Template.food_products.onCreated ->
+        document.title = 'gr food_product'
         
         # @autorun => @subscribe 'model_docs','artist', ->
-        @autorun => @subscribe 'food_facets',
-            picked_food_tags.array()
+        @autorun => @subscribe 'food_product_facets',
+            picked_food_product_tags.array()
             Session.get('title')
-        @autorun => @subscribe 'food_results',
-            picked_food_tags.array()
+        @autorun => @subscribe 'food_product_results',
+            picked_food_product_tags.array()
             Session.get('title')
 
 
 
 
-    Template.food_page.onRendered ->
+    Template.food_product_page.onRendered ->
         # console.log @
         found_doc = Docs.findOne Router.current().params.doc_id
         if found_doc 
@@ -107,8 +136,8 @@ if Meteor.isClient
             unless found_doc.details 
                 Meteor.call 'recipe_details', Router.current().params.doc_id, ->
                     console.log 'pulled recipe details'
-    # Template.recipe_card.onRendered ->
-    # Template.recipe_card. ->
+    # Template.food_product_card.onRendered ->
+    # Template.food_product_card. ->
     #     console.log @
     #     # found_doc = Docs.findOne Template.currentData()
     #     unless @data.watson
@@ -119,13 +148,13 @@ if Meteor.isClient
     #             console.log 'pulled recipe details'
                 
     
-    Template.food_page.helpers
+    Template.food_product_page.helpers
         instruction_steps: ->
             console.log @
             console.log @details.analyzedInstructions[0]
             @details.analyzedInstructions[0].steps
             
-    Template.recipe_card.events
+    Template.food_product_card.events
         'click .call_watson': ->
             unless @details 
                 Meteor.call 'recipe_details', @_id, ->
@@ -134,10 +163,10 @@ if Meteor.isClient
                 Meteor.call 'call_watson',@_id,'content','html', ->
                     console.log 'autoran watson'
             
-        'click .pick_food_tag': ->
-            picked_food_tags.clear()
-            picked_food_tags.push @valueOf()
-            Meteor.call 'call_food', @valueOf(), ->
+        'click .pick_food_product_tag': ->
+            picked_food_product_tags.clear()
+            picked_food_product_tags.push @valueOf()
+            Meteor.call 'call_food_product', @valueOf(), ->
             
             $('body').toast({
                 title: "browsing #{@valueOf()}"
@@ -155,11 +184,11 @@ if Meteor.isClient
                   hideMethod   : 'fade',
                   hideDuration : 250
                 })
-    Template.food_page.events
-        'click .pick_food_tag': ->
-            Router.go "/food"
-            picked_food_tags.clear()
-            picked_food_tags.push @valueOf()
+    Template.food_product_page.events
+        'click .pick_food_product_tag': ->
+            Router.go "/food_product"
+            picked_food_product_tags.clear()
+            picked_food_product_tags.push @valueOf()
             $('body').toast({
                 title: "browsing #{@valueOf()}"
                 # message: 'Please see desk staff for key.'
@@ -177,23 +206,23 @@ if Meteor.isClient
                   hideDuration : 250
                 })
 
-            Meteor.call 'call_food', @valueOf(), ->
+            Meteor.call 'call_food_product', @valueOf(), ->
         'click .get_details': ->
             Meteor.call 'recipe_details', @_id, ->
-    Template.recipe_card_big.events
-        'click .pick_food_tag': ->
-            picked_food_tags.clear()
-            picked_food_tags.push @valueOf()
-            Meteor.call 'call_food', @valueOf(), ->
-    Template.food.events
+    Template.food_product_card_big.events
+        'click .pick_food_product_tag': ->
+            picked_food_product_tags.clear()
+            picked_food_product_tags.push @valueOf()
+            Meteor.call 'call_food_product', @valueOf(), ->
+    Template.food_products.events
         'click .show_list': ->
             Session.set('view_mode', 'list')
         'click .show_cards': ->
             Session.set('view_mode', 'cards')
-        'keyup .food_search': (e,t)->
+        'keyup .food_product_search': (e,t)->
             # console.log 'hi'
-            query = t.$('.food_search').val()
-            Session.set('food_search',query)
+            query = t.$('.food_product_search').val()
+            Session.set('food_product_search',query)
             if e.which is 13
                 $('body').toast({
                     title: "browsing #{query}"
@@ -211,7 +240,7 @@ if Meteor.isClient
                       hideMethod   : 'fade',
                       hideDuration : 250
                     })
-                Meteor.call 'call_food', Session.get('food_search'), ->
+                Meteor.call 'call_food_product', Session.get('food_product_search'), ->
                     $('body').toast({
                         title: "searched #{query}"
                         # message: 'Please see desk staff for key.'
@@ -228,45 +257,15 @@ if Meteor.isClient
                           hideMethod   : 'fade',
                           hideDuration : 250
                         })
-                t.$('.food_search').val('')
-                picked_food_tags.push query
-            
-    Template.food.helpers
-        viewing_list: -> Session.equals('view_mode', 'list')
-        viewing_cards: -> Sesisn.equals('view_mode', 'cards')
-        one_recipe: -> 
-            # console.log 'hi', Docs.find({model:'recipe'}).count() 
-            Docs.find({
-                model:'recipe', 
-                tags:$in:picked_food_tags.array()
-            }).count() is 1
-        two_recipes: -> 
-            # console.log 'hi', Docs.find({model:'recipe'}).count() 
-            Docs.find({
-                model:'recipe', 
-                tags:$in:picked_food_tags.array()
-            }).count() is 2
-        one_doc: ->
-            Docs.findOne(model:'recipe')
-        food_docs: ->
-            Docs.find 
-                model:'food'
-        recipe_docs: ->
-            Docs.find {
-                model:'recipe'
-            }, sort:_timestamp:-1
-            
-        picked_food_tags: -> picked_food_tags.array()
-        tag_results: ->
-            Results.find()
-        
+                t.$('.food_product_search').val('')
+                picked_food_product_tags.push query
             
             
             
             
 if Meteor.isServer
     Meteor.methods 
-        recipe_details: (doc_id)->
+        food_product_details: (doc_id)->
             doc = Docs.findOne doc_id
             HTTP.get "https://api.spoonacular.com/recipes/#{doc.id}/information/?includeNutrition=false&apiKey=cb1161b798864463a35af72931e79229&",(err,res)=>
                 # console.log res.data
@@ -275,18 +274,43 @@ if Meteor.isServer
                         details:res.data
                         
                 
-        call_food: (search)->
+        call_food_product: (search)->
             console.log 'calling', search
             # HTTP.get "https://api.spoonacular.com/mealplanner/generate?apiKey=e52f2f2ca01a448e944d94194e904775&timeFrame=day&targetCalories=#{calories}",(err,res)=>
-            HTTP.get "https://api.spoonacular.com/food/search?apiKey=cb1161b798864463a35af72931e79229&query=#{search}",(err,res)=>
-                # console.log res.data
+            HTTP.get "https://api.spoonacular.com/food_product/search?apiKey=cb1161b798864463a35af72931e79229&query=#{search}",(err,res)=>
+                console.log res.data
                 if err 
                     console.log err
                 else 
-                    console.log 'good food call'
+                    console.log 'good food_product call'
                     for result in res.data.searchResults
                         # console.log result.name
                         # if result.name is 'Recipes'
+                        products = _.where(res.data.searchResults, {name:'Products'})
+                        for product in products
+                            console.log product
+                            found_food_product_product = 
+                                Docs.findOne 
+                                    model:'food_product_product'
+                                    id:product.id
+                            if found_food_product_product
+                                Docs.update found_food_product_product._id, 
+                                    $inc:hits:1
+                                    $addToSet:
+                                        tags:search
+                            else 
+                                new_id = Docs.insert 
+                                    model:'food_product_product'
+                                    id:product.id
+                                    name:product.name
+                                    image:product.image
+                                    link:product.link
+                                    tags:[search]
+                                    type:product.type
+                                    relevance:product.relevance
+                                    content:product.content
+                                # Meteor.call 'recipe_details', new_id, ->
+
                         recipes = _.where(res.data.searchResults, {name:'Recipes'})
                         for recipe in recipes[0].results
                             # console.log recipe
@@ -318,15 +342,15 @@ if Meteor.isServer
                 
             
 if Meteor.isServer
-    Meteor.publish 'food_facets', (
-        picked_food_tags=[]
+    Meteor.publish 'food_product_facets', (
+        picked_food_product_tags=[]
         name_search=''
         )->
     
             self = @
             match = {}
     
-            # match.tags = $all: picked_food_tags
+            # match.tags = $all: picked_food_product_tags
             match.model = $in:['recipe']
             # if parent_id then match.parent_id = parent_id
     
@@ -338,7 +362,7 @@ if Meteor.isServer
             # if view_private is false
             #     match.published = $in: [0,1]
     
-            if picked_food_tags.length > 0 then match.tags = $all: picked_food_tags
+            if picked_food_product_tags.length > 0 then match.tags = $all: picked_food_product_tags
             # if picked_styles.length > 0 then match.strStyle = $all: picked_styles
             # if picked_moods.length > 0 then match.strMood = $all: picked_moods
             # if picked_genres.length > 0 then match.strGenre = $all: picked_genres
@@ -351,7 +375,7 @@ if Meteor.isServer
                 { $project: tags: 1 }
                 { $unwind: "$tags" }
                 { $group: _id: '$tags', count: $sum: 1 }
-                { $match: _id: $nin: picked_food_tags }
+                { $match: _id: $nin: picked_food_product_tags }
                 { $sort: count: -1, _id: 1 }
                 { $match: count: $lt: total_count }
                 { $limit: 15}
@@ -368,7 +392,7 @@ if Meteor.isServer
                     
             self.ready()
 
-    Meteor.publish 'food_tag_image', (
+    Meteor.publish 'food_product_tag_image', (
         term=null
         # porn=false
         )->
@@ -409,15 +433,15 @@ if Meteor.isServer
         }
 
 
-    Meteor.publish 'food_results', (
-        picked_food_tags=[]
+    Meteor.publish 'food_product_results', (
+        picked_food_product_tags=[]
         name_search=''
         )->
         self = @
         match = {}
         match.model = $in:['recipe']
         
-        if picked_food_tags.length > 0 then match.tags = $all: picked_food_tags
+        if picked_food_product_tags.length > 0 then match.tags = $all: picked_food_product_tags
         if name_search.length > 1
             match.name = {$regex:"#{name_search}", $options: 'i'}
         #     # match.tags_string = {$regex:"#{query}", $options: 'i'}

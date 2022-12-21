@@ -1,11 +1,11 @@
-template(name='food')
+template(name='food_products')
     // img.ui.fluid.image.checkin_banner.invert(src="{{c.url 'frontrange' width=1000 height=1000 crop='crop'}}")
     .ui.stackable.padded.grid 
         .four.wide.column
             .ui.inline.small.header 
-                +i name='food'
-                |{{comma food_count}}
-                |recipes
+                +i name='food_product'
+                |{{comma food_product_count}}
+                |food_products
             each picked_types
                 button.ui.compact.big.button.unpick_type(tabindex='0')
                     //- i.remove.icon
@@ -14,11 +14,11 @@ template(name='food')
                 button.ui.large.label.button.pick_type(tabindex="0" class=result_class title=count)
                     |#{name}
                     // small #{count}
-            each picked_food_tags
-                +unpick_food_tag
+            each picked_food_product_tags
+                +unpick_food_product_tag
             .ui.icon.input
                 i.search.icon
-                input.food_search(type='text' placeholder='search recipes...' value=current_search)
+                input.food_product_search(type='text' placeholder='search food_products...' value=current_search)
             .ui.styled.fluid.accordion
                 .active.title.zoomer
                     // +i name='tag'
@@ -27,7 +27,7 @@ template(name='food')
                     i.dropdown.icon
                 .active.content
                     each tag_results
-                        +agg_food_tag
+                        +agg_food_product_tag
                         // button.ui.large.label.button.pick_tag(tabindex="0" class=result_class title=count)
                         //     |#{name}
                         //     small #{count}
@@ -53,36 +53,29 @@ template(name='food')
             .scrolling
                 if subs_ready
                     if viewing_list
-                        each recipe_docs 
-                            +recipe_item
-                    if one_recipe
-                        each recipe_docs
-                            +recipe_card_big
+                        each food_product_docs 
+                            +food_product_item
+                    if one_food_product
+                        each food_product_docs
+                            +food_product_card_big
                         // with one_doc
-                        //     +recipe_doc
-                    else if two_recipes
+                        //     +food_product_doc
+                    else if two_food_products
                         .ui.centered.stackable.two.cards 
-                            each recipe_docs
-                                +recipe_card
+                            each food_product_docs
+                                +food_product_card
                     else 
                         .ui.centered.stackable.cards 
-                            each recipe_docs
-                                +recipe_card
+                            each food_product_docs
+                                +food_product_card
                 else 
                     .ui.basic.center.aligned.segment
-                        // +ibig name='food' cl='spinning'
-                        i.massive.food.loading.icon
+                        // +ibig name='food_product' cl='spinning'
+                        i.massive.food_product.loading.icon
               
               
               
-template(name='sort_button')
-    .ui.compact.button.set_amount.zoomer(title="set limit to #{amount}")
-        if icon 
-            +i name=icon 
-        |#{label}
-                    
-                    
-template(name='unpick_food_tag')
+template(name='unpick_food_product_tag')
     button.ui.big.image.link.label.zoomer.unpick_tag.pointer(tabindex="0" class="#{loading_class} #{active_term_class}")
         // i.minus.icon
         if flat_term_image
@@ -91,7 +84,7 @@ template(name='unpick_food_tag')
         strong #{this}
                     
                     
-template(name='agg_food_tag') 
+template(name='agg_food_product_tag') 
     // button.ui.big.compact.active.fade.animated.button.result(tabindex="0" title=count)
     button.ui.image.basic.large.label.result.zoomer(tabindex="0" title=count)
         // .visible.content
@@ -113,26 +106,26 @@ template(name='agg_food_tag')
 
                     
                     
-template(name='recipe_card')
-    // a.card(href="/food/#{_id}")
+template(name='food_product_card')
+    // a.card(href="/food_product/#{_id}")
     .card.call_watson
-        a.fly_right(href="/food/#{_id}")
+        a.fly_right(href="/food_product/#{_id}")
             img.ui.fluid.image.zoomer(src=image)
         .content
-            a.ui.header(href="/food/#{_id}")
+            a.ui.header(href="/food_product/#{_id}")
                 | #{name}
             // .ui.label #{link}
-            a.smallcut.zoomer(href="/food/#{_id}") !{content}
+            a.smallcut.zoomer(href="/food_product/#{_id}") !{content}
             .ui.label #{points}p
             // .ui.label #{type}
             .ui.label ##{id}
             .ui.label #{relevance}
             if _author_username
-                a.ui.label.fly_down(href="/user/#{_author_username}/food")
+                a.ui.label.fly_down(href="/user/#{_author_username}/food_product")
                     i.user.icon
                     |#{_author_username}
             each tags 
-                a.ui.label.zoomer.pick_food_tag #{this}
+                a.ui.label.zoomer.pick_food_product_tag #{this}
             if currentUser.admin_mode
                 +delete_button
             if details.glutenFree
@@ -154,27 +147,27 @@ template(name='recipe_card')
                     |servings
             .content
                 |mined #{_when} by #{_author_username}
-template(name='recipe_item')
-    // a.card(href="/food/#{_id}")
+template(name='food_product_item')
+    // a.card(href="/food_product/#{_id}")
     .item.call_watson
-        a.fly_right.image(href="/food/#{_id}")
+        a.fly_right.image(href="/food_product/#{_id}")
             img.ui.small.image.zoomer(src=image)
         .content
-            a.ui.header(href="/food/#{_id}")
+            a.ui.header(href="/food_product/#{_id}")
                 | #{name}
             // .ui.label #{link}
-            a.smallcut.zoomer(href="/food/#{_id}") 
+            a.smallcut.zoomer(href="/food_product/#{_id}") 
                 |!{content}
             .ui.label #{points}p
             // .ui.label #{type}
             // .ui.label ##{id}
             .ui.label #{relevance}
             if _author_username
-                a.ui.label.fly_down(href="/user/#{_author_username}/food")
+                a.ui.label.fly_down(href="/user/#{_author_username}/food_product")
                     i.user.icon
                     |#{_author_username}
             each seven_tags 
-                a.ui.basic.label.zoomer.pick_food_tag #{this}
+                a.ui.basic.label.zoomer.pick_food_product_tag #{this}
             if currentUser.admin_mode
                 +delete_button
             if details.glutenFree
@@ -196,12 +189,8 @@ template(name='recipe_item')
                     |servings
             .content
                 |mined #{_when} by #{_author_username}
-template(name='delete_button')
-    .ui.icon.button.delete_this(title='delete this')
-        i.large.remove.red.icon        
             
-            
-template(name='recipe_card_big')
+template(name='food_product_card_big')
     .ui.fluid.card
         img.ui.fluid.image.checkin_banner.invert(src=image)
         .ui.stackable.padded.grid 
@@ -245,7 +234,7 @@ template(name='recipe_card_big')
                 
                 +i name='tags'
                 each tags 
-                    .ui.compact.button.pick_food_tag
+                    .ui.compact.button.pick_food_product_tag
                         |#{this}
             .sixteen.wide.column
                 .f7 !{content}
@@ -253,7 +242,7 @@ template(name='recipe_card_big')
                     +call_watson key='content' mode='html'
             .eight.wide.column
                 .ui.header 
-                    |related recipes
+                    |related food_products
                 .ui.header details
                 if currentUser.admin_mode
                     .ui.button.get_details get details
@@ -362,14 +351,14 @@ template(name='recipe_card_big')
                     +watson_view
 
             
-template(name='food_page')
+template(name='food_product_page')
     with current_doc 
         img.ui.fluid.image.checkin_banner.invert(src=image)
         .ui.stackable.padded.grid 
             .sixteen.wide.column 
-                a.ui.button.fly_down(href="/food")
-                    +i name='food'
-                    |food
+                a.ui.button.fly_down(href="/food_product")
+                    +i name='food_product'
+                    |food_product
                 .ui.inline.header #{name}
                 with details 
                     .ui.big.label(title='aggregateLikes')
@@ -418,7 +407,7 @@ template(name='food_page')
             .five.wide.column
                 +i name='tags'
                 each tags 
-                    .ui.compact.button.pick_food_tag
+                    .ui.compact.button.pick_food_product_tag
                         |#{this}
             .five.wide.column
                 .f7 !{content}
@@ -426,7 +415,7 @@ template(name='food_page')
                     +call_watson key='content' mode='html'
             .five.wide.column
                 .ui.header 
-                    |related recipes
+                    |related food_products
                 .ui.header details
                 if currentUser.admin_mode
                     .ui.button.get_details get details
@@ -537,13 +526,13 @@ template(name='food_page')
             
             
 template(name='user_food')
-    a.ui.button(href="/food")
+    a.ui.button(href="/food_product")
         i.chevron.left.icon
-        +i name='food'
-        |food
+        +i name='food_product'
+        |food_product
     // .ui.inline.header 
-    //     +i name='food'
-    //     |#{user_task_docs.count} food
+    //     +i name='food_product'
+    //     |#{user_task_docs.count} food_product
     .ui.header 
         +i name='spade'
         |mined
@@ -554,16 +543,16 @@ template(name='user_food')
         i.large.thumbs.down.red.icon
         |liked
     .ui.inline.header
-        +icolor name='food'
-        |user food
+        +icolor name='food_product'
+        |user food_product
     if is_current_user
-        a.ui.circular.basic.icon.button(href="/user/#{current_user.username}/edit/food")
+        a.ui.circular.basic.icon.button(href="/user/#{current_user.username}/edit/food_product")
             i.pencil.icon
     div
     +array_view key='allergens' label='allergens'
-    +array_view key='food_likes' label='food likes'
-    +array_view key='food_dislikes' label='food dislikes'
-    each food_orders
-        +food_order_view
+    +array_view key='food_product_likes' label='food_product likes'
+    +array_view key='food_product_dislikes' label='food_product dislikes'
+    each food_product_orders
+        +food_product_order_view
 
 

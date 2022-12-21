@@ -73,10 +73,3 @@ if Meteor.isClient
         user_docs: ->
             Meteor.users.find {}
 
-
-
-if Meteor.isServer 
-    Meteor.publish 'latest_docs', ->
-        Docs.find {},
-            sort:_timestamp:-1
-            limit:20

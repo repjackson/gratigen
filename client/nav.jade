@@ -1,6 +1,6 @@
 template(name='nav')
     // https://fomantic-ui.com/elements/icon.html#/icon
-    #topnav.topnav.ui.attached.borderless.big.menu.hscroll(class=invert_class)
+    #topnav.topnav.ui.attached.borderless.large.menu.hscroll(class=invert_class)
         // if is_loading
         //     .icon.item
         //         i.big.loading.grey.refresh.icon.cancel
@@ -11,7 +11,8 @@ template(name='nav')
             +i name='network'
             // i.large.home.icon
             span.mobile.hidden gratigen
-        +nav_item route='food' icon='food' label='food'
+        +nav_item route='recipes' icon='meal' label='recipes'
+        +nav_item route='food_products' icon='shop' label='products'
         +nav_item route='music' icon='music' label='music'
         +nav_item route='users' icon='groups' label='users'
         // a.icon.item.toggle_invert
