@@ -83,6 +83,7 @@ body {
 
 .ui.label {
   margin:2px !important;
+  border-radius: 10px !important;
 }
 
 .zoomer{
@@ -101,7 +102,7 @@ body {
 }
 
 .button:not(.circular) {
-  /*border-radius: 10px !important;*/
+  border-radius: 10px !important;
 }
 
 .inline {

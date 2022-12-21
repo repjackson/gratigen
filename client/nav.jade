@@ -72,6 +72,8 @@ template(name='nav')
                     span.mobile.hidden login
             if session_is 'viewing_alerts'
                 +topbar
+                
+template(name='secnav')
     .ui.attached.small.borderless.menu.hscroll(class=invert_class)
         a.item.zoomer(href="/resources" class="{{isActiveRoute 'resources'}}")
             // i.large.inbox.icon
