@@ -1,8 +1,8 @@
 template(name='food')
-    img.ui.fluid.image.checkin_banner.invert(src="{{c.url 'frontrange' width=1000 height=1000 crop='crop'}}")
+    // img.ui.fluid.image.checkin_banner.invert(src="{{c.url 'frontrange' width=1000 height=1000 crop='crop'}}")
     .ui.stackable.padded.grid 
         .four.wide.column
-            .ui.inline.header 
+            .ui.inline.small.header 
                 +i name='food'
                 |{{comma food_count}}
                 |recipes
@@ -16,7 +16,7 @@ template(name='food')
                     // small #{count}
             each picked_food_tags
                 +unpick_food_tag
-            .ui.large.icon.input
+            .ui.icon.input
                 i.search.icon
                 input.food_search(type='text' placeholder='search recipes...' value=current_search)
             each tag_results
@@ -30,6 +30,7 @@ template(name='food')
                 i.large.list.icon
             .ui.icon.large.button.show_cards 
                 i.large.th.icon
+            
             .scrolling
                 if subs_ready
                     if viewing_list
@@ -65,7 +66,7 @@ template(name='unpick_food_tag')
                     
 template(name='agg_food_tag') 
     // button.ui.big.compact.active.fade.animated.button.result(tabindex="0" title=count)
-    button.ui.image.basic.big.label.result.zoomer(tabindex="0" title=count)
+    button.ui.image.basic.large.label.result.zoomer(tabindex="0" title=count)
         // .visible.content
         if subs_ready
             img.ui.fluid.image.zoomer.invert(src=term_image.image)
@@ -128,24 +129,25 @@ template(name='recipe_card')
                 |mined #{_when} by #{_author_username}
 template(name='recipe_item')
     // a.card(href="/food/#{_id}")
-    .card.call_watson
-        a.fly_right(href="/food/#{_id}")
-            img.ui.fluid.image.zoomer(src=image)
+    .item.call_watson
+        a.fly_right.image(href="/food/#{_id}")
+            img.ui.small.image.zoomer(src=image)
         .content
             a.ui.header(href="/food/#{_id}")
                 | #{name}
             // .ui.label #{link}
-            a.smallcut.zoomer(href="/food/#{_id}") !{content}
+            a.smallcut.zoomer(href="/food/#{_id}") 
+                |!{content}
             .ui.label #{points}p
             // .ui.label #{type}
-            .ui.label ##{id}
+            // .ui.label ##{id}
             .ui.label #{relevance}
             if _author_username
                 a.ui.label.fly_down(href="/user/#{_author_username}/food")
                     i.user.icon
                     |#{_author_username}
-            each tags 
-                a.ui.label.zoomer.pick_food_tag #{this}
+            each seven_tags 
+                a.ui.basic.label.zoomer.pick_food_tag #{this}
             if currentUser.admin_mode
                 +delete_button
             if details.glutenFree
