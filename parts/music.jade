@@ -1,6 +1,6 @@
 template(name='music')
     .ui.stackable.padded.grid 
-        .sixteen.wide.column
+        .four.wide.column
             .ui.inline.header 
                 +i name='music'
                 |#{music_count} artists
@@ -21,6 +21,7 @@ template(name='music')
                         +i name='database'
                     |#{name}
                     // small #{count}
+            div
             +i name='tags'
             each picked_music_tags
                 button.ui.blue.compact.button.unpick_tag(tabindex='0')
@@ -31,6 +32,7 @@ template(name='music')
                     |#{name}
                     // small #{count}
 
+            div
             .ui.inline.small.header
                 .ui.small.inline.header
                     +i name='music'
@@ -44,6 +46,7 @@ template(name='music')
                         button.ui.compact.button.pick_genre(tabindex="0" class=result_class title=count)
                             |#{name}
                             // small #{count}
+            div
             .ui.inline.small.header
                 +i name='artist'
                 |#{style_results.count} styles
@@ -56,6 +59,7 @@ template(name='music')
                     button.ui.compact.button.pick_style(tabindex="0" class=result_class title=count)
                         |#{name}
                         // small #{count}
+            div
             .ui.inline.small.header
                 +i name='happy'
                 |#{mood_results.count} moods
@@ -68,7 +72,7 @@ template(name='music')
                     button.ui.compact.button.pick_mood(tabindex="0" class=result_class title=count)
                         |#{name}
                         // small #{count}
-        .sixteen.wide.column
+        .twelve.wide.column
             unless one_result
                 .ui.inline.header(title='result count') #{result_docs.count}
                 // +search_input key='title'
@@ -85,36 +89,37 @@ template(name='music')
                 // +session_set key='limit' value=25
                 // +session_set key='limit' value=100
             .ui.hidden.divider
-            if subs_ready
-                if session_is 'view_mode' 'grid'
-                    .ui.stackable.cards.scrolling
-                        if one_result
-                            .ui.one.cards
-                                each music_docs 
-                                    +music_card
-                        else
-                            .ui.cards
-                                each music_docs 
-                                    +music_card
-                else
-                    .ui.large.list 
-                        each music_docs 
-                            +music_item
-            else 
-                .ui.center.aligned.basic.segment
-                    i.massive.yin.yang.loading.grey.icon
-            // .ui.inline.header search songs
-            // .ui.input 
-            //     input(type='text' placholder='song...')
-            // .ui.list 
-            //     each song_docs 
-            //         .ui.header #{title}
-            // .ui.inline.header search albums
-            // .ui.input 
-            //     input(type='text' placholder='album...')
-            // .ui.list 
-            //     each album_docs 
-            //         .ui.header #{title}
+            .scrolling
+                if subs_ready
+                    if session_is 'view_mode' 'grid'
+                        .ui.stackable.cards.scrolling
+                            if one_result
+                                .ui.one.cards
+                                    each music_docs 
+                                        +music_card
+                            else
+                                .ui.cards
+                                    each music_docs 
+                                        +music_card
+                    else
+                        .ui.large.list 
+                            each music_docs 
+                                +music_item
+                else 
+                    .ui.center.aligned.basic.segment
+                        i.massive.yin.yang.loading.grey.icon
+                // .ui.inline.header search songs
+                // .ui.input 
+                //     input(type='text' placholder='song...')
+                // .ui.list 
+                //     each song_docs 
+                //         .ui.header #{title}
+                // .ui.inline.header search albums
+                // .ui.input 
+                //     input(type='text' placholder='album...')
+                // .ui.list 
+                //     each album_docs 
+                //         .ui.header #{title}
             
 
 template(name='music_card')

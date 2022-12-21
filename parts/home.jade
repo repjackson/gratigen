@@ -7,6 +7,7 @@ template(name='home')
             +filter_model model='request' icon='bullhorn'
             +filter_model model='project' icon='project'
             +filter_model model='comment' icon='comment'
+            +filter_model model='food' icon='food'
             .scrolling
                 each doc_results
                     +home_card
@@ -121,38 +122,45 @@ template(name='open_requests')
                     .ui.header #{when}
                             
 template(name='home_card')
-    a.ui.fluid.card.zoomer.fly_left(href="/#{model}/#{_id}")
-        if youtube_id 
-            +youtube_view key='youtube_id' direct=true
-        .content 
-            .inline.header 
-                if _is 'model' 'post'
-                    +i name='blog'
-                if _is 'model' 'rental'
-                    +i name='clock'
-                if _is 'model' 'task'
-                    +i name='tasks'
-                if _is 'model' 'group'
-                    +i name='campfire'
-                if _is 'model' 'comment'
-                    +i name='chat'
-                // .ui.label #{model}
-                |#{title} #{body}
-            i.clock.icon
-            |#{when}
-        img.ui.image(src="{{c.url image_id width=400 height=400}}")
-        .content 
-            .description
-                    // i.newspaper.large.icon
-                .ui.image.large.label 
-                    img.ui.image(src="{{c.url _author.image_id width=400 height=400}}")
-                    // i.user.icon
-                    |#{_author_username}
-                if tags 
-                    each seven_tags 
-                        .ui.basic.label #{this}
-                            
-                            
+    if _is 'model' 'recipe'
+        +recipe_card
+    else 
+        a.ui.fluid.card.zoomer.fly_left(href="/#{model}/#{_id}")
+            if youtube_id 
+                +youtube_view key='youtube_id' direct=true
+            .content 
+                .inline.header 
+                    if _is 'model' 'recipe'
+                        +i name='recipe'
+                    if _is 'model' 'food'
+                        +i name='food'
+                    if _is 'model' 'post'
+                        +i name='blog'
+                    if _is 'model' 'rental'
+                        +i name='clock'
+                    if _is 'model' 'task'
+                        +i name='tasks'
+                    if _is 'model' 'group'
+                        +i name='campfire'
+                    if _is 'model' 'comment'
+                        +i name='chat'
+                    // .ui.label #{model}
+                    |#{title} #{body}
+                i.clock.icon
+                |#{when}
+            img.ui.image(src="{{c.url image_id width=400 height=400}}")
+            .content 
+                .description
+                        // i.newspaper.large.icon
+                    .ui.image.large.label 
+                        img.ui.image(src="{{c.url _author.image_id width=400 height=400}}")
+                        // i.user.icon
+                        |#{_author_username}
+                    if tags 
+                        each seven_tags 
+                            .ui.basic.label #{this}
+                                
+                                
 
 template(name='latest_activity')
     .ui.header 

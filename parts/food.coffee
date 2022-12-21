@@ -257,7 +257,7 @@ if Meteor.isServer
     Meteor.methods 
         recipe_details: (doc_id)->
             doc = Docs.findOne doc_id
-            HTTP.get "https://api.spoonacular.com/recipes/#{doc.id}/information/?includeNutrition=false&apiKey=e52f2f2ca01a448e944d94194e904775&",(err,res)=>
+            HTTP.get "https://api.spoonacular.com/recipes/#{doc.id}/information/?includeNutrition=false&apiKey=cb1161b798864463a35af72931e79229&",(err,res)=>
                 # console.log res.data
                 Docs.update doc_id, 
                     $set:
@@ -267,40 +267,44 @@ if Meteor.isServer
         call_food: (search)->
             console.log 'calling', search
             # HTTP.get "https://api.spoonacular.com/mealplanner/generate?apiKey=e52f2f2ca01a448e944d94194e904775&timeFrame=day&targetCalories=#{calories}",(err,res)=>
-            HTTP.get "https://api.spoonacular.com/food/search?apiKey=e52f2f2ca01a448e944d94194e904775&query=#{search}",(err,res)=>
+            HTTP.get "https://api.spoonacular.com/food/search?apiKey=cb1161b798864463a35af72931e79229&query=#{search}",(err,res)=>
                 # console.log res.data
-                for result in res.data.searchResults
-                    # console.log result.name
-                    # if result.name is 'Recipes'
-                    recipes = _.where(res.data.searchResults, {name:'Recipes'})
-                    for recipe in recipes[0].results
-                        # console.log recipe
-                        found_recipe = 
-                            Docs.findOne 
-                                model:'recipe'
-                                id:recipe.id
-                        if found_recipe
-                            Docs.update found_recipe._id, 
-                                $inc:hits:1
-                                $addToSet:
-                                    tags:search
-                        unless found_recipe
-                            new_id = Docs.insert 
-                                model:'recipe'
-                                id:recipe.id
-                                name:recipe.name
-                                image:recipe.image
-                                link:recipe.link
-                                tags:[search]
-                                type:recipe.type
-                                relevance:recipe.relevance
-                                content:recipe.content
-                            Meteor.call 'recipe_details', new_id, ->
-
-                    # recipes = res.data.searchResults
-                    
-                    # console.log response.data.searchResults.results
-            
+                if err 
+                    console.log err
+                else 
+                    console.log 'good food call'
+                    for result in res.data.searchResults
+                        # console.log result.name
+                        # if result.name is 'Recipes'
+                        recipes = _.where(res.data.searchResults, {name:'Recipes'})
+                        for recipe in recipes[0].results
+                            # console.log recipe
+                            found_recipe = 
+                                Docs.findOne 
+                                    model:'recipe'
+                                    id:recipe.id
+                            if found_recipe
+                                Docs.update found_recipe._id, 
+                                    $inc:hits:1
+                                    $addToSet:
+                                        tags:search
+                            unless found_recipe
+                                new_id = Docs.insert 
+                                    model:'recipe'
+                                    id:recipe.id
+                                    name:recipe.name
+                                    image:recipe.image
+                                    link:recipe.link
+                                    tags:[search]
+                                    type:recipe.type
+                                    relevance:recipe.relevance
+                                    content:recipe.content
+                                Meteor.call 'recipe_details', new_id, ->
+    
+                        # recipes = res.data.searchResults
+                        
+                        # console.log response.data.searchResults.results
+                
             
 if Meteor.isServer
     Meteor.publish 'food_facets', (
