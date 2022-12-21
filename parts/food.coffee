@@ -181,6 +181,10 @@ if Meteor.isClient
             picked_food_tags.push @valueOf()
             Meteor.call 'call_food', @valueOf(), ->
     Template.food.events
+        'click .show_list': ->
+            Session.set('view_mode', 'list')
+        'click .show_cards': ->
+            Session.set('view_mode', 'cards')
         'keyup .food_search': (e,t)->
             # console.log 'hi'
             query = t.$('.food_search').val()
@@ -223,6 +227,8 @@ if Meteor.isClient
                 picked_food_tags.push query
             
     Template.food.helpers
+        viewing_list: -> Session.equals('view_mode', 'list')
+        viewing_cards: -> Sesisn.equals('view_mode', 'cards')
         one_recipe: -> 
             # console.log 'hi', Docs.find({model:'recipe'}).count() 
             Docs.find({

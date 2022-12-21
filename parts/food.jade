@@ -1,7 +1,7 @@
 template(name='food')
     img.ui.fluid.image.checkin_banner.invert(src="{{c.url 'frontrange' width=1000 height=1000 crop='crop'}}")
     .ui.stackable.padded.grid 
-        .sixteen.wide.column
+        .four.wide.column
             .ui.inline.header 
                 +i name='food'
                 |{{comma food_count}}
@@ -25,24 +25,32 @@ template(name='food')
                     // |#{name}
                     // small #{count}
 
-        .sixteen.wide.column.scrolling
-            if subs_ready
-                if one_recipe
-                    each recipe_docs
-                        +recipe_card_big
-                    // with one_doc
-                    //     +recipe_doc
-                else if two_recipes
-                    .ui.centered.stackable.two.cards 
+        .twelve.wide.column
+            .ui.icon.large.button.show_list 
+                i.large.list.icon
+            .ui.icon.large.button.show_cards 
+                i.large.th.icon
+            .scrolling
+                if subs_ready
+                    if viewing_list
+                        each recipe_docs 
+                            +recipe_item
+                    if one_recipe
                         each recipe_docs
-                            +recipe_card
+                            +recipe_card_big
+                        // with one_doc
+                        //     +recipe_doc
+                    else if two_recipes
+                        .ui.centered.stackable.two.cards 
+                            each recipe_docs
+                                +recipe_card
+                    else 
+                        .ui.centered.stackable.cards 
+                            each recipe_docs
+                                +recipe_card
                 else 
-                    .ui.centered.stackable.cards 
-                        each recipe_docs
-                            +recipe_card
-            else 
-                .ui.basic.center.aligned.segment
-                    +ibig name='food' cl='spinning'
+                    .ui.basic.center.aligned.segment
+                        +ibig name='food' cl='spinning'
                     
                     
                     
@@ -78,6 +86,47 @@ template(name='agg_food_tag')
                     
                     
 template(name='recipe_card')
+    // a.card(href="/food/#{_id}")
+    .card.call_watson
+        a.fly_right(href="/food/#{_id}")
+            img.ui.fluid.image.zoomer(src=image)
+        .content
+            a.ui.header(href="/food/#{_id}")
+                | #{name}
+            // .ui.label #{link}
+            a.smallcut.zoomer(href="/food/#{_id}") !{content}
+            .ui.label #{points}p
+            // .ui.label #{type}
+            .ui.label ##{id}
+            .ui.label #{relevance}
+            if _author_username
+                a.ui.label.fly_down(href="/user/#{_author_username}/food")
+                    i.user.icon
+                    |#{_author_username}
+            each tags 
+                a.ui.label.zoomer.pick_food_tag #{this}
+            if currentUser.admin_mode
+                +delete_button
+            if details.glutenFree
+                .ui.big.label
+                    +i name='no-gluten'
+                    |gluten free
+            with details
+                .ui.label(title='aggregateLikes')
+                    i.thumbs.up.icon
+                    |#{aggregateLikes}
+                .ui.label(title='')
+                    i.clock.up.icon
+                    |ready in 
+                    strong #{readyInMinutes}
+                    |minutes
+                .ui.label(title='servings')
+                    i.hashtag.icon
+                    strong #{servings}
+                    |servings
+            .content
+                |mined #{_when} by #{_author_username}
+template(name='recipe_item')
     // a.card(href="/food/#{_id}")
     .card.call_watson
         a.fly_right(href="/food/#{_id}")
