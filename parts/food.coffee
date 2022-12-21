@@ -11,6 +11,11 @@ if Meteor.isClient
     @picked_food_tags = new ReactiveArray()
     
     
+    Template.food.onRendered ->
+        Meteor.setTimeout ->
+            $('.accordion').accordion()
+        , 1000
+
     Template.food.onCreated ->
         @autorun => Meteor.subscribe 'food_counter', ->
     Template.food.helpers

@@ -19,11 +19,18 @@ template(name='food')
             .ui.icon.input
                 i.search.icon
                 input.food_search(type='text' placeholder='search recipes...' value=current_search)
-            each tag_results
-                +agg_food_tag
-                // button.ui.large.label.button.pick_tag(tabindex="0" class=result_class title=count)
-                    // |#{name}
-                    // small #{count}
+            .ui.styled.fluid.accordion
+                .active.title.zoomer
+                    // +i name='tag'
+                    i.red.large.tag.icon
+                    |#{tag_results.count} tags
+                    i.dropdown.icon
+                .active.content
+                    each tag_results
+                        +agg_food_tag
+                        // button.ui.large.label.button.pick_tag(tabindex="0" class=result_class title=count)
+                        //     |#{name}
+                        //     small #{count}
 
         .twelve.wide.column
             .ui.icon.large.button.show_list 
@@ -51,7 +58,8 @@ template(name='food')
                                 +recipe_card
                 else 
                     .ui.basic.center.aligned.segment
-                        +ibig name='food' cl='spinning'
+                        // +ibig name='food' cl='spinning'
+                        i.massive.food.loading.icon
                     
                     
                     
@@ -82,7 +90,7 @@ template(name='agg_food_tag')
         //     .ui.inline.small.thin.header(class=tag_result_class) #{title}
         // else
         //     //- button.ui.compact.button(tabindex="0" title=count)
-        //- small #{count}
+        small #{count}
 
                     
                     
