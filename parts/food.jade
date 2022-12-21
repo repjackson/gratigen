@@ -329,10 +329,12 @@ template(name='food_page')
                 .ui.label #{relevance}
                 .ui.header #{id}
                 
+            .five.wide.column
                 +i name='tags'
                 each tags 
                     .ui.compact.button.pick_food_tag
                         |#{this}
+            .five.wide.column
                 .f7 !{content}
                 if currentUser.admin_mode
                     +call_watson key='content' mode='html'
@@ -385,7 +387,7 @@ template(name='food_page')
                         .item
                             small gaps: 
                             strong #{gaps}
-            .five.wide.column
+            .sixteen.wide.column
                 .ui.header 
                     +i name='list'
                     |instructions

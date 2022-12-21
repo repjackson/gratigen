@@ -10,6 +10,27 @@ template(name='session_key_value_edit')
             +i name=icon cl='ui avatar image'
             // i.icon(class=icon)
         |#{label}
+        
+        
+        
+template(name='viewing_info')
+    .ui.header 
+        +i name='eye'
+        |viewing info
+    .ui.small.header 
+        |viewers
+    .ui.list 
+        each read_user_ids
+            +user_info
+            // img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+    .ui.small.header 
+        |#{views} views
+    .ui.small.header 
+        |last user viewed: {{med_date last_user_viewed_timestamp}}
+        |last user viewed
+    .ui.small.header 
+        |last anon viewed: {{med_date last_anon_viewed_timestamp}}
+
 
 template(name='session_icon_button')
     .ui.icon.circular.button.set_session_value(class=session_icon_button_class)
