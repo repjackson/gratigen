@@ -267,7 +267,7 @@ if Meteor.isServer
     Meteor.methods 
         food_product_details: (doc_id)->
             doc = Docs.findOne doc_id
-            HTTP.get "https://api.spoonacular.com/recipes/#{doc.id}/information/?includeNutrition=false&apiKey=cb1161b798864463a35af72931e79229&",(err,res)=>
+            HTTP.get "https://api.spoonacular.com/food/products/#{doc.id}/information/?includeNutrition=false&apiKey=cb1161b798864463a35af72931e79229&",(err,res)=>
                 # console.log res.data
                 Docs.update doc_id, 
                     $set:
@@ -277,64 +277,31 @@ if Meteor.isServer
         call_food_product: (search)->
             console.log 'calling', search
             # HTTP.get "https://api.spoonacular.com/mealplanner/generate?apiKey=e52f2f2ca01a448e944d94194e904775&timeFrame=day&targetCalories=#{calories}",(err,res)=>
-            HTTP.get "https://api.spoonacular.com/food_product/search?apiKey=cb1161b798864463a35af72931e79229&query=#{search}",(err,res)=>
-                console.log res.data
+            HTTP.get "https://api.spoonacular.com/food/products/search?apiKey=cb1161b798864463a35af72931e79229&query=#{search}",(err,res)=>
+                # console.log res.data
                 if err 
                     console.log err
                 else 
                     console.log 'good food_product call'
-                    for result in res.data.searchResults
-                        # console.log result.name
-                        # if result.name is 'Recipes'
-                        products = _.where(res.data.searchResults, {name:'Products'})
-                        for product in products
-                            console.log product
-                            found_food_product_product = 
-                                Docs.findOne 
-                                    model:'food_product_product'
-                                    id:product.id
-                            if found_food_product_product
-                                Docs.update found_food_product_product._id, 
-                                    $inc:hits:1
-                                    $addToSet:
-                                        tags:search
-                            else 
-                                new_id = Docs.insert 
-                                    model:'food_product_product'
-                                    id:product.id
-                                    name:product.name
-                                    image:product.image
-                                    link:product.link
-                                    tags:[search]
-                                    type:product.type
-                                    relevance:product.relevance
-                                    content:product.content
-                                # Meteor.call 'recipe_details', new_id, ->
-
-                        recipes = _.where(res.data.searchResults, {name:'Recipes'})
-                        for recipe in recipes[0].results
-                            # console.log recipe
-                            found_recipe = 
-                                Docs.findOne 
-                                    model:'recipe'
-                                    id:recipe.id
-                            if found_recipe
-                                Docs.update found_recipe._id, 
-                                    $inc:hits:1
-                                    $addToSet:
-                                        tags:search
-                            unless found_recipe
-                                new_id = Docs.insert 
-                                    model:'recipe'
-                                    id:recipe.id
-                                    name:recipe.name
-                                    image:recipe.image
-                                    link:recipe.link
-                                    tags:[search]
-                                    type:recipe.type
-                                    relevance:recipe.relevance
-                                    content:recipe.content
-                                Meteor.call 'recipe_details', new_id, ->
+                    for product in res.data.products
+                        console.log product
+                        found_food_product = 
+                            Docs.findOne 
+                                model:'food_product'
+                                id:product.id
+                        if found_food_product
+                            Docs.update found_food_product._id, 
+                                $inc:hits:1
+                                $addToSet:
+                                    tags:search
+                        else 
+                            new_id = Docs.insert 
+                                model:'food_product'
+                                id:product.id
+                                title:product.title
+                                image:product.image
+                                tags:[search]
+                            # Meteor.call 'recipe_details', new_id, ->
     
                         # recipes = res.data.searchResults
                         
@@ -439,7 +406,7 @@ if Meteor.isServer
         )->
         self = @
         match = {}
-        match.model = $in:['recipe']
+        match.model = $in:['food_product']
         
         if picked_food_product_tags.length > 0 then match.tags = $all: picked_food_product_tags
         if name_search.length > 1
