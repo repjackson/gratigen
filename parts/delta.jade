@@ -213,7 +213,9 @@ template(name='delta_list')
                 
                 
 template(name='set_limit')
-    .item.set_limit #{amount}
+    // .item.set_limit #{amount}
+    .ui.compact.button 
+        |#{amount}
 
 template(name='set_view_mode')
     a.ui.tertiary.icon.button.set_view_mode(title=title)

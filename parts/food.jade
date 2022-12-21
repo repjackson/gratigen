@@ -37,7 +37,19 @@ template(name='food')
                 i.large.list.icon
             .ui.icon.large.button.show_cards 
                 i.large.th.icon
-            
+            .ui.inline.header 
+                |limit 
+            +set_limit amount=5
+            +set_limit amount=10
+            +set_limit amount=50
+            |most 
+            +sort_button label='consumed' icon='eat'
+            +sort_button label='ordered' icon='shop'
+            +sort_button label='contained' icon='kitchen'
+            +sort_button label='viewed' icon='visible'
+            +sort_button label='liked' icon='like'
+            +sort_button label='cooked' icon='oven'
+            +sort_button label='commented' icon='chat'
             .scrolling
                 if subs_ready
                     if viewing_list
@@ -60,7 +72,14 @@ template(name='food')
                     .ui.basic.center.aligned.segment
                         // +ibig name='food' cl='spinning'
                         i.massive.food.loading.icon
-                    
+              
+              
+              
+template(name='sort_button')
+    .ui.compact.button.set_amount.zoomer(title="set limit to #{amount}")
+        if icon 
+            +i name=icon 
+        |#{label}
                     
                     
 template(name='unpick_food_tag')
@@ -348,7 +367,7 @@ template(name='food_page')
         img.ui.fluid.image.checkin_banner.invert(src=image)
         .ui.stackable.padded.grid 
             .sixteen.wide.column 
-                a.ui.button(href="/food")
+                a.ui.button.fly_down(href="/food")
                     +i name='food'
                     |food
                 .ui.inline.header #{name}
@@ -377,6 +396,14 @@ template(name='food_page')
                         .ui.big.label
                             +i name='no-milk'
                             |dairy free
+                    .ui.large.button.add_to_pantry
+                        |add to pantry
+                    .ui.large.button.mark_cooked
+                        |mark cooked 
+                    .ui.large.button.request 
+                        |request 
+                    .ui.large.button.mark_consumed
+                        |mark consumed
                 
             .five.wide.column 
                 img.ui.centered.fluid.image.rounded.zoomer.invert(src=image)
