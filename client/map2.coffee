@@ -29,7 +29,6 @@ Template.map.onRendered =>
             touchZoom:false
             doubleClickZoom:false
             }).setView([51.505, -0.09], 13);
-            # }).setView([Session.get('current_lat'), Session.get('current_long')], 16);
     , 2000
 Template.map.events 
     'click .make': ->
@@ -39,6 +38,20 @@ Template.map.events
             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
         }).addTo(map);
 
+
+    'click .locate': ->
+        navigator.geolocation.getCurrentPosition (position) =>
+            console.log 'navigator position', position
+            Session.set('current_lat', position.coords.latitude)
+            Session.set('current_long', position.coords.longitude)
+            
+            console.log 'saving long', position.coords.longitude
+            console.log 'saving lat', position.coords.latitude
+        
+            pos = Geolocation.currentLocation()
+            map.setView([Session.get('current_lat'), Session.get('current_long')], 13);
+
+            # }).setView([Session.get('current_lat'), Session.get('current_long')], 16);
 
 
 
