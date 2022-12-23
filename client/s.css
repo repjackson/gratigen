@@ -181,7 +181,15 @@ body {
 	border-color : green;
 }
 
-
+#map {
+  height:500px !important;
+  /*width: 100% !important;*/
+  /*border: 2px !important;*/
+}
+#localmap {
+  border: 2px !important;
+  min-height:500px !important;
+}
 
 
 .scrolling{

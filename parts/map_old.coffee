@@ -1,8 +1,8 @@
 # if Meteor.isClient
 #     # # @picked_tags = new ReactiveArray []
     
-#     # Router.route '/map', -> @render 'mapgl'
-#     Router.route '/map', -> @render 'localmap'
+#     Router.route '/map', -> @render 'map'
+#     # Router.route '/map', -> @render 'localmap'
 #     # Router.route '/map2', -> @render 'map2'
 #     @current_markers = new ReactiveArray []
     
@@ -73,133 +73,133 @@
 #         #         .transition('fade in', 250)
     
     
-#     # Template.mapgl.onCreated ->
-#     #     # @autorun => Meteor.subscribe 'markers'
-#     #     # if Meteor.user()
-#     #     # @autorun => Meteor.subscribe 'nearby_people', Session.get('current_user')
+#     Template.mapgl.onCreated ->
+#         # @autorun => Meteor.subscribe 'markers'
+#         # if Meteor.user()
+#         # @autorun => Meteor.subscribe 'nearby_people', Session.get('current_user')
     
-#     # Template.mapgl.onRendered =>
-#     #     # Meteor.setTimeout =>
-#     #     #     # pos.coords.latitude
-#     #     #     # Session.set('current_lat', pos.coords.latitude)
-#     #     #     # Session.set('current_long', pos.coords.longitude)
-#     #     #     # Meteor.users.update Meteor.userId(),
-#     #     #     #     $set:current_position:pos
-#     #     #     @map = L.map('mapid',{
-#     #     #         dragging:false, 
-#     #     #         zoomControl:false
-#     #     #         bounceAtZoomLimits:false
-#     #     #         touchZoom:false
-#     #     #         doubleClickZoom:false
-#     #     #         }).setView([Session.get('current_lat'), Session.get('current_long')], 16);
+#     Template.mapgl.onRendered =>
+#         Meteor.setTimeout =>
+#             # pos.coords.latitude
+#             # Session.set('current_lat', pos.coords.latitude)
+#             # Session.set('current_long', pos.coords.longitude)
+#             # Meteor.users.update Meteor.userId(),
+#             #     $set:current_position:pos
+#             @map = L.map('mapid',{
+#                 dragging:false, 
+#                 zoomControl:false
+#                 bounceAtZoomLimits:false
+#                 touchZoom:false
+#                 doubleClickZoom:false
+#                 }).setView([Session.get('current_lat'), Session.get('current_long')], 16);
     
-#     #     #     # var map = L.map('map', {
-#     #     #     # doubleClickZoom: false
-#     #     #     # }).setView([49.25044, -123.137], 13);
+#             # var map = L.map('map', {
+#             # doubleClickZoom: false
+#             # }).setView([49.25044, -123.137], 13);
             
-#     #     #     # L.tileLayer.provider('Stamen.Watercolor').addTo(map);
+#             # L.tileLayer.provider('Stamen.Watercolor').addTo(map);
             
-#     #     #     # map.on('dblclick', (event)->
-#     #     #     #     console.log 'clicked', event
-#     #     #     #     Markers.insert({latlng: event.latlng});
-#     #     #     # )
-#     #     #     # // add clustermarkers
-#     #     #     # markers = L.markerClusterGroup();
-#     #     #     # map.addLayer(markers);
+#             # map.on('dblclick', (event)->
+#             #     console.log 'clicked', event
+#             #     Markers.insert({latlng: event.latlng});
+#             # )
+#             # // add clustermarkers
+#             # markers = L.markerClusterGroup();
+#             # map.addLayer(markers);
             
-#     #     #     query = Markers.find();
-#     #     #     query.observe
-#     #     #         added: (doc)->
-#     #     #             console.log 'added marker', doc
-#     #     #             # marker = L.marker(doc.latlng).on('click', (event)->
-#     #     #             #     Markers.remove({_id: doc._id});
-#     #     #             # );
-#     #     #             # console.log {{c.url currentUser.profile_image_id height=500 width=500 gravity='face' crop='fill'}}
-#     #     #             myIcon = L.icon({
-#     #     #                 iconUrl:"https://res.cloudinary.com/facet/image/upload/c_fill,g_face,h_300,w_100/#{Meteor.user().profile_image_id}"
-#     #     #                 iconSize: [38, 95],
-#     #     #                 iconAnchor: [22, 94],
-#     #     #                 popupAnchor: [-3, -76],
-#     #     #                 # shadowUrl: 'my-icon-shadow.png',
-#     #     #                 shadowSize: [68, 95],
-#     #     #                 shadowAnchor: [22, 94]
-#     #     #             });
+#             query = Markers.find();
+#             query.observe
+#                 added: (doc)->
+#                     console.log 'added marker', doc
+#                     # marker = L.marker(doc.latlng).on('click', (event)->
+#                     #     Markers.remove({_id: doc._id});
+#                     # );
+#                     # console.log {{c.url currentUser.profile_image_id height=500 width=500 gravity='face' crop='fill'}}
+#                     myIcon = L.icon({
+#                         iconUrl:"https://res.cloudinary.com/facet/image/upload/c_fill,g_face,h_300,w_100/#{Meteor.user().profile_image_id}"
+#                         iconSize: [38, 95],
+#                         iconAnchor: [22, 94],
+#                         popupAnchor: [-3, -76],
+#                         # shadowUrl: 'my-icon-shadow.png',
+#                         shadowSize: [68, 95],
+#                         shadowAnchor: [22, 94]
+#                     });
     
-#     #     #             L.marker([doc.latlng.lat, doc.latlng.long],{
-#     #     #                 draggable:true
-#     #     #                 icon:myIcon
-#     #     #                 riseOnHover:true
-#     #     #                 }).addTo(map)
-#     #     #             # markers.addLayer(marker);
+#                     L.marker([doc.latlng.lat, doc.latlng.long],{
+#                         draggable:true
+#                         icon:myIcon
+#                         riseOnHover:true
+#                         }).addTo(map)
+#                     # markers.addLayer(marker);
                     
-#     #     #         removed: (oldDocument)->
-#     #     #             layers = map._layers;
-#     #     #             for key in layers
-#     #     #                 val = layers[key];
-#     #     #                 if (val._latlng)
-#     #     #                     if val._latlng.lat is oldDocument.latlng.lat and val._latlng.lng is oldDocument.latlng.lng
-#     #     #                         markers.removeLayer(val)
+#                 removed: (oldDocument)->
+#                     layers = map._layers;
+#                     for key in layers
+#                         val = layers[key];
+#                         if (val._latlng)
+#                             if val._latlng.lat is oldDocument.latlng.lat and val._latlng.lng is oldDocument.latlng.lng
+#                                 markers.removeLayer(val)
                 
-#     #     #     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-#     #     #         # attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-#     #     #         accessToken:"pk.eyJ1IjoicmVwamFja3NvbiIsImEiOiJja21iN3V5OWgwMGI4Mm5temU0ZHk3bjVsIn0.3nq7qTUAh0up18iIIuOPrQ"
-#     #     #         maxZoom: 19,
-#     #     #         minZoom: 19,
-#     #     #         id: 'mapbox/outdoors-v11',
-#     #     #         tileSize: 512,
-#     #     #         zoomOffset: -1,
-#     #     #     }).addTo(map);
-#     #     #     # L.marker([Session.get('current_lat'), Session.get('current_long')]).addTo(map)
-#     #     #         # .openPopup();
-#     #     #         # .bindPopup('you')
-#     #     #     L.circle([Session.get('current_lat'), Session.get('current_long')], {
-#     #     #         color: 'blue',
-#     #     #         weight: 0
-#     #     #         fillColor: '#3b5998',
-#     #     #         fillOpacity: 0.16,
-#     #     #         radius: 50
-#     #     #     }).addTo(map);
-#     #     #     onMapClick = (e)->
-#     #     #         alert("You clicked the map at " + e.latlng);
+#             L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+#                 # attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+#                 accessToken:"pk.eyJ1IjoicmVwamFja3NvbiIsImEiOiJja21iN3V5OWgwMGI4Mm5temU0ZHk3bjVsIn0.3nq7qTUAh0up18iIIuOPrQ"
+#                 maxZoom: 19,
+#                 minZoom: 19,
+#                 id: 'mapbox/outdoors-v11',
+#                 tileSize: 512,
+#                 zoomOffset: -1,
+#             }).addTo(map);
+#             # L.marker([Session.get('current_lat'), Session.get('current_long')]).addTo(map)
+#                 # .openPopup();
+#                 # .bindPopup('you')
+#             L.circle([Session.get('current_lat'), Session.get('current_long')], {
+#                 color: 'blue',
+#                 weight: 0
+#                 fillColor: '#3b5998',
+#                 fillOpacity: 0.16,
+#                 radius: 50
+#             }).addTo(map);
+#             onMapClick = (e)->
+#                 alert("You clicked the map at " + e.latlng);
             
-#     #     #     # map.on('click', onMapClick);
+#             # map.on('click', onMapClick);
     
-#     #     # , 2000
-#     #     # Meteor.setInterval ()->
-#     #     #     navigator.geolocation.getCurrentPosition((position)->
-#     #     #         Session.set('lat', position.coords.latitude)
-#     #     #         Session.set('lon', position.coords.longitude)
-#     #     #     , 5000);
-#     #     # pos.coords.latitude
-#     #     # pos.coords.longitude
-#     #     # if Session.get('current_lat')
-#     #     #     map = L.map('mapid').setView([Session.get('current_lat'), Session.get('current_long')], 13);
-#     #     # L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-#     #     #     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-#     #     #     maxZoom: 18,
-#     #     #     id: 'mapbox/outdoors-v11',
-#     #     #     tileSize: 512,
-#     #     #     zoomOffset: -1,
-#     #     #     accessToken: 'your.mapbox.access.token'
-#     #     # }).addTo(mymap);
-#     #     # L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-#     #     #     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-#     #     # }).addTo(map);
+#         , 2000
+#         Meteor.setInterval ()->
+#             navigator.geolocation.getCurrentPosition((position)->
+#                 Session.set('lat', position.coords.latitude)
+#                 Session.set('lon', position.coords.longitude)
+#             , 5000);
+#         pos.coords.latitude
+#         pos.coords.longitude
+#         if Session.get('current_lat')
+#             map = L.map('mapid').setView([Session.get('current_lat'), Session.get('current_long')], 13);
+#         L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+#             attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+#             maxZoom: 18,
+#             id: 'mapbox/outdoors-v11',
+#             tileSize: 512,
+#             zoomOffset: -1,
+#             accessToken: 'your.mapbox.access.token'
+#         }).addTo(mymap);
+#         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+#             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+#         }).addTo(map);
         
     
-#     #     # L.marker([53.5, -0.1]).addTo(map)
-#     #     #     .bindPopup('person')
-#     #     #     .openPopup();
+#         L.marker([53.5, -0.1]).addTo(map)
+#             .bindPopup('person')
+#             .openPopup();
         
     
-#     #     # home_subs_ready: ->
-#     #     #     Template.instance().subscriptionsReady()
-#     #     #
-#     #     # home_subs_ready: ->
-#     #     #     if Template.instance().subscriptionsReady()
-#     #     #         Session.set('global_subs_ready', true)
-#     #     #     else
-#     #     #         Session.set('global_subs_ready', false)
+#         # home_subs_ready: ->
+#         #     Template.instance().subscriptionsReady()
+#         #
+#         # home_subs_ready: ->
+#         #     if Template.instance().subscriptionsReady()
+#         #         Session.set('global_subs_ready', true)
+#         #     else
+#         #         Session.set('global_subs_ready', false)
     
     
 #     # Template.nearby_person.onCreated ->

@@ -1,90 +1,98 @@
-// // // template(name='map')
-// // //     .ui.segment
-// // //         .ui.header.mapbox map  
-// // //         // #map
-// // //         // .ui.fluid.button.refresh
-// // //         //     i.marker.icon
-// // //         //     |reload location data
-// // //         // #mapid
-// // //         // unless pos
-// // //         // .ui.one.column.padded.grid
-// // //         //     .column
-// // //         //         .ui.center.aligned.header People Near You: #{my_longform} (#{my_category})
-// // //         //         .ui.four.column.stackable.padded.centered.grid
-// // //         //             each nearby_people
-// // //         //                 +nearby_person
+template(name='map')
+    .ui.header map
+    .ui.button.make
+        |make
+    .ui.button.tile tile
+    #map
+    // iframe(src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d12222.948394808938!2d-105.2545892!3d40.01431965!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sus!4v1671659231306!5m2!1sen!2sus" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade")
+    // +localmap
+    // +mapgl
+    // .ui.segment
+    //     .ui.header.mapbox map  
+    //     // #map
+    //     // .ui.fluid.button.refresh
+    //     //     i.marker.icon
+    //     //     |reload location data
+    //     // #mapid
+    //     // unless pos
+    //     // .ui.one.column.padded.grid
+    //     //     .column
+    //     //         .ui.center.aligned.header People Near You: #{my_longform} (#{my_category})
+    //     //         .ui.four.column.stackable.padded.centered.grid
+    //     //             each nearby_people
+    //     //                 +nearby_person
 
 
 // template(name='localmap')
 //     #localmap
 
         
-// // template(name='mapgl')
-// //     #map
-// //     .ui.padded.grid
-// //         .sixteen.wide.column
-// //             // .ui.disabled.button.init 
-// //             //     i.checkmark.icon
-// //             //     |init
-// //             // a.ui.big.button(href='/mapgl')
-// //             //     i.globe.icon
-// //             //     |map gl
-// //             // i.minus.circular.link.icon.zoomout(title='zoom out')
-// //             // .ui.labeled.input(title='zoom')
-// //             //     input.zoom_level(type='number' value=current_zoom_level min='0' max='25')
-// //             // i.plus.circular.link.icon.zoomin(title='zoom in')
+// template(name='mapgl')
+//     #map
+//     .ui.padded.grid
+//         .sixteen.wide.column
+//             .ui.disabled.button.init 
+//                 i.checkmark.icon
+//                 |init
+//             a.ui.big.button(href='/mapgl')
+//                 i.globe.icon
+//                 |map gl
+//             i.minus.circular.link.icon.zoomout(title='zoom out')
+//             .ui.labeled.input(title='zoom')
+//                 input.zoom_level(type='number' value=current_zoom_level min='0' max='25')
+//             i.plus.circular.link.icon.zoomin(title='zoom in')
                 
-// //             // .ui.button.draw  
-// //             //     i.pencil.icon
-// //             //     |draw map
-// //             // .ui.button.click_markers  
-// //             //     i.marker.icon
-// //             //     |clickable markers
-// //             // .ui.button.add_marker  
-// //             //     i.plus.icon
-// //             //     |add marker
-// //             // .ui.button.find_me  
-// //             //     i.marker.icon
-// //             //     |find me
-// //             // .ui.button.add_legend
-// //             //     |legend
-// //             // .ui.button.add_circle
-// //             //     i.circle.icon
-// //             //     |circle
-// //             // .ui.button.toggle_moving
-// //             //     if can_move
-// //             //         i.chevron.right.icon
-// //             //         |movable
-// //             //     else
-// //             //         i.lock.icon
-// //             //         |locked
-// //             // .ui.input
-// //             //     input.add_place(type='text' placeholder='add geocoded place')
-// //             // each current_markers
-// //             //     .ui.label 
-// //             //         i.remove.icon
-// //             //         |#{this}
-// //             a.ui.fluid.button.locate(title='locate me')
-// //                 i.refresh.large.icon
-// //                 |refresh map
-// //             // if pos
-// //             //     .ui.label #{lat}, #{lng}
-// //             .ui.inline.header lat: #{lat}
-// //             .ui.inline.header long: #{lon}
-// //             .ui.inline.header current lat: #{current_lat}
-// //             .ui.inline.header current long: #{current_long}
-// //     // .ui.four.stackable.cards.list
-// //     //     each post_docs
-// //     //         .card
-// //     //             img.ui.image.pick_post.pointer.zoomer(src="{{c.url image_id width=400 height=400}}")
-// //     //             .content
-// //     //                 a.header.pick_post.zoomer #{title}
-// //     //                 .description
-// //     //                     .ui.label #{location}
-// //     //                     each locaation_tags
-// //     //                         .ui.label #{this}
-// //     //                     a.ui.compact.button(href="/post/#{_id}")
-// //     //                         |view
+//             .ui.button.draw  
+//                 i.pencil.icon
+//                 |draw map
+//             .ui.button.click_markers  
+//                 i.marker.icon
+//                 |clickable markers
+//             .ui.button.add_marker  
+//                 i.plus.icon
+//                 |add marker
+//             .ui.button.find_me  
+//                 i.marker.icon
+//                 |find me
+//             .ui.button.add_legend
+//                 |legend
+//             .ui.button.add_circle
+//                 i.circle.icon
+//                 |circle
+//             .ui.button.toggle_moving
+//                 if can_move
+//                     i.chevron.right.icon
+//                     |movable
+//                 else
+//                     i.lock.icon
+//                     |locked
+//             .ui.input
+//                 input.add_place(type='text' placeholder='add geocoded place')
+//             each current_markers
+//                 .ui.label 
+//                     i.remove.icon
+//                     |#{this}
+//             a.ui.fluid.button.locate(title='locate me')
+//                 i.refresh.large.icon
+//                 |refresh map
+//             // if pos
+//             //     .ui.label #{lat}, #{lng}
+//             .ui.inline.header lat: #{lat}
+//             .ui.inline.header long: #{lon}
+//             .ui.inline.header current lat: #{current_lat}
+//             .ui.inline.header current long: #{current_long}
+//     // .ui.four.stackable.cards.list
+//     //     each post_docs
+//     //         .card
+//     //             img.ui.image.pick_post.pointer.zoomer(src="{{c.url image_id width=400 height=400}}")
+//     //             .content
+//     //                 a.header.pick_post.zoomer #{title}
+//     //                 .description
+//     //                     .ui.label #{location}
+//     //                     each locaation_tags
+//     //                         .ui.label #{this}
+//     //                     a.ui.compact.button(href="/post/#{_id}")
+//     //                         |view
         
         
             

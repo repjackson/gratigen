@@ -289,23 +289,24 @@ if Meteor.isServer
                 else 
                     console.log 'good recipe call'
                     for result in res.data.searchResults
-                        # console.log result.name
+                        console.log result
                         # if result.name is 'Recipes'
                         products = _.where(res.data.searchResults, {name:'Products'})
                         for product in products
                             console.log product
                             found_recipe_product = 
                                 Docs.findOne 
-                                    model:'recipe_product'
+                                    model:'recipe'
                                     id:product.id
                             if found_recipe_product
                                 Docs.update found_recipe_product._id, 
-                                    $inc:hits:1
+                                    $inc:
+                                        hits:1
                                     $addToSet:
                                         tags:search
                             else 
                                 new_id = Docs.insert 
-                                    model:'recipe_product'
+                                    model:'recipe'
                                     id:product.id
                                     name:product.name
                                     image:product.image
