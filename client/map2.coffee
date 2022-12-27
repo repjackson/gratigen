@@ -13,6 +13,9 @@
 # # # #   actions: [{action: 'archive', title: "Archive"}]
 # # # # });
 
+Template.map.onCreated ->
+    @autorun => @subscribe 'all_markers', ->
+        
 
 Template.map.onRendered =>
     # @map = L.map('map').setView([51.505, -0.09], 13);
@@ -23,35 +26,70 @@ Template.map.onRendered =>
         # Meteor.users.update Meteor.userId(),
         #     $set:current_position:pos
         # @map = L.map('map',{
-        #     dragging:false, 
-        #     zoomControl:false
-        #     bounceAtZoomLimits:false
-        #     touchZoom:false
-        #     doubleClickZoom:false
         #     }).setView([51.505, -0.09], 13);
-    	@map = L.map('map').fitWorld();
-    
-    	tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    		maxZoom: 19,
-    		attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-    	}).addTo(map);
-    
-    	@onLocationFound = (e)->
-    		radius = e.accuracy / 2;
-            console.log e
-    		locationMarker = L.marker(e.latlng).addTo(map)
-    			.bindPopup("You are within #{radius} meters from this point").openPopup();
-    
-    		locationCircle = L.circle(e.latlng, radius).addTo(map);
-    
-    	@onLocationError = (e)->
-    		alert(e.message);
-    
-    	map.on('locationfound', onLocationFound);
-    	map.on('locationerror', onLocationError);
-    
-    	map.locate({setView: true, maxZoom: 16});
-            
+        @map = L.map('map', {
+            dragging:false, 
+            zoomControl:false
+            touchZoom:false
+            doubleClickZoom:false
+        })
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+        # 	tiles = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
+        # @onLslocationCircle = L.circle(e.latlng, radius).addTo(map);
+        # @onLocationError = (e)-> 
+        #     alert(e.message);
+        # map.on('locationfound', onLocationFound);
+        # map.on('locationerror', onLocationError);
+        # L.tileLayer.provider('Stamen.Watercolor').addTo(map);
+        map.locate({setView: true, maxZoom: 20});
+        map.on('dblclick', (event)->
+            console.log 'clicked', event
+            Markers.insert({latlng: event.latlng});
+        )
+        popup = L.popup();
+        onMapClick = (e)=>
+            popup
+                .setLatLng(e.latlng)
+                .setContent("You clicked the map at " + e.latlng.toString())
+                .openOn(map);
+        map.on('click', onMapClick);
+        # // add clustermarkers
+        # markers = L.markerClusterGroup();
+        # map.addLayer(markers);
+        
+        # query = Markers.find()
+        # query.observe
+        #     added: (doc)->
+        #         console.log 'added marker', doc
+        #         # marker = L.marker(doc.latlng).on('click', (event)->
+        #         #     Markers.remove({_id: doc._id});
+        #         # );
+        #         # console.log {{c.url currentUser.profile_image_id height=500 width=500 gravity='face' crop='fill'}}
+        #         myIcon = L.icon({
+        #             iconUrl:"https://res.cloudinary.com/facet/image/upload/c_fill,g_face,h_300,w_100/#{Meteor.user().profile_image_id}"
+        #             iconSize: [38, 95],
+        #             iconAnchor: [22, 94],
+        #             popupAnchor: [-3, -76],
+        #             # shadowUrl: 'my-icon-shadow.png',
+        #             shadowSize: [68, 95],
+        #             shadowAnchor: [22, 94]
+        #         });
+
+        #         L.marker([doc.latlng.lat, doc.latlng.long],{
+        #             draggable:true
+        #             icon:myIcon
+        #             riseOnHover:true
+        #             }).addTo(map)
+        #         # markers.addLayer(marker);
+        # removed: (oldDocument)->
+        #     layers = map._layers;
+        #     for key in layers
+        #         val = layers[key];
+        #         if (val._latlng)
+        #             if val._latlng.lat is oldDocument.latlng.lat and val._latlng.lng is oldDocument.latlng.lng
+        #                 markers.removeLayer(val)
         # navigator.geolocation.getCurrentPosition (position) =>
         #     console.log 'navigator position', position
         #     Session.set('current_lat', position.coords.latitude)
@@ -62,7 +100,6 @@ Template.map.onRendered =>
         
         #     pos = Geolocation.currentLocation()
         #     map.setView([Session.get('current_lat'), Session.get('current_long')], 13);
-            
     , 2000
     # Meteor.setTimeout =>
     #     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {

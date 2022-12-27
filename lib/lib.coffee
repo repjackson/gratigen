@@ -1,5 +1,6 @@
 @Docs = new Meteor.Collection 'docs'
 @Results = new Meteor.Collection 'results'
+@Markers = new Meteor.Collection 'markers'
 
 Meteor.users.helpers
     name: ->
