@@ -1,89 +1,88 @@
 template(name='home')
     // +secnav
     .ui.stackable.padded.celled.grid
-        .sixteen.wide.column
+        .eight.wide.column
             +map
             // .ui.button create request
-        //     +filter_model model='resource' icon='car'
-        //     +filter_model model='transfer' icon='exchange'
-        //     +filter_model model='request' icon='bullhorn'
-        //     +filter_model model='project' icon='project'
-        //     +filter_model model='comment' icon='comment'
-        //     +filter_model model='food' icon='food'
-        //     .scrolling
-        //         each doc_results
-        //             +home_card
-        // .four.wide.column
-        //     if currentUser
-        //         a.item(href="/user/#{currentUser.username}" class=user_nav_button_class title=user_nav_button_title)
-        //             if currentUser.image_id
-        //                 img.ui.tiny.circular.image(src="{{c.url currentUser.image_id width=200 height=200 gravity='face' crop='fill'}}")
-        //             else
-        //                 i.user.icon
-        //             .ui.inline.header #{currentUser.name}
-        //             strong #{currentUser.points}p
-        //             div
-        //             .ui.inline.header #{currentUser.tagline}
+            +filter_model model='resource' icon='car'
+            +filter_model model='transfer' icon='exchange'
+            +filter_model model='request' icon='bullhorn'
+            +filter_model model='project' icon='project'
+            +filter_model model='comment' icon='comment'
+            +filter_model model='food' icon='food'
+            .scrolling
+                each doc_results
+                    +home_card
+        .four.wide.column
+            if currentUser
+                a.item(href="/user/#{currentUser.username}" class=user_nav_button_class title=user_nav_button_title)
+                    if currentUser.image_id
+                        img.ui.tiny.circular.image(src="{{c.url currentUser.image_id width=200 height=200 gravity='face' crop='fill'}}")
+                    else
+                        i.user.icon
+                    .ui.inline.header #{currentUser.name}
+                    strong #{currentUser.points}p
+                    div
+                    .ui.inline.header #{currentUser.tagline}
                 
-        //     else 
-        //         .ui.header 
-        //             |gratigen
-        //         a.ui.button(href='/login')
-        //             +i name='internal'
-        //             |login/join
-        //     +locate_me
-        //     .ui.button.check_notifications
-        //         |check notifications
-        //     .ui.button.send_notification
-        //         |send notifications
-        //     .ui.header sections
-        // // .four.wide.column
-        // //     +map
+            else 
+                .ui.header 
+                    |gratigen
+                a.ui.button(href='/login')
+                    +i name='internal'
+                    |login/join
+            .ui.button.check_notifications
+                |check notifications
+            .ui.button.send_notification
+                |send notifications
+            .ui.header sections
         // .four.wide.column
-        //     +online_users
-        // .four.wide.column
-        //     .ui.list 
-        //         .item 
-        //             i.food.icon
-        //             |food 
-        //         .item 
-        //             i.home.icon
-        //             |housing
-        //         .item 
-        //             i.tshirt.icon
-        //             |clothing
-        //         .item 
-        //             i.car.icon
-        //             |transportation
-        //         .item 
-        //             i.lightning.icon
-        //             |energy
-        //         .item 
-        //             i.leaf.icon
-        //             |zero waste
-        //         .item 
-        //             i.smile.icon
-        //             |wellness
-        //         .item 
-        //             i.university.icon
-        //             |education
-        //         .item 
-        //             i.paint.brush.icon
-        //             |art
-        //         .item 
-        //             i.users.icon
-        //             |community core
-        //     .ui.header 
-        //         |resources
+        //     +map
+        .four.wide.column
+            +online_users
+        .four.wide.column
+            .ui.list 
+                .item 
+                    i.food.icon
+                    |food 
+                .item 
+                    i.home.icon
+                    |housing
+                .item 
+                    i.tshirt.icon
+                    |clothing
+                .item 
+                    i.car.icon
+                    |transportation
+                .item 
+                    i.lightning.icon
+                    |energy
+                .item 
+                    i.leaf.icon
+                    |zero waste
+                .item 
+                    i.smile.icon
+                    |wellness
+                .item 
+                    i.university.icon
+                    |education
+                .item 
+                    i.paint.brush.icon
+                    |art
+                .item 
+                    i.users.icon
+                    |community core
+            .ui.header 
+                |resources
             
                     
-        // .four.wide.column
-        //     .ui.segment.smallscroll
-        //         +latest_activity
-        //     .ui.segment
-        //         +closest_allies
-        //     .ui.segment
-        //         +open_requests
+        .four.wide.column
+            .ui.segment.smallscroll
+                +latest_activity
+            .ui.segment
+                +closest_allies
+            .ui.segment
+                +open_requests
            
            
 template(name='filter_model')

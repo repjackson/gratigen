@@ -87,60 +87,62 @@ template(name='profile')
         
                             
                 .twelve.wide.column.scrolling
-                    a.ui.compact.circular.button(href="/user/#{username}/" class="{{isActiveRoute 'user_dashboard'}}" title="#{user.username} dashboard")
-                        // i.dashboard.icon
-                        +i name='dashboard'
-                        span.mobile.hidden dashboard
-                    a.ui.compact.circular.button(href="/user/#{username}/about" class="{{isActiveRoute 'user_about'}}" title="#{user.username} info")
-                        // i.info.icon
-                        +i name='info'
-                        span.mobile.hidden about
-                    a.ui.compact.circular.button(href="/user/#{username}/credits" class="{{isActiveRoute 'user_credits'}}" title="#{user.username} credits")
-                        // i.chevron.down.icon
-                        +i name='chevron-down'
-                        span.mobile.hidden pts received
-                    a.ui.compact.circular.button(href="/user/#{username}/debits" class="{{isActiveRoute 'user_sent'}}" title="#{user.username} sent")
-                        // i.gift.icon
-                        +i name='gift'
-                        span.mobile.hidden pts sent
-                    a.ui.compact.circular.button(href="/user/#{username}/credit" class="{{isActiveRoute 'user_credit'}}" title="#{user.username} credit")
-                        // i.dollar.icon
-                        +i name='money'
-                        span.mobile.hidden credit
-                    a.ui.compact.circular.button(href="/user/#{username}/events" class="{{isActiveRoute 'user_events'}}" title="#{user.username} events")
-                        // i.calendar.icon
-                        +i name='calendar'
-                        span.mobile.hidden events
-                    a.ui.compact.circular.button(href="/user/#{username}/requests" class="{{isActiveRoute 'user_requests'}}" title="#{user.username} requests")
-                        // i.concierge.bell.icon
-                        +i name='service-bell'
-                        span.mobile.hidden requests
-                    a.ui.compact.circular.button(href="/user/#{username}/offers" class="{{isActiveRoute 'user_offers'}}" title="#{user.username} offers")
-                        // i.hand.holding.heart.icon
-                        +i name='hand-holding-heart'
-                        span.mobile.hidden offers
-                    a.ui.compact.circular.button(href="/user/#{username}/food" class="{{isActiveRoute 'user_food'}}" title="#{user.username} food")
-                        // i.hand.holding.heart.icon
-                        +i name='food'
-                        span.mobile.hidden food
-                    a.ui.compact.circular.button(href="/user/#{username}/messages" class="{{isActiveRoute 'user_messages'}}" title="#{user.username} messages")
-                        // i.chat.icon
-                        +i name='chat'
-                        span.mobile.hidden chat
-                    a.ui.compact.circular.button(href="/user/#{username}/badges" class="{{isActiveRoute 'user_badges'}}" title="#{user.username} badges")
-                        // i.certificate.icon
-                        +i name='prize'
-                        span.mobile.hidden badges
-                    a.ui.compact.circular.button(href="/user/#{username}/delivery" class="{{isActiveRoute 'user_delivery'}}" title="#{user.username} badges")
-                        // i.certificate.icon
-                        +i name='car'
-                        span.mobile.hidden delivery
-                    a.ui.compact.circular.button(href="/user/#{username}/genekeys" class="{{isActiveRoute 'user_genekeys'}}" title="#{user.username} genekeys")
-                        // i.large.dna.icon
-                        +i name='dna-helix'
-                        span genekeys
+                    // a.ui.compact.circular.button(href="/user/#{username}/" class="{{isActiveRoute 'user_dashboard'}}" title="#{user.username} dashboard")
+                    //     // i.dashboard.icon
+                    //     +i name='dashboard'
+                    //     span.mobile.hidden dashboard
+                    // a.ui.compact.circular.button(href="/user/#{username}/about" class="{{isActiveRoute 'user_about'}}" title="#{user.username} info")
+                    //     // i.info.icon
+                    //     +i name='info'
+                    //     span.mobile.hidden about
+                    // a.ui.compact.circular.button(href="/user/#{username}/credits" class="{{isActiveRoute 'user_credits'}}" title="#{user.username} credits")
+                    //     // i.chevron.down.icon
+                    //     +i name='chevron-down'
+                    //     span.mobile.hidden pts received
+                    // a.ui.compact.circular.button(href="/user/#{username}/debits" class="{{isActiveRoute 'user_sent'}}" title="#{user.username} sent")
+                    //     // i.gift.icon
+                    //     +i name='gift'
+                    //     span.mobile.hidden pts sent
+                    // a.ui.compact.circular.button(href="/user/#{username}/credit" class="{{isActiveRoute 'user_credit'}}" title="#{user.username} credit")
+                    //     // i.dollar.icon
+                    //     +i name='money'
+                    //     span.mobile.hidden credit
+                    // a.ui.compact.circular.button(href="/user/#{username}/events" class="{{isActiveRoute 'user_events'}}" title="#{user.username} events")
+                    //     // i.calendar.icon
+                    //     +i name='calendar'
+                    //     span.mobile.hidden events
+                    // a.ui.compact.circular.button(href="/user/#{username}/requests" class="{{isActiveRoute 'user_requests'}}" title="#{user.username} requests")
+                    //     // i.concierge.bell.icon
+                    //     +i name='service-bell'
+                    //     span.mobile.hidden requests
+                    // a.ui.compact.circular.button(href="/user/#{username}/offers" class="{{isActiveRoute 'user_offers'}}" title="#{user.username} offers")
+                    //     // i.hand.holding.heart.icon
+                    //     +i name='hand-holding-heart'
+                    //     span.mobile.hidden offers
+                    // a.ui.compact.circular.button(href="/user/#{username}/food" class="{{isActiveRoute 'user_food'}}" title="#{user.username} food")
+                    //     // i.hand.holding.heart.icon
+                    //     +i name='food'
+                    //     span.mobile.hidden food
+                    // a.ui.compact.circular.button(href="/user/#{username}/messages" class="{{isActiveRoute 'user_messages'}}" title="#{user.username} messages")
+                    //     // i.chat.icon
+                    //     +i name='chat'
+                    //     span.mobile.hidden chat
+                    // a.ui.compact.circular.button(href="/user/#{username}/badges" class="{{isActiveRoute 'user_badges'}}" title="#{user.username} badges")
+                    //     // i.certificate.icon
+                    //     +i name='prize'
+                    //     span.mobile.hidden badges
+                    // a.ui.compact.circular.button(href="/user/#{username}/delivery" class="{{isActiveRoute 'user_delivery'}}" title="#{user.username} badges")
+                    //     // i.certificate.icon
+                    //     +i name='car'
+                    //     span.mobile.hidden delivery
+                    // a.ui.compact.circular.button(href="/user/#{username}/genekeys" class="{{isActiveRoute 'user_genekeys'}}" title="#{user.username} genekeys")
+                    //     // i.large.dna.icon
+                    //     +i name='dna-helix'
+                    //     span genekeys
                     .spacer
                     .spacer
+                    .ui.button.sponsor
+                        |sponsor
                     +yield    
 
 
@@ -203,15 +205,14 @@ template(name='user_credit')
       
       
 template(name='locate_me')
-    .ui.segment
-        .ui.button.locate_me
-            // i.marker.icon
-            +i name='marker'
-            |locate me
-        with currentUser
-            if current_lat 
-                .ui.large.label lat:#{current_lat}
-                .ui.large.label lon:#{current_lon}
+    .ui.button.locate_me
+        // i.marker.icon
+        +i name='marker'
+        |locate me
+    with currentUser
+        if current_lat 
+            .ui.large.label lat:#{current_lat}
+            .ui.large.label lon:#{current_lon}
 
                                     
                                     

@@ -64,11 +64,28 @@ if Meteor.isClient
     Template.profile.helpers
         current_user: ->
             Meteor.users.findOne username:Router.current().params.username
-
         user: ->
             Meteor.users.findOne username:Router.current().params.username
+        sponsored_by_users: ->
+            user = Meteor.users.findOne username:Router.current().params.username
+            Meteor.users.find 
+                sponsored_by_ids:$in:[Meteor.userId()]
+        sponsoring_users: ->
+            user = Meteor.users.findOne username:Router.current().params.username
+            Meteor.users.find 
+                sponsoring_ids:$in:[Meteor.userId()]
+
 
     Template.profile.events
+        'click .sponsor': ->
+            current_user = Meteor.users.findOne username:Router.current().params.username
+            Meteor.users Meteor.userId(), 
+                $addToSet:
+                    sponsoring_user_ids: current_user._id
+            Meteor.users.update current_user._id, 
+                $addToSet:
+                    sponsored_by_ids: Meteor.userId()
+            
         'click .logout_other_clients': ->
             Meteor.logoutOtherClients()
 
