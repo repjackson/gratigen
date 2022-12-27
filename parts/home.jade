@@ -87,7 +87,7 @@ template(name='home')
            
            
 template(name='filter_model')
-    .ui.basic.circular.compact.small.button 
+    .ui.compact.circular.button.pick_model(class=button_class)
         +i name=icon
         // i.exchange.large.icon
         |#{model}

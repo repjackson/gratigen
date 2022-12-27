@@ -6,7 +6,7 @@ if Meteor.isClient
     
     
     Template.latest_activity.onCreated ->
-        @autorun => @subscribe 'latest_docs', ->
+        @autorun => @subscribe 'latest_home_docs', ->
     Template.latest_activity.helpers 
         latest_docs: ->
             Docs.find {_updated_timestamp:$exists:true},
@@ -31,7 +31,16 @@ if Meteor.isServer
     Meteor.publish 'online_users', ->
         Meteor.users.find {online:true}
         
-    
+    Meteor.publish 'latest_home_docs', (model)->
+        match = {}
+        if model 
+            match.model = model
+        else 
+            match.model = model:$in:['product','service','project','resource', 'comment']
+        Docs.find match,
+            limit:20
+            sort:_timestamp:-1
+            
     
 if Meteor.isClient
     Template.home.onCreated ->
@@ -39,21 +48,19 @@ if Meteor.isClient
         #     picked_tags.array()
         #     Session.get('post_title_filter')
 
-        # @autorun => @subscribe 'model_docs', 'post', ->
-        # @autorun => @subscribe 'model_docs', 'request', ->
-        # @autorun => @subscribe 'model_docs', 'offer', ->
-        # @autorun => @subscribe 'model_docs', 'rental', ->
-        # @autorun => @subscribe 'model_docs', 'product', ->
-        # @autorun => @subscribe 'model_docs', 'task', ->
-        # @autorun => @subscribe 'model_docs', 'project', ->
-        @autorun => @subscribe 'latest_docs', ->
+        @autorun => @subscribe 'latest_home_docs', Session.get('current_model_filter'),->
         
         @autorun => @subscribe 'all_users', ->
         @autorun => @subscribe 'post_facets',
             picked_tags.array()
             Session.get('post_title_filter')
 
-    
+    Template.filter_model.helpers
+        button_class:->
+            if Session.equals('current_model_filter',@model) then 'blue large' else 'basic small'
+    Template.filter_model.events
+        'click .pick_model': ->
+            Session.set('current_model_filter',@model)
     Template.home.events 
         'click .check_notifications': ->
             Notification.requestPermission (result) ->

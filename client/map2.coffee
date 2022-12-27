@@ -33,6 +33,7 @@ Template.map.onRendered =>
             touchZoom:false
             doubleClickZoom:false
         })
+        # L.tileLayer('https://tile.thunderforest.com/spinal-map/{z}/{x}/{y}.png?apikey=4377541979a540d8bae5e6360cf369d9', {
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
