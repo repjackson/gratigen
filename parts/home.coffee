@@ -36,7 +36,7 @@ if Meteor.isServer
         if model 
             match.model = model
         else 
-            match.model = model:$in:['product','service','project','resource', 'comment']
+            match.model = model:$in:['product','service','project','resource', 'comment','event']
         Docs.find match,
             limit:20
             sort:_timestamp:-1
