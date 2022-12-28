@@ -90,41 +90,62 @@ template(name='event_edit')
                     .ui.inline.header 
                         +icolor name='tear-off-calendar'
                         |edit event
-                    +boolean_edit key='published' label='published' direct=true
+                    +boolean_edit key='published' label='published'
+                    div
                     .ui.icon.basic.circular.button.delete_item(title='delete')
                         i.remove.red.icon
-                    +text_edit key='title' label='title' direct=true
+                    +text_edit key='title' label='title'
+                    div
                     .ui.header 
                         small author
                         |#{_author.name}
-                    +slug_edit key='slug' label='slug' icon='slug' direct=true
+                    +slug_edit key='slug' label='slug' icon='slug'
+                    div
                     // if reservation_exists
                     //     .ui.header date: #{date}
                     //     .ui.header time: #{time}
                     // else
-                    +datetime_edit key='start_datetime' label='start datetime' direct=true
-                    +datetime_edit key='end_datetime' label='end datetime' direct=true
-                    // +time_edit key='time' label='time' direct=true
-                    +number_edit key='hour_duration' label='hours' direct=true
-                    +text_edit key='location' label='location' direct=true
-                    // +range_edit label='time range' direct=true
-                    // +single_user_edit key='facilitator_id' label='facilitator' icon='chess king' direct=true
-                    // +single_user_edit key='support_id' label='support' icon='chess queen' direct=true
-                    +single_user_edit key='host_id' label='host' icon='shield' direct=true
+                    +datetime_edit key='start_datetime' label='start datetime'
+                    div
+                    +datetime_edit key='end_datetime' label='end datetime'
+                    div
+                    // +time_edit key='time' label='time'
+                    div
+                    +number_edit key='hour_duration' label='hours'
+                    div
+                    +text_edit key='location' label='location'
+                    div
+                    // +range_edit label='time range'
+                    div
+                    // +single_user_edit key='facilitator_id' label='facilitator' icon='chess king'
+                    div
+                    // +single_user_edit key='support_id' label='support' icon='chess queen'
+                    div
+                    +single_user_edit key='host_id' label='host' icon='shield'
+                    div
                     div 
-                    +array_edit key='tags' label='tags' icon='red tags' direct=true
+                    +array_edit key='tags' label='tags' icon='red tags'
+                    div
                 .ten.wide.column.scrolling
                     .ui.header
                         i.users.icon
                         |audience
-                    +number_edit key='max_attendees' label='max attendees' min='0' max='100' direct=true
+                    +number_edit key='max_attendees' label='max attendees' min='0' max='100'
+                    div
                     // div
-                    +boolean_edit key='free' label='free' direct=true
+                    +boolean_edit key='free' label='free'
+                    div
                     unless free
-                        +number_edit key='price_points' label='point price' min='0' max='100' direct=true
-                    +number_edit key='price_usd' label='dollar price' min='0' max='100' direct=true
-                    +html_edit key='description' label='description' direct=true
-                    +image_edit key='image_id' label='image' direct=true
+                        +number_edit key='price_points' label='point price' min='0' max='100'
+                        div
+                    +number_edit key='usd_price' label='usd price' min='0' max='100'
+                    div
+                    +number_edit key='price_usd' label='dollar price' min='0' max='100'
+                    div
+                    +html_edit key='description' label='description'
+                    div
+                    +image_edit key='image_id' label='image'
+                    div
                     +link_edit key='link' label='link'
 
 template(name='reserve_button')
@@ -213,11 +234,13 @@ template(name='event_view')
                     with current_doc
                         +gcal_button
                     .ui.hidden.divider
-                    +array_view key='tags' label='tags' icon='tags red' direct=true
+                    +array_view key='tags' label='tags' icon='tags red'
+                    div
                     div
                     if currentUser
                         +voting_full
-                    +array_view key='location_tags' label='location tags' icon='marker' direct=true
+                    +array_view key='location_tags' label='location tags' icon='marker'
+                    div
                 .eight.wide.column.scrollin
                     a(href="{{c.url image_id }}")
                         img.ui.fluid.rounded.image(src="{{c.url image_id }}" class=currentUser.invert_class)
@@ -230,6 +253,8 @@ template(name='event_view')
                     // .spacer
                     +comments
                 .four.wide.column
+                    .ui.big.button.buy_for_usd
+                        |buy with usd
                     .ui.inline.large.header 
                         |RSVP
                     if tickets_left
@@ -375,9 +400,12 @@ template(name='ticket_view')
                         a.ui.header(href="/event/#{ticket_event._id}")
                             |#{ticket_event.title}
                             
-                    +number_view key='amount' label='amount' direct=true
-                    +textarea_view key='description' label='description' direct=true
-                    +image_view key='image_id' label='image' direct=true
+                    +number_view key='amount' label='amount'
+                    div
+                    +textarea_view key='description' label='description'
+                    div
+                    +image_view key='image_id' label='image'
+                    div
                     div 
                     if tags
                         i.tags.icon
@@ -387,7 +415,8 @@ template(name='ticket_view')
                     .spacer
                     +comments
                     // +voting_full
-                    //- +array_view key='location_tags' label='location_tags' direct=true
+                    //- +array_view key='location_tags' label='location_tags'
+                    div
                 .four.wide.column
                     //- .ui.fluid.green.button.submit
                     //-     i.checkmark.icon

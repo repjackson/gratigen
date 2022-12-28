@@ -70,6 +70,9 @@ template(name='nav')
                     span.mobile.hidden login
             if session_is 'viewing_alerts'
                 +topbar
+    +secnav        
+                
+                
                 
 template(name='secnav')
     .ui.attached.small.borderless.menu.hscroll(class=invert_class)
