@@ -698,7 +698,7 @@ Template.multi_user_edit.events
 Template.single_user_edit.onCreated ->
     @user_results = new ReactiveVar
 Template.single_user_edit.helpers
-    user_results: ->Template.instance().user_results.get()
+    user_results: -> Template.instance().user_results.get()
 Template.single_user_edit.events
     'click .clear_results': (e,t)->
         t.user_results.set null

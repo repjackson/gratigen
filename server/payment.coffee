@@ -210,7 +210,7 @@ Meteor.methods
         console.log new_charge
         if new_charge
             Docs.insert
-                model:'transaction'
+                model:'order'
                 transaction_type:'shop_purchase'
                 payment_type:'usd'
                 is_usd:true
@@ -254,7 +254,7 @@ Meteor.methods
         console.log new_charge
         if new_charge
             Docs.insert
-                model:'transaction'
+                model:'order'
                 transaction_type:'ticket_purchase'
                 payment_type:'usd'
                 is_usd:true
@@ -270,15 +270,15 @@ Meteor.methods
                     
                     
                     
-stripe = require('stripe')('sk_test_5103F9t2l80WEvLLPcQfRPWGFslvo4htyZRCjRQ4YQ8DnRO0Qp18WNWRw7KSOxX9N0f45WU0eYeGXpkAx9MnXkaa700I9qwX0HQ');
-Meteor.methods
-  stripe: ()=>
-    paymentIntent = stripe.paymentIntents.create({
-      amount: 1000,
-      currency: 'usd',
-      payment_method_types: ['card'],
-      receipt_email: 'jenny.rosen@example.com',
-    });
+# stripe = require('stripe')('sk_test_5103F9t2l80WEvLLPcQfRPWGFslvo4htyZRCjRQ4YQ8DnRO0Qp18WNWRw7KSOxX9N0f45WU0eYeGXpkAx9MnXkaa700I9qwX0HQ');
+# Meteor.methods
+#   stripe: ()=>
+#     paymentIntent = stripe.paymentIntents.create({
+#       amount: 1000,
+#       currency: 'usd',
+#       payment_method_types: ['card'],
+#       receipt_email: 'jenny.rosen@example.com',
+#     });
 
 
 # stripe = require('stripe')

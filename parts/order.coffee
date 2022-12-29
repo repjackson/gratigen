@@ -3,9 +3,6 @@ if Meteor.isClient
         @render 'orders'
         ), name:'orders'
 
-                        
-                
-if Meteor.isClient
     Router.route '/order/:doc_id', (->
         @layout 'layout'
         @render 'order'
@@ -17,9 +14,10 @@ if Meteor.isClient
 
 
     Template.order.onCreated ->
-        @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
-        @autorun => Meteor.subscribe 'product_by_order_id', Router.current().params.doc_id
-        @autorun => Meteor.subscribe 'order_things', Router.current().params.doc_id
+        @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id, ->
+        @autorun => Meteor.subscribe 'product_by_order_id', Router.current().params.doc_id, ->
+        @autorun => Meteor.subscribe 'order_things', Router.current().params.doc_id, ->
+        @autorun => Meteor.subscribe 'model_docs', 'order', ->
 
 
                 

@@ -15,6 +15,9 @@ template(name='nav')
         +nav_item route='food_products' icon='shop' label='products'
         +nav_item route='music' icon='music' label='music'
         +nav_item route='users' icon='groups' label='users'
+        if currentUser.admin
+            +nav_item route='admin' icon='shield' label='admin'
+            
         // a.icon.item.toggle_invert
         //     i.lightbulb.icon
         // .search.item.zoomer.mobile.hidden(title='search')

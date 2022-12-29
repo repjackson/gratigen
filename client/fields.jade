@@ -1,13 +1,16 @@
 template(name='youtube_edit')
-    .ui.labeled.fluid.icon.input
-        .ui.label 
-            // if icon
-            //     i.icon(class=icon)
-            +i name='youtube'
-            |youtube id
-        input.youtube_id(type='text' value=field_value placeholder=placeholder autocomplete="off")
-    if field_value
-        iframe.invert(width='100%' height='500px' src="https://www.youtube.com/embed/#{field_value}" frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen='')
+    with ..
+        +boolean_edit key='has_youtube' label='attach youtube' icon='youtube'
+        if has_youtube
+            .ui.labeled.fluid.icon.input
+                .ui.label 
+                    // if icon
+                    //     i.icon(class=icon)
+                    +i name='youtube'
+                    |youtube id
+                input.youtube_id(type='text' value=field_value placeholder=placeholder autocomplete="off")
+            if field_value
+                iframe.invert(width='100%' height='500px' src="https://www.youtube.com/embed/#{field_value}" frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen='')
 
 template(name='youtube_view')
     if field_value

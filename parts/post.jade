@@ -15,7 +15,6 @@ template(name='posts')
                 a.ui.compact.button.pick_post_tag
                     |#{title} 
                     // small.ui.grey.text #{count}
-                    
         .twelve.wide.column
             .ui.centered.stackable.cards
                 each post_docs 
@@ -25,9 +24,9 @@ template(name='posts')
 template(name='post_card')
     a.ui.card.fly_right(href="/post/#{_id}")
         if youtube_id 
-            +youtube_view key='youtube_id' direct=true
+            +youtube_view key='youtube_id'
         if image_id 
-            +image_view key='image_id' direct=true
+            +image_view key='image_id'
         .content
             .ui.inline.header #{title}
             if private 
@@ -138,17 +137,17 @@ template(name='post_view')
                             .item #{views} views
                         each viewers
                             .ui.label #{username}
-                        +array_view key='tags' label='tags' direct=true
+                        +array_view key='tags' label='tags'
                         +voting_full
                         .ui.header #{when}
-                        //- +array_view key='location_tags' label='location_tags' direct=true
+                        //- +array_view key='location_tags' label='location_tags'
                         +comments
                 .eight.wide.column.scrolling
                     img.ui.image(src="{{c.url image_id }}" class=currentUser.invert_class)
                     // a.ui.header(href="/user/#{target.username}")
                     //     |#{target.username}
                     if youtube_id 
-                        +youtube_view key='youtube_id' direct=true
+                        +youtube_view key='youtube_id'
                     |!{content}
                     div 
                     .spacer
@@ -175,23 +174,26 @@ template(name='post_edit')
                         |edit post
                     a.ui.icon.green.big.button(href="/post/#{_id}" title='save')
                         i.checkmark.big.icon
-                    +text_edit key='title' label='title' direct=true
-                    +html_edit key='content' label='content' direct=true
-                    +youtube_edit key='youtube_id' label='youtube id' direct=true
+                    +text_edit key='title' label='title'
+                    +html_edit key='content' label='content'
+                    +youtube_edit key='youtube_id' label='youtube id'
                 .six.wide.column
-                    i.large.link.red.remove.icon.delete_post
+                    .ui.red.button.delete_post
+                        i.remove.icon
+                        |delete post
                     .ui.header 
                         small author
                         |#{_author.username}
                     if is_dev
-                        +single_user_edit key='_author_id' label='author' direct=true
-                    +image_edit key='image_id' label='image' direct=true
+                        +single_user_edit key='_author_id' label='author'
+                    +image_edit key='image_id' label='image'
                     div 
-                    +array_edit key='tags' label='tags' direct=true icon='tags'
-                    +boolean_edit key='published' icon='visible' direct=true
+                .ten.wide.column
+                    +array_edit key='tags' label='tags' icon='tags'
+                    +boolean_edit key='published' icon='visible'
                     if is_dev 
-                        +text_edit key='model' label='model' direct=true
-                    +array_edit key='location_tags' label='location_tags' direct=true
+                        +text_edit key='model' label='model' icon='database'
+                    +array_edit key='location_tags' label='location_tags' icon='marker'
                     // unless published
                     //     a.ui.fluid.green.button.submit(href="/save")
                     //         i.checkmark.icon
@@ -199,9 +201,11 @@ template(name='post_edit')
                     // else
                     //     .ui.basic.button.unpublish 
                     //         |unpublish
+                .six.wide.column
                     .ui.header
+                        +i name='audience'
                         |audience
                     +boolean_edit key='private' label='private' 
                     if private 
-                        +multi_user_edit key='access_user_ids' label='user picker' direct=true
+                        +multi_user_edit key='access_user_ids' label='user picker'
                     +group_picker

@@ -3,6 +3,9 @@ Meteor.users.allow
         true
         # if userId and doc._id == userId
         #     true
+    remove: (userId, doc) -> 
+        # true
+        doc._author_id is userId or 'admin' in Meteor.user().roles
 
 
 Docs.allow

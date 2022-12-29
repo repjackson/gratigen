@@ -417,6 +417,7 @@ if Meteor.isClient
         # @autorun => Meteor.subscribe 'author_by_doc_slug', Router.current().params.doc_slug
 
         @autorun => Meteor.subscribe 'event_tickets', Router.current().params.doc_id, ->
+        @autorun => Meteor.subscribe 'event_orders', Router.current().params.doc_id, ->
         # @autorun => Meteor.subscribe 'model_docs', 'room'
         
         if Meteor.isDevelopment
@@ -595,7 +596,10 @@ if Meteor.isClient
                     event_id: Router.current().params.doc_id
                 }).count()
             @max_attendees-ticket_count
-
+        event_orders: ->
+            Docs.find 
+                model:'order'
+                
 
 
 # if Meteor.isServer
@@ -644,3 +648,13 @@ if Meteor.isServer
             Docs.find 
                 model:'order'
                 event_id:event_id
+                
+    Meteor.publish 'event_orders', (event_id)->
+        event = Docs.findOne event_id 
+        if event 
+            Docs.find 
+                model:'order'
+                
+                
+                
+                
