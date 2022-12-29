@@ -109,7 +109,7 @@ body {
     display: inline !important;
 }
 .rounded {
-    border-radius: 10px !important;
+    border-radius: 15px !important;
 }
 
 .hscroll::-webkit-scrollbar {
@@ -191,7 +191,9 @@ body {
   min-height:500px !important;
 }
 
-
+input {
+  border-radius:10px !important;
+}
 .scrolling{
 	overflow-y:scroll;
 	overflow-x:hidden;

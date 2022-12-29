@@ -9,6 +9,30 @@ Tracker.autorun ->
         $(window).scrollTop 0
 
 
+Meteor.users.find(_id:Meteor.userId()).observe({
+    changed: (new_doc, old_doc)->
+        difference = new_doc.points-old_doc.points
+        if difference > 0
+            $('body').toast({
+                title: "#{new_doc.points-old_doc.points}p earned"
+                # message: 'Please see desk staff for key.'
+                class : 'success'
+                showIcon:'hashtag'
+                # showProgress:'bottom'
+                position:'bottom right'
+                # className:
+                #     toast: 'ui massive message'
+                # displayTime: 5000
+                transition:
+                  showMethod   : 'zoom',
+                  showDuration : 250,
+                  hideMethod   : 'fade',
+                  hideDuration : 250
+                })
+
+})
+
+
 Template.footer.helpers
     doc_docs: ->
         Docs.find {}
@@ -18,8 +42,8 @@ Template.footer.helpers
 # Template.home.onCreated ->
 #     @autorun => @subscribe 'model_docs', 'stats', ->
 # Template.home.onRendered ->
-#     Meteor.call 'log_homepage_view', ->
-#         console.log '?'
+    #     Meteor.call 'log_homepage_view', ->
+    #         console.log '?'
 # Template.home.helpers
 #     stats: ->
 #         Docs.findOne

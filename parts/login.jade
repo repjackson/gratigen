@@ -3,38 +3,42 @@ template(name='login')
         .centered.row
             .eight.wide.column
                 // img.ui.image(src="{{c.url 'kitchen_logo' gravity='face' crop='fill'}}")
-                // img.ui.centered.image(src="https://nudefoodsmarket.com/wp-content/uploads/2021/03/logo-smaller-300x87.jpg")
-                .ui.center.aligned.header 
-                    +ibig name='network'
-                    |gratigen login
+                .ui.middle.aligned.two.column.grid
+                    .column
+                        img.ui.circular.image(src="/mstile-150x150.png")
+                    .column
+                        .ui.massive.header
+                            // +ibig name='network'
+                            |gratigen login
                 .ui.inline.small.header 
                     +i name='user-male'
                     // i.user.outline.icon
                     |username
-                .ui.fluid.large.input(class=login_class)
+                .ui.fluid.big.input(class=login_class)
                     input.username(type='text')
                 .spacer
-                .ui.inline.small.header 
+                .ui.inline.header 
                     +i name='password'
                     // i.lock.icon
                     | password
-                .ui.fluid.large.input(class=login_class)
+                .ui.fluid.big.input(class=login_class)
                     input.password(type='password')
                 //- if username
                 //- if logging_in
                 .ui.hidden.divider
-                .ui.fluid.big.button.enter(title="login #{username}" class=enter_class)
+                .ui.fluid.big.green.button.enter(title="login #{username}" class=enter_class)
                     +i name='internal' cl='ui mini inline image'
                     |login
                     strong #{username}
                     //- i.right.chevron.icon
+                .ui.horizontal.divider or
                 .ui.center.aligned.basic.segment    
-                    a.ui.compact.small.button(href='/forgot_password')
-                        +i name='forgot-password' cl='ui mini inline image'                    
-                        |forgot password
+                    // a.ui.compact.small.button(href='/forgot_password')
+                    //     +i name='forgot-password' cl='ui mini inline image'                    
+                    //     |forgot password
 
-                    a.ui.button(href='/register')
-                        i.plus.icon
+                    a.ui.big.teal.button(href='/register')
+                        i.user.plus.icon
                         |register
 
 template(name='register')
