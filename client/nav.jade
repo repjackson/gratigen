@@ -1,14 +1,16 @@
 template(name='nav')
     // https://fomantic-ui.com/elements/icon.html#/icon
-    #topnav.topnav.ui.attached.borderless.large.menu.hscroll(class=invert_class)
+    #topnav.topnav.ui.attached.borderless.inverted.menu.hscroll(class=invert_class)
         // if is_loading
         //     .icon.item
         //         i.big.loading.grey.refresh.icon.cancel
         // else 
         // a.icon.item.toggle_leftbar
         //     i.large.bars.icon
-        a.header.item.zoomer(href='/' class="{{isActivePath '/'}}" )
-            +i name='network'
+        a.header.image.item.zoomer(href='/' class="{{isActivePath '/'}}" )
+            // +i name='network'
+            img.ui.mini.image(src="/logo.png")
+            
             // i.large.home.icon
             span.mobile.hidden gratigen
         +nav_item route='recipes' icon='meal' label='recipes'
@@ -78,7 +80,7 @@ template(name='nav')
                 
                 
 template(name='secnav')
-    .ui.attached.small.borderless.menu.hscroll(class=invert_class)
+    .ui.attached.small.borderless.inverted.menu.hscroll(class=invert_class)
         a.item.zoomer(href="/resources" class="{{isActiveRoute 'resources'}}")
             // i.large.inbox.icon
             +i name='clock'
