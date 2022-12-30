@@ -30,14 +30,14 @@ template(name='home')
                 
             // .ui.button create request
         .eight.wide.column.bordered
-            .ui.icon.button.add_mode 
-                i.plus.large.icon
+            // .ui.icon.button.add_mode 
+            //     i.plus.large.icon
             .ui.search
-                .ui.large.icon.input.search_bar
+                .ui.large.icon.fluid.input.search_bar
                     input.prompt(type='text' placeholder='add/request/search...')
                     i.search.icon
                 .results
-            .ui.center.aligned.basic.compact.segment
+            .centered
                 +filter_model model='organization' icon='groups' color='83DFF4'
                     //light blue
                 +filter_model model='project' icon='project' color='7229AF' 
@@ -64,6 +64,7 @@ template(name='home')
                 +session_set key='view_mode' value='list' icon='list'
                 // +session_set key='view_mode' value='card' icon='card'
                 +session_set key='view_mode' value='calendar' icon='calendar'
+                +session_set key='view_mode' value='map' icon='map'
 
             .ui.two.stackable.cards.scrolling
                 each doc_results
