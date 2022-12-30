@@ -12,6 +12,13 @@ body {
     /* background: #0e0e44 !important; */
 }
 
+#main {
+  /*height:100% !important;*/
+}
+
+.maincontent {
+  /*height:100% !important;*/
+}
 #mapbox {
   height:400px !important;
 }

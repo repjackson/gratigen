@@ -119,7 +119,7 @@ Template.mapbox.onRendered =>
                     #         if val._latlng.lat is oldDocument.latlng.lat and val._latlng.lng is oldDocument.latlng.lng
                     #             markers.removeLayer(val)
 
-    , 3000
+    , 4000
 
 
 Template.mapbox.helpers 

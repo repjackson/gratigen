@@ -183,7 +183,7 @@ template(name='home_card')
             if youtube_id 
                 +youtube_view key='youtube_id' direct=true
             .content 
-                a.inline.header(href="/#{model}/#{_id}") 
+                a.inline.header.fly_left(href="/#{model}/#{_id}") 
                     if _is 'model' 'recipe'
                         +i name='recipe'
                     if _is 'model' 'food'
@@ -205,7 +205,7 @@ template(name='home_card')
                 //     i.marker.large.red.icon
                 //     |map me
                 |#{when}
-            a(href="/#{model}/#{_id}")
+            a.zoom(href="/#{model}/#{_id}")
                 img.ui.fluid.image(src="{{c.url image_id width=400 height=400}}")
             .content 
                 .description

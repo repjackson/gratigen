@@ -5,8 +5,8 @@ template(name='nav')
         //     .icon.item
         //         i.big.loading.grey.refresh.icon.cancel
         // else 
-        a.icon.item.toggle_leftbar
-            i.large.bars.icon
+        // a.icon.item.toggle_leftbar
+        //     i.large.bars.icon
         a.header.image.item.zoomer(href='/' class="{{isActivePath '/'}}" )
             // +i name='network'
             img.ui.mini.image(src="/logo.png")
@@ -63,14 +63,14 @@ template(name='nav')
                     else
                         i.user.icon
                     strong #{currentUser.name}
-                a.icon.item.toggle_rightbar.no_blink
-                    // .ui.avatar.image
-                    //     if currentUser.image_id
-                    //         img.ui.mini.inline.image(src="{{c.url currentUser.image_id width=200 height=200 gravity='face' crop='fill'}}")
-                    //     else
-                    //         i.user.large.icon
-                    // strong.mobile.hidden #{currentUser.name}
-                    i.bars.large.grey.icon
+                // a.icon.item.toggle_rightbar.no_blink
+                //     // .ui.avatar.image
+                //     //     if currentUser.image_id
+                //     //         img.ui.mini.inline.image(src="{{c.url currentUser.image_id width=200 height=200 gravity='face' crop='fill'}}")
+                //     //     else
+                //     //         i.user.large.icon
+                //     // strong.mobile.hidden #{currentUser.name}
+                //     i.bars.large.grey.icon
             unless subs_ready
                 .icon.item
                     i.yin.yang.large.loading.icon
@@ -82,8 +82,8 @@ template(name='nav')
                     // i.sign.in.large.icon
                     +i name='internal'
                     span.mobile.hidden login
-            if session_is 'viewing_alerts'
-                +topbar
+            // if session_is 'viewing_alerts'
+            //     +topbar
                 
                 
                 
