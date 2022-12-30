@@ -36,17 +36,17 @@ template(name='home')
                 +online_users
             // .ui.button create request
         .eight.wide.column.bordered
-            +filter_model model='organization' icon='groups' color='FA5252'
+            +filter_model model='organization' icon='groups' color='83DFF4'
+            +filter_model model='project' icon='project' color='7229AF'
             +filter_model model='event' icon='calendar' color='FAB005'
-            +filter_model model='resource' icon='car' color='FD7E14'
-            +filter_model model='request' icon='commercial' color='F25081'
-            +filter_model model='project' icon='project' color='7950F2'
+            +filter_model model='role' icon='what-i-do' color='42E8C4'
+            +filter_model model='tasks' icon='task' color='B785E1'
+            +filter_model model='resource' icon='car' color='FD7E14'  
             +filter_model model='post' icon='for-you' color='1255B8'
-            +filter_model model='roles' icon='what-i-do' color='42E8C4'
-            +filter_model model='skills' icon='wrench' color='228BE6c'
-            // +filter_model model='badge' icon='badge' color='40C057'
-            +filter_model model='tasks' icon='task' color='40C057'
-            // +filter_model model='food' icon='food'
+            +filter_model model='offer' icon='hand-holding-heart' color='F25081'
+            +filter_model model='request' icon='commercial' color='40C057'           
+            +filter_model model='skills' icon='wrench' color='FA5252'
+            // +filter_model model='food' icon='food' 83DFF4
             .scrolling
                 each doc_results
                     +home_card
@@ -100,10 +100,15 @@ template(name='dash_user_info')
             img.ui.small.image(src="{{c.url currentUser.image_id width=600 height=600 gravity='face' crop='fill'}}")
         .column
             .ui.header.print_me
-                  | @#{currentUser.username}
+                  | #{currentUser.username}
                   | #{currentUser.points}pts
-                  
+                | #{currentUser.tagline}
 
+    // i.user.icon
+    // .ui.inline.header #{currentUser.name}
+    // strong #{currentUser.points}p
+    // div
+    // .ui.inline.header #{currentUser.tagline}
         
            
            

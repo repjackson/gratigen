@@ -1,4 +1,10 @@
 template(name='mapbox')
+    .ui.button.clear_markers
+        |clear markers
+    .ui.list
+        each marker_docs
+            .item #{title}
+                |#{lat}, #{lng}
     #mapbox.invert
 
 

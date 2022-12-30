@@ -13,6 +13,14 @@
 # # # #   actions: [{action: 'archive', title: "Archive"}]
 # # # # });
 
+Template.mapbox.events
+    'click .clear_markers': ->
+        Meteor.call 'clear_markers', ->
+            # alert 'cleared'
+        for marker in Meteor.user().markers
+            marker.remove()
+        location.reload()
+        
 Template.mapbox.onRendered =>
     Meteor.setTimeout =>
         mapboxgl.accessToken = 'pk.eyJ1IjoiZ29sZHJ1biIsImEiOiJjbGM5cXNsZmQwbW14M3BsaHFjMnY4dW90In0.SQ5FWLZYeq-xO6_g7wekRQ';
@@ -32,17 +40,25 @@ Template.mapbox.onRendered =>
                 container: 'mapbox',
                 style: 'mapbox://styles/mapbox/streets-v12'
                 center: [position.coords.longitude, position.coords.latitude]
-                zoom: 12,
+                zoom: 10,
             });
+            
+
+            markers = []
+            
             marker1 = new mapboxgl.Marker()
                 .setLngLat([position.coords.longitude, position.coords.latitude])
                 .addTo(map);
+            # markers.push marker1
+            # Meteor.users.update Meteor.userId(), 
+            #     $addToSet:markers:marker1
+            console.log 'markers list', markers
             # marker1 = new mapboxgl.Marker()
             # .setLngLat([12.554729, 55.70651])
             # .addTo(map);
             query = Markers.find()
             query.observe
-                added: (doc)=>
+                added: (doc)->
                     console.log 'added marker', doc
                     # marker = L.marker(doc.latlng).on('click', (event)->
                     #     Markers.remove({_id: doc._id});
@@ -57,10 +73,35 @@ Template.mapbox.onRendered =>
                     #     shadowSize: [68, 95],
                     #     shadowAnchor: [22, 94]
                     # });
-    
+                    markerHeight = 50;
+                    markerRadius = 10;
+                    linearOffset = 25;
+                    popupOffsets = {
+                    'top': [0, 0],
+                    'top-left': [0, 0],
+                    'top-right': [0, 0],
+                    'bottom': [0, -markerHeight],
+                    'bottom-left': [linearOffset, (markerHeight - markerRadius + linearOffset) * -1],
+                    'bottom-right': [-linearOffset, (markerHeight - markerRadius + linearOffset) * -1],
+                    'left': [markerRadius, (markerHeight - markerRadius) * -1],
+                    'right': [-markerRadius, (markerHeight - markerRadius) * -1]
+                    };
+                    popup = new mapboxgl.Popup({offset: popupOffsets, className: 'my-class'})
+                    .setLngLat([doc.lng, doc.lat])
+                    .setHTML("<h4>#{doc.title}</h4>")
+                    .setMaxWidth("300px")
+                    .addTo(map);
+                    
                     marker1 = new mapboxgl.Marker()
                     .setLngLat([doc.lng, doc.lat])
                     .addTo(map);
+    
+                    # Meteor.users.update Meteor.userId(), 
+                    #     $addToSet:markers:marker1
+                    # markers.push marker1
+                    # console.log 'markers list', markers
+
+    
 
 
         #         # L.marker([doc.latlng.lat, doc.latlng.long],{
@@ -80,7 +121,11 @@ Template.mapbox.onRendered =>
     , 2000
 
 
-Template.map.onCreated ->
+Template.mapbox.helpers 
+    marker_docs: ->
+        Markers.find()
+
+Template.mapbox.onCreated ->
     @autorun => @subscribe 'all_markers', ->
         
 

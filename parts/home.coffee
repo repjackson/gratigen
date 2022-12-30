@@ -75,6 +75,7 @@ if Meteor.isClient
             #     pos = Geolocation.currentLocation()
             #     map.setView([Session.get('current_lat'), Session.get('current_long')], 13);
                 Markers.insert 
+                    title:@title
                     lat: "#{@lat}"
                     lng:"#{@lng}"
                 

@@ -279,6 +279,9 @@ if Meteor.isServer
     
     
     Meteor.methods
+        clear_markers: ->
+            Markers.remove({})
+
         geolocate: (doc_id, search)->
             # Doc
             console.log Meteor.settings.private.maps

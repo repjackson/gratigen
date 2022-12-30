@@ -13,12 +13,16 @@ template(name='nav')
             
             // i.large.home.icon
             span.mobile.hidden gratigen
-        +nav_item route='recipes' icon='meal' label='recipes'
-        +nav_item route='food_products' icon='shop' label='products'
-        +nav_item route='music' icon='music' label='music'
-        +nav_item route='users' icon='groups' label='users'
+        +nav_item route='my_accounts' label='accounts' icon='data-in-both-directions' color='40C057'
+        +nav_item route='my_organizations' icon='groups' color='83DFF4' label='organizations'
+        +nav_item route='my_projects' icon='project' color='7229AF' label='projects'
+        +nav_item route='my_events' icon='calendar' color='FAB005' label='events'
+        +nav_item route='my_role' icon='what-i-do' color='42E8C4' label='roles'
+        +nav_item route='my_tasks' icon='task' color='B785E1' label='tasks'
+        +nav_item route='my_resources' icon='car' color='FD7E14' label='resources'
+        +nav_item route='my_skills' icon='wrench' color='FA5252' label='skills'
         if currentUser.admin
-            +nav_item route='admin' icon='shield' label='admin'
+            +nav_item route='admin' icon='shield' color='FFFFFF' label='admin'
             
         // a.icon.item.toggle_invert
         //     i.lightbulb.icon
@@ -113,7 +117,8 @@ template(name='secnav')
 template(name='nav_item')
     a.item.zoomer(href="/{{route}}" class="{{isActiveRoute route }}")
         // i.large.inbox.icon
-        +i name=icon
+        
+        +i name=icon color=color cl='ui mini inline image'
         span.mobile.hidden #{label}
 
                  
