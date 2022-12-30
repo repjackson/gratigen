@@ -3,27 +3,28 @@ template(name='home')
         .four.wide.column.bordered
             +dash_user_info
 
-   
-            .ui.vertical.fluid.menu
+            .ui.fluid.big.menu.hscroll.mobile.only
                 +side_menu_item color="FF73EA" icon='food' label='food'
                 +side_menu_item color="B785E1" icon='home' label='housing'
                 +side_menu_item color="7229AF" icon='tshirt' label='clothing'
                 +side_menu_item color="1255B8" icon='car' label='transportation'
                 +side_menu_item color="83DFF4" icon='lightning' label='energy'
                 +side_menu_item color="42E8C4" icon='leaf' label='zero waste'
-                .item.invert.active(style="color:#40C057")
-                    i.smile.icon
-                    |wellness
-                .item.invert.active(style="color:#FAB005")
-                    i.university.icon
-                    |education
-                .item.invert.active(style="color:#FD7E14") 
-                    i.paint.brush.icon
-                    |art
-                .item.invert.active(style="color:red") 
-                    i.users.icon
-                    |community core
-                +online_allies
+                +side_menu_item color="40C057" icon='smile' label='wellness'
+                +side_menu_item color="FAB005" icon='university' label='education'
+                +side_menu_item color="FD7E14" icon='paint brush' label='art'
+                +side_menu_item color="FF0000" icon='users' label='community core'
+            .ui.vertical.fluid.menu.mobile.hidden
+                +side_menu_item color="FF73EA" icon='food' label='food'
+                +side_menu_item color="B785E1" icon='home' label='housing'
+                +side_menu_item color="7229AF" icon='tshirt' label='clothing'
+                +side_menu_item color="1255B8" icon='car' label='transportation'
+                +side_menu_item color="83DFF4" icon='lightning' label='energy'
+                +side_menu_item color="42E8C4" icon='leaf' label='zero waste'
+                +side_menu_item color="40C057" icon='smile' label='wellness'
+                +side_menu_item color="FAB005" icon='university' label='education'
+                +side_menu_item color="FD7E14" icon='paint brush' label='art'
+                +side_menu_item color="FF0000" icon='users' label='community core'
                 
             // .ui.button create request
         .eight.wide.column.bordered
@@ -61,8 +62,7 @@ template(name='home')
             
         .four.wide.column.bordered
             +mapbox
-            .ui.header 
-                |gratigen
+            +online_allies
             //     a.ui.button(href='
             //     .four.wide.column
             // // .ui.segment.smallscroll
@@ -116,7 +116,7 @@ template(name='side_menu_item')
 template(name='dash_user_info') 
     a.ui.two.column.grid.zoomer(href="/user/#{currentUser.username}")
         .column
-            img.ui.small.image(src="{{c.url currentUser.image_id width=600 height=600 gravity='face' crop='fill'}}")
+            img.ui.small.circular.image(src="{{c.url currentUser.image_id width=600 height=600 gravity='face' crop='fill'}}")
         .column
             .ui.header
                 | #{currentUser.username}

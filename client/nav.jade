@@ -13,15 +13,16 @@ template(name='nav')
             
             // i.large.home.icon
             span.mobile.hidden gratigen
-        +nav_item route='my_accounts' label='accounts' icon='data-in-both-directions' color='40C057'
-        +nav_item route='my_organizations' icon='groups' color='83DFF4' label='organizations'
-        +nav_item route='my_projects' icon='project' color='7229AF' label='projects'
-        +nav_item route='my_events' icon='calendar' color='FAB005' label='events'
-        +nav_item route='my_roles' icon='what-i-do' color='42E8C4' label='roles'
-        +nav_item route='my_tasks' icon='task' color='B785E1' label='tasks'
-        +nav_item route='my_resources' icon='car' color='FD7E14' label='resources'
-        +nav_item route='my_skills' icon='wrench' color='ff0000' label='skills'
-        +nav_item route='my_badges' label='badges' icon='badge' color='1255B8'
+        // span.mobile.hidden
+        +top_nav_item route='my_accounts' label='accounts' icon='data-in-both-directions' color='40C057'
+        +top_nav_item route='my_organizations' icon='groups' color='83DFF4' label='organizations'
+        +top_nav_item route='my_projects' icon='project' color='7229AF' label='projects'
+        +top_nav_item route='my_events' icon='calendar' color='FAB005' label='events'
+        +top_nav_item route='my_roles' icon='what-i-do' color='42E8C4' label='roles'
+        +top_nav_item route='my_tasks' icon='task' color='B785E1' label='tasks'
+        +top_nav_item route='my_resources' icon='car' color='FD7E14' label='resources'
+        +top_nav_item route='my_skills' icon='wrench' color='ff0000' label='skills'
+        +top_nav_item route='my_badges' label='badges' icon='badge' color='1255B8'
 
         if currentUser.admin
             // +nav_item route='admin' icon='shield' color='FFFFFF' label='admin'
@@ -121,10 +122,19 @@ template(name='secnav')
 template(name='nav_item')
     a.item.zoomer(href="/{{route}}" class="{{isActiveRoute route }}")
         // i.large.icon(class=icon)
+        +i name=icon color=color cl='ui avatar image'
+        // |&nbsp;
+        // |&nbsp;
+        span #{label}
+
+                 
+template(name='top_nav_item')
+    a.item.zoomer.mobile.hidden(href="/{{route}}" class="{{isActiveRoute route }}")
+        // i.large.icon(class=icon)
         +i name=icon color=color cl='ui mini inline image'
         // |&nbsp;
         |&nbsp;
-        span.mobile.hidden #{label}
+        span #{label}
 
                  
                     
@@ -165,6 +175,16 @@ template(name='rightbar')
                 else
                     +i name='light'
                 |dark mode
+            +nav_item route='my_accounts' label='accounts' icon='data-in-both-directions' color='40C057'
+            +nav_item route='my_organizations' icon='groups' color='83DFF4' label='organizations'
+            +nav_item route='my_projects' icon='project' color='7229AF' label='projects'
+            +nav_item route='my_events' icon='calendar' color='FAB005' label='events'
+            +nav_item route='my_roles' icon='what-i-do' color='42E8C4' label='roles'
+            +nav_item route='my_tasks' icon='task' color='B785E1' label='tasks'
+            +nav_item route='my_resources' icon='car' color='FD7E14' label='resources'
+            +nav_item route='my_skills' icon='wrench' color='ff0000' label='skills'
+            +nav_item route='my_badges' label='badges' icon='badge' color='1255B8'
+                
             +right_nav_item route='credit' label='credit' icon='money'
             +right_nav_item route='orders' label='orders' icon='check'
             +right_nav_item route='subscriptions' label='subscriptions' icon='check'
@@ -202,13 +222,13 @@ template(name='rightbar')
 
 template(name='right_nav_item')
     a.item.toggle_rightbar(href="/user/#{currentUser.username}/#{route}" class="{{isActiveRoute regex='user_dashboard'}}")
-        +i name=icon cl='ui avatar image'
-        // i.dashboard.icon
+        // +i name=icon cl='ui avatar image'
+        i.large.icon(class=icon)
         |#{label}
 
 
 template(name='leftbar')
-    .ui.left.sidebar.ui.vertical.big.borderless.menu
+    .ui.left.thin.sidebar.ui.vertical.borderless.menu
         +leftbar_item key='posts' icon='newspaper'
         +leftbar_item key='products' icon='shop'
         +leftbar_item key='food' icon='food'
