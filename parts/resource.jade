@@ -134,7 +134,7 @@ template(name='resource_view')
                         a.zoomer(href="/resource/#{_id}/edit")
                             i.pencil.big.circular.icon
                     div
-                    +text_view key='location' icon='marker' label='location' direct=true
+                    +text_view key='location' icon='marker' label='location' 
                     .ui.hidden.divider
                     if image_id
                         img.ui.centered.rounded.shadowed.fluid.image(src="{{c.url image_id crop='fit'}}")
@@ -177,7 +177,7 @@ template(name='resource_view')
                     +quickbuy day_diff=5
                     div
                     if description.length
-                        +html_view key='description' label='description' icon='content' direct=true
+                        +html_view key='description' label='description' icon='content' 
                     div
                     .ui.small.list
                         .item total earnings
@@ -232,8 +232,8 @@ template(name='resource_edit')
                         small resource
                     a.ui.big.icon.green.fluid.button(href="/resource/#{_id}/")
                         i.checkmark.big.icon
-                    +text_edit key='title' icon='header' direct=true
-                    +number_edit key='daily_rate' label='daily rate' icon='exchange' direct=true
+                    +text_edit key='title' icon='header' 
+                    +number_edit key='daily_rate' label='daily rate' icon='exchange' 
                     .ui.icon.small.red.button.delete_resource_item 
                         i.trash.icon
                 .column
@@ -246,14 +246,15 @@ template(name='resource_edit')
                         |gps coords
                     .ui.label #{lat}
                     .ui.label #{long}
-                    +text_edit key='location' label='location text' icon='marker' direct=true
-                    +html_edit key='description' label='description' icon='content' direct=true
+                    +text_edit key='location' label='location text' icon='marker' 
+                    +geolocate_button
+                    +html_edit key='description' label='description' icon='content' 
                 .column
-                    +array_edit key='tags' icon='tags' label='tags' direct=true
-                    +array_edit key='location_tags' label='public location tags' icon='marker' direct=true
-                    +array_edit key='private_location_tags' label='private location tags' icon='marker' direct=true tooltip='for handlers and buyers who are picking up'
-                    +image_edit key='image_id' label='image' direct=true
-                    +image_link_edit key='image_link' label='image link' direct=true
+                    +array_edit key='tags' icon='tags' label='tags' 
+                    +array_edit key='location_tags' label='public location tags' icon='marker' 
+                    +array_edit key='private_location_tags' label='private location tags' icon='marker'  tooltip='for handlers and buyers who are picking up'
+                    +image_edit key='image_id' label='image' 
+                    +image_link_edit key='image_link' label='image link' 
 
     
 
@@ -271,7 +272,7 @@ template(name='profile_resource_item')
     .ui.segment.grid
         .row
             .three.column
-                +image_view key='image' direct=true cl='zoom ui tiny image'
+                +image_view key='image'  cl='zoom ui tiny image'
             .twelve.wide.column
                 .ui.header #{title}
                 a.ui.header.inline.lowercase(href="/resource/#{_id}/")

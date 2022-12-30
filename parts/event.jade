@@ -17,6 +17,26 @@ template(name='events')
                 .ui.stackable.cards
                     each event_docs
                         +event_card
+                        
+template(name='my_events')
+    .ui.stackable.padded.grid 
+        .row
+            .sixteen.wide.column
+                .ui.inline.header
+                    // i.calendar.icon
+                    +i name='calendar'
+                    |my events
+                +add_model_button model='event'
+                .ui.large.basic.circular.button.toggle_past
+                    if viewing_past
+                        i.checkmark.large.green.icon
+                    else
+                        i.circle.outline.large.icon
+                    |past
+                .spacer
+                .ui.stackable.cards
+                    each event_docs
+                        +event_card
 
 template(name='event_card')
     .ui.card

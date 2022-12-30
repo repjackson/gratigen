@@ -9,7 +9,31 @@ if Meteor.isClient
         @render 'events'
         ), name:'events'
         
+    Router.route '/my_events', (->
+        @layout 'layout'
+        @render 'my_events'
+        ), name:'my_events'
         
+
+    Template.my_events.onCreated ->
+        @autorun => Meteor.subscribe 'my_events_publication', ->
+    Template.my_events.onRendered ->
+    Template.my_events.helpers
+        event_docs: ->
+            Docs.find   
+                model:'event'
+                
+if Meteor.isServer 
+    Meteor.publish 'my_events_publication', ->
+        user = Meteor.user()
+        # authored
+        Docs.find 
+            model:'event'
+            _author_id:Meteor.userId()
+
+
+
+if Meteor.isClient
     # Router.route '/e/:doc_slug/', (->
     #     @layout 'layout'
     #     @render 'event_view'
@@ -272,9 +296,9 @@ if Meteor.isClient
         ), name:'event_edit'
 
     Template.event_edit.onCreated ->
-        @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
-        @autorun => Meteor.subscribe 'model_docs', 'room_reservation'
-        @autorun => Meteor.subscribe 'model_docs', 'room'
+        @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id, ->
+        @autorun => Meteor.subscribe 'model_docs', 'room_reservation', ->
+        @autorun => Meteor.subscribe 'model_docs', 'room', ->
     Template.event_edit.onRendered ->
     Template.event_edit.helpers
         rooms: ->

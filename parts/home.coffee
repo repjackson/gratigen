@@ -151,7 +151,7 @@ if Meteor.isClient
             # Docs.find {model:$ne:'comment'},
             Docs.find {},
                 sort:_timestamp:-1
-    Template.closest_allies.helpers 
-        user_docs: ->
-            Meteor.users.find {}
+    # Template.closest_allies.helpers 
+    #     user_docs: ->
+    #         Meteor.users.find {}
 

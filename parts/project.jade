@@ -194,6 +194,9 @@ template(name='project_edit')
                         +single_user_edit key='_author_id' label='author' direct=true
                     +image_edit key='image_id' label='image' direct=true
                     div 
+                    +text_edit key='location' 
+                    +geolocate_button
+                    
                     +array_edit key='tags' label='tags' direct=true icon='tags'
                     +boolean_edit key='published' icon='visible' direct=true
                     if is_dev 

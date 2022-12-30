@@ -29,8 +29,8 @@ Template.mapbox.onRendered =>
             Session.set('current_lat', position.coords.latitude)
             Session.set('current_long', position.coords.longitude)
             
-            console.log 'saving long', position.coords.longitude
-            console.log 'saving lat', position.coords.latitude
+            # console.log 'saving long', position.coords.longitude
+            # console.log 'saving lat', position.coords.latitude
         
             pos = Geolocation.currentLocation()
             # map.setView([Session.get('current_lat'), Session.get('current_long')], 13);
@@ -119,7 +119,7 @@ Template.mapbox.onRendered =>
                     #         if val._latlng.lat is oldDocument.latlng.lat and val._latlng.lng is oldDocument.latlng.lng
                     #             markers.removeLayer(val)
 
-    , 2000
+    , 3000
 
 
 Template.mapbox.helpers 

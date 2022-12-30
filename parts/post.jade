@@ -189,6 +189,9 @@ template(name='post_edit')
                     +image_edit key='image_id' label='image'
                     div 
                 .ten.wide.column
+                    +text_edit key='location' 
+                    +geolocate_button
+
                     +array_edit key='tags' label='tags' icon='tags'
                     +boolean_edit key='published' icon='visible'
                     if is_dev 
