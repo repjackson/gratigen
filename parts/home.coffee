@@ -174,6 +174,29 @@ if Meteor.isClient
             # Docs.find {model:$ne:'comment'},
             Docs.find {},
                 sort:_timestamp:-1
+                
+    Template.home.onRendered ->
+        categoryContent = [
+            { category:'eft', title:'food', color:"FF73EA", icon:'food' }
+            { category:'eft', title:'housing', color:"B785E1", icon:'home' }
+            { category:'eft', title:'clothing', color:"7229AF", icon:'tshirt' }
+            { category:'eft', title:'transportation', color:"1255B8", icon:'car' }
+            { category:'eft', title:'energy', color:"83DFF4", icon:'lightning' }
+            { category:'eft', title:'zero waste', color:"42E8C4", icon:'leaf' }
+            { category:'eft', title:'wellness', color:"40C057", icon:'smile' }
+            { category:'eft', title:'education', color:"FAB005", icon:'university' }
+            { category:'eft', title:'art', color:"FD7E14", icon:'paint brush' }
+            { category:'eft', title:'community core', color:"FF0000", icon:'users' }
+        ];
+        
+        $('.ui.search')
+          .search({
+            type: 'category',
+            source: categoryContent
+            selectFirstResult:true	            
+          })
+        ;
+
     # Template.closest_allies.helpers 
     #     user_docs: ->
     #         Meteor.users.find {}

@@ -32,8 +32,11 @@ template(name='home')
         .eight.wide.column.bordered
             .ui.icon.button.add_mode 
                 i.plus.large.icon
-            .ui.large.input.search_bar
-                input(type='text' placeholder='add/request/search...')
+            .ui.search
+                .ui.large.icon.input.search_bar
+                    input.prompt(type='text' placeholder='add/request/search...')
+                    i.search.icon
+                .results
             .ui.center.aligned.basic.compact.segment
                 +filter_model model='organization' icon='groups' color='83DFF4'
                     //light blue
