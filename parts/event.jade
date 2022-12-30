@@ -198,17 +198,22 @@ template(name='eft_picker')
 
 template(name='eft_viewer')
     if in_list
-        .ui.basic.big.compact.icon.circular.inverted.label.toggle_eft.invert(style="color:##{color}")
-            // |&nbsp;
-            i.large.icon(class=icon)
-            // |&nbsp;
-            |#{label}
-    // else 
-    //     a.ui.animated.fade.button.toggle_eft.invert.zoomer(style="color:##{color}" class=eft_picker_class)
-    //         .visible.content
-    //             i.big.icon(class=icon)
-    //         .hidden.content
-    //             |#{label}
+        .ui.animated.fade.basic.inverted.circular.large.button.invert(style="color:##{color}")
+            .visible.content
+                i.big.icon(class=icon)
+            .hidden.content
+                |#{label}
+    //     .ui.basic.big.compact.icon.circular.inverted.label.toggle_eft.invert(style="color:##{color}")
+    //         // |&nbsp;
+    //         i.large.icon(class=icon)
+    //         // |&nbsp;
+    //         |#{label}
+    // // else 
+    // ui.animated.fade.button.toggle_eft.invert.zoomer(style="color:##{color}" class=eft_picker_class)
+            .visible.content
+                i.big.icon(class=icon)
+            .hidden.content
+                |#{label}
 
 
 
@@ -398,49 +403,6 @@ template(name='event_view')
     //         .ui.red.cancel.button cancel
     //         .ui.green.big.ok.button ok
 
-
-// template(name='eft_viewer')
-
-//     if _in 'food'
-//         .ui.large.label
-//             i.icon(style="color=#FF73EA" class='food')
-//             |'food'
-//     if _in 'housing'
-//         .ui.large.label
-//             i.icon(style="color=#B785E1" class='home')
-//             |'housing'
-//     if _in 'clothing'
-//         .ui.large.label
-//             i.icon(style="color=#7229AF" class='tshirt')
-//             |'clothing'
-//     if _in 'transportation'
-//         .ui.large.label
-//             i.icon(style="color=#1255B8" class='car')
-//             |'transportation'
-//     if _in 'energy'
-//         .ui.large.label
-//             i.icon(style="color=#83DFF4" class='lightning')
-//             |'energy'
-//     if _in 'zero waste'
-//         .ui.large.label
-//             i.icon(style="color=#42E8C4" class='leaf')
-//             |'zero waste'
-//     if _in 'wellness'
-//         .ui.large.label
-//             i.icon(style="color=#40C057" class='smile')
-//             |'wellness'
-//     if _in 'education'
-//         .ui.large.label
-//             i.icon(style="color=#FAB005" class='university')
-//             |'education'
-//     if _in 'art'
-//         .ui.large.label
-//             i.icon(style="color=#FD7E14" class='paint )
-//             |'art'
-//     if _in 'community core'
-//         .ui.large.label
-//             i.icon(style="color=#FF0000" class='users')
-//             |'community core'
 
 
 
