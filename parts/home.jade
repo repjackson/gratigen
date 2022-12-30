@@ -30,6 +30,10 @@ template(name='home')
                 
             // .ui.button create request
         .eight.wide.column.bordered
+            .ui.icon.button.add_mode 
+                i.plus.large.icon
+            .ui.large.input.search_bar
+                input(type='text' placeholder='add/request/search...')
             .ui.center.aligned.basic.compact.segment
                 +filter_model model='organization' icon='groups' color='83DFF4'
                     //light blue
@@ -108,11 +112,11 @@ template(name='home')
       
       
 template(name='side_menu_item')
-    a.item.toggle_item.invert(style="color:##{color}" class=side_item_class)
+    a.ui.header.item.toggle_item.invert(style="color:##{color}" class=side_item_class)
         i.icon(class=icon)
         |#{label}
-        if is_toggled
-            i.large.checkmark.icon
+        // if is_toggled
+        //     i.large.checkmark.icon
 
            
            

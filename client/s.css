@@ -116,7 +116,9 @@ body {
 /*.zoomer {*/
 /*}*/
 .zoomed {
-    transform: scale(1.05) !important; /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+    transform: scale(1.02) !important; /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+    border: 3px solid !important;
+  
 }
 .zoomer{
     transition: transform 2s;

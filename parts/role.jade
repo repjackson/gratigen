@@ -112,43 +112,43 @@ template(name='role_item')
 
 template(name='role_view')
     with current_doc
-        .ui.stackable.grid
-            .row 
-                .four.wide.column
-                    .ui.basic.segment
-                        .ui.header #{title}
-                        a.ui.circular.button.fly_left(href="/roles")
-                            i.chevron.left.big.icon
-                            i.newspaper.big.icon
-                            |roles
-                        // div
-                        // .ui.inline.grey.header {{from_now start_datetime}}
-                        
-                        if can_edit
-                            a.ui.circular.icon.button.edit_role(href="/role/#{_id}/edit" title='edit')
-                                i.big.link.pencil.icon
-                        .ui.segment
-                            .ui.header 
-                                small author
-                            a.ui.header(href="/user/#{_author.username}") 
-                                img.ui.avatar.image(src="{{c.url _author.image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                                |#{_author.username}
-                        .ui.small.grey.header 
-                            i.line.chart.icon
-                            |stats
-                        .ui.list
-                            .item #{views} views
-                        each viewers
-                            .ui.label #{username}
-                        +array_view key='tags' label='tags' direct=true
-                        +array_view key='badge_titles' label='badges' direct=true
-                        +voting_full
-                        .ui.header #{when}
-                        +eft_viewer
-                        //- +array_view key='location_tags' label='location_tags' direct=true
-                        +comments
+        .ui.stackable.padded.grid
+            .three.column.row 
+                .column
+                    .ui.header #{title}
+                    a.ui.circular.button.fly_left(href="/roles")
+                        i.chevron.left.big.icon
+                        i.newspaper.big.icon
+                        |roles
+                    // div
+                    // .ui.inline.grey.header {{from_now start_datetime}}
+                    
+                    if can_edit
+                        a.ui.circular.icon.button.edit_role(href="/role/#{_id}/edit" title='edit')
+                            i.big.link.pencil.icon
+                    .ui.segment
+                        .ui.header 
+                            small author
+                        a.ui.header(href="/user/#{_author.username}") 
+                            img.ui.avatar.image(src="{{c.url _author.image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                            |#{_author.username}
+                .column
+                    .ui.small.grey.header 
+                        i.line.chart.icon
+                        |stats
+                    .ui.list
+                        .item #{views} views
+                    each viewers
+                        .ui.label #{username}
+                    +array_view key='tags' label='tags' direct=true
+                    +array_view key='badge_titles' label='badges' direct=true
+                    +voting_full
+                    .ui.header #{when}
+                    +eft_viewer
+                    //- +array_view key='location_tags' label='location_tags' direct=true
+                    +comments
 
-                .twelve.wide.column.scrolling
+                .column
                     img.ui.image(src="{{c.url image_id }}" class=currentUser.invert_class)
                     // a.ui.header(href="/user/#{target.username}")
                     //     |#{target.username}
@@ -170,23 +170,26 @@ template(name='role_view')
 template(name='role_edit')
     with current_doc
         .ui.stackable.padded.grid
-            .row 
-                .eight.wide.column
+            .three.column.row 
+                .column
                     .ui.inline.header 
                         +icolor name='news' cl='ui image inline pointer'
                         |edit role
                     a.ui.icon.green.big.button(href="/role/#{_id}" title='save')
                         i.checkmark.big.icon
                     +text_edit key='title' label='title' direct=true
+                .column
                     +html_edit key='content' label='content' direct=true
                     +youtube_edit key='youtube_id' label='youtube id' direct=true
-                .eight.wide.column
+                .column
                     .ui.header required badges
                     +badge_picker
                     +task_picker
+                .column
                     +model_picker model='event' icon='calendar'
                     
                     i.large.link.red.remove.icon.delete_role
+                .column
                     .ui.header 
                         small owner - each id should be stored in user account or as nft in crypto wallet.
                         
@@ -205,6 +208,7 @@ template(name='role_edit')
                         +eft_picker color="FD7E14" icon='paint brush' label='art'
                         +eft_picker color="FF0000" icon='users' label="community core \n"
                         
+                .column
                     if is_dev
                         +single_user_edit key='_author_id' label='author' direct=true
                     +image_edit key='image_id' label='image' direct=true
@@ -213,6 +217,7 @@ template(name='role_edit')
                     +boolean_edit key='published' icon='visible' direct=true
                     if is_dev 
                         +text_edit key='model' label='model' direct=true
+                .column
                     +array_edit key='location_tags' label='location_tags' direct=true
                     // unless published
                     //     a.ui.fluid.green.button.submit(href="/save")
@@ -221,11 +226,14 @@ template(name='role_edit')
                     // else
                     //     .ui.basic.button.unpublish 
                     //         |unpublish
+                .column
                     .ui.header
                         |audience
                     +boolean_edit key='private' label='private' 
                     if private 
                         +multi_user_edit key='access_user_ids' label='user picker' direct=true
+                .column
                     +group_picker
                     +array_edit key='skills' label='skills' icon='wrench' direct=true
+                .column
                     +model_picker model='skill' icon='wrench'

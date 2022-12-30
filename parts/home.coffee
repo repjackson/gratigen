@@ -23,7 +23,7 @@ if Meteor.isClient
             @label in Meteor.user().active_side_menu_items
         side_item_class: ->
             if @label in Meteor.user().active_side_menu_items
-                'big inverted active zoomed'
+                'inverted active zoomed'
             else 
                 'small'
                 

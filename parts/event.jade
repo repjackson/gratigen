@@ -107,8 +107,9 @@ template(name='event_edit')
         .ui.stackable.padded.grid
             .centered.row 
                 .five.wide.column
-                    a.ui.icon.green.big.button.fly_right(href="/event/#{_id}" title='save')
+                    a.ui.green.big.circular.button.fly_right(href="/event/#{_id}" title='save')
                         i.checkmark.big.icon
+                        |save
                     .ui.inline.header 
                         +icolor name='tear-off-calendar'
                         |edit event
