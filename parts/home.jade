@@ -179,7 +179,9 @@ template(name='open_requests')
                     .ui.header #{when}
                             
 template(name='home_card')
-    if _is 'model' 'recipe'
+    if _is 'model' 'event'
+        +event_card
+    else if _is 'model' 'recipe'
         +recipe_card
     else 
         .ui.card.zoomer

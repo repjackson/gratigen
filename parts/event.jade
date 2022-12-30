@@ -87,6 +87,8 @@ template(name='event_card')
                         |#{body}
             if is_dev
                 +print_this
+            div 
+            +eft_viewer_small
 
 
 
@@ -132,7 +134,7 @@ template(name='event_edit')
                     // +time_edit key='time' label='time'
                     div
                     +number_edit key='hour_duration' label='hours'
-                    div
+                    div 
                     +text_edit key='location' label='location'
                     +geolocate_button
                     div
@@ -176,7 +178,7 @@ template(name='event_edit')
                         +eft_picker color="40C057" icon='smile' label='wellness'
                         +eft_picker color="FAB005" icon='university' label='education'
                         +eft_picker color="FD7E14" icon='paint brush' label='art'
-                        +eft_picker color="FF0000" icon='users' label='community core'
+                        +eft_picker color="FF0000" icon='users' label="community core \n"
                     
                     div
                     +image_edit key='image_id' label='image'
@@ -185,9 +187,11 @@ template(name='event_edit')
 
 template(name='eft_picker')
     if toggled
-        .ui.basic.big.compact.icon.circular.inverted.button.toggle_eft.invert(style="color:##{color}")
-            // |&nbsp;
-            i.large.icon(class=icon)
+        .ui.animated.fade.basic.inverted.circular.large.button.toggle_eft.zoomer.invert(style="color:##{color}")
+            .visible.content
+                i.big.icon(class=icon)
+            .hidden.content
+                small #{label}
             // |&nbsp;
     else 
         a.ui.animated.fade.button.toggle_eft.invert.zoomer(style="color:##{color}" class=eft_picker_class)
@@ -196,13 +200,16 @@ template(name='eft_picker')
             .hidden.content
                 |#{label}
 
-template(name='eft_viewer')
+template(name='eft_view_item')
     if in_list
-        .ui.animated.fade.basic.inverted.circular.large.button.invert(style="color:##{color}")
+        .ui.animated.fade.basic.inverted.circular.large.button.zoomer.invert(style="color:##{color}")
             .visible.content
                 i.big.icon(class=icon)
             .hidden.content
-                |#{label}
+                small #{label}
+template(name='eft_view_item_small')
+    if in_list
+        i.icon.zoomer.invert(class=icon style="color:##{color}" title=label)
     //     .ui.basic.big.compact.icon.circular.inverted.label.toggle_eft.invert(style="color:##{color}")
     //         // |&nbsp;
     //         i.large.icon(class=icon)
@@ -260,16 +267,7 @@ template(name='event_view')
                     if can_edit
                         a.edit_event(href="/event/#{_id}/edit" title='edit')
                             i.large.blue.link.pencil.circular.icon
-                    +eft_viewer color="FF73EA" icon='food' label='food'
-                    +eft_viewer color="B785E1" icon='home' label='housing'
-                    +eft_viewer color="7229AF" icon='tshirt' label='clothing'
-                    +eft_viewer color="1255B8" icon='car' label='transportation'
-                    +eft_viewer color="83DFF4" icon='lightning' label='energy'
-                    +eft_viewer color="42E8C4" icon='leaf' label='zero waste'
-                    +eft_viewer color="40C057" icon='smile' label='wellness'
-                    +eft_viewer color="FAB005" icon='university' label='education'
-                    +eft_viewer color="FD7E14" icon='paint brush' label='art'
-                    +eft_viewer color="FF0000" icon='users' label='community core'
+                    +eft_viewer
             .row 
                 .four.wide.column.scrollin
                     if location 
@@ -404,6 +402,30 @@ template(name='event_view')
     //         .ui.green.big.ok.button ok
 
 
+
+template(name='eft_viewer')
+    +eft_view_item color="FF73EA" icon='food' label='food'
+    +eft_view_item color="B785E1" icon='home' label='housing'
+    +eft_view_item color="7229AF" icon='tshirt' label='clothing'
+    +eft_view_item color="1255B8" icon='car' label='transportation'
+    +eft_view_item color="83DFF4" icon='lightning' label='energy'
+    +eft_view_item color="42E8C4" icon='leaf' label='zero waste'
+    +eft_view_item color="40C057" icon='smile' label='wellness'
+    +eft_view_item color="FAB005" icon='university' label='education'
+    +eft_view_item color="FD7E14" icon='paint brush' label='art'
+    +eft_view_item color="FF0000" icon='users' label='community core'
+    
+template(name='eft_viewer_small')
+    +eft_view_item_small color="FF73EA" icon='food' label='food'
+    +eft_view_item_small color="B785E1" icon='home' label='housing'
+    +eft_view_item_small color="7229AF" icon='tshirt' label='clothing'
+    +eft_view_item_small color="1255B8" icon='car' label='transportation'
+    +eft_view_item_small color="83DFF4" icon='lightning' label='energy'
+    +eft_view_item_small color="42E8C4" icon='leaf' label='zero waste'
+    +eft_view_item_small color="40C057" icon='smile' label='wellness'
+    +eft_view_item_small color="FAB005" icon='university' label='education'
+    +eft_view_item_small color="FD7E14" icon='paint brush' label='art'
+    +eft_view_item_small color="FF0000" icon='users' label='community core'
 
 
 
