@@ -15,6 +15,7 @@
 
 Template.mapbox.onRendered =>
     Meteor.setTimeout =>
+        mapboxgl.accessToken = 'pk.eyJ1IjoiZ29sZHJ1biIsImEiOiJjbGM5cXNsZmQwbW14M3BsaHFjMnY4dW90In0.SQ5FWLZYeq-xO6_g7wekRQ';
         navigator.geolocation.getCurrentPosition (position) =>
             console.log 'navigator position', position
             Session.set('current_lat', position.coords.latitude)
@@ -26,41 +27,40 @@ Template.mapbox.onRendered =>
             pos = Geolocation.currentLocation()
             # map.setView([Session.get('current_lat'), Session.get('current_long')], 13);
             
-            mapboxgl.accessToken = 'pk.eyJ1IjoiZ29sZHJ1biIsImEiOiJjbGM5cXNsZmQwbW14M3BsaHFjMnY4dW90In0.SQ5FWLZYeq-xO6_g7wekRQ';
+        
             map = new mapboxgl.Map({
                 container: 'mapbox',
                 style: 'mapbox://styles/mapbox/streets-v12'
                 center: [position.coords.longitude, position.coords.latitude]
-                zoom: 9,
+                zoom: 12,
             });
-        
             marker1 = new mapboxgl.Marker()
                 .setLngLat([position.coords.longitude, position.coords.latitude])
                 .addTo(map);
-        # marker1 = new mapboxgl.Marker()
-        # .setLngLat([12.554729, 55.70651])
-        # .addTo(map);
-        # query = Markers.find()
-        # query.observe
-        #     added: (doc)->
-        #         console.log 'added marker', doc
-        #         # marker = L.marker(doc.latlng).on('click', (event)->
-        #         #     Markers.remove({_id: doc._id});
-        #         # );
-        #         # console.log {{c.url currentUser.profile_image_id height=500 width=500 gravity='face' crop='fill'}}
-        #         # myIcon = L.icon({
-        #         #     iconUrl:"https://res.cloudinary.com/facet/image/upload/c_fill,g_face,h_300,w_100/#{Meteor.user().profile_image_id}"
-        #         #     iconSize: [38, 95],
-        #         #     iconAnchor: [22, 94],
-        #         #     popupAnchor: [-3, -76],
-        #         #     # shadowUrl: 'my-icon-shadow.png',
-        #         #     shadowSize: [68, 95],
-        #         #     shadowAnchor: [22, 94]
-        #         # });
-
-        #         marker1 = new mapboxgl.Marker()
-        #         .setLngLat([doc.lat, doc.long])
-        #         .addTo(map);
+            # marker1 = new mapboxgl.Marker()
+            # .setLngLat([12.554729, 55.70651])
+            # .addTo(map);
+            query = Markers.find()
+            query.observe
+                added: (doc)=>
+                    console.log 'added marker', doc
+                    # marker = L.marker(doc.latlng).on('click', (event)->
+                    #     Markers.remove({_id: doc._id});
+                    # );
+                    # console.log {{c.url currentUser.profile_image_id height=500 width=500 gravity='face' crop='fill'}}
+                    # myIcon = L.icon({
+                    #     iconUrl:"https://res.cloudinary.com/facet/image/upload/c_fill,g_face,h_300,w_100/#{Meteor.user().profile_image_id}"
+                    #     iconSize: [38, 95],
+                    #     iconAnchor: [22, 94],
+                    #     popupAnchor: [-3, -76],
+                    #     # shadowUrl: 'my-icon-shadow.png',
+                    #     shadowSize: [68, 95],
+                    #     shadowAnchor: [22, 94]
+                    # });
+    
+                    marker1 = new mapboxgl.Marker()
+                    .setLngLat([doc.lng, doc.lat])
+                    .addTo(map);
 
 
         #         # L.marker([doc.latlng.lat, doc.latlng.long],{
@@ -77,7 +77,7 @@ Template.mapbox.onRendered =>
         #             if val._latlng.lat is oldDocument.latlng.lat and val._latlng.lng is oldDocument.latlng.lng
         #                 markers.removeLayer(val)
 
-    , 3000
+    , 2000
 
 
 Template.map.onCreated ->
