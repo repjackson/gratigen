@@ -147,7 +147,7 @@ template(name='event_edit')
                     div 
                     +array_edit key='tags' label='tags' icon='red tags'
                     div
-                .ten.wide.column.scrolling
+                .ten.wide.column.scrollin
                     .ui.header
                         i.users.icon
                         |audience
@@ -165,20 +165,39 @@ template(name='event_edit')
                     div
                     +html_edit key='description' label='description'
                     div
-                    +side_menu_item color="FF73EA" icon='food' label='food'
-                    +ui primary tertiary button color="B785E1" icon='home' label='housing'
-                    +ui primary tertiary button color="7229AF" icon='tshirt' label='clothing'
-                    +ui primary tertiary button color="1255B8" icon='car' label='transportation'
-                    +ui primary tertiary button color="83DFF4" icon='lightning' label='energy'
-                    +ui primary tertiary button color="42E8C4" icon='leaf' label='zero waste'
-                    +ui primary tertiary button color="40C057" icon='smile' label='wellness'
-                    +ui primary tertiary button color="FAB005" icon='university' label='education'
-                    +ui primary tertiary button color="FD7E14" icon='paint brush' label='art'
-                    +ui primary tertiary button color="FF0000" icon='users' label='community core'
+                    // .ui.buttons 
+                    .ui.basic.center.aligned.segment
+                        +eft_picker color="FF73EA" icon='food' label='food'
+                        +eft_picker color="B785E1" icon='home' label='housing'
+                        +eft_picker color="7229AF" icon='tshirt' label='clothing'
+                        +eft_picker color="1255B8" icon='car' label='transportation'
+                        +eft_picker color="83DFF4" icon='lightning' label='energy'
+                        +eft_picker color="42E8C4" icon='leaf' label='zero waste'
+                        +eft_picker color="40C057" icon='smile' label='wellness'
+                        +eft_picker color="FAB005" icon='university' label='education'
+                        +eft_picker color="FD7E14" icon='paint brush' label='art'
+                        +eft_picker color="FF0000" icon='users' label='community core'
+                    
                     div
                     +image_edit key='image_id' label='image'
                     div
                     +link_edit key='link' label='link'
+
+template(name='eft_picker')
+    if toggled
+        .ui.basic.big.compact.icon.circular.inverted.button.toggle_eft.invert(style="color:##{color}")
+            // |&nbsp;
+            i.large.icon(class=icon)
+            // |&nbsp;
+    else 
+        a.ui.animated.fade.button.toggle_eft.invert.zoomer(style="color:##{color}" class=eft_picker_class)
+            .visible.content
+                i.big.icon(class=icon)
+            .hidden.content
+                |#{label}
+
+
+
 
 template(name='reserve_button')
     if slot_res

@@ -295,6 +295,34 @@ if Meteor.isClient
         @render 'event_edit'
         ), name:'event_edit'
 
+    Template.eft_picker.events 
+        'click .toggle_eft': ->
+            current_doc = Docs.findOne Router.current().params.doc_id 
+            if current_doc.efts
+                if @label in current_doc.efts 
+                    Docs.update current_doc._id,
+                        $pull:
+                            efts:@label
+                else 
+                    Docs.update current_doc._id,
+                        $addToSet:
+                            efts:@label
+            else 
+                Docs.update current_doc._id,
+                    $addToSet:
+                        efts:@label
+    Template.eft_picker.helpers 
+        toggled: -> 
+            current_doc = Docs.findOne Router.current().params.doc_id 
+            @label in current_doc.efts
+        eft_picker_class: ->
+            current_doc = Docs.findOne Router.current().params.doc_id 
+            if @label in current_doc.efts
+                'basic'
+            else
+                'tertiary'
+
+
     Template.event_edit.onCreated ->
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id, ->
         @autorun => Meteor.subscribe 'model_docs', 'room_reservation', ->

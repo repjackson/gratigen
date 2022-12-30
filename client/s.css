@@ -12,6 +12,10 @@ body {
     /* background: #0e0e44 !important; */
 }
 
+.circle {
+  border-radius:40px !important;
+}
+
 #main {
   /*height:100% !important;*/
 }
@@ -127,9 +131,9 @@ body {
     z-index:1000 !important;
 }
 
-.button:not(.circular) {
-  border-radius: 10px !important;
-}
+/*.button:not(.circular) {*/
+/*  border-radius: 10px !important;*/
+/*}*/
 
 .inline {
     display: inline !important;

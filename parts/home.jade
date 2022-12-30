@@ -55,7 +55,8 @@ template(name='home')
                 .ui.hidden.divider
                 +session_set key='view_mode' value='grid' icon='th' 
                 +session_set key='view_mode' value='list' icon='list'
-                +session_set key='view_mode' value='card' icon='card'
+                // +session_set key='view_mode' value='card' icon='card'
+                +session_set key='view_mode' value='calendar' icon='calendar'
 
             .ui.two.stackable.cards.scrolling
                 each doc_results
