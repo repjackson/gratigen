@@ -329,12 +329,18 @@ if Meteor.isClient
     Template.eft_picker.helpers 
         toggled: -> 
             current_doc = Docs.findOne Router.current().params.doc_id 
-            @label in current_doc.efts
+            if current_doc.efts
+                @label in current_doc.efts
+            else 
+                false
         eft_picker_class: ->
             current_doc = Docs.findOne Router.current().params.doc_id 
-            if @label in current_doc.efts
-                'basic'
-            else
+            if current_doc.efts
+                if @label in current_doc.efts
+                    'basic'
+                else
+                    'tertiary'
+            else 
                 'tertiary'
 
 

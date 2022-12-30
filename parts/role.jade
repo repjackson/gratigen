@@ -45,6 +45,8 @@ template(name='role_card')
                 |#{when}
             // +comments_view_small
             +author_info
+            div
+            +eft_viewer_small
 
 
 template(name='set_role_sort_key')
@@ -142,9 +144,9 @@ template(name='role_view')
                         +array_view key='badge_titles' label='badges' direct=true
                         +voting_full
                         .ui.header #{when}
+                        +eft_viewer
                         //- +array_view key='location_tags' label='location_tags' direct=true
                         +comments
-                        
 
                 .twelve.wide.column.scrolling
                     img.ui.image(src="{{c.url image_id }}" class=currentUser.invert_class)
@@ -191,6 +193,18 @@ template(name='role_edit')
                     .ui.header 
                         small author
                         |#{_author.username}
+                    .ui.basic.center.aligned.segment
+                        +eft_picker color="FF73EA" icon='food' label='food'
+                        +eft_picker color="B785E1" icon='home' label='housing'
+                        +eft_picker color="7229AF" icon='tshirt' label='clothing'
+                        +eft_picker color="1255B8" icon='car' label='transportation'
+                        +eft_picker color="83DFF4" icon='lightning' label='energy'
+                        +eft_picker color="42E8C4" icon='leaf' label='zero waste'
+                        +eft_picker color="40C057" icon='smile' label='wellness'
+                        +eft_picker color="FAB005" icon='university' label='education'
+                        +eft_picker color="FD7E14" icon='paint brush' label='art'
+                        +eft_picker color="FF0000" icon='users' label="community core \n"
+                        
                     if is_dev
                         +single_user_edit key='_author_id' label='author' direct=true
                     +image_edit key='image_id' label='image' direct=true

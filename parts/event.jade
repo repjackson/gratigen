@@ -4,9 +4,9 @@ template(name='events')
             .sixteen.wide.column
                 .ui.inline.header
                     // i.calendar.icon
-                    +i name='calendar'
+                    +i name='calendar' color='FAB005'
                     |events
-                +add_model_button model='event'
+                +add_model_button model='event' color='FAB005'
                 .ui.large.basic.circular.button.toggle_past
                     if viewing_past
                         i.checkmark.large.green.icon

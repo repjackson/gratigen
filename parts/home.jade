@@ -30,7 +30,7 @@ template(name='home')
                 
             // .ui.button create request
         .eight.wide.column.bordered
-            .ui.center.aligned.basic.segment
+            .ui.center.aligned.basic.compact.segment
                 +filter_model model='organization' icon='groups' color='83DFF4'
                     //light blue
                 +filter_model model='project' icon='project' color='7229AF' 
@@ -179,7 +179,9 @@ template(name='open_requests')
                     .ui.header #{when}
                             
 template(name='home_card')
-    if _is 'model' 'event'
+    if _is 'model' 'role'
+        +role_card
+    else if _is 'model' 'event'
         +event_card
     else if _is 'model' 'recipe'
         +recipe_card
