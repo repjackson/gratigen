@@ -40,13 +40,13 @@ Template.mapbox.onRendered =>
                 container: 'mapbox',
                 style: 'mapbox://styles/mapbox/streets-v12'
                 center: [position.coords.longitude, position.coords.latitude]
-                zoom: 10,
+                zoom: 11,
             });
             
 
             # markers = []
             
-            marker1 = new mapboxgl.Marker()
+            marker1 = new mapboxgl.Marker({color:'red'})
                 .setLngLat([position.coords.longitude, position.coords.latitude])
                 .addTo(map);
             # markers.push marker1
