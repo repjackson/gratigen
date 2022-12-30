@@ -16,6 +16,10 @@ if Meteor.isClient
         @layout 'layout'
         @render 'badges'
         ), name:'badges'
+    Router.route '/my_badges', (->
+        @layout 'layout'
+        @render 'badges'
+        ), name:'my_badges'
     Router.route '/badge/:doc_id', (->
         @layout 'layout'
         @render 'badge_view'

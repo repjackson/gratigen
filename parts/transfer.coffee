@@ -275,6 +275,10 @@ if Meteor.isClient
         @layout 'layout'
         @render 'transfers'
         ), name:'transfers'
+    Router.route '/my_accounts/', (->
+        @layout 'layout'
+        @render 'transfers'
+        ), name:'my_accounts'
     
 
     Router.route '/transfer/:doc_id', (->

@@ -83,6 +83,10 @@ if Meteor.isClient
         @layout 'layout'
         @render 'groups'
         ), name:'groups'
+    Router.route '/my_organizations', (->
+        @layout 'layout'
+        @render 'groups'
+        ), name:'my_organizations'
 
 
     Template.groups.onCreated ->

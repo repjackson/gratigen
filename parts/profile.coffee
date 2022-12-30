@@ -737,6 +737,52 @@ if Meteor.isServer
         Docs.find
             model:'request'
                                     
+                             
+                             
+# if Meteor.isClient
+#     Router.route '/user/:username/skills', (->
+#         @layout 'profile_layout'
+#         @render 'user_skills'
+#         ), name:'user_skills'
+
+#     Template.user_skills.onCreated ->
+#         @autorun -> Meteor.subscribe 'user_model_docs', 'request', Router.current().params.username
+#         # @autorun => Meteor.subscribe 'user_skills', Router.current().params.username
+#         @autorun => Meteor.subscribe 'model_docs', 'request'
+
+#     Template.user_skills.events
+#         'keyup .new_request': (e,t)->
+#             if e.which is 13
+#                 val = $('.new_request').val()
+#                 console.log val
+#                 target_user = Meteor.users.findOne(username:Router.current().params.username)
+#                 Docs.insert
+#                     model:'request'
+#                     body: val
+#                     target_user_id: target_user._id
+
+
+
+#     Template.user_skills.helpers
+#         skills: ->
+#             current_user = Meteor.users.findOne(username:Router.current().params.username)
+#             Docs.find {
+#                 model:'request'
+#                 _author_id: current_user._id
+#                 # target_user_id: target_user._id
+#             },
+#                 sort:_timestamp:-1
+
+
+
+if Meteor.isServer
+    Meteor.publish 'user_requests', (username)->
+        Docs.find
+            model:'request'
+                                    
+                                    
+                                    
+                             
                                     
                                     
 if Meteor.isClient

@@ -15,6 +15,10 @@ if Meteor.isClient
         @layout 'layout'
         @render 'role_view'
         ), name:'role_view_long'
+    Router.route '/my_roles/', (->
+        @layout 'layout'
+        @render 'roles'
+        ), name:'my_roles'
     
     
     Template.roles.onCreated ->
@@ -51,9 +55,9 @@ if Meteor.isClient
                 model:'tag'
             }, sort:_timestamp:-1
 
-    Template.user_roles.onCreated ->
+    Template.my_roles.onCreated ->
         @autorun => Meteor.subscribe 'user_roles', Router.current().params.username, ->
-    Template.user_roles.helpers
+    Template.my_roles.helpers
         role_docs: ->
             Docs.find {
                 model:'role'

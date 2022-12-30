@@ -100,6 +100,9 @@ template(name='profile_layout')
                     +profile_link route='chat' icon='chat'
                     +profile_link route='badges' icon='prize'
                     +profile_link route='delivery' icon='car'
+                    +profile_link route='skills' icon='wrench' color='ff0000'
+
+                    //organizations, skills, 
                     .spacer
                     .spacer
                     .ui.button.sponsor
@@ -109,7 +112,7 @@ template(name='profile_layout')
 template(name='profile_link')
     a.ui.compact.circular.button(href="/user/#{current_user.username}/#{route}" class="{{isActiveRoute 'user_dashboard'}}" title="#{current_user.username} dashboard")
         // i.dashboard.icon
-        +i name=icon
+        +i name=icon color=color
         span.mobile.hidden #{route}
 
 
@@ -610,6 +613,22 @@ template(name='user_offers')
                 //- div
                 +author_info
                 +creation_info            
+                
+                
+template(name='user_skills')  
+    .ui.center.aligned.header 
+        i.concierge.bell.icon
+        |#{current_user.name} skills
+    .scrolling
+        each skills
+            .ui.segment
+                a.ui.header(href="/m/skill/#{_id}/view") #{bounty}pts: #{title}
+                | !{description}
+                div
+                if is_dev
+                    +remove_button
+                    +print_this
+                +creation_info                
                 
                 
 template(name='user_requests')  
