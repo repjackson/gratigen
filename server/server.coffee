@@ -279,6 +279,13 @@ if Meteor.isServer
     
     
     Meteor.methods
+        geolocate: (search)->
+            console.log Meteor.settings.private.maps
+            # HTTP.get "https://api.mapbox.com/geocoding/v5/mapbox.places/#{search}.json&access_token=#{"pk.eyJ1IjoiZ29sZHJ1biIsImEiOiJjbGM5cXNsZmQwbW14M3BsaHFjMnY4dW90In0.SQ5FWLZYeq-xO6_g7wekRQ"}",(err,res)=>
+            HTTP.get "https://api.mapbox.com/geocoding/v5/mapbox.places/arapahoe%2C%20boulder%2C%20co.json?proximity=ip&types=place%2Cpostcode%2Caddress&access_token=#{Meteor.settings.private.maps}",(err,res)=>
+                console.log res
+        
+        
         tag_coordinates: (doc_id, lat,long)->
             # HTTP.get "https://api.opencagedata.com/geocode/v1/json?q=#{lat}%2C#{long}&key=f234c66b8ec44a448f8cb6a883335718&language=en&pretty=1&no_annotations=1",(err,response)=>
             HTTP.get "https://api.opencagedata.com/geocode/v1/json?q=#{lat}+#{long}&key=7c21b934bda2463a94bcd5ff74647374&language=en&pretty=1&no_annotations=1",(err,response)=>

@@ -274,9 +274,8 @@ if Meteor.isClient
     Template.event_edit.onCreated ->
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
         @autorun => Meteor.subscribe 'model_docs', 'room_reservation'
-    Template.event_edit.onRendered ->
-    Template.event_edit.onCreated ->
         @autorun => Meteor.subscribe 'model_docs', 'room'
+    Template.event_edit.onRendered ->
     Template.event_edit.helpers
         rooms: ->
             Docs.find   
@@ -284,6 +283,9 @@ if Meteor.isClient
 
 
     Template.event_edit.events
+        'click .geolocate': ->
+            alert @location
+            Meteor.call 'geolocate', @location
         'click .delete_item': ->
             if confirm 'delete item?'
                 Docs.remove @_id

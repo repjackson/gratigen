@@ -35,7 +35,7 @@ template(name='home')
                     |community core
                 +online_users
             // .ui.button create request
-        .eight.wide.column.bordered
+        .six.wide.column.bordered
             +filter_model model='organization' icon='groups'
             +filter_model model='event' icon='calendar'
             +filter_model model='resource' icon='car'
@@ -52,7 +52,7 @@ template(name='home')
                     +home_card
                     
             
-        .four.wide.column.bordered
+        .six.wide.column.bordered
             +mapbox
             if currentUser
                 a.item(href="/user/#{currentUser.username}" class=user_nav_button_class title=user_nav_button_title)
@@ -152,6 +152,8 @@ template(name='home_card')
     if _is 'model' 'recipe'
         +recipe_card
     else 
+        .ui.button.map_me
+            |map me
         a.ui.fluid.card.zoomer.fly_left(href="/#{model}/#{_id}")
             if youtube_id 
                 +youtube_view key='youtube_id' direct=true
