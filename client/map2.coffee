@@ -44,7 +44,7 @@ Template.mapbox.onRendered =>
             });
             
 
-            markers = []
+            # markers = []
             
             marker1 = new mapboxgl.Marker()
                 .setLngLat([position.coords.longitude, position.coords.latitude])
@@ -52,7 +52,7 @@ Template.mapbox.onRendered =>
             # markers.push marker1
             # Meteor.users.update Meteor.userId(), 
             #     $addToSet:markers:marker1
-            console.log 'markers list', markers
+            # console.log 'markers list', markers
             # marker1 = new mapboxgl.Marker()
             # .setLngLat([12.554729, 55.70651])
             # .addTo(map);
@@ -96,8 +96,7 @@ Template.mapbox.onRendered =>
                     .setLngLat([doc.lng, doc.lat])
                     .addTo(map);
     
-                    # Meteor.users.update Meteor.userId(), 
-                    #     $addToSet:markers:marker1
+                    current_markers.push marker1
                     # markers.push marker1
                     # console.log 'markers list', markers
 
@@ -110,13 +109,19 @@ Template.mapbox.onRendered =>
         #         #     riseOnHover:true
         #         #     }).addTo(map)
         #         # markers.addLayer(marker);
-        # removed: (oldDocument)->
-        #     layers = map._layers;
-        #     for key in layers
-        #         val = layers[key];
-        #         if (val._latlng)
-        #             if val._latlng.lat is oldDocument.latlng.lat and val._latlng.lng is oldDocument.latlng.lng
-        #                 markers.removeLayer(val)
+        removed: (old_doc)->
+            markers = current_markers.array()
+            for marker in markers 
+                if marker.lat is old_doc.lat 
+                    if marker.lng is old_doc.lng 
+                        marker.remove()
+            
+            # layers = map._layers;
+            # for key in layers
+            #     val = layers[key];
+            #     if (val._latlng)
+            #         if val._latlng.lat is oldDocument.latlng.lat and val._latlng.lng is oldDocument.latlng.lng
+            #             markers.removeLayer(val)
 
     , 2000
 
@@ -124,6 +129,7 @@ Template.mapbox.onRendered =>
 Template.mapbox.helpers 
     marker_docs: ->
         Markers.find()
+    current_markers: -> current_markers.array()
 
 Template.mapbox.onCreated ->
     @autorun => @subscribe 'all_markers', ->

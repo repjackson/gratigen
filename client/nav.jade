@@ -21,6 +21,8 @@ template(name='nav')
         +nav_item route='my_tasks' icon='task' color='B785E1' label='tasks'
         +nav_item route='my_resources' icon='car' color='FD7E14' label='resources'
         +nav_item route='my_skills' icon='wrench' color='FA5252' label='skills'
+        +nav_item route='my_badges' label='badges' icon='badge' color='1255B8'
+
         if currentUser.admin
             +nav_item route='admin' icon='shield' color='FFFFFF' label='admin'
             
@@ -51,7 +53,7 @@ template(name='nav')
                 a.item(href="/user/#{currentUser.username}/credit" class="{{isActiveRoute regex='user_credit'}}" title='your credits')
                     strong
                         |&nbsp;
-                        |(#{currentUser.points}p)
+                        |#{currentUser.points}p
                 a.item(href="/user/#{currentUser.username}" class=user_nav_button_class title=user_nav_button_title)
                     if currentUser.image_id
                         img.ui.avatar.image(src="{{c.url currentUser.image_id width=200 height=200 gravity='face' crop='fill'}}")

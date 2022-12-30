@@ -2,6 +2,7 @@
 @picked_tags = new ReactiveArray []
 @picked_ingredients = new ReactiveArray []
 
+@current_markers = new ReactiveArray []
 
 Tracker.autorun ->
     current = Router.current()
