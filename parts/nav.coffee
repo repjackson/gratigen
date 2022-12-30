@@ -89,13 +89,19 @@ if Meteor.isClient
         'click .alerts': ->
             Session.set('viewing_alerts', !Session.get('viewing_alerts'))
             
-        'click .toggle_admin': ->
-            if 'admin' in Meteor.user().roles
+        'click .toggle_admin_mode': ->
+            if Meteor.user().admin_mode
                 Meteor.users.update Meteor.userId(),
-                    $pull:'roles':'admin'
-            else
+                    $set:admin_mode:false
+            else 
                 Meteor.users.update Meteor.userId(),
-                    $addToSet:'roles':'admin'
+                    $set:admin_mode:true
+            # if 'admin' in Meteor.user().roles
+            #     Meteor.users.update Meteor.userId(),
+            #         $pull:'roles':'admin'
+            # else
+            #     Meteor.users.update Meteor.userId(),
+            #         $addToSet:'roles':'admin'
         'click .toggle_dev': ->
             if 'dev' in Meteor.user().roles
                 Meteor.users.update Meteor.userId(),
