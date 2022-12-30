@@ -295,6 +295,10 @@ if Meteor.isClient
         @render 'event_edit'
         ), name:'event_edit'
 
+    Template.eft_viewer.helpers 
+        in_list: ()->
+            current_doc = Docs.findOne Router.current().params.doc_id 
+            @label in current_doc.efts
     Template.eft_picker.events 
         'click .toggle_eft': ->
             current_doc = Docs.findOne Router.current().params.doc_id 
