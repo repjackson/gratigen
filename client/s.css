@@ -12,7 +12,20 @@ body {
     /* background: #0e0e44 !important; */
 }
 
+#mapbox {
+  height:400px !important;
+}
 
+.bordered {
+  border:1px solid !important;
+  /*height: 100px;*/
+  /*padding: 30px;*/
+  /*border: 30px solid transparent;*/
+  /*background-color: blue;*/
+}
+/*.bordered.column {background-clip: content-box;}*/
+  
+/**/
 .darkmode {
   filter: invert(.9) !important;
 }
@@ -182,7 +195,7 @@ body {
 }
 
 #map {
-  height:500px !important;
+  height:300px !important;
   /*width: 100% !important;*/
   /*border: 2px !important;*/
 }

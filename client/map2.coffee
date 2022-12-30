@@ -13,6 +13,18 @@
 # # # #   actions: [{action: 'archive', title: "Archive"}]
 # # # # });
 
+Template.mapbox.onRendered =>
+    Meteor.setTimeout =>
+        mapboxgl.accessToken = 'pk.eyJ1IjoiZ29sZHJ1biIsImEiOiJjbGM5cXNsZmQwbW14M3BsaHFjMnY4dW90In0.SQ5FWLZYeq-xO6_g7wekRQ';
+        map = new mapboxgl.Map({
+            container: 'mapbox',
+            style: 'mapbox://styles/mapbox/streets-v12'
+            center: [-74.5, 40]
+            zoom: 9,
+        });
+    , 2000
+
+
 Template.map.onCreated ->
     @autorun => @subscribe 'all_markers', ->
         

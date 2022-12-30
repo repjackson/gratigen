@@ -3,13 +3,10 @@ template(name='login')
         .centered.row
             .eight.wide.column
                 // img.ui.image(src="{{c.url 'kitchen_logo' gravity='face' crop='fill'}}")
-                .ui.middle.aligned.two.column.grid
-                    .column
-                        img.ui.circular.image(src="/mstile-150x150.png")
-                    .column
-                        .ui.massive.header
-                            // +ibig name='network'
-                            |gratigen login
+                .ui.massive.center.aligned.header
+                    img.ui.circular.image(src="/logo.png")
+                    // +ibig name='network'
+                    |gratigen login
                 .ui.inline.small.header 
                     +i name='user-male'
                     // i.user.outline.icon

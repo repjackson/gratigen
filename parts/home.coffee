@@ -21,6 +21,21 @@ if Meteor.isClient
 #             limit:10
         
 if Meteor.isClient
+    Template.dash_user_info.events 
+        'click .print_me': ->
+            console.log Meteor.user()
+            alert Meteor.user()
+            Meteor.call 'print_me', ->
+            Meteor.users.update Meteor.userId(),
+                $unset:updated:true
+            
+if Meteor.isServer
+    Meteor.methods 
+        print_me: ->
+            console.log Meteor.user()
+            
+    
+if Meteor.isClient
     Template.online_users.onCreated ->
         @autorun => @subscribe 'online_users', ->
     Template.online_users.helpers 
@@ -31,36 +46,63 @@ if Meteor.isServer
     Meteor.publish 'online_users', ->
         Meteor.users.find {online:true}
         
-    Meteor.publish 'latest_home_docs', (model)->
+    Meteor.publish 'latest_home_docs', (model_filters=[])->
         match = {}
-        if model 
-            match.model = model
-        else 
-            match.model = model:$in:['product','service','project','resource', 'comment','event']
-        Docs.find match,
+        # user = Meteor.user()
+        # console.log Meteor.user().current_model_filters
+        # if model 
+        #     match.model = model
+        # else 
+        #     match.model = model:$in:['product','service','project','resource', 'comment','event']
+        Docs.find {model:$in: model_filters},
             limit:20
             sort:_timestamp:-1
             
     
 if Meteor.isClient
+    @model_filters = new ReactiveArray []
+    
     Template.home.onCreated ->
         # @autorun => @subscribe 'post_docs',
         #     picked_tags.array()
         #     Session.get('post_title_filter')
-
-        @autorun => @subscribe 'latest_home_docs', Session.get('current_model_filter'),->
+        @autorun => @subscribe 'latest_home_docs',model_filters.array(),->
         
         @autorun => @subscribe 'all_users', ->
         @autorun => @subscribe 'post_facets',
             picked_tags.array()
             Session.get('post_title_filter')
 
+    
+    
     Template.filter_model.helpers
         button_class:->
-            if Session.equals('current_model_filter',@model) then 'blue large' else 'basic small'
+            if @model in model_filters.array()
+                'blue'
+            else 
+                'small secondary'
+            # if Session.equals('current_model_filter',@model) then 'blue large' else 'small'
+            # if  @model in Meteor.user().current_model_filters then 'blue big' else 'small basic'
     Template.filter_model.events
         'click .pick_model': ->
-            Session.set('current_model_filter',@model)
+            # Session.set('current_model_filter',@model)
+            if @model in model_filters.array()
+                model_filters.remove @model 
+            else 
+                model_filters.push @model 
+                
+            # # if @model in Meteor.user().current_model_filters 
+            # if @model in Meteor.user().current_model_filters 
+            #     Meteor.users.update Meteor.userId(),
+            #         $pull:
+            #             current_model_filters:@model
+            # else 
+            #     Meteor.users.update Meteor.userId(),
+            #         $addToSet:
+            #             current_model_filters:@model
+                
+    
+    
     Template.home.events 
         'click .check_notifications': ->
             Notification.requestPermission (result) ->
