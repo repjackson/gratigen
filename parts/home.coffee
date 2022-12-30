@@ -62,6 +62,19 @@ if Meteor.isServer
 if Meteor.isClient
     @model_filters = new ReactiveArray []
     
+    Template.home_card.onDestroyed ->
+        console.log 'destroy', @data
+        found = Markers.findOne
+            lat:@data.lat
+        if found
+            Markers.remove found._id
+    Template.home_card.onRendered ->
+        console.log @data
+        if @data.lat and @data.lng
+            Markers.insert 
+                title:@data.title
+                lat:@data.lat
+                lng:@data.lng
     Template.home_card.events 
         'click .map_me': ->
             # navigator.geolocation.getCurrentPosition (position) =>
