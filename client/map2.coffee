@@ -60,7 +60,7 @@ Template.mapbox.onRendered =>
             markers_list = []
             query.observe
                 added: (doc)=>
-                    console.log 'added marker', doc
+                    # console.log 'added marker', doc
                     # marker = L.marker(doc.latlng).on('click', (event)->
                     #     Markers.remove({_id: doc._id});
                     # );
@@ -104,12 +104,12 @@ Template.mapbox.onRendered =>
 
     
                 removed: (old_doc)=>
-                    console.log 'removing old marker', old_doc
+                    # console.log 'removing old marker', old_doc
                     # markers = markers_list.array()
                     for marker in markers_list 
-                        console.log 'deleting marker?', marker._lngLat.lat, old_doc.lat
+                        # console.log 'deleting marker?', marker._lngLat.lat, old_doc.lat
                         if parseInt(marker._lngLat.lat) is parseInt(old_doc.lat) 
-                            console.log 'confirm deleting', marker
+                            # console.log 'confirm deleting', marker
                             marker.remove()
                     
                     # layers = map._layers;

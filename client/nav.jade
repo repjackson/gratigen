@@ -24,7 +24,9 @@ template(name='nav')
         +nav_item route='my_badges' label='badges' icon='badge' color='1255B8'
 
         if currentUser.admin
-            +nav_item route='admin' icon='shield' color='FFFFFF' label='admin'
+            // +nav_item route='admin' icon='shield' color='FFFFFF' label='admin'
+            a.icon.item.toggle_admin_mode(title='toggle admin mode')
+                i.large.shield.icon
             
         // a.icon.item.toggle_invert
         //     i.lightbulb.icon

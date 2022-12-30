@@ -4,7 +4,30 @@ if Meteor.isClient
         @render 'home'
         ), name:'home'
     
-    
+    Template.side_menu_item.events
+        'click .toggle_item': ->
+            console.log @label 
+            console.log Meteor.user().active_side_menu_items
+            if Meteor.user().active_side_menu_items
+                if @label in Meteor.user().active_side_menu_items
+                    Meteor.users.update Meteor.userId(),
+                        $pull:active_side_menu_items:@label
+                else 
+                    Meteor.users.update Meteor.userId(),
+                        $addToSet:active_side_menu_items:@label
+            else 
+                Meteor.users.update Meteor.userId(),
+                    $addToSet:active_side_menu_items:@label
+    Template.side_menu_item.helpers
+        is_toggled: ->
+            @label in Meteor.user().active_side_menu_items
+        side_item_class: ->
+            if @label in Meteor.user().active_side_menu_items
+                'big inverted active zoomed'
+            else 
+                'small'
+                
+        
     Template.latest_activity.onCreated ->
         @autorun => @subscribe 'latest_home_docs', ->
     Template.latest_activity.helpers 
@@ -63,13 +86,13 @@ if Meteor.isClient
     @model_filters = new ReactiveArray []
     
     Template.home_card.onDestroyed ->
-        console.log 'destroy', @data
+        # console.log 'destroy', @data
         found = Markers.findOne
             lat:@data.lat
         if found
             Markers.remove found._id
     Template.home_card.onRendered ->
-        console.log @data
+        # console.log @data
         if @data.lat and @data.lng
             Markers.insert 
                 title:@data.title

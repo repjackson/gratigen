@@ -5,24 +5,12 @@ template(name='home')
 
    
             .ui.vertical.fluid.menu
-                .item.invert.active(style="color:#FF73EA")
-                    i.food.icon
-                    |food 
-                .item.invert.active(style="color:#B785E1")
-                    i.home.icon
-                    |housing
-                .item.invert.active(style="color:#7229AF")
-                    i.tshirt.icon
-                    |clothing
-                .item.invert.active(style="color:#1255B8")
-                    i.car.icon
-                    |transportation
-                .item.invert.active(style="color:#83DFF4")
-                    i.lightning.icon
-                    |energy
-                .item.invert.active(style="color:#42E8C4")
-                    i.leaf.icon
-                    |zero waste
+                +side_menu_item color="FF73EA" icon='food' label='food'
+                +side_menu_item color="B785E1" icon='home' label='housing'
+                +side_menu_item color="7229AF" icon='tshirt' label='clothing'
+                +side_menu_item color="1255B8" icon='car' label='transportation'
+                +side_menu_item color="83DFF4" icon='lightning' label='energy'
+                +side_menu_item color="42E8C4" icon='leaf' label='zero waste'
                 .item.invert.active(style="color:#40C057")
                     i.smile.icon
                     |wellness
@@ -39,28 +27,34 @@ template(name='home')
                 
             // .ui.button create request
         .eight.wide.column.bordered
-            +filter_model model='organization' icon='groups' color='83DFF4'
-                //light blue
-            +filter_model model='project' icon='project' color='7229AF' 
-                //violet
-            +filter_model model='event' icon='calendar' color='FAB005'
-                //yellow
-            +filter_model model='role' icon='what-i-do' color='42E8C4'
-                //turquoise
-            +filter_model model='tasks' icon='task' color='B785E1'
-                //lavender
-            +filter_model model='resource' icon='car' color='FD7E14'  
-                //orange
-            +filter_model model='post' icon='for-you' color='1255B8'
-                //blue
-            +filter_model model='offer' icon='hand-holding-heart' color='FF73EA'
-                //pink
-            +filter_model model='request' icon='commercial' color='40C057'     
-                //green
-            +filter_model model='skills' icon='wrench' color='ff0000'
+            .ui.center.aligned.basic.segment
+                +filter_model model='organization' icon='groups' color='83DFF4'
+                    //light blue
+                +filter_model model='project' icon='project' color='7229AF' 
+                    //violet
+                +filter_model model='event' icon='calendar' color='FAB005'
+                    //yellow
+                +filter_model model='role' icon='what-i-do' color='42E8C4'
+                    //turquoise
+                +filter_model model='tasks' icon='task' color='B785E1'
+                    //lavender
+                +filter_model model='resource' icon='car' color='FD7E14'  
+                    //orange
+                +filter_model model='post' icon='for-you' color='1255B8'
+                    //blue
+                +filter_model model='offer' icon='hand-holding-heart' color='FF73EA'
+                    //pink
+                +filter_model model='request' icon='commercial' color='40C057'     
+                    //green
+                +filter_model model='skills' icon='wrench' color='ff0000'
                 //red
-            // +filter_model model='food' icon='food' 83DFF4
-            .scrolling
+                // +filter_model model='food' icon='food' 83DFF4
+                .ui.hidden.divider
+                +session_set key='view_mode' value='grid' icon='th' 
+                +session_set key='view_mode' value='list' icon='list'
+                +session_set key='view_mode' value='card' icon='card'
+
+            .ui.two.stackable.cards.scrolling
                 each doc_results
                     +home_card
                     
@@ -108,7 +102,14 @@ template(name='home')
         //     .ui.header 
         //         |resources
             
-                    
+      
+      
+template(name='side_menu_item')
+    a.item.toggle_item.invert(style="color:##{color}" class=side_item_class)
+        i.icon(class=icon)
+        |#{label}
+        if is_toggled
+            i.large.checkmark.icon
 
            
            
@@ -178,7 +179,7 @@ template(name='home_card')
     if _is 'model' 'recipe'
         +recipe_card
     else 
-        .ui.fluid.card.zoomer
+        .ui.card.zoomer
             if youtube_id 
                 +youtube_view key='youtube_id' direct=true
             .content 
@@ -205,7 +206,7 @@ template(name='home_card')
                 //     |map me
                 |#{when}
             a(href="/#{model}/#{_id}")
-                img.ui.image(src="{{c.url image_id width=400 height=400}}")
+                img.ui.fluid.image(src="{{c.url image_id width=400 height=400}}")
             .content 
                 .description
                     // .ui.header lat: #{lat}

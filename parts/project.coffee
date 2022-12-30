@@ -3,6 +3,10 @@ if Meteor.isClient
         @layout 'layout'
         @render 'projects'
         ), name:'projects'
+    Router.route '/my_projects', (->
+        @layout 'layout'
+        @render 'projects'
+        ), name:'my_projects'
     Router.route '/project/:doc_id/edit', (->
         @layout 'layout'
         @render 'project_edit'

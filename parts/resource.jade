@@ -237,15 +237,17 @@ template(name='resource_edit')
                     .ui.icon.small.red.button.delete_resource_item 
                         i.trash.icon
                 .column
+                    +key_value_edit key='category' value='clothing' icon='tshirt'
+                    +key_value_edit key='category' value='housing' icon='home'
                     if in_dev
                         +print_this
                     +boolean_edit key='published' label='published' icon='checkmark'
                     +boolean_edit key='anonymous' label='anonymous' icon='visible'
                     div
-                    a.ui.header.pointer.refresh_gps(href='#') 
-                        |gps coords
-                    .ui.label #{lat}
-                    .ui.label #{long}
+                    // a.ui.header.pointer.refresh_gps(href='#') 
+                    //     |gps coords
+                    // .ui.label #{lat}
+                    // .ui.label #{long}
                     +text_edit key='location' label='location text' icon='marker' 
                     +geolocate_button
                     +html_edit key='description' label='description' icon='content' 

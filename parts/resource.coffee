@@ -3,6 +3,10 @@ if Meteor.isClient
         @layout 'layout'
         @render 'resources'
         ), name:'resources'
+    Router.route '/my_resources', (->
+        @layout 'layout'
+        @render 'resources'
+        ), name:'my_resources'
 
 
     Template.resources.onCreated ->
