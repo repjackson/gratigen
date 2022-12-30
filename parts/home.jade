@@ -2,35 +2,37 @@ template(name='home')
     .ui.stackable.padded.divided.celled.grid
         .four.wide.column.bordered
             +dash_user_info
-            .ui.list 
-                .item 
+
+   
+            .ui.vertical.fluid.menu
+                .blue.item.invert.active(style="color:#B785E1")
                     i.food.icon
                     |food 
-                .item 
+                .item.invert.active(style="color:#7229AF")
                     i.home.icon
                     |housing
-                .item 
+                .item.invert.active(style="color:#1255B8")
                     i.tshirt.icon
                     |clothing
-                .item 
+                .item.invert.active(style="color:#83DFF4")
                     i.car.icon
                     |transportation
-                .item 
+                .item.invert.active(style="color:#83DFF4")
                     i.lightning.icon
                     |energy
-                .item 
+                .item.invert.active(style="color:#42E8C4")
                     i.leaf.icon
                     |zero waste
-                .item 
+                .item.invert.active(style="color:#40C057")
                     i.smile.icon
                     |wellness
-                .item 
+                .item.invert.active(style="color:#FAB005")
                     i.university.icon
                     |education
-                .item 
+                .item.invert.active(style="color:#FD7E14") 
                     i.paint.brush.icon
                     |art
-                .item 
+                .item.invert.active(style="color:#FA5252") 
                     i.users.icon
                     |community core
                 +online_users
@@ -38,15 +40,25 @@ template(name='home')
             // .ui.button create request
         .eight.wide.column.bordered
             +filter_model model='organization' icon='groups' color='83DFF4'
-            +filter_model model='project' icon='project' color='7229AF'
+                //light blue
+            +filter_model model='project' icon='project' color='7229AF' 
+                //violet
             +filter_model model='event' icon='calendar' color='FAB005'
+                //yellow
             +filter_model model='role' icon='what-i-do' color='42E8C4'
+                //turquoise
             +filter_model model='tasks' icon='task' color='B785E1'
+                //lavender
             +filter_model model='resource' icon='car' color='FD7E14'  
+                //orange
             +filter_model model='post' icon='for-you' color='1255B8'
+                //blue
             +filter_model model='offer' icon='hand-holding-heart' color='F25081'
-            +filter_model model='request' icon='commercial' color='40C057'           
+                //pink
+            +filter_model model='request' icon='commercial' color='40C057'     
+                //green
             +filter_model model='skills' icon='wrench' color='FA5252'
+                //red
             // +filter_model model='food' icon='food' 83DFF4
             .scrolling
                 each doc_results
@@ -101,8 +113,10 @@ template(name='dash_user_info')
             img.ui.small.image(src="{{c.url currentUser.image_id width=600 height=600 gravity='face' crop='fill'}}")
         .column
             .ui.header.print_me
-                  | #{currentUser.username}
-                  | #{currentUser.points}pts
+                | #{currentUser.username}
+            .ui.small
+                | #{currentUser.points}pts
+            .ui.header.print_me
                 | #{currentUser.tagline}
 
     // i.user.icon
@@ -114,7 +128,7 @@ template(name='dash_user_info')
            
            
 template(name='filter_model')
-    .ui.compact.large.circular.secondary.basic.button.pick_model(class=button_class)
+    .ui.compact.circular.secondary.basic.button.pick_model.zoomer(class=button_class)
         +i name=icon color=color cl='ui mini inline image'
         // i.exchange.large.icon
         |#{model}

@@ -17,9 +17,9 @@ Template.mapbox.events
     'click .clear_markers': ->
         Meteor.call 'clear_markers', ->
             # alert 'cleared'
-        for marker in Meteor.user().markers
-            marker.remove()
-        location.reload()
+        current_markers.clear()
+            # marker.remove()
+        # location.reload()
         
 Template.mapbox.onRendered =>
     Meteor.setTimeout =>
@@ -57,8 +57,9 @@ Template.mapbox.onRendered =>
             # .setLngLat([12.554729, 55.70651])
             # .addTo(map);
             query = Markers.find()
+            markers_list = []
             query.observe
-                added: (doc)->
+                added: (doc)=>
                     console.log 'added marker', doc
                     # marker = L.marker(doc.latlng).on('click', (event)->
                     #     Markers.remove({_id: doc._id});
@@ -73,55 +74,50 @@ Template.mapbox.onRendered =>
                     #     shadowSize: [68, 95],
                     #     shadowAnchor: [22, 94]
                     # });
-                    markerHeight = 50;
-                    markerRadius = 10;
-                    linearOffset = 25;
-                    popupOffsets = {
-                    'top': [0, 0],
-                    'top-left': [0, 0],
-                    'top-right': [0, 0],
-                    'bottom': [0, -markerHeight],
-                    'bottom-left': [linearOffset, (markerHeight - markerRadius + linearOffset) * -1],
-                    'bottom-right': [-linearOffset, (markerHeight - markerRadius + linearOffset) * -1],
-                    'left': [markerRadius, (markerHeight - markerRadius) * -1],
-                    'right': [-markerRadius, (markerHeight - markerRadius) * -1]
-                    };
-                    popup = new mapboxgl.Popup({offset: popupOffsets, className: 'my-class'})
-                    .setLngLat([doc.lng, doc.lat])
-                    .setHTML("<h4>#{doc.title}</h4>")
-                    .setMaxWidth("300px")
-                    .addTo(map);
+                    if doc.lat
+                        markerHeight = 50;
+                        markerRadius = 10;
+                        linearOffset = 25;
+                        popupOffsets = {
+                        'top': [0, 0],
+                        'top-left': [0, 0],
+                        'top-right': [0, 0],
+                        'bottom': [0, -markerHeight],
+                        'bottom-left': [linearOffset, (markerHeight - markerRadius + linearOffset) * -1],
+                        'bottom-right': [-linearOffset, (markerHeight - markerRadius + linearOffset) * -1],
+                        'left': [markerRadius, (markerHeight - markerRadius) * -1],
+                        'right': [-markerRadius, (markerHeight - markerRadius) * -1]
+                        };
+                        # popup = new mapboxgl.Popup({offset: popupOffsets, className: 'my-class'})
+                        # .setLngLat([doc.lng, doc.lat])
+                        # .setHTML("<h4>#{doc.title}</h4>")
+                        # .setMaxWidth("300px")
+                        # .addTo(map);
+                        
+                        marker1 = new mapboxgl.Marker()
+                        .setLngLat([doc.lng, doc.lat])
+                        .addTo(map);
+        
+                        markers_list.push marker1
+                        # markers.push marker1
+                        # console.log 'markers list', markers.array()
+
+    
+                removed: (old_doc)=>
+                    console.log 'removing old marker', old_doc
+                    # markers = markers_list.array()
+                    for marker in markers_list 
+                        console.log 'deleting marker?', marker._lngLat.lat, old_doc.lat
+                        if parseInt(marker._lngLat.lat) is parseInt(old_doc.lat) 
+                            console.log 'confirm deleting', marker
+                            marker.remove()
                     
-                    marker1 = new mapboxgl.Marker()
-                    .setLngLat([doc.lng, doc.lat])
-                    .addTo(map);
-    
-                    current_markers.push marker1
-                    # markers.push marker1
-                    # console.log 'markers list', markers
-
-    
-
-
-        #         # L.marker([doc.latlng.lat, doc.latlng.long],{
-        #         #     draggable:true
-        #         #     icon:myIcon
-        #         #     riseOnHover:true
-        #         #     }).addTo(map)
-        #         # markers.addLayer(marker);
-        removed: (old_doc)->
-            markers = current_markers.array()
-            for marker in markers 
-                if marker.lat is old_doc.lat 
-                    if marker.lng is old_doc.lng 
-                        marker.remove()
-            
-            # layers = map._layers;
-            # for key in layers
-            #     val = layers[key];
-            #     if (val._latlng)
-            #         if val._latlng.lat is oldDocument.latlng.lat and val._latlng.lng is oldDocument.latlng.lng
-            #             markers.removeLayer(val)
+                    # layers = map._layers;
+                    # for key in layers
+                    #     val = layers[key];
+                    #     if (val._latlng)
+                    #         if val._latlng.lat is oldDocument.latlng.lat and val._latlng.lng is oldDocument.latlng.lng
+                    #             markers.removeLayer(val)
 
     , 2000
 
