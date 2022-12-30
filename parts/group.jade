@@ -112,19 +112,22 @@ template(name='group_edit')
                     a.ui.big.icon.fluid.green.button(href="/group/#{_id}" title='save')
                         i.checkmark.large.icon
                     +remove_button
-                    +image_edit key='image_id' label='image' direct=true
-                    +link_edit key='link' label='link' direct=true
+                    +image_edit key='image_id' label='image' 
+                    +link_edit key='link' label='link' 
                 .six.wide.column.scrolling
-                    +text_edit key='title' direct=true
-                    +html_edit key='description' label='content' icon='content' direct=true
+                    +text_edit key='title' 
+                    +html_edit key='description' label='content' icon='content' 
                 .five.wide.column.scrolling
-                    +single_user_edit key='leader' label='leader' icon='crown' direct=true
-                    +array_edit key='tags' label='tags' icon='tags' direct=true
-                    +array_edit key='location_tags' label='location tags' icon='marker' direct=true
-                    +text_edit key='contact_info' label='contact info' icon='info' direct=true
-                    +multi_user_edit key='member_ids' label='members' direct=true
-                    +boolean_edit key='private' label='private' direct=true
-                    +multi_user_edit key='leader_ids' label='tribe leaders' direct=true
+                    +single_user_edit key='leader' label='leader' icon='crown' 
+                    +array_edit key='tags' label='tags' icon='tags' 
+                    
+                    +text_edit key='location' 
+                    +geolocate_button
+                    +array_edit key='location_tags' label='location tags' icon='marker' 
+                    +text_edit key='contact_info' label='contact info' icon='info' 
+                    +multi_user_edit key='member_ids' label='members' 
+                    +boolean_edit key='private' label='private' 
+                    +multi_user_edit key='leader_ids' label='tribe leaders' 
 
                     
 template(name='group_view')
@@ -160,7 +163,7 @@ template(name='group_view')
                     +viewing
                     if in_dev 
                         +print_this
-                    +multi_user_view key='member_ids' label='members' direct=true
+                    +multi_user_view key='member_ids' label='members' 
                     +group_history
                     +group_subscription
 
@@ -223,7 +226,7 @@ template(name='profile_group_item')
     .ui.segment.grid
         .row
             .four.wide.column
-                +image_view key='image_id' direct=true cl='zoom ui tiny image'
+                +image_view key='image_id'  cl='zoom ui tiny image'
             .twelve.wide.column
                 .ui.header #{title}
                 a.ui.small.header.inline.lowercase(href="/group/#{_id}/")

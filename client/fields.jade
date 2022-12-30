@@ -12,6 +12,13 @@ template(name='youtube_edit')
             if field_value
                 iframe.invert(width='100%' height='500px' src="https://www.youtube.com/embed/#{field_value}" frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen='')
 
+template(name='geolocate_button')
+    .ui.button.geolocate
+        |find this
+    .ui.header  lat #{lat}
+    .ui.header lng #{lng}
+
+
 template(name='youtube_view')
     if field_value
         if icon

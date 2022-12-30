@@ -1,3 +1,10 @@
+Template.geolocate_button.events 
+    'click .geolocate': ->
+        # alert @location
+        Meteor.call 'geolocate', Router.current().params.doc_id, @location, (err,res)->
+            console.log res
+
+
 Template.youtube_edit.onRendered ->
     Meteor.setTimeout ->
         $('.ui.embed').embed();

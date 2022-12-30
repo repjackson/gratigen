@@ -114,10 +114,7 @@ template(name='event_edit')
                     +number_edit key='hour_duration' label='hours'
                     div
                     +text_edit key='location' label='location'
-                    .ui.button.geolocate
-                        |find this
-                    .ui.header  lat #{lat}
-                    .ui.header lng #{lng}
+                    +geolocate_button
                     div
                     // +range_edit label='time range'
                     div
