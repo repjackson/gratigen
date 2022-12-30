@@ -35,24 +35,25 @@ template(name='home')
                     |community core
                 +online_users
             // .ui.button create request
-        .six.wide.column.bordered
-            +filter_model model='organization' icon='groups'
-            +filter_model model='event' icon='calendar'
-            +filter_model model='resource' icon='car'
-            +filter_model model='transfer' icon='exchange'
-            +filter_model model='request' icon='bullhorn'
-            +filter_model model='project' icon='project'
+        .eight.wide.column.bordered
+            +filter_model model='organization' icon='groups' color='FA5252'
+            +filter_model model='event' icon='calendar' color='FAB005'
+            +filter_model model='resource' icon='car' color='228BE6c'
+            +filter_model model='transfer' icon='exchange' color='FD7E14'
+            +filter_model model='request' icon='commercial' color='F25081'
+            +filter_model model='project' icon='project' color='7950F2'
             +filter_model model='comment' icon='comment'
-            +filter_model model='roles' icon='shield'
+            +filter_model model='roles' icon='what-i-do'
             +filter_model model='skills' icon='wrench'
-            +filter_model model='badge' icon='cloud' color='40C057'
+            +filter_model model='badge' icon='badge' color='40C057'
+            +filter_model model='tasks' icon='task' color='40C057'
             // +filter_model model='food' icon='food'
             .scrolling
                 each doc_results
                     +home_card
                     
             
-        .six.wide.column.bordered
+        .four.wide.column.bordered
             +mapbox
             if currentUser
                 a.item(href="/user/#{currentUser.username}" class=user_nav_button_class title=user_nav_button_title)
@@ -109,7 +110,7 @@ template(name='dash_user_info')
            
 template(name='filter_model')
     .ui.compact.large.circular.secondary.basic.button.pick_model(class=button_class)
-        +i name=icon color=color
+        +i name=icon color=color cl='ui mini inline image'
         // i.exchange.large.icon
         |#{model}
 

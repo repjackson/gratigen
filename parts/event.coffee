@@ -284,8 +284,9 @@ if Meteor.isClient
 
     Template.event_edit.events
         'click .geolocate': ->
-            alert @location
-            Meteor.call 'geolocate', @location
+            # alert @location
+            Meteor.call 'geolocate', Router.current().params.doc_id, @location, (err,res)->
+                console.log res
         'click .delete_item': ->
             if confirm 'delete item?'
                 Docs.remove @_id
