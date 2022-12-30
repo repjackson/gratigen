@@ -114,15 +114,15 @@ template(name='side_menu_item')
            
            
 template(name='dash_user_info') 
-    .ui.two.column.grid
+    a.ui.two.column.grid.zoomer(href="/user/#{currentUser.username}")
         .column
             img.ui.small.image(src="{{c.url currentUser.image_id width=600 height=600 gravity='face' crop='fill'}}")
         .column
-            .ui.header.print_me
+            .ui.header
                 | #{currentUser.username}
             .ui.small
                 | #{currentUser.points}pts
-            .ui.header.print_me
+            .ui.header
                 | #{currentUser.tagline}
 
     // i.user.icon

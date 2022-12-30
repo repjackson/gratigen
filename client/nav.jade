@@ -5,8 +5,8 @@ template(name='nav')
         //     .icon.item
         //         i.big.loading.grey.refresh.icon.cancel
         // else 
-        // a.icon.item.toggle_leftbar
-        //     i.large.bars.icon
+        a.icon.item.toggle_leftbar
+            i.large.bars.icon
         a.header.image.item.zoomer(href='/' class="{{isActivePath '/'}}" )
             // +i name='network'
             img.ui.mini.image(src="/logo.png")
@@ -48,7 +48,7 @@ template(name='nav')
                     i.large.outline.bell.icon
             a.item.zoomer(href="/chat" class="{{isActiveRoute 'chat'}}")
                 // i.large.inbox.icon
-                +i name='chat'
+                +i name='chat' color='blue'
 
             if currentUser
                 // a.item(href='/user/#{currentUser.username}/credit' class="{{isActiveRoute 'user_credit'}}" title='current wallet balance')
@@ -62,14 +62,14 @@ template(name='nav')
                     else
                         i.user.icon
                     strong #{currentUser.name}
-                // a.icon.item.toggle_rightbar.no_blink
-                //     // .ui.avatar.image
-                //     //     if currentUser.image_id
-                //     //         img.ui.mini.inline.image(src="{{c.url currentUser.image_id width=200 height=200 gravity='face' crop='fill'}}")
-                //     //     else
-                //     //         i.user.large.icon
-                //     // strong.mobile.hidden #{currentUser.name}
-                //     i.bars.large.grey.icon
+                a.icon.item.toggle_rightbar.no_blink
+                    // .ui.avatar.image
+                    //     if currentUser.image_id
+                    //         img.ui.mini.inline.image(src="{{c.url currentUser.image_id width=200 height=200 gravity='face' crop='fill'}}")
+                    //     else
+                    //         i.user.large.icon
+                    // strong.mobile.hidden #{currentUser.name}
+                    i.bars.large.grey.icon
             unless subs_ready
                 .icon.item
                     i.yin.yang.large.loading.icon
@@ -120,7 +120,7 @@ template(name='secnav')
                  
 template(name='nav_item')
     a.item.zoomer(href="/{{route}}" class="{{isActiveRoute route }}")
-        // i.large.inbox.icon
+        // i.large.icon(class=icon)
         +i name=icon color=color cl='ui mini inline image'
         // |&nbsp;
         |&nbsp;
@@ -129,7 +129,7 @@ template(name='nav_item')
                  
                     
 template(name='topbar')
-    .ui.fluid.large.attached.segment
+    .ui.fluid.large.attached.segment.topbar
         .ui.middle.aligned.divided.list
             each recent_alerts
                 +recent_alert
@@ -147,3 +147,83 @@ template(name='recent_alert')
                 |#{description} 
             .description #{author.name} #{made_when}
                     
+                    
+                    
+template(name='rightbar')
+    .ui.right.sidebar.vertical.small.borderless.menu.rightbar
+        with currentUser
+            a.item.toggle_rightbar.no_blink(href="/user/#{currentUser.username}" class="{{isActiveRoute 'user_layout'}}")
+                img.ui.avatar.compact.image(src="{{c.url currentUser.image_id height=200 width=200 gravity='face' crop='fill'}}")
+                |#{currentUser.name}
+            a.item.toggle_rightbar(href="/user/#{username}" class="{{isActiveRoute regex='user_dashboard'}}")
+                +i name='dashboard'
+                // i.dashboard.icon
+                |dashboard
+            a.item.zoomer.toggle_darkmode
+                if darkmode
+                    +i name='checkmark'
+                else
+                    +i name='light'
+                |dark mode
+            +right_nav_item route='credit' label='credit' icon='money'
+            +right_nav_item route='orders' label='orders' icon='check'
+            +right_nav_item route='subscriptions' label='subscriptions' icon='check'
+            +right_nav_item route='friends' label='friends' icon='friends'
+            // a.item.toggle_rightbar(href="/user/#{username}/pantry" class="{{isActiveRoute 'user_pantry'}}")
+            //     +i name='cupboard' cl='ui avatar image'
+            //     |pantry
+            +right_nav_item route='cart' label='cart' icon='shopping-cart'
+            // a.item.toggle_rightbar(href="/work" class="{{isActiveRoute 'work'}}")
+            //     +i name='trust' cl='ui avatar image'
+            //     |work
+            // a.item.toggle_rightbar(href="/user/#{username}/trips" class="{{isActiveRoute 'user_trips'}}")
+            //     +i name='bicycle' cl='ui avatar image'
+            //     |trips
+            a.item.toggle_rightbar(href="/user/#{currentUser._id}/edit" class="{{isActiveRoute 'user_trips'}}")
+                +i name='settings' 
+                |account
+            // .ui.divider
+            a.item.logout
+                if is_logging_out
+                    i.refresh.loading.large.icon
+                else
+                    +i name='exit-sign' cl='ui avatar image'
+                    // i.sign.out.icon
+                |logout
+        else 
+            a.item.toggle_rightbar(href="/login" class="{{isActiveRoute 'login'}}")
+                +i name='internal' cl='ui avatar image'
+                |login
+            a.item.toggle_rightbar(href="/register" class="{{isActiveRoute 'register'}}")
+                +i name='plus' cl='ui avatar image'
+                |register
+
+
+
+template(name='right_nav_item')
+    a.item.toggle_rightbar(href="/user/#{currentUser.username}/#{route}" class="{{isActiveRoute regex='user_dashboard'}}")
+        +i name=icon cl='ui avatar image'
+        // i.dashboard.icon
+        |#{label}
+
+
+template(name='leftbar')
+    .ui.left.sidebar.ui.vertical.big.borderless.menu
+        +leftbar_item key='posts' icon='newspaper'
+        +leftbar_item key='products' icon='shop'
+        +leftbar_item key='food' icon='food'
+        +leftbar_item key='music' icon='music'
+        +leftbar_item key='transfers' icon='exchange'
+        +leftbar_item key='orders' icon='history'
+        +leftbar_item key='groups' icon='fire'
+        +leftbar_item key='requests' icon='hand holding heart'
+        +leftbar_item key='services' icon='wrench'
+        +leftbar_item key='rentals' icon='clock'
+        +leftbar_item key='users' icon='users'
+            
+template(name='leftbar_item')    
+    a.item.zoomer.fly_right.toggle_leftbar(href="/#{key}")
+        i.large.icon(class=icon)
+        // +i name=icon
+        span #{key}
+                

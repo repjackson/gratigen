@@ -9,6 +9,47 @@ if Meteor.isClient
 
     Template.nav.onRendered ->
         Session.setDefault('invert_mode', false)
+    Template.nav.onRendered ->
+        Meteor.setTimeout ->
+            $('.menu .item')
+                .popup()
+            $('.ui.left.sidebar')
+                .sidebar({
+                    context: $('.bottom.segment')
+                    transition:'push'
+                    mobileTransition:'push'
+                    exclusive:true
+                    duration:200
+                    scrollLock:true
+                })
+                .sidebar('attach events', '.toggle_leftbar')
+        , 3000
+        Meteor.setTimeout ->
+            $('.ui.rightbar')
+                .sidebar({
+                    context: $('.bottom.segment')
+                    transition:'push'
+                    mobileTransition:'push'
+                    exclusive:true
+                    duration:200
+                    scrollLock:true
+                })
+                .sidebar('attach events', '.toggle_rightbar')
+        , 3000
+        Meteor.setTimeout ->
+            $('.ui.topbar')
+                .sidebar({
+                    context: $('.bottom.segment')
+                    transition:'push'
+                    mobileTransition:'push'
+                    exclusive:true
+                    duration:200
+                    scrollLock:true
+                })
+                .sidebar('attach events', '.toggle_topbar')
+        , 2000
+        
+        
     Template.nav.events
         'click .reset': ->
             # model_slug =  Router.current().params.model_slug

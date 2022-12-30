@@ -72,26 +72,25 @@ head
 template(name='full')
     img.ui.fluid.image.checkin_banner(src="{{c.url 'frontrange'}}" class=darkmode_class)
     // +nav
-    // #man.ui.bottom.attached.pushable.segment
-    //     // +topbar
-    //     // +left_sidebar
-    //     // +right_sidebar
-    //     // +cartbar
-    //     // +walletbar
-    //     #ain_area.global_conainer.pusher
+    #man.ui.bottom.attached.pushable.segment
+        // +topbar
+        // +left_sidebar
+        // +right_sidebar
+        // +cartbar
+        // +walletbar
+        #ain_area.global_conainer.pusher
     +yield
     +footer
     
 template(name='layout')
     +nav
     // img.ui.fluid.image.home_banner(src="{{c.url 'frontrange'}}" class=darkmode_class)
-    // #main.ui.bottom.attached.pushable.segment
-    //     +topbar
-    //     +left_sidebar
-    //     +right_sidebar
-    // #ain_area.global_conainer.pusher
-    .inverted
-        +yield
+    #main.ui.bottom.attached.pushable.segment
+        // +topbar
+        +leftbar
+        +rightbar
+        .inverte
+            +yield
     // +footer
 
 
