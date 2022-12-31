@@ -12,11 +12,18 @@ if Meteor.isServer
         # user = Meteor.user()
         Docs.find current_thing_id
 if Meteor.isClient
+    Template.home_card.helpers
+        current_viewing_thing: ->
+            
+    Template.home_card.helpers
+        view_template: ->
+            "#{@model}_view"
     Template.home_card.events 
         'click .show_modal': ->
             Session.set('current_viewing_thing_id')
             $('.ui.modal').modal({
                 inverted:true
+                # blurring:true
                 }).modal('show')
     Template.thing_maker.events 
         'click .show_modal': ->

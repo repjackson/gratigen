@@ -327,11 +327,12 @@ template(name='home_card')
                     |view
                     i.chevron.right.icon
                 +voting
-    .ui.modal 
+    .ui.longer.modal 
         // with current_viewing_thing
         .ui.header hi
-        if _is 'model' 'event'
-            +event_view
+        +Template.dynamic template=view_template
+        // if _is 'model' 'event'
+        //     +event_view
                     
                     
 template(name='latest_activity')

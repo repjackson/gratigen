@@ -42,110 +42,108 @@ template(name='badge_card')
 
 
 template(name='badge_view')
-    with current_doc
-        .ui.stackable.padded.grid
-            .row
-                .sixteen.wide.column
-                    // if can_edit
-                    a.ui.icon.button(href="/badges")
-                        i.chevron.left.icon
-                        +i name='prize'
-                    +i name=icon cl='ui inline image'
-                    .ui.center.aligned.inline.header 
-                        small viewing badge: 
-                        |#{title}
-                    if can_edit
-                        a.ui.icon.large.button.edit_badge(href="/badge/#{_id}/edit")
-                            i.big.pencil.big.blue.icon
-            .row 
-                .eight.wide.column
-                    .ui.header 
-                        small author
-                    a.ui.header(href="/user/#{_author.username}") 
-                        img.ui.avatar.image(src="{{c.url _author.image_id height=200 width=200 gravity='face' crop='fill'}}")
-                        |#{_author.username}
-                            
-                    +number_view key='bounty' label='bounty' direct=true
-                    +textarea_view key='description' label='description' direct=true
-                    +image_view key='image_id' label='image' direct=true
-                    div 
-                    +array_view key='tags' label='tags' direct=true
-                    .spacer
-                    .spacer
-                    +comments
-                    //- +array_view key='location_tags' label='location_tags' direct=true
-                .eight.wide.column
-                    .ui.header 
-                        +i name='badger'
-                        |badgers
-                    each badgers
-                        a.ui.button(href="/user/#{username}") 
-                            img.ui.avatar.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}")
-                            |#{name}
-        
-                    // .ui.header 
-                    //     +honey_badger
-                    //     |honey badgers
-                    // each honey_badgers
-                    //     a.ui.basic.button(href="/user/#{username}") 
-                    //         img.ui.avatar.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}")
-                    //         |#{name}
-                    // //- .ui.fluid.green.button.submit
-                    // //-     i.checkmark.icon
-                    // //-     |submit
+    .ui.stackable.padded.grid
+        .row
+            .sixteen.wide.column
+                // if can_edit
+                a.ui.icon.button(href="/badges")
+                    i.chevron.left.icon
+                    +i name='prize'
+                +i name=icon cl='ui inline image'
+                .ui.center.aligned.inline.header 
+                    small viewing badge: 
+                    |#{title}
+                if can_edit
+                    a.ui.icon.large.button.edit_badge(href="/badge/#{_id}/edit")
+                        i.big.pencil.big.blue.icon
+        .row 
+            .eight.wide.column
+                .ui.header 
+                    small author
+                a.ui.header(href="/user/#{_author.username}") 
+                    img.ui.avatar.image(src="{{c.url _author.image_id height=200 width=200 gravity='face' crop='fill'}}")
+                    |#{_author.username}
+                        
+                +number_view key='bounty' label='bounty' direct=true
+                +textarea_view key='description' label='description' direct=true
+                +image_view key='image_id' label='image' direct=true
+                div 
+                +array_view key='tags' label='tags' direct=true
+                .spacer
+                .spacer
+                +comments
+                //- +array_view key='location_tags' label='location_tags' direct=true
+            .eight.wide.column
+                .ui.header 
+                    +i name='badger'
+                    |badgers
+                each badgers
+                    a.ui.button(href="/user/#{username}") 
+                        img.ui.avatar.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}")
+                        |#{name}
+    
+                // .ui.header 
+                //     +honey_badger
+                //     |honey badgers
+                // each honey_badgers
+                //     a.ui.basic.button(href="/user/#{username}") 
+                //         img.ui.avatar.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}")
+                //         |#{name}
+                // //- .ui.fluid.green.button.submit
+                // //-     i.checkmark.icon
+                // //-     |submit
 
 template(name='badge_edit')
-    with current_doc
-        .ui.stackable.padded.grid
-            .centered.middle.aligned.row 
-                .sixteen.wide.column
-                    a.ui.green.cicular.icon.big.button.fly_left(href="/badge/#{_id}" title='save')
-                        i.checkmark.big.icon
-                    .ui.inline.header
-                        small edit badge
-                        |#{title}
-                    i.remove.circular.link.icon.delete_item
-            .row 
-                .eight.wide.column
-                    +text_edit key='title' icon='header' direct=true
-                    +slug_edit key='slug' icon='slug' direct=true
-                    +icon_edit key='icon' label='icon' direct=true
-                    +textarea_edit key='description' label='description' direct=true
-                    +image_edit key='image_id' label='image' direct=true
-                    div 
-                    +array_edit key='tags' label='tags' direct=true
-                    +text_edit key='location' label='location' icon='marker' direct=true
-                    +array_edit key='location_tags' label='location_tags' direct=true
-                    +boolean_edit key='published' direct=true
-                    +group_picker
-                .eight.wide.column
-                    .ui.header
-                        +i name='badger'
-                        |badgers
-                    each badgers
-                        a.ui.compact.button(href="/user/#{username}") 
-                            img.ui.avatar.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}")
+    .ui.stackable.padded.grid
+        .centered.middle.aligned.row 
+            .sixteen.wide.column
+                a.ui.green.cicular.icon.big.button.fly_left(href="/badge/#{_id}" title='save')
+                    i.checkmark.big.icon
+                .ui.inline.header
+                    small edit badge
+                    |#{title}
+                i.remove.circular.link.icon.delete_item
+        .row 
+            .eight.wide.column
+                +text_edit key='title' icon='header' direct=true
+                +slug_edit key='slug' icon='slug' direct=true
+                +icon_edit key='icon' label='icon' direct=true
+                +textarea_edit key='description' label='description' direct=true
+                +image_edit key='image_id' label='image' direct=true
+                div 
+                +array_edit key='tags' label='tags' direct=true
+                +text_edit key='location' label='location' icon='marker' direct=true
+                +array_edit key='location_tags' label='location_tags' direct=true
+                +boolean_edit key='published' direct=true
+                +group_picker
+            .eight.wide.column
+                .ui.header
+                    +i name='badger'
+                    |badgers
+                each badgers
+                    a.ui.compact.button(href="/user/#{username}") 
+                        img.ui.avatar.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}")
+                        |#{name}
+                    i.remove.link.icon.remove_badger
+                .ui.segment
+                    .ui.small.header add badgers
+                    each unselected_badgers
+                        .ui.basic.circular.compact.button.add_badger
+                            img.ui.avatar.circular.compact.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}")
                             |#{name}
-                        i.remove.link.icon.remove_badger
-                    .ui.segment
-                        .ui.small.header add badgers
-                        each unselected_badgers
-                            .ui.basic.circular.compact.button.add_badger
-                                img.ui.avatar.circular.compact.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}")
-                                |#{name}
-                    
-                    // .ui.header
-                    //     +honey_badger
-                    //     |honey badgers
-                    // each honey_badgers
-                    //     a.ui.compact.button(href="/user/#{username}") 
-                    //         img.ui.avatar.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}")
-                    //         |#{name}
-                    //     i.remove.link.icon.remove_honey_badger
-                    // .ui.segment
-                    //     .ui.small.header add honey badgers
-                    //     each unselected_honey_badgers
-                    //         .ui.basic.button.add_honey_badger
-                    //             img.ui.avatar.compact.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}")
-                    //             |#{name}
-                    
+                
+                // .ui.header
+                //     +honey_badger
+                //     |honey badgers
+                // each honey_badgers
+                //     a.ui.compact.button(href="/user/#{username}") 
+                //         img.ui.avatar.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}")
+                //         |#{name}
+                //     i.remove.link.icon.remove_honey_badger
+                // .ui.segment
+                //     .ui.small.header add honey badgers
+                //     each unselected_honey_badgers
+                //         .ui.basic.button.add_honey_badger
+                //             img.ui.avatar.compact.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}")
+                //             |#{name}
+                
