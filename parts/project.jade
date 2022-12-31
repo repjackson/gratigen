@@ -1,27 +1,3 @@
-template(name='projects')
-    .ui.stackable.padded.grid 
-        .four.wide.column
-            .ui.inline.header 
-                +i name='blog'
-                |projects
-                // if currentUser
-                .ui.icon.button.add_project
-                    i.plus.large.icon
-            each picked_tags
-                a.ui.blue.button.unpick_project_tag
-                    |#{this}
-            each tag_results
-                // if title
-                a.ui.compact.button.pick_project_tag
-                    |#{title} 
-                    // small.ui.grey.text #{count}
-                    
-        .twelve.wide.column
-            .ui.centered.stackable.cards
-                each project_docs 
-                    +project_card
-                    
-                    
 template(name='project_card')
     a.ui.card.fly_right(href="/project/#{_id}")
         if youtube_id 
@@ -61,32 +37,6 @@ template(name='set_project_sort_key')
         
         
                 
-template(name='user_projects')
-    .ui.inline.header 
-        +i name='blog'
-        |user projects
-    if is_current_user
-        .ui.basic.icon.button.add_project
-            i.large.plus.icon
-    .ui.padded.stackable.one.column.grid
-        .column
-            .ui.stackable.cards.scrolling
-                each project_docs 
-                    .ui.card
-                        .content
-                            a(href="/project/#{_id}") 
-                                img.ui.image(src="{{c.url image_id width=400 height=300 crop='pad'}}")
-    
-                            .smallscroll 
-                                |!{content}
-                            // |created #{when}
-                            small {{when}}
-                            a.ui.icon.button(href='/project/#{_id}')
-                                i.large.chevron.right.icon
-                            
-        
-        
-
 template(name='set_view_mode_project')
     .item.set_view
         i.icon(class=icon)

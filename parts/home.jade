@@ -2,41 +2,6 @@ template(name='home')
     if currentUser.admin_mode
         img.ui.fluid.image.home_banner(src="{{c.url 'gratigenlayout'}}" class=darkmode_class)
     .ui.stackable.padded.divided.celled.grid
-        .bordered(class=left_column_class)
-            +session_toggle key='expand_leftbar' icon='chevron left'
-            // +session_toggle key='add_mode' icon='plus'
-            .ui.icon.button.show_model
-                i.large.plus.icon
-            // .ui.fluid.small.button.toggle_leftbar
-            //     i.chevron.left.icon
-            .ui.hidden.divider
-            +dash_user_info
-
-            .ui.fluid.big.menu.hscroll.mobile.only
-                +side_menu_item color="FF73EA" icon='food' label='food'
-                +side_menu_item color="B785E1" icon='home' label='housing'
-                +side_menu_item color="7229AF" icon='tshirt' label='clothing'
-                +side_menu_item color="1255B8" icon='car' label='transportation'
-                +side_menu_item color="83DFF4" icon='lightning' label='energy'
-                +side_menu_item color="42E8C4" icon='leaf' label='zero waste'
-                +side_menu_item color="40C057" icon='smile' label='wellness'
-                +side_menu_item color="FAB005" icon='university' label='education'
-                +side_menu_item color="FD7E14" icon='paint brush' label='art'
-                +side_menu_item color="FF0000" icon='users' label='community core'
-            .ui.vertical.fluid.icon.menu.mobile.hidden
-                +side_menu_item color="FF73EA" icon='food' label='food'
-                +side_menu_item color="B785E1" icon='home' label='housing'
-                +side_menu_item color="7229AF" icon='tshirt' label='clothing'
-                +side_menu_item color="1255B8" icon='car' label='transportation'
-                +side_menu_item color="83DFF4" icon='lightning' label='energy'
-                +side_menu_item color="42E8C4" icon='leaf' label='zero waste'
-                +side_menu_item color="40C057" icon='smile' label='wellness'
-                +side_menu_item color="FAB005" icon='university' label='education'
-                +side_menu_item color="FD7E14" icon='paint brush' label='art'
-                +side_menu_item color="FF0000" icon='users' label='community core'
-                
-            // .ui.button create request
-        // .eight.wide.column.bordered
         .bordered.scrolling(class=main_column_class)
             .ui.one.column.grid 
                 .column.bordered
@@ -77,7 +42,7 @@ template(name='home')
                             .results    
                         +session_set key='view_mode' value='grid' icon='th' 
                         +session_set key='view_mode' value='list' icon='list'
-                        // +session_set key='view_mode' value='card' icon='card'
+                        +session_set key='view_mode' value='card' icon='card'
                         +session_toggle key='show_map' icon='map'
                         +session_toggle key='show_calendar' icon='calendar'
                     
@@ -91,6 +56,41 @@ template(name='home')
                         .ui.two.stackable.cards.scrollin
                             each doc_results
                                 +home_card
+        .bordered(class=left_column_class)
+            +session_toggle key='expand_leftbar' icon='chevron left'
+            // +session_toggle key='add_mode' icon='plus'
+            .ui.icon.button.show_model
+                i.large.plus.icon
+            // .ui.fluid.small.button.toggle_leftbar
+            //     i.chevron.left.icon
+            .ui.hidden.divider
+            +dash_user_info
+
+            .ui.fluid.big.menu.hscroll.mobile.only
+                +side_menu_item color="FF73EA" icon='food' label='food'
+                +side_menu_item color="B785E1" icon='home' label='housing'
+                +side_menu_item color="7229AF" icon='tshirt' label='clothing'
+                +side_menu_item color="1255B8" icon='car' label='transportation'
+                +side_menu_item color="83DFF4" icon='lightning' label='energy'
+                +side_menu_item color="42E8C4" icon='leaf' label='zero waste'
+                +side_menu_item color="40C057" icon='smile' label='wellness'
+                +side_menu_item color="FAB005" icon='university' label='education'
+                +side_menu_item color="FD7E14" icon='paint brush' label='art'
+                +side_menu_item color="FF0000" icon='users' label='community core'
+            .ui.vertical.fluid.icon.menu.mobile.hidden
+                +side_menu_item color="FF73EA" icon='food' label='food'
+                +side_menu_item color="B785E1" icon='home' label='housing'
+                +side_menu_item color="7229AF" icon='tshirt' label='clothing'
+                +side_menu_item color="1255B8" icon='car' label='transportation'
+                +side_menu_item color="83DFF4" icon='lightning' label='energy'
+                +side_menu_item color="42E8C4" icon='leaf' label='zero waste'
+                +side_menu_item color="40C057" icon='smile' label='wellness'
+                +side_menu_item color="FAB005" icon='university' label='education'
+                +side_menu_item color="FD7E14" icon='paint brush' label='art'
+                +side_menu_item color="FF0000" icon='users' label='community core'
+                
+            // .ui.button create request
+        // .eight.wide.column.bordered
         .bordered(class=right_column_class)
             if session_is 'show_map' true
                 +mapbox
@@ -103,8 +103,66 @@ template(name='home')
         // [current_thing_type]_edit
         //     +thing_picker
         //      +eft_picker
-            
-    //template(name='thing_maker_modal')        
+    .ui.modal 
+        with current_viewing_thing
+            .header #{title}
+            i.close.large.icon
+            .scrolling.content
+                +Template.dynamic template=view_template
+
+//template(name='thing_maker_modal')        
+template(name='home_card')
+    // if _is 'model' 'role'
+    //     +role_card
+    // else if _is 'model' 'event'
+    //     +event_card
+    // else if _is 'model' 'recipe'
+    //     +recipe_card
+    // else 
+    .ui.card.zoomer.show_modal
+        if youtube_id 
+            +youtube_view key='youtube_id' direct=true
+        .content 
+            a.inline.header
+                if _is 'model' 'recipe'
+                    +i name='recipe'
+                if _is 'model' 'food'
+                    +i name='food'
+                if _is 'model' 'post'
+                    +i name='blog'
+                if _is 'model' 'rental'
+                    +i name='clock'
+                if _is 'model' 'task'
+                    +i name='tasks'
+                if _is 'model' 'group'
+                    +i name='campfire'
+                if _is 'model' 'comment'
+                    +i name='chat'
+                // .ui.label #{model}
+                |#{title} #{body}
+            i.clock.icon
+            |#{when}
+        img.ui.fluid.image(src="{{c.url image_id width=400 height=400}}")
+        .content 
+            .description
+                // .ui.header lat: #{lat}
+                // .ui.header lng: #{lng}
+                //     // i.newspaper.large.icon
+                if location 
+                    .ui.label 
+                        i.marker.icon
+                        |#{location}
+                .ui.image.large.label 
+                    img.ui.image(src="{{c.url _author.image_id width=400 height=400}}")
+                    // i.user.icon
+                    |#{_author_username}
+                if tags 
+                    each seven_tags 
+                        .ui.basic.label #{this}
+                +voting
+      
+      
+      
       
 template(name='thing_maker')
     // unless currentUser.current_thing_id
@@ -274,63 +332,6 @@ template(name='open_requests')
                 .description
                     .ui.header #{when}
                             
-template(name='home_card')
-    // if _is 'model' 'role'
-    //     +role_card
-    // else if _is 'model' 'event'
-    //     +event_card
-    // else if _is 'model' 'recipe'
-    //     +recipe_card
-    // else 
-    .ui.card.zoomer.show_modal
-        if youtube_id 
-            +youtube_view key='youtube_id' direct=true
-        .content 
-            a.inline.header
-                if _is 'model' 'recipe'
-                    +i name='recipe'
-                if _is 'model' 'food'
-                    +i name='food'
-                if _is 'model' 'post'
-                    +i name='blog'
-                if _is 'model' 'rental'
-                    +i name='clock'
-                if _is 'model' 'task'
-                    +i name='tasks'
-                if _is 'model' 'group'
-                    +i name='campfire'
-                if _is 'model' 'comment'
-                    +i name='chat'
-                // .ui.label #{model}
-                |#{title} #{body}
-            i.clock.icon
-            |#{when}
-        img.ui.fluid.image(src="{{c.url image_id width=400 height=400}}")
-        .content 
-            .description
-                // .ui.header lat: #{lat}
-                // .ui.header lng: #{lng}
-                //     // i.newspaper.large.icon
-                if location 
-                    .ui.label 
-                        i.marker.icon
-                        |#{location}
-                .ui.image.large.label 
-                    img.ui.image(src="{{c.url _author.image_id width=400 height=400}}")
-                    // i.user.icon
-                    |#{_author_username}
-                if tags 
-                    each seven_tags 
-                        .ui.basic.label #{this}
-                +voting
-    .ui.modal 
-        // with current_viewing_thing
-        .header #{title}
-        i.close.large.icon
-        .scrolling.content
-            +Template.dynamic template=view_template
-        // if _is 'model' 'event'
-        //     +event_view
                     
                     
 template(name='latest_activity')

@@ -1,54 +1,11 @@
 //parties, games, conferences, classes, ceremonies, meetups, ski-trips/adventures, 
 // protests, farm swarms
-template(name='events')
-    .ui.stackable.padded.grid 
-        .row
-            .sixteen.wide.column
-                .ui.inline.header
-                    // i.calendar.icon
-                    +i name='calendar' color='FAB005'
-                    |events
-                +add_model_button model='event' color='FAB005'
-                .ui.large.basic.circular.button.toggle_past
-                    if viewing_past
-                        i.checkmark.large.green.icon
-                    else
-                        i.circle.outline.large.icon
-                    |past
-                .spacer
-                .ui.stackable.cards
-                    each event_docs
-                        +event_card
-                        
-template(name='my_events')
-    .ui.stackable.padded.grid 
-        .row
-            .sixteen.wide.column
-                .ui.inline.header
-                    // i.calendar.icon
-                    +i name='calendar'
-                    |my events
-                +add_model_button model='event'
-                .ui.large.basic.circular.button.toggle_past
-                    if viewing_past
-                        i.checkmark.large.green.icon
-                    else
-                        i.circle.outline.large.icon
-                    |past
-                .spacer
-                .ui.stackable.cards
-                    each event_docs
-                        +event_card
-
 template(name='event_card')
     .ui.card
         if image_id
-            a.image.zoom.pointer.mobile.hidden(href="/event/#{_id}")
-                img.ui.image(src="{{c.url image_id height=500 width=500 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-            a.image.zoom.pointer.mobile.only(href="/event/#{_id}")
-                img.ui.image(src="{{c.url image_id height=200 width=500 gravity='center' crop='fill'}}" class=currentUser.invert_class)
+            img.ui.image(src="{{c.url image_id height=500 width=500 gravity='face' crop='fill'}}" class=currentUser.invert_class)
         .content
-            a.ui.header(href="/event/#{_id}") #{title} 
+            .ui.header #{title} 
             div
             .ui.small.header {{medium_date date}} 
                 if time 
@@ -104,86 +61,88 @@ template(name='gcal_button')
         
         
 template(name='event_edit')
-    with current_doc
-        .ui.stackable.padded.grid
-            .centered.row 
-                .five.wide.column
-                    a.ui.green.big.circular.button.fly_right(href="/event/#{_id}" title='save')
-                        i.checkmark.big.icon
-                        |save
-                    .ui.inline.header 
-                        +icolor name='tear-off-calendar'
-                        |edit event
-                    +boolean_edit key='published' label='published'
+    .ui.stackable.padded.grid
+        .centered.row 
+            .five.wide.column
+                a.ui.green.big.circular.button.fly_right(href="/event/#{_id}" title='save')
+                    i.checkmark.big.icon
+                    |save
+                .ui.inline.header 
+                    +icolor name='tear-off-calendar'
+                    |edit event
+                +boolean_edit key='published' label='published'
+                div
+                .ui.icon.basic.circular.button.delete_item(title='delete')
+                    i.remove.red.icon
+                +text_edit key='title' label='title'
+                div
+                .ui.header 
+                    small author
+                    |#{_author.name}
+                +slug_edit key='slug' label='slug' icon='slug'
+                div
+                // if reservation_exists
+                //     .ui.header date: #{date}
+                //     .ui.header time: #{time}
+                // else
+                +datetime_edit key='start_datetime' label='start datetime'
+                div
+                +datetime_edit key='end_datetime' label='end datetime'
+                div
+                // +time_edit key='time' label='time'
+                div
+                +number_edit key='hour_duration' label='hours'
+                div 
+                +text_edit key='location' label='location'
+                +geolocate_button
+                div
+                // +range_edit label='time range'
+                div
+                // +single_user_edit key='facilitator_id' label='facilitator' icon='chess king'
+                div
+                // +single_user_edit key='support_id' label='support' icon='chess queen'
+                div
+                +single_user_edit key='host_id' label='host' icon='shield'
+                div
+                div 
+                +array_edit key='tags' label='tags' icon='red tags'
+                div
+            .ten.wide.column.scrollin
+                .ui.header
+                    i.users.icon
+                    |audience
+                +number_edit key='max_attendees' label='max attendees' min='0' max='100'
+                div
+                // div
+                +boolean_edit key='free' label='free'
+                div
+                unless free
+                    +number_edit key='price_points' label='point price' min='0' max='100'
                     div
-                    .ui.icon.basic.circular.button.delete_item(title='delete')
-                        i.remove.red.icon
-                    +text_edit key='title' label='title'
-                    div
-                    .ui.header 
-                        small author
-                        |#{_author.name}
-                    +slug_edit key='slug' label='slug' icon='slug'
-                    div
-                    // if reservation_exists
-                    //     .ui.header date: #{date}
-                    //     .ui.header time: #{time}
-                    // else
-                    +datetime_edit key='start_datetime' label='start datetime'
-                    div
-                    +datetime_edit key='end_datetime' label='end datetime'
-                    div
-                    // +time_edit key='time' label='time'
-                    div
-                    +number_edit key='hour_duration' label='hours'
-                    div 
-                    +text_edit key='location' label='location'
-                    +geolocate_button
-                    div
-                    // +range_edit label='time range'
-                    div
-                    // +single_user_edit key='facilitator_id' label='facilitator' icon='chess king'
-                    div
-                    // +single_user_edit key='support_id' label='support' icon='chess queen'
-                    div
-                    +single_user_edit key='host_id' label='host' icon='shield'
-                    div
-                    div 
-                    +array_edit key='tags' label='tags' icon='red tags'
-                    div
-                .ten.wide.column.scrollin
-                    .ui.header
-                        i.users.icon
-                        |audience
-                    +number_edit key='max_attendees' label='max attendees' min='0' max='100'
-                    div
-                    // div
-                    +boolean_edit key='free' label='free'
-                    div
-                    unless free
-                        +number_edit key='price_points' label='point price' min='0' max='100'
-                        div
-                    +number_edit key='usd_price' label='usd price' min='0' max='100'
-                    div
-                    +number_edit key='price_usd' label='dollar price' min='0' max='100'
-                    div
-                    +html_edit key='description' label='description'
-                    div
-                    // .ui.buttons 
-                    .ui.basic.center.aligned.segment
-                        +eft_picker color="FF73EA" icon='food' label='food'
-                        +eft_picker color="B785E1" icon='home' label='housing'
-                        +eft_picker color="7229AF" icon='tshirt' label='clothing'
-                        +eft_picker color="1255B8" icon='car' label='transportation'
-                        +eft_picker color="83DFF4" icon='lightning' label='energy'
-                        +eft_picker color="42E8C4" icon='leaf' label='zero waste'
-                        +eft_picker color="40C057" icon='smile' label='wellness'
-                        +eft_picker color="FAB005" icon='university' label='education'
-                        +eft_picker color="FD7E14" icon='paint brush' label='art'
-                        +eft_picker color="FF0000" icon='users' label="community core"
-                        +eft_picker color="FF0000" icon='users' label="community core"
+                +number_edit key='usd_price' label='usd price' min='0' max='100'
+                div
+                +number_edit key='price_usd' label='dollar price' min='0' max='100'
+                div
+                +html_edit key='description' label='description'
+                div
+                // .ui.buttons 
+                .ui.basic.center.aligned.segment
+                    +eft_picker color="FF73EA" icon='food' label='food'
+                    +eft_picker color="B785E1" icon='home' label='housing'
+                    +eft_picker color="7229AF" icon='tshirt' label='clothing'
+                    +eft_picker color="1255B8" icon='car' label='transportation'
+                    +eft_picker color="83DFF4" icon='lightning' label='energy'
+                    +eft_picker color="42E8C4" icon='leaf' label='zero waste'
+                    +eft_picker color="40C057" icon='smile' label='wellness'
+                    +eft_picker color="FAB005" icon='university' label='education'
+                    +eft_picker color="FD7E14" icon='paint brush' label='art'
+                    +eft_picker color="FF0000" icon='users' label="community core"
+                    +eft_picker color="FF0000" icon='users' label="community core"
+                div
+                .ui.eight.wide.column
+                    +calendar_view
 
-                    
+                
 //                     div
 //                     +image_edit key='image_id' label='image'
 //                     div
@@ -206,8 +165,8 @@ template(name='event_edit')
 //                         +thing_picker model='request' icon='commercial' color='40C057'     
 //                             //green
 //                         +thing_picker model='skills' icon='wrench' color='ff0000'
-                        //         //Blue
-                        //   +thing_picker model='badges' icon='badge' color='1255B8'
+                    //         //Blue
+                    //   +thing_picker model='badges' icon='badge' color='1255B8'
                 
 // template(name='thing_picker')
                         //thing picker needs to pick the specific thing (ex. a my_skill) to associate it with the thing being created.
@@ -216,6 +175,7 @@ template(name='event_edit')
 //         // i.exchange.large.icon
 //         |#{model}
 //                 //red
+
 
 template(name='eft_picker')
     if toggled

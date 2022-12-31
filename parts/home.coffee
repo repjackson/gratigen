@@ -18,9 +18,14 @@ if Meteor.isClient
     Template.home_card.helpers
         view_template: ->
             "#{@model}_view"
-    Template.home_card.events 
-        'click .show_modal': ->
-            Session.set('current_viewing_thing_id')
+    Template.home.helpers 
+        current_viewing_thing: ->
+            Docs.findOne Session.get('current_viewing_thing_id')
+    Template.home.events 
+        'click .show_modal': (e,t)->
+            Session.set('current_viewing_thing_id', @_id)
+            console.log @
+            # $(e.currentTarget).closest('.ui.modal').modal({
             $('.ui.modal').modal({
                 inverted:true
                 # blurring:true

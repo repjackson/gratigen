@@ -1,12 +1,4 @@
 if Meteor.isClient
-    Router.route '/projects', (->
-        @layout 'layout'
-        @render 'projects'
-        ), name:'projects'
-    Router.route '/my_projects', (->
-        @layout 'layout'
-        @render 'projects'
-        ), name:'my_projects'
     Router.route '/project/:doc_id/edit', (->
         @layout 'layout'
         @render 'project_edit'
@@ -21,55 +13,7 @@ if Meteor.isClient
         ), name:'project_view_long'
     
     
-    Template.projects.onCreated ->
-        @autorun => @subscribe 'model_docs', 'project', ->
-        # @autorun => @subscribe 'project_docs',
-        #     picked_tags.array()
-        #     Session.get('project_title_filter')
-
-        # @autorun => @subscribe 'project_facets',
-        #     picked_tags.array()
-        #     Session.get('project_title_filter')
-
     
-    
-    Template.projects.events
-        'click .add_project': ->
-            new_id = 
-                Docs.insert 
-                    model:'project'
-            Router.go "/project/#{new_id}/edit"
-            
-            
-            
-    Template.projects.helpers
-        picked_tags: -> picked_tags.array()
-    
-        project_docs: ->
-            Docs.find {
-                model:'project'
-                private:$ne:true
-            }, sort:_timestamp:-1    
-        tag_results: ->
-            Results.find {
-                model:'tag'
-            }, sort:_timestamp:-1
-
-    Template.user_projects.onCreated ->
-        @autorun => Meteor.subscribe 'user_projects', Router.current().params.username, ->
-    Template.user_projects.helpers
-        project_docs: ->
-            Docs.find {
-                model:'project'
-            }, sort:_timestamp:-1    
-    
-    Template.project_view.onCreated ->
-        @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
-        @autorun => Meteor.subscribe 'model_docs', 'task', ->
-        
-    Template.project_edit.onCreated ->
-        @autorun => Meteor.subscribe 'model_docs', 'task', ->
-        @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
     Template.project_card.onCreated ->
         @autorun => Meteor.subscribe 'doc_comments', @data._id, ->
 

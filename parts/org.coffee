@@ -59,7 +59,7 @@ if Meteor.isClient
             Docs.find
                 model:'org_option'
 
-if Meteor.isServer
+# if Meteor.isServer
     # Meteor.publish 'org_results', (
     #     picked_tags
     #     doc_limit
