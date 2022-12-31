@@ -85,107 +85,105 @@ template(name='post_item')
         
 
 template(name='post_view')
-    with current_doc
-        .ui.stackable.padded.grid
-            .row 
-                .four.wide.column
-                    .ui.basic.segment
-                        .ui.header #{title}
-                        a.ui.circular.button.fly_left(href="/posts")
-                            i.chevron.left.big.icon
-                            i.newspaper.big.icon
-                            .ui.inline.header posts
-                        // div
-                        // .ui.inline.grey.header {{from_now start_datetime}}
-                        
-                        if can_edit
-                            a.ui.circular.icon.button.edit_post(href="/post/#{_id}/edit" title='edit')
-                                i.big.link.pencil.icon
-                        .ui.segment
-                            .ui.header 
-                                small author
-                            a.ui.header(href="/user/#{_author.username}") 
-                                img.ui.avatar.image(src="{{c.url _author.image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                                |#{_author.username}
-                        .ui.small.grey.header 
-                            i.line.chart.icon
-                            |stats
-                        .ui.list
-                            .item #{views} views
-                        each viewers
-                            .ui.label #{username}
-                        +array_view key='tags' label='tags'
-                        +voting_full
-                        .ui.header #{when}
-                        //- +array_view key='location_tags' label='location_tags'
-                        +comments
-                .eight.wide.column.scrolling
-                    img.ui.image(src="{{c.url image_id }}" class=currentUser.invert_class)
-                    // a.ui.header(href="/user/#{target.username}")
-                    //     |#{target.username}
-                    if youtube_id 
-                        +youtube_view key='youtube_id'
-                    |!{content}
-                    div 
-                    .spacer
-                    .spacer
-                    if watson 
-                        +watson_view
-                .four.wide.column
-                    .ui.header read by 
-                    each read_users 
-                        .item #{username}
-                    .ui.fluid.green.button.submit
-                        i.checkmark.icon
-                        |submit
+    .ui.stackable.padded.grid
+        .row 
+            .four.wide.column
+                .ui.basic.segment
+                    .ui.header #{title}
+                    // a.ui.circular.button.fly_left(href="/posts")
+                    //     i.chevron.left.big.icon
+                    //     i.newspaper.big.icon
+                    //     .ui.inline.header posts
+                    // div
+                    // .ui.inline.grey.header {{from_now start_datetime}}
+                    
+                    if can_edit
+                        a.ui.circular.icon.button.edit_post(href="/post/#{_id}/edit" title='edit')
+                            i.big.link.pencil.icon
+                    .ui.segment
+                        .ui.header 
+                            small author
+                        a.ui.header(href="/user/#{_author.username}") 
+                            img.ui.avatar.image(src="{{c.url _author.image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                            |#{_author.username}
+                    .ui.small.grey.header 
+                        i.line.chart.icon
+                        |stats
+                    .ui.list
+                        .item #{views} views
+                    each viewers
+                        .ui.label #{username}
+                    +array_view key='tags' label='tags'
+                    +voting_full
+                    .ui.header #{when}
+                    //- +array_view key='location_tags' label='location_tags'
+                    // +comments
+            .eight.wide.column.scrolling
+                img.ui.image(src="{{c.url image_id }}" class=currentUser.invert_class)
+                // a.ui.header(href="/user/#{target.username}")
+                //     |#{target.username}
+                if youtube_id 
+                    +youtube_view key='youtube_id'
+                |!{content}
+                div 
+                .spacer
+                .spacer
+                if watson 
+                    +watson_view
+            .four.wide.column
+                .ui.header read by 
+                // each read_users 
+                //     .item #{username}
+                .ui.fluid.green.button.submit
+                    i.checkmark.icon
+                    |submit
                     
                     
                     
 template(name='post_edit')
-    with current_doc
-        .ui.stackable.padded.grid
-            .row 
-                .ten.wide.column
-                    .ui.inline.header 
-                        +icolor name='news' cl='ui image inline pointer'
-                        |edit post
-                    a.ui.icon.green.big.button(href="/post/#{_id}" title='save')
-                        i.checkmark.big.icon
-                    +text_edit key='title' label='title'
-                    +html_edit key='content' label='content'
-                    +youtube_edit key='youtube_id' label='youtube id'
-                .six.wide.column
-                    .ui.red.button.delete_post
-                        i.remove.icon
-                        |delete post
-                    .ui.header 
-                        small author
-                        |#{_author.username}
-                    if is_dev
-                        +single_user_edit key='_author_id' label='author'
-                    +image_edit key='image_id' label='image'
-                    div 
-                .ten.wide.column
-                    +text_edit key='location' 
-                    +geolocate_button
+    .ui.stackable.padded.grid
+        .row 
+            .ten.wide.column
+                .ui.inline.header 
+                    +icolor name='news' cl='ui image inline pointer'
+                    |edit post
+                a.ui.icon.green.big.button(href="/post/#{_id}" title='save')
+                    i.checkmark.big.icon
+                +text_edit key='title' label='title'
+                +html_edit key='content' label='content'
+                +youtube_edit key='youtube_id' label='youtube id'
+            .six.wide.column
+                .ui.red.button.delete_post
+                    i.remove.icon
+                    |delete post
+                .ui.header 
+                    small author
+                    |#{_author.username}
+                if is_dev
+                    +single_user_edit key='_author_id' label='author'
+                +image_edit key='image_id' label='image'
+                div 
+            .ten.wide.column
+                +text_edit key='location' 
+                +geolocate_button
 
-                    +array_edit key='tags' label='tags' icon='tags'
-                    +boolean_edit key='published' icon='visible'
-                    if is_dev 
-                        +text_edit key='model' label='model' icon='database'
-                    +array_edit key='location_tags' label='location_tags' icon='marker'
-                    // unless published
-                    //     a.ui.fluid.green.button.submit(href="/save")
-                    //         i.checkmark.icon
-                    //         |publish
-                    // else
-                    //     .ui.basic.button.unpublish 
-                    //         |unpublish
-                .six.wide.column
-                    .ui.header
-                        +i name='audience'
-                        |audience
-                    +boolean_edit key='private' label='private' 
-                    if private 
-                        +multi_user_edit key='access_user_ids' label='user picker'
-                    +group_picker
+                +array_edit key='tags' label='tags' icon='tags'
+                +boolean_edit key='published' icon='visible'
+                if is_dev 
+                    +text_edit key='model' label='model' icon='database'
+                +array_edit key='location_tags' label='location_tags' icon='marker'
+                // unless published
+                //     a.ui.fluid.green.button.submit(href="/save")
+                //         i.checkmark.icon
+                //         |publish
+                // else
+                //     .ui.basic.button.unpublish 
+                //         |unpublish
+            .six.wide.column
+                .ui.header
+                    +i name='audience'
+                    |audience
+                +boolean_edit key='private' label='private' 
+                if private 
+                    +multi_user_edit key='access_user_ids' label='user picker'
+                +group_picker

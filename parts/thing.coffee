@@ -441,10 +441,6 @@ if Meteor.isServer
             
             
 if Meteor.isClient
-    Router.route '/roles', (->
-        @layout 'layout'
-        @render 'roles'
-        ), name:'roles'
     Router.route '/role/:doc_id/edit', (->
         @layout 'layout'
         @render 'role_edit'
@@ -457,53 +453,7 @@ if Meteor.isClient
         @layout 'layout'
         @render 'role_view'
         ), name:'role_view_long'
-    Router.route '/my_roles/', (->
-        @layout 'layout'
-        @render 'roles'
-        ), name:'my_roles'
     
-    
-    Template.roles.onCreated ->
-        @autorun => @subscribe 'model_docs', 'role', ->
-        # @autorun => @subscribe 'role_docs',
-        #     picked_tags.array()
-        #     Session.get('role_title_filter')
-
-        # @autorun => @subscribe 'role_facets',
-        #     picked_tags.array()
-        #     Session.get('role_title_filter')
-
-    
-    
-    Template.roles.events
-        'click .add_role': ->
-            new_id = 
-                Docs.insert 
-                    model:'role'
-            Router.go "/role/#{new_id}/edit"
-            
-            
-            
-    Template.roles.helpers
-        picked_tags: -> picked_tags.array()
-    
-        role_docs: ->
-            Docs.find {
-                model:'role'
-                private:$ne:true
-            }, sort:_timestamp:-1    
-        tag_results: ->
-            Results.find {
-                model:'tag'
-            }, sort:_timestamp:-1
-
-    Template.my_roles.onCreated ->
-        @autorun => Meteor.subscribe 'user_roles', Router.current().params.username, ->
-    Template.my_roles.helpers
-        role_docs: ->
-            Docs.find {
-                model:'role'
-            }, sort:_timestamp:-1    
     
     Template.role_view.onCreated ->
         @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->

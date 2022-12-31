@@ -64,9 +64,9 @@ template(name='event_edit')
     .ui.stackable.padded.grid
         .centered.row 
             .five.wide.column
-                a.ui.green.big.circular.button.fly_right(href="/event/#{_id}" title='save')
-                    i.checkmark.big.icon
-                    |save
+                // a.ui.green.big.circular.button.fly_right(href="/event/#{_id}" title='save')
+                //     i.checkmark.big.icon
+                //     |save
                 .ui.inline.header 
                     +icolor name='tear-off-calendar'
                     |edit event
@@ -141,6 +141,7 @@ template(name='event_edit')
                 div
                 .ui.eight.wide.column
                     +calendar_view
+                    +mapbox
 
                 
 //                     div
@@ -383,6 +384,8 @@ template(name='event_view')
                                 //         +voting_small
                     
                 +attendance
+                +calendar_view
+                +mapbox
     // .ui.modal
     //     i.close.icon
     //     .header buy ticket for #{current_doc.point_price}pts?
