@@ -298,7 +298,8 @@ if Meteor.isClient
             source: categoryContent
             selectFirstResult:true	            
           })
-        ;
+        $('.tabular.menu .item').tab();
+
 
     # Template.closest_allies.helpers 
     #     user_docs: ->

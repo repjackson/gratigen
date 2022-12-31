@@ -56,57 +56,66 @@ template(name='home')
                         +thing_maker
                     // else 
                 .column.bordered
-                    .centered
-                        .ui.icon.button.huge.tertiary.add_mode 
+                    .ui.top.attached.tabular.menu  
+                        .item(data-tab='add')
                             +i name='play-button-circled--v1' color='40C057'
-                    .centered
-                        +filter_model model='org' icon='groups' color='83DFF4'
-                            //light blue
-                        +filter_model model='project' icon='project' color='7229AF' 
-                            //violet
-                        +filter_model model='event' icon='calendar' color='FAB005'
-                            //yellow
-                        +filter_model model='role' icon='what-i-do' color='42E8C4'
-                            //turquoise
-                        +filter_model model='task' icon='task' color='B785E1'
-                            //lavender
-                        +filter_model model='resource' icon='car' color='FD7E14'  
-                            //orange
-                        +filter_model model='post' icon='for-you' color='1255B8'
-                            //blue
-                        +filter_model model='offer' icon='hand-holding-heart' color='FF73EA'
-                            //pink
-                        +filter_model model='request' icon='commercial' color='40C057'     
-                            //green
-                        +filter_model model='skill' icon='wrench' color='ff0000'
-                        //red
-                        // +filter_model model='food' icon='food' 83DFF4
-                    .centered   
-                        .ui.search
-                            .ui.large.icon.input.search_bar
-                                input.prompt(type='text' placeholder='add/request/search...')
-                                i.search.icon
-                            .results    
-                        +session_set key='view_mode' value='grid' icon='th' 
-                        +session_set key='view_mode' value='list' icon='list'
-                        +session_set key='view_mode' value='feed' icon='stream'
-                        +session_toggle key='show_map' icon='map'
-                        +session_toggle key='show_calendar' icon='calendar'
-                    
-                    if session_is 'view_mode' 'list'
-                        .ui.items 
-                            each doc_results 
-                                .item
-                                    .content
-                                        .header #{title}
-                    if session_is 'view_mode' 'feed'
-                       .ui.one.stackable.cards.scrolling
-                            each doc_results
-                                +home_card
-                    else
-                        .ui.two.stackable.cards.scrolling
-                            each doc_results
-                                +home_card
+                        .active.item(data-tab='viewing')
+                            |viewing
+                    .ui.bottom.attached.tab.segment(data-tab='add')
+                        +thing_maker
+                    .ui.bottom.attached.tab.segment(data-tab='viewing')
+                        // make interface tabs, switch between edit and add
+                        .centered
+                            //.ui.icon.button.huge.tertiary.add_mode.show_modal
+                            
+                        .centered
+                            +filter_model model='org' icon='groups' color='83DFF4'
+                                //light blue
+                            +filter_model model='project' icon='project' color='7229AF' 
+                                //violet
+                            +filter_model model='event' icon='calendar' color='FAB005'
+                                //yellow
+                            +filter_model model='role' icon='what-i-do' color='42E8C4'
+                                //turquoise
+                            +filter_model model='task' icon='task' color='B785E1'
+                                //lavender
+                            +filter_model model='resource' icon='car' color='FD7E14'  
+                                //orange
+                            +filter_model model='post' icon='for-you' color='1255B8'
+                                //blue
+                            +filter_model model='offer' icon='hand-holding-heart' color='FF73EA'
+                                //pink
+                            +filter_model model='request' icon='commercial' color='40C057'     
+                                //green
+                            +filter_model model='skill' icon='wrench' color='ff0000'
+                            //red
+                            // +filter_model model='food' icon='food' 83DFF4
+                        .centered   
+                            .ui.search
+                                .ui.large.icon.input.search_bar
+                                    input.prompt(type='text' placeholder='add/request/search...')
+                                    i.search.icon
+                                .results    
+                            +session_set key='view_mode' value='grid' icon='th' 
+                            +session_set key='view_mode' value='list' icon='list'
+                            +session_set key='view_mode' value='feed' icon='stream'
+                            +session_toggle key='show_map' icon='map'
+                            +session_toggle key='show_calendar' icon='calendar'
+                        
+                        if session_is 'view_mode' 'list'
+                            .ui.items 
+                                each doc_results 
+                                    .item
+                                        .content
+                                            .header #{title}
+                        if session_is 'view_mode' 'feed'
+                           .ui.one.stackable.cards.scrolling
+                                each doc_results
+                                    +home_card
+                        else
+                            .ui.two.stackable.cards.scrolling
+                                each doc_results
+                                    +home_card
         // .eight.wide.column.bordered
         .bordered(class=right_column_class)
             if session_is 'show_map' true
@@ -148,7 +157,7 @@ template(name='home_card')
                 if _is 'model' 'food'
                     +i name='food'
                 if _is 'model' 'post'
-                    +i name='blog'
+                    +i name='for-you' color='1255B8'
                 if _is 'model' 'rental'
                     +i name='clock'
                 if _is 'model' 'task'

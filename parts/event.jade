@@ -244,10 +244,10 @@ template(name='event_view')
     .ui.stackable.padded.grid
         .middle.aligned.row 
             .sixteen.wide.column
-                if currentUser
-                    a(href="/events")
-                        i.calendar.big.circular.link.icon
-                .ui.large.inline.header #{title}
+                // if currentUser
+                //     a(href="/events")
+                //         i.calendar.big.circular.link.icon
+                // .ui.large.inline.header #{title}
                 if can_edit
                     if published 
                         i.big.eye.green.icon(title='published')
@@ -259,9 +259,9 @@ template(name='event_view')
                 // .ui.inline.grey.header {{from_now date}}
                 if time 
                     .ui.inline.grey.header {{time}}
-                if can_edit
-                    a.edit_event(href="/event/#{_id}/edit" title='edit')
-                        i.large.blue.link.pencil.circular.icon
+                // if can_edit
+                //     a.edit_event(href="/event/#{_id}/edit" title='edit')
+                //         i.large.blue.link.pencil.circular.icon
                 +eft_viewer
         .row 
             .four.wide.column.scrollin
