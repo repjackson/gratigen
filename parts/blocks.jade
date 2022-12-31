@@ -715,3 +715,57 @@ template(name='print_this')
     .ui.icon.basic.button.print
         i.orange.code.icon
 
+template(name='online_allies')
+    .ui.header 
+        +i name='marker'
+        |online allies
+    .ui.selectable.animated.list.smallscroll
+        each user_docs 
+            a.item.fly_right(href="/user/#{username}")
+                img.ui.avatar.image(src="{{c.url image_id width=400 height=400}}")
+                |#{username}
+                if tags 
+                    each tags 
+                        .ui.basic.label #{this}
+                        
+template(name='online_users')
+    .ui.header 
+        +i name='conference-background-selected' color='83DFF4'
+        |online users
+    //.ui.selectable.animated.list.smallscroll
+    .ui.fluid.menu.hscroll.secondary
+        each online_user_docs 
+            a.item.fly_right(href="/user/#{username}")
+                img.ui.circular.tiny.image(src="{{c.url image_id width=400 height=400 gravity='face' crop='fill'}}")
+                //click needs to pop up modal of user page
+                
+                // make sure comments aren't indented under code, it'll break
+            div
+                |#{username}
+                if tags 
+                    each tags 
+                        .ui.basic.label #{this}
+
+template(name='open_requests')
+    .ui.header open requests
+    each open_requests 
+        a.ui.fluid.card(href="/request/#{_id}")
+            .content 
+                .header #{title}
+                .description
+                    .ui.header #{when}
+                            
+                    
+                    
+template(name='latest_activity')
+    .ui.header 
+        +i name='clock'
+        |latest activity
+    .ui.selection.animated.list
+        each latest_docs 
+            a.item(href="/#{model}/#{_id}") 
+                img.ui.avatar.image(src="{{c.url image_id width=200 height=200 gravity='face' crop='fill'}}")
+                .content
+                    .header #{title}
+                    .description
+                        |{{from_now _updated_timestamp}}

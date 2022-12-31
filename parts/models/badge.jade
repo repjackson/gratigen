@@ -1,33 +1,5 @@
-template(name='badges')
-    .ui.stackable.padded.grid
-        .row
-            .four.wide.column
-                .ui.inline.header
-                    +i name='prize'
-                    |badges
-                .ui.icon.button.add_badge
-                    i.plus.icon
-                // .ui.header 
-                //     i.grey.users.icon
-                //     |members
-                // each members 
-                //     if image_id
-                //         a(href="/user/#{username}")
-                //             img.ui.tiny.pointer.inline.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}")
-            .twelve.wide.column
-                // .ui.segment
-                //     .ui.big.fluid.input
-                //         input(type='text' placeholder='write something...')
-                .ui.stackable.cards
-                    each badges 
-                        +badge_card
-                    
-
-
-
-
 template(name='badge_card')
-    a.card(href="/badge/#{_id}")
+    .card
         .image
             img.ui.raw.image(src="{{c.url image_id width=400 height=300 crop='fill'}}")    
         .content

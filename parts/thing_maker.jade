@@ -1,0 +1,96 @@
+template(name='thing_maker')
+    // unless currentUser.current_thing_id
+    // .ui.header 
+    //     i.plus.icon
+    //     |add a thing
+    // .ui.fluid.circular.zoomer.basic.green.button.invert.add_thing add a thing
+    // .ui.circular.zoomer.green.button.invert.show_modal 
+    //     i.plus.icon
+    //     |add a thing
+    // if current_thing
+    //     .ui.red.circular.button.invert.delete_thing
+    //         i.remove.icon
+    //         |delete thing
+    .ui.fullscreen.modal
+        .header thing picker #{model}
+        // +thing_editor
+        // template(name='thing_editor')
+        with current_thing
+            .ui.inline.header 
+                i.pencil.icon
+                |editing thing
+            +thing_picker model='org' icon='groups' color='83DFF4'
+            //lightblue
+            +thing_picker model='project' icon='project' color='7229AF' 
+            //violet
+            +thing_picker model='event' icon='calendar' color='FAB005'
+            //yellow
+            +thing_picker model='role' icon='what-i-do' color='42E8C4'
+            //turquoise
+            +thing_picker model='tasks' icon='task' color='B785E1'
+            //lavender
+            +thing_picker model='resource' icon='car' color='FD7E14'  
+            //orange
+            +thing_picker model='post' icon='for-you' color='1255B8'
+            //blue
+            +thing_picker model='offer' icon='hand-holding-heart' color='FF73EA'
+            //pink
+            +thing_picker model='request' icon='commercial' color='40C057'     
+            //green
+            +thing_picker model='skills' icon='wrench' color='ff0000'
+            //red
+            +thing_picker model='badges' icon='badge' color='1255B8'
+            //blue
+            +thing_picker model='time_date' icon='overtime--v1' color='FD7E14'
+            +thing_picker model='location' icon='worldwide-location' color='40C057'
+            +thing_picker model='accounts' icon='gold-bars' color='FAB005'
+                //people
+            
+            if _is 'model' 'event'
+                .ui.header editing event
+                +event_edit
+            if _is 'model' 'role'
+                .ui.header editing event
+            
+            if model
+                +text_edit key='title' label='title'
+                .ui.header role picker
+                .ui.header org picker
+                .ui.header event picker
+                .ui.header resource picker
+                .ui.header skill picker
+                .ui.header request picker
+                .ui.header offer picker
+                .ui.header task picker
+            +eft_picker  
+    
+
+                // thing picker needs to pick the specific thing (ex. a my_skill) to associate it with the thing being created.
+
+
+template(name='thing_picker')
+    //.ui.compact.circular.secondary.basic.button.pick_thing.zoomer(class=model_picker_class)
+        +i name=icon color=color cl='ui mini inline image'
+            i.exchange.large.icon
+        |#{model}  
+    .ui.animated.fade.basic.inverted.circular.large.button.pick_thing.zoomer.invert(class=model_picker_class style="color:##{color}")
+            .visible.content
+             +i name=icon color=color cl='ui mini inline image'
+                i.big.icon(class=icon)
+            .hidden.content
+                small #{model}
+
+
+// template(name='thing_view_item')
+//     if in_list
+//         .ui.animated.fade.basic.inverted.circular.large.button.zoomer.invert(style="color:##{color}")
+//             .visible.content
+//                 i.big.icon(class=icon)
+//             .hidden.content
+//                 small #{label}
+                
+                
+// template(name='thing_view_item_small')
+//     if in_list
+//         i.icon.zoomer.invert(class=icon style="color:##{color}" title=label)
+      

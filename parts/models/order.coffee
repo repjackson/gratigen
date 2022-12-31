@@ -1,8 +1,4 @@
 if Meteor.isClient
-    Router.route '/orders', (->
-        @render 'orders'
-        ), name:'orders'
-
     Router.route '/order/:doc_id', (->
         @layout 'layout'
         @render 'order'

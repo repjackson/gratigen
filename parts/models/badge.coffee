@@ -12,14 +12,6 @@ if Meteor.isClient
             Meteor.users.find   
                 _id:$in:badge.honey_badger_ids
 
-    Router.route '/badges', (->
-        @layout 'layout'
-        @render 'badges'
-        ), name:'badges'
-    Router.route '/my_badges', (->
-        @layout 'layout'
-        @render 'badges'
-        ), name:'my_badges'
     Router.route '/badge/:doc_id', (->
         @layout 'layout'
         @render 'badge_view'
@@ -29,9 +21,6 @@ if Meteor.isClient
         @render 'badge_edit'
         ), name:'badge_edit'
 
-    Template.badges.onCreated ->
-        @autorun => Meteor.subscribe 'model_docs', 'badge'
-   
     Template.badge_view.onCreated ->
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
         @autorun => Meteor.subscribe 'all_users'
@@ -49,15 +38,6 @@ if Meteor.isClient
                 Meteor.call 'send_badge', @_id, =>
                     Router.go "/badge/#{@_id}/view"
 
-
-    Template.badges.helpers
-        badges: ->
-            Docs.find   
-                model:'badge'
-    
-    Template.badge_view.helpers
-    Template.badge_view.events
-    
 
 # if Meteor.isServer
 #     Meteor.methods
