@@ -65,54 +65,29 @@ template(name='home')
                 // +session_set key='view_mode' value='card' icon='card'
                 +session_set key='view_mode' value='calendar' icon='calendar'
                 +session_set key='view_mode' value='map' icon='map'
-
-            .ui.two.stackable.cards.scrolling
-                each doc_results
-                    +home_card
-                    
-            
+            if session_is 'view_mode' 'list'
+                .ui.items 
+                    each doc_results 
+                        .item 
+                            .content
+                                .header #{title}
+            if session_is 'view_mode' 'calendar'
+                +calendar_view
+            else
+                .ui.two.stackable.cards.scrolling
+                    each doc_results
+                        +home_card
         .four.wide.column.bordered
             +mapbox
             +online_allies
-            //     a.ui.button(href='
-            //     .four.wide.column
-            // // .ui.segment.smallscroll
-            // //     +latest_activity
-            // .ui.segment
-            //     +closest_allies
-            // .ui.segment
-            //     +open_requests
             
-            // if currentUser
-            //     a.item(href="/user/#{currentUser.username}" class=user_nav_button_class title=user_nav_button_title)
-            //         if currentUser.image_id
-            //             img.ui.tiny.circular.image(src="{{c.url currentUser.image_id width=200 height=200 gravity='face' crop='fill'}}")
-            //         else
-            //             i.user.icon
-            //         .ui.inline.header #{currentUser.name}
-            //         strong #{currentUser.points}p
-            //         div
-            //         .ui.inline.header #{currentUser.tagline}
-                
-            // else 
-            //     .ui.header 
-            //         |gratigen
-            //     a.ui.button(href='/login')
-            //         +i name='internal'
-            //         |login/join
-            // .ui.button.check_notifications
-            //     |check notifications
-            // .ui.button.send_notification
-            //     |send notifications
-            // .ui.header sections
-        // .four.wide.column
-        //     +map
-        // .four.wide.column
-        //     +online_users
-        // .four.wide.column
-        //     .ui.header 
-        //         |resources
       
+template(name='calendar_view')    
+    #inline_calendar 
+        
+      
+      
+    
 template(name='side_menu_item')
     a.ui.header.item.toggle_item.invert(style="color:##{color}" class=side_item_class)
         i.icon(class=icon)

@@ -91,6 +91,11 @@ if Meteor.isClient
             lat:@data.lat
         if found
             Markers.remove found._id
+    Template.calendar_view.onRendered ->
+        $('#inline_calendar')
+          .calendar()
+        ;
+
     Template.home_card.onRendered ->
         # console.log @data
         if @data.lat and @data.lng
