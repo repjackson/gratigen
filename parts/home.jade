@@ -44,13 +44,9 @@ template(name='home')
                         +thing_maker
                     // else 
                 .column.bordered
-                    // .ui.icon.button.add_mode 
-                    //     i.plus.large.icon
-                    .ui.search
-                        .ui.large.icon.fluid.input.search_bar
-                            input.prompt(type='text' placeholder='add/request/search...')
-                            i.search.icon
-                        .results
+                .centered
+                    .ui.icon.button.huge.tertiary.add_mode 
+                        +i name='play-button-circled--v1' color='40C057'
                     .centered
                         +filter_model model='org' icon='groups' color='83DFF4'
                             //light blue
@@ -79,6 +75,12 @@ template(name='home')
                         // +session_set key='view_mode' value='card' icon='card'
                         +session_toggle key='show_map' icon='map'
                         +session_toggle key='show_calendar' icon='calendar'
+                    .centered   
+                        .ui.search
+                        .ui.large.icon.input.search_bar
+                            input.prompt(type='text' placeholder='add/request/search...')
+                            i.search.icon
+                        .results
                     if session_is 'view_mode' 'list'
                         .ui.items 
                             each doc_results 
@@ -148,6 +150,7 @@ template(name='thing_maker')
             +thing_picker model='time_date' icon='overtime--v1' color='FD7E14'
             +thing_picker model='location' icon='worldwide-location' color='40C057'
             +thing_picker model='accounts' icon='gold-bars' color='FAB005'
+                //people
             
             if _is 'model' 'event'
                 .ui.header editing event
@@ -301,9 +304,6 @@ template(name='home_card')
                 // .ui.label #{model}
                 |#{title} #{body}
             i.clock.icon
-            // .ui.button.map_me
-            //     i.marker.large.red.icon
-            //     |map me
             |#{when}
         a.zoom(href="/#{model}/#{_id}")
             img.ui.fluid.image(src="{{c.url image_id width=400 height=400}}")
