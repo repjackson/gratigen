@@ -64,21 +64,22 @@ template(name='home')
                 +session_set key='view_mode' value='list' icon='list'
                 // +session_set key='view_mode' value='card' icon='card'
                 +session_set key='view_mode' value='calendar' icon='calendar'
-                +session_set key='view_mode' value='map' icon='map'
+                +session_toggle key='show_map' icon='map'
             if session_is 'view_mode' 'list'
                 .ui.items 
                     each doc_results 
                         .item 
                             .content
                                 .header #{title}
-            if session_is 'view_mode' 'calendar'
+            else if session_is 'view_mode' 'calendar'
                 +calendar_view
             else
                 .ui.two.stackable.cards.scrolling
                     each doc_results
                         +home_card
         .four.wide.column.bordered
-            +mapbox
+            if session_is 'show_map' true
+                +mapbox
             +online_allies
             
       
