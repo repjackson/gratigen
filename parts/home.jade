@@ -96,8 +96,16 @@ template(name='home')
 template(name='thing_maker')
     .ui.header add a thing
     unless current_thing
-        .ui.big.button.add_thing add a thing
+        .ui.big.green.button.invert.add_thing add a thing
+    if currentUser.current_thing_id
+        +thing_editor
+    
+template(name='thing_editor')
     with current_thing
+        .ui.header adding thing
+        .ui.red.button.invert.delete_thing
+            i.large.remove.icon
+            |delete thing
         +thing_picker model='project' icon='project' color='7229AF' 
         //violet
         +thing_picker model='event' icon='calendar' color='FAB005'
