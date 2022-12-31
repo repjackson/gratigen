@@ -38,6 +38,15 @@ body {
   /*border: 30px solid transparent;*/
   /*background-color: blue;*/
 }
+.ani {
+  /*border:1px solid grey !important;*/
+  transition: height 1s ease-in-out;
+  
+  /*height: 100px;*/
+  /*padding: 30px;*/
+  /*border: 30px solid transparent;*/
+  /*background-color: blue;*/
+}
 /*.bordered.column {background-clip: content-box;}*/
   
 /**/

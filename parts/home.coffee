@@ -4,7 +4,7 @@ if Meteor.isClient
         @render 'home'
         ), name:'home'
     
-    Template.thing_maker.onCreated ->
+    Template.home.onCreated ->
         # @autorun => @subscribe 'my_current_thing', ->
         @autorun => @subscribe 'my_current_thing', Session.get('current_thing_id'),->
 if Meteor.isServer
@@ -13,14 +13,18 @@ if Meteor.isServer
         Docs.find current_thing_id
 if Meteor.isClient
     Template.home.helpers
-        view_template: ->
-            "#{@model}_view"
-    Template.home.helpers 
+        view_template: -> "#{@model}_view"
+        edit_template: -> "#{@model}_edit"
         current_viewing_thing: ->
-            Docs.findOne Session.get('current_viewing_thing_id')
+            Docs.findOne Session.get('current_thing_id')
     Template.home.events 
+        'click .toggle_editmode':->
+            Session.set('editmode', !Session.get('editmode'))
+            console.log Session.get('editmode')
+        'click .toggle_addmode': ->
+            Session.set('addmode', !Session.get('addmode'))
         'click .show_modal': (e,t)->
-            Session.set('current_viewing_thing_id', @_id)
+            Session.set('current_thing_id', @_id)
             console.log @
             # $(e.currentTarget).closest('.ui.modal').modal({
             $('.ui.modal').modal({
@@ -69,9 +73,18 @@ if Meteor.isClient
                 'basic'
     Template.thing_picker.events
         'click .pick_thing':->
-            Docs.update Template.parentData()._id,
-                $set:
-                    model:@model
+            new_id = 
+                Docs.insert 
+                    model:@model 
+            Session.set('current_thing_id', new_id)      
+            Session.set('editmode',true)
+            $('.ui.modal').modal({
+                inverted:true
+                }).modal('show')
+
+            # Docs.update Template.parentData()._id,
+            #     $set:
+            #         model:@model
     
     Template.side_menu_item.events
         'click .toggle_item': ->
