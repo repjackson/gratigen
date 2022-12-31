@@ -69,18 +69,6 @@ head
         gtag('config', 'G-GLYPPRGJFQ');
 
     
-template(name='full')
-    img.ui.fluid.image.checkin_banner(src="{{c.url 'frontrange'}}" class=darkmode_class)
-    // +nav
-    #man.ui.bottom.attached.pushable.segment
-        // +topbar
-        // +left_sidebar
-        // +right_sidebar
-        // +cartbar
-        // +walletbar
-        #ain_area.global_conainer.pusher
-    +yield
-    +footer
     
 template(name='layout')
     +nav
