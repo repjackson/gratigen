@@ -4,6 +4,28 @@ if Meteor.isClient
         @render 'home'
         ), name:'home'
     
+    Template.thing_maker.onCreated ->
+        @autorun => @subscribe 'my_current_thing', ->
+if Meteor.isServer
+    Meteor.publish 'my_current_thing', ->
+        Docs.find Meteor.user().current_thing_id
+if Meteor.isClient
+    Template.thing_maker.events
+        'click .add_thing':->
+            new_id = 
+                Docs.insert 
+                    thing:true
+            Meteor.users.update Meteor.userId(),
+                current_thing_id: new_id
+    Template.thing_maker.helpers 
+        current_thing: ->
+            Docs.findOne Meteor.user().current_thing_id
+    Template.thing_picker.events
+        'click .pick_model':->
+            Docs.update Template.parentData()._id,
+                $set:
+                    model:@model
+    
     Template.side_menu_item.events
         'click .toggle_item': ->
             console.log @label 
