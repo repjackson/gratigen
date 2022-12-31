@@ -175,6 +175,17 @@ if Meteor.isClient
 
 
     Template.home.helpers 
+        main_column_class: ->
+            if Session.get('show_map') or Session.get('show_calendar')
+                'eight wide column'
+            else 
+                'twelve wide column'
+        right_column_class: ->
+            if Session.get('show_map') or Session.get('show_calendar')
+                'four wide column'
+            else 
+                'no_show'
+                
         doc_results: ->
             # Docs.find {model:$ne:'comment'},
             Docs.find {},

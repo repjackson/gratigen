@@ -29,7 +29,8 @@ template(name='home')
                 +side_menu_item color="FF0000" icon='users' label='community core'
                 
             // .ui.button create request
-        .eight.wide.column.bordered
+        // .eight.wide.column.bordered
+        .bordered(class=main_column_class)
             // .ui.icon.button.add_mode 
             //     i.plus.large.icon
             .ui.search
@@ -63,27 +64,31 @@ template(name='home')
                 +session_set key='view_mode' value='grid' icon='th' 
                 +session_set key='view_mode' value='list' icon='list'
                 // +session_set key='view_mode' value='card' icon='card'
-                +session_set key='view_mode' value='calendar' icon='calendar'
                 +session_toggle key='show_map' icon='map'
+                +session_toggle key='show_calendar' icon='calendar'
             if session_is 'view_mode' 'list'
                 .ui.items 
                     each doc_results 
                         .item 
                             .content
                                 .header #{title}
-            else if session_is 'view_mode' 'calendar'
-                +calendar_view
             else
                 .ui.two.stackable.cards.scrolling
                     each doc_results
                         +home_card
-        .four.wide.column.bordered
+        .bordered(class=right_column_class)
             if session_is 'show_map' true
                 +mapbox
+            if session_is 'show_calendar' true 
+                +calendar_view
             +online_allies
             
       
 template(name='calendar_view')    
+    // .ui.header 
+    //     // i.calendar.icon
+    //     |calendar 
+    
     #inline_calendar 
         
       
