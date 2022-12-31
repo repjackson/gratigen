@@ -12,10 +12,7 @@ if Meteor.isServer
         # user = Meteor.user()
         Docs.find current_thing_id
 if Meteor.isClient
-    Template.home_card.helpers
-        current_viewing_thing: ->
-            
-    Template.home_card.helpers
+    Template.home.helpers
         view_template: ->
             "#{@model}_view"
     Template.home.helpers 

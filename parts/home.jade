@@ -42,7 +42,7 @@ template(name='home')
                             .results    
                         +session_set key='view_mode' value='grid' icon='th' 
                         +session_set key='view_mode' value='list' icon='list'
-                        +session_set key='view_mode' value='card' icon='card'
+                        +session_set key='view_mode' value='card' icon='activity-feed'
                         +session_toggle key='show_map' icon='map'
                         +session_toggle key='show_calendar' icon='calendar'
                     
@@ -107,7 +107,7 @@ template(name='home')
         with current_viewing_thing
             .header #{title}
             i.close.large.icon
-            .scrolling.content
+            .content
                 +Template.dynamic template=view_template
 
 //template(name='thing_maker_modal')        
