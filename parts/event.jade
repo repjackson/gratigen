@@ -1,3 +1,5 @@
+//parties, games, conferences, classes, ceremonies, meetups, ski-trips/adventures, 
+// protests, farm swarms
 template(name='events')
     .ui.stackable.padded.grid 
         .row
@@ -90,8 +92,7 @@ template(name='event_card')
             div 
             +eft_viewer_small
 
-
-
+            +filter_model model='organization' icon='groups' color='83DFF4'
 
 
 
@@ -179,12 +180,41 @@ template(name='event_edit')
                         +eft_picker color="40C057" icon='smile' label='wellness'
                         +eft_picker color="FAB005" icon='university' label='education'
                         +eft_picker color="FD7E14" icon='paint brush' label='art'
-                        +eft_picker color="FF0000" icon='users' label="community core \n"
+                        +eft_picker color="FF0000" icon='users' label="community core"
+                        +eft_picker color="FF0000" icon='users' label="community core"
+
                     
-                    div
-                    +image_edit key='image_id' label='image'
-                    div
-                    +link_edit key='link' label='link'
+//                     div
+//                     +image_edit key='image_id' label='image'
+//                     div
+//                     +link_edit key='link' label='link'
+//                             //light blue
+//                         +thing_picker model='project' icon='project' color='7229AF' 
+//                             //violet
+//                         +thing_picker model='event' icon='calendar' color='FAB005'
+//                             //yellow
+//                         +thing_picker model='role' icon='what-i-do' color='42E8C4'
+//                             //turquoise
+//                         +thing_picker model='tasks' icon='task' color='B785E1'
+//                             //lavender
+//                         +thing_picker model='resource' icon='car' color='FD7E14'  
+//                             //orange
+//                         +thing_picker model='post' icon='for-you' color='1255B8'
+//                             //blue
+//                         +thing_picker model='offer' icon='hand-holding-heart' color='FF73EA'
+//                             //pink
+//                         +thing_picker model='request' icon='commercial' color='40C057'     
+//                             //green
+//                         +thing_picker model='skills' icon='wrench' color='ff0000'
+                        //         //Blue
+                        //   +thing_picker model='badges' icon='badge' color='1255B8'
+                
+// template(name='thing_picker')
+//     .ui.compact.circular.secondary.basic.button.pick_model.zoomer(class=button_class)
+//         +i name=icon color=color cl='ui mini inline image'
+//         // i.exchange.large.icon
+//         |#{model}
+//                 //red
 
 template(name='eft_picker')
     if toggled
@@ -208,6 +238,8 @@ template(name='eft_view_item')
                 i.big.icon(class=icon)
             .hidden.content
                 small #{label}
+                
+                
 template(name='eft_view_item_small')
     if in_list
         i.icon.zoomer.invert(class=icon style="color:##{color}" title=label)

@@ -175,6 +175,13 @@ if Meteor.isClient
 
 
     Template.home.helpers 
+        left_column_class: ->
+            if Session.get('expand_leftbar')
+                'four wide center aligned column'
+            else 
+                'two wide center aligned column'
+                
+                
         main_column_class: ->
             if Session.get('show_map') or Session.get('show_calendar')
                 'eight wide column'

@@ -2,7 +2,11 @@ template(name='home')
     if currentUser.admin_mode
         img.ui.fluid.image.home_banner(src="{{c.url 'gratigenlayout'}}" class=darkmode_class)
     .ui.stackable.padded.divided.celled.grid
-        .four.wide.column.bordered
+        .bordered(class=left_column_class)
+            +session_toggle key='expand_leftbar' icon='chevron left'
+            // .ui.fluid.small.button.toggle_leftbar
+            //     i.chevron.left.icon
+            .ui.hidden.divider
             +dash_user_info
 
             .ui.fluid.big.menu.hscroll.mobile.only
@@ -16,7 +20,7 @@ template(name='home')
                 +side_menu_item color="FAB005" icon='university' label='education'
                 +side_menu_item color="FD7E14" icon='paint brush' label='art'
                 +side_menu_item color="FF0000" icon='users' label='community core'
-            .ui.vertical.fluid.menu.mobile.hidden
+            .ui.vertical.fluid.icon.menu.mobile.hidden
                 +side_menu_item color="FF73EA" icon='food' label='food'
                 +side_menu_item color="B785E1" icon='home' label='housing'
                 +side_menu_item color="7229AF" icon='tshirt' label='clothing'
@@ -97,22 +101,32 @@ template(name='calendar_view')
 template(name='side_menu_item')
     a.ui.header.item.toggle_item.invert(style="color:##{color}" class=side_item_class)
         i.icon(class=icon)
-        |#{label}
+        if session_is 'expand_leftbar' true
+            |#{label}
         // if is_toggled
         //     i.large.checkmark.icon
 
            
 template(name='dash_user_info') 
-    a.ui.two.column.grid.zoomer(href="/user/#{currentUser.username}")
-        .column
-            img.ui.small.circular.image(src="{{c.url currentUser.image_id width=600 height=600 gravity='face' crop='fill'}}")
-        .column
-            .ui.header
-                | #{currentUser.username}
-            .ui.small
-                | #{currentUser.points}pts
-            .ui.header
-                | #{currentUser.tagline}
+    unless session_is 'expand_leftbar' true
+        img.ui.small.circular.image(src="{{c.url currentUser.image_id width=600 height=600 gravity='face' crop='fill'}}")
+        .ui.header
+            | #{currentUser.username}
+        .ui.small
+            | #{currentUser.points}pts
+        .ui.header
+            | #{currentUser.tagline}
+    else     
+        a.ui.two.column.grid.zoomer(href="/user/#{currentUser.username}")
+            .column
+                img.ui.small.circular.image(src="{{c.url currentUser.image_id width=600 height=600 gravity='face' crop='fill'}}")
+            .column
+                .ui.header
+                    | #{currentUser.username}
+                .ui.small
+                    | #{currentUser.points}pts
+                .ui.header
+                    | #{currentUser.tagline}
 
     // i.user.icon
     // .ui.inline.header #{currentUser.name}
