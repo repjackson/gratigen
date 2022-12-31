@@ -1,35 +1,35 @@
-Router.route '/group/:doc_id', (->
+Router.route '/org/:doc_id', (->
     @layout 'layout'
-    @render 'group_view'
-    ), name:'group_view'
+    @render 'org_view'
+    ), name:'org_view'
 
 
 
 if Meteor.isClient
-    Template.groups_small.onCreated ->
-        @autorun => Meteor.subscribe 'model_docs', 'group', ->
-    Template.groups_small.helpers
-        group_docs: ->
+    Template.orgs_small.onCreated ->
+        @autorun => Meteor.subscribe 'model_docs', 'org', ->
+    Template.orgs_small.helpers
+        org_docs: ->
             Docs.find   
-                model:'group'
+                model:'org'
                 
                 
-    Template.group_view.onCreated ->
+    Template.org_view.onCreated ->
         @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
-        # @autorun => Meteor.subscribe 'children', 'group_update', Router.current().params.doc_id
+        # @autorun => Meteor.subscribe 'children', 'org_update', Router.current().params.doc_id
         @autorun => Meteor.subscribe 'members', Router.current().params.doc_id, ->
-        # @autorun => Meteor.subscribe 'group_dishes', Router.current().params.doc_id, ->
-    Template.group_view.helpers
+        # @autorun => Meteor.subscribe 'org_dishes', Router.current().params.doc_id, ->
+    Template.org_view.helpers
         is_member: ->
             Meteor.userId() and Meteor.userId() in @member_ids
-        # current_group: ->
+        # current_org: ->
         #     Docs.findOne
-        #         model:'group'
+        #         model:'org'
         #         slug: Router.current().params.doc_id
 
-    Template.group_view.events
-        'click .refresh_group_stats': ->
-            Meteor.call 'calc_group_stats', Router.current().params.doc_id, ->
+    Template.org_view.events
+        'click .refresh_org_stats': ->
+            Meteor.call 'calc_org_stats', Router.current().params.doc_id, ->
         'click .join': ->
             if Meteor.userId()
                 Docs.update @_id, 
@@ -37,67 +37,67 @@ if Meteor.isClient
                         member_ids: Meteor.userId()
                 Meteor.users.update Meteor.userId(),
                     $addToSet:
-                        group_ids:@_id
+                        org_ids:@_id
             else 
                 Router.go '/login'
                 
-        'click .group_leave': ->
+        'click .org_leave': ->
             Docs.update @_id, 
                 $pull:
                     member_ids: Meteor.userId()
             Meteor.users.update Meteor.userId(),
                 $pull:
-                    group_ids:@_id
+                    org_ids:@_id
 
 
 if Meteor.isServer
-    Meteor.publish 'group_dishes', (doc_id)->
-        group = Docs.findOne
-            model:'group'
+    Meteor.publish 'org_dishes', (doc_id)->
+        org = Docs.findOne
+            model:'org'
             slug:doc_id
         Docs.find
             model:'dish'
-            _id: $in: group.dish_ids
+            _id: $in: org.dish_ids
 
 
 
 
-Router.route '/group/:doc_id/edit', -> @render 'group_edit'
+Router.route '/org/:doc_id/edit', -> @render 'org_edit'
 
 if Meteor.isClient
-    Template.group_edit.onCreated ->
+    Template.org_edit.onCreated ->
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
-        # @autorun => Meteor.subscribe 'group_options', Router.current().params.doc_id
-    Template.group_edit.events
+        # @autorun => Meteor.subscribe 'org_options', Router.current().params.doc_id
+    Template.org_edit.events
         'click .add_option': ->
             Docs.insert
-                model:'group_option'
+                model:'org_option'
                 ballot_id: Router.current().params.doc_id
-    Template.group_edit.helpers
+    Template.org_edit.helpers
         options: ->
             Docs.find
-                model:'group_option'
+                model:'org_option'
 
 if Meteor.isClient
-    Router.route '/groups', (->
+    Router.route '/orgs', (->
         @layout 'layout'
-        @render 'groups'
-        ), name:'groups'
+        @render 'orgs'
+        ), name:'orgs'
     Router.route '/my_organizations', (->
         @layout 'layout'
-        @render 'groups'
+        @render 'orgs'
         ), name:'my_organizations'
 
 
-    Template.groups.onCreated ->
+    Template.orgs.onCreated ->
         Session.setDefault 'view_mode', 'list'
         Session.setDefault 'sort_key', 'member_count'
         Session.setDefault 'sort_label', 'available'
         Session.setDefault 'limit', 20
         Session.setDefault 'view_open', true
 
-    Template.groups.onCreated ->
-        @autorun => @subscribe 'group_facets',
+    Template.orgs.onCreated ->
+        @autorun => @subscribe 'org_facets',
             picked_tags.array()
             Session.get('limit')
             Session.get('sort_key')
@@ -106,7 +106,7 @@ if Meteor.isClient
             Session.get('view_pickup')
             Session.get('view_open')
 
-        @autorun => @subscribe 'group_results',
+        @autorun => @subscribe 'org_results',
             picked_tags.array()
             Session.get('limit')
             Session.get('sort_key')
@@ -116,12 +116,12 @@ if Meteor.isClient
             Session.get('view_open')
 
 
-    Template.groups.events
-        'click .add_group': ->
+    Template.orgs.events
+        'click .add_org': ->
             new_id =
                 Docs.insert
-                    model:'group'
-            Router.go("/group/#{new_id}/edit")
+                    model:'org'
+            Router.go("/org/#{new_id}/edit")
 
 
         'click .toggle_delivery': -> Session.set('view_delivery', !Session.get('view_delivery'))
@@ -161,8 +161,8 @@ if Meteor.isClient
                     # , 10000
         , 1000)
 
-        'click .calc_group_count': ->
-            Meteor.call 'calc_group_count', ->
+        'click .calc_org_count': ->
+            Meteor.call 'calc_org_count', ->
 
         # 'keydown #search': _.throttle((e,t)->
         #     if e.which is 8
@@ -180,15 +180,15 @@ if Meteor.isClient
 
 
         'click .set_sort_direction': ->
-            if Session.get('group_sort_direction') is -1
-                Session.set('group_sort_direction', 1)
+            if Session.get('org_sort_direction') is -1
+                Session.set('org_sort_direction', 1)
             else
-                Session.set('group_sort_direction', -1)
+                Session.set('org_sort_direction', -1)
 
 
-    Template.groups.helpers
+    Template.orgs.helpers
         sorting_up: ->
-            parseInt(Session.get('group_sort_direction')) is 1
+            parseInt(Session.get('org_sort_direction')) is 1
 
         # toggle_open_class: -> if Session.get('view_open') then 'blue' else ''
         # connection: ->
@@ -200,10 +200,10 @@ if Meteor.isClient
             # if Session.get('current_query') and Session.get('current_query').length > 1
             #     Terms.find({}, sort:count:-1)
             # else
-            group_count = Docs.find().count()
-            # console.log 'group count', group_count
-            if group_count < 3
-                Results.find({count: $lt: group_count})
+            org_count = Docs.find().count()
+            # console.log 'org count', org_count
+            if org_count < 3
+                Results.find({count: $lt: org_count})
             else
                 Results.find()
 
@@ -219,13 +219,13 @@ if Meteor.isClient
 
         one_post: ->
             Docs.find().count() is 1
-        group_docs: ->
+        org_docs: ->
             # if picked_tags.array().length > 0
             Docs.find {
-                model:'group'
+                model:'org'
             },
-                sort: "#{Session.get('group_sort_key')}":parseInt(Session.get('group_sort_direction'))
-                # limit:Session.get('group_limit')
+                sort: "#{Session.get('org_sort_key')}":parseInt(Session.get('org_sort_direction'))
+                # limit:Session.get('org_limit')
 
         home_subs_ready: ->
             Template.instance().subscriptionsReady()
@@ -245,15 +245,15 @@ if Meteor.isClient
         #         sort: count:-1
         #         # limit:1
 
-        group_limit: ->
-            Session.get('group_limit')
+        org_limit: ->
+            Session.get('org_limit')
 
-        current_group_sort_label: ->
-            Session.get('group_sort_label')
+        current_org_sort_label: ->
+            Session.get('org_sort_label')
 
 
 if Meteor.isServer
-    Meteor.publish 'group_results', (
+    Meteor.publish 'org_results', (
         picked_tags
         doc_limit
         doc_sort_key
@@ -272,7 +272,7 @@ if Meteor.isServer
         if doc_sort_direction
             sort_direction = parseInt(doc_sort_direction)
         self = @
-        match = {model:'group'}
+        match = {model:'org'}
         # if view_open
         #     match.open = $ne:false
         # if view_delivery
@@ -300,7 +300,7 @@ if Meteor.isServer
         #         match["#{key}"] = $all: key_array
             # console.log 'current facet filter array', current_facet_filter_array
 
-        console.log 'group match', match
+        console.log 'org match', match
         console.log 'sort key', sort_key
         console.log 'sort direction', sort_direction
         Docs.find match,
@@ -308,7 +308,7 @@ if Meteor.isServer
             sort:_timestamp:-1
             limit: limit
 
-    Meteor.publish 'group_facets', (
+    Meteor.publish 'org_facets', (
         picked_tags
         picked_timestamp_tags
         query
@@ -325,7 +325,7 @@ if Meteor.isServer
 
         self = @
         match = {}
-        match.model = 'group'
+        match.model = 'org'
         if view_open
             match.open = $ne:false
 
@@ -350,7 +350,7 @@ if Meteor.isServer
             #     { $match: match }
             #     { $project: "tags": 1 }
             #     { $unwind: "$tags" }
-            #     { $group: _id: "$tags", count: $sum: 1 }
+            #     { $org: _id: "$tags", count: $sum: 1 }
             #     { $match: _id: $nin: picked_tags }
             #     { $match: _id: {$regex:"#{query}", $options: 'i'} }
             #     { $sort: count: -1, _id: 1 }
@@ -367,7 +367,7 @@ if Meteor.isServer
         #     { $match: match }
         #     { $project: "tags": 1 }
         #     { $unwind: "$tags" }
-        #     { $group: _id: "$tags", count: $sum: 1 }
+        #     { $org: _id: "$tags", count: $sum: 1 }
         #     { $match: _id: $nin: picked_tags }
         #     # { $match: _id: {$regex:"#{current_query}", $options: 'i'} }
         #     { $sort: count: -1, _id: 1 }
@@ -391,7 +391,7 @@ if Meteor.isServer
             { $match: match }
             { $project: "tags": 1 }
             { $unwind: "$tags" }
-            { $group: _id: "$tags", count: $sum: 1 }
+            { $org: _id: "$tags", count: $sum: 1 }
             { $sort: count: -1, _id: 1 }
             { $limit: 20 }
             { $project: _id: 0, title: '$_id', count: 1 }
@@ -411,74 +411,74 @@ if Meteor.isServer
         self.ready()
 
 
-# Router.route '/group/:doc_id/', (->
-#     @render 'group_view'
-#     ), name:'group_view'
-# Router.route '/group/:doc_id/edit', (->
-#     @render 'group_edit'
-#     ), name:'group_edit'
+# Router.route '/org/:doc_id/', (->
+#     @render 'org_view'
+#     ), name:'org_view'
+# Router.route '/org/:doc_id/edit', (->
+#     @render 'org_edit'
+#     ), name:'org_edit'
 
 
 if Meteor.isClient
-    Template.group_view.onCreated ->
+    Template.org_view.onCreated ->
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
-    Template.group_edit.onCreated ->
+    Template.org_edit.onCreated ->
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
 
-    Template.group_history.onCreated ->
+    Template.org_history.onCreated ->
         @autorun => Meteor.subscribe 'children', 'log_event', Router.current().params.doc_id
-    Template.group_history.helpers
-        group_events: ->
+    Template.org_history.helpers
+        org_events: ->
             Docs.find
                 model:'log_event'
                 parent_id:Router.current().params.doc_id
 
 
-    Template.group_subscription.onCreated ->
+    Template.org_subscription.onCreated ->
         # @autorun => Meteor.subscribe 'children', 'log_event', Router.current().params.doc_id
-    Template.group_subscription.events
+    Template.org_subscription.events
         'click .subscribe': ->
             Docs.insert
                 model:'log_event'
                 log_type:'subscribe'
                 parent_id:Router.current().params.doc_id
-                text: "#{Meteor.user().username} subscribed to group order."
+                text: "#{Meteor.user().username} subscribed to org order."
 
 
-    Template.group_reservations.onCreated ->
-        @autorun => Meteor.subscribe 'group_reservations', Router.current().params.doc_id
-    Template.group_reservations.helpers
+    Template.org_reservations.onCreated ->
+        @autorun => Meteor.subscribe 'org_reservations', Router.current().params.doc_id
+    Template.org_reservations.helpers
         reservations: ->
             Docs.find
                 model:'reservation'
-                group_id: Router.current().params.doc_id
-    Template.group_reservations.events
+                org_id: Router.current().params.doc_id
+    Template.org_reservations.events
         'click .new_reservation': ->
             Docs.insert
                 model:'reservation'
-                group_id: Router.current().params.doc_id
+                org_id: Router.current().params.doc_id
 
 
 if Meteor.isServer
-    Meteor.publish 'group_reservations', (group_id)->
+    Meteor.publish 'org_reservations', (org_id)->
         Docs.find
             model:'reservation'
-            group_id: group_id
+            org_id: org_id
 
 
 
     Meteor.methods
-        calc_group_stats: ->
-            group_stat_doc = Docs.findOne(model:'group_stats')
-            unless group_stat_doc
+        calc_org_stats: ->
+            org_stat_doc = Docs.findOne(model:'org_stats')
+            unless org_stat_doc
                 new_id = Docs.insert
-                    model:'group_stats'
-                group_stat_doc = Docs.findOne(model:'group_stats')
-            console.log group_stat_doc
-            total_count = Docs.find(model:'group').count()
-            complete_count = Docs.find(model:'group', complete:true).count()
-            incomplete_count = Docs.find(model:'group', complete:$ne:true).count()
-            Docs.update group_stat_doc._id,
+                    model:'org_stats'
+                org_stat_doc = Docs.findOne(model:'org_stats')
+            console.log org_stat_doc
+            total_count = Docs.find(model:'org').count()
+            complete_count = Docs.find(model:'org', complete:true).count()
+            incomplete_count = Docs.find(model:'org', complete:$ne:true).count()
+            Docs.update org_stat_doc._id,
                 $set:
                     total_count:total_count
                     complete_count:complete_count
@@ -486,28 +486,28 @@ if Meteor.isServer
 
 
 if Meteor.isClient
-    Template.user_groups.onCreated ->
-        @autorun => Meteor.subscribe 'user_groups', Router.current().params.username
-    Template.user_groups.events
-        'click .add_group': ->
+    Template.user_orgs.onCreated ->
+        @autorun => Meteor.subscribe 'user_orgs', Router.current().params.username
+    Template.user_orgs.events
+        'click .add_org': ->
             new_id =
                 Docs.insert
-                    model:'group'
-            Router.go "/group/#{new_id}/edit"
+                    model:'org'
+            Router.go "/org/#{new_id}/edit"
 
-    Template.user_groups.helpers
-        groups: ->
+    Template.user_orgs.helpers
+        orgs: ->
             current_user = Meteor.users.findOne username:Router.current().params.username
             Docs.find {
-                model:'group'
+                model:'org'
                 _author_id: current_user._id
             }, sort:_timestamp:-1
 
 if Meteor.isServer
-    Meteor.publish 'user_groups', (username)->
+    Meteor.publish 'user_orgs', (username)->
         user = Meteor.users.findOne username:username
         Docs.find
-            model:'group'
+            model:'org'
             _author_id: user._id
 
 
