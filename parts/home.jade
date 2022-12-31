@@ -4,7 +4,9 @@ template(name='home')
     .ui.stackable.padded.divided.celled.grid
         .bordered(class=left_column_class)
             +session_toggle key='expand_leftbar' icon='chevron left'
-            +session_toggle key='add_mode' icon='plus'
+            // +session_toggle key='add_mode' icon='plus'
+            .ui.icon.button.show_model
+                i.large.plus.icon
             // .ui.fluid.small.button.toggle_leftbar
             //     i.chevron.left.icon
             .ui.hidden.divider
@@ -36,101 +38,141 @@ template(name='home')
             // .ui.button create request
         // .eight.wide.column.bordered
         .bordered(class=main_column_class)
-            if session_is 'add_mode' true
-                +thing_maker
-            else 
-                // .ui.icon.button.add_mode 
-                //     i.plus.large.icon
-                .ui.search
-                    .ui.large.icon.fluid.input.search_bar
-                        input.prompt(type='text' placeholder='add/request/search...')
-                        i.search.icon
-                    .results
-                .centered
-                    +filter_model model='org' icon='groups' color='83DFF4'
-                        //light blue
-                    +filter_model model='project' icon='project' color='7229AF' 
-                        //violet
-                    +filter_model model='event' icon='calendar' color='FAB005'
-                        //yellow
-                    +filter_model model='role' icon='what-i-do' color='42E8C4'
-                        //turquoise
-                    +filter_model model='tasks' icon='task' color='B785E1'
-                        //lavender
-                    +filter_model model='resource' icon='car' color='FD7E14'  
-                        //orange
-                    +filter_model model='post' icon='for-you' color='1255B8'
-                        //blue
-                    +filter_model model='offer' icon='hand-holding-heart' color='FF73EA'
-                        //pink
-                    +filter_model model='request' icon='commercial' color='40C057'     
-                        //green
-                    +filter_model model='skill' icon='wrench' color='ff0000'
-                    //red
-                    // +filter_model model='food' icon='food' 83DFF4
-                    .ui.hidden.divider
-                    +session_set key='view_mode' value='grid' icon='th' 
-                    +session_set key='view_mode' value='list' icon='list'
-                    // +session_set key='view_mode' value='card' icon='card'
-                    +session_toggle key='show_map' icon='map'
-                    +session_toggle key='show_calendar' icon='calendar'
-                if session_is 'view_mode' 'list'
-                    .ui.items 
-                        each doc_results 
-                            .item 
-                                .content
-                                    .header #{title}
-                else
-                    .ui.two.stackable.cards.scrolling
-                        each doc_results
-                            +home_card
+            .ui.one.column.grid 
+                .column.bordered
+                    if session_is 'add_mode' true
+                        +thing_maker
+                    // else 
+                .column.bordered
+                    // .ui.icon.button.add_mode 
+                    //     i.plus.large.icon
+                    .ui.search
+                        .ui.large.icon.fluid.input.search_bar
+                            input.prompt(type='text' placeholder='add/request/search...')
+                            i.search.icon
+                        .results
+                    .centered
+                        +filter_model model='org' icon='groups' color='83DFF4'
+                            //light blue
+                        +filter_model model='project' icon='project' color='7229AF' 
+                            //violet
+                        +filter_model model='event' icon='calendar' color='FAB005'
+                            //yellow
+                        +filter_model model='role' icon='what-i-do' color='42E8C4'
+                            //turquoise
+                        +filter_model model='tasks' icon='task' color='B785E1'
+                            //lavender
+                        +filter_model model='resource' icon='car' color='FD7E14'  
+                            //orange
+                        +filter_model model='post' icon='for-you' color='1255B8'
+                            //blue
+                        +filter_model model='offer' icon='hand-holding-heart' color='FF73EA'
+                            //pink
+                        +filter_model model='request' icon='commercial' color='40C057'     
+                            //green
+                        +filter_model model='skill' icon='wrench' color='ff0000'
+                        //red
+                        // +filter_model model='food' icon='food' 83DFF4
+                        .ui.hidden.divider
+                        +session_set key='view_mode' value='grid' icon='th' 
+                        +session_set key='view_mode' value='list' icon='list'
+                        // +session_set key='view_mode' value='card' icon='card'
+                        +session_toggle key='show_map' icon='map'
+                        +session_toggle key='show_calendar' icon='calendar'
+                    if session_is 'view_mode' 'list'
+                        .ui.items 
+                            each doc_results 
+                                .item 
+                                    .content
+                                        .header #{title}
+                    else
+                        .ui.two.stackable.cards.scrolling
+                            each doc_results
+                                +home_card
         .bordered(class=right_column_class)
             if session_is 'show_map' true
                 +mapbox
             if session_is 'show_calendar' true 
                 +calendar_view
             +online_allies
+        // +thing_maker
+        // if current_thing.
+        //     if _is 'model'_edit
+        // [current_thing_type]_edit
+        //     +thing_picker
+        //      +eft_picker
             
-      
+    //template(name='thing_maker_modal')        
       
 template(name='thing_maker')
-    .ui.header add a thing
-    unless current_thing
-        .ui.big.green.button.invert.add_thing add a thing
-    if currentUser.current_thing_id
-        +thing_editor
-    
-template(name='thing_editor')
-    with current_thing
-        .ui.header adding thing
-        .ui.red.button.invert.delete_thing
-            i.large.remove.icon
+    // unless currentUser.current_thing_id
+    // .ui.header 
+    //     i.plus.icon
+    //     |add a thing
+    // .ui.fluid.circular.zoomer.basic.green.button.invert.add_thing add a thing
+    .ui.circular.zoomer.green.button.invert.show_modal 
+        i.plus.icon
+        |add a thing
+    if current_thing
+        .ui.red.circular.button.invert.delete_thing
+            i.remove.icon
             |delete thing
-        +thing_picker model='project' icon='project' color='7229AF' 
-        //violet
-        +thing_picker model='event' icon='calendar' color='FAB005'
-        //yellow
-        +thing_picker model='role' icon='what-i-do' color='42E8C4'
-        //turquoise
-        +thing_picker model='tasks' icon='task' color='B785E1'
-        //lavender
-        +thing_picker model='resource' icon='car' color='FD7E14'  
-        //orange
-        +thing_picker model='post' icon='for-you' color='1255B8'
-        //blue
-        +thing_picker model='offer' icon='hand-holding-heart' color='FF73EA'
-        //pink
-        +thing_picker model='request' icon='commercial' color='40C057'     
-        //green
-        +thing_picker model='skills' icon='wrench' color='ff0000'
-        //Blue
-        +thing_picker model='badges' icon='badge' color='1255B8'
-        +eft_picker  
-// thing picker needs to pick the specific thing (ex. a my_skill) to associate it with the thing being created.
+    .ui.fullscreen.modal
+        .header thing picker #{model}
+        // +thing_editor
+        // template(name='thing_editor')
+        with current_thing
+            .ui.inline.header 
+                i.pencil.icon
+                |editing thing
+            +thing_picker model='project' icon='project' color='7229AF' 
+            //violet
+            +thing_picker model='event' icon='calendar' color='FAB005'
+            //yellow
+            +thing_picker model='role' icon='what-i-do' color='42E8C4'
+            //turquoise
+            +thing_picker model='tasks' icon='task' color='B785E1'
+            //lavender
+            +thing_picker model='resource' icon='car' color='FD7E14'  
+            //orange
+            +thing_picker model='post' icon='for-you' color='1255B8'
+            //blue
+            +thing_picker model='offer' icon='hand-holding-heart' color='FF73EA'
+            //pink
+            +thing_picker model='request' icon='commercial' color='40C057'     
+            //green
+            +thing_picker model='skills' icon='wrench' color='ff0000'
+            //red
+            +thing_picker model='badges' icon='badge' color='1255B8'
+            //blue
+            +thing_picker model='time_date' icon='overtime--v1' color='FD7E14'
+            +thing_picker model='location' icon='worldwide-location' color='40C057'
+            +thing_picker model='accounts' icon='gold-bars' color='FAB005'
+            
+            if _is 'model' 'event'
+                .ui.header editing event
+                +event_edit
+            if _is 'model' 'role'
+                .ui.header editing event
+            
+            if model
+                +text_edit key='title' label='title'
+                .ui.header role picker
+                .ui.header org picker
+                .ui.header event picker
+                .ui.header resource picker
+                .ui.header skill picker
+                .ui.header request picker
+                .ui.header offer picker
+                .ui.header task picker
+            +eft_picker  
+    
+
+                // thing picker needs to pick the specific thing (ex. a my_skill) to associate it with the thing being created.
 
 
 template(name='thing_picker')
-    .ui.compact.circular.secondary.basic.button.pick_model.zoomer(class=button_class)
+    .ui.compact.circular.secondary.button.pick_thing.zoomer(class=model_picker_class)
         +i name=icon color=color cl='ui mini inline image'
         // i.exchange.large.icon
         |#{model}
@@ -230,62 +272,68 @@ template(name='open_requests')
                     .ui.header #{when}
                             
 template(name='home_card')
-    if _is 'model' 'role'
-        +role_card
-    else if _is 'model' 'event'
-        +event_card
-    else if _is 'model' 'recipe'
-        +recipe_card
-    else 
-        .ui.card.zoomer
-            if youtube_id 
-                +youtube_view key='youtube_id' direct=true
-            .content 
-                a.inline.header.fly_left(href="/#{model}/#{_id}") 
-                    if _is 'model' 'recipe'
-                        +i name='recipe'
-                    if _is 'model' 'food'
-                        +i name='food'
-                    if _is 'model' 'post'
-                        +i name='blog'
-                    if _is 'model' 'rental'
-                        +i name='clock'
-                    if _is 'model' 'task'
-                        +i name='tasks'
-                    if _is 'model' 'group'
-                        +i name='campfire'
-                    if _is 'model' 'comment'
-                        +i name='chat'
-                    // .ui.label #{model}
-                    |#{title} #{body}
-                i.clock.icon
-                // .ui.button.map_me
-                //     i.marker.large.red.icon
-                //     |map me
-                |#{when}
-            a.zoom(href="/#{model}/#{_id}")
-                img.ui.fluid.image(src="{{c.url image_id width=400 height=400}}")
-            .content 
-                .description
-                    // .ui.header lat: #{lat}
-                    // .ui.header lng: #{lng}
-                    //     // i.newspaper.large.icon
-                    if location 
-                        .ui.label 
-                            i.marker.icon
-                            |#{location}
-                    .ui.image.large.label 
-                        img.ui.image(src="{{c.url _author.image_id width=400 height=400}}")
-                        // i.user.icon
-                        |#{_author_username}
-                    if tags 
-                        each seven_tags 
-                            .ui.basic.label #{this}
-                    a.ui.button.zoomer.fly_left(href="/#{model}/#{_id}")
-                        |view
-                        i.chevron.right.icon
-                    +voting
-
+    // if _is 'model' 'role'
+    //     +role_card
+    // else if _is 'model' 'event'
+    //     +event_card
+    // else if _is 'model' 'recipe'
+    //     +recipe_card
+    // else 
+    .ui.card.zoomer.show_modal
+        if youtube_id 
+            +youtube_view key='youtube_id' direct=true
+        .content 
+            a.inline.header.fly_left(href="/#{model}/#{_id}") 
+                if _is 'model' 'recipe'
+                    +i name='recipe'
+                if _is 'model' 'food'
+                    +i name='food'
+                if _is 'model' 'post'
+                    +i name='blog'
+                if _is 'model' 'rental'
+                    +i name='clock'
+                if _is 'model' 'task'
+                    +i name='tasks'
+                if _is 'model' 'group'
+                    +i name='campfire'
+                if _is 'model' 'comment'
+                    +i name='chat'
+                // .ui.label #{model}
+                |#{title} #{body}
+            i.clock.icon
+            // .ui.button.map_me
+            //     i.marker.large.red.icon
+            //     |map me
+            |#{when}
+        a.zoom(href="/#{model}/#{_id}")
+            img.ui.fluid.image(src="{{c.url image_id width=400 height=400}}")
+        .content 
+            .description
+                // .ui.header lat: #{lat}
+                // .ui.header lng: #{lng}
+                //     // i.newspaper.large.icon
+                if location 
+                    .ui.label 
+                        i.marker.icon
+                        |#{location}
+                .ui.image.large.label 
+                    img.ui.image(src="{{c.url _author.image_id width=400 height=400}}")
+                    // i.user.icon
+                    |#{_author_username}
+                if tags 
+                    each seven_tags 
+                        .ui.basic.label #{this}
+                a.ui.button.zoomer.fly_left(href="/#{model}/#{_id}")
+                    |view
+                    i.chevron.right.icon
+                +voting
+    .ui.modal 
+        // with current_viewing_thing
+        .ui.header hi
+        if _is 'model' 'event'
+            +event_view
+                    
+                    
 template(name='latest_activity')
     .ui.header 
         +i name='clock'

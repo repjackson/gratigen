@@ -4,17 +4,42 @@ if Meteor.isClient
         @render 'home'
         ), name:'home'
     
-    Template.thing_editor.onCreated ->
-        @autorun => @subscribe 'my_current_thing', ->
+    Template.thing_maker.onCreated ->
+        # @autorun => @subscribe 'my_current_thing', ->
+        @autorun => @subscribe 'my_current_thing', Session.get('current_thing_id'),->
 if Meteor.isServer
-    Meteor.publish 'my_current_thing', ->
-        user = Meteor.user()
-        Docs.find user.current_thing_id
+    Meteor.publish 'my_current_thing', (current_thing_id)->
+        # user = Meteor.user()
+        Docs.find current_thing_id
 if Meteor.isClient
-    Template.thing_maker.events
+    Template.home_card.events 
+        'click .show_modal': ->
+            Session.set('current_viewing_thing_id')
+            $('.ui.modal').modal({
+                inverted:true
+                }).modal('show')
+    Template.thing_maker.events 
+        'click .show_modal': ->
+            $('.ui.modal').modal({
+                inverted:true
+                }).modal('show')
+            unless Session.get('current_thing_id')
+                # unless Meteor.user().current_thing_id
+                new_id = 
+                    Docs.insert 
+                        thing:true
+                # Session.set('editing_thing_id')
+                Session.set('current_thing_id', new_id)
+                # Meteor.users.update Meteor.userId(),
+                #     $set:
+                #         current_thing_id: new_id
+                
         'click .delete_thing':->
             if confirm 'delete?'
                 Docs.remove @_id
+                Session.set('current_thing_id', null)
+                Meteor.users.update Meteor.userId(),
+                    $unset:current_thing_id:1
         'click .add_thing':->
             new_id = 
                 Docs.insert 
@@ -22,12 +47,19 @@ if Meteor.isClient
             Meteor.users.update Meteor.userId(),
                 $set:
                     current_thing_id: new_id
-    Template.thing_editor.helpers 
-        current_thing: ->
-            user = Meteor.user()
-            Docs.findOne user.current_thing_id
+    Template.thing_maker.helpers 
+        current_thing:->
+            # user = Meteor.user()
+            # Docs.findOne user.current_thing_id
+            Docs.findOne Session.get('current_thing_id')
+    Template.thing_picker.helpers
+        model_picker_class:->
+            if @model is Template.parentData().model
+                'big'
+            else 
+                'basic'
     Template.thing_picker.events
-        'click .pick_model':->
+        'click .pick_thing':->
             Docs.update Template.parentData()._id,
                 $set:
                     model:@model
@@ -193,6 +225,7 @@ if Meteor.isClient
     
     
     Template.home.events 
+
         'click .check_notifications': ->
             Notification.requestPermission (result) ->
                 console.log result
