@@ -1,28 +1,5 @@
-template(name='posts')
-    .ui.stackable.padded.grid 
-        .four.wide.column
-            .ui.inline.header 
-                +i name='blog'
-                |posts
-                // if currentUser
-                .ui.icon.button.add_post
-                    i.plus.large.icon
-            each picked_tags
-                a.ui.blue.button.unpick_post_tag
-                    |#{this}
-            each tag_results
-                // if title
-                a.ui.compact.button.pick_post_tag
-                    |#{title} 
-                    // small.ui.grey.text #{count}
-        .twelve.wide.column
-            .ui.centered.stackable.cards
-                each post_docs 
-                    +post_card
-                    
-                    
 template(name='post_card')
-    a.ui.card.fly_right(href="/post/#{_id}")
+    .ui.card
         if youtube_id 
             +youtube_view key='youtube_id'
         if image_id 

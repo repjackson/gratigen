@@ -1,8 +1,4 @@
 if Meteor.isClient
-    Router.route '/posts', (->
-        @layout 'layout'
-        @render 'posts'
-        ), name:'posts'
     Router.route '/post/:doc_id/edit', (->
         @layout 'layout'
         @render 'post_edit'
@@ -17,39 +13,6 @@ if Meteor.isClient
         ), name:'post_view_long'
     
     
-    Template.posts.onCreated ->
-        @autorun => @subscribe 'post_docs',
-            picked_tags.array()
-            Session.get('post_title_filter')
-
-        @autorun => @subscribe 'post_facets',
-            picked_tags.array()
-            Session.get('post_title_filter')
-
-    
-    
-    Template.posts.events
-        'click .add_post': ->
-            new_id = 
-                Docs.insert 
-                    model:'post'
-            Router.go "/post/#{new_id}/edit"
-            
-            
-            
-    Template.posts.helpers
-        picked_tags: -> picked_tags.array()
-    
-        post_docs: ->
-            Docs.find {
-                model:'post'
-                private:$ne:true
-            }, sort:_timestamp:-1    
-        tag_results: ->
-            Results.find {
-                model:'tag'
-            }, sort:_timestamp:-1
-
     Template.user_posts.onCreated ->
         @autorun => Meteor.subscribe 'user_posts', Router.current().params.username, ->
     Template.user_posts.helpers

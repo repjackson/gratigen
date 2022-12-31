@@ -86,10 +86,9 @@ template(name='toggle_sort_direction_button')
                     
                     
 template(name='task_card')
-    .ui.link.card.fly_right
-        a(href="/task/#{_id}") 
-            img.ui.image(src="{{c.url image_id width=400 height=300 crop='pad'}}")
-        a.content(href="/task/#{_id}") 
+    .ui.card
+        img.ui.image(src="{{c.url image_id width=400 height=300 crop='pad'}}")
+        .content
             .ui.header 
                 if complete 
                     i.large.green.checkmark.icon
@@ -192,10 +191,6 @@ template(name='task_view')
         .three.column.row
             .column
                 // +parent_unit_button
-                a.ui.big.button.fly_left(href="/tasks")
-                    // i.tasks.icon
-                    +i name='tasks'
-                    |tasks
                 .ui.inline.header
                     | #{title}
                     small task view
@@ -483,32 +478,8 @@ template(name='work_view')
                                             
                                                 
                                                 
-template(name='roles')
-    .ui.stackable.padded.grid 
-        .four.wide.column
-            .ui.inline.header 
-                +i name='blog'
-                |roles
-                // if currentUser
-                .ui.icon.button.add_role
-                    i.plus.large.icon
-            each picked_tags
-                a.ui.blue.button.unpick_role_tag
-                    |#{this}
-            each tag_results
-                // if title
-                a.ui.compact.button.pick_role_tag
-                    |#{title} 
-                    // small.ui.grey.text #{count}
-                    
-        .twelve.wide.column
-            .ui.centered.stackable.cards
-                each role_docs 
-                    +role_card
-                    
-                    
 template(name='role_card')
-    a.ui.card.fly_right(href="/role/#{_id}")
+    .ui.card
         if youtube_id 
             +youtube_view key='youtube_id' direct=true
         if image_id 
@@ -547,28 +518,6 @@ template(name='set_role_sort_key')
         
         
                 
-template(name='my_roles')
-    .ui.inline.header 
-        +i name='blog'
-        |user roles
-    if is_current_user
-        .ui.basic.icon.button.add_role
-            i.large.plus.icon
-    .ui.padded.stackable.one.column.grid
-        .column
-            .ui.stackable.cards.scrolling
-                each role_docs 
-                    .ui.card
-                        .content
-                            a(href="/role/#{_id}") 
-                                img.ui.image(src="{{c.url image_id width=400 height=300 crop='pad'}}")
-    
-                            .smallscroll 
-                                |!{content}
-                            // |created #{when}
-                            small {{when}}
-                            a.ui.icon.button(href='/role/#{_id}')
-                                i.large.chevron.right.icon
                             
         
         
@@ -600,10 +549,6 @@ template(name='role_view')
         .three.column.row 
             .column
                 .ui.header #{title}
-                a.ui.circular.button.fly_left(href="/roles")
-                    i.chevron.left.big.icon
-                    i.newspaper.big.icon
-                    |roles
                 // div
                 // .ui.inline.grey.header {{from_now start_datetime}}
                 

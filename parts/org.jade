@@ -20,52 +20,6 @@
         lead support safety 
         safety officer, public info officer, liason officer, incident commander
         
-template(name='orgs')
-    .ui.stackable.padded.grid
-        .sixteen.wide.column
-            .ui.inline.header 
-                +i name='campfire'
-                |orgs
-            +add_model_button model='org'
-            // .ui.left.icon.search.small.input
-            //     i.search.icon.refresh_tags
-            //     input#search_tag.prompt(type='text' autocomplete="off" placeholder='tags')
-            if selected_tag_plural
-                .ui.icon.circular.black.compact.button.clear_picked_tags
-                    i.remove.icon
-            each picked_tags
-                button.ui.blue.compact.circular.small.button.unselect_tag(tabindex='0')
-                    //- i.remove.icon
-                    | #{this}
-            each tags
-                button.ui.circular.compact.small.basic.button.tag_result(tabindex="0" class=result_class title=count) #{title}
-                    //- small #{count}
-            span.sorting_row
-                .ui.icon.input
-                    i.search.icon
-                    input.tag_search(type='text' placeholder='search...')
-                |sort by
-                .ui.compact.small.menu
-                    .ui.simple.dropdown.item
-                        strong #{current_org_sort_label}
-                        i.dropdown.icon
-                        .menu
-                            +set_sort_key key='member_ids' label='$/serving' icon='money'
-                            +set_sort_key key='private' label='available' icon='clock'
-                            +set_sort_key key='_timestamp' label='added' icon='clock'
-                            +set_sort_key key='comment_count' label='comment count' icon='chat'
-                .ui.compact.icon.circular.button.set_sort_direction(title='toggle sort direction')
-                    if sorting_up
-                        i.sort.amount.down.icon
-                    else
-                        i.sort.amount.up.icon
-                |&nbsp;
-                |&nbsp;
-        .sixteen.wide.column
-            .ui.stackable.cards.scrollin
-                each org_docs
-                    +org_card
-
 
 template(name='org_card')
     .ui.card.zoomer
