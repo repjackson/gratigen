@@ -4,6 +4,7 @@ template(name='home')
     .ui.stackable.padded.divided.celled.grid
         .bordered(class=left_column_class)
             +session_toggle key='expand_leftbar' icon='chevron left'
+            +session_toggle key='add_mode' icon='plus'
             // .ui.fluid.small.button.toggle_leftbar
             //     i.chevron.left.icon
             .ui.hidden.divider
@@ -35,51 +36,55 @@ template(name='home')
             // .ui.button create request
         // .eight.wide.column.bordered
         .bordered(class=main_column_class)
-            // .ui.icon.button.add_mode 
-            //     i.plus.large.icon
-            .ui.search
-                .ui.large.icon.fluid.input.search_bar
-                    input.prompt(type='text' placeholder='add/request/search...')
-                    i.search.icon
-                .results
-            .centered
-                +filter_model model='org' icon='groups' color='83DFF4'
-                    //light blue
-                +filter_model model='project' icon='project' color='7229AF' 
-                    //violet
-                +filter_model model='event' icon='calendar' color='FAB005'
-                    //yellow
-                +filter_model model='role' icon='what-i-do' color='42E8C4'
-                    //turquoise
-                +filter_model model='tasks' icon='task' color='B785E1'
-                    //lavender
-                +filter_model model='resource' icon='car' color='FD7E14'  
-                    //orange
-                +filter_model model='post' icon='for-you' color='1255B8'
-                    //blue
-                +filter_model model='offer' icon='hand-holding-heart' color='FF73EA'
-                    //pink
-                +filter_model model='request' icon='commercial' color='40C057'     
-                    //green
-                +filter_model model='skill' icon='wrench' color='ff0000'
-                //red
-                // +filter_model model='food' icon='food' 83DFF4
-                .ui.hidden.divider
-                +session_set key='view_mode' value='grid' icon='th' 
-                +session_set key='view_mode' value='list' icon='list'
-                // +session_set key='view_mode' value='card' icon='card'
-                +session_toggle key='show_map' icon='map'
-                +session_toggle key='show_calendar' icon='calendar'
-            if session_is 'view_mode' 'list'
-                .ui.items 
-                    each doc_results 
-                        .item 
-                            .content
-                                .header #{title}
-            else
-                .ui.two.stackable.cards.scrolling
-                    each doc_results
-                        +home_card
+            if session_is 'add_mode' true
+                .ui.header add mode 
+                .ui.header add a thing
+            else 
+                // .ui.icon.button.add_mode 
+                //     i.plus.large.icon
+                .ui.search
+                    .ui.large.icon.fluid.input.search_bar
+                        input.prompt(type='text' placeholder='add/request/search...')
+                        i.search.icon
+                    .results
+                .centered
+                    +filter_model model='org' icon='groups' color='83DFF4'
+                        //light blue
+                    +filter_model model='project' icon='project' color='7229AF' 
+                        //violet
+                    +filter_model model='event' icon='calendar' color='FAB005'
+                        //yellow
+                    +filter_model model='role' icon='what-i-do' color='42E8C4'
+                        //turquoise
+                    +filter_model model='tasks' icon='task' color='B785E1'
+                        //lavender
+                    +filter_model model='resource' icon='car' color='FD7E14'  
+                        //orange
+                    +filter_model model='post' icon='for-you' color='1255B8'
+                        //blue
+                    +filter_model model='offer' icon='hand-holding-heart' color='FF73EA'
+                        //pink
+                    +filter_model model='request' icon='commercial' color='40C057'     
+                        //green
+                    +filter_model model='skill' icon='wrench' color='ff0000'
+                    //red
+                    // +filter_model model='food' icon='food' 83DFF4
+                    .ui.hidden.divider
+                    +session_set key='view_mode' value='grid' icon='th' 
+                    +session_set key='view_mode' value='list' icon='list'
+                    // +session_set key='view_mode' value='card' icon='card'
+                    +session_toggle key='show_map' icon='map'
+                    +session_toggle key='show_calendar' icon='calendar'
+                if session_is 'view_mode' 'list'
+                    .ui.items 
+                        each doc_results 
+                            .item 
+                                .content
+                                    .header #{title}
+                else
+                    .ui.two.stackable.cards.scrolling
+                        each doc_results
+                            +home_card
         .bordered(class=right_column_class)
             if session_is 'show_map' true
                 +mapbox
