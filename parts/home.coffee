@@ -187,7 +187,17 @@ if Meteor.isClient
             { category:'eft', title:'education', color:"FAB005", icon:'university' }
             { category:'eft', title:'art', color:"FD7E14", icon:'paint brush' }
             { category:'eft', title:'community core', color:"FF0000", icon:'users' }
-        ];
+            { category:'model', title:'org' }
+            { category:'model', title:'project' }
+            { category:'model', title:'event' }
+            { category:'model', title:'role' }
+            { category:'model', title:'tasks' }
+            { category:'model', title:'resource' }
+            { category:'model', title:'post' }
+            { category:'model', title:'offer' }
+            { category:'model', title:'request' }
+            { category:'model', title:'skills' }
+        ]
         
         $('.ui.search')
           .search({

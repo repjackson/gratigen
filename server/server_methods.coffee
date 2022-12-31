@@ -1,4 +1,8 @@
 Meteor.methods
+    convert_groups:->
+        Docs.update {model:'group'},
+            {$set:model:'org'},
+            {multi:true}
     log_view: (doc_id)->
         Docs.update doc_id,
             $inc:views:1

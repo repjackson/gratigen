@@ -38,7 +38,7 @@ template(name='home')
                     i.search.icon
                 .results
             .centered
-                +filter_model model='organization' icon='groups' color='83DFF4'
+                +filter_model model='org' icon='groups' color='83DFF4'
                     //light blue
                 +filter_model model='project' icon='project' color='7229AF' 
                     //violet
@@ -56,7 +56,7 @@ template(name='home')
                     //pink
                 +filter_model model='request' icon='commercial' color='40C057'     
                     //green
-                +filter_model model='skills' icon='wrench' color='ff0000'
+                +filter_model model='skill' icon='wrench' color='ff0000'
                 //red
                 // +filter_model model='food' icon='food' 83DFF4
                 .ui.hidden.divider
@@ -112,8 +112,6 @@ template(name='home')
         // .four.wide.column
         //     .ui.header 
         //         |resources
-            
-      
       
 template(name='side_menu_item')
     a.ui.header.item.toggle_item.invert(style="color:##{color}" class=side_item_class)
@@ -122,7 +120,6 @@ template(name='side_menu_item')
         // if is_toggled
         //     i.large.checkmark.icon
 
-           
            
 template(name='dash_user_info') 
     a.ui.two.column.grid.zoomer(href="/user/#{currentUser.username}")
