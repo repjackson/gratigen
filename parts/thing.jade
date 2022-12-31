@@ -385,104 +385,102 @@ template(name='work')
                 
                 
 template(name='work_edit')
-    with current_doc
-        .ui.stackable.padded.grid
-            .row
-                .six.wide.column
-                    .ui.inline.small.header
-                        i.pencil.icon
-                        | #{title}
-                        | work edit
-                    with work_task
-                        .ui.segment
-                            img.ui.tiny.inline.image(src="{{c.url image_id width=200 height=200 gravity='face' crop='fill'}}")
-                            .ui.inline.header 
-                                |#{title}
-                            |#{description}
-                    .ui.grey.header 
-                        i.clock.icon
-                        |#{when}
-                    // +text_edit key='title' label='title' direct=true
-                    div
-                    +textarea_edit key='notes' label='notes' direct=true
-                    // if location_id
-                    //     if image_id
-                    .ui.hidden.divider
-                    a.ui.massive.icon.fluid.green.button.submit_work(title='submit')
-                        i.checkmark.big.icon
-                .ten.wide.column
+    .ui.stackable.padded.grid
+        .row
+            .six.wide.column
+                .ui.inline.small.header
+                    i.pencil.icon
+                    | #{title}
+                    | work edit
+                with work_task
                     .ui.segment
-                        .ui.header
-                            i.image.icon
-                            |image
-                        +image_edit key='before_image_id' label='before image' direct=true capture="camera"
-                        +image_edit key='after_image_id' label='after image' direct=true capture="camera"
-                    .ui.inline.header 
-                        i.red.marker.icon
-                        |location
-                    each task_locations
-                        a.ui.circular.image.link.label.pick_location.zoomer(class=location_picker_class)
-                            img.ui.image(src="{{c.url image_id width=200 height=200 gravity='face' crop='fill'}}")
-                            | #{title}
-                    .ui.red.small.fluid.button.delete_work
-                        i.remove.icon   
-                        | cancel
-                    if in_dev
-                        +print_this
+                        img.ui.tiny.inline.image(src="{{c.url image_id width=200 height=200 gravity='face' crop='fill'}}")
+                        .ui.inline.header 
+                            |#{title}
+                        |#{description}
+                .ui.grey.header 
+                    i.clock.icon
+                    |#{when}
+                // +text_edit key='title' label='title' direct=true
+                div
+                +textarea_edit key='notes' label='notes' direct=true
+                // if location_id
+                //     if image_id
+                .ui.hidden.divider
+                a.ui.massive.icon.fluid.green.button.submit_work(title='submit')
+                    i.checkmark.big.icon
+            .ten.wide.column
+                .ui.segment
+                    .ui.header
+                        i.image.icon
+                        |image
+                    +image_edit key='before_image_id' label='before image' direct=true capture="camera"
+                    +image_edit key='after_image_id' label='after image' direct=true capture="camera"
+                .ui.inline.header 
+                    i.red.marker.icon
+                    |location
+                each task_locations
+                    a.ui.circular.image.link.label.pick_location.zoomer(class=location_picker_class)
+                        img.ui.image(src="{{c.url image_id width=200 height=200 gravity='face' crop='fill'}}")
+                        | #{title}
+                .ui.red.small.fluid.button.delete_work
+                    i.remove.icon   
+                    | cancel
+                if in_dev
+                    +print_this
                         
                 
 template(name='work_view')
-    with current_doc
-        .ui.stackable.padded.grid
-            .row
-                .four.wide.column
-                    a.ui.basic.icon.button.fly_right(href="/work")
-                        i.wrench.large.icon
-                    .ui.inline.header
-                        | #{title}
-                        small work view
-                    +image_view key='image_id' label='image' direct=true
-                    div
-                    a.ui.icon.button(href="/work/#{_id}/edit")
-                        i.pencil.icon
-                .eight.wide.column
-                    a.zoomer(href="/user/#{_author_username}/")
-                        img.ui.small.inline.image(src="{{c.url author.image_id width=200 height=200 gravity='face' crop='fill'}}")
-                        .ui.large.inline.header #{_author_username} 
-                    div
-                    a.zoomer(href="/task/#{task_id}/")
-                        img.ui.small.inline.image(src="{{c.url task_image_id width=200 height=200 gravity='face' crop='fill'}}")
-                        .ui.inline.header 
-                            |#{task_title}
-                    div
-                    a.zoomer(href="/location/#{location_id}/") 
-                        img.ui.small.inline.image(src="{{c.url location_image_id width=200 height=200 gravity='face' crop='fill'}}")
-                        .ui.inline.header @#{location_title}
-                    .ui.header #{when}
-                    div.scrolling
-                        +html_view key='notes' label='directions' direct=true
-                    // +array_view key='tags' label='tags' icon='tags' direct=true
-                    +comments
-                .four.wide.column
-                    +voting_full
-                    .ui.header 
-                        i.checkmark.icon
-                        |vouched by #{vouchers.count}
-                    each vouchers
-                        .ui.header #{username}
-                    unless is_author
-                        if vouched_for
-                            .ui.button.vouch
-                                i.checkmark.icon 
-                                |vouch 
-                        else
-                            .ui.small.button.unvouch
-                                |unvouch
-                        
-                    .ui.header #{task_points} pts earned
-                    if in_dev 
-                        +print_this
-                                                
+    .ui.stackable.padded.grid
+        .row
+            .four.wide.column
+                a.ui.basic.icon.button.fly_right(href="/work")
+                    i.wrench.large.icon
+                .ui.inline.header
+                    | #{title}
+                    small work view
+                +image_view key='image_id' label='image' direct=true
+                div
+                a.ui.icon.button(href="/work/#{_id}/edit")
+                    i.pencil.icon
+            .eight.wide.column
+                a.zoomer(href="/user/#{_author_username}/")
+                    img.ui.small.inline.image(src="{{c.url author.image_id width=200 height=200 gravity='face' crop='fill'}}")
+                    .ui.large.inline.header #{_author_username} 
+                div
+                a.zoomer(href="/task/#{task_id}/")
+                    img.ui.small.inline.image(src="{{c.url task_image_id width=200 height=200 gravity='face' crop='fill'}}")
+                    .ui.inline.header 
+                        |#{task_title}
+                div
+                a.zoomer(href="/location/#{location_id}/") 
+                    img.ui.small.inline.image(src="{{c.url location_image_id width=200 height=200 gravity='face' crop='fill'}}")
+                    .ui.inline.header @#{location_title}
+                .ui.header #{when}
+                div.scrolling
+                    +html_view key='notes' label='directions' direct=true
+                // +array_view key='tags' label='tags' icon='tags' direct=true
+                +comments
+            .four.wide.column
+                +voting_full
+                .ui.header 
+                    i.checkmark.icon
+                    |vouched by #{vouchers.count}
+                each vouchers
+                    .ui.header #{username}
+                unless is_author
+                    if vouched_for
+                        .ui.button.vouch
+                            i.checkmark.icon 
+                            |vouch 
+                    else
+                        .ui.small.button.unvouch
+                            |unvouch
+                    
+                .ui.header #{task_points} pts earned
+                if in_dev 
+                    +print_this
+                                            
                                                 
                                                 
 template(name='roles')
@@ -725,3 +723,5 @@ template(name='role_edit')
                 +array_edit key='skills' label='skills' icon='wrench' direct=true
             .column
                 +model_picker model='skill' icon='wrench'
+
+
