@@ -1,12 +1,12 @@
-if Meteor.isClient
-    Template.html_notifications.events 
-        'click .check_notifications': ->
-            Notification.requestPermission (result) ->
-                console.log result
+# if Meteor.isClient
+#     Template.html_notifications.events 
+#         'click .check_notifications': ->
+#             Notification.requestPermission (result) ->
+#                 console.log result
 
-        'click .send_notification': ->
-            if Notification.permission is "granted"
-                notification = new Notification("Hi there!")
+#         'click .send_notification': ->
+#             if Notification.permission is "granted"
+#                 notification = new Notification("Hi there!")
 
 
 if Meteor.isClient

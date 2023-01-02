@@ -278,7 +278,7 @@ if Meteor.isClient
             Docs.insert
                 model:'delta'
                 view_mode:'cards'
-                app:'stand'
+                app:'gratigen'
                 model_filter: Router.current().params.model_slug
 
         'click .print_delta': (e,t)->

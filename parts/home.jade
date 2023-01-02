@@ -4,13 +4,16 @@ template(name='home')
     .ui.stackable.padded.divided.celled.grid
         .bordered(class=left_column_class)
             +session_toggle key='expand_leftbar' icon='line'
-            // +session_toggle key='add_mode' icon='plus'
-            //.ui.icon.button.show_model
-            // i.large.plus.icon
-            // .ui.fluid.small.button.toggle_leftbar
-            //     i.chevron.left.icon
-            .ui.hidden.divider
+                // +session_toggle key='add_mode' icon='plus'
+                //.ui.icon.button.show_model
+                    i.large.plus.icon
+                // .ui.fluid.small.button.toggle_leftbar
+                //     i.chevron.left.icon
+                .ui.hidden.divider
             +dash_user_info
+            a.ui.button.delta(href="/m/model")
+                |manage models
+
             .ui.fluid.big.menu.hscroll.mobile.only
                 +side_menu_item color="FF73EA" icon='food' label='food'
                 +side_menu_item color="B785E1" icon='home' label='housing'
@@ -46,6 +49,8 @@ template(name='home')
                     +side_menu_item color="FAB005" icon='university' label='education'
                     +side_menu_item color="FD7E14" icon='paint brush' label='art'
                     +side_menu_item color="FF0000" icon='users' label='community core'
+                
+            // .ui.button create request
         .bordered.scrolling(class=main_column_class)
             .ui.one.column.grid 
                 .column.bordered
@@ -57,12 +62,14 @@ template(name='home')
                     .ui.bottom.attached.tab.segment.centered.ani(data-tab='add')
                         //select type of thing you're creating >> open thing type editor modal
                         if session_is 'addmode' true
+                       
                             +thing_picker model='post' icon='for-you' color='1255B8'
                             //blue
                             +thing_picker model='offer' icon='hand-holding-heart' color='FF73EA'
                             //pink
                             +thing_picker model='request' icon='commercial' color='40C057'     
                             //green
+                            
                             div
                             +thing_picker model='org' icon='groups' color='83DFF4' 
                             //light blue
@@ -83,12 +90,15 @@ template(name='home')
                             +thing_picker model='datetime' icon='overtime--v1' color='FD7E14'
                             +thing_picker model='location' icon='worldwide-location' color='40C057'
                             +thing_picker model='accounts' icon='gold-bars' color='FAB005'
-                            //people
+                                //people
                             .ui.divider
+                    div
                             +online_users
                      //side scrolling users' avatars (pulls  up profile in modal) - new, nearby, recommended - 
                         //.ui.fluid.big.menu.hscroll
+                        +
                         //+new_nearby_allied_users
+
                     div
                 .centered
                     +filter_model model='post' icon='for-you' color='1255B8'
@@ -97,6 +107,7 @@ template(name='home')
                     //pink
                     +filter_model model='request' icon='commercial' color='40C057'     
                     //green
+
                     div
                     +filter_model model='org' icon='groups' color='83DFF4'
                     //light blue
@@ -112,6 +123,7 @@ template(name='home')
                     //orange
                     +filter_model model='skill' icon='wrench' color='ff0000'
                     //red
+                    
                     // +filter_model model='food' icon='food' 83DFF4
                 .centered   
                     .ui.search
@@ -124,6 +136,7 @@ template(name='home')
                     +session_set key='view_mode' value='feed' icon='stream'
                     +session_toggle key='show_map' icon='map'
                     +session_toggle key='show_calendar' icon='calendar'
+                
                 if session_is 'view_mode' 'list'
                     .ui.items 
                         each doc_results 
@@ -141,11 +154,15 @@ template(name='home')
                             +home_card
         // .eight.wide.column.bordered
         .bordered(class=right_column_class)
+                +my_things
             if session_is 'show_map' true
                 +mapbox
             if session_is 'show_calendar' true 
                 +calendar_view
             +online_allies
+               //.ui.container
+                    |my things
+                       // this needs to display list of "my_thing" (and its direct parent) corellated with search parameters, and click to pull up modal of thing
         // +thing_maker
         // if current_thing.
         //     if _is 'model'_edit
@@ -163,11 +180,12 @@ template(name='home')
                     +Template.dynamic template=edit_template
                 else 
                     +Template.dynamic template=view_template
-                    
-    .bordered(class=right_column_class)
-        .ui.conainer
-            |my things
-                // this needs to display list of "my_thing" (and its direct parent) corellated with search parameters, and click to pull up modal of thing
+
+
+template(name='my_things')
+    .ui.segment
+        |my_things
+        
 
 //template(name='thing_maker_modal')        
 template(name='home_card')
@@ -194,9 +212,10 @@ template(name='home_card')
                     +post_card
                 if _is 'model' 'event'
                     +i name='calendar' color='FAB005'
-                    //left
+                        //left
                     //+user icon, user name    
-                if _is 'model' 'event'
+                    i.clock.icon
+                    |#{when}
                     +event_card
                 if _is 'model' 'task'
                     +i name='task' color='B785E1'
@@ -213,7 +232,6 @@ template(name='home_card')
                 if _is 'model' 'resource'
                     +i name='field-and-tractor' color='42E8C4'   
                     +resource_card
-                +Template.dynamic template=
                 //like/dislike, comment, share(sms,email,dm), comments (expand)    
                     
                     
