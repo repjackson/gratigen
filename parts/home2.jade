@@ -1,0 +1,56 @@
+template(name='calendar_view')    
+    // .ui.header 
+    //     // i.calendar.icon
+    //     |calendar 
+    
+    #inline_calendar 
+        
+      
+      
+    
+template(name='side_menu_item')
+    a.ui.header.item.toggle_item.invert(style="color:##{color}" class=side_item_class)
+        i.icon.tiny(class=icon)
+        if session_is 'expand_leftbar' true
+            |#{label}
+        // if is_toggled
+        //     i.large.checkmark.icon
+
+           
+template(name='dash_user_info') 
+    unless session_is 'expand_leftbar' true
+        
+        .ui.header.centered
+            | #{currentUser.username}
+        img.ui.tiny.circular.image.centered(src="{{c.url currentUser.image_id width=600 height=600 gravity='face' crop='fill'}}")
+        .ui.small
+            | #{currentUser.points}pts
+        
+        .ui.header
+            | #{currentUser.tagline}
+    else     
+        a.ui.two.column.grid.zoomer(href="/user/#{currentUser.username}")
+            .column
+                img.ui.small.circular.image(src="{{c.url currentUser.image_id width=600 height=600 gravity='face' crop='fill'}}")
+            .column
+                .ui.header
+                    | #{currentUser.username}
+                .ui.small
+                    | #{currentUser.points}pts
+            div
+                .ui.header
+                    | #{currentUser.tagline}
+
+    // i.user.icon
+    // .ui.inline.header #{currentUser.name}
+    // strong #{currentUser.points}p
+    // div
+    // .ui.inline.header #{currentUser.tagline}
+        
+           
+           
+template(name='filter_model')
+    .ui.compact.circular.secondary.basic.button.pick_model.zoomer(class=button_class)
+        +i name=icon color=color cl='ui mini inline image'
+        // i.exchange.large.icon
+        |#{model}

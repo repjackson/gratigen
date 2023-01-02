@@ -31,60 +31,6 @@ if Meteor.isClient
                 inverted:true
                 # blurring:true
                 }).modal('show')
-    Template.thing_maker.events 
-        'click .show_modal': ->
-            $('.ui.modal').modal({
-                inverted:true
-                }).modal('show')
-            unless Session.get('current_thing_id')
-                # unless Meteor.user().current_thing_id
-                new_id = 
-                    Docs.insert 
-                        thing:true
-                # Session.set('editing_thing_id')
-                Session.set('current_thing_id', new_id)
-                # Meteor.users.update Meteor.userId(),
-                #     $set:
-                #         current_thing_id: new_id
-                
-        'click .delete_thing':->
-            if confirm 'delete?'
-                Docs.remove @_id
-                Session.set('current_thing_id', null)
-                Meteor.users.update Meteor.userId(),
-                    $unset:current_thing_id:1
-        'click .add_thing':->
-            new_id = 
-                Docs.insert 
-                    thing:true
-            Meteor.users.update Meteor.userId(),
-                $set:
-                    current_thing_id: new_id
-    Template.thing_maker.helpers 
-        current_thing:->
-            # user = Meteor.user()
-            # Docs.findOne user.current_thing_id
-            Docs.findOne Session.get('current_thing_id')
-    Template.thing_picker.helpers
-        model_picker_class:->
-            if @model is Template.parentData().model
-                'big'
-            else 
-                'basic'
-    Template.thing_picker.events
-        'click .pick_thing':->
-            new_id = 
-                Docs.insert 
-                    model:@model 
-            Session.set('current_thing_id', new_id)      
-            Session.set('editmode',true)
-            $('.ui.modal').modal({
-                inverted:true
-                }).modal('show')
-
-            # Docs.update Template.parentData()._id,
-            #     $set:
-            #         model:@model
     
     Template.side_menu_item.events
         'click .toggle_item': ->
@@ -110,13 +56,6 @@ if Meteor.isClient
                 'small'
                 
         
-    Template.latest_activity.onCreated ->
-        @autorun => @subscribe 'latest_home_docs', ->
-    Template.latest_activity.helpers 
-        latest_docs: ->
-            Docs.find {_updated_timestamp:$exists:true},
-                sort:
-                    _updated_timestamp:-1
                 
 # if Meteor.isServer
 #     Meteor.publish 'latest_docs', ->
@@ -125,32 +64,14 @@ if Meteor.isClient
 #                 _updated_timestamp:-1
 #             limit:10
         
-if Meteor.isClient
-    Template.dash_user_info.events 
-        'click .print_me': ->
-            console.log Meteor.user()
-            alert Meteor.user()
-            Meteor.call 'print_me', ->
-            Meteor.users.update Meteor.userId(),
-                $unset:updated:true
             
 if Meteor.isServer
     Meteor.methods 
         print_me: ->
             console.log Meteor.user()
             
-    
-if Meteor.isClient
-    Template.online_users.onCreated ->
-        @autorun => @subscribe 'online_users', ->
-    Template.online_users.helpers 
-        online_user_docs: ->
-            Meteor.users.find {online:true}
-                
-if Meteor.isServer
-    Meteor.publish 'online_users', ->
-        Meteor.users.find {online:true}
         
+if Meteor.isServer
     Meteor.publish 'latest_home_docs', (model_filters=[])->
         match = {}
         # user = Meteor.user()
@@ -246,16 +167,6 @@ if Meteor.isClient
                 
     
     
-    Template.home.events 
-
-        'click .check_notifications': ->
-            Notification.requestPermission (result) ->
-                console.log result
-
-        'click .send_notification': ->
-            if Notification.permission is "granted"
-                notification = new Notification("Hi there!")
-
 
     Template.home.helpers 
         left_column_class: ->

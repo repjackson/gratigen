@@ -1,4 +1,46 @@
 if Meteor.isClient
+    Template.html_notifications.events 
+        'click .check_notifications': ->
+            Notification.requestPermission (result) ->
+                console.log result
+
+        'click .send_notification': ->
+            if Notification.permission is "granted"
+                notification = new Notification("Hi there!")
+
+
+if Meteor.isClient
+    Template.dash_user_info.events 
+        'click .print_me': ->
+            console.log Meteor.user()
+            alert Meteor.user()
+            Meteor.call 'print_me', ->
+            Meteor.users.update Meteor.userId(),
+                $unset:updated:true
+
+
+if Meteor.isClient
+    Template.latest_activity.onCreated ->
+        @autorun => @subscribe 'latest_home_docs', ->
+    Template.latest_activity.helpers 
+        latest_docs: ->
+            Docs.find {_updated_timestamp:$exists:true},
+                sort:
+                    _updated_timestamp:-1
+
+    Template.online_users.onCreated ->
+        @autorun => @subscribe 'online_users', ->
+    Template.online_users.helpers 
+        online_user_docs: ->
+            Meteor.users.find {online:true}
+                
+if Meteor.isServer
+    Meteor.publish 'online_users', ->
+        Meteor.users.find {online:true}
+
+
+
+if Meteor.isClient
     Template.session_toggle.events
         'click .toggle_session_var': ->
             Session.set(@key, !Session.get(@key))

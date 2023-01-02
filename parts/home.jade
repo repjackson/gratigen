@@ -3,15 +3,14 @@ template(name='home')
         img.ui.fluid.image.home_banner(src="{{c.url 'gratigenlayout'}}" class=darkmode_class)
     .ui.stackable.padded.divided.celled.grid
         .bordered(class=left_column_class)
-            +session_toggle key='expand_leftbar' icon='horizontal-line'
+            +session_toggle key='expand_leftbar' icon='line'
             // +session_toggle key='add_mode' icon='plus'
             //.ui.icon.button.show_model
-                i.large.plus.icon
+            // i.large.plus.icon
             // .ui.fluid.small.button.toggle_leftbar
             //     i.chevron.left.icon
             .ui.hidden.divider
             +dash_user_info
-
             .ui.fluid.big.menu.hscroll.mobile.only
                 +side_menu_item color="FF73EA" icon='food' label='food'
                 +side_menu_item color="B785E1" icon='home' label='housing'
@@ -47,8 +46,6 @@ template(name='home')
                     +side_menu_item color="FAB005" icon='university' label='education'
                     +side_menu_item color="FD7E14" icon='paint brush' label='art'
                     +side_menu_item color="FF0000" icon='users' label='community core'
-                
-            // .ui.button create request
         .bordered.scrolling(class=main_column_class)
             .ui.one.column.grid 
                 .column.bordered
@@ -60,14 +57,12 @@ template(name='home')
                     .ui.bottom.attached.tab.segment.centered.ani(data-tab='add')
                         //select type of thing you're creating >> open thing type editor modal
                         if session_is 'addmode' true
-                       
                             +thing_picker model='post' icon='for-you' color='1255B8'
                             //blue
                             +thing_picker model='offer' icon='hand-holding-heart' color='FF73EA'
                             //pink
                             +thing_picker model='request' icon='commercial' color='40C057'     
                             //green
-                            
                             div
                             +thing_picker model='org' icon='groups' color='83DFF4' 
                             //light blue
@@ -88,15 +83,12 @@ template(name='home')
                             +thing_picker model='datetime' icon='overtime--v1' color='FD7E14'
                             +thing_picker model='location' icon='worldwide-location' color='40C057'
                             +thing_picker model='accounts' icon='gold-bars' color='FAB005'
-                                //people
+                            //people
                             .ui.divider
-                    div
                             +online_users
                      //side scrolling users' avatars (pulls  up profile in modal) - new, nearby, recommended - 
                         //.ui.fluid.big.menu.hscroll
-                        +
                         //+new_nearby_allied_users
-
                     div
                 .centered
                     +filter_model model='post' icon='for-you' color='1255B8'
@@ -105,7 +97,6 @@ template(name='home')
                     //pink
                     +filter_model model='request' icon='commercial' color='40C057'     
                     //green
-
                     div
                     +filter_model model='org' icon='groups' color='83DFF4'
                     //light blue
@@ -121,7 +112,6 @@ template(name='home')
                     //orange
                     +filter_model model='skill' icon='wrench' color='ff0000'
                     //red
-                    
                     // +filter_model model='food' icon='food' 83DFF4
                 .centered   
                     .ui.search
@@ -134,7 +124,6 @@ template(name='home')
                     +session_set key='view_mode' value='feed' icon='stream'
                     +session_toggle key='show_map' icon='map'
                     +session_toggle key='show_calendar' icon='calendar'
-                
                 if session_is 'view_mode' 'list'
                     .ui.items 
                         each doc_results 
@@ -142,9 +131,10 @@ template(name='home')
                                 .content
                                     .header #{title}
                 if session_is 'view_mode' 'feed'
-                    .ui.one.stackable.cards.scrolling.centered
-                        each doc_results
-                            +home_card
+                    .centered
+                        .ui.centered.cards.one.scrolling
+                            each doc_results
+                                +home_card
                 else
                     .ui.two.stackable.cards.scrolling
                         each doc_results
@@ -173,6 +163,11 @@ template(name='home')
                     +Template.dynamic template=edit_template
                 else 
                     +Template.dynamic template=view_template
+                    
+    .bordered(class=right_column_class)
+        .ui.conainer
+            |my things
+                // this needs to display list of "my_thing" (and its direct parent) corellated with search parameters, and click to pull up modal of thing
 
 //template(name='thing_maker_modal')        
 template(name='home_card')
@@ -183,36 +178,48 @@ template(name='home_card')
     // else if _is 'model' 'recipe'
     //     +recipe_card
     // else 
-    a.ui.link.card.zoomer.show_modal
-        if youtube_id 
-            +youtube_view key='youtube_id' direct=true
+    a.ui.link.card.show_modal
+        // if youtube_id 
+        //     +youtube_view key='youtube_id' direct=true
         .content 
             a.inline.header
                 if _is 'model' 'org' 
                     +i name='groups' color='83DFF4'
+                    +org_card
                 if _is 'model' 'project'
                     +i name='project' color='7229AF'
+                    +project_card
                 if _is 'model' 'post'
                     +i name='for-you' color='1255B8'
+                    +post_card
                 if _is 'model' 'event'
                     +i name='calendar' color='FAB005'
+                    //left
+                    //+user icon, user name    
+                if _is 'model' 'event'
+                    +event_card
                 if _is 'model' 'task'
                     +i name='task' color='B785E1'
+                    +task_card
                 if _is 'model' 'offer'
                     +i name='hand-holding-heart' color='FF73EA'
+                    +offer_card
                 if _is 'model' 'request'
                     +i name='commercial' color='40C057'
+                    +request_card
                 if _is 'model' 'role'
-                    +i name='what-i-do' color='42E8C4'  
+                    +i name='what-i-do' color='42E8C4'
+                    +role_card
                 if _is 'model' 'resource'
-                    +i name='field-and-tractor' color='42E8C4'      
-                    
+                    +i name='field-and-tractor' color='42E8C4'   
+                    +resource_card
+                +Template.dynamic template=
+                //like/dislike, comment, share(sms,email,dm), comments (expand)    
                     
                     
                 // .ui.label #{model}
                 |#{title} #{body}
-            i.clock.icon
-            |#{when}
+            
         img.ui.fluid.image(src="{{c.url image_id width=400 height=400}}")
         .content 
             .description
@@ -220,10 +227,10 @@ template(name='home_card')
                 // .ui.header lng: #{lng}
                 //     // i.newspaper.large.icon
                 if location 
-                    .ui.label 
+                    .ui.label.basic
                         i.marker.icon
                         |#{location}
-                .ui.image.large.label 
+                .ui.image.large.basic.label
                     img.ui.image(src="{{c.url _author.image_id width=400 height=400}}")
                     // i.user.icon
                     |#{_author_username}
@@ -232,62 +239,3 @@ template(name='home_card')
                 //         .ui.basic.label #{this}
                 +voting
                 +eft_view_item_small
-      
-      
-      
-      
-      
-      
-template(name='calendar_view')    
-    // .ui.header 
-    //     // i.calendar.icon
-    //     |calendar 
-    
-    #inline_calendar 
-        
-      
-      
-    
-template(name='side_menu_item')
-    a.ui.header.item.toggle_item.invert(style="color:##{color}" class=side_item_class)
-        i.icon(class=icon)
-        if session_is 'expand_leftbar' true
-            |#{label}
-        // if is_toggled
-        //     i.large.checkmark.icon
-
-           
-template(name='dash_user_info') 
-    unless session_is 'expand_leftbar' true
-        img.ui.small.circular.image(src="{{c.url currentUser.image_id width=600 height=600 gravity='face' crop='fill'}}")
-        .ui.header
-            | #{currentUser.username}
-        .ui.small
-            | #{currentUser.points}pts
-        .ui.header
-            | #{currentUser.tagline}
-    else     
-        a.ui.two.column.grid.zoomer(href="/user/#{currentUser.username}")
-            .column
-                img.ui.small.circular.image(src="{{c.url currentUser.image_id width=600 height=600 gravity='face' crop='fill'}}")
-            .column
-                .ui.header
-                    | #{currentUser.username}
-                .ui.small
-                    | #{currentUser.points}pts
-                .ui.header
-                    | #{currentUser.tagline}
-
-    // i.user.icon
-    // .ui.inline.header #{currentUser.name}
-    // strong #{currentUser.points}p
-    // div
-    // .ui.inline.header #{currentUser.tagline}
-        
-           
-           
-template(name='filter_model')
-    .ui.compact.circular.secondary.basic.button.pick_model.zoomer(class=button_class)
-        +i name=icon color=color cl='ui mini inline image'
-        // i.exchange.large.icon
-        |#{model}
