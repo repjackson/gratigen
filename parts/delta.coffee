@@ -83,6 +83,7 @@ if Meteor.isClient
             slug: Router.current().params.model_slug
 
     Template.registerHelper 'is_loading', () ->
+            
         Session.get('loading')
     Template.registerHelper 'field_value', () ->
         # console.log @

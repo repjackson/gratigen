@@ -82,7 +82,7 @@ template(name='profile_layout')
                         a.ui.large.compact.basic.circular.icon.button(href="/user/#{username}/messages" class="{{isActiveRoute 'user_messages'}}" title="#{user.username} messages")
                             i.chat.large.blue.icon
                             // | message
-                    if is_dev
+                    if Meteor.inDevelopment
                         +print_this
         
         
@@ -169,7 +169,7 @@ template(name='user_credit')
                                     |$#{amount}
                                 .description 
                                     |#{when} {{long_date _timestamp}}
-                                    //- if is_dev
+                                    //- if Meteor.inDevelopment
                                     +remove_button        
                                     
                                     
@@ -568,7 +568,7 @@ template(name='user_sent')
 //         a.ui.header(href="/m/order/#{_id}/view") #{when}
 //         if charge 
 //             .ui.header charge
-//         if is_dev
+//         if Meteor.inDevelopment
 //             |#{charge.result.id}
 //         .ui.header $#{charge.result.amount}
 //         if can_edit 
@@ -585,7 +585,7 @@ template(name='user_sent')
 //                 .ui.large.label
 //                     |tiffen type: #{tiffen_type}
 //                 +boolean_edit key='delivery' label='add delivery' direct=true                    
-//         if is_dev
+//         if Meteor.inDevelopment
 //             +remove_button
 //             +print_this   
             
@@ -625,7 +625,7 @@ template(name='user_skills')
                 a.ui.header(href="/m/skill/#{_id}/view") #{bounty}pts: #{title}
                 | !{description}
                 div
-                if is_dev
+                if Meteor.inDevelopment
                     +remove_button
                     +print_this
                 +creation_info                
@@ -641,7 +641,7 @@ template(name='user_requests')
                 a.ui.header(href="/m/request/#{_id}/view") #{bounty}pts: #{title}
                 | !{description}
                 div
-                if is_dev
+                if Meteor.inDevelopment
                     +remove_button
                     +print_this
                 +creation_info                
@@ -863,7 +863,7 @@ template(name='food_order_view')
         a.ui.header(href="/m/food_order/#{_id}/view") #{when}
         if charge 
             .ui.header charge
-        if is_dev
+        if Meteor.inDevelopment
             |#{charge.result.id}
         .ui.header $#{charge.result.amount}
         if can_edit 
@@ -880,7 +880,7 @@ template(name='food_order_view')
                 .ui.large.label
                     |tiffen type: #{tiffen_type}
                 +boolean_edit key='delivery' label='add delivery' direct=true                    
-        if is_dev
+        if Meteor.inDevelopment
             +remove_button
             +print_this                
             
