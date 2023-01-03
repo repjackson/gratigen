@@ -1,16 +1,10 @@
 template(name='badge_card')
-    .card
-        .image
-            img.ui.raw.image(src="{{c.url image_id width=400 height=300 crop='fill'}}")    
-        .content
-            .ui.header
-                |#{title}
-            // i.marker.icon
-            // |#{location} 
-            |!{description}
-            each badgers
-                img.ui.avatar.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}" title=name)
-                |#{name}
+    // i.marker.icon
+    // |#{location} 
+    |!{description}
+    each badgers
+        img.ui.avatar.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}" title=name)
+        |#{name}
 
 
 template(name='badge_view')
@@ -18,16 +12,10 @@ template(name='badge_view')
         .row
             .sixteen.wide.column
                 // if can_edit
-                a.ui.icon.button(href="/badges")
-                    i.chevron.left.icon
-                    +i name='prize'
                 +i name=icon cl='ui inline image'
                 .ui.center.aligned.inline.header 
                     small viewing badge: 
                     |#{title}
-                if can_edit
-                    a.ui.icon.large.button.edit_badge(href="/badge/#{_id}/edit")
-                        i.big.pencil.big.blue.icon
         .row 
             .eight.wide.column
                 .ui.header 
@@ -43,7 +31,6 @@ template(name='badge_view')
                 +array_view key='tags' label='tags' direct=true
                 .spacer
                 .spacer
-                +comments
                 //- +array_view key='location_tags' label='location_tags' direct=true
             .eight.wide.column
                 .ui.header 

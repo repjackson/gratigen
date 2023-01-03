@@ -1,10 +1,3 @@
-if Meteor.isClient
-    Router.route '/event/:doc_id', (->
-        @layout 'layout'
-        @render 'event_view'
-        ), name:'event_view'
-        
-                
 if Meteor.isServer 
     Meteor.publish 'my_events_publication', ->
         user = Meteor.user()

@@ -1,24 +1,3 @@
-if Meteor.isClient
-    Router.route '/messages/', (->
-        @layout 'layout'
-        @render 'messages'
-        ), name:'messages'
-    
-
-    Router.route '/message/:doc_id/view', (->
-        @layout 'layout'
-        @render 'message_view'
-        ), name:'message_view'
-
-    Template.message_view.onCreated ->
-        @autorun => Meteor.subscribe 'product_from_message_id', Router.current().params.doc_id
-        @autorun => Meteor.subscribe 'author_from_doc_id', Router.current().params.doc_id
-        @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
-        
-    Template.message_view.onRendered ->
-
-
-
 if Meteor.isServer
     Meteor.publish 'product_from_message_id', (message_id)->
         message = Docs.findOne message_id
@@ -27,18 +6,6 @@ if Meteor.isServer
             
             
 if Meteor.isClient
-    Router.route '/message/:doc_id/edit', (->
-        @layout 'layout'
-        @render 'message_edit'
-        ), name:'message_edit'
-        
-        
-    Template.message_edit.onCreated ->
-        @autorun => Meteor.subscribe 'recipient_from_message_id', Router.current().params.doc_id
-        @autorun => Meteor.subscribe 'author_from_doc_id', Router.current().params.doc_id
-        @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
-
-
     Template.message_edit.helpers
         recipient: ->
             message = Docs.findOne Router.current().params.doc_id
@@ -105,28 +72,8 @@ if Meteor.isClient
         #     # , 7000
 
     
-        'blur .edit_description': (e,t)->
-            textarea_val = t.$('.edit_textarea').val()
-            Docs.update Router.current().params.doc_id,
-                $set:description:textarea_val
-    
-    
-        'blur .edit_text': (e,t)->
-            val = t.$('.edit_text').val()
-            Docs.update Router.current().params.doc_id,
-                $set:"#{@key}":val
-    
-    
-
 
 if Meteor.isClient
-    Template.message_edit.onCreated ->
-        @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
-        @autorun => Meteor.subscribe 'recipient_from_message_id', Router.current().params.doc_id
-        @autorun => Meteor.subscribe 'author_from_doc_id', Router.current().params.doc_id
-    Template.message_edit.onRendered ->
-
-
     Template.message_edit.events
         'click .delete_item': ->
             if confirm 'delete item?'
@@ -158,10 +105,6 @@ if Meteor.isClient
                         )
                         Router.go "/message/#{@_id}/view"
             )
-
-
-    Template.message_edit.helpers
-    Template.message_edit.events
 
 if Meteor.isServer
     Meteor.methods

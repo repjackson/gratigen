@@ -191,8 +191,6 @@ template(name='model_top')
                 i.plus.icon
                 |create session
             
-            
-            
 template(name='toggle_visible_field')            
     .item.toggle_visibility
         if field_visible
@@ -217,11 +215,6 @@ template(name='delta_list')
         //- .column
         +delta_list_result
                         
-                    
-                        
-                
-                
-                
 template(name='set_limit')
     // .item.set_limit #{amount}
     .ui.compact.button.set
@@ -328,6 +321,8 @@ template(name='model_doc_view')
                             +Template.dynamic template=view_template 
                     each current_model.actions
                         +Template.dynamic template=this data=current_doc
+                    +array_view key='tags' label='tags' direct=true
+
                     //- +comments
                     //- div
                     //- if watson
@@ -380,10 +375,7 @@ template(name='offer')
     +author_info
 
 
-
-
-template(name='model_edit_layout')
-    +nav
+template(name='model_edit')
     with current_doc
         .ui.stackable.padded.grid            
             .centered.row
@@ -403,28 +395,29 @@ template(name='model_edit_layout')
                     .ui.divider
                     +boolean_edit key='show_filter_bar' label='show filter bar' direct=true
                     +boolean_edit key='show_facets' label='show facets' direct=true
-                    // a.ui.large.basic.button(href="/model/edit/#{current_doc._id}/" class="{{isActiveRoute 'model_edit_dashboard'}}")
-                    //     i.dashboard.icon
-                    //     |dashboard
-                    // a.ui.large.basic.button(href="/model/edit/#{current_doc._id}/fields" class="{{isActiveRoute 'model_edit_fields'}}")
-                    //     i.list.icon
-                    //     |fields
-                    // a.ui.large.basic.button(href="/model/edit/#{current_doc._id}/modules" class="{{isActiveRoute 'model_edit_modules'}}")
-                    //     i.cubes.icon
-                    //     |modules
-                    // a.ui.large.basic.button(href="/model/edit/#{current_doc._id}/permissions" class="{{isActiveRoute 'model_edit_permissions'}}")
-                    //     i.shield.icon
-                    //     |permissions
                 .twelve.wide.column
+                    .ui.segment 
+                        .ui.header 
+                            i.large.fork.icon
+                            |parent models
+                            
                     +model_edit_dashboard
                     .ui.segment
                         .ui.header 
                             +i name='list'
                             |fields
                         +model_edit_fields
-                    +model_edit_modules 
-                    +model_edit_permissions
-                    // +yield
+                    .ui.segment
+                        .ui.header
+                            +i name='module'
+                            |modules
+                        +boolean_edit key='show_comments' label='comments' icon='chat' direct=true
+                        +boolean_edit key='show_voting' label='voting' icon='elections' direct=true
+                    .spacer
+                    +comments
+                    .ui.header permissions
+                    +multi_doc_edit key='view_roles' label='view roles' ref_model='role' direct=true
+                    +multi_doc_edit key='edit_roles' label='edit roles' ref_model='role' direct=true
                     
                     
                     
@@ -461,23 +454,6 @@ template(name='model_edit_fields')
             +field_edit
         
             
-template(name='model_edit_modules')
-    .ui.segment
-        .ui.header
-            +i name='module'
-            |modules
-        +boolean_edit key='show_comments' label='comments' icon='chat' direct=true
-        +boolean_edit key='show_voting' label='voting' icon='elections' direct=true
-    .spacer
-    +comments
-
-
-template(name='model_edit_permissions')
-    .ui.header permissions
-    +multi_doc_edit key='view_roles' label='view roles' ref_model='role' direct=true
-    +multi_doc_edit key='edit_roles' label='edit roles' ref_model='role' direct=true
-
-
 template(name='field_edit')
     .ui.segment.field_segment
         a.title.field_edit.zoomer(href="#")
@@ -632,12 +608,6 @@ template(name='model_view')
                             +Template.dynamic template=model_doc
                             +array_view key='tags'
                             +edit_button
-
-                    
-
-
-
-
 
 
 template(name='delta_list_result')

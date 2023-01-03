@@ -79,13 +79,6 @@ if Meteor.isClient
                 Docs.remove @_id
                 Router.go "/m/badge"
 
-        'click .publish': ->
-            Docs.update Router.current().params.doc_id,
-                $set:published:true
-            if confirm 'confirm?'
-                Meteor.call 'publish_badge', @_id, =>
-                    Router.go "/badge/#{@_id}/view"
-
         'click .add_badger': ->
             Docs.update Router.current().params.doc_id, 
                 $addToSet: 

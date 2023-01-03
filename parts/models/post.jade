@@ -2,25 +2,11 @@ template(name='post_card')
     .content
         if youtube_id 
             +youtube_view key='youtube_id'
-        if image_id 
-            +image_view key='image_id'
         .content
-            .ui.inline.header #{title}
             if private 
                 i.large.lock.icon
             .smallscroll
                 |!{content}
-                .ui.label 
-                    i.user.icon
-                    |#{_author_username}
-                i.tag.icon
-                each tags 
-                    .ui.basic.label #{this}
-            .ui.small.grey.header
-                i.clock.icon
-                |#{when}
-            // +comments_view_small
-            +author_info
 
 
 template(name='set_post_sort_key')

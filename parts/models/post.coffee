@@ -1,18 +1,4 @@
 if Meteor.isClient
-    Router.route '/post/:doc_id/edit', (->
-        @layout 'layout'
-        @render 'post_edit'
-        ), name:'post_edit'
-    Router.route '/post/:doc_id', (->
-        @layout 'layout'
-        @render 'post_view'
-        ), name:'post_view'
-    Router.route '/post/:doc_id/view', (->
-        @layout 'layout'
-        @render 'post_view'
-        ), name:'post_view_long'
-    
-    
     Template.user_posts.onCreated ->
         @autorun => Meteor.subscribe 'user_posts', Router.current().params.username, ->
     Template.user_posts.helpers
@@ -21,14 +7,8 @@ if Meteor.isClient
                 model:'post'
             }, sort:_timestamp:-1    
     
-    Template.post_view.onCreated ->
-        @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
     Template.post_view.onRendered ->
         Meteor.call 'mark_doc_read', Router.current().params.doc_id, ->
-    Template.post_edit.onCreated ->
-        @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
-    Template.post_card.onCreated ->
-        @autorun => Meteor.subscribe 'doc_comments', @data._id, ->
 
 if Meteor.isServer 
     Meteor.methods 
@@ -39,26 +19,11 @@ if Meteor.isServer
             
 
 if Meteor.isClient
-    Template.post_card.events
-        'click .view_post': ->
-            Router.go "/post/#{@_id}"
-    Template.post_item.events
-        'click .view_post': ->
-            Router.go "/post/#{@_id}"
-
     Template.post_view.helpers
         read_users: ->
             doc = Docs.findOne Router.current().params.doc_id
             Meteor.users.find 
                 _id:$in:doc.read_by_user_ids
-    Template.post_view.events
-        'click .add_post_recipe': ->
-            new_id = 
-                Docs.insert 
-                    model:'recipe'
-                    post_ids:[@_id]
-            Router.go "/recipe/#{new_id}/edit"
-
     # Template.favorite_icon_toggle.helpers
     #     icon_class: ->
     #         if @favorite_ids and Meteor.userId() in @favorite_ids
@@ -108,49 +73,6 @@ if Meteor.isClient
                     Router.go "/posts"
             )
 
-        'click .publish': ->
-            Swal.fire({
-                title: "publish post?"
-                text: "point bounty will be held from your account"
-                icon: 'question'
-                confirmButtonText: 'publish'
-                confirmButtonColor: 'green'
-                showCancelButton: true
-                cancelButtonText: 'cancel'
-                reverseButtons: true
-            }).then((result)=>
-                if result.value
-                    Meteor.call 'publish_post', @_id, =>
-                        Swal.fire(
-                            position: 'bottom-end',
-                            icon: 'success',
-                            title: 'post published',
-                            showConfirmButton: false,
-                            timer: 1000
-                        )
-            )
-
-        'click .unpublish': ->
-            Swal.fire({
-                title: "unpublish post?"
-                text: "point bounty will be returned to your account"
-                icon: 'question'
-                confirmButtonText: 'unpublish'
-                confirmButtonColor: 'orange'
-                showCancelButton: true
-                cancelButtonText: 'cancel'
-                reverseButtons: true
-            }).then((result)=>
-                if result.value
-                    Meteor.call 'unpublish_post', @_id, =>
-                        Swal.fire(
-                            position: 'bottom-end',
-                            icon: 'success',
-                            title: 'post unpublished',
-                            showConfirmButton: false,
-                            timer: 1000
-                        )
-            )
             
 if Meteor.isServer
     Meteor.publish 'user_posts', (username)->
