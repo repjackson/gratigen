@@ -52,14 +52,14 @@ template(name='delta')
                             //-     |#{current_delta.sort_direction}
                             |&nbsp;
                             |&nbsp;
-                            - .ui.inline.small.grey.header
-                            -     |viewing
-                            - .ui.simple.dropdown(title='visible fields')
-                            -     | fields
-                            -     i.dropdown.icon
-                            -     .menu
-                            -         each model_fields
-                            -             +toggle_visible_field
+                            .ui.inline.small.grey.header
+                                |viewing
+                            .ui.simple.dropdown(title='visible fields')
+                                | fields
+                                i.dropdown.icon
+                                .menu
+                                    each model_fields
+                                        +toggle_visible_field
                             |&nbsp;
                             |&nbsp;
                             |&nbsp;
@@ -276,9 +276,6 @@ template(name='toggle_delta_config')
             
 
 
-
-
-
 template(name='model_doc_view')
     with current_doc
         .ui.stackable.padded.grid
@@ -402,21 +399,25 @@ template(name='model_edit_layout')
                     .ui.divider
                     +boolean_edit key='show_filter_bar' label='show filter bar' direct=true
                     +boolean_edit key='show_facets' label='show facets' direct=true
-                    a.ui.large.basic.button(href="/model/edit/#{current_doc._id}/" class="{{isActiveRoute 'model_edit_dashboard'}}")
-                        i.dashboard.icon
-                        |dashboard
-                    a.ui.large.basic.button(href="/model/edit/#{current_doc._id}/fields" class="{{isActiveRoute 'model_edit_fields'}}")
-                        i.list.icon
-                        |fields
-                    a.ui.large.basic.button(href="/model/edit/#{current_doc._id}/modules" class="{{isActiveRoute 'model_edit_modules'}}")
-                        i.cubes.icon
-                        |modules
-                    a.ui.large.basic.button(href="/model/edit/#{current_doc._id}/permissions" class="{{isActiveRoute 'model_edit_permissions'}}")
-                        i.shield.icon
-                        |permissions
+                    // a.ui.large.basic.button(href="/model/edit/#{current_doc._id}/" class="{{isActiveRoute 'model_edit_dashboard'}}")
+                    //     i.dashboard.icon
+                    //     |dashboard
+                    // a.ui.large.basic.button(href="/model/edit/#{current_doc._id}/fields" class="{{isActiveRoute 'model_edit_fields'}}")
+                    //     i.list.icon
+                    //     |fields
+                    // a.ui.large.basic.button(href="/model/edit/#{current_doc._id}/modules" class="{{isActiveRoute 'model_edit_modules'}}")
+                    //     i.cubes.icon
+                    //     |modules
+                    // a.ui.large.basic.button(href="/model/edit/#{current_doc._id}/permissions" class="{{isActiveRoute 'model_edit_permissions'}}")
+                    //     i.shield.icon
+                    //     |permissions
                 .twelve.wide.column
                     +model_edit_dashboard
-                    +model_edit_fields
+                    .ui.segment
+                        .ui.header 
+                            +i name='list'
+                            |fields
+                        +model_edit_fields
                     +model_edit_modules 
                     +model_edit_permissions
                     // +yield
@@ -424,21 +425,22 @@ template(name='model_edit_layout')
                     
                     
 template(name='model_edit_dashboard')
-    .ui.header 
-        +i name='info'
-        |main info
-    .ui.form
-        +text_edit key='title' label='title' direct=true
-        +slug_edit key='slug' label='slug' direct=true
-        +icon_edit key='icon' label='icon' direct=true
-        +textarea_edit key='description' label='description' direct=true
-        +array_edit key='tags' label='tags' direct=true
-        //- +text_edit key='collection' label='collection' direct=true
-        +key_value_edit key='collection' value='docs' icon='document'
-        +key_value_edit key='collection' value='users' icon='users'
-
-        //- +multi_doc_edit key='actions' label='actions' ref_model='action' direct=true
-        //- +text_edit key='app' label='app' direct=true
+    .ui.segment
+        .ui.header 
+            +i name='info'
+            |main info
+        .ui.form
+            +text_edit key='title' label='title' direct=true
+            +slug_edit key='slug' label='slug' direct=true
+            +icon_edit key='icon' label='icon' direct=true
+            +text_edit key='description' label='description' direct=true
+            +array_edit key='tags' label='tags' direct=true
+            //- +text_edit key='collection' label='collection' direct=true
+            +key_value_edit key='collection' value='docs' icon='document'
+            +key_value_edit key='collection' value='users' icon='users'
+    
+            //- +multi_doc_edit key='actions' label='actions' ref_model='action' direct=true
+            //- +text_edit key='app' label='app' direct=true
         
 template(name='model_edit_fields')
     //- |#{model}
@@ -474,7 +476,7 @@ template(name='model_edit_permissions')
 
 template(name='field_edit')
     .ui.segment.field_segment
-        a.title.field_edit(href="#")
+        a.title.field_edit.zoomer(href="#")
             |#{rank}
             if icon
                 +i name=icon cl='ui mini inline image'
