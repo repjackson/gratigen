@@ -71,11 +71,11 @@ template(name='limit_menu')
 
 
 template(name='key_value_edit')
-    .ui.compact.button.set_key_value(class=calculated_class)
+    .ui.icon.button.set_key_value(class=calculated_class title=label)
         if icon 
             // +i name=icon cl='ui avatar image'
-            i.large.icon(class=icon)
-        if label
+            i.big.icon(class=icon)
+        else if label
             |#{label}
         else 
             |#{value}

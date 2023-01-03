@@ -43,12 +43,7 @@ if Meteor.isClient
                     org_ids:@_id
 
 
-Router.route '/org/:doc_id/edit', -> @render 'org_edit'
-
 if Meteor.isClient
-    Template.org_edit.onCreated ->
-        @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
-        # @autorun => Meteor.subscribe 'org_options', Router.current().params.doc_id
     Template.org_edit.events
         'click .add_option': ->
             Docs.insert

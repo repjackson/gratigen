@@ -12,21 +12,6 @@ if Meteor.isClient
             Meteor.users.find   
                 _id:$in:badge.honey_badger_ids
 
-    Router.route '/badge/:doc_id', (->
-        @layout 'layout'
-        @render 'badge_view'
-        ), name:'badge_view'
-    Router.route '/badge/:doc_id/edit', (->
-        @layout 'layout'
-        @render 'badge_edit'
-        ), name:'badge_edit'
-
-    Template.badge_view.onCreated ->
-        @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
-        @autorun => Meteor.subscribe 'all_users'
-   
-    Template.badge_view.onRendered ->
-
 
     Template.badge_view.events
         'click .delete_item': ->

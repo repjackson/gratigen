@@ -1,22 +1,4 @@
 if Meteor.isClient
-    Router.route '/project/:doc_id/edit', (->
-        @layout 'layout'
-        @render 'project_edit'
-        ), name:'project_edit'
-    Router.route '/project/:doc_id', (->
-        @layout 'layout'
-        @render 'project_view'
-        ), name:'project_view'
-    Router.route '/project/:doc_id/view', (->
-        @layout 'layout'
-        @render 'project_view'
-        ), name:'project_view_long'
-    
-    
-    
-    Template.project_card.onCreated ->
-        @autorun => Meteor.subscribe 'doc_comments', @data._id, ->
-
     Template.project_edit.helpers
         child_tasks: ->
             Docs.find
@@ -29,20 +11,6 @@ if Meteor.isClient
                 model:'task'
                 project_id: Router.current().params.doc_id
                 
-                
-                
-    Template.project_card.events
-        'click .view_project': ->
-            Router.go "/project/#{@_id}"
-
-    Template.project_view.events
-        'click .add_project_recipe': ->
-            new_id = 
-                Docs.insert 
-                    model:'recipe'
-                    project_ids:[@_id]
-            Router.go "/recipe/#{new_id}/edit"
-
     # Template.favorite_icon_toggle.helpers
     #     icon_class: ->
     #         if @favorite_ids and Meteor.userId() in @favorite_ids

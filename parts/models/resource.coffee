@@ -125,15 +125,6 @@ if Meteor.isClient
     
     Template.resource_big_card.onCreated ->
         @autorun => @subscribe 'resource_orders',@data._id, ->
-    Template.resource_view.onCreated ->
-        @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
-        @autorun => @subscribe 'resource_orders',Router.current().params.doc_id, ->
-    Template.resource_edit.onCreated ->
-        @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
-        @autorun => @subscribe 'resource_orders',Router.current().params.doc_id, ->
-    Template.resource_view.onRendered ->
-        Docs.update Router.current().params.doc_id, 
-            $inc:views:1
     
     Template.resource_view.helpers
         future_order_docs: ->

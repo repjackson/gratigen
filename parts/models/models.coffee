@@ -1,63 +1,6 @@
 if Meteor.isClient
     @picked_tags = new ReactiveArray []
     
-    Router.route '/task/:doc_id', (->
-        @layout 'layout'
-        @render 'task_view'
-        ), name:'task_view'
-    Router.route '/tasks', (->
-        @layout 'layout'
-        @render 'tasks'
-        ), name:'tasks'
-    Router.route '/my_tasks', (->
-        @layout 'layout'
-        @render 'tasks'
-        ), name:'my_tasks'
-    
-    Template.tasks.onCreated ->
-        @autorun => @subscribe 'task_docs',
-            picked_tags.array()
-            Session.get('task_title_filter')
-
-        @autorun => @subscribe 'task_facets',
-            picked_tags.array()
-            Session.get('task_title_filter')
-
-    Template.tasks.events
-        'click .pick_task_tag': -> picked_tags.push @title
-        'click .unpick_task_tag': -> picked_tags.remove @valueOf()
-
-                
-            
-    Template.tasks.helpers
-        picked_tags: -> picked_tags.array()
-    
-        task_docs: ->
-            Docs.find 
-                model:'task'
-                # group_id: Meteor.user().current_group_id
-                
-        task_tag_results: ->
-            Results.find {
-                model:'task_tag'
-            }, sort:_timestamp:-1
-  
-                
-
-            
-    Template.task_edit.onCreated ->
-        @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
-        @autorun => Meteor.subscribe 'task_work', Router.current().params.doc_id, ->
-        @autorun => Meteor.subscribe 'model_docs', 'location', ->
-        @autorun => Meteor.subscribe 'child_groups_from_parent_id', Router.current().params.doc_id,->
- 
-    Template.task_view.onCreated ->
-        @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
-        @autorun => Meteor.subscribe 'task_work', Router.current().params.doc_id, ->
-        @autorun => Meteor.subscribe 'model_docs', 'location', ->
-    
-
-
     Template.task_view.events
         'click .record_work': ->
             new_id = Docs.insert 
@@ -130,19 +73,6 @@ if Meteor.isServer
             
             
 if Meteor.isClient
-    Router.route '/task/:doc_id/edit', (->
-        @layout 'layout'
-        @render 'task_edit'
-        ), name:'task_edit'
-
-
-
-    Template.task_edit.onCreated ->
-        @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id
-        # @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
-        # @autorun => Meteor.subscribe 'model_docs', 'menu_section'
-
-
     Template.task_edit.events
         'click .send_task': ->
             Swal.fire({
@@ -193,43 +123,6 @@ if Meteor.isClient
     @picked_tasks = new ReactiveArray []
     @picked_timestamp_tags = new ReactiveArray []
     
-    Router.route '/work', (->
-        @layout 'layout'
-        @render 'work'
-        ), name:'work'
-    Router.route '/user/:username/work', (->
-        @layout 'user_layout'
-        @render 'user_work'
-        ), name:'user_work'
-    Router.route '/work/:doc_id', (->
-        @layout 'layout'
-        @render 'work_view'
-        ), name:'work_view'
-    
-    
-    
-    Template.work.onCreated ->
-        @autorun => @subscribe 'work_docs',
-            picked_authors.array()
-            picked_tasks.array()
-            picked_locations.array()
-            picked_timestamp_tags.array()
-        @autorun => @subscribe 'work_facets',
-            picked_authors.array()
-            picked_tasks.array()
-            picked_locations.array()
-            picked_timestamp_tags.array()
-            
-            
-    Template.work_edit.onCreated ->
-        @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
-        @autorun => Meteor.subscribe 'model_docs', 'location', ->
-        @autorun => Meteor.subscribe 'model_docs', 'staff', ->
-
-    Template.work_view.onCreated ->
-        @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
-        @autorun => Meteor.subscribe 'work_task', Router.current().params.doc_id, ->
-
 
     Template.work.helpers
         task_results: ->

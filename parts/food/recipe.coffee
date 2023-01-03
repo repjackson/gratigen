@@ -1,29 +1,6 @@
 if Meteor.isClient
-    Router.route '/recipes/', (->
-        @layout 'layout'
-        @render 'recipes'
-        ), name:'recipes'
-    Router.route '/recipe/', (->
-        @layout 'layout'
-        @render 'recipes'
-        ), name:'recipes2'
-    Router.route '/recipe/:doc_id', (->
-        @layout 'layout'
-        @render 'recipe_page'
-        ), name:'recipe_page'
-        
     @picked_recipe_tags = new ReactiveArray()
     
-    
-    Template.recipes.onRendered ->
-        Meteor.setTimeout ->
-            $('.accordion').accordion()
-        , 1000
-
-    Template.recipes.onCreated ->
-        @autorun => Meteor.subscribe 'recipe_counter', ->
-    Template.recipes.helpers
-        recipe_count: -> Counts.get('recipe_counter') 
     
 if Meteor.isServer
     Meteor.publish 'recipe_counter', (model)->
@@ -85,22 +62,6 @@ if Meteor.isClient
                 Session.set('is_loading', false)
                 Session.set('searching', false)
     
-    Template.recipe_page.onCreated ->
-        @autorun => @subscribe 'doc_by_id', Router.current().params.doc_id, ->
-    Template.recipes.onCreated ->
-        document.title = 'gr recipe'
-        
-        # @autorun => @subscribe 'model_docs','artist', ->
-        @autorun => @subscribe 'recipe_facets',
-            picked_recipe_tags.array()
-            Session.get('title')
-        @autorun => @subscribe 'recipe_results',
-            picked_recipe_tags.array()
-            Session.get('title')
-
-
-
-
     Template.recipe_page.onRendered ->
         # console.log @
         found_doc = Docs.findOne Router.current().params.doc_id
@@ -236,8 +197,6 @@ if Meteor.isClient
                 picked_recipe_tags.push query
             
     Template.recipes.helpers
-        viewing_list: -> Session.equals('view_mode', 'list')
-        viewing_cards: -> Sesisn.equals('view_mode', 'cards')
         one_recipe: -> 
             # console.log 'hi', Docs.find({model:'recipe'}).count() 
             Docs.find({

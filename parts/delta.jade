@@ -82,23 +82,23 @@ template(name='delta')
                             span.ui.small.inline.header(title='total results') #{current_delta.total}
                             |&nbsp;
                             |&nbsp;
-                            with delta
-                                +key_value_edit key='view_mode' value='list'
-                                +key_value_edit key='view_mode' value='cards'
-                            +set_view_mode title='list' icon='list'
-                            +set_view_mode title='cards' icon='clone'
-                            .ui.inline.small.grey.header view
-                            .ui.simple.dropdown.item
-                                |#{current_delta.view_mode}
-                                i.dropdown.icon
-                                .menu
-                                    //+set_view_mode title='table' icon='table'
-                                    +set_view_mode title='items' icon='list'
-                                    +set_view_mode title='map' icon='map'
-                                    +set_view_mode title='graph' icon='graph'
-                            .ui.compact.small.icon.button.toggle_right_panel
-                                i.table.large.icon
-                            .spacer
+                            with current_delta
+                                +key_value_edit key='view_mode' value='list' icon='list'
+                                +key_value_edit key='view_mode' value='cards' icon='th'
+                            // +set_view_mode title='list' icon='list'
+                            // +set_view_mode title='cards' icon='clone'
+                            // .ui.inline.small.grey.header view
+                            // .ui.simple.dropdown.item
+                            //     |#{current_delta.view_mode}
+                            //     i.dropdown.icon
+                            //     .menu
+                            //         //+set_view_mode title='table' icon='table'
+                            //         +set_view_mode title='items' icon='list'
+                            //         +set_view_mode title='map' icon='map'
+                            //         +set_view_mode title='graph' icon='graph'
+                            // .ui.compact.small.icon.button.toggle_right_panel
+                            //     i.table.large.icon
+                            // .spacer
                     .scrolling
                         //- each current_delta.result_ids
                         //-     .ui.header #{this}
@@ -280,7 +280,7 @@ template(name='model_doc_view')
                     .ui.circular.basic.large.button.back_to_model
                         i.chevron.left.icon
                         // i.big.icon(class=current_model.icon)
-                        +i name=icon
+                        +i name=current_model.icon
                         |#{current_model.title}
                     // if can_edit
                     a.ui.large.icon.circular.button(href="/m/#{current_model.slug}/#{_id}/edit" title='Edit')
@@ -302,7 +302,9 @@ template(name='model_doc_view')
                     +creation_info
                     //- +points_transaction
                     +voting_full
+                    +array_view key='tags' label='tags' direct=true
                     +comments
+                    +viewing
                 .twelve.wide.column
                     if template_exists
                         +Template.dynamic template=model_template
@@ -314,14 +316,12 @@ template(name='model_doc_view')
                         // if icon
                         //     i.icon(class=icon)
                         // |#{title}
-                    +viewing
                     each fields
                         // unless header
                         .item
                             +Template.dynamic template=view_template 
                     each current_model.actions
                         +Template.dynamic template=this data=current_doc
-                    +array_view key='tags' label='tags' direct=true
 
                     //- +comments
                     //- div
@@ -400,8 +400,22 @@ template(name='model_edit')
                         .ui.header 
                             i.large.fork.icon
                             |parent models
-                            
-                    +model_edit_dashboard
+                    .ui.segment
+                        .ui.header 
+                            +i name='info'
+                            |main info
+                        .ui.form
+                            +text_edit key='title' label='title' direct=true
+                            +slug_edit key='slug' label='slug' direct=true
+                            +icon_edit key='icon' label='icon' direct=true
+                            +text_edit key='description' label='description' direct=true
+                            +array_edit key='tags' label='tags' direct=true
+                            //- +text_edit key='collection' label='collection' direct=true
+                            +key_value_edit key='collection' value='docs' icon='document'
+                            +key_value_edit key='collection' value='users' icon='users'
+                    
+                            //- +multi_doc_edit key='actions' label='actions' ref_model='action' direct=true
+                            //- +text_edit key='app' label='app' direct=true
                     .ui.segment
                         .ui.header 
                             +i name='list'
@@ -410,42 +424,28 @@ template(name='model_edit')
                     .ui.segment
                         .ui.header
                             +i name='module'
-                            |modules
+                            |blocks/actions
                         +boolean_edit key='show_comments' label='comments' icon='chat' direct=true
                         +boolean_edit key='show_voting' label='voting' icon='elections' direct=true
                     .spacer
                     +comments
-                    .ui.header permissions
+                    .ui.header
+                        +i name='shield'
+                        |permissions
                     +multi_doc_edit key='view_roles' label='view roles' ref_model='role' direct=true
                     +multi_doc_edit key='edit_roles' label='edit roles' ref_model='role' direct=true
                     
                     
                     
-template(name='model_edit_dashboard')
-    .ui.segment
-        .ui.header 
-            +i name='info'
-            |main info
-        .ui.form
-            +text_edit key='title' label='title' direct=true
-            +slug_edit key='slug' label='slug' direct=true
-            +icon_edit key='icon' label='icon' direct=true
-            +text_edit key='description' label='description' direct=true
-            +array_edit key='tags' label='tags' direct=true
-            //- +text_edit key='collection' label='collection' direct=true
-            +key_value_edit key='collection' value='docs' icon='document'
-            +key_value_edit key='collection' value='users' icon='users'
-    
-            //- +multi_doc_edit key='actions' label='actions' ref_model='action' direct=true
-            //- +text_edit key='app' label='app' direct=true
-        
 template(name='model_edit_fields')
     //- |#{model}
     //- each fields
     //-     +Template.dynamic template=edit_template 
     //-     // .ui.header #{key} [#{field}] #{label}
     .spacer
-    .ui.inline.header fields
+    .ui.inline.header 
+        +i name='list'
+        |fields
     .ui.icon.large.compact.button.add_field
         i.plus.green.icon
     .spacer

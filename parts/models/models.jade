@@ -235,9 +235,6 @@ template(name='task_view')
                             if before_image_id
                                 img.ui.tiny.inline.image(src="{{c.url after_image_id width=400 height=300 crop='pad'}}")
                             |#{when} #{_author_username}
-            .column
-                +voting_full
-                +comments
                         
                         
                         
@@ -421,8 +418,6 @@ template(name='work_edit')
                 .ui.red.small.fluid.button.delete_work
                     i.remove.icon   
                     | cancel
-                if in_dev
-                    +print_this
                         
                 
 template(name='work_view')
@@ -455,9 +450,7 @@ template(name='work_view')
                 div.scrolling
                     +html_view key='notes' label='directions' direct=true
                 // +array_view key='tags' label='tags' icon='tags' direct=true
-                +comments
             .four.wide.column
-                +voting_full
                 .ui.header 
                     i.checkmark.icon
                     |vouched by #{vouchers.count}
@@ -471,38 +464,21 @@ template(name='work_view')
                     else
                         .ui.small.button.unvouch
                             |unvouch
-                    
                 .ui.header #{task_points} pts earned
-                if in_dev 
-                    +print_this
-                                            
                                                 
                                                 
 template(name='role_card')
-    .ui.card
-        if youtube_id 
-            +youtube_view key='youtube_id' direct=true
-        if image_id 
-            +image_view key='image_id' direct=true
-        .content
-            .ui.inline.header #{title}
-            if private 
-                i.large.lock.icon
-            .smallscroll
-                |!{content}
-                .ui.label 
-                    i.user.icon
-                    |#{_author_username}
-                i.tag.icon
-                each tags 
-                    .ui.basic.label #{this}
-            .ui.small.grey.header
-                i.clock.icon
-                |#{when}
-            // +comments_view_small
-            +author_info
-            div
-            +eft_viewer_small
+    if youtube_id 
+        +youtube_view key='youtube_id' direct=true
+    .content
+        .ui.inline.header #{title}
+        if private 
+            i.large.lock.icon
+        .smallscroll
+            |!{content}
+        // +comments_view_small
+        div
+        +eft_viewer_small
 
 
 template(name='set_role_sort_key')
@@ -517,11 +493,6 @@ template(name='set_role_sort_key')
             |#{label}
         
         
-                
-                            
-        
-        
-
 template(name='set_view_mode_role')
     .item.set_view
         i.icon(class=icon)
@@ -569,10 +540,7 @@ template(name='role_view')
                     .item #{views} views
                 each viewers
                     .ui.label #{username}
-                +array_view key='tags' label='tags' direct=true
                 +array_view key='badge_titles' label='badges' direct=true
-                +voting_full
-                .ui.header #{when}
                 +eft_viewer
                 //- +array_view key='location_tags' label='location_tags' direct=true
                 +comments
@@ -620,7 +588,6 @@ template(name='role_edit')
             .column
                 .ui.header 
                     small owner - each id should be stored in user account or as nft in crypto wallet.
-                    
                 .ui.header 
                     small author
                     |#{_author.username}

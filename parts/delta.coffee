@@ -1239,8 +1239,8 @@ if Meteor.isClient
 if Meteor.isClient
     Router.route '/model/edit/:doc_id/', (->
         @layout 'layout'
-        @render 'model_edit_dashboard'
-        ), name:'model_edit_dashboard'
+        @render 'model_edit'
+        ), name:'model_edit'
 
 
     Template.model_edit.onCreated ->
