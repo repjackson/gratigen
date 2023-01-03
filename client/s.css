@@ -54,6 +54,10 @@ body {
   filter: invert(1) !important;
 }
 
+.input {
+  margin: 5px !important;
+}
+
 .invert, .ui.image {
   filter: invert(1) !important;
 }

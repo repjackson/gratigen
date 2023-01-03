@@ -1,5 +1,6 @@
 template(name='resource_card')
-    .ui.card(class=resource_card_class)
+    // .ui.card(class=resource_card_class)
+    .content
         a.image.fly_right(href="/resource/#{_id}/") 
             if image_id
                 img.ui.zoomer.pointer.goto_resource.image(src="{{c.url image_id width=400 height=300 crop='pad'}}")

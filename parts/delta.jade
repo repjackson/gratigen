@@ -147,13 +147,13 @@ template(name='delta')
             //- else
             .ui.basic.segment
                 .ui.header
-                    i.big.loading.grey.yin.yang.icon
+                    i.massive.loading.grey.yin.yang.icon
             
             
 template(name='model_top')
     if is_loading
         .ui.header
-            i.grey.loading.yin.yang.icon
+            i.grey.loading.yin.yang.big.icon
             | loading #{current_model.title}...
     else
         unless key_value_is current_delta.model_filter 'model'
@@ -285,7 +285,8 @@ template(name='model_doc_view')
                 .four.wide.column
                     .ui.circular.basic.large.button.back_to_model
                         i.chevron.left.icon
-                        i.big.icon(class=current_model.icon)
+                        // i.big.icon(class=current_model.icon)
+                        +i name=icon
                         |#{current_model.title}
                     // if can_edit
                     a.ui.large.icon.circular.button(href="/m/#{current_model.slug}/#{_id}/edit" title='Edit')
@@ -636,11 +637,12 @@ template(name='model_view')
 
 template(name='delta_result_card')
     with result
-        .ui.card.result.pointer.zoomer.fly_right(class=loading_class tabindex="1")
+        .ui.card(class=loading_class tabindex="1")
             if template_exists
                 +Template.dynamic template=model_template
-            .content
-                i.large.database.icon(title='delta')
+            .content.result.pointer.zoomer.fly_right
+                unless key_value_is 'model' 'model'
+                    i.large.database.icon(title='delta')
                 if key_value_is 'model' 'model'
                     .ui.header
                         // i.icon(class=icon)
@@ -650,40 +652,39 @@ template(name='delta_result_card')
                     each fields
                         +Template.dynamic template=view_template
                         div
-                .extra
-                    if key_value_is 'model' 'model'
-                        //- +user_list_toggle key='bookmark_ids' icon='bookmark' label='bookmark' color='red'
-                        //- a.ui.button.route_model(href="/m/#{slug}")
-                        //-     |view model
-                        //-     i.right.chevron.green.icon
-                            //- +i name='chevron-right' clases='ui avatar image'
-                        if is_admin
-                            a.ui.button.route_model(href="/model/edit/#{_id}")
-                                i.cog.icon
-                                |edit model
-                            // span(title='views')
-                            //     i.grey.eye.icon
-                            //     | #{views}
-                            // .ui.teal.label 
-                            //     |#{app}
-                    else
-                        if can_edit
-                            a.ui.icon.button(href="/m/#{current_model.slug}/#{_id}/edit" title='edit')
-                                i.pencil.large.icon
-                                //- |edit
-                        //- a.ui.icon.large.button(href="/m/#{current_model.slug}/#{_id}/view" title='view')
-                        //-     i.right.chevron.yellow.large.icon
-                    // if is_admin
-                    if _author_id
-                        +author_info
-                    div
-                    +creation_info
-                    div
-                    .ui.small.inline.header #{views} views
-                        //- i.eye.icon
-                        each viewer_usernames
-                            .ui.small.inverted.label #{this}
-                    //- +comments
+                if key_value_is 'model' 'model'
+                    //- +user_list_toggle key='bookmark_ids' icon='bookmark' label='bookmark' color='red'
+                    //- a.ui.button.route_model(href="/m/#{slug}")
+                    //-     |view model
+                    //-     i.right.chevron.green.icon
+                        //- +i name='chevron-right' clases='ui avatar image'
+                    if is_admin
+                        a.ui.button.route_model(href="/model/edit/#{_id}")
+                            i.cog.icon
+                            |edit model
+                        // span(title='views')
+                        //     i.grey.eye.icon
+                        //     | #{views}
+                        // .ui.teal.label 
+                        //     |#{app}
+                else
+                    if can_edit
+                        a.ui.icon.button(href="/m/#{current_model.slug}/#{_id}/edit" title='edit')
+                            i.pencil.large.icon
+                            //- |edit
+                    //- a.ui.icon.large.button(href="/m/#{current_model.slug}/#{_id}/view" title='view')
+                //-     i.right.chevron.yellow.large.icon
+                // if is_admin
+            .content
+                if _author_id
+                    +author_info
+                +creation_info
+                +voting
+                .ui.small.inline.header #{views} views
+                    //- i.eye.icon
+                    each viewer_usernames
+                        .ui.small.inverted.label #{this}
+                //- +comments
                 if is_admin
                     +print_this
                     +remove_button
