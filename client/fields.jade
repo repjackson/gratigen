@@ -149,9 +149,15 @@ template(name='icon_edit')
     a.ui.small.link.label.zoomer(href="https://fomantic-ui.com/elements/icon.html" target='_window')
         i.external.icon
         |fomantic icons
-    a.ui.small.link.label.zoomer(href="https://www.icons8.com" target='_window')
-        i.external.icon
-        |icons8 icons
+    if field_value 
+        a.ui.small.link.label.zoomer(href="https://icons8.com/icon/set/#{field_value}/ios" target='_window')
+            i.search.icon
+            |icons8 icons
+    else         
+        a.ui.small.link.label.zoomer(href="https://www.icons8.com/icons/ios" target='_window')
+            i.external.icon
+            |icons8 icons
+    +text_edit key='icon_color' direct=true
 
 
 // template(name='color_icon_view')
@@ -209,7 +215,7 @@ template(name='ibig')
     // if is_hovering
     //     img.content.fade(src="https://img.icons8.com/color/96/000000/#{name}.png" class=cl title=title)
     // else
-    img.content.fade(src="https://img.icons8.com/color/96/000000/#{name}.png" class=cl title=title)
+    img.content.fade(src="https://img.icons8.com/ios/96/000000/#{name}.png" class=cl title=title)
 // template(name='iios')
 //     img(src="https://img.icons8.com/ios/48/000000/#{name}.png" class=cl title=title)
 //     //- img(src="https://img.icons8.com/ultraviolet/48/000000/#{name}.png" class=cl title=title)
@@ -958,7 +964,7 @@ template(name='multi_doc_edit')
         +i name=icon cl='ui mini inline image'
     .ui.inline.header(title=key)
         |#{title} #{label}    
-    i.remove.link.circular.icon.zoomer.clear_ref_field
+    i.remove.link.circular.red.icon.invert.zoomer.clear_ref_field(title='clear field values')
     each choices
         if slug
             .ui.compact.button.pick_choice.zoomer(class=choice_class)

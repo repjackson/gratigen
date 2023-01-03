@@ -1,37 +1,16 @@
 template(name='nav')
     // https://fomantic-ui.com/elements/icon.html#/icon
     #topnav.topnav.ui.attached.borderless.menu.hscroll(class=invert_class)
-        // if is_loading
-        //     .icon.item
-        //         i.big.loading.grey.refresh.icon.cancel
-        // else 
-        // a.icon.item.toggle_leftbar
-        //     i.large.bars.icon
-        a.header.image.item.zoomer(href='/' class="{{isActivePath '/'}}" )
-            // +i name='network'
-            img.ui.mini.image(src="/logo.png")
-            
-            // i.large.home.icon
+        a.header.image.item.zoomer(href='/' class="{{isActivePath '/'}}" title='gratihome')
+            if is_loading
+                .icon.item
+                    i.big.loading.grey.refresh.icon.cancel
+            else 
+                img.ui.mini.image(src="/logo.png")
             span.mobile.hidden Gratigen
-        // span.mobile.hidden
-        // +top_nav_item route='my_accounts' label='accounts' icon='data-in-both-directions' color='40C057'
-        // +top_nav_item route='my_orgs' icon='groups' color='83DFF4' label='organizations'
-        // +top_nav_item route='my_projects' icon='project' color='7229AF' label='projects'
-        // +top_nav_item route='my_events' icon='calendar' color='FAB005' label='events'
-        // +top_nav_item route='my_roles' icon='what-i-do' color='42E8C4' label='roles'
-        // +top_nav_item route='my_tasks' icon='task' color='B785E1' label='tasks'
-        // +top_nav_item route='my_resources' icon='car' color='FD7E14' label='resources'
-        // +top_nav_item route='my_skills' icon='wrench' color='ff0000' label='skills'
-        // +top_nav_item route='my_badges' label='badges' icon='badge' color='1255B8'
-            //accounts gold-bars
-
         if currentUser.admin
-            // +nav_item route='admin' icon='shield' color='FFFFFF' label='admin'
-            a.icon.item.toggle_admin_mode(title='toggle admin mode')
-                i.large.shield.icon
-            
-        // a.icon.item.toggle_invert
-        //     i.lightbulb.icon
+            +toggle_nav_item key='admin_mode' icon='shield' label='admin mode'
+        +toggle_nav_item key='invert_mode' icon='lightbulb' label='invert mode'
         // .search.item.zoomer.mobile.hidden(title='search')
         //     .ui.icon.transparent.input
         //         if current_product_search
@@ -86,6 +65,12 @@ template(name='nav')
             // if session_is 'viewing_alerts'
             //     +topbar
                 
+                
+template(name='toggle_nav_item')
+    a.icon.item.toggle(class=toggle_item_class title="toggle #{label}")
+        i.large.icon(class=icon)
+          
+          
                 
                 
 template(name='secnav')

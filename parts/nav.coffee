@@ -2,14 +2,14 @@ if Meteor.isClient
     Template.nav.onCreated ->
         @autorun => Meteor.subscribe 'me'
         @autorun => Meteor.subscribe 'all_users'
-        @autorun => Meteor.subscribe 'model_docs', 'field', ->
+        # @autorun => Meteor.subscribe 'model_docs', 'field', ->
         
         # @autorun => Meteor.subscribe 'my_cart'
         # @autorun => Meteor.subscribe 'my_cart_order'
         # @autorun => Meteor.subscribe 'my_cart_products'
 
     Template.nav.onRendered ->
-        Session.setDefault('invert_mode', false)
+        Session.setDefault('invert_mode', true)
     Template.nav.onRendered ->
         Meteor.setTimeout ->
             $('.menu .item')
@@ -90,13 +90,6 @@ if Meteor.isClient
         'click .alerts': ->
             Session.set('viewing_alerts', !Session.get('viewing_alerts'))
             
-        'click .toggle_admin_mode': ->
-            if Meteor.user().admin_mode
-                Meteor.users.update Meteor.userId(),
-                    $set:admin_mode:false
-            else 
-                Meteor.users.update Meteor.userId(),
-                    $set:admin_mode:true
             # if 'admin' in Meteor.user().roles
             #     Meteor.users.update Meteor.userId(),
             #         $pull:'roles':'admin'
@@ -121,6 +114,22 @@ if Meteor.isClient
                     invert_mode:!Meteor.user().invert_mode
             Session.set('invert_mode', !Session.get('invert_mode'))
             console.log Session.get('invert_mode')
+        
+    Template.toggle_nav_item.events 
+        'click .toggle': ->
+            if Meteor.user()["#{@key}"]
+                Meteor.users.update Meteor.userId(),
+                    $set:"#{@key}":false
+            else 
+                Meteor.users.update Meteor.userId(),
+                    $set:"#{@key}":true
+    Template.toggle_nav_item.helpers 
+        toggle_item_class: ->
+            if Meteor.user()["#{@key}"]
+                'active red'
+            else 
+                ''
+
         
     Template.nav.helpers
         model_docs: ->

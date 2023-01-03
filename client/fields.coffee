@@ -602,7 +602,7 @@ Template.multi_doc_edit.helpers
         target = Template.parentData(2)
 
         if target["#{ref_field.key}"]
-            if @_id in target["#{ref_field.key}"] then 'active large' else 'compact circular'
+            if @_id in target["#{ref_field.key}"] then 'active large' else 'compact circular small'
         else
             ''
 

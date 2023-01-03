@@ -328,6 +328,12 @@ Template.registerHelper 'product_subs', () ->
 #         if 'frontdesk' in Meteor.user().current_roles then true else false
 
 
+Template.registerHelper 'invert_mode', () ->
+    if Meteor.user() and Meteor.user().invert_mode
+        'invert'
+    else 
+        ''
+
 Template.registerHelper 'is_dev', () ->
     Meteor.user() and Meteor.user().username is 'dev'
     # if Meteor.user() and Meteor.user().roles
