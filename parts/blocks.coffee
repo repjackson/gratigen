@@ -10,6 +10,51 @@
 
 
 if Meteor.isClient
+    Template.publish_button.events
+        'click .publish': ->
+            Swal.fire({
+                title: "publish role?"
+                text: "point bounty will be held from your account"
+                icon: 'question'
+                confirmButtonText: 'publish'
+                confirmButtonColor: 'green'
+                showCancelButton: true
+                cancelButtonText: 'cancel'
+                reverseButtons: true
+            }).then((result)=>
+                if result.value
+                    Meteor.call 'publish_role', @_id, =>
+                        Swal.fire(
+                            position: 'bottom-end',
+                            icon: 'success',
+                            title: 'role published',
+                            showConfirmButton: false,
+                            timer: 1000
+                        )
+            )
+
+        'click .unpublish': ->
+            Swal.fire({
+                title: "unpublish role?"
+                text: "point bounty will be returned to your account"
+                icon: 'question'
+                confirmButtonText: 'unpublish'
+                confirmButtonColor: 'orange'
+                showCancelButton: true
+                cancelButtonText: 'cancel'
+                reverseButtons: true
+            }).then((result)=>
+                if result.value
+                    Meteor.call 'unpublish_role', @_id, =>
+                        Swal.fire(
+                            position: 'bottom-end',
+                            icon: 'success',
+                            title: 'role unpublished',
+                            showConfirmButton: false,
+                            timer: 1000
+                        )
+            )
+
     Template.dash_user_info.events 
         'click .print_me': ->
             console.log Meteor.user()

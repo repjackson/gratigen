@@ -1,56 +1,4 @@
 if Meteor.isClient
-    Router.route '/services', (->
-        @layout 'layout'
-        @render 'services'
-        ), name:'services'
-    Router.route '/service/:doc_id/edit', (->
-        @layout 'layout'
-        @render 'service_edit'
-        ), name:'service_edit'
-    Router.route '/service/:doc_id', (->
-        @layout 'layout'
-        @render 'service_view'
-        ), name:'service_view'
-    Router.route '/service/:doc_id/view', (->
-        @layout 'layout'
-        @render 'service_view'
-        ), name:'service_view_long'
-    
-    
-    Template.services.onCreated ->
-        @autorun => @subscribe 'model_docs', 'service', ->
-        # @autorun => @subscribe 'service_docs',
-        #     picked_tags.array()
-        #     Session.get('service_title_filter')
-
-        # @autorun => @subscribe 'service_facets',
-        #     picked_tags.array()
-        #     Session.get('service_title_filter')
-
-    
-    
-    Template.services.events
-        'click .add_service': ->
-            new_id = 
-                Docs.insert 
-                    model:'service'
-            Router.go "/service/#{new_id}/edit"
-            
-            
-            
-    Template.services.helpers
-        picked_tags: -> picked_tags.array()
-    
-        service_docs: ->
-            Docs.find {
-                model:'service'
-                private:$ne:true
-            }, sort:_timestamp:-1    
-        tag_results: ->
-            Results.find {
-                model:'tag'
-            }, sort:_timestamp:-1
-
     Template.user_services.onCreated ->
         @autorun => Meteor.subscribe 'user_services', Router.current().params.username, ->
     Template.user_services.helpers
@@ -59,28 +7,8 @@ if Meteor.isClient
                 model:'service'
             }, sort:_timestamp:-1    
     
-    Template.service_view.onCreated ->
-        @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
-    Template.service_edit.onCreated ->
-        @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
-    Template.service_card.onCreated ->
-        @autorun => Meteor.subscribe 'doc_comments', @data._id, ->
 
 
-    Template.service_card.events
-        'click .view_service': ->
-            Router.go "/service/#{@_id}"
-    Template.service_item.events
-        'click .view_service': ->
-            Router.go "/service/#{@_id}"
-
-    Template.service_view.events
-        'click .add_service_recipe': ->
-            new_id = 
-                Docs.insert 
-                    model:'recipe'
-                    service_ids:[@_id]
-            Router.go "/recipe/#{new_id}/edit"
 
     # Template.favorite_icon_toggle.helpers
     #     icon_class: ->
@@ -131,50 +59,6 @@ if Meteor.isClient
                     Router.go "/services"
             )
 
-        'click .publish': ->
-            Swal.fire({
-                title: "publish service?"
-                text: "point bounty will be held from your account"
-                icon: 'question'
-                confirmButtonText: 'publish'
-                confirmButtonColor: 'green'
-                showCancelButton: true
-                cancelButtonText: 'cancel'
-                reverseButtons: true
-            }).then((result)=>
-                if result.value
-                    Meteor.call 'publish_service', @_id, =>
-                        Swal.fire(
-                            position: 'bottom-end',
-                            icon: 'success',
-                            title: 'service published',
-                            showConfirmButton: false,
-                            timer: 1000
-                        )
-            )
-
-        'click .unpublish': ->
-            Swal.fire({
-                title: "unpublish service?"
-                text: "point bounty will be returned to your account"
-                icon: 'question'
-                confirmButtonText: 'unpublish'
-                confirmButtonColor: 'orange'
-                showCancelButton: true
-                cancelButtonText: 'cancel'
-                reverseButtons: true
-            }).then((result)=>
-                if result.value
-                    Meteor.call 'unpublish_service', @_id, =>
-                        Swal.fire(
-                            position: 'bottom-end',
-                            icon: 'success',
-                            title: 'service unpublished',
-                            showConfirmButton: false,
-                            timer: 1000
-                        )
-            )
-            
 if Meteor.isServer
     Meteor.publish 'user_services', (username)->
         user = Meteor.users.findOne username:username

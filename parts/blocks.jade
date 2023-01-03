@@ -32,6 +32,10 @@ template(name='viewing_info')
         |last anon viewed: {{med_date last_anon_viewed_timestamp}}
 
 
+template(name='publish_button')
+    .ui.button.publish 
+        |publish
+
 template(name='session_icon_button')
     .ui.icon.circular.button.set_session_value(class=session_icon_button_class)
         +i name=icon

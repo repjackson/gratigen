@@ -305,10 +305,8 @@ template(name='model_doc_view')
                     each viewer_usernames
                         .ui.small.label #{this}
                     
-                    .ui.small.header
-                        |by
-                        +author_info
-                        +creation_info
+                    +author_info
+                    +creation_info
                     //- +points_transaction
                     +voting_full
                     +comments
@@ -323,6 +321,7 @@ template(name='model_doc_view')
                         // if icon
                         //     i.icon(class=icon)
                         // |#{title}
+                    +viewing
                     each fields
                         // unless header
                         .item

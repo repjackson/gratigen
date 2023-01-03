@@ -459,13 +459,6 @@ if Meteor.isClient
         @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
     Template.role_edit.onCreated ->
         @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
-    Template.role_card.onCreated ->
-        @autorun => Meteor.subscribe 'doc_comments', @data._id, ->
-
-
-    Template.role_card.events
-        'click .view_role': ->
-            Router.go "/role/#{@_id}"
     Template.role_item.events
         'click .view_role': ->
             Router.go "/role/#{@_id}"
@@ -527,49 +520,6 @@ if Meteor.isClient
                     Router.go "/roles"
             )
 
-        'click .publish': ->
-            Swal.fire({
-                title: "publish role?"
-                text: "point bounty will be held from your account"
-                icon: 'question'
-                confirmButtonText: 'publish'
-                confirmButtonColor: 'green'
-                showCancelButton: true
-                cancelButtonText: 'cancel'
-                reverseButtons: true
-            }).then((result)=>
-                if result.value
-                    Meteor.call 'publish_role', @_id, =>
-                        Swal.fire(
-                            position: 'bottom-end',
-                            icon: 'success',
-                            title: 'role published',
-                            showConfirmButton: false,
-                            timer: 1000
-                        )
-            )
-
-        'click .unpublish': ->
-            Swal.fire({
-                title: "unpublish role?"
-                text: "point bounty will be returned to your account"
-                icon: 'question'
-                confirmButtonText: 'unpublish'
-                confirmButtonColor: 'orange'
-                showCancelButton: true
-                cancelButtonText: 'cancel'
-                reverseButtons: true
-            }).then((result)=>
-                if result.value
-                    Meteor.call 'unpublish_role', @_id, =>
-                        Swal.fire(
-                            position: 'bottom-end',
-                            icon: 'success',
-                            title: 'role unpublished',
-                            showConfirmButton: false,
-                            timer: 1000
-                        )
-            )
             
 if Meteor.isServer
     Meteor.publish 'user_roles', (username)->

@@ -1,50 +1,9 @@
-template(name='services')
-    .ui.stackable.padded.grid 
-        .four.wide.column
-            .ui.inline.header 
-                +i name='blog'
-                |services
-                // if currentUser
-                .ui.icon.button.add_service
-                    i.plus.large.icon
-            each picked_tags
-                a.ui.blue.button.unpick_service_tag
-                    |#{this}
-            each tag_results
-                // if title
-                a.ui.compact.button.pick_service_tag
-                    |#{title} 
-                    // small.ui.grey.text #{count}
-                    
-        .twelve.wide.column
-            .ui.centered.stackable.cards
-                each service_docs 
-                    +service_card
-                    
-                    
 template(name='service_card')
-    a.ui.card.fly_right(href="/service/#{_id}")
-        if youtube_id 
-            +youtube_view key='youtube_id' 
-        if image_id 
-            +image_view key='image_id' 
-        .content
-            .ui.inline.header #{title}
-            if private 
-                i.large.lock.icon
-            .smallscroll
-                |!{content}
-                .ui.label 
-                    i.user.icon
-                    |#{_author_username}
-                i.tag.icon
-                each tags 
-                    .ui.basic.label #{this}
-            .ui.small.grey.header
-                i.clock.icon
-                |#{when}
-            // +comments_view_small
-            +author_info
+    .content
+        if private 
+            i.large.lock.icon
+        .smallscroll
+            |!{content}
 
 
 template(name='set_service_sort_key')

@@ -120,50 +120,6 @@ if Meteor.isClient
                     Router.go "/m/request"
             )
 
-        'click .publish': ->
-            Swal.fire({
-                title: "publish request?"
-                text: "point bounty will be held from your account"
-                icon: 'question'
-                confirmButtonText: 'publish'
-                confirmButtonColor: 'green'
-                showCancelButton: true
-                cancelButtonText: 'cancel'
-                reverseButtons: true
-            }).then((result)=>
-                if result.value
-                    Meteor.call 'publish_request', @_id, =>
-                        Swal.fire(
-                            position: 'bottom-end',
-                            icon: 'success',
-                            title: 'request published',
-                            showConfirmButton: false,
-                            timer: 1000
-                        )
-            )
-
-        'click .unpublish': ->
-            Swal.fire({
-                title: "unpublish request?"
-                text: "point bounty will be returned to your account"
-                icon: 'question'
-                confirmButtonText: 'unpublish'
-                confirmButtonColor: 'orange'
-                showCancelButton: true
-                cancelButtonText: 'cancel'
-                reverseButtons: true
-            }).then((result)=>
-                if result.value
-                    Meteor.call 'unpublish_request', @_id, =>
-                        Swal.fire(
-                            position: 'bottom-end',
-                            icon: 'success',
-                            title: 'request unpublished',
-                            showConfirmButton: false,
-                            timer: 1000
-                        )
-            )
-
 
     Template.request_edit.helpers
     Template.request_edit.events

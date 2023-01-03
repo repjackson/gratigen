@@ -92,49 +92,6 @@ if Meteor.isClient
                     Router.go "/projects"
             )
 
-        'click .publish': ->
-            Swal.fire({
-                title: "publish project?"
-                text: "point bounty will be held from your account"
-                icon: 'question'
-                confirmButtonText: 'publish'
-                confirmButtonColor: 'green'
-                showCancelButton: true
-                cancelButtonText: 'cancel'
-                reverseButtons: true
-            }).then((result)=>
-                if result.value
-                    Meteor.call 'publish_project', @_id, =>
-                        Swal.fire(
-                            position: 'bottom-end',
-                            icon: 'success',
-                            title: 'project published',
-                            showConfirmButton: false,
-                            timer: 1000
-                        )
-            )
-
-        'click .unpublish': ->
-            Swal.fire({
-                title: "unpublish project?"
-                text: "point bounty will be returned to your account"
-                icon: 'question'
-                confirmButtonText: 'unpublish'
-                confirmButtonColor: 'orange'
-                showCancelButton: true
-                cancelButtonText: 'cancel'
-                reverseButtons: true
-            }).then((result)=>
-                if result.value
-                    Meteor.call 'unpublish_project', @_id, =>
-                        Swal.fire(
-                            position: 'bottom-end',
-                            icon: 'success',
-                            title: 'project unpublished',
-                            showConfirmButton: false,
-                            timer: 1000
-                        )
-            )
             
 if Meteor.isServer
     Meteor.publish 'user_projects', (username)->
