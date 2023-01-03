@@ -17,7 +17,6 @@ template(name='delta_result_card')
 
                     each fields
                         +Template.dynamic template=view_template
-                        div
                 if key_value_is 'model' 'model'
                     //- +user_list_toggle key='bookmark_ids' icon='bookmark' label='bookmark' color='red'
                     //- a.ui.button.route_model(href="/m/#{slug}")
@@ -25,9 +24,9 @@ template(name='delta_result_card')
                     //-     i.right.chevron.green.icon
                         //- +i name='chevron-right' clases='ui avatar image'
                     if is_admin
-                        a.ui.button.route_model(href="/model/edit/#{_id}")
+                        a.ui.circular.icon.button.route_model(href="/model/edit/#{_id}" title='edit model')
                             i.cog.icon
-                            |edit model
+                            // |edit model
                         // span(title='views')
                         //     i.grey.eye.icon
                         //     | #{views}

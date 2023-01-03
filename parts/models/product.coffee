@@ -1,49 +1,20 @@
 if Meteor.isClient
-    Router.route '/product/:doc_id', (->
-        @layout 'layout'
-        @render 'product_view'
-        ), name:'product_view'
-    # Router.route '/product/:doc_id/orders', (->
-    #     @layout 'product_layout'
-    #     @render 'product_orders'
-    #     ), name:'product_orders'
-    # Router.route '/product/:doc_id/subscriptions', (->
-    #     @layout 'product_layout'
-    #     @render 'product_subscriptions'
-    #     ), name:'product_subscriptions'
-    # Router.route '/product/:doc_id/comments', (->
-    #     @layout 'product_layout'
-    #     @render 'product_comments'
-    #     ), name:'product_comments'
-    # Router.route '/product/:doc_id/reviews', (->
-    #     @layout 'product_layout'
-    #     @render 'product_reviews'
-    #     ), name:'product_reviews'
-    # Router.route '/product/:doc_id/inventory', (->
-    #     @layout 'product_layout'
-    #     @render 'product_inventory'
-    #     ), name:'product_inventory'
-
-
     Template.product_view.onCreated ->
         @autorun => Meteor.subscribe 'product_source', Router.current().params.doc_id, ->
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id, ->
         @autorun => Meteor.subscribe 'ingredients_from_product_id', Router.current().params.doc_id, ->
         @autorun => Meteor.subscribe 'orders_from_product_id', Router.current().params.doc_id, ->
         @autorun => Meteor.subscribe 'subs_from_product_id', Router.current().params.doc_id, ->
-    Template.product_view.onRendered ->
-        Meteor.call 'log_view', Router.current().params.doc_id
-        # @autorun => Meteor.subscribe 'ingredients_from_product_id', Router.current().params.doc_id
     Template.product_view.events
-        'click .generate_qrcode': (e,t)->
-            qrcode = new QRCode(document.getElementById("qrcode"), {
-                text: @title,
-                width: 250,
-                height: 250,
-                colorDark : "#000000",
-                colorLight : "#ffffff",
-                correctLevel : QRCode.CorrectLevel.H
-            })
+        # 'click .generate_qrcode': (e,t)->
+        #     qrcode = new QRCode(document.getElementById("qrcode"), {
+        #         text: @title,
+        #         width: 250,
+        #         height: 250,
+        #         colorDark : "#000000",
+        #         colorLight : "#ffffff",
+        #         correctLevel : QRCode.CorrectLevel.H
+        #     })
 
         'click .calc_stats': (e,t)->
             Meteor.call 'calc_product_data', Router.current().params.doc_id, ->

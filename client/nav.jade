@@ -12,11 +12,7 @@ template(name='nav')
             img.ui.mini.image(src="/logo.png")
             
             // i.large.home.icon
-            span.mobile.hidden gratigen
-        a.item(href="/m/model")
-            i.database.large.icon
-            .mobile.hidden manage models
-            
+            span.mobile.hidden Gratigen
         // span.mobile.hidden
         // +top_nav_item route='my_accounts' label='accounts' icon='data-in-both-directions' color='40C057'
         // +top_nav_item route='my_orgs' icon='groups' color='83DFF4' label='organizations'
@@ -52,9 +48,9 @@ template(name='nav')
             else
                 a.icon.item(href="/inbox" class="{{isActiveRoute 'inbox'}}")
                     i.large.outline.bell.icon
-            a.item.zoomer(href="/chat" class="{{isActiveRoute 'chat'}}")
-                // i.large.inbox.icon
-                +i name='chat' color='blue'
+            // a.item.zoomer(href="/chat" class="{{isActiveRoute 'chat'}}")
+            //     // i.large.inbox.icon
+            //     +i name='chat' color='blue'
 
             if currentUser
                 // a.item(href='/user/#{currentUser.username}/credit' class="{{isActiveRoute 'user_credit'}}" title='current wallet balance')

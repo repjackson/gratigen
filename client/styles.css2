@@ -686,12 +686,6 @@ input.username_search{
   /* margin: .5em !important;2 */
 }
 
-.ui.header{
-     font-family: 'Raleway', sans-serif !important; 
-     /*font-family: 'Ubuntu', sans-serif !important; */
-     /*font-family: 'Varela Round' !important; */
-    /*font-family: 'Goudy Bookletter 1911', sans-serif !important;*/
-}
 h1.ui.header{
      font-family: 'Varela Round', sans-serif !important; 
     /* font-family: 'Lusitana', serif !important; */

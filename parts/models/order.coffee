@@ -1,24 +1,4 @@
 if Meteor.isClient
-    Router.route '/order/:doc_id', (->
-        @layout 'layout'
-        @render 'order'
-        ), name:'order'
-    Router.route '/order/:doc_id/view', (->
-        @layout 'layout'
-        @render 'order'
-        ), name:'order_long'
-
-
-    Template.order.onCreated ->
-        @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id, ->
-        @autorun => Meteor.subscribe 'product_by_order_id', Router.current().params.doc_id, ->
-        @autorun => Meteor.subscribe 'order_things', Router.current().params.doc_id, ->
-        @autorun => Meteor.subscribe 'model_docs', 'order', ->
-
-
-                
-            
-            
     Template.order.events
         'click .mark_viewed': ->
             # if confirm 'mark viewed?'
