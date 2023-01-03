@@ -10,9 +10,9 @@ template(name='delta')
                 
         with current_model
             // unless current_model.show_facets
-            //     .middle.aligned.row
-            //         .sixteen.wide.column
-            //             +model_top
+            .middle.aligned.row
+                .sixteen.wide.column
+                    +model_top
             .row
                 if current_model.show_facets
                     .four.wide.column
@@ -52,51 +52,51 @@ template(name='delta')
                             //-     |#{current_delta.sort_direction}
                             |&nbsp;
                             |&nbsp;
-                            //- .ui.inline.small.grey.header
-                            //-     |viewing
-                            //- .ui.simple.dropdown(title='visible fields')
-                            //-     | fields
-                            //-     i.dropdown.icon
-                            //-     .menu
-                            //-         each model_fields
-                            //-             +toggle_visible_field
-                            // |&nbsp;
-                            // |&nbsp;
-                            // |&nbsp;
+                            - .ui.inline.small.grey.header
+                            -     |viewing
+                            - .ui.simple.dropdown(title='visible fields')
+                            -     | fields
+                            -     i.dropdown.icon
+                            -     .menu
+                            -         each model_fields
+                            -             +toggle_visible_field
+                            |&nbsp;
+                            |&nbsp;
+                            |&nbsp;
                         
-                            // .ui.simple.dropdown(title='result limit')
-                            //     .text.large #{current_delta.limit}
-                            //     i.dropdown.icon
-                            //     .menu
-                            //         +set_limit amount=1
-                            //         +set_limit amount=5
-                            //         +set_limit amount=10
-                            //         +set_limit amount=20
-                            //         +set_limit amount=50
-                            // |&nbsp;
-                            // |&nbsp;
-                            // |&nbsp;
-                            // |of 
-                            // span.ui.small.inline.header(title='total results') #{current_delta.total}
-                            // |&nbsp;
-                            // |&nbsp;
-                            // // - with delta
-                            // // -     +key_value_edit key='view_mode' value='list'
-                            // // -     +key_value_edit key='view_mode' value='cards'
-                            // +set_view_mode title='list' icon='list'
-                            // +set_view_mode title='cards' icon='clone'
-                            //- .ui.inline.small.grey.header view
-                            //- .ui.simple.dropdown.item
-                            //-     |#{current_delta.view_mode}
-                            //-     i.dropdown.icon
-                            //-     .menu
-                            //-         //- +set_view_mode title='table' icon='table'
-                                    //- +set_view_mode title='items' icon='list'
-                                    //- +set_view_mode title='map' icon='map'
-                                    //- +set_view_mode title='graph' icon='graph'
-                            //- .ui.compact.small.icon.button.toggle_right_panel
-                            //-     i.table.large.icon
-                            //- .spacer
+                            .ui.simple.dropdown(title='result limit')
+                                .text.large #{current_delta.limit}
+                                i.dropdown.icon
+                                .menu
+                                    +set_limit amount=1
+                                    +set_limit amount=5
+                                    +set_limit amount=10
+                                    +set_limit amount=20
+                                    +set_limit amount=50
+                            |&nbsp;
+                            |&nbsp;
+                            |&nbsp;
+                            |of 
+                            span.ui.small.inline.header(title='total results') #{current_delta.total}
+                            |&nbsp;
+                            |&nbsp;
+                            with delta
+                                +key_value_edit key='view_mode' value='list'
+                                +key_value_edit key='view_mode' value='cards'
+                            +set_view_mode title='list' icon='list'
+                            +set_view_mode title='cards' icon='clone'
+                            .ui.inline.small.grey.header view
+                            .ui.simple.dropdown.item
+                                |#{current_delta.view_mode}
+                                i.dropdown.icon
+                                .menu
+                                    //+set_view_mode title='table' icon='table'
+                                    +set_view_mode title='items' icon='list'
+                                    +set_view_mode title='map' icon='map'
+                                    +set_view_mode title='graph' icon='graph'
+                            .ui.compact.small.icon.button.toggle_right_panel
+                                i.table.large.icon
+                            .spacer
                     .scrolling
                         //- each current_delta.result_ids
                         //-     .ui.header #{this}
@@ -415,11 +415,18 @@ template(name='model_edit_layout')
                         i.shield.icon
                         |permissions
                 .twelve.wide.column
-                    +yield
+                    +model_edit_dashboard
+                    +model_edit_fields
+                    +model_edit_modules 
+                    +model_edit_permissions
+                    // +yield
                     
                     
                     
 template(name='model_edit_dashboard')
+    .ui.header 
+        +i name='info'
+        |main info
     .ui.form
         +text_edit key='title' label='title' direct=true
         +slug_edit key='slug' label='slug' direct=true
