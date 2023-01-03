@@ -1,111 +1,21 @@
-template(name='requests')
-    .ui.stackable.padded.grid
-        .four.wide.column
-            .ui.inline.header 
-                // i.requests.icon
-                +i name='service-bell'
-                |requests
-            div
-            if currentUser
-                i.plus.large.link.circular.icon.add_request
-            .ui.inline.small.header 
-                i.user.friends.icon
-                |authors
-            each picked_authors
-                a.ui.blue.label.unpick_author
-                    |#{this}
-            each author_results
-                if title
-                    a.ui.basic.circular.small.link.label.pick_author
-                        |#{title} 
-                        small.ui.grey.text #{count}
-            div
-            .ui.small.inline.header
-                i.tags.icon
-                |tags
-            each picked_request_tags
-                a.ui.blue.label.unpick_request
-                    |#{this}
-            each request_tag_results
-                if title
-                    a.ui.basic.circular.small.link.label.pick_request
-                        |#{title} 
-                        small.ui.grey.text #{count}
-            div
-            // .ui.small.inline.header
-            //     i.fire.icon
-            //     |groups
-            // each picked_request_groups
-            //     a.ui.blue.label.unpick_group
-            //         |#{this}
-            // each request_group_results
-            //     if title
-            //         a.ui.basic.circular.small.link.label.pick_group
-            //             |#{title} 
-            //             small.ui.grey.text #{count}
-        .twelve.wide.column
-            span.sorting_row
-                // +search_input model='request' field='title'
-                // +session_set key='view_users' value='grid' icon='th' 
-                // +session_set key='view_users' value='list' icon='list'
-                // +session_set key='sort_users_direction' value='-1' icon='chevron down'
-                // +session_set key='sort_users_direction' value='1' icon='chevron up'
-                // +session_set key='sort_users_key' value='points' icon='coins'
-                // +session_set key='sort_users_key' value='created_date' icon='clock'
-                // +session_set key='view_limit' value=1
-                +session_set key='view_limit' value=10
-                +session_set key='view_limit' value=20
-                +session_set key='view_limit' value=50
-
-                
-                i.large.sort.icon
-                // +set_sort_key key='comment_count' label='comment count' icon='chat'
-                // +set_sort_key key='views' label='views' icon='eye'
-                // +set_sort_key key='points' label='points' icon='line chart'
-                .ui.compact.icon.button.set_sort_direction(title='toggle sort direction')
-                    if sorting_up
-                        i.sort.amount.down.icon
-                    else
-                        i.sort.amount.up.icon
-                |&nbsp;
-                |&nbsp;
-                .spacer 
-        
-            span.ui.doubling.cards.scrolling
-                each request_docs
-                    +request_card
-                    
-
-
-
 template(name='request_card')
-    .card.pointer.request_card.zoomer
-        .image
-            if youtube_id
-                +youtube_view key='youtube_id' direct=true
-            else if image_id
-                img.ui.zoom.image(src="{{c.url image_id width=400 height=300 crop='fill'}}" class=currentUser.invert_class)    
-        .content
-            .ui.header
-                |#{title}
-                if complete
-                    i.green.checkmark.icon
-            |!{description}
-        .content
-            +comments
-        .content
-            |by 
-            if _author.image_id
-                img.ui.avatar.compact.image(src="{{c.url _author.image_id height=200 width=200 gravity='face' crop='fill'}}")
-            |#{_author.name}
-            .ui.big.basic.label
-                |#{point_bounty}pts
-            .ui.small.inline.header status:#{status}
+    .image
+        if youtube_id
+            +youtube_view key='youtube_id' direct=true
+    .content
+        .ui.header
+            |#{title}
             if complete
-                .ui.basic.label 
-                    |completed by #{completer.name}
-                    |{{from_now completed_timestamp}}
-        
+                i.green.checkmark.icon
+        |!{description}
+        .ui.small.inline.header status:#{status}
+        .ui.big.basic.label
+            |#{point_bounty}pts
+        if complete
+            .ui.basic.label 
+                |completed by #{completer.name}
+                |{{from_now completed_timestamp}}
+    
 
 
 
@@ -125,7 +35,6 @@ template(name='request_view')
                 .ui.header #{when}
                 +array_view key='location_tags' label='location_tags' direct=true
                 div
-                +voting_full
             .column
                 .f13
                     |!{description}
@@ -140,7 +49,6 @@ template(name='request_view')
                     .ui.basic.large.label #{this}
                 .spacer
                 .spacer
-                +comments
                 .ui.header status: #{status}
                 if can_claim
                     .ui.fluid.green.big.button.claim

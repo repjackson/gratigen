@@ -1,70 +1,10 @@
 if Meteor.isClient
-    Router.route '/requests', (->
-        @layout 'layout'
-        @render 'requests'
-        ), name:'requests'
-    
-    Template.requests.onCreated ->
-        @autorun => @subscribe 'request_docs',
-            picked_tags.array()
-            Session.get('request_title_filter')
-
-        @autorun => @subscribe 'request_facets',
-            picked_tags.array()
-            Session.get('request_title_filter')
-
-    Template.requests.events
-        'click .add_request': ->
-            new_id = Docs.insert 
-                model:'request'
-            Router.go "/request/#{new_id}/edit"    
-        'click .pick_request_tag': -> picked_tags.push @title
-        'click .unpick_request_tag': -> picked_tags.remove @valueOf()
-
-                
-            
-    Template.requests.helpers
-        picked_tags: -> picked_tags.array()
-    
-        request_docs: ->
-            Docs.find 
-                model:'request'
-                # group_id: Meteor.user().current_group_id
-                
-        request_tag_results: ->
-            Results.find {
-                model:'request_tag'
-            }, sort:_timestamp:-1
-  
-                
-    
     Template.registerHelper 'claimer', () ->
         Meteor.users.findOne @claimed_user_id
     Template.registerHelper 'completer', () ->
         Meteor.users.findOne @completed_by_user_id
     
     
-    Template.request_card.onCreated ->
-        @autorun => Meteor.subscribe 'doc_comments', @data._id
-
-    Template.request_card.events
-        'click .request_card': ->
-            Router.go "/request/#{@_id}"
-            Docs.update @_id,
-                $inc: views:1
-
-
-    Router.route '/request/:doc_id', (->
-        @layout 'layout'
-        @render 'request_view'
-        ), name:'request_view'
-
-   
-    Template.request_view.onRendered ->
-
-    Template.request_view.onCreated ->
-        @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
-
     Template.request_view.events
         'click .claim': ->
             Docs.update Router.current().params.doc_id,

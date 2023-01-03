@@ -103,37 +103,38 @@ template(name='delta')
                         //- each current_delta.result_ids
                         //-     .ui.header #{this}
                         // if delta_key_value_is 'view_mode' 'cards'
-                        .ui.stackable.cards
-                            if is_loading
-                                each current_delta.result_ids
-                                    .ui.card
-                                        .ui.placeholder
-                                            .rectangular.image
-                                        .content
-                                            .ui.fluid.placeholder
-                                                .header
+                        unless delta_key_value_is 'view_mode' 'list'
+                            .ui.stackable.cards
+                                if is_loading
+                                    each current_delta.result_ids
+                                        .ui.card
+                                            .ui.placeholder
+                                                .rectangular.image
+                                            .content
+                                                .ui.fluid.placeholder
+                                                    .header
+                                                        .line
                                                     .line
-                                                .line
-                                                .line
-                                                .line
-                                                .line
-                            else
-                                each current_delta.result_ids
-                                    +delta_result_card
-                    //     else if delta_key_value_is 'view_mode' 'list'
-                    //         //- .ui.segments
-                    //         each current_delta.result_ids
-                    //             if is_loading
-                    //                 .ui.basic.segment
-                    //                     .ui.fluid.placeholder
-                    //                         .line
-                    //                         .line
-                    //                         .line
-                    //                         .line
-                    //             else 
-                    //                 +delta_list_result
-                    //                 // .ui.divider
-                    // //- +Template.dynamic template=view_mode_template
+                                                    .line
+                                                    .line
+                                                    .line
+                                else
+                                    each current_delta.result_ids
+                                        +delta_result_card
+                        if delta_key_value_is 'view_mode' 'list'
+                            //- .ui.segments
+                            each current_delta.result_ids
+                                if is_loading
+                                    .ui.basic.segment
+                                        .ui.fluid.placeholder
+                                            .line
+                                            .line
+                                            .line
+                                            .line
+                                else 
+                                    +delta_list_result
+                                    // .ui.divider
+                    // - +Template.dynamic template=view_mode_template
             .row 
                 .sixteen.wide.column
                     if model_stats_exists
@@ -310,6 +311,7 @@ template(name='model_doc_view')
                         +creation_info
                     //- +points_transaction
                     +voting_full
+                    +comments
                 .twelve.wide.column
                     if template_exists
                         +Template.dynamic template=model_template
@@ -635,64 +637,6 @@ template(name='model_view')
                     
 
 
-template(name='delta_result_card')
-    with result
-        .ui.card(class=loading_class tabindex="1")
-            .content.result.pointer.zoomer.fly_right
-                unless key_value_is 'model' 'model'
-                    i.grey.database.icon(title='delta')
-                if key_value_is 'model' 'model'
-                    .ui.header
-                        // i.icon(class=icon)
-                        +ibig name=icon
-                        |#{title}
-                else
-                    if title 
-                        .ui.inline.header #{title}
-                    if image_id
-                        img.ui.image(src="{{c.url image_id width=400 height=400}}")
-
-                    each fields
-                        +Template.dynamic template=view_template
-                        div
-                if key_value_is 'model' 'model'
-                    //- +user_list_toggle key='bookmark_ids' icon='bookmark' label='bookmark' color='red'
-                    //- a.ui.button.route_model(href="/m/#{slug}")
-                    //-     |view model
-                    //-     i.right.chevron.green.icon
-                        //- +i name='chevron-right' clases='ui avatar image'
-                    if is_admin
-                        a.ui.button.route_model(href="/model/edit/#{_id}")
-                            i.cog.icon
-                            |edit model
-                        // span(title='views')
-                        //     i.grey.eye.icon
-                        //     | #{views}
-                        // .ui.teal.label 
-                        //     |#{app}
-                else
-                    if can_edit
-                        a.ui.icon.button(href="/m/#{current_model.slug}/#{_id}/edit" title='edit')
-                            i.pencil.large.icon
-                            //- |edit
-                    //- a.ui.icon.large.button(href="/m/#{current_model.slug}/#{_id}/view" title='view')
-                //-     i.right.chevron.yellow.large.icon
-                // if is_admin
-            .content
-                if _author_id
-                    +author_info
-                +creation_info
-                +voting
-                .ui.small.inline.header #{views} views
-                    //- i.eye.icon
-                    each viewer_usernames
-                        .ui.small.inverted.label #{this}
-                //- +comments
-                if is_admin
-                    +print_this
-                    +remove_button
-            if template_exists
-                +Template.dynamic template=model_template
 
 
 
