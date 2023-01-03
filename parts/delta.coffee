@@ -826,7 +826,7 @@ if Meteor.isServer
             if delta.limit
                 limit = delta.limit
             else
-                limit = 10
+                limit = 42
             modifier =
                 {
                     fields:_id:1
