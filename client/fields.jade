@@ -41,7 +41,8 @@ template(name='color_edit')
                     |#{key}
                 else
                     |#{this}
-            input.edit_color(type='color' value=field_value placeholder='color' autocomplete="off")
+            .ui.large.label #{field_value}
+            input.edit_color(type='color' value=field_value placeholder='color' autocomplete="off" class=invert_class)
 
 
 
@@ -129,35 +130,34 @@ template(name='color_icon_edit')
         //- img.ui.inline.image(src="https://img.icons8.com/dusk/48/000000/#{field_value}.png")
         img.ui.inline.image(src="https://img.icons8.com/color/48/000000/#{field_value}.png")
         //- img.ui.inline.image(src="https://img.icons8.com/office/48/000000/#{field_value}.png")
+
 template(name='icon_edit')
-    div
-    if icon
-        //- i.grey.icon(class=icon)
-        +i name=icon
-    .ui.inline.header
-        if title
-            |#{title}
-        else if key
-            |#{key}
-        else
-            |#{this}    
-    if field_value
-        i.large.icon(class=field_value)
-        +i name=field_value
-    .ui.right.icon.input
-        input.icon_val(type='text' value=field_value placeholder='fa class' autocomplete="off")
-    a.ui.small.link.label.zoomer(href="https://fomantic-ui.com/elements/icon.html" target='_window')
-        i.external.icon
-        |fomantic icons
-    if field_value 
-        a.ui.small.link.label.zoomer(href="https://icons8.com/icon/set/#{field_value}/ios" target='_window')
-            i.search.icon
-            |icons8 icons
-    else         
-        a.ui.small.link.label.zoomer(href="https://www.icons8.com/icons/ios" target='_window')
-            i.external.icon
-            |icons8 icons
-    +text_edit key='icon_color' direct=true
+    .ui.segment
+        if icon
+            +i name=icon 
+        .ui.inline.header
+            if title
+                |#{title}
+            else if key
+                |#{key}
+            else
+                |#{this}    
+        if field_value
+            +i name=field_value
+        .ui.input.inline(class=cl)
+            input.icon_val(type='text' value=field_value placeholder='icons8 name' autocomplete="off")
+        // a.ui.small.link.label.zoomer(href="https://fomantic-ui.com/elements/icon.html" target='_window')
+        //     i.external.icon
+        //     |fomantic icons
+        if field_value 
+            a.ui.small.link.label.zoomer(href="https://icons8.com/icon/set/#{field_value}/ios" target='_window')
+                i.search.icon
+                |icons8 icons
+        else         
+            a.ui.small.link.label.zoomer(href="https://www.icons8.com/icons/ios" target='_window')
+                i.external.icon
+                |icons8 icons
+        +color_edit key='icon_color' direct=true
 
 
 // template(name='color_icon_view')
@@ -187,9 +187,9 @@ template(name='i')
             img.content.fade.invert(src="https://img.icons8.com/ios/48/000000/#{name}.png" class=cl title=title)
     else 
         if color
-            img.content.fade.invert(src="https://img.icons8.com/ios/48/#{color}/#{name}.png" class='ui image' title=title)
+            img.content.fade.invert(src="https://img.icons8.com/ios/48/#{color}/#{name}.png" class='ui inline image' title=title)
         else 
-            img.content.fade.invert(src="https://img.icons8.com/ios/48/ffffff/#{name}.png" class='ui image' title=title)
+            img.content.fade.invert(src="https://img.icons8.com/ios/48/ffffff/#{name}.png" class='ui inline image' title=title)
             
 //     // img.content.fade(src="https://img.icons8.com/ios/24/000000/#{name}.png" class=cl title=title)
 //     // img(src="https://img.icons8.com/dusk/64/000000/#{name}.png" class=cl title=title)
