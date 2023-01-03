@@ -376,7 +376,10 @@ Template.textarea_edit.events
 Template.text_edit.events
     'blur .edit_text': (e,t)->
         val = t.$('.edit_text').val()
-        parent = Template.parentData()
+        if @direct
+            parent = Template.parentData()
+        else
+            parent = Template.parentData(5)
 
         doc = Docs.findOne parent._id
         if doc
@@ -470,14 +473,22 @@ Template.skvs.events
 
 Template.boolean_edit.helpers
     boolean_toggle_class: ->
-        parent = Template.parentData()
+        if @direct
+            parent = Template.parentData()
+        else 
+            parent = Template.parentData(5)
+            
         if parent["#{@key}"] then 'active' else 'basic'
 
 
 Template.boolean_edit.events
     'click .toggle_boolean': (e,t)->
         parent = Template.parentData()
-        # $(e.currentTarget).closest('.button').transition('pulse', 100)
+        $(e.currentTarget).closest('.button').transition('bounce', 1000)
+        if @direct
+            parent = Template.parentData()
+        else 
+            parent = Template.parentData(5)
 
         doc = Docs.findOne parent._id
         if doc

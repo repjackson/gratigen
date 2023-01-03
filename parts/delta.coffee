@@ -69,7 +69,7 @@ if Meteor.isClient
         if model
             Docs.find {
                 model:'field'
-                # parent_id:model._id
+                parent_id:model._id
                 # edit_roles:$in:Meteor.user().roles
             }, sort:rank:1
 
