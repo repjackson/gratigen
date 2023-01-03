@@ -588,7 +588,8 @@ Template.multi_doc_view.helpers
 
 
 Template.multi_doc_edit.onCreated ->
-    @autorun => Meteor.subscribe 'model_docs', @data.ref_model
+    @autorun => Meteor.subscribe 'model_docs', @data.ref_model, (err,res)->
+        console.log res
 Template.multi_doc_edit.helpers
     choices: ->
         Docs.find model:@ref_model
@@ -601,13 +602,21 @@ Template.multi_doc_edit.helpers
         target = Template.parentData(2)
 
         if target["#{ref_field.key}"]
-            if @slug in target["#{ref_field.key}"] then 'active' else ''
+            if @_id in target["#{ref_field.key}"] then 'active large' else 'compact circular'
         else
             ''
 
-
 Template.multi_doc_edit.events
-    'click .select_choice': ->
+    'click .clear_ref_field': ->
+        console.log @
+        parent = Template.parentData()
+        if @direct
+            if confirm "clear #{@key}?"
+                Docs.update parent._id,
+                    $unset:
+                        "#{@key}":1
+        # console.log Template.parentData(2)
+    'click .pick_choice': ->
         selection = @
         ref_field = Template.currentData()
         if ref_field.direct
@@ -624,16 +633,18 @@ Template.multi_doc_edit.events
 
         #
 
-        if parent["#{ref_field.key}"] and @slug in parent["#{ref_field.key}"]
+        if parent["#{ref_field.key}"] and @_id in parent["#{ref_field.key}"]
             doc = Docs.findOne parent._id
+            console.log 'pulling from', doc
             if doc
                 Docs.update parent._id,
-                    $pull:"#{ref_field.key}":@slug
+                    $pull:"#{ref_field.key}":@_id
         else
             doc = Docs.findOne parent._id
+            console.log 'adding to on', doc
             if doc
                 Docs.update parent._id,
-                    $addToSet: "#{ref_field.key}": @slug
+                    $addToSet: "#{ref_field.key}": @_id
 
 
 

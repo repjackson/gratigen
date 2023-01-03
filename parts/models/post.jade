@@ -76,34 +76,6 @@ template(name='post_view')
             .four.wide.column
                 .ui.basic.segment
                     .ui.header #{title}
-                    // a.ui.circular.button.fly_left(href="/posts")
-                    //     i.chevron.left.big.icon
-                    //     i.newspaper.big.icon
-                    //     .ui.inline.header posts
-                    // div
-                    // .ui.inline.grey.header {{from_now start_datetime}}
-                    
-                    if can_edit
-                        a.ui.circular.icon.button.edit_post(href="/post/#{_id}/edit" title='edit')
-                            i.big.link.pencil.icon
-                    .ui.segment
-                        .ui.header 
-                            small author
-                        a.ui.header(href="/user/#{_author.username}") 
-                            img.ui.avatar.image(src="{{c.url _author.image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                            |#{_author.username}
-                    .ui.small.grey.header 
-                        i.line.chart.icon
-                        |stats
-                    .ui.list
-                        .item #{views} views
-                    each viewers
-                        .ui.label #{username}
-                    +array_view key='tags' label='tags'
-                    +voting_full
-                    .ui.header #{when}
-                    //- +array_view key='location_tags' label='location_tags'
-                    // +comments
             .eight.wide.column.scrolling
                 img.ui.image(src="{{c.url image_id }}" class=currentUser.invert_class)
                 // a.ui.header(href="/user/#{target.username}")
@@ -116,13 +88,6 @@ template(name='post_view')
                 .spacer
                 if watson 
                     +watson_view
-            .four.wide.column
-                .ui.header read by 
-                // each read_users 
-                //     .item #{username}
-                .ui.fluid.green.button.submit
-                    i.checkmark.icon
-                    |submit
                     
                     
                     
@@ -133,8 +98,6 @@ template(name='post_edit')
                 .ui.inline.header 
                     +icolor name='news' cl='ui image inline pointer'
                     |edit post
-                a.ui.icon.green.big.button(href="/post/#{_id}" title='save')
-                    i.checkmark.big.icon
                 +text_edit key='title' label='title'
                 +html_edit key='content' label='content'
                 +youtube_edit key='youtube_id' label='youtube id'

@@ -718,7 +718,7 @@ template(name='skvs')
 
 template(name='boolean_edit')
     //- div
-    .ui.compact.button.toggle_boolean(class="#{boolean_toggle_class} #{cl}" title=tooltip)
+    .ui.large.button.toggle_boolean(class="#{boolean_toggle_class} #{cl}" title=tooltip)
         if field_value
             i.green.checkmark.icon
         else
@@ -958,13 +958,15 @@ template(name='multi_doc_edit')
         +i name=icon cl='ui mini inline image'
     .ui.inline.header(title=key)
         |#{title} #{label}    
+    i.remove.link.circular.icon.zoomer.clear_ref_field
     each choices
-        .ui.compact.button.select_choice(class=choice_class)
-            if icon
-                //- i.grey.icon(class=icon)
-                +i name=icon cl='ui inline image'
-            //- |#{title} #{slug}
-            |#{slug}
+        if slug
+            .ui.compact.button.pick_choice.zoomer(class=choice_class)
+                if icon
+                    //- i.grey.icon(class=icon)
+                    +i name=icon cl='ui avatar image'
+                //- |#{title} #{slug}
+                |#{slug}
     //- .ui.sub.header 
     //-     if icon
     //-         i.grey.icon(class=icon)

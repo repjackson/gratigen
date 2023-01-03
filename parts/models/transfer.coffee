@@ -1,4 +1,4 @@
-if Meteor.isClient
+# if Meteor.isClient
 #     Template.registerHelper 'transfer_products', () -> 
 #         Docs.find
 #             model:'product'
@@ -11,19 +11,6 @@ if Meteor.isClient
 #         # console.log found
 #         found
     
-    Template.transfers.onCreated ->
-        @autorun => Meteor.subscribe 'model_docs', 'transfer', 20, ->
-        @autorun => Meteor.subscribe 'all_users', ->
-            
-            
-    Template.transfers.events
-        'click .add_transfer': ->
-            new_id = 
-                Docs.insert 
-                    model:'transfer'
-            
-            Router.go "/transfer/#{new_id}/edit"
-            
         
 # if Meteor.isServer
 #     Meteor.publish 'transfer_products', (transfer_id)->
@@ -84,25 +71,8 @@ if Meteor.isClient
 
 
 if Meteor.isClient
-    Router.route '/transfer/:doc_id/edit', (->
-        @layout 'layout'
-        @render 'transfer_edit'
-        ), name:'transfer_edit'
-        
-        
     Template.transfer_edit.onCreated ->
-        @autorun => Meteor.subscribe 'all_users', ->
         @autorun => Meteor.subscribe 'recipient_from_transfer_id', Router.current().params.doc_id
-        @autorun => Meteor.subscribe 'author_from_doc_id', Router.current().params.doc_id
-        @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
-        @autorun => @subscribe 'tag_results',
-            # Router.current().params.doc_id
-            picked_tags.array()
-            Session.get('searching')
-            Session.get('current_query')
-            Session.get('dummy')
-        
-    Template.transfer_edit.onRendered ->
 
 
     Template.transfer_edit.helpers
@@ -188,17 +158,6 @@ if Meteor.isClient
             Session.set('dummy', !Session.get('dummy'))
 
     
-        'blur .edit_description': (e,t)->
-            textarea_val = t.$('.edit_textarea').val()
-            Docs.update Router.current().params.doc_id,
-                $set:description:textarea_val
-    
-    
-        'blur .edit_text': (e,t)->
-            val = t.$('.edit_text').val()
-            Docs.update Router.current().params.doc_id,
-                $set:"#{@key}":val
-    
     
         'blur .point_amount': (e,t)->
             # console.log @
@@ -271,29 +230,11 @@ if Meteor.isServer
             
             
 if Meteor.isClient
-    Router.route '/transfers/', (->
-        @layout 'layout'
-        @render 'transfers'
-        ), name:'transfers'
     Router.route '/my_accounts/', (->
         @layout 'layout'
         @render 'transfers'
         ), name:'my_accounts'
     
-
-    Router.route '/transfer/:doc_id', (->
-        @layout 'layout'
-        @render 'transfer_view'
-        ), name:'transfer_view'
-
-    Template.transfer_view.onCreated ->
-        @autorun => Meteor.subscribe 'product_from_transfer_id', Router.current().params.doc_id
-        @autorun => Meteor.subscribe 'author_from_doc_id', Router.current().params.doc_id
-        @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
-        @autorun => Meteor.subscribe 'all_users'
-        
-    Template.transfer_view.onRendered ->
-
 
 
 if Meteor.isServer

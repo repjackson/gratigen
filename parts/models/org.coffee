@@ -7,11 +7,6 @@ if Meteor.isClient
                 model:'org'
                 
                 
-    Template.org_view.onCreated ->
-        @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
-        # @autorun => Meteor.subscribe 'children', 'org_update', Router.current().params.doc_id
-        @autorun => Meteor.subscribe 'members', Router.current().params.doc_id, ->
-        # @autorun => Meteor.subscribe 'org_dishes', Router.current().params.doc_id, ->
     Template.org_view.helpers
         is_member: ->
             Meteor.userId() and Meteor.userId() in @member_ids
@@ -222,11 +217,6 @@ if Meteor.isClient
 
 
 if Meteor.isClient
-    Template.org_view.onCreated ->
-        @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
-    Template.org_edit.onCreated ->
-        @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
-
     Template.org_history.onCreated ->
         @autorun => Meteor.subscribe 'children', 'log_event', Router.current().params.doc_id
     Template.org_history.helpers

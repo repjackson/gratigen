@@ -1,31 +1,3 @@
-template(name='transfers')
-    .ui.stackable.padded.grid
-        .sixteen.wide.column
-            .ui.inline.header 
-                +i name='exchange'
-                |transfers
-            .ui.basic.icon.button.add_transfer
-                i.large.plus.icon
-        .sixteen.wide.column
-            .ui.stackable.centered.cards
-                each model_docs_helper 'transfer'
-                    a.card.zoomer.fly_right(href="/transfer/#{_id}") 
-                        img.ui.image(src="{{c.url image_id width=400 height=400 crop='pad'}}")
-                        .content
-                            .ui.inline.header 
-                                |#{amount}p
-                            i.tag.icon
-                            each tags 
-                                .ui.label #{this}
-                            if location_tags
-                                i.marker.icon
-                            each location_tags 
-                                .ui.label #{this}
-                            |#{when} by #{_author_username} to
-                            with recipient
-                                .ui.header #{username}
-                                +user_info
-                
 // template(name='transfer_edit')
 //     with current_doc
 //         .ui.stackable.padded.grid
@@ -89,17 +61,6 @@ template(name='transfer_view')
                     +image_view key='image_id' label='image' direct=true
                     +link_view key='link' label='link' icon='link' direct=true
                     div 
-                    if tags
-                        i.tags.icon
-                        each tags 
-                            .ui.big.basic.circular.label #{this}
-                    +voting_full
-                    .ui.small.header
-                        i.clock.icon
-                        | #{when}
-                    .spacer
-                    .spacer
-                    +comments
                     //- +array_view key='location_tags' label='location_tags' direct=true
                 .five.wide.column
                     a.fly_right(href="/user/#{recipient.username}")
@@ -124,7 +85,9 @@ template(name='transfer_edit')
                             img.ui.small.image(src="{{c.url _author.image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                             |#{_author.name}
                     .ui.segment
-                        .ui.header recipient
+                        .ui.header 
+                            i.user.icon
+                            |recipient
                         with recipient
                             i.large.remove.link.icon.remove_recipient
                             a.pointer(href="/user/#{name}")
