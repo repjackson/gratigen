@@ -6,8 +6,6 @@ template(name='resource_card')
             if image_link
                 img.ui.zoomer.pointer.goto_resource.image(src=image_link)
         .content
-            a.header.zoomer.fly_right(href="/resource/#{_id}/") 
-                | #{title}
             div
             .ui.inline.header 
                 |#{daily_rate}

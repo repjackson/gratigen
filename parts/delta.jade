@@ -1,12 +1,13 @@
 template(name='delta')
     .ui.stackable.padded.grid
-        unless current_delta 
-            .ui.button.create_delta 
-                |make delta
-            
-        unless current_model
-            .ui.button.create_model
-                |create model
+        if currentUser.admin_mode
+            unless current_delta 
+                .ui.button.create_delta 
+                    |make delta
+                
+            unless current_model
+                .ui.button.create_model
+                    |create model
                 
         with current_model
             // unless current_model.show_facets
@@ -14,13 +15,14 @@ template(name='delta')
             //     .sixteen.wide.column
             //         +model_top
             .row
-                if current_model.show_facets
-                    .four.wide.column
-                        each sorted_facets
-                            +facet
-                div(class=result_column_class)
-                    unless current_model.show_facets
-                        +model_top
+                // if current_model.show_facets
+                //     .four.wide.column
+                //         each sorted_facets
+                //             +facet
+                // div(class=result_column_class)
+                .ui.sixteen.wide.column
+                    // unless current_model.show_facets
+                    +model_top
                     if current_model.show_filter_bar
                         |&nbsp;
                         .ui.icon.input(class=query_class)
@@ -156,7 +158,7 @@ template(name='model_top')
     else
         unless key_value_is current_delta.model_filter 'model'
             if currentUser
-                a.ui.icon.basic.compact.circular.button.go_home
+                a.ui.icon.basic.compact.circular.button.go_home.zoomer
                     i.big.home.icon
         a.ui.large.header.reset.inline(title="#{description}, #{views} views")
             // i.large.icon(class=icon)
@@ -172,10 +174,10 @@ template(name='model_top')
                 // if is_admin
                 // else 
                 //     if currentUser
-                .ui.icon.basic.circular.button.add_model_doc(title="add #{slug}")
-                    i.plus.large.green.icon
+                .ui.icon.basic.circular.button.add_model_doc.zoomer(title="add #{slug}")
+                    i.plus.large.green.icon.invert
                 if currentUser
-                    i.cog.large.circular.link.icon.edit_model(title='edit model')
+                    i.cog.large.circular.link.icon.edit_model.zoomer(title='edit model')
         //     //- +user_list_toggle key='bookmark_ids' add_icon='bookmark outline' remove_icon='bookmark' label="bookmark"
         if current_delta
             // if is_admin
@@ -634,10 +636,11 @@ template(name='model_view')
 
 template(name='delta_result_card')
     with result
-        if template_exists
-            +Template.dynamic template=model_template
-        .ui.card.result.pointer(class=loading_class tabindex="1")
+        .ui.card.result.pointer.zoomer.fly_right(class=loading_class tabindex="1")
+            if template_exists
+                +Template.dynamic template=model_template
             .content
+                i.large.database.icon(title='delta')
                 if key_value_is 'model' 'model'
                     .ui.header
                         // i.icon(class=icon)
@@ -655,12 +658,12 @@ template(name='delta_result_card')
                         //-     i.right.chevron.green.icon
                             //- +i name='chevron-right' clases='ui avatar image'
                         if is_admin
-                            a.ui.compact.basic.button.route_model(href="/model/edit/#{_id}")
+                            a.ui.button.route_model(href="/model/edit/#{_id}")
                                 i.cog.icon
                                 |edit model
-                            span(title='views')
-                                i.grey.eye.icon
-                                | #{views}
+                            // span(title='views')
+                            //     i.grey.eye.icon
+                            //     | #{views}
                             // .ui.teal.label 
                             //     |#{app}
                     else
@@ -670,14 +673,16 @@ template(name='delta_result_card')
                                 //- |edit
                         //- a.ui.icon.large.button(href="/m/#{current_model.slug}/#{_id}/view" title='view')
                         //-     i.right.chevron.yellow.large.icon
-                    if is_admin
-                        if _author_id
-                            +author_info
-                        +creation_info
-                        .ui.small.inline.header #{views} views
-                            //- i.eye.icon
-                            each viewer_usernames
-                                .ui.small.inverted.label #{this}
+                    // if is_admin
+                    if _author_id
+                        +author_info
+                    div
+                    +creation_info
+                    div
+                    .ui.small.inline.header #{views} views
+                        //- i.eye.icon
+                        each viewer_usernames
+                            .ui.small.inverted.label #{this}
                     //- +comments
                 if is_admin
                     +print_this
