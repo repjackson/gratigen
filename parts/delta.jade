@@ -138,7 +138,7 @@ template(name='delta')
                         +Template.dynamic template=model_stats
         unless current_model
             if subs_ready
-                if in_dev
+                if currentUser
                     .ui.big.button.create_model create model
                 //- else 
                     //- .ui.header model not found
@@ -155,7 +155,7 @@ template(name='model_top')
             | loading #{current_model.title}...
     else
         unless key_value_is current_delta.model_filter 'model'
-            if in_dev
+            if currentUser
                 a.ui.icon.basic.compact.circular.button.go_home
                     i.big.home.icon
         a.ui.large.header.reset.inline(title="#{description}, #{views} views")
@@ -171,15 +171,15 @@ template(name='model_top')
                 //     unless key_value_is current_model.collection 'user'
                 // if is_admin
                 // else 
-                //     if in_dev
+                //     if currentUser
                 .ui.icon.basic.circular.button.add_model_doc(title="add #{slug}")
                     i.plus.large.green.icon
-                if in_dev
+                if currentUser
                     i.cog.large.circular.link.icon.edit_model(title='edit model')
         //     //- +user_list_toggle key='bookmark_ids' add_icon='bookmark outline' remove_icon='bookmark' label="bookmark"
         if current_delta
             // if is_admin
-            if in_dev
+            if currentUser
                 i.refresh.link.reset.grey.circular.large.icon.zoomer(title='reload session')
                 // i.code.link.icon.print_delta(title='print session doc')
                 i.trash.delete_delta.link.icon(title='delete session')
@@ -505,7 +505,7 @@ template(name='field_edit')
                 +icon_edit key='icon' label='icon' direct=true       
                 //- +textarea_edit key='description' label='description' direct=true
                 .spacer
-                if in_dev
+                if currentUser
                     +text_edit key='field_type' label='field type' direct=true
                 +key_value_edit key='field_type' value='text' icon='header'
                 +key_value_edit key='field_type' value='array' icon='list'
@@ -524,7 +524,7 @@ template(name='field_edit')
                 +key_value_edit key='field_type' value='multi_doc' icon='clone'
                 +key_value_edit key='field_type' value='single_user' icon='clone'
                 +key_value_edit key='field_type' value='multi_user' icon='clone'
-                if in_dev
+                if currentUser
                     i.large.code.icon
                     +single_doc_edit key='field_type' ref_model='field_type' label='field type' direct=true        
                     .spacer
