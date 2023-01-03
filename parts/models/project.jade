@@ -87,10 +87,7 @@ template(name='project_view')
                     each child_tasks
                         +child_task
                         // a.ui.large.label(href="/task/#{this}") #{this}
-                    +voting_full
-                    .ui.header #{when}
                     //- +array_view key='location_tags' label='location_tags' direct=true
-                    +comments
             .twelve.wide.column.scrolling
                 img.ui.image(src="{{c.url image_id }}" class=currentUser.invert_class)
                 // a.ui.header(href="/user/#{target.username}")

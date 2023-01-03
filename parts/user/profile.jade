@@ -6,9 +6,9 @@ template(name='profile_layout')
         .ui.stackable.padded.grid
             .row
                 .four.wide.column.scrolling
-                    a.ui.fluid.compact.circular.button.fly_left(href='/users')
-                        i.chevron.left.icon
-                        +i name='groups'
+                    a.ui.big.circular.button.fly_left(href='/users')
+                        i.users.icon
+                        // +i name='groups'
                         |users
                     .spacer
                     a.item.mobile.hidden(href="/user/#{username}")

@@ -422,16 +422,16 @@ template(name='text_view')
         //-     div
         //-     if icon
         //-         +i name=icon                
-        .ui.grey.small.inline.header
-            if title
-                |#{title}
-            else if label
-                |#{label}
-            else if key
-                |#{key}
-            else
-                |#{this}
-        .ui.inline.header #{field_value}
+        // .ui.grey.small.inline.header
+        //     if title
+        //         |#{title}
+        //     else if label
+        //         |#{label}
+        //     else if key
+        //         |#{key}
+        //     else
+        //         |#{this}
+        .ui.inline.header(title=title) #{field_value}
 
 
 

@@ -309,10 +309,10 @@ template(name='model_doc_view')
                         +author_info
                         +creation_info
                     //- +points_transaction
-                    //- +voting
+                    +voting_full
                 .twelve.wide.column
-                    // if template_exists
-                    //     +Template.dynamic template=model_template
+                    if template_exists
+                        +Template.dynamic template=model_template
                     .ui.header
                         each fields
                             // if header
@@ -638,17 +638,20 @@ template(name='model_view')
 template(name='delta_result_card')
     with result
         .ui.card(class=loading_class tabindex="1")
-            if template_exists
-                +Template.dynamic template=model_template
             .content.result.pointer.zoomer.fly_right
                 unless key_value_is 'model' 'model'
-                    i.large.database.icon(title='delta')
+                    i.grey.database.icon(title='delta')
                 if key_value_is 'model' 'model'
                     .ui.header
                         // i.icon(class=icon)
                         +ibig name=icon
                         |#{title}
                 else
+                    if title 
+                        .ui.inline.header #{title}
+                    if image_id
+                        img.ui.image(src="{{c.url image_id width=400 height=400}}")
+
                     each fields
                         +Template.dynamic template=view_template
                         div
@@ -688,6 +691,8 @@ template(name='delta_result_card')
                 if is_admin
                     +print_this
                     +remove_button
+            if template_exists
+                +Template.dynamic template=model_template
 
 
 

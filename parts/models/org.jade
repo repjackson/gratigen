@@ -22,28 +22,16 @@
         
 
 template(name='org_card')
-    .ui.card.zoomer
-        if image_id
-            a.fly_right(href="/org/#{_id}")
-                img.ui.image(src="{{c.url image_id width=400 height=400}}")
-        .content
-            a.ui.header.fly_right(href="/org/#{_id}")
-                |#{title}
-            |#{member_ids.length} members
-            .smallscroll
-                |!{description}
-            //+ismall name='tags' cl='ui inline image'
-            each ten_tags
-                .ui.basic.label #{this}
-            a.zoomer(href="/org/#{_id}")
-                i.chevron.right.large.circular.icon
-            // if is_admin
-            //     .ui.small.header slug: #{slug}
-            if can_edit
-                a.ui.circular.basic.icon.button(href="/org/#{_id}/edit")
-                    i.pencil.blue.icon
-            +print_this
-                    
+    .content
+        |#{member_ids.length} members
+        .smallscroll
+            |!{description}
+        //+ismall name='tags' cl='ui inline image'
+        each ten_tags
+            .ui.basic.label #{this}
+        // if is_admin
+        //     .ui.small.header slug: #{slug}
+                
 
 
                 
