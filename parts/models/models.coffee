@@ -1,3 +1,1168 @@
+if Meteor.isServer 
+    Meteor.publish 'my_events_publication', ->
+        user = Meteor.user()
+        # authored
+        Docs.find 
+            model:'event'
+            _author_id:Meteor.userId()
+
+
+
+if Meteor.isClient
+    # Router.route '/e/:doc_slug/', (->
+    #     @layout 'layout'
+    #     @render 'event_view'
+    #     ), name:'event_view_by_slug'
+        
+    Template.registerHelper 'facilitator', () ->    
+        Meteor.users.findOne @facilitator_id
+    Template.registerHelper 'fac', () ->    
+        Meteor.users.findOne @facilitator_id
+   
+    Template.registerHelper 'my_ticket', () ->    
+        event = Docs.findOne @_id
+        Docs.findOne
+            model:'order'
+            order_type:'ticket_purchase'
+            event_id:@_id
+            _author_id:Meteor.userId()
+   
+    Template.registerHelper 'event_room', () ->
+        event = Docs.findOne @_id
+        Docs.findOne 
+            _id:event.room_id
+
+    Template.registerHelper 'going', () ->
+        event = Docs.findOne @_id
+        event_tickets = 
+            Docs.find(
+                model:'order'
+                order_type:'ticket_purchase'
+                event_id: @_id
+                ).fetch()
+        going_user_ids = []
+        for ticket in event_tickets
+            going_user_ids.push ticket._author_id
+        Meteor.users.find 
+            _id:$in:going_user_ids
+            
+    Template.registerHelper 'maybe_going', () ->
+        event = Docs.findOne @_id
+        Meteor.users.find 
+            _id:$in:event.maybe_user_ids
+    Template.registerHelper 'not_going', () ->
+        event = Docs.findOne @_id
+        Meteor.users.find 
+            _id:$in:event.not_user_ids
+
+    Template.registerHelper 'event_tickets', () ->
+        Docs.find 
+            model:'order'
+            order_type:'ticket_purchase'
+            event_id: Router.current().params.doc_id
+
+
+    Template.event_view.onCreated ->
+        # @autorun => @subscribe 'model_docs', 'order'
+    Template.event_view.events
+        'click .buy_ticket': ->
+            Docs.insert 
+                model:'order'
+                ticket:true
+                event_id:@_id
+                ticket_price: @point_price
+        
+    Template.event_view.helpers
+        event_ticket_docs: ->
+            Docs.find
+                model:'order'
+                ticket:true
+                event_id:@_id
+                ticket_price: @point_price
+        
+    
+        can_add_event: ->
+            facilitator_badge = 
+                Docs.findOne    
+                    model:'badge'
+                    slug:'facilitator'
+            if facilitator_badge
+                Meteor.userId() in facilitator_badge.badger_ids
+            
+    
+    
+
+if Meteor.isServer
+    Meteor.publish 'future_events', ()->
+        console.log moment().subtract(1,'days').format("YYYY-MM-DD")
+        Docs.find {
+            model:'event'
+            published:true
+            date:$gt:moment().subtract(1,'days').format("YYYY-MM-DD")
+        }, 
+            sort:date:1
+    
+    Meteor.publish 'events', (
+        viewing_room_id
+        viewing_past
+        viewing_published
+        )->
+            
+        match = {model:'event'}
+        if viewing_room_id
+            match.room_id = viewing_room_id
+        if viewing_past
+            match.date = $gt:moment().subtract(1,'days').format("YYYY-MM-DD")
+            
+        match.published = viewing_published    
+            
+        console.log moment().subtract(1,'days').format("YYYY-MM-DD")
+        Docs.find match, 
+            sort:date:1
+    
+
+    # Meteor.publish 'doc_by_slug', (slug)->
+    #     Docs.find
+    #         slug:slug
+            
+    # Meteor.publish 'author_by_doc_id', (doc_id)->
+    #     doc_by_id =
+    #         Docs.findOne doc_id
+    #     doc_by_slug =
+    #         Docs.findOne slug:doc_id
+    #     if doc_by_id
+    #         Meteor.users.findOne 
+    #             _id:doc_by_id._author_id
+    #     else
+    #         Meteor.users.findOne 
+    #             _id:doc_by_slug._author_id
+            
+            
+    # Meteor.publish 'author_by_doc_slug', (slug)->
+    #     doc = 
+    #         Docs.findOne
+    #             slug:slug
+    #     Meteor.users.findOne 
+    #         _id:doc._author_id
+
+
+#     Meteor.methods
+        # send_event: (event_id)->
+        #     event = Docs.findOne event_id
+        #     target = Meteor.users.findOne event.recipient_id
+        #     gifter = Meteor.users.findOne event._author_id
+        #
+        #     console.log 'sending event', event
+        #     Meteor.users.update target._id,
+        #         $inc:
+        #             points: event.amount
+        #     Meteor.users.update gifter._id,
+        #         $inc:
+        #             points: -event.amount
+        #     Docs.update event_id,
+        #         $set:
+        #             submitted:true
+        #             submitted_timestamp:Date.now()
+        #
+        #
+        #
+        #     Docs.update Router.current().params.doc_id,
+        #         $set:
+        #             submitted:true
+
+
+ if Meteor.isClient
+    Template.registerHelper 'ticket_event', () ->
+        Docs.findOne @event_id
+
+
+
+    Template.ticket_view.onCreated ->
+        @autorun => Meteor.subscribe 'event_from_ticket_id', Router.current().params.doc_id
+        @autorun => Meteor.subscribe 'author_from_doc_id', Router.current().params.doc_id
+        @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
+        @autorun => Meteor.subscribe 'all_users'
+        
+    Template.ticket_view.onRendered ->
+
+    Template.ticket_view.events
+        'click .cancel_reservation': ->
+            event = @
+            # Swal.fire({
+            #     title: "cancel reservation?"
+            #     # text: "cannot be undone"
+            #     icon: 'question'
+            #     confirmButtonText: 'confirm cancelation'
+            #     confirmButtonColor: 'red'
+            #     showCancelButton: true
+            #     cancelButtonText: 'return'
+            #     reverseButtons: true
+            # }).then((result)=>
+            #     if result.value
+            #         console.log @
+            #             Meteor.call 'remove_reservation', @_id, =>
+            #                 Swal.fire(
+            #                     position: 'top-end',
+            #                     icon: 'success',
+            #                     title: 'reservation removed',
+            #                     showConfirmButton: false,
+            #                     timer: 1500
+            #                 )
+            #                 Router.go "/event/#{event}/view"
+            #         )
+            # )_
+
+
+
+if Meteor.isServer
+    Meteor.publish 'event_from_ticket_id', (ticket_id)->
+        ticket = Docs.findOne ticket_id
+        Docs.find 
+            _id:ticket.event_id
+            
+            
+    Meteor.methods
+        remove_reservation: (doc_id)->
+            Docs.remove doc_id
+            
+            
+            
+if Meteor.isClient
+    Router.route '/event/:doc_id/edit', (->
+        @layout 'layout'
+        @render 'event_edit'
+        ), name:'event_edit'
+
+    Template.eft_view_item.helpers 
+        in_list: ()->
+            # cd = Docs.findOne Router.current().params.doc_id 
+            @label in Template.parentData().efts
+            # @label in cd.efts
+    Template.eft_view_item_small.onRendered ->
+        Meteor.setTimeout ->
+            $('.icon')
+                .popup()
+        , 2000
+    Template.eft_view_item_small.helpers 
+        in_list: ()->
+            # cd = Docs.findOne Router.current().params.doc_id 
+            @label in Template.parentData().efts
+            # @label in cd.efts
+    Template.eft_picker.events 
+        'click .toggle_eft': ->
+            current_doc = Docs.findOne Router.current().params.doc_id 
+            if current_doc.efts
+                if @label in current_doc.efts 
+                    Docs.update current_doc._id,
+                        $pull:
+                            efts:@label
+                else 
+                    Docs.update current_doc._id,
+                        $addToSet:
+                            efts:@label
+            else 
+                Docs.update current_doc._id,
+                    $addToSet:
+                        efts:@label
+    Template.eft_picker.helpers 
+        toggled: -> 
+            current_doc = Docs.findOne Router.current().params.doc_id 
+            if current_doc.efts
+                @label in current_doc.efts
+            else 
+                false
+        eft_picker_class: ->
+            current_doc = Docs.findOne Router.current().params.doc_id 
+            if current_doc.efts
+                if @label in current_doc.efts
+                    'basic'
+                else
+                    'tertiary'
+            else 
+                'tertiary'
+
+
+    Template.event_edit.onCreated ->
+        @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id, ->
+        @autorun => Meteor.subscribe 'model_docs', 'room_reservation', ->
+        @autorun => Meteor.subscribe 'model_docs', 'room', ->
+    Template.event_edit.onRendered ->
+    Template.event_edit.helpers
+        rooms: ->
+            Docs.find   
+                model:'room'
+
+
+    Template.event_edit.events
+        'click .delete_item': ->
+            if confirm 'delete item?'
+                Docs.remove @_id
+
+        'click .select_room': ->
+            reservation_exists = 
+                Docs.findOne
+                    model:'room_reservation'
+                    room_id:event.room_id 
+                    date:event.date
+            console.log reservation_exists
+            unless reservation_exists            
+                Docs.update Router.current().params.doc_id,
+                    $set:
+                        room_id:@_id
+                        room_title:@title
+
+        'click .submit': ->
+            Docs.update Router.current().params.doc_id,
+                $set:published:true
+            if confirm 'confirm?'
+                Meteor.call 'send_event', @_id, =>
+                    Router.go "/event/#{@_id}"
+
+
+    Template.event_edit.helpers
+        reservation_exists: ->
+            event = Docs.findOne Router.current().params.doc_id
+            Docs.findOne
+                model:'room_reservation'
+                # room_id:event.room_id 
+                date:event.date
+        room_button_class: ->
+            event = Docs.findOne Router.current().params.doc_id
+            room = Docs.findOne _id:event.room_id
+            reservation_exists = 
+                Docs.findOne
+                    model:'room_reservation'
+                    # room_id:event.room_id 
+                    date:event.date
+            res = ''
+            if event.room_id is @_id
+                res += 'blue'
+            else 
+                res += 'basic'
+            if reservation_exists
+                # console.log 'res exists'
+                res += ' disabled'
+            else
+                console.log 'no res'
+            res
+    
+        room_reservations: ->
+            event = Docs.findOne Router.current().params.doc_id
+            room = Docs.findOne _id:event.room_id
+            Docs.find 
+                model:'room_reservation'
+                room_id:event.room_id 
+                date:event.date
+                
+    Template.reserve_button.helpers
+        event_room: ->
+            event = Docs.findOne Router.current().params.doc_id
+            room = Docs.findOne _id:event.room_id
+        slot_res: ->
+            event = Docs.findOne Router.current().params.doc_id
+            room = Docs.findOne _id:event.room_id
+            Docs.findOne
+                model:'room_reservation'
+                room_id:event.room_id
+                date:event.date
+                slot:@slot
+    
+    
+    Template.reserve_button.events
+        'click .cancel_res': ->
+            Swal.fire({
+                title: "confirm delete reservation?"
+                text: ""
+                icon: 'question'
+                showCancelButton: true,
+                confirmButtonText: 'confirm'
+                cancelButtonText: 'cancel'
+                reverseButtons: true
+            }).then((result)=>
+                if result.value
+                    Docs.remove @_id
+            )
+        'click .reserve_slot': ->
+            event = Docs.findOne Router.current().params.doc_id
+            room = Docs.findOne _id:event.room_id
+            Docs.insert 
+                model:'room_reservation'
+                room_id:event.room_id
+                date:event.date
+                slot:@slot
+                payment:'points'
+
+if Meteor.isServer
+    Meteor.methods
+        send_event: (event_id)->
+            event = Docs.findOne event_id
+            target = Meteor.users.findOne event.recipient_id
+            gifter = Meteor.users.findOne event._author_id
+
+            console.log 'sending event', event
+            Meteor.users.update target._id,
+                $inc:
+                    points: event.amount
+            Meteor.users.update gifter._id,
+                $inc:
+                    points: -event.amount
+            Docs.update event_id,
+                $set:
+                    submitted:true
+                    submitted_timestamp:Date.now()
+
+
+
+            Docs.update Router.current().params.doc_id,
+                $set:
+                    submitted:true
+
+
+
+if Meteor.isClient
+    Template.event_view.onCreated ->
+        @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
+        @autorun => Meteor.subscribe 'doc_by_slug', Router.current().params.doc_slug
+        @autorun => Meteor.subscribe 'author_by_doc_id', Router.current().params.doc_id
+        # @autorun => Meteor.subscribe 'author_by_doc_slug', Router.current().params.doc_slug
+
+        @autorun => Meteor.subscribe 'event_tickets', Router.current().params.doc_id, ->
+        @autorun => Meteor.subscribe 'event_orders', Router.current().params.doc_id, ->
+        # @autorun => Meteor.subscribe 'model_docs', 'room'
+        
+        if Meteor.isDevelopment
+            pub_key = Meteor.settings.public.stripe_test_publishable
+        else if Meteor.isProduction
+            pub_key = Meteor.settings.public.stripe_live_publishable
+        Template.instance().checkout = StripeCheckout.configure(
+            key: pub_key
+            image: 'https://res.cloudinary.com/facet/image/upload/v1585357133/one_logo.png'
+            locale: 'auto'
+            zipCode: true
+            token: (token) =>
+                # amount = parseInt(Session.get('topup_amount'))
+                event = Docs.findOne Router.current().params.doc_id
+                charge =
+                    amount: event.price_usd*100
+                    event_id:event._id
+                    currency: 'usd'
+                    source: token.id
+                    input:'number'
+                    # description: token.description
+                    description: "gratigen event ticket purchase"
+                    event_title:event.title
+                    # receipt_email: token.email
+                Meteor.call 'buy_ticket', charge, (err,res)=>
+                    if err then alert err.reason, 'danger'
+                    else
+                        console.log 'res', res
+                        Swal.fire(
+                            'ticket purchased',
+                            ''
+                            'success'
+                        # Meteor.users.update Meteor.userId(),
+                        #     $inc: points:500
+                        )
+        )
+    
+    Template.event_view.onRendered ->
+        Docs.update Router.current().params.doc_id, 
+            $inc: views: 1
+
+    Template.event_view.helpers 
+        can_buy: ->
+            now = Date.now()
+            
+
+    Template.event_view.events
+        'click .buy_for_points': (e,t)->
+            val = parseInt $('.point_input').val()
+            Session.set('point_paying',val)
+            # $('.ui.modal').modal('show')
+            Swal.fire({
+                title: "buy ticket for #{Session.get('point_paying')}pts?"
+                text: "#{@title}"
+                icon: 'question'
+                # input:'number'
+                confirmButtonText: 'purchase'
+                confirmButtonColor: 'green'
+                showCancelButton: true
+                cancelButtonText: 'cancel'
+                reverseButtons: true
+            }).then((result)=>
+                if result.value
+                    Docs.insert 
+                        model:'order'
+                        order_type:'ticket_purchase'
+                        payment_type:'points'
+                        is_points:true
+                        point_amount:Session.get('point_paying')
+                        event_id:@_id
+                    Meteor.users.update Meteor.userId(),
+                        $inc:points:-Session.get('point_paying')
+                    Meteor.users.update @_author_id, 
+                        $inc:points:Session.get('point_paying')
+                    Swal.fire(
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'ticket purchased',
+                        showConfirmButton: false,
+                        timer: 1500
+                    )
+            )
+        
+        'click .return': (e,t)->
+            # val = parseInt $('.point_input').val()
+            # Session.set('point_paying',val)
+            # $('.ui.modal').modal('show')
+            Swal.fire({
+                title: "return ticket?"
+                # text: "#{Template.parentData().title}"
+                icon: 'question'
+                # input:'number'
+                confirmButtonText: 'return'
+                confirmButtonColor: 'orange'
+                showCancelButton: true
+                cancelButtonText: 'cancel'
+                reverseButtons: true
+            }).then((result)=>
+                if result.value
+                    Docs.remove @_id
+                    Swal.fire(
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'ticket returned',
+                        showConfirmButton: false,
+                        timer: 1500
+                    )
+            )
+    
+        'click .buy_for_usd': (e,t)->
+            console.log Template.instance()
+            val = parseInt t.$('.usd_input').val()
+            Session.set('usd_paying',val)
+
+            instance = Template.instance()
+            event = 
+                Docs.findOne Router.current().params.doc_id
+            console.log event
+            if event.price_usd
+                Swal.fire({
+                    # title: "buy ticket for $#{@usd_price} or more!"
+                    title: "buy ticket for $#{event.price_usd}?"
+                    text: "for #{@title}"
+                    icon: 'question'
+                    showCancelButton: true,
+                    confirmButtonText: 'purchase'
+                    # input:'number'
+                    confirmButtonColor: 'green'
+                    showCancelButton: true
+                    cancelButtonText: 'cancel'
+                    reverseButtons: true
+                }).then((result)=>
+                    if result.value
+                        # Session.set('topup_amount',5)
+                        # Template.instance().checkout.open
+                        instance.checkout.open
+                            name: 'gratigen'
+                            # email:Meteor.user().emails[0].address
+                            description: "#{@title} ticket purchase"
+                            amount: event.price_usd*100
+                
+                        Meteor.users.update @_author_id,
+                            $inc:credit:@order_price
+                        Swal.fire(
+                            'topup initiated',
+                            ''
+                            'success'
+                        )
+                )
+
+
+
+
+    
+    Template.attendance.events
+        'click .mark_maybe': ->
+            event = Docs.findOne Router.current().params.doc_id
+            Meteor.call 'mark_maybe', Router.current().params.doc_id, ->
+    
+        'click .mark_not': ->
+            event = Docs.findOne Router.current().params.doc_id
+            Meteor.call 'mark_not', Router.current().params.doc_id, ->
+
+    Template.event_card.events
+        'click .mark_maybe': ->
+            Meteor.call 'mark_maybe', @_id, ->
+    
+        'click .mark_not': ->
+            Meteor.call 'mark_not', @_id, ->
+    Template.event_view.helpers
+        tickets_left: ->
+            ticket_count = 
+                Docs.find({ 
+                    model:'order'
+                    # order_type:'ticket_purchase'
+                    event_id: Router.current().params.doc_id
+                }).count()
+            @max_attendees-ticket_count
+        event_orders: ->
+            Docs.find 
+                model:'order'
+                
+
+
+# if Meteor.isServer
+#     Meteor.publish 'event_tickets', (event_id)->
+#         Docs.find
+#             model:'order'
+#             order_type:'ticket_purchase'
+#             event_id:event_id
+
+
+Meteor.methods
+    'mark_not': (event_id)->
+        event = Docs.findOne event_id
+        if Meteor.userId() in event.not_user_ids
+            Docs.update event_id,
+                $pull:
+                    not_user_ids: Meteor.userId()
+        else
+            Docs.update event_id,
+                $addToSet:
+                    not_user_ids: Meteor.userId()
+                $pull:
+                    going_user_ids: Meteor.userId()
+                    maybe_user_ids: Meteor.userId()
+
+        
+    'mark_maybe': (event_id)->
+        event = Docs.findOne event_id
+        if Meteor.userId() in event.maybe_user_ids
+            Docs.update event_id,
+                $pull:
+                    maybe_user_ids: Meteor.userId()
+        else
+            Docs.update event_id,
+                $addToSet:
+                    maybe_user_ids: Meteor.userId()
+                $pull:
+                    going_user_ids: Meteor.userId()
+                    not_user_ids: Meteor.userId()
+                    
+                    
+if Meteor.isServer
+    Meteor.publish 'event_tickets', (event_id)->
+        event = Docs.findOne event_id 
+        if event 
+            Docs.find 
+                model:'order'
+                event_id:event_id
+                
+    Meteor.publish 'event_orders', (event_id)->
+        event = Docs.findOne event_id 
+        if event 
+            Docs.find 
+                model:'order'
+                
+                
+                
+                
+
+
+if Meteor.isClient
+    Template.registerHelper 'claimer', () ->
+        Meteor.users.findOne @claimed_user_id
+    Template.registerHelper 'completer', () ->
+        Meteor.users.findOne @completed_by_user_id
+    
+    
+    Template.request_view.events
+        'click .claim': ->
+            Docs.update Router.current().params.doc_id,
+                $set:
+                    claimed_user_id: Meteor.userId()
+                    status:'claimed'
+            
+                            
+        'click .unclaim': ->
+            Docs.update Router.current().params.doc_id,
+                $unset:
+                    claimed_user_id: 1
+                $set:
+                    status:'unclaimed'
+            
+                            
+        'click .mark_complete': ->
+            Docs.update Router.current().params.doc_id,
+                $set:
+                    complete: true
+                    completed_by_user_id:@claimed_user_id
+                    status:'complete'
+                    completed_timestamp:Date.now()
+            Meteor.users.update @claimed_user_id,
+                $inc:points:@point_bounty
+                            
+        'click .mark_incomplete': ->
+            Docs.update Router.current().params.doc_id,
+                $set:
+                    complete: false
+                    completed_by_user_id: null
+                    status:'claimed'
+                    completed_timestamp:null
+            Meteor.users.update @claimed_user_id,
+                $inc:points:-@point_bounty
+                            
+
+    Template.request_view.helpers
+        can_claim: ->
+            if @claimed_user_id
+                false
+            else 
+                if @_author_id is Meteor.userId()
+                    false
+                else
+                    true
+
+
+
+# if Meteor.isServer
+#     Meteor.methods
+        # send_request: (request_id)->
+        #     request = Docs.findOne request_id
+        #     target = Meteor.users.findOne request.recipient_id
+        #     gifter = Meteor.users.findOne request._author_id
+        #
+        #     console.log 'sending request', request
+        #     Meteor.users.update target._id,
+        #         $inc:
+        #             points: request.amount
+        #     Meteor.users.update gifter._id,
+        #         $inc:
+        #             points: -request.amount
+        #     Docs.update request_id,
+        #         $set:
+        #             publishted:true
+        #             submitted_timestamp:Date.now()
+        #
+        #
+        #
+        #     Docs.update Router.current().params.doc_id,
+        #         $set:
+        #             submitted:true
+
+
+if Meteor.isClient
+    Router.route '/request/:doc_id/edit', (->
+        @layout 'layout'
+        @render 'request_edit'
+        ), name:'request_edit'
+
+
+
+    Template.request_edit.onCreated ->
+        @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id
+        # @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
+        # @autorun => Meteor.subscribe 'model_docs', 'menu_section'
+    
+    Template.request_edit.onRendered ->
+
+
+    Template.request_edit.events
+        'click .delete_request': ->
+            Swal.fire({
+                title: "delete request?"
+                text: "point bounty will be returned to your account"
+                icon: 'question'
+                confirmButtonText: 'delete'
+                confirmButtonColor: 'red'
+                showCancelButton: true
+                cancelButtonText: 'cancel'
+                reverseButtons: true
+            }).then((result)=>
+                if result.value
+                    Docs.remove @_id
+                    Swal.fire(
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'request removed',
+                        showConfirmButton: false,
+                        timer: 1500
+                    )
+                    Router.go "/m/request"
+            )
+
+
+    Template.request_edit.helpers
+    Template.request_edit.events
+
+if Meteor.isServer
+    Meteor.methods
+        publish_request: (request_id)->
+            request = Docs.findOne request_id
+            # target = Meteor.users.findOne request.recipient_id
+            author = Meteor.users.findOne request._author_id
+
+            console.log 'publishing request', request
+            Meteor.users.update author._id,
+                $inc:
+                    points: -request.point_bounty
+            Docs.update request_id,
+                $set:
+                    published:true
+                    published_timestamp:Date.now()
+                    
+                    
+        unpublish_request: (request_id)->
+            request = Docs.findOne request_id
+            # target = Meteor.users.findOne request.recipient_id
+            author = Meteor.users.findOne request._author_id
+
+            console.log 'unpublishing request', request
+            Meteor.users.update author._id,
+                $inc:
+                    points: request.point_bounty
+            Docs.update request_id,
+                $set:
+                    published:false
+                    published_timestamp:null
+                    
+                    
+                    
+if Meteor.isServer 
+    Meteor.publish 'request_facets', (
+        picked_tags=[]
+        title_filter
+        picked_authors=[]
+        picked_requests=[]
+        picked_locations=[]
+        picked_timestamp_tags=[]
+        )->
+        # console.log 'dummy', dummy
+        # console.log 'query', query
+        # console.log 'picked staff', picked_authors
+    
+        self = @
+        match = {}
+        # match = {app:'pes'}
+        # match.group_id = Meteor.user().current_group_id
+        
+        match.model = 'request'
+        if title_filter and title_filter.length > 1
+            match.title = {$regex:title_filter, $options:'i'}
+        
+        # if view_vegan
+        #     match.vegan = true
+        # if view_gf
+        #     match.gluten_free = true
+        # if view_local
+        #     match.local = true
+        if picked_authors.length > 0 then match._author_username = $in:picked_authors
+        if picked_tags.length > 0 then match.tags = $all:picked_tags 
+        if picked_locations.length > 0 then match.location_title = $in:picked_locations 
+        if picked_timestamp_tags.length > 0 then match._timestamp_tags = $in:picked_timestamp_tags 
+        # match.$regex:"#{product_query}", $options: 'i'}
+        # if product_query and product_query.length > 1
+        author_cloud = Docs.aggregate [
+            { $match: match }
+            { $project: "_author_username": 1 }
+            { $group: _id: "$_author_username", count: $sum: 1 }
+            { $match: _id: $nin: picked_authors }
+            # { $match: _id: {$regex:"#{product_query}", $options: 'i'} }
+            { $sort: count: -1, _id: 1 }
+            { $limit: 10 }
+            { $project: _id: 0, title: '$_id', count: 1 }
+        ], {
+            allowDiskUse: true
+        }
+        
+        author_cloud.forEach (author, i) =>
+            # console.log 'queried author ', author
+            # console.log 'key', key
+            self.added 'results', Random.id(),
+                title: author.title
+                count: author.count
+                model:'author'
+                # category:key
+                # index: i
+    
+        tag_cloud = Docs.aggregate [
+            { $match: match }
+            { $project: "tags": 1 }
+            { $unwind: "$tags" }
+            { $group: _id: "$tags", count: $sum: 1 }
+            { $match: _id: $nin: picked_tags }
+            # { $match: _id: {$regex:"#{product_query}", $options: 'i'} }
+            { $sort: count: -1, _id: 1 }
+            { $limit: 20 }
+            { $project: _id: 0, title: '$_id', count: 1 }
+        ], {
+            allowDiskUse: true
+        }
+        
+        tag_cloud.forEach (tag, i) =>
+            # console.log 'queried tag ', tag
+            # console.log 'key', key
+            self.added 'results', Random.id(),
+                title: tag.title
+                count: tag.count
+                model:'request_tag'
+                # category:key
+                # index: i
+    
+    
+        location_cloud = Docs.aggregate [
+            { $match: match }
+            { $project: "location_title": 1 }
+            # { $unwind: "$locations" }
+            { $match: _id: $nin: picked_locations }
+            { $group: _id: "$location_title", count: $sum: 1 }
+            { $sort: count: -1, _id: 1 }
+            { $limit: 10 }
+            { $project: _id: 0, title: '$_id', count: 1 }
+        ], {
+            allowDiskUse: true
+        }
+    
+        location_cloud.forEach (location, i) =>
+            # console.log 'location result ', location
+            self.added 'results', Random.id(),
+                title: location.title
+                count: location.count
+                model:'location'
+                # category:key
+                # index: i
+    
+        timestamp_tag_cloud = Docs.aggregate [
+            { $match: match }
+            { $project: "_timestamp_tags": 1 }
+            { $unwind: "$_timestamp_tags" }
+            { $match: _id: $nin: picked_timestamp_tags }
+            { $group: _id: "$_timestamp_tags", count: $sum: 1 }
+            { $sort: count: -1, _id: 1 }
+            { $limit: 10 }
+            { $project: _id: 0, title: '$_id', count: 1 }
+        ], {
+            allowDiskUse: true
+        }
+    
+        timestamp_tag_cloud.forEach (timestamp_tag, i) =>
+            # console.log 'timestamp_tag result ', timestamp_tag
+            self.added 'results', Random.id(),
+                title: timestamp_tag.title
+                count: timestamp_tag.count
+                model:'timestamp_tag'
+                # category:key
+                # index: i
+    
+    
+    
+    
+        self.ready()
+        
+    Meteor.publish 'request_docs', (
+        picked_tags
+        title_filter
+        picked_authors=[]
+        picked_requests=[]
+        picked_locations=[]
+        picked_timestamp_tags=[]
+        # product_query
+        # view_vegan
+        # view_gf
+        # doc_limit
+        # doc_sort_key
+        # doc_sort_direction
+        )->
+    
+        self = @
+        match = {}
+        # match = {app:'pes'}
+        match.model = 'request'
+        # match.group_id = Meteor.user().current_group_id
+        
+        if title_filter and title_filter.length > 1
+            match.title = {$regex:title_filter, $options:'i'}
+        
+        # if view_vegan
+        #     match.vegan = true
+        # if view_gf
+        #     match.gluten_free = true
+        # if view_local
+        #     match.local = true
+        if picked_authors.length > 0 then match._author_username = $in:picked_authors
+        if picked_tags.length > 0 then match.tags = $all:picked_tags 
+        if picked_locations.length > 0 then match.location_title = $in:picked_locations 
+        if picked_timestamp_tags.length > 0 then match._timestamp_tags = $in:picked_timestamp_tags 
+        console.log match
+        Docs.find match, 
+            limit:20
+            sort:
+                _timestamp:-1
+
+
+if Meteor.isClient
+    Template.user_posts.onCreated ->
+        @autorun => Meteor.subscribe 'user_posts', Router.current().params.username, ->
+    Template.user_posts.helpers
+        post_docs: ->
+            Docs.find {
+                model:'post'
+            }, sort:_timestamp:-1    
+    
+    Template.post_view.onRendered ->
+        Meteor.call 'mark_doc_read', Router.current().params.doc_id, ->
+
+if Meteor.isServer 
+    Meteor.methods 
+        mark_doc_read: (doc_id)->
+            Docs.update doc_id, 
+                $addToSet:read_by_user_ids:Meteor.userId()
+            console.log 'marked doc read'
+            
+
+if Meteor.isClient
+    Template.post_view.helpers
+        read_users: ->
+            doc = Docs.findOne Router.current().params.doc_id
+            Meteor.users.find 
+                _id:$in:doc.read_by_user_ids
+    # Template.favorite_icon_toggle.helpers
+    #     icon_class: ->
+    #         if @favorite_ids and Meteor.userId() in @favorite_ids
+    #             'red'
+    #         else
+    #             'outline'
+    # Template.favorite_icon_toggle.events
+    #     'click .toggle_fav': ->
+    #         if @favorite_ids and Meteor.userId() in @favorite_ids
+    #             Docs.update @_id, 
+    #                 $pull:favorite_ids:Meteor.userId()
+    #         else
+    #             $('body').toast(
+    #                 showIcon: 'heart'
+    #                 message: "marked favorite"
+    #                 showProgress: 'bottom'
+    #                 class: 'success'
+    #                 # displayTime: 'auto',
+    #                 position: "bottom right"
+    #             )
+
+    #             Docs.update @_id, 
+    #                 $addToSet:favorite_ids:Meteor.userId()
+    
+    
+    Template.post_edit.events
+        'click .delete_post': ->
+            Swal.fire({
+                title: "delete post?"
+                text: "cannot be undone"
+                icon: 'question'
+                confirmButtonText: 'delete'
+                confirmButtonColor: 'red'
+                showCancelButton: true
+                cancelButtonText: 'cancel'
+                reverseButtons: true
+            }).then((result)=>
+                if result.value
+                    Docs.remove @_id
+                    Swal.fire(
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'post removed',
+                        showConfirmButton: false,
+                        timer: 1500
+                    )
+                    Router.go "/posts"
+            )
+
+            
+if Meteor.isServer
+    Meteor.publish 'user_posts', (username)->
+        user = Meteor.users.findOne username:username
+        
+        Docs.find 
+            model:'post'
+            _author_id:user._id
+    
+    Meteor.publish 'post_count', (
+        picked_tags
+        picked_sections
+        post_query
+        view_vegan
+        view_gf
+        )->
+        # @unblock()
+    
+        # console.log picked_tags
+        self = @
+        match = {model:'post'}
+        if picked_tags.length > 0
+            match.ingredients = $all: picked_tags
+            # sort = 'price_per_serving'
+        if picked_sections.length > 0
+            match.menu_section = $all: picked_sections
+            # sort = 'price_per_serving'
+        # else
+            # match.tags = $nin: ['wikipedia']
+        sort = '_timestamp'
+            # match.source = $ne:'wikipedia'
+        if view_vegan
+            match.vegan = true
+        if view_gf
+            match.gluten_free = true
+        if post_query and post_query.length > 1
+            console.log 'searching post_query', post_query
+            match.title = {$regex:"#{post_query}", $options: 'i'}
+        Counts.publish this, 'post_counter', Docs.find(match)
+        return undefined
+
+
+if Meteor.isClient
+    Template.post_card.onCreated ->
+        # @autorun => Meteor.subscribe 'model_docs', 'food'
+    Template.post_card.events
+        'click .quickbuy': ->
+            console.log @
+            Session.set('quickbuying_id', @_id)
+            # $('.ui.dimmable')
+            #     .dimmer('show')
+            # $('.special.cards .image').dimmer({
+            #   on: 'hover'
+            # });
+            # $('.card')
+            #   .dimmer('toggle')
+            $('.ui.modal')
+              .modal('show')
+
+        'click .goto_food': (e,t)->
+            # $(e.currentTarget).closest('.card').transition('zoom',420)
+            # $('.global_container').transition('scale', 500)
+            Router.go("/food/#{@_id}")
+            # Meteor.setTimeout =>
+            # , 100
+
+        # 'click .view_card': ->
+        #     $('.container_')
+
+    Template.post_card.helpers
+        post_card_class: ->
+            # if Session.get('quickbuying_id')
+            #     if Session.equals('quickbuying_id', @_id)
+            #         'raised'
+            #     else
+            #         'active medium dimmer'
+        is_quickbuying: ->
+            Session.equals('quickbuying_id', @_id)
+
+        food: ->
+            # console.log Meteor.user().roles
+            Docs.find {
+                model:'food'
+            }, sort:title:1
+            
+
+
 if Meteor.isClient
     @picked_tags = new ReactiveArray []
     
@@ -970,3 +2135,1135 @@ if Meteor.isClient
                 model:'food'
             }, sort:title:1
             
+if Meteor.isClient
+    Template.product_view.onCreated ->
+        @autorun => Meteor.subscribe 'product_source', Router.current().params.doc_id, ->
+        @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id, ->
+        @autorun => Meteor.subscribe 'ingredients_from_product_id', Router.current().params.doc_id, ->
+        @autorun => Meteor.subscribe 'orders_from_product_id', Router.current().params.doc_id, ->
+        @autorun => Meteor.subscribe 'subs_from_product_id', Router.current().params.doc_id, ->
+    Template.product_view.events
+        # 'click .generate_qrcode': (e,t)->
+        #     qrcode = new QRCode(document.getElementById("qrcode"), {
+        #         text: @title,
+        #         width: 250,
+        #         height: 250,
+        #         colorDark : "#000000",
+        #         colorLight : "#ffffff",
+        #         correctLevel : QRCode.CorrectLevel.H
+        #     })
+
+        'click .calc_stats': (e,t)->
+            Meteor.call 'calc_product_data', Router.current().params.doc_id, ->
+        'click .goto_source': (e,t)->
+            $(e.currentTarget).closest('.pushable').transition('fade right', 240)
+            product = Docs.findOne Router.current().params.doc_id
+            Meteor.setTimeout =>
+                Router.go "/source/#{product.source_id}"
+            , 240
+        
+        'click .goto_ingredient': (e,t)->
+            # $(e.currentTarget).closest('.pushable').transition('fade right', 240)
+            product = Docs.findOne Router.current().params.doc_id
+            console.log @
+            found_ingredient = 
+                Docs.findOne 
+                    model:'ingredient'
+                    title:@valueOf()
+            if found_ingredient
+                Router.go "/ingredient/#{found_ingredient._id}"
+            else 
+                new_id = 
+                    Docs.insert 
+                        model:'ingredient'
+                        title:@valueOf()
+                Router.go "/ingredient/#{new_id}/edit"
+                
+            # found_ingredient = 
+            #     Docs.findOne 
+            #         model:'ingredient'
+            #         title:@valueOf()
+            # Meteor.setTimeout =>
+            #     Router.go "/source/#{product.source_id}"
+            # , 240
+        
+        'click .add_to_cart': ->
+            Meteor.call 'add_to_cart', @_id, =>
+                $('body').toast(
+                    showIcon: 'cart plus'
+                    message: "#{@title} added"
+                    # showProgress: 'bottom'
+                    class: 'success'
+                    # displayTime: 'auto',
+                    position: "bottom right"
+                )
+
+
+    Template.product_subscriptions.events
+        'click .subscribe': ->
+            if confirm 'subscribe?'
+                Docs.update Router.current().params.doc_id,
+                    $addToSet: 
+                        subscribed_ids: Meteor.userId()
+                new_sub_id = 
+                    Docs.insert 
+                        model:'product_subscription'
+                        product_id:Router.current().params.doc_id
+                Router.go "/subscription/#{new_sub_id}/edit"
+                    
+        'click .unsubscribe': ->
+            if confirm 'unsubscribe?'
+                Docs.update Router.current().params.doc_id,
+                    $pull: 
+                        subscribed_ids: Meteor.userId()
+                                    
+    
+        'click .mark_ready': ->
+            if confirm 'mark product ready?'
+                Docs.update Router.current().params.doc_id,
+                    $set:
+                        ready:true
+                        ready_timestamp:Date.now()
+
+        'click .unmark_ready': ->
+            if confirm 'unmark product ready?'
+                Docs.update Router.current().params.doc_id,
+                    $set:
+                        ready:false
+                        ready_timestamp:null
+
+    Template.product_inventory.onCreated ->
+        @autorun => Meteor.subscribe 'inventory_from_product_id', Router.current().params.doc_id
+            
+    Template.product_inventory.events
+        'click .add_inventory': ->
+            count = Docs.find(model:'inventory_item').count()
+            new_id = Docs.insert 
+                model:'inventory_item'
+                product_id:@_id
+                id:count++
+            Session.set('editing_inventory_id', @_id)
+        'click .edit_inventory_item': -> 
+            Session.set('editing_inventory_id', @_id)
+        'click .save_inventory_item': -> 
+            Session.set('editing_inventory_id', null)
+        
+    Template.product_inventory.helpers
+        editing_this: -> Session.equals('editing_inventory_id', @_id)
+        inventory_items: ->
+            Docs.find({
+                model:'inventory_item'
+                product_id:@_id
+            }, sort:'_timestamp':-1)
+
+
+    Template.product_subscriptions.helpers
+        product_subs: ->
+            Docs.find
+                model:'product_subscription'
+                product_id:Router.current().params.doc_id
+
+    Template.product_view.helpers
+        product_order_total: ->
+            orders = 
+                Docs.find({
+                    model:'order'
+                    product_id:@_id
+                }).fetch()
+            res = 0
+            for order in orders
+                res += order.order_price
+            res
+                
+
+        can_cancel: ->
+            product = Docs.findOne Router.current().params.doc_id
+            if Meteor.userId() is product._author_id
+                if product.ready
+                    false
+                else
+                    true
+            else if Meteor.userId() is @_author_id
+                if product.ready
+                    false
+                else
+                    true
+
+
+        can_order: ->
+            if Meteor.user().roles and 'admin' in Meteor.user().roles
+                true
+            else
+                @cook_user_id isnt Meteor.userId()
+
+        product_order_class: ->
+            if @status is 'ready'
+                'green'
+            else if @status is 'pending'
+                'yellow'
+                
+                
+    Template.order_button.onCreated ->
+
+    Template.order_button.helpers
+
+    Template.order_button.events
+        # 'click .join_waitlist': ->
+        #     Swal.fire({
+        #         title: 'confirm wait list join',
+        #         text: 'this will charge your account if orders cancel'
+        #         icon: 'question'
+        #         showCancelButton: true,
+        #         confirmButtonText: 'confirm'
+        #         cancelButtonText: 'cancel'
+        #     }).then((result) =>
+        #         if result.value
+        #             Docs.insert
+        #                 model:'order'
+        #                 waitlist:true
+        #                 product_id: Router.current().params.doc_id
+        #             Swal.fire(
+        #                 'wait list joined',
+        #                 "you'll be alerted if accepted"
+        #                 'success'
+        #             )
+        #     )
+
+        'click .order_product': ->
+            # if Meteor.user().credit >= @price_per_serving
+            # Docs.insert
+            #     model:'order'
+            #     status:'pending'
+            #     complete:false
+            #     product_id: Router.current().params.doc_id
+            #     if @serving_unit
+            #         serving_text = @serving_unit
+            #     else
+            #         serving_text = 'serving'
+            # Swal.fire({
+            #     # title: "confirm buy #{serving_text}"
+            #     title: "confirm order?"
+            #     text: "this will charge you #{@price_usd}"
+            #     icon: 'question'
+            #     showCancelButton: true,
+            #     confirmButtonText: 'confirm'
+            #     cancelButtonText: 'cancel'
+            # }).then((result) =>
+            #     if result.value
+            Meteor.call 'order_product', @_id, (err, res)->
+                if err
+                    Swal.fire(
+                        'err'
+                        'error'
+                    )
+                    console.log err
+                else
+                    Router.go "/order/#{res}/edit"
+                    # Swal.fire(
+                    #     'order and payment processed'
+                    #     ''
+                    #     'success'
+                    # )
+        # )
+
+if Meteor.isServer
+    Meteor.publish 'ingredients_from_product_id', (product_id)->
+        product = Docs.findOne product_id
+        Docs.find 
+            model:'ingredient'  
+            _id:$in:product.ingredient_ids
+    Meteor.publish 'product_source', (product_id)->
+        product = Docs.findOne product_id
+        # console.log 'need source from this product', product
+        Docs.find
+            model:'source'
+            _id:product.source_id
+    Meteor.publish 'orders_from_product_id', (product_id)->
+        # product = Docs.findOne product_id
+        Docs.find
+            model:'order'
+            product_id:product_id
+            
+    Meteor.publish 'subs_from_product_id', (product_id)->
+        # product = Docs.findOne product_id
+        Docs.find
+            model:'product_subscription'
+            product_id:product_id
+    Meteor.publish 'inventory_from_product_id', (product_id)->
+        # product = Docs.findOne product_id
+        Docs.find
+            model:'inventory_item'
+            product_id:product_id
+
+
+
+
+
+if Meteor.isClient
+    Router.route '/product/:doc_id/edit', (->
+        @layout 'layout'
+        @render 'product_edit'
+        ), name:'product_edit'
+
+
+    Template.product_edit.onCreated ->
+        @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id
+        # @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
+        # @autorun => Meteor.subscribe 'model_docs', 'source'
+
+    Template.product_edit.onRendered ->
+        Meteor.setTimeout ->
+            today = new Date()
+            $('#availability')
+                .calendar({
+                    inline:true
+                    # minDate: new Date(today.getFullYear(), today.getMonth(), today.getDate() - 5),
+                    # maxDate: new Date(today.getFullYear(), today.getMonth(), today.getDate() + 5)
+                })
+        , 2000
+
+    Template.product_edit.helpers
+        # all_shop: ->
+        #     Docs.find
+        #         model:'product'
+        can_delete: ->
+            product = Docs.findOne Router.current().params.doc_id
+            if product.reservation_ids
+                if product.reservation_ids.length > 1
+                    false
+                else
+                    true
+            else
+                true
+
+    Template.product_edit.onCreated ->
+        @autorun => @subscribe 'source_search_results', Session.get('source_search'), ->
+    Template.product_edit.helpers
+        search_results: ->
+            Docs.find 
+                model:'source'
+                
+
+    Template.product_edit.events
+        'click .remove_source': (e,t)->
+            if confirm 'remove source?'
+                Docs.update Router.current().params.doc_id,
+                    $set:source_id:null
+        'click .pick_source': (e,t)->
+            Docs.update Router.current().params.doc_id,
+                $set:source_id:@_id
+        'keyup .source_search': (e,t)->
+            # if e.which is '13'
+            val = t.$('.source_search').val()
+            console.log val
+            Session.set('source_search', val)
+                
+            
+        'click .save_product': ->
+            product_id = Router.current().params.doc_id
+            Meteor.call 'calc_product_data', product_id, ->
+            Router.go "/product/#{product_id}"
+
+
+        'click .save_availability': ->
+            doc_id = Router.current().params.doc_id
+            availability = $('.ui.calendar').calendar('get date')[0]
+            console.log availability
+            formatted = moment(availability).format("YYYY-MM-DD[T]HH:mm")
+            console.log formatted
+            # console.log moment(@end_datetime).diff(moment(@start_datetime),'minutes',true)
+            # console.log moment(@end_datetime).diff(moment(@start_datetime),'hours',true)
+            Docs.update doc_id,
+                $set:datetime_available:formatted
+
+
+
+
+
+        # 'click .select_product': ->
+        #     Docs.update Router.current().params.doc_id,
+        #         $set:
+        #             product_id: @_id
+        #
+        #
+        # 'click .clear_product': ->
+        #     if confirm 'clear product?'
+        #         Docs.update Router.current().params.doc_id,
+        #             $set:
+        #                 product_id: null
+
+
+
+        'click .delete_product': ->
+            if confirm 'refund orders and cancel product?'
+                Docs.remove Router.current().params.doc_id
+                Router.go "/"
+
+if Meteor.isServer 
+    Meteor.publish 'source_search_results', (source_title_queary)->
+        Docs.find 
+            model:'source'
+            title: {$regex:"#{source_title_queary}",$options:'i'}
+
+
+if Meteor.isClient
+    Template.ingredient_picker.onCreated ->
+        @autorun => @subscribe 'ingredient_search_results', Session.get('ingredient_search'), ->
+        @autorun => @subscribe 'model_docs', 'ingredient', ->
+    Template.ingredient_picker.helpers
+        ingredient_results: ->
+            Docs.find 
+                model:'ingredient'
+                title: {$regex:"#{Session.get('ingredient_search')}",$options:'i'}
+                
+        product_ingredients: ->
+            product = Docs.findOne Router.current().params.doc_id
+            Docs.find 
+                # model:'ingredient'
+                _id:$in:product.ingredient_ids
+        ingredient_search_value: ->
+            Session.get('ingredient_search')
+        
+    Template.ingredient_picker.events
+        'click .clear_search': (e,t)->
+            Session.set('ingredient_search', null)
+            t.$('.ingredient_search').val('')
+
+            
+        'click .remove_ingredient': (e,t)->
+            if confirm "remove #{@title} ingredient?"
+                Docs.update Router.current().params.doc_id,
+                    $pull:
+                        ingredient_ids:@_id
+                        ingredient_titles:@title
+        'click .pick_ingredient': (e,t)->
+            Docs.update Router.current().params.doc_id,
+                $addToSet:
+                    ingredient_ids:@_id
+                    ingredient_titles:@title
+            Session.set('ingredient_search',null)
+            t.$('.ingredient_search').val('')
+                    
+        'keyup .ingredient_search': (e,t)->
+            # if e.which is '13'
+            val = t.$('.ingredient_search').val()
+            console.log val
+            Session.set('ingredient_search', val)
+
+        'click .create_ingredient': ->
+            new_id = 
+                Docs.insert 
+                    model:'ingredient'
+                    title:Session.get('ingredient_search')
+            Router.go "/ingredient/#{new_id}/edit"
+
+
+if Meteor.isServer 
+    Meteor.publish 'ingredient_search_results', (ingredient_title_query)->
+        Docs.find 
+            model:'ingredient'
+            title: {$regex:"#{ingredient_title_query}",$options:'i'}
+    Meteor.publish 'product_orders', (product_id)->
+        product = Docs.findOne product_id
+        # console.log 'finding mishi for', product
+        if product.slug 
+            Docs.find 
+                model:'order'
+                _product:product.slug
+        # else console.log 'no product slug', product
+        
+        
+if Meteor.isClient
+    Router.route '/products', (->
+        @layout 'layout'
+        @render 'products'
+        ), name:'products'
+
+
+    Template.product_card.events
+        'click .add_to_cart': (e,t)->
+            $(e.currentTarget).closest('.card').transition('bounce',500)
+            Meteor.call 'add_to_cart', @_id, =>
+                $('body').toast(
+                    showIcon: 'cart plus'
+                    message: "#{@title} added"
+                    # showProgress: 'bottom'
+                    class: 'success'
+                    # displayTime: 'auto',
+                    position: "bottom center"
+                )
+
+
+    # Template.set_sort_key.events
+    #     'click .set_sort': ->
+    #         console.log @
+    #         Session.set('sort_key', @key)
+    #         Session.set('product_sort_label', @label)
+    #         Session.set('product_sort_icon', @icon)
+
+
+
+if Meteor.isServer
+    Meteor.methods
+        add_to_cart: (product_id)->
+            # existing_cart_item_with_product = 
+            #     Docs.findOne 
+            #         model:'cart_item'
+            #         product_id:product_id
+            # if existing_cart_item_with_product
+            #     Docs.update existing_cart_item_with_product._id,
+            #         $inc:amount:1
+            # else 
+            product = Docs.findOne product_id
+            current_order = 
+                Docs.findOne 
+                    model:'order'
+                    _author_id:Meteor.userId()
+                    status:'cart'
+            if current_order
+                order_id = current_order._id
+            else
+                order_id = 
+                    Docs.insert 
+                        model:'order'
+                        status:'cart'
+            new_cart_doc_id = 
+                Docs.insert 
+                    model:'cart_item'
+                    status:'cart'
+                    product_id: product_id
+                    product_price_usd:product.price_usd
+                    product_price_points:product.price_points
+                    product_title:product.title
+                    product_image_id:product.image_id
+                    order_id:order_id
+            console.log new_cart_doc_id
+            
+                    
+    Meteor.publish 'product_results', (
+        picked_ingredients=[]
+        picked_sections=[]
+        product_query=''
+        view_vegan
+        view_gf
+        products_section=null
+        limit=20
+        sort_key='_timestamp'
+        sort_direction=1
+        )->
+        # console.log picked_ingredients
+        self = @
+        match = {model:'product', app:'nf'}
+        if products_section 
+            match.products_section = products_section
+        if picked_ingredients.length > 0
+            match.ingredients = $all: picked_ingredients
+            # sort = 'price_per_serving'
+        if picked_sections.length > 0
+            match.menu_section = $all: picked_sections
+            # sort = 'price_per_serving'
+        # else
+            # match.tags = $nin: ['wikipedia']
+        sort = '_timestamp'
+            # match.source = $ne:'wikipedia'
+        if view_vegan
+            match.vegan = true
+        if view_gf
+            match.gluten_free = true
+        if product_query and product_query.length > 1
+            console.log 'searching product_query', product_query
+            match.title = {$regex:"#{product_query}", $options: 'i'}
+            # match.tags_string = {$regex:"#{query}", $options: 'i'}
+
+        # match.tags = $all: picked_ingredients
+        # if filter then match.model = filter
+        # keys = _.keys(prematch)
+        # for key in keys
+        #     key_array = prematch["#{key}"]
+        #     if key_array and key_array.length > 0
+        #         match["#{key}"] = $all: key_array
+            # console.log 'current facet filter array', current_facet_filter_array
+
+        # console.log 'product match', match
+        # console.log 'sort key', sort_key
+        # console.log 'sort direction', sort_direction
+        Docs.find match,
+            sort:"#{sort_key}":sort_direction
+            # sort:_timestamp:-1
+            limit: limit
+            fields:
+                title:1
+                image_id:1
+                ingredients:1
+                model:1
+                price_usd:1
+                vegan:1
+                local:1
+                gluten_free:1
+            
+    Meteor.publish 'product_search_count', (
+        picked_ingredients=[]
+        picked_sections=[]
+        product_query
+        view_vegan
+        view_gf
+        )->
+        # @unblock()
+    
+        # console.log picked_ingredients
+        self = @
+        match = {model:'product', app:'nf'}
+        if picked_ingredients.length > 0
+            match.ingredients = $all: picked_ingredients
+            # sort = 'price_per_serving'
+        if picked_sections.length > 0
+            match.menu_section = $all: picked_sections
+            # sort = 'price_per_serving'
+        # else
+            # match.tags = $nin: ['wikipedia']
+        sort = '_timestamp'
+            # match.source = $ne:'wikipedia'
+        if view_vegan
+            match.vegan = true
+        if view_gf
+            match.gluten_free = true
+        if product_query and product_query.length > 1
+            console.log 'searching product_query', product_query
+            match.title = {$regex:"#{product_query}", $options: 'i'}
+        Counts.publish this, 'product_counter', Docs.find(match)
+        return undefined
+
+    Meteor.publish 'product_facets', (
+        picked_ingredients=[]
+        picked_sections=[]
+        product_query=null
+        view_vegan=false
+        view_gf=false
+        products_section=null
+        doc_limit=20
+        doc_sort_key
+        doc_sort_direction
+        view_delivery
+        view_pickup
+        view_open
+        )->
+        # console.log 'dummy', dummy
+        # console.log 'query', query
+        # console.log 'picked ingredients', picked_ingredients
+
+        self = @
+        match = {app:'nf'}
+        match.model = 'product'
+        if products_section 
+            match.products_section = products_section
+        if view_vegan
+            match.vegan = true
+        if view_gf
+            match.gluten_free = true
+        # if view_local
+        #     match.local = true
+        if picked_ingredients.length > 0 then match.ingredients = $all: picked_ingredients
+        if picked_sections.length > 0 then match.menu_section = $all: picked_sections
+            # match.$regex:"#{product_query}", $options: 'i'}
+        if product_query and product_query.length > 1
+            console.log 'searching product_query', product_query
+            match.title = {$regex:"#{product_query}", $options: 'i'}
+            # match.tags_string = {$regex:"#{query}", $options: 'i'}
+        #
+        #     Terms.find {
+        #         title: {$regex:"#{query}", $options: 'i'}
+        #     },
+        #         sort:
+        #             count: -1
+        #         limit: 42
+            # tag_cloud = Docs.aggregate [
+            #     { $match: match }
+            #     { $project: "tags": 1 }
+            #     { $unwind: "$tags" }
+            #     { $group: _id: "$tags", count: $sum: 1 }
+            #     { $match: _id: $nin: picked_ingredients }
+            #     { $match: _id: {$regex:"#{query}", $options: 'i'} }
+            #     { $sort: count: -1, _id: 1 }
+            #     { $limit: 42 }
+            #     { $project: _id: 0, name: '$_id', count: 1 }
+            #     ]
+
+        # else
+        # unless query and query.length > 2
+        # if picked_ingredients.length > 0 then match.tags = $all: picked_ingredients
+        # # match.tags = $all: picked_ingredients
+        # # console.log 'match for tags', match
+        section_cloud = Docs.aggregate [
+            { $match: match }
+            { $project: "menu_section": 1 }
+            { $group: _id: "$menu_section", count: $sum: 1 }
+            { $match: _id: $nin: picked_sections }
+            # { $match: _id: {$regex:"#{product_query}", $options: 'i'} }
+            { $sort: count: -1, _id: 1 }
+            { $limit: 20 }
+            { $project: _id: 0, name: '$_id', count: 1 }
+        ], {
+            allowDiskUse: true
+        }
+        
+        section_cloud.forEach (section, i) =>
+            # console.log 'queried section ', section
+            # console.log 'key', key
+            self.added 'results', Random.id(),
+                title: section.name
+                count: section.count
+                model:'section'
+                # category:key
+                # index: i
+
+
+        ingredient_cloud = Docs.aggregate [
+            { $match: match }
+            { $project: "ingredients": 1 }
+            { $unwind: "$ingredients" }
+            { $match: _id: $nin: picked_ingredients }
+            { $group: _id: "$ingredients", count: $sum: 1 }
+            { $sort: count: -1, _id: 1 }
+            { $limit: 20 }
+            { $project: _id: 0, title: '$_id', count: 1 }
+        ], {
+            allowDiskUse: true
+        }
+
+        ingredient_cloud.forEach (ingredient, i) =>
+            # console.log 'ingredient result ', ingredient
+            self.added 'results', Random.id(),
+                title: ingredient.title
+                count: ingredient.count
+                model:'ingredient'
+                # category:key
+                # index: i
+
+
+        self.ready()
+
+
+
+
+
+if Meteor.isClient
+    Template.product_card.onCreated ->
+        # @autorun => Meteor.subscribe 'model_docs', 'food'
+    Template.product_card.events
+        'click .quickbuy': ->
+            console.log @
+            Session.set('quickbuying_id', @_id)
+            # $('.ui.dimmable')
+            #     .dimmer('show')
+            # $('.special.cards .image').dimmer({
+            #   on: 'hover'
+            # });
+            # $('.card')
+            #   .dimmer('toggle')
+            $('.ui.modal')
+              .modal('show')
+
+        'click .goto_food': (e,t)->
+            # $(e.currentTarget).closest('.card').transition('zoom',420)
+            # $('.global_container').transition('scale', 500)
+            Router.go("/food/#{@_id}")
+            # Meteor.setTimeout =>
+            # , 100
+
+        # 'click .view_card': ->
+        #     $('.container_')
+
+    Template.product_card.helpers
+        product_card_class: ->
+            # if Session.get('quickbuying_id')
+            #     if Session.equals('quickbuying_id', @_id)
+            #         'raised'
+            #     else
+            #         'active medium dimmer'
+        is_quickbuying: ->
+            Session.equals('quickbuying_id', @_id)
+
+        food: ->
+            # console.log Meteor.user().roles
+            Docs.find {
+                model:'food'
+            }, sort:title:1
+        
+        
+        
+if Meteor.isClient
+    Template.orgs_small.onCreated ->
+        @autorun => Meteor.subscribe 'model_docs', 'org', ->
+    Template.orgs_small.helpers
+        org_docs: ->
+            Docs.find   
+                model:'org'
+                
+                
+    Template.org_view.helpers
+        is_member: ->
+            Meteor.userId() and Meteor.userId() in @member_ids
+        # current_org: ->
+        #     Docs.findOne
+        #         model:'org'
+        #         slug: Router.current().params.doc_id
+
+    Template.org_view.events
+        'click .refresh_org_stats': ->
+            Meteor.call 'calc_org_stats', Router.current().params.doc_id, ->
+        'click .join': ->
+            if Meteor.userId()
+                Docs.update @_id, 
+                    $addToSet:
+                        member_ids: Meteor.userId()
+                Meteor.users.update Meteor.userId(),
+                    $addToSet:
+                        org_ids:@_id
+            else 
+                Router.go '/login'
+                
+        'click .org_leave': ->
+            Docs.update @_id, 
+                $pull:
+                    member_ids: Meteor.userId()
+            Meteor.users.update Meteor.userId(),
+                $pull:
+                    org_ids:@_id
+
+
+if Meteor.isClient
+    Template.org_edit.events
+        'click .add_option': ->
+            Docs.insert
+                model:'org_option'
+                ballot_id: Router.current().params.doc_id
+    Template.org_edit.helpers
+        options: ->
+            Docs.find
+                model:'org_option'
+
+# if Meteor.isServer
+    # Meteor.publish 'org_results', (
+    #     picked_tags
+    #     doc_limit
+    #     doc_sort_key
+    #     doc_sort_direction
+    #     view_delivery
+    #     view_pickup
+    #     view_open
+    #     )->
+    #     # console.log picked_tags
+    #     if doc_limit
+    #         limit = doc_limit
+    #     else
+    #         limit = 42
+    #     if doc_sort_key
+    #         sort_key = doc_sort_key
+    #     if doc_sort_direction
+    #         sort_direction = parseInt(doc_sort_direction)
+    #     self = @
+    #     match = {model:'org'}
+    #     # if view_open
+    #     #     match.open = $ne:false
+    #     # if view_delivery
+    #     #     match.delivery = $ne:false
+    #     # if view_pickup
+    #     #     match.pickup = $ne:false
+    #     if picked_tags.length > 0
+    #         match.tags = $all: picked_tags
+    #         sort = 'member_count'
+    #     else
+    #         # match.tags = $nin: ['wikipedia']
+    #         sort = '_timestamp'
+    #         # match.source = $ne:'wikipedia'
+    #     # if view_images
+    #     #     match.is_image = $ne:false
+    #     # if view_videos
+    #     #     match.is_video = $ne:false
+
+    #     # match.tags = $all: picked_tags
+    #     # if filter then match.model = filter
+    #     # keys = _.keys(prematch)
+    #     # for key in keys
+    #     #     key_array = prematch["#{key}"]
+    #     #     if key_array and key_array.length > 0
+    #     #         match["#{key}"] = $all: key_array
+    #         # console.log 'current facet filter array', current_facet_filter_array
+
+    #     console.log 'org match', match
+    #     console.log 'sort key', sort_key
+    #     console.log 'sort direction', sort_direction
+    #     Docs.find match,
+    #         # sort:"#{sort_key}":sort_direction
+    #         sort:_timestamp:-1
+    #         limit: limit
+
+    # Meteor.publish 'org_facets', (
+    #     picked_tags
+    #     picked_timestamp_tags
+    #     query
+    #     doc_limit
+    #     doc_sort_key
+    #     doc_sort_direction
+    #     view_delivery
+    #     view_pickup
+    #     view_open
+    #     )->
+    #     # console.log 'dummy', dummy
+    #     # console.log 'query', query
+    #     console.log 'selected tags', picked_tags
+
+    #     self = @
+    #     match = {}
+    #     match.model = 'org'
+    #     if view_open
+    #         match.open = $ne:false
+
+    #     if view_delivery
+    #         match.delivery = $ne:false
+    #     if view_pickup
+    #         match.pickup = $ne:false
+    #     if picked_tags.length > 0 then match.tags = $all: picked_tags
+    #         # match.$regex:"#{current_query}", $options: 'i'}
+    #     # if query and query.length > 1
+    #     # #     console.log 'searching query', query
+    #     # #     # match.tags = {$regex:"#{query}", $options: 'i'}
+    #     # #     # match.tags_string = {$regex:"#{query}", $options: 'i'}
+    #     # #
+    #     #     Terms.find {
+    #     #         title: {$regex:"#{query}", $options: 'i'}
+    #     #     },
+    #     #         sort:
+    #     #             count: -1
+    #     #         limit: 20
+    #         # tag_cloud = Docs.aggregate [
+    #         #     { $match: match }
+    #         #     { $project: "tags": 1 }
+    #         #     { $unwind: "$tags" }
+    #         #     { $org: _id: "$tags", count: $sum: 1 }
+    #         #     { $match: _id: $nin: picked_tags }
+    #         #     { $match: _id: {$regex:"#{query}", $options: 'i'} }
+    #         #     { $sort: count: -1, _id: 1 }
+    #         #     { $limit: 42 }
+    #         #     { $project: _id: 0, name: '$_id', count: 1 }
+    #         #     ]
+
+    #     # else
+    #     # unless query and query.length > 2
+    #     # if picked_tags.length > 0 then match.tags = $all: picked_tags
+    #     # # match.tags = $all: picked_tags
+    #     # # console.log 'match for tags', match
+    #     # tag_cloud = Docs.aggregate [
+    #     #     { $match: match }
+    #     #     { $project: "tags": 1 }
+    #     #     { $unwind: "$tags" }
+    #     #     { $org: _id: "$tags", count: $sum: 1 }
+    #     #     { $match: _id: $nin: picked_tags }
+    #     #     # { $match: _id: {$regex:"#{current_query}", $options: 'i'} }
+    #     #     { $sort: count: -1, _id: 1 }
+    #     #     { $limit: 20 }
+    #     #     { $project: _id: 0, name: '$_id', count: 1 }
+    #     # ], {
+    #     #     allowDiskUse: true
+    #     # }
+    #     #
+    #     # tag_cloud.forEach (tag, i) =>
+    #     #     # console.log 'queried tag ', tag
+    #     #     # console.log 'key', key
+    #     #     self.added 'tags', Random.id(),
+    #     #         title: tag.name
+    #     #         count: tag.count
+    #     #         # category:key
+    #     #         # index: i
+
+
+    #     tag_cloud = Docs.aggregate [
+    #         { $match: match }
+    #         { $project: "tags": 1 }
+    #         { $unwind: "$tags" }
+    #         { $org: _id: "$tags", count: $sum: 1 }
+    #         { $sort: count: -1, _id: 1 }
+    #         { $limit: 20 }
+    #         { $project: _id: 0, title: '$_id', count: 1 }
+    #     ], {
+    #         allowDiskUse: true
+    #     }
+
+    #     tag_cloud.forEach (tag, i) =>
+    #         # console.log 'tag result ', tag
+    #         self.added 'tags', Random.id(),
+    #             title: tag.title
+    #             count: tag.count
+    #             # category:key
+    #             # index: i
+
+
+    #     self.ready()
+
+
+# Router.route '/org/:doc_id/', (->
+#     @render 'org_view'
+#     ), name:'org_view'
+# Router.route '/org/:doc_id/edit', (->
+#     @render 'org_edit'
+#     ), name:'org_edit'
+
+
+if Meteor.isClient
+    Template.org_history.onCreated ->
+        @autorun => Meteor.subscribe 'children', 'log_event', Router.current().params.doc_id
+    Template.org_history.helpers
+        org_events: ->
+            Docs.find
+                model:'log_event'
+                parent_id:Router.current().params.doc_id
+
+
+    Template.org_subscription.onCreated ->
+        # @autorun => Meteor.subscribe 'children', 'log_event', Router.current().params.doc_id
+    Template.org_subscription.events
+        'click .subscribe': ->
+            Docs.insert
+                model:'log_event'
+                log_type:'subscribe'
+                parent_id:Router.current().params.doc_id
+                text: "#{Meteor.user().username} subscribed to org order."
+
+
+    Template.org_reservations.onCreated ->
+        @autorun => Meteor.subscribe 'org_reservations', Router.current().params.doc_id
+    Template.org_reservations.helpers
+        reservations: ->
+            Docs.find
+                model:'reservation'
+                org_id: Router.current().params.doc_id
+    Template.org_reservations.events
+        'click .new_reservation': ->
+            Docs.insert
+                model:'reservation'
+                org_id: Router.current().params.doc_id
+
+
+if Meteor.isServer
+    Meteor.publish 'org_reservations', (org_id)->
+        Docs.find
+            model:'reservation'
+            org_id: org_id
+
+
+
+    Meteor.methods
+        calc_org_stats: ->
+            org_stat_doc = Docs.findOne(model:'org_stats')
+            unless org_stat_doc
+                new_id = Docs.insert
+                    model:'org_stats'
+                org_stat_doc = Docs.findOne(model:'org_stats')
+            console.log org_stat_doc
+            total_count = Docs.find(model:'org').count()
+            complete_count = Docs.find(model:'org', complete:true).count()
+            incomplete_count = Docs.find(model:'org', complete:$ne:true).count()
+            Docs.update org_stat_doc._id,
+                $set:
+                    total_count:total_count
+                    complete_count:complete_count
+                    incomplete_count:incomplete_count
+
+
+if Meteor.isClient
+    Template.user_orgs.onCreated ->
+        @autorun => Meteor.subscribe 'user_orgs', Router.current().params.username
+    Template.user_orgs.events
+        'click .add_org': ->
+            new_id =
+                Docs.insert
+                    model:'org'
+            Router.go "/org/#{new_id}/edit"
+
+    Template.user_orgs.helpers
+        orgs: ->
+            current_user = Meteor.users.findOne username:Router.current().params.username
+            Docs.find {
+                model:'org'
+                _author_id: current_user._id
+            }, sort:_timestamp:-1
+
+if Meteor.isServer
+    Meteor.publish 'user_orgs', (username)->
+        user = Meteor.users.findOne username:username
+        Docs.find
+            model:'org'
+            _author_id: user._id
+
+
+if Meteor.isServer
+    Meteor.publish 'members', (tribe_id)->
+        Meteor.users.find
+            _id:$in:@member_ids
+
+    Meteor.publish 'tribe_by_slug', (tribe_slug)->
+        Docs.find
+            model:'tribe'
+            slug:tribe_slug
+    Meteor.methods
+        calc_tribe_stats: (tribe_slug)->
+            tribe = Docs.findOne
+                model:'tribe'
+                slug: tribe_slug
+
+            member_count =
+                tribe.member_ids.length
+
+            tribe_members =
+                Meteor.users.find
+                    _id: $in: tribe.member_ids
+
+            dish_count = 0
+            dish_ids = []
+            for member in tribe_members.fetch()
+                member_dishes =
+                    Docs.find(
+                        model:'dish'
+                        _author_id:member._id
+                    ).fetch()
+                for dish in member_dishes
+                    console.log 'dish', dish.title
+                    dish_ids.push dish._id
+                    dish_count++
+            # dish_count =
+            #     Docs.find(
+            #         model:'dish'
+            #         tribe_id:tribe._id
+            #     ).count()
+            tribe_count =
+                Docs.find(
+                    model:'tribe'
+                    tribe_id:tribe._id
+                ).count()
+
+            order_cursor =
+                Docs.find(
+                    model:'order'
+                    tribe_id:tribe._id
+                )
+            order_count = order_cursor.count()
+            total_credit_exchanged = 0
+            for order in order_cursor.fetch()
+                if order.order_price
+                    total_credit_exchanged += order.order_price
+            tribe_tribes =
+                Docs.find(
+                    model:'tribe'
+                    tribe_id:tribe._id
+                ).fetch()
+
+            console.log 'total_credit_exchanged', total_credit_exchanged
+
+
+            Docs.update tribe._id,
+                $set:
+                    member_count:member_count
+                    tribe_count:tribe_count
+                    dish_count:dish_count
+                    total_credit_exchanged:total_credit_exchanged
+                    dish_ids:dish_ids

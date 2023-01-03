@@ -1,3 +1,1291 @@
+//parties, games, conferences, classes, ceremonies, meetups, ski-trips/adventures, 
+// protests, farm swarms
+template(name='event_card')
+    .content
+        div
+        .ui.small.header {{medium_date date}} 
+            if time 
+                |{{time}}
+        // .ui.inline.small.header {{long_date start_datetime}}
+        // div
+        // .ui.small.grey.inline.header {{from_now start_datetime}}
+        if location
+            i.marker.icon 
+            |#{location}
+        div 
+        // small led by
+        img.ui.avatar.image(src="{{c.url fac.image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+        strong #{fac.name}
+        |#{event_tickets.count}
+        a(href="/m/event/#{_id}" title='ticket purchase required')
+            i.checkmark.green.link.icon
+        | #{going.count}
+        each going
+            img.ui.avatar.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+        i.question.orange.link.icon.mark_maybe(title='mark yourself maybe')
+        div
+        | #{maybe_user_ids.length}
+        each maybe_going
+            img.ui.avatar.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+        | #{not_user_ids.length}
+        div
+        i.ban.red.link.icon.mark_not(title='mark yourself not')
+        each not_going
+            img.ui.avatar.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+        if doc_comments.count
+            .meta
+                each doc_comments 
+                    i.grey.chat.outline.icon
+                    img.ui.avatar.image(src="{{c.url _author.image_id height=200 width=200 gravity='face' crop='fill'}}" class=user_class)
+                    |#{body}
+        div 
+        +eft_viewer_small
+
+        +filter_model model='organization' icon='groups' color='83DFF4'
+
+
+
+template(name='gcal_button')
+    a.ui.circular.basic.circular.large.button(href="http://www.google.com/calendar/event?action=TEMPLATE&text=#{title}&dates=#{start_datetime}/#{end_datetime}&details=#{description}&location=#{location}" target="_window")
+        i.calendar.icon
+        |add to gcal
+        
+        
+        
+template(name='event_edit')
+    .ui.stackable.padded.grid
+        .centered.row 
+            .five.wide.column
+                // a.ui.green.big.circular.button.fly_right(href="/event/#{_id}" title='save')
+                //     i.checkmark.big.icon
+                //     |save
+                .ui.inline.header 
+                    +icolor name='tear-off-calendar'
+                    |edit event
+                +boolean_edit key='published' label='published'
+                div
+                .ui.icon.basic.circular.button.delete_item(title='delete')
+                    i.remove.red.icon
+                +text_edit key='title' label='title'
+                div
+                .ui.header 
+                    small author
+                    |#{_author.name}
+                +slug_edit key='slug' label='slug' icon='slug'
+                div
+                // if reservation_exists
+                //     .ui.header date: #{date}
+                //     .ui.header time: #{time}
+                // else
+                +datetime_edit key='start_datetime' label='start datetime'
+                div
+                +datetime_edit key='end_datetime' label='end datetime'
+                div
+                // +time_edit key='time' label='time'
+                div
+                +number_edit key='hour_duration' label='hours'
+                div 
+                +text_edit key='location' label='location'
+                +geolocate_button
+                div
+                // +range_edit label='time range'
+                div
+                // +single_user_edit key='facilitator_id' label='facilitator' icon='chess king'
+                div
+                // +single_user_edit key='support_id' label='support' icon='chess queen'
+                div
+                +single_user_edit key='host_id' label='host' icon='shield'
+                div
+                div 
+                +array_edit key='tags' label='tags' icon='red tags'
+                div
+            .ten.wide.column.scrollin
+                .ui.header
+                    i.users.icon
+                    |audience
+                +number_edit key='max_attendees' label='max attendees' min='0' max='100'
+                div
+                // div
+                +boolean_edit key='free' label='free'
+                div
+                unless free
+                    +number_edit key='price_points' label='point price' min='0' max='100'
+                    div
+                +number_edit key='usd_price' label='usd price' min='0' max='100'
+                div
+                +number_edit key='price_usd' label='dollar price' min='0' max='100'
+                div
+                +html_edit key='description' label='description'
+                div
+                // .ui.buttons 
+                .ui.basic.center.aligned.segment
+                    +eft_picker color="FF73EA" icon='food' label='food'
+                    +eft_picker color="B785E1" icon='home' label='housing'
+                    +eft_picker color="7229AF" icon='tshirt' label='clothing'
+                    +eft_picker color="1255B8" icon='car' label='transportation'
+                    +eft_picker color="83DFF4" icon='lightning' label='energy'
+                    +eft_picker color="42E8C4" icon='leaf' label='zero waste'
+                    +eft_picker color="40C057" icon='smile' label='wellness'
+                    +eft_picker color="FAB005" icon='university' label='education'
+                    +eft_picker color="FD7E14" icon='paint brush' label='art'
+                    +eft_picker color="FF0000" icon='users' label="community core"
+                    +eft_picker color="FF0000" icon='users' label="community core"
+                div
+                .ui.eight.wide.column
+                    +calendar_view
+                    +mapbox
+
+                
+//                     div
+//                     +image_edit key='image_id' label='image'
+//                     div
+//                     +link_edit key='link' label='link'
+//                             //light blue
+//                         +thing_picker model='project' icon='project' color='7229AF' 
+//                             //violet
+//                         +thing_picker model='event' icon='calendar' color='FAB005'
+//                             //yellow
+//                         +thing_picker model='role' icon='what-i-do' color='42E8C4'
+//                             //turquoise
+//                         +thing_picker model='tasks' icon='task' color='B785E1'
+//                             //lavender
+//                         +thing_picker model='resource' icon='car' color='FD7E14'  
+//                             //orange
+//                         +thing_picker model='post' icon='for-you' color='1255B8'
+//                             //blue
+//                         +thing_picker model='offer' icon='hand-holding-heart' color='FF73EA'
+//                             //pink
+//                         +thing_picker model='request' icon='commercial' color='40C057'     
+//                             //green
+//                         +thing_picker model='skills' icon='wrench' color='ff0000'
+                    //         //Blue
+                    //   +thing_picker model='badges' icon='badge' color='1255B8'
+                
+// template(name='thing_picker')
+                        //thing picker needs to pick the specific thing (ex. a my_skill) to associate it with the thing being created.
+//     .ui.compact.circular.secondary.basic.button.pick_model.zoomer(class=button_class)
+//         +i name=icon color=color cl='ui mini inline image'
+//         // i.exchange.large.icon
+//         |#{model}
+//                 //red
+
+
+
+
+
+
+
+template(name='reserve_button')
+    if slot_res
+        .ui.segment
+            with slot_res
+                .ui.header 
+                    |reserved by #{_author.name}
+                if can_edit
+                    .ui.circular.icon.button.cancel_res
+                        i.red.remove.icon
+    else 
+        // if event_room.dollars_per_hour
+        //     .ui.green.button.buy_slot buy slot #{slot}
+        //     .ui.green.button.request_slot request for points
+        // else
+        .ui.green.fluid.button.reserve_slot reserve slot #{slot}
+        
+        
+        
+
+template(name='event_view')
+    // with current_doc
+    .ui.stackable.padded.grid
+        .middle.aligned.row 
+            .sixteen.wide.column
+                // if currentUser
+                //     a(href="/events")
+                //         i.calendar.big.circular.link.icon
+                // .ui.large.inline.header #{title}
+                if can_edit
+                    if published 
+                        i.big.eye.green.icon(title='published')
+                    else 
+                        i.big.eye.red.slash.icon(title='unpublished')
+                // div
+                // .ui.inline.header {{medium_date date}}
+                .ui.inline.header {{long_date start_datetime}}
+                // .ui.inline.grey.header {{from_now date}}
+                if time 
+                    .ui.inline.grey.header {{time}}
+                // if can_edit
+                //     a.edit_event(href="/event/#{_id}/edit" title='edit')
+                //         i.large.blue.link.pencil.circular.icon
+                +eft_viewer
+        .row 
+            .four.wide.column.scrollin
+                if location 
+                    i.large.marker.icon(title='location')
+                    |#{location}
+                .spacer
+                // a(href="/m/room/#{event_room._id}")
+                //     img.ui.small.circular.inline.image.pointer.zoom(src="{{c.url event_room.image_id }}" class=currentUser.invert_class)
+                //     .ui.inline.header.pointer.zoom
+                //         |#{event_room.title}
+                if is_admin
+                    .ui.segment
+                        .ui.header 
+                            i.shield.icon
+                            | author
+                        a.ui.header(href="/user/#{_author.username}") 
+                            img.ui.avatar.image(src="{{c.url _author.image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                            |#{_author.name}
+                if facilitator
+                    .ui.dividing.header 
+                        i.chess.king.grey.icon
+                        |facilitator
+                    a.ui.header(href="/user/#{fac.username}") 
+                        img.ui.avatar.image(src="{{c.url fac.image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                        |#{fac.name}
+                if support
+                    .ui.dividing.header 
+                        i.chess.queen.grey.icon
+                        |support
+                    a.ui.header(href="/user/#{support.username}") 
+                        img.ui.avatar.image(src="{{c.url support.image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                        |#{support.name}
+                if is_admin
+                    .ui.header
+                        |#{max_attendees} max attendees
+                // .ui.small.grey.header 
+                //     i.line.chart.icon
+                //     |stats
+                .ui.small.header #{views} views
+                each viewers
+                    .ui.label #{username}
+                with current_doc
+                    +gcal_button
+                .ui.hidden.divider
+                +array_view key='tags' label='tags' icon='tags red'
+                div
+                div
+                if currentUser
+                    +voting_full
+                +array_view key='location_tags' label='location tags' icon='marker'
+                div
+            .eight.wide.column.scrollin
+                a(href="{{c.url image_id }}")
+                    img.ui.fluid.rounded.image(src="{{c.url image_id }}" class=currentUser.invert_class)
+                // a.ui.header(href="/user/#{target.username}")
+                //     |#{target.username}
+                // .scrolling
+                |!{description}
+                // div 
+                // .spacer
+                // .spacer
+                +comments
+            .four.wide.column
+                .ui.big.button.buy_for_usd
+                    |buy with usd
+                .ui.inline.large.header 
+                    |RSVP
+                if tickets_left
+                    .ui.grey.small.inline.header #{tickets_left} available
+                    .spacer
+                    .ui.grey.small.inline.header  min requested 
+                    // .spacer
+                    // .ui.grey.small.inline.header (give more if you want to)
+                    div
+                if my_ticket
+                    .ui.header your ticket
+                    with my_ticket
+                        .ui.segment
+                            // if is_usd
+                            //     .ui.inline.green.header ${{money_format amount}}
+                            // else
+                            .ui.inline.header #{point_amount}pts
+                            |#{when} 
+                            if is_usd
+                                .ui.button.request_refund
+                                    i.undo.icon
+                                    |request refund
+                            else
+                                .ui.button.return
+                                    i.undo.icon
+                                    |return
+                unless my_ticket
+                    .ui.green.fluid.button.buy_ticket
+                        |buy ticket #{price}p
+                .spacer
+                .spacer
+                .ui.dividing.header
+                    // +icolor name='activity-history' cl='ui inline image'
+                    |#{event_ticket_docs.count} spots reserved
+                .ui.comments
+                    each event_ticket_docs
+                        .comment
+                            a.avatar(href="/user/#{_author.username}") 
+                                img(src="{{c.url _author.image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                            a.content(href="/order/#{_id}")
+                                a.author(href="/user/#{_author.username}") 
+                                    |#{_author.name}
+                                .metadata
+                                    span.date #{when}
+                                .text
+                                    if is_usd
+                                        .ui.inline.green.header ${{money_format amount}}
+                                    else
+                                        .ui.inline.header #{point_amount}pts
+                                // span.meta
+                                //     if can_edit
+                                //         +remove_icon
+                                //     else
+                                //         +voting_small
+                    
+                +attendance
+                +calendar_view
+                +mapbox
+    // .ui.modal
+    //     i.close.icon
+    //     .header buy ticket for #{current_doc.point_price}pts?
+    //     .content
+    //         .description
+    //             .ui.header event title: #{current_doc.title}
+    //             .ui.input
+    //                 input(type='number' min=current_doc.point_price)
+    //     .actions
+    //         .ui.red.cancel.button cancel
+    //         .ui.green.big.ok.button ok
+
+
+
+template(name='eft_viewer')
+    +eft_view_item color="FF73EA" icon='food' label='food'
+    +eft_view_item color="B785E1" icon='home' label='housing'
+    +eft_view_item color="7229AF" icon='tshirt' label='clothing'
+    +eft_view_item color="1255B8" icon='car' label='transportation'
+    +eft_view_item color="83DFF4" icon='lightning' label='energy'
+    +eft_view_item color="42E8C4" icon='leaf' label='zero waste'
+    +eft_view_item color="40C057" icon='smile' label='wellness'
+    +eft_view_item color="FAB005" icon='university' label='education'
+    +eft_view_item color="FD7E14" icon='paint brush' label='art'
+    +eft_view_item color="FF0000" icon='users' label='community core'
+    
+template(name='eft_viewer_small')
+    +eft_view_item_small color="FF73EA" icon='food' label='food'
+    +eft_view_item_small color="B785E1" icon='home' label='housing'
+    +eft_view_item_small color="7229AF" icon='tshirt' label='clothing'
+    +eft_view_item_small color="1255B8" icon='car' label='transportation'
+    +eft_view_item_small color="83DFF4" icon='lightning' label='energy'
+    +eft_view_item_small color="42E8C4" icon='leaf' label='zero waste'
+    +eft_view_item_small color="40C057" icon='smile' label='wellness'
+    +eft_view_item_small color="FAB005" icon='university' label='education'
+    +eft_view_item_small color="FD7E14" icon='paint brush' label='art'
+    +eft_view_item_small color="FF0000" icon='users' label='community core'
+
+
+
+
+template(name='attendance')
+    if event_tickets.length
+        .ui.inline.green.header 
+            |#{ticket.length} going
+    // .ui.inline.small.grey.header ticket required
+    // .ui.icon.button.pick_going 
+    //     i.green.checkmark.big.icon
+    // each going 
+    //     a.ui.circular.basic.circular.button(href="/user/#{username}")    
+    //         img.ui.avatar.compact.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+    //         |#{username}
+    .ui.basic.circular.button.mark_maybe
+        .ui.orange.header
+            // if currentUser
+            //     +icolor name='clock' cl='mark_maybe pointer'
+            // else
+            i.question.icon
+            |#{maybe_going.count} maybe
+    // .ui.icon.button.mark_maybe 
+    //     i.yellow.minus.big.icon
+    each maybe_going
+        a.ui.circular.basic.circular.button(href="/user/#{username}")    
+            img.ui.avatar.compact.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+            |#{username}
+    .ui.basic.circular.button.mark_not
+        .ui.red.header
+            i.ban.icon
+            |#{not_going.count} not going
+        // .ui.icon.button.pick_not
+            // i.big.ban.icon
+    each not_going
+        a.ui.circular.basic.circular.button(href="/user/#{username}")    
+            img.ui.avatar.compact.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+            |#{username}
+
+
+
+
+template(name='ticket_view')
+    with current_doc
+        .ui.stackable.padded.grid
+            .row 
+                .four.wide.column
+                    if can_edit
+                        .ui.button.cancel_reservation
+                            i.large.remove.icon
+                            |cancel reservation
+                .eight.wide.column
+                    .ui.header
+                        i.ticket.icon
+                        |#{ticket_point_price}
+                        | points ticket
+                    .ui.small.header
+                        i.clock.icon
+                        | #{when}
+                    .ui.segment
+                        .ui.inline.header 
+                            i.user.outline.icon
+                            |buyer
+                        a.ui.inline.header(href="/user/#{_author.username}") 
+                            img.ui.avatar.image(src="{{c.url _author.image_id height=200 width=200 gravity='face' crop='fill'}}")
+                            |#{_author.username}
+                    .ui.segment
+                        a.ui.inline.header(href="/event/#{event_id}")
+                            i.calendar.icon
+                            |event
+                        a(href="/event/#{event_id}")
+                            img.ui.medium.image(src="{{c.url ticket_event.image_id height=200 width=200 gravity='face' crop='fill'}}")
+                        a.ui.header(href="/event/#{ticket_event._id}")
+                            |#{ticket_event.title}
+                            
+                    +number_view key='amount' label='amount'
+                    div
+                    +textarea_view key='description' label='description'
+                    div
+                    +image_view key='image_id' label='image'
+                    div
+                    div 
+                    if tags
+                        i.tags.icon
+                        each tags 
+                            .ui.big.label #{this}
+                    .spacer
+                    .spacer
+                    +comments
+                    // +voting_full
+                    //- +array_view key='location_tags' label='location_tags'
+                    div
+                .four.wide.column
+                    //- .ui.fluid.green.button.submit
+                    //-     i.checkmark.icon
+                    //-     |submit
+
+
+
+//multi-stakeholder cooperatives, 
+    stakeholder categories, percentage sliders
+//businesses w/departments, 
+    Governance
+    Strategy
+    Finance
+    Marketing
+    Research and Development (visioning and design)
+    Information Technology
+    Customer Service
+    Human Resources
+    Production
+    Quality Control
+    Distribution
+    Sourcing
+    Operations
+    Design
+//incident ics teams, ecs roles
+    Ops, fin, adm, log, com, pln
+        lead support safety 
+        safety officer, public info officer, liason officer, incident commander
+        
+
+template(name='org_card')
+    .content
+        |#{member_ids.length} members
+        .smallscroll
+            |!{description}
+        //+ismall name='tags' cl='ui inline image'
+        each ten_tags
+            .ui.basic.label #{this}
+        // if is_admin
+        //     .ui.small.header slug: #{slug}
+                
+
+
+                
+template(name='org_history')
+    +ismall name='rss'
+    .ui.inline.header
+        |activity
+    .ui.list
+        each org_events
+            .item #{text} #{when}
+            
+template(name='org_subscription')
+    //- +ismall name='renew-subscription'
+    //- .ui.inline.header
+    //-     |subscription settings
+    .ui.button.subscribe subscribe to updates
+    .ui.list
+        each subscribers
+            .item #{text} #{when}
+            
+template(name='org_reservations')
+    .ui.header
+        +ismall name='invoice'
+        |org reservations
+    .ui.button.new_reservation
+        |new reservation
+    each reservations
+        .ui.segment
+            .ui.header #{when}
+            .ui.header by #{_author_username}
+            +view_button
+            +edit_button
+
+
+template(name='org_edit')
+    .ui.stackable.padded.grid
+        .row
+            .five.wide.column.scrolling
+                .ui.header 
+                    |edit org
+                a.ui.big.icon.fluid.green.button(href="/org/#{_id}" title='save')
+                    i.checkmark.large.icon
+                +remove_button
+                +image_edit key='image_id' label='image' 
+                +link_edit key='link' label='link' 
+            .six.wide.column.scrolling
+                +text_edit key='title' 
+                +html_edit key='description' label='content' icon='content' 
+            .five.wide.column.scrolling
+                +single_user_edit key='leader' label='leader' icon='crown' 
+                +array_edit key='tags' label='tags' icon='tags' 
+                
+                +text_edit key='location' 
+                +geolocate_button
+                +array_edit key='location_tags' label='location tags' icon='marker' 
+                +text_edit key='contact_info' label='contact info' icon='info' 
+                +multi_user_edit key='member_ids' label='members' 
+                +boolean_edit key='private' label='private' 
+                +multi_user_edit key='leader_ids' label='tribe leaders' 
+
+                    
+template(name='org_view')
+    .ui.stackable.padded.grid
+        .row
+            .six.wide.column
+                .ui.header 
+                    if icon
+                        +i name=icon
+                    |#{title}
+                a.ui.circular.basic.button(href="/orgs")
+                    i.left.chevron.icon
+                    +i name='campfire' cl='ui mini inline image'
+                    |orgs
+                if can_edit
+                    a.ui.circular.basic.icon.button.fly_down(href="/org/#{_id}/edit")
+                        i.setting.large.icon
+                +image_view key='image_id' icon='image' label='image'
+                +array_view key='tags' icon='tags'
+                .spacer
+                if link
+                    a.ui.basic.circular.button(href=link target='_window')
+                        i.external.icon
+                        |view site
+                    .spacer
+                div
+                .spacer
+                if address
+                    a.ui.compact.basic.circular.button(href=address_link target='_window')
+                        i.marker.icon
+                        |#{address}
+                +multi_user_view key='member_ids' label='members' 
+                +org_history
+                +org_subscription
+
+            .five.wide.column
+                +html_view key='description' icon='content' label='description'
+                .ui.inline.header 
+                    +i name='crown' cl='ui avatar image'
+                    |leader: 
+                with leader 
+                    +user_info
+                // a.ui.basic.button(href="/user/#{leader}")
+                //     |#{leader}
+                .ui.header 
+                    +i name='orgs'
+                    |#{member_ids.count} members
+                .ui.large.selection.animated.list
+                    each member_ids
+                        +user_info
+                        // a.item(href="/org/#{_id}/#{username}")
+                        //     img.ui.mini.image(src="{{c.url image_id width=200 height=200}}")
+                        //     .content
+                        //         .header
+                        //             |#{username}
+            .five.wide.column
+                if is_member
+                    .ui.button.leave(title='click to leave')
+                        i.checkmark.icon
+                        |member
+                else 
+                    .ui.button.join(title='')
+                        i.user.plus.icon
+                        |join
+                // +doc_array_togggle key='member_ids' value=currentUser._id add_label='join' remove_label='joined'
+                .ui.header 
+                    +i name='rss'
+                    |activity
+                each log_items
+                    +log_item
+                .ui.header 
+                    +i name='line-chart'
+                    |stats
+                i.refresh.link.icon.refresh_org_stats
+                .ui.large.list
+                    .item #{member_count} members
+                    .item #{meal_count} meals
+                    .item #{dish_count} dishes
+                    .item #{total_credit_exchanged} credits exchanged
+                +comments
+    
+template(name='user_orgs')
+    .scrolling
+        if is_current_user
+            .ui.circular.button.add_org
+                i.plus.icon
+                |org
+        each orgs
+            +profile_org_item
+
+template(name='post_card')
+    .content
+        if youtube_id 
+            +youtube_view key='youtube_id'
+        .content
+            if private 
+                i.large.lock.icon
+            .smallscroll
+                |!{content}
+
+
+template(name='set_post_sort_key')
+    .item.set_sort
+        if color
+            .ui.label(class=color) #{label}
+        else 
+            if emoji
+                em(data-emoji=emoji)
+            else if icon
+                i.icon(class=icon)
+            |#{label}
+        
+        
+                
+template(name='user_posts')
+    .ui.inline.header 
+        +i name='blog'
+        |user posts
+    if is_current_user
+        .ui.basic.icon.button.add_post
+            i.large.plus.icon
+    .ui.padded.stackable.one.column.grid
+        .column
+            .ui.stackable.cards.scrolling
+                each post_docs 
+                    .ui.card
+                        .content
+                            a(href="/post/#{_id}") 
+                                img.ui.image(src="{{c.url image_id width=400 height=300 crop='pad'}}")
+    
+                            .smallscroll 
+                                |!{content}
+                            // |created #{when}
+                            small {{when}}
+                            a.ui.icon.button(href='/post/#{_id}')
+                                i.large.chevron.right.icon
+                            
+        
+        
+
+template(name='set_view_mode_post')
+    .item.set_view
+        i.icon(class=icon)
+        |#{title}
+
+
+// template(name='set_limit')
+    .ui.compact.small.basic.button.set_limit #{amount}
+
+
+
+        
+template(name='post_item')
+    .ui.fluid.segment.view_post.pointer
+        a.ui.header(href="/post/#{_id}") #{title}
+        div
+        .ui.small.grey.inline.header #{when}
+        | #{content}
+        each tags 
+            .ui.basic.small.label #{this}
+        
+
+template(name='post_view')
+    .ui.stackable.padded.grid
+        .row 
+            .four.wide.column
+                .ui.basic.segment
+                    .ui.header #{title}
+            .eight.wide.column.scrolling
+                img.ui.image(src="{{c.url image_id }}" class=currentUser.invert_class)
+                // a.ui.header(href="/user/#{target.username}")
+                //     |#{target.username}
+                if youtube_id 
+                    +youtube_view key='youtube_id'
+                |!{content}
+                div 
+                .spacer
+                .spacer
+                if watson 
+                    +watson_view
+                    
+                    
+                    
+template(name='post_edit')
+    .ui.stackable.padded.grid
+        .row 
+            .ten.wide.column
+                .ui.inline.header 
+                    +icolor name='news' cl='ui image inline pointer'
+                    |edit post
+                +text_edit key='title' label='title'
+                +html_edit key='content' label='content'
+                +youtube_edit key='youtube_id' label='youtube id'
+            .six.wide.column
+                .ui.red.button.delete_post
+                    i.remove.icon
+                    |delete post
+                .ui.header 
+                    small author
+                    |#{_author.username}
+                if is_dev
+                    +single_user_edit key='_author_id' label='author'
+                +image_edit key='image_id' label='image'
+                div 
+            .ten.wide.column
+                +text_edit key='location' 
+                +geolocate_button
+
+                +array_edit key='tags' label='tags' icon='tags'
+                +boolean_edit key='published' icon='visible'
+                if is_dev 
+                    +text_edit key='model' label='model' icon='database'
+                +array_edit key='location_tags' label='location_tags' icon='marker'
+                // unless published
+                //     a.ui.fluid.green.button.submit(href="/save")
+                //         i.checkmark.icon
+                //         |publish
+                // else
+                //     .ui.basic.button.unpublish 
+                //         |unpublish
+            .six.wide.column
+                .ui.header
+                    +i name='audience'
+                    |audience
+                +boolean_edit key='private' label='private' 
+                if private 
+                    +multi_user_edit key='access_user_ids' label='user picker'
+                +group_picker
+
+
+template(name='profile_org_item')
+    .ui.segment.grid
+        .row
+            .four.wide.column
+                +image_view key='image_id'  cl='zoom ui tiny image'
+            .twelve.wide.column
+                .ui.header #{title}
+                a.ui.small.header.inline.lowercase(href="/org/#{_id}/")
+                    |#{price_per_serving}c / #{serving_unit}
+                .ui.small.inline.header #{when}
+                a.ui.button(href="/org/#{_id}/")
+                    |view
+                    i.right.chevron.icon
+                if is_admin
+                    +remove_button
+    
+    
+    
+template(name='orgs_small')
+    a.ui.header.zoomer(href="/orgs")
+        +i name='orgs'
+        |orgs
+    .ui.selection.animated.list.smallscroll
+        each org_docs
+            a.item(href="/org/#{_id}")
+                img.ui.avatar.image(src="{{c.url image_id width=200 height=200}}")
+                |#{title}
+
+
+template(name='product_view')
+    .ui.stackable.padded.three.column.grid
+        .row
+            .column
+                .ui.large.inline.header 
+                    //- small viewing
+                    | #{title}
+                div
+                .ui.small.grey.inline.header 
+                    i.code.icon
+                    |#{slug}
+                div
+                a.ui.basic.icon.button.fly_left(href="/shop")
+                    i.chevron.left.large.icon
+                    // i.large.food.icon
+                    +i name='food-cart' cl='ui mini inline image'
+                if in_dev
+                    a(href="/product/#{_id}/edit")
+                        i.pencil.blue.large.link.circular.icon
+                // a(href="{{c.url image_id}}" target="_window")
+                // .four.wide.column
+                img.ui.rounded.fluid.image.zoomer(src="{{c.url image_id}}")
+                if image_id2
+                    img.ui.rounded.image.zoomer(src="{{c.url image_id2}}")
+            .column
+                +html_view key='description' direct=true
+                // +text_view key='size_description' label='size description'  direct=true
+                a.ui.circular.button(href=product_link)
+                    // i.wordpress.large.icon
+                    i.external.icon
+                    |#{product_link}
+                
+                +boolean_view key='gluten_free' label='gluten free' direct=true icon='no-gluten'
+                +boolean_view key='vegetarian' label='vegetarian' direct=true icon='vegetarian-mark'
+                +boolean_view key='no_sugar_added' label='no sugar added' direct=true icon='no-sugar2'
+                +boolean_view key='vegan' label='vegan' direct=true icon='vegan-symbol'
+                +boolean_view key='paleo' label='paleo' direct=true icon='caveman'
+                +boolean_view key='local' label='local' direct=true icon='marker'
+                +boolean_view key='nut_free' label='nut free' direct=true icon='no-peanut'
+                +boolean_view key='rescued' label='rescued' direct=true icon='nothing-found'
+                +boolean_view key='organic' label='organic' direct=true icon='organic-food'
+                +boolean_view key='no_gmo' label='no gmo' direct=true icon='no-gmo'
+                +boolean_view key='jar' label='jar container (requires deposit & return)' direct=true icon='mason-jar'
+                // .ui.header #{menu_section}
+                        +link_edit key='amazon_referral_link' label='amazon referral link' icon='amazon' direct=true
+                // +boolean_view key='has_2cup' label='2 cup' direct=true icon='cup'
+                div
+                .ui.inline.header 
+                    +i name='ingredients'
+                    |ingredients
+                each ingredients
+                    .ui.large.basic.label.goto_ingredient #{this}
+                div
+                +voting_full
+                +link_view key='amazon_referral_link' label='amazon link' icon='amazon' direct=true
+                +link_view key='external_link' label='external link' icon='globe' direct=true
+                +comments
+                
+                // +product_orders
+            .column
+                .ui.header #{price_points} points
+                .ui.header $#{price_usd}
+                .ui.big.fluid.green.button.add_to_cart
+                    i.cart.plus.large.icon
+                    |add to cart
+                +bookmark_button
+            .column
+                // .ui.large.button.generate_qrcode
+                //     i.large.qrcode.icon
+                //     |generate qr code
+                // #qrcode(width='400px')
+                .ui.segment
+                    +product_inventory
+                .ui.list
+                    .item #{product_link}
+                    .item calculated inventory
+                    .item #{total_units_sold} total units sold
+                    .item $#{total_revenue} total revenue
+                    .item expected inventory
+                    .item query params: #{query_params}
+                    .item #{last_inventory_boh_record} most recent BOH record
+                    .item #{last_inventory_foh_record} most recent FOH record
+                i.refresh.large.link.icon.calc_stats(title='refresh_stats')
+            .column
+                +product_reviews
+            .five.wide.column
+                +product_subscriptions
+                // .ui.green.large.button.add_to_cart
+                //     // i.cart.plus.large.icon
+                //     +i name='add-shopping-cart--v1' cl='ui avatar image'
+                //     |add to cart
+                // .ui.link.card.zoomer.goto_source
+                //     img.ui.fluid.image(src="{{c.url product_source.image_id width=200 height=200 gravity='face' crop='fill'}}")
+                //     .content
+                //         .ui.header.zoomer
+                //             |#{product_source.title}
+                .ui.header 
+                    i.fork.icon
+                    |related products
+                each related_products
+                    a.ui.header(href="/product/#{_id}") #{title}
+                            
+        
+        
+            
+template(name='product_inventory')      
+    .ui.inline.header 
+        +i name='shield'
+        |inventory
+    div 
+    .ui.list #{last_inventory_record} most recent record
+    a.ui.icon.basic.button.add_inventory
+        i.plus.icon
+    .ui.large.selection.list
+        each inventory_items
+            .item
+                .content
+                    // unless editing_this
+                    img.ui.rounded.small.inline.image(src="{{c.url image_id gravity='face' crop='fit'}}" class=cl)
+                    
+                    // +image_view key='image_id' cl='ui tiny inline image'
+                    .ui.basic.label ##{amount}
+                    .ui.basic.label #{location}
+                    if notes
+                        .ui.basic.label notes: #{notes}
+                    .ui.basic.label
+                        i.user.icon
+                        |#{staff}
+                    i.edit.link.icon.edit_inventory_item
+                    if editing_this
+                        +number_edit key='amount' label='amount' direct=true
+                        +key_value_edit key='location' value='boh' label='boh' direct=true
+                        +key_value_edit key='location' value='foh' label='foh' direct=true
+                        // +text_edit key='location' label='location' icon='marker' direct=true
+                        +text_edit key='notes' label='notes' icon='pencil' direct=true
+                        // +text_edit key='staff' label='staff' icon='user' direct=true
+                        +image_edit key='image_id'
+                        +key_value_edit key='staff' value='matt' direct=true
+                        +key_value_edit key='staff' value='nena' direct=true
+                        +key_value_edit key='staff' value='rachel' direct=true
+                        +key_value_edit key='staff' value='jimmy' direct=true
+                        +key_value_edit key='staff' value='elena' direct=true
+                        +key_value_edit key='staff' value='eric' direct=true
+                        +key_value_edit key='staff' value='luke' direct=true
+                        +key_value_edit key='staff' value='mateo' direct=true
+                        i.checkmark.green.link.circular.large.icon.save_inventory_item
+
+template(name='product_reviews')
+    .ui.inline.header 
+        +i name='popular-topic'
+        |reviews
+    .ui.circular.basic.icon.button.add_review
+        i.plus.icon
+    div
+    each product_recipes
+        a.ui.header(href="/recipe/#{_id}/view") #{title}
+        
+template(name='product_subscriptions')     
+    div
+    if subscribed
+        .ui.basic.green.inverted.button.unsubscribe
+            i.undo.icon
+            |unsubscribe
+    else
+        .ui.basic.green.inverted.button.subscribe
+            i.undo.icon
+            |subscribe
+    .ui.small.header 
+        +i name='clock'
+        |subs
+    .ui.link.selection.animated.list
+        each product_subs
+            a.item(href="/sub/#{_id}") 
+                |#{when} #{_author_username}
+                .ui.basic.label #{sub_day}
+                .ui.basic.label #{sub_frequency}
+    .ui.small.header 
+        |your subscriptions
+
+template(name='product_orders')                            
+    if can_order
+        +order_button
+    each subs
+        .ui.header #{_author_username}
+    .ui.header 
+        +i name='order-history'
+        |#{product_orders.count}
+        |orders
+        |(${{fixed product_order_total}})
+    .ui.basic.segments
+        each product_orders
+            +product_order_card
+    .ui.header #{views} views
+    +order_status_icons
+    .ui.hidden.divider
+                
+template(name='order_status_icons')  
+    a.zoomer(href="/order/#{_id}")
+        if runner_viewed
+            +icolor name='eye-checked' cl='ui avatar image'
+        if preparing
+            +icolor name='new-product--v1' cl='ui avatar image'
+        if prepared
+            +icolor name='handle-with-care' cl='ui inline image'
+        if arrived
+            +icolor name='checked-truck' cl='ui inline image'
+        if delivered
+            +icolor name='checkmark' cl='ui inline image'
+        
+        if delivery_photo
+            +image_view key='delivery_photo' direct=true cl='ui tiny inline image'
+
+         
+template(name='product_order_card')
+    .ui.segment(class=product_order_class)
+        .ui.inline.green.header
+            |${{fixed order_price}} 
+            if _author.image_id
+                img.ui.avatar.image(src="{{c.url _author.image_id width=100 height=100 gravity='face' crop='fill'}}")
+            |#{_author.username}
+        // div
+        .ui.large.basic.label
+            i.clock.icon
+            |status: #{status}
+        .ui.small.inline.header
+            | #{when} ({{long_date _timestamp}})
+        a.ui.compact.big.icon.button(href="/order/#{_id}")
+            i.right.chevron.large.icon
+        if is_author
+            .ui.small.compact.basic.button.cancel_order(title='cancel')
+                i.remove.red.icon
+                |cancel
+
+
+
+template(name='order_button')
+    // if servings_left
+    .ui.green.large.button.order_product
+        i.cart.plus.large.icon
+        strong ${{fixed price_usd}}
+        // |order #{serving_unit}
+        // small order for
+        // strong #{price_franc}f
+    // else 
+    //     .ui.grey.header sold out
+        //- .ui.teal.large.button.join_waitlist
+        //-     i.clock.large.icon
+        //-     |join wait list
+
+
+
+
+template(name='product_edit')
+    with current_doc
+        .ui.stackable.padded.three.column.grid
+            .row
+                .column
+                    .ui.inline.header
+                        i.pencil.icon
+                        | #{title}
+                        small product
+                    .ui.large.icon.fluid.green.button.save_product.fly_right(title='save product')
+                        i.checkmark.large.icon   
+                    +text_edit key='title' label='title' icon='header' direct=true
+                    +text_edit key='slug' label='slug' icon='slug' direct=true
+                    +print_this
+                .column
+                    +image_edit key='image_id' label='image' direct=true
+                    +image_edit key='image_id2' label='alt image' direct=true
+                    +link_edit key='product_link' label='old site link' direct=true
+                    // div
+                    +float_edit key='price_usd' label='$ price' direct=true
+                    +number_edit key='price_points' label='point price' icon='coins' direct=true
+                // .four.wide.column
+                //     .ui.inline.header 
+                //         +i name='category'
+                //         |section
+                //     div
+                //     +number_edit key='a_number' label="'A' number" direct=true
+                //     div
+                //     +number_edit key='b_number' label="'B' number" direct=true
+                //     +key_value_edit key='shop_section' value='beans' label='beans' icon='white-beans'
+                //     +key_value_edit key='shop_section' value='coffee' label='coffee' icon='coffee'
+                //     +key_value_edit key='shop_section' value='snacks' label='snacks' icon='potato-chips'
+                //     +key_value_edit key='shop_section' value='fridge' label='fridge' icon='fridge'
+                //     +key_value_edit key='shop_section' value='freezer' label='freezer' icon='ice-cream-freezer'
+                //     +key_value_edit key='shop_section' value='nuts_seeds' label='nuts & seeds' icon='chia-seeds'
+                //     +key_value_edit key='shop_section' value='rice_grains' label='rice & grains' icon='wheat'
+                //     // +key_value_edit key='shop_section' value='seeds' label='seeds' icon='seeds'
+                .column
+                    +text_edit key='size_description' label='size description' icon='content' direct=true
+                    .ui.inline.header food
+                    +boolean_edit key='is_food' label='is food' direct=true icon='food'
+                    if is_food
+                        +ingredient_picker
+                        +boolean_edit key='gluten_free' label='gluten free' direct=true icon='no-gluten'
+                        +boolean_edit key='paleo' label='paleo' direct=true icon='caveman'
+                        +boolean_edit key='vegetarian' label='vegetarian' direct=true icon='vegetarian-mark'
+                        +boolean_edit key='no_sugar_added' label='no sugar added' direct=true icon='no-sugar2'
+                        +boolean_edit key='vegan' label='vegan' direct=true icon='vegan-symbol'
+                        +boolean_edit key='no_gmo' label='no gmo' direct=true icon='no-gmo'
+                        +boolean_edit key='local' label='local' direct=true icon='marker'
+                        +boolean_edit key='nut_free' label='nut free' direct=true icon='no-peanut'
+                        +boolean_edit key='rescued' label='rescued' direct=true icon='nothing-found'
+                        +boolean_edit key='kosher' label='kosher' direct=true icon='judaism'
+                        +boolean_edit key='organic' label='organic' direct=true icon='organic-food'
+                        // +boolean_edit key='jar' label='jar container (requires deposit & return)' direct=true icon='mason-jar'
+                        div
+                        +number_edit key='calories' label='calories' icon='food' direct=true
+                .column
+                    div
+                    +html_edit key='description' label='description' direct=true
+                    if can_delete
+                        .ui.red.button.delete_product
+                            i.remove.icon   
+                            | delete
+                .column
+                    .ui.header 
+                        +i name='field-and-tractor'
+                        |source
+                        with product_source
+                            a.ui.header.pointer.zoomer(href="/source/#{_id}")
+                                img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+                                |#{title}
+                            i.remove.link.circular.red.icon.remove_source
+                            // if is_admin
+                            
+                    unless source_id
+                        // if is_admin
+                        .ui.icon.input 
+                            i.building.icon
+                            input.source_search(type='text' placeholder='search source title')
+                        .ui.selection.link.animated.list
+                            each search_results
+                                .ui.item.pick_source.zoomer
+                                    img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+                                    |#{title}
+                            
+                                
+                                
+                                
+                                
+template(name='group_picker')
+    +boolean_edit key='has_group' label='attach group'
+    if has_group
+        .ui.header 
+            +i name='campfire'
+            |groups
+        
+        // if is_admin
+        .ui.icon.large.input 
+            if group_search_value
+                i.large.red.remove.link.icon.zoomer.clear_search
+            else 
+                i.search.icon
+            input.group_search(type='text' placeholder='search' value=group_search_value)
+        if group_results
+            .ui.selection.link.animated.list
+                each group_results
+                    .ui.item.pick_group.zoomer
+                        img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+                        |#{title}
+        // else if group_search_value
+        .ui.button.create_group
+            |add #{group_search_value}
+        
+        if product_groups
+            .ui.header 
+                |#{product_groups.length}
+                |picked groups
+            .ui.list
+                each product_groups
+                    .ui.item
+                        |#{title}
+                        i.remove.link.icon.zoomer.remove_group
+                        
+                    
+
+                            
+template(name='ingredient_picker')
+    .ui.header 
+        +i name='ingredients'
+        |ingredients
+    // if is_admin
+    .ui.icon.large.input 
+        if ingredient_search_value
+            i.large.red.remove.link.icon.zoomer.clear_search
+        else 
+            i.search.icon
+        input.ingredient_search(type='text' placeholder='search' value=ingredient_search_value)
+    if ingredient_results
+        .ui.selection.link.animated.list
+            each ingredient_results
+                .ui.item.pick_ingredient.zoomer
+                    img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+                    |#{title}
+    // else if ingredient_search_value
+    .ui.button.create_ingredient
+        |add #{ingredient_search_value}
+    
+    if product_ingredients
+        .ui.header 
+            |#{product_ingredients.length}
+            |picked ingredients
+        .ui.list
+            each product_ingredients
+                .ui.item
+                    |#{title}
+                    i.remove.link.icon.zoomer.remove_ingredient
+
+                            
+                            
+                            
+template(name='product_card')
+    .ui.card.zoomer(class=product_card_class title=ingredients)
+        if rescued 
+            .ui.top.right.attached.blue.label(title='rescued')
+                i.search.icon
+        if local 
+            .ui.top.right.attached.corner.green.label(title='local')
+                i.marker.icon
+        a.zoomer.fly_right(href="/product/#{_id}") 
+            img.ui.centered.image(src="{{c.url image_id width=400 height=300 crop='pad'}}")
+        .content
+            a.ui.header.fly_right(href="/product/#{_id}") 
+                //- |#{_author.name}'s
+                | #{title}
+            //- if session_is 'view_ingredients' true
+            // +ismall name='ingredients'
+            // each ingredients
+            //     .ui.small.label #{this}
+            if gluten_free
+                +i name='no-gluten' cl='ui mini inline image' title='gluten free'
+            if vegan
+                +i name='vegan-food' cl='ui mini inline image' title='vegan'
+            //- .ui.inline.small.header tags
+            // .content
+            //     .right.floated.meta
+            //         | {{from_now datetime_available}}
+            //     //- if session_is 'view_users' true
+            // //- a.image(href="/product/#{_id}")
+                
+        .content    
+            .ui.inline.header 
+                |${{fixed price_usd}}
+            i.big.link.cart.plus.green.icon.add_to_cart
+            if is_admin
+                a(href="/product/#{_id}/edit")
+                    i.pencil.link.icon
+            .ui.inline.small.header 
+                |(#{menu_section}) 
+            div
+            .ui.inline.inline.small.grey.header #{views}
+                i.eye.icon
+            .ui.inline.inline.small.grey.header #{points} 
+                i.line.chart.icon
+
 template(name='service_card')
     .content
         if private 
