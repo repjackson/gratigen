@@ -3,7 +3,7 @@ template(name='home')
         img.ui.fluid.image.home_banner(src="{{c.url 'gratigenlayout'}}" class=darkmode_class)
     .ui.stackable.padded.divided.celled.grid
         .bordered(class=left_column_class)
-            +session_toggle key='expand_leftbar' icon='line'
+            +session_toggle key='expand_leftbar' icon='heart outline'
                 // +session_toggle key='add_mode' icon='plus'
                 //.ui.icon.button.show_model
                     i.large.plus.icon
@@ -11,7 +11,7 @@ template(name='home')
                 //     i.chevron.left.icon
                 .ui.hidden.divider
             +dash_user_info
-            a.ui.button.delta(href="/m/model")
+            a.ui.button.tertiary.delta(href="/m/model")
                 |manage models
 
             .ui.fluid.big.menu.hscroll.mobile.only
@@ -113,7 +113,7 @@ template(name='home')
                     //light blue
                     +filter_model model='project' icon='project' color='7229AF' 
                     //violet
-                    +filter_model model='event' icon='calendar' color='FAB005'
+                    +filter_model model='event' icon='scenic-view' color='FAB005'
                     //yellow
                     +filter_model model='role' icon='what-i-do' color='42E8C4'
                     //turquoise
@@ -123,6 +123,8 @@ template(name='home')
                     //orange
                     +filter_model model='skill' icon='wrench' color='ff0000'
                     //red
+                    +filter_model model='trip' icon='car' color='40C057'
+
                     
                     // +filter_model model='food' icon='food' 83DFF4
                 .centered   
@@ -154,7 +156,7 @@ template(name='home')
                             +home_card
         // .eight.wide.column.bordered
         .bordered(class=right_column_class)
-                +my_things
+            +my_things
             if session_is 'show_map' true
                 +mapbox
             if session_is 'show_calendar' true 
@@ -172,7 +174,7 @@ template(name='home')
     .ui.modal 
         with current_viewing_thing
             .header #{title}
-                .ui.button.toggle_editmode
+                .ui.button.button.toggle_editmode
                     i.large.pencil.icon
             i.close.large.icon
             .scrolling.content
@@ -185,7 +187,8 @@ template(name='home')
 template(name='my_things')
     .ui.segment
         |my_things
-        
+        div
+        |eft_categories x gratigen_thing_type x mainpage_search_bar x datetime_range x selected_map_area x my_things
 
 //template(name='thing_maker_modal')        
 template(name='home_card')
@@ -211,7 +214,7 @@ template(name='home_card')
                     +i name='for-you' color='1255B8'
                     +post_card
                 if _is 'model' 'event'
-                    +i name='calendar' color='FAB005'
+                    +i name='scenic-view' color='FAB005'
                         //left
                     //+user icon, user name    
                     i.clock.icon

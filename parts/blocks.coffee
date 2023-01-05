@@ -143,16 +143,25 @@ if Meteor.isClient
         Meteor.setTimeout ->
             $('.accordion').accordion()
         , 1000
+        
+        
     Template.comments.onCreated ->
-        if Router.current().params.doc_id
+        console.log Template.parentData(3)
+        console.log Template.parentData(4)
+                
+        if Template.parentData(4)
+            parent = Template.parentData(4)
+        else if Router.current().params.doc_id
             parent = Docs.findOne Router.current().params.doc_id
-        # else
-        #     parent = Docs.findOne Template.parentData()._id
+        else
+            parent = Template.parentData()
         if parent
             @autorun => Meteor.subscribe 'children', 'comment', parent._id
     Template.comments.helpers
         doc_comments: ->
-            if Router.current().params.doc_id
+            if Template.parentData(4)
+                parent = Template.parentData(4)
+            else if Router.current().params.doc_id
                 parent = Docs.findOne Router.current().params.doc_id
             else
                 parent = Docs.findOne Template.parentData()._id
@@ -162,7 +171,13 @@ if Meteor.isClient
     Template.comments.events
         'keyup .add_comment': (e,t)->
             if e.which is 13
-                if Router.current().params.doc_id
+                console.log Template.parentData()
+                console.log Template.parentData(1)
+                console.log Template.parentData(2)
+                console.log Template.parentData(3)
+                if Template.parentData(4)
+                    parent = Template.parentData(4)
+                else if Router.current().params.doc_id
                     parent = Docs.findOne Router.current().params.doc_id
                 else
                     parent = Docs.findOne Template.parentData()._id

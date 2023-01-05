@@ -127,11 +127,12 @@ template(name='comments')
     .ui.header
         i.chat.outline.icon
         |#{doc_comments.count} comments
+        |#doc_comments
     div
     // if currentUser
-    // .ui.fluid.icon.large.disabled.input
-    //     i.plus.icon
-    //     input.add_comment(model='text' placeholder='add')
+    .ui.fluid.icon.large.input
+        i.plus.icon
+        input.add_comment(model='text' placeholder='add')
     .ui.comments
         each doc_comments
             .comment
@@ -413,12 +414,12 @@ template(name='user_list_toggle')
 
 
 template(name='voting')
-    .ui.icon.button.upvote(title='upvote')
-        i.thumbs.up.icon(class=upvote_class)
+    .ui.icon.button.tertiary.upvote(title='upvote')
+        i.thumbs.up.outline.icon(class=upvote_class)
     //- each upvoter_ids
     //-     +user_info
-    .ui.icon.button.downvote(title='downvote')
-        i.thumbs.down.icon(class=downvote_class)
+    .ui.icon.button.tertiary.downvote(title='downvote')
+        i.thumbs.down.outline.icon(class=downvote_class)
     //- each downvoter_ids
     //-     +user_info
     if points

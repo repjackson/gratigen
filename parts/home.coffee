@@ -56,6 +56,13 @@ if Meteor.isClient
                 'small'
                 
         
+    Template.latest_activity.onCreated ->
+        @autorun => @subscribe 'latest_home_docs', ->
+    Template.latest_activity.helpers 
+        latest_docs: ->
+            Docs.find {_updated_timestamp:$exists:true},
+                sort:
+                    _updated_timestamp:-1
                 
 # if Meteor.isServer
 #     Meteor.publish 'latest_docs', ->
@@ -64,6 +71,14 @@ if Meteor.isClient
 #                 _updated_timestamp:-1
 #             limit:10
         
+if Meteor.isClient
+    Template.dash_user_info.events 
+        'click .print_me': ->
+            console.log Meteor.user()
+            alert Meteor.user()
+            Meteor.call 'print_me', ->
+            Meteor.users.update Meteor.userId(),
+                $unset:updated:true
             
 if Meteor.isServer
     Meteor.methods 
@@ -167,6 +182,16 @@ if Meteor.isClient
                 
     
     
+    Template.home.events 
+
+        'click .check_notifications': ->
+            Notification.requestPermission (result) ->
+                console.log result
+
+        'click .send_notification': ->
+            if Notification.permission is "granted"
+                notification = new Notification("Hi there!")
+
 
     Template.home.helpers 
         left_column_class: ->
