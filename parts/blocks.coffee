@@ -171,10 +171,10 @@ if Meteor.isClient
     Template.comments.events
         'keyup .add_comment': (e,t)->
             if e.which is 13
-                console.log Template.parentData()
-                console.log Template.parentData(1)
-                console.log Template.parentData(2)
-                console.log Template.parentData(3)
+                # console.log Template.parentData()
+                # console.log Template.parentData(1)
+                # console.log Template.parentData(2)
+                # console.log Template.parentData(3)
                 if Template.parentData(4)
                     parent = Template.parentData(4)
                 else if Router.current().params.doc_id

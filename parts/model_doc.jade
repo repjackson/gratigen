@@ -71,8 +71,8 @@ template(name='model_doc_edit')
                     if is_user
                         +boolean_edit key='private' direct=true
                 .twelve.wide.column
-                    // if template_exists
-                    //     +Template.dynamic template=model_template
+                    if template_exists
+                        +Template.dynamic template=model_template
                     //- |#{model}
                     each edit_fields
                         .ui.header field #{title}

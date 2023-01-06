@@ -53,45 +53,45 @@ template(name='home')
             // .ui.button create request
         .bordered.scrolling(class=main_column_class)
             .ui.one.column.grid 
-                .column.bordered
-                    .ui.top.attached.tabular.menu  
-                        a.center.item.toggle_addmode.zoomer(data-tab='add' title='add thing')
-                            +i name='play-button-circled--v1' color='40C057'
-                        // .active.item(data-tab='viewing')
-                        //     |viewing
-                    .ui.bottom.attached.tab.segment.centered.ani(data-tab='add')
-                        //select type of thing you're creating >> open thing type editor modal
-                        if session_is 'addmode' true
+                // .column.bordered
+                //     .ui.top.attached.tabular.menu  
+                //         a.center.item.toggle_addmode.zoomer(data-tab='add' title='add thing')
+                //             +i name='play-button-circled--v1' color='40C057'
+                //         // .active.item(data-tab='viewing')
+                //         //     |viewing
+                //     .ui.bottom.attached.tab.segment.centered.ani(data-tab='add')
+                //         //select type of thing you're creating >> open thing type editor modal
+                //         if session_is 'addmode' true
                        
-                            +thing_picker model='post' icon='for-you' color='1255B8'
-                            //blue
-                            +thing_picker model='offer' icon='hand-holding-heart' color='FF73EA'
-                            //pink
-                            +thing_picker model='request' icon='commercial' color='40C057'     
-                            //green
+                //             +thing_picker model='post' icon='for-you' color='1255B8'
+                //             //blue
+                //             +thing_picker model='offer' icon='hand-holding-heart' color='FF73EA'
+                //             //pink
+                //             +thing_picker model='request' icon='commercial' color='40C057'     
+                //             //green
                             
-                            div
-                            +thing_picker model='org' icon='groups' color='83DFF4' 
-                            //light blue
-                            +thing_picker model='project' icon='project' color='7229AF' 
-                            //violet
-                            +thing_picker model='event' icon='calendar' color='FAB005'
-                            //yellow
-                            +thing_picker model='role' icon='what-i-do' color='42E8C4'
-                            //turquoise
-                            +thing_picker model='tasks' icon='task' color='B785E1'
-                            //lavender
-                            +thing_picker model='resource' icon='field-and-tractor' color='FD7E14'
-                            +thing_picker model='skills' icon='wrench' color='ff0000'
-                            //red
-                            +thing_picker model='badges' icon='badge' color='1255B8'
-                            //blue
-                            div
-                            +thing_picker model='datetime' icon='overtime--v1' color='FD7E14'
-                            +thing_picker model='location' icon='worldwide-location' color='40C057'
-                            +thing_picker model='accounts' icon='gold-bars' color='FAB005'
-                                //people
-                            .ui.divider
+                //             div
+                //             +thing_picker model='org' icon='groups' color='83DFF4' 
+                //             //light blue
+                //             +thing_picker model='project' icon='project' color='7229AF' 
+                //             //violet
+                //             +thing_picker model='event' icon='calendar' color='FAB005'
+                //             //yellow
+                //             +thing_picker model='role' icon='what-i-do' color='42E8C4'
+                //             //turquoise
+                //             +thing_picker model='tasks' icon='task' color='B785E1'
+                //             //lavender
+                //             +thing_picker model='resource' icon='field-and-tractor' color='FD7E14'
+                //             +thing_picker model='skills' icon='wrench' color='ff0000'
+                //             //red
+                //             +thing_picker model='badges' icon='badge' color='1255B8'
+                //             //blue
+                //             div
+                //             +thing_picker model='datetime' icon='overtime--v1' color='FD7E14'
+                //             +thing_picker model='location' icon='worldwide-location' color='40C057'
+                //             +thing_picker model='accounts' icon='gold-bars' color='FAB005'
+                //                 //people
+                //             .ui.divider
                     div
                             +online_users
                      //side scrolling users' avatars (pulls  up profile in modal) - new, nearby, recommended - 
@@ -189,16 +189,23 @@ template(name='my_things')
         |my_things
         div
         |eft_categories x gratigen_thing_type x mainpage_search_bar x datetime_range x selected_map_area x my_things
+        //(displays small cards of dashboard search parameters)
+        div
+        +home_card
+        //should be small_card
+
+// //template(name='small_card')
+//         // thing_type_icon, thing_name, 
+//             thing_short_info 
+//                 (pending action alert and; 
+//                 countdown for events and tasks, number of pending tasks for role, resource in use or not, 
+//                 Project progress percentage, my held value in org, like count for posts, offer accepted or not, 
+//                 request granted or not, skills you have that are being sought,
+//                 Badges you have or almost qualify for that are being sought)
+
 
 //template(name='thing_maker_modal')        
 template(name='home_card')
-    // if _is 'model' 'role'
-    //     +role_card
-    // else if _is 'model' 'event'
-    //     +event_card
-    // else if _is 'model' 'recipe'
-    //     +recipe_card
-    // else 
     a.ui.link.card.show_modal
         // if youtube_id 
         //     +youtube_view key='youtube_id' direct=true
@@ -215,8 +222,8 @@ template(name='home_card')
                     +post_card
                 if _is 'model' 'event'
                     +i name='scenic-view' color='FAB005'
-                        //left
-                    //+user icon, user name    
+                    //left
+                    //+user icon, user name
                     i.clock.icon
                     |#{when}
                     +event_card
@@ -241,7 +248,7 @@ template(name='home_card')
                 // .ui.label #{model}
                 |#{title} #{body}
             
-        img.ui.fluid.image(src="{{c.url image_id width=400 height=400}}")
+        img.ui.image(src="{{c.url image_id width=400 height=400}}")
         .content 
             .description
                 // .ui.header lat: #{lat}

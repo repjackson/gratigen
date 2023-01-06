@@ -16,39 +16,39 @@ template(name='model_edit')
                         i.big.checkmark.icon
                     i#delete_model.trash.red.circular.link.icon
                     .ui.divider
-                    +boolean_edit key='show_filter_bar' label='show filter bar' direct=true
-                    +boolean_edit key='show_facets' label='show facets' direct=true
-                    +boolean_edit key='show_homepage' label='show on homepage' direct=true
+                    .ui.header 
+                        +i name='info'
+                        |main info
+                    .ui.form
+                        +text_edit key='title' label='title' direct=true
+                        +slug_edit key='slug' label='slug' direct=true
+                        +icon_edit key='icon' label='icon' direct=true
+                        +text_edit key='description' label='description' direct=true
+                        +array_edit key='tags' label='tags' direct=true
+                        //- +text_edit key='collection' label='collection' direct=true
+                        +key_value_edit key='collection' value='docs' icon='document'
+                        +key_value_edit key='collection' value='users' icon='users'
+                
+                        +multi_doc_edit key='actions' label='actions' ref_model='action' direct=true
+                        +text_edit key='app' label='app' direct=true
                 .twelve.wide.column
-                    .ui.segment 
-                        +multi_doc_edit key='parent_model_ids' label='parent models' ref_model='model' direct=true icon='fork'
+                    // .ui.segment 
+                    // .ui.segment
                     .ui.segment
-                        .ui.header 
-                            +i name='info'
-                            |main info
-                        .ui.form
-                            +text_edit key='title' label='title' direct=true
-                            +slug_edit key='slug' label='slug' direct=true
-                            +icon_edit key='icon' label='icon' direct=true
-                            +text_edit key='description' label='description' direct=true
-                            +array_edit key='tags' label='tags' direct=true
-                            //- +text_edit key='collection' label='collection' direct=true
-                            +key_value_edit key='collection' value='docs' icon='document'
-                            +key_value_edit key='collection' value='users' icon='users'
-                    
-                            +multi_doc_edit key='actions' label='actions' ref_model='action' direct=true
-                            +text_edit key='app' label='app' direct=true
+                        .ui.header
+                            +i name='module'
+                            |blocks/actions
+                        +multi_doc_edit key='parent_model_ids' label='parent models' ref_model='model' direct=true icon='fork'
+                        +boolean_edit key='show_comments' label='comments' icon='chat' direct=true
+                        +boolean_edit key='show_voting' label='voting' icon='elections' direct=true
+                        +boolean_edit key='show_filter_bar' label='show filter bar' direct=true
+                        +boolean_edit key='show_facets' label='show facets' direct=true
+                        +boolean_edit key='show_homepage' label='show on homepage' direct=true
                     .ui.segment
                         .ui.header 
                             +i name='list'
                             |fields
                         +model_edit_fields
-                    .ui.segment
-                        .ui.header
-                            +i name='module'
-                            |blocks/actions
-                        +boolean_edit key='show_comments' label='comments' icon='chat' direct=true
-                        +boolean_edit key='show_voting' label='voting' icon='elections' direct=true
                     .spacer
                     +comments
                     .ui.header

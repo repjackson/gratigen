@@ -1,16 +1,19 @@
 template(name='nav')
     // https://fomantic-ui.com/elements/icon.html#/icon
-    #topnav.topnav.ui.attached.borderless.menu.hscroll(class=invert_class)
+    //#topnav.topnav
+    #topnav.ui.attached.borderless.menu.topnav(class=invert_class)
         a.header.image.item.zoomer(href='/' class="{{isActivePath '/'}}" title='gratihome')
             if is_loading
                 .icon.item
                     i.big.loading.grey.refresh.icon.cancel
             else 
-                img.ui.mini.image(src="/logo.png")
+                img.ui.tiny.circular.image(src="/logo.png")
             span.mobile.hidden Gratigen
         if currentUser.admin
             +toggle_nav_item key='admin_mode' icon='shield' label='admin mode'
-        +toggle_nav_item key='invert_mode' icon='lightbulb' label='invert mode'
+        a.icon.item.zoomer(href='/m/model' title='delta')
+            i.large.database.icon
+        // +toggle_nav_item key='invert_mode' icon='lightbulb' label='invert mode'
         // .search.item.zoomer.mobile.hidden(title='search')
         //     .ui.icon.transparent.input
         //         if current_product_search
@@ -18,6 +21,43 @@ template(name='nav')
         //         else
         //             i.search.large.icon
         //         input.search_site(type='text' autocomplete="off" value=current_product_search)
+        // .column.centered
+        .ui.top.attached.tabular.menu  
+            a.center.item.toggle_addmode.zoomer(data-tab='add' title='add thing')
+                +i name='play-button-circled--v1' color='40C057'
+            // .active.item(data-tab='viewing')
+            //     |viewing
+        .ui.bottom.attached.tab.segment.centered.ani(data-tab='add')
+            //select type of thing you're creating >> open thing type editor modal
+            if session_is 'addmode' true
+                +thing_picker model='post' icon='for-you' color='1255B8'
+                //blue
+                +thing_picker model='offer' icon='hand-holding-heart' color='FF73EA'
+                //pink
+                +thing_picker model='request' icon='commercial' color='40C057'     
+                //green
+                
+                div
+                +thing_picker model='org' icon='groups' color='83DFF4' 
+                //light blue
+                +thing_picker model='project' icon='project' color='7229AF' 
+                //violet
+                +thing_picker model='event' icon='calendar' color='FAB005'
+                //yellow
+                +thing_picker model='role' icon='what-i-do' color='42E8C4'
+                //turquoise
+                +thing_picker model='tasks' icon='task' color='B785E1'
+                //lavender
+                +thing_picker model='resource' icon='field-and-tractor' color='FD7E14'
+                +thing_picker model='skills' icon='wrench' color='ff0000'
+                //red
+                +thing_picker model='badges' icon='badge' color='1255B8'
+                //blue
+                div
+                +thing_picker model='datetime' icon='overtime--v1' color='FD7E14'
+                +thing_picker model='location' icon='worldwide-location' color='40C057'
+                +thing_picker model='accounts' icon='gold-bars' color='FAB005'
+                //people
         .right.menu
             if unread_count
                 a.item.alerts.select_term(href="#" class=alert_toggle_class)

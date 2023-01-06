@@ -38,10 +38,15 @@ body {
   height:400px !important;
 }
 
+.item:active, .button:active, .card:active {
+   transform:scale(.9) !important;
+   box-shadow:2px 2px 10px rgba(0,0,0,0.3) !important;
+}
+#topnav .item:active {
+  /*border:1px solid grey !important;*/
+  transition: all 1s ease-in-out;
+}
 .bordered {
-  border:1px solid grey !important;
-  transition: width 1s ease-in-out;
-  
   /*height: 100px;*/
   /*padding: 30px;*/
   /*border: 30px solid transparent;*/
