@@ -140,6 +140,15 @@ if Meteor.isClient
     #     Meteor.call 'log_view', @_id, ->
 
     Template.delta.helpers
+        editing_model: ->
+            # user = Meteor.user()
+            model = Docs.findOne 
+                slug:Router.current().params.model_slug
+                model:'model'
+            if Meteor.user().editing_model_id is model._id
+                true 
+            else 
+                false 
         result_column_class: ->
             delta = Docs.findOne model:'delta'
             model = Docs.findOne model:'model'
@@ -338,10 +347,15 @@ if Meteor.isClient
 
 
         'click .edit_model': ->
+            alert 'hi'
             model = Docs.findOne
                 model:'model'
                 slug: Router.current().params.model_slug
-            Router.go "/model/edit/#{model._id}"
+            Meteor.users.update Meteor.userId(),
+                $set:
+                    editing_model_id:model._id
+            
+            # Router.go "/model/edit/#{model._id}"
 
         # 'click .page_up': (e,t)->
         #     delta = Docs.findOne model:'delta'

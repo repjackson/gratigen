@@ -1,4 +1,97 @@
+template(name='model_doc_view')
+    with current_doc
+        .ui.stackable.padded.grid
+            .row
+                .four.wide.column
+                    .ui.circular.basic.large.button.back_to_model
+                        i.chevron.left.icon
+                        // i.big.icon(class=current_model.icon)
+                        +i name=current_model.icon
+                        |#{current_model.title}
+                    // if can_edit
+                    a.ui.large.icon.circular.button(href="/m/#{current_model.slug}/#{_id}/edit" title='Edit')
+                        i.pencil.blue.large.icon
+                    if is_admin
+                        .ui.header 
+                            i.clock.icon
+                            |timestamp tags
+                        each _timestamp_tags
+                            .ui.inverted.label #{this}
+                    +user_list_toggle key='bookmark_ids' icon='bookmark' label='bookmark'
+                    div
+                    .ui.small.header #{views} views
+                    .ui.small.inline.header by
+                    each viewer_usernames
+                        .ui.small.label #{this}
+                    
+                    +author_info
+                    +creation_info
+                    //- +points_transaction
+                    +voting_full
+                    +array_view key='tags' label='tags' direct=true
+                    +comments
+                    +viewing
+                .twelve.wide.column
+                    if template_exists
+                        +Template.dynamic template=model_template
+                    .ui.header
+                        each fields
+                            // if header
+                            .ui.header #{key} type: #{field_type}
+                            +Template.dynamic template=view_template 
+                        // if icon
+                        //     i.icon(class=icon)
+                        // |#{title}
+                    each fields
+                        // unless header
+                        .item
+                            +Template.dynamic template=view_template 
+                    each current_model.actions
+                        +Template.dynamic template=this data=current_doc
+
+                    //- +comments
+                    //- div
+                    //- if watson
+                    //-     +watson_view
+
+
+
+template(name='model_doc_edit')
+    .ui.header editing model
+    with current_doc
+        .ui.stackable.padded.grid
+            .centered.row
+                .four.wide.column
+                    .ui.header(title="model: #{model}")
+                        |edit #{model}
+                    +creation_info
+                    a.ui.big.icon.green.circular.button(href="/m/#{model}/#{_id}/view")
+                        i.big.checkmark.icon
+                    #delete_doc.ui.icon.circular.button
+                        i.trash.icon
+                    if is_user
+                        +boolean_edit key='private' direct=true
+                .twelve.wide.column
+                    if template_exists
+                        +Template.dynamic template=model_template
+                    //- |#{model}
+                    each edit_fields
+                        .ui.header field #{title}
+                        +Template.dynamic template=edit_template 
+                        .spacer
+                        // .ui.header #{key} [#{field}] #{label}
+            //- if watson 
+            //-     .row
+            //-         .sixteen.wide.column
+            //-             +watson_view
+                
+
+
+
 template(name='delta')
+    if editing_model
+        .ui.inverted.segment
+            +model_edit
     .ui.stackable.padded.grid
         if currentUser.admin_mode
             unless current_delta 
