@@ -154,8 +154,12 @@ Meteor.publish 'document_by_slug', (slug)->
         slug:slug
 
 Meteor.publish 'child_docs', (id)->
-    Docs.find
-        parent_id:id
+    # id=unknown 
+    if id
+        found_parent = Docs.findOne id
+        if found_parent
+            Docs.find
+                parent_id:id
 
 
 Meteor.publish 'facet_doc', (tags)->

@@ -347,7 +347,6 @@ if Meteor.isClient
 
 
         'click .edit_model': ->
-            alert 'hi'
             model = Docs.findOne
                 model:'model'
                 slug: Router.current().params.model_slug
@@ -1285,6 +1284,13 @@ if Meteor.isClient
                 parent_model:Router.current().params.model_slug
                 # parent_id:current_model._id
 
+    Template.block_editor.events 
+        'click .remove_block': ->
+            if confirm 'delete?'
+                Docs.remove @_id
+
+
+
     Template.field_edit.onRendered ->
 
 
@@ -1327,7 +1333,7 @@ if Meteor.isClient
                 console.log new_id
     Template.model_edit.events
         'click .save_model': ->
-            Meteor.users().update Meteor.userId(),
+            Meteor.users.update Meteor.userId(),
                 $set:editing_model_id:null
                 
                 

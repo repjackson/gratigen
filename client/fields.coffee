@@ -509,7 +509,7 @@ Template.single_doc_view.helpers
 
 
 Template.single_doc_edit.onCreated ->
-    @autorun => Meteor.subscribe 'model_docs', @data.ref_model
+    @autorun => Meteor.subscribe 'model_docs', @data.ref_model, ->
 
 Template.single_doc_edit.helpers
     choices: ->
@@ -531,42 +531,50 @@ Template.single_doc_edit.helpers
         else
             parent = Template.parentData(5)
         target = Template.parentData(2)
-        if true
-            if target["#{ref_field.key}"]
-                if @ref_field is target["#{ref_field.key}"] then 'active' else ''
-            else ''
-        else
-            if parent["#{ref_field.key}"]
-                if @slug is parent["#{ref_field.key}"] then 'active' else ''
-            else ''
+        # if true
+        #     if target["#{ref_field.key}"]
+        #         if @ref_field is target["#{ref_field.key}"] then 'active' else ''
+        #     else ''
+        # else
+        if parent["#{ref_field.key}"]
+            if @_id is parent["#{ref_field.key}"] then 'active large' else 'compact'
+        # else ''
 
 
 Template.single_doc_edit.events
     'click .select_choice': ->
         selection = @
+        console.log @
+        
+        console.log Template.parentData(1)
+        console.log Template.parentData(2)
+        console.log Template.parentData(3)
+        console.log Template.parentData(4)
+        console.log Template.parentData(5)
+        console.log Template.parentData(6)
         ref_field = Template.currentData()
         if ref_field.direct
-            parent = Template.parentData()
+            parent = Template.parentData(1)
         else
             parent = Template.parentData(5)
         # parent = Template.parentData(1)
 
         # key = ref_field.button_key
         key = ref_field.key
+        console.log ref_field, 'ref field'
 
 
         # if parent["#{key}"] and @["#{ref_field.button_key}"] in parent["#{key}"]
-        if parent["#{key}"] and @slug in parent["#{key}"]
+        if parent["#{key}"] and @_id is parent["#{key}"]
             doc = Docs.findOne parent._id
             if doc
                 Docs.update parent._id,
                     $unset:"#{ref_field.key}":1
         else
             doc = Docs.findOne parent._id
-
             if doc
                 Docs.update parent._id,
-                    $set: "#{ref_field.key}": @slug
+                    $set: "#{ref_field.key}": @_id
 
 
 Template.multi_doc_view.onCreated ->

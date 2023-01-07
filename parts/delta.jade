@@ -98,8 +98,8 @@ template(name='model_edit')
                     +creation_info
                     div
                     // a.ui.big.icon.green.circular.button(href="/m/#{slug}")
-                    a.ui.big.icon.green.circular.button(href="/m/#{slug}")
-                    
+                    // a.ui.big.icon.green.circular.button(href="/m/#{slug}")
+                    a.ui.big.button.save_model
                         i.big.checkmark.icon
                     i#delete_model.trash.red.circular.link.icon
                     .ui.divider
@@ -130,13 +130,11 @@ template(name='model_edit')
                 .twelve.wide.column
                     .ui.header active blocks
                     each active_block_docs
-                        .ui.header #{type}
-                        // +block_editor
+                        +block_editor
                     .ui.header
                         +i name='module'
                         |blocks/fields/actions
                     +model_block_menu_item type='model_ref' label='model reference' icon='databse'
-                    // +multi_doc_edit key='parent_model_ids' label='parent models' ref_model='model' direct=true icon='fork'
                     +boolean_edit key='show_comments' label='comments' icon='chat' direct=true
                     +boolean_edit key='show_voting' label='voting' icon='elections' direct=true
                     +boolean_edit key='show_filter_bar' label='show filter bar' direct=true
@@ -149,9 +147,12 @@ template(name='model_edit')
                     
 template(name='block_editor')
     .ui.segment 
-        a.ui.button.remove.remove_block(title='delete block')
+        a.ui.icon.circular.red.button.invert.remove_block(title='delete block')
             i.large.remove.icon
         .ui.header #{type}
+        .ui.label #{_id}
+        // +multi_doc_edit key='parent_model_ids' label='parent models' ref_model='model' direct=true icon='fork'
+        +single_doc_edit key='model_ref_id' label='referenced model' ref_model='model' direct=true icon='fork'
                     
                     
 template(name='model_block_menu_item')
