@@ -99,7 +99,7 @@ template(name='model_edit')
                     div
                     // a.ui.big.icon.green.circular.button(href="/m/#{slug}")
                     // a.ui.big.icon.green.circular.button(href="/m/#{slug}")
-                    a.ui.big.button.save_model
+                    a.ui.big.icon.green.circular.button.invert.save_model
                         i.big.checkmark.icon
                     i#delete_model.trash.red.circular.link.icon
                     .ui.divider
@@ -167,25 +167,27 @@ template(name='permission_settings')
                     
                     
 template(name='block_editor')
-    .ui.segment 
-        a.ui.icon.circular.red.button.invert.remove_block(title='delete block')
-            i.large.remove.icon
-        .ui.inline.header(title=_id) #{type}
-        // .ui.label #{_id}
-        // +multi_doc_edit key='parent_model_ids' label='parent models' ref_model='model' direct=true icon='fork'
-        if _is 'type' 'model_ref'
-            +single_doc_edit key='model_ref_id' label='referenced model' ref_model='model' direct=true icon='fork'
-        else if _is 'type' 'title'
-            .ui.header title
-        else _is 'type' 'field'
-            .ui.header 
-                |field
-            +field_edit
-        .ui.inline.header
-            i.paint.brush.icon
-            |ux
-        +number_edit key='column' min=0 max=../column_count direct=true
-        +number_edit key='row' min=0 max=../row_count direct=true
+    .ui.fluid.styled.accordion
+        .active.title
+            a.ui.icon.circular.red.button.invert.remove_block(title='delete block')
+                i.large.remove.icon
+            .ui.inline.header(title=_id) #{type}
+            // .ui.label #{_id}
+        .active.content
+            // +multi_doc_edit key='parent_model_ids' label='parent models' ref_model='model' direct=true icon='fork'
+            if _is 'type' 'model_ref'
+                +single_doc_edit key='model_ref_id' label='referenced model' ref_model='model' direct=true icon='fork'
+            else if _is 'type' 'title'
+                .ui.header title
+            else _is 'type' 'field'
+                .ui.header 
+                    |field
+                +field_edit
+            .ui.inline.header
+                i.paint.brush.icon
+                |ux
+            +number_edit key='column' min=0 max=../column_count direct=true
+            +number_edit key='row' min=0 max=../row_count direct=true
         
                     
 template(name='model_block_menu_item')
