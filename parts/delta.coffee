@@ -534,6 +534,11 @@ if Meteor.isClient
 
 
 if Meteor.isServer
+    Meteor.publish 'model_blocks', (model_slug)->
+        if model_slug
+            Docs.find 
+                model:'model_block'
+                parent_model:model_slug
     Meteor.publish 'model_from_slug', (model_slug)->
         # if model_slug in ['model','brick','field','tribe','block','page']
         #     Docs.find
@@ -840,7 +845,7 @@ if Meteor.isServer
             if delta.limit
                 limit = delta.limit
             else
-                limit = 42
+                limit = 10
             modifier =
                 {
                     fields:_id:1
@@ -1258,19 +1263,27 @@ if Meteor.isClient
 
 
     Template.model_edit.onCreated ->
-        @autorun -> Meteor.subscribe 'child_docs', Router.current().params.doc_id
+        # @autorun -> Meteor.subscribe 'child_docs', Router.current().params.doc_id, ->
         # @autorun -> Meteor.subscribe 'doc', Router.current().params.doc_id
         # @autorun -> Meteor.subscribe 'model_fields_from_id', Router.current().params.doc_id
-        @autorun -> Meteor.subscribe 'model_from_slug', Router.current().params.model_slug
-        @autorun -> Meteor.subscribe 'model_docs', 'field_type'
+        @autorun -> Meteor.subscribe 'model_from_slug', Router.current().params.model_slug, ->
+        # @autorun -> Meteor.subscribe 'model_docs', 'model_block', ->
+        @autorun -> Meteor.subscribe 'model_blocks', Router.current().params.model_slug, ->
 
     Template.model_edit.onRendered ->
         Meteor.setTimeout ->
             $('.accordion').accordion()
         , 1000
 
-
-
+    Template.model_edit.helpers 
+        active_block_docs: ->
+            current_model = Docs.findOne slug:Router.current().params.model_slug 
+            # console.log current_model
+            # current_model.active_blocks
+            Docs.find 
+                model:'model_block'
+                parent_model:Router.current().params.model_slug
+                # parent_id:current_model._id
 
     Template.field_edit.onRendered ->
 
@@ -1300,10 +1313,24 @@ if Meteor.isClient
                 parent_id: Router.current().params.doc_id
             }, sort:rank:1
 
+    Template.model_block_menu_item.events
+        'click .add_new_block': ->
+            # alert 'hi'
+            cm = Docs.findOne slug:Router.current().params.model_slug
+            if cm
+                new_id = 
+                    Docs.insert
+                        model:'model_block'
+                        parent_model:Router.current().params.model_slug
+                        parent_id:cm._id
+                        type:@type
+                console.log new_id
     Template.model_edit.events
         'click .save_model': ->
             Meteor.users().update Meteor.userId(),
                 $set:editing_model_id:null
+                
+                
         'click #delete_model': (e,t)->
             if confirm 'delete model?'
                 Docs.remove Router.current().params.doc_id, ->
