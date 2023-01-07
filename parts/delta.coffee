@@ -1259,10 +1259,18 @@ if Meteor.isClient
 
     Template.model_edit.onCreated ->
         @autorun -> Meteor.subscribe 'child_docs', Router.current().params.doc_id
-        @autorun -> Meteor.subscribe 'doc', Router.current().params.doc_id
-        @autorun -> Meteor.subscribe 'model_fields_from_id', Router.current().params.doc_id
+        # @autorun -> Meteor.subscribe 'doc', Router.current().params.doc_id
+        # @autorun -> Meteor.subscribe 'model_fields_from_id', Router.current().params.doc_id
         @autorun -> Meteor.subscribe 'model_from_slug', Router.current().params.model_slug
         @autorun -> Meteor.subscribe 'model_docs', 'field_type'
+
+    Template.model_edit.onRendered ->
+        Meteor.setTimeout ->
+            $('.accordion').accordion()
+        , 1000
+
+
+
 
     Template.field_edit.onRendered ->
 
@@ -1293,6 +1301,9 @@ if Meteor.isClient
             }, sort:rank:1
 
     Template.model_edit.events
+        'click .save_model': ->
+            Meteor.users().update Meteor.userId(),
+                $set:editing_model_id:null
         'click #delete_model': (e,t)->
             if confirm 'delete model?'
                 Docs.remove Router.current().params.doc_id, ->
