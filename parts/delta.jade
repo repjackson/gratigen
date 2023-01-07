@@ -130,8 +130,14 @@ template(name='model_edit')
                     .ui.header 
                         i.large.paint.icon
                         |ux
-                    +number_edit key='column_count' label='# of columns' direct=true
                     +number_edit key='row_count' label='# of rows' direct=true
+                    .ui.header columns 
+                    .ui.list 
+                        each column_docs 
+                            .item #{_id} 
+                                +text_edit key='title' label='title' direct=true
+                                +number_edit key='column_width' label='width' direct=true
+                                i.remove.red.large.icon(title='remove column')
                 .twelve.wide.column
                     .ui.header active blocks
                     each active_block_docs
@@ -166,6 +172,7 @@ template(name='block_editor')
         else _is 'type' 'field'
             .ui.header 
                 |field
+            +field_edit
         .ui.inline.header
             i.paint.brush.icon
             |ux
@@ -276,158 +283,164 @@ template(name='delta')
     if editing_model
         .ui.segment
             +model_edit
-    else 
-        .ui.stackable.padded.grid
-            if currentUser.admin_mode
-                unless current_delta 
-                    .ui.button.create_delta 
-                        |make delta
-                    
-                unless current_model
-                    .ui.button.create_model
-                        |create model
-                    
-            with current_model
-                // unless current_model.show_facets
-                // .middle.aligned.row
-                //     .sixteen.wide.column
-                //         +model_top
-                .row
-                    // if current_model.show_facets
-                    //     .four.wide.column
-                    //         each sorted_facets
-                    //             +facet
-                    // div(class=result_column_class)
-                    .ui.sixteen.wide.column
-                        // unless current_model.show_facets
-                        +model_top
-                        if current_model.show_filter_bar
-                            |&nbsp;
-                            .ui.icon.input(class=query_class)
-                                if current_delta.search_query
-                                    i.link.remove.large.icon.clear_query
-                                else
-                                    i.search.icon
-                                input#search(type='text' autocomplete="off" value=current_delta.search_query)
-                            unless single_doc
-                                // - .ui.segment(class=loading_class)
-                                span.ui.inline.small.grey.header(title='change sort direction')
-                                    |sort
-                                if sortable_fields.count
-                                    .ui.simple.large.dropdown(title='sort by')
-                                        strong #{current_delta.sort_key}
-                                        i.dropdown.icon
-                                        .menu
-                                            each sortable_fields
-                                                .item.set_sort_key 
-                                                    if icon 
-                                                        +i name=icon
-                                                    |#{title}
-                                    .ui.tertiary.icon.button.set_sort_direction(title='sort direction')
-                                        if sorting_up
-                                            i.sort.amount.down.large.icon
-                                        else
-                                            i.sort.amount.up.large.icon
-                                //- .ui.compact.button.set_sort_direction
-                                //-     |#{current_delta.sort_direction}
-                                |&nbsp;
-                                |&nbsp;
-                                .ui.inline.small.grey.header
-                                    |viewing
-                                .ui.simple.dropdown(title='visible fields')
-                                    | fields
-                                    i.dropdown.icon
-                                    .menu
-                                        each model_fields
-                                            +toggle_visible_field
-                                |&nbsp;
-                                |&nbsp;
-                                |&nbsp;
-                            
-                                .ui.simple.dropdown(title='result limit')
-                                    .text.large #{current_delta.limit}
-                                    i.dropdown.icon
-                                    .menu
-                                        +set_limit amount=1
-                                        +set_limit amount=5
-                                        +set_limit amount=10
-                                        +set_limit amount=20
-                                        +set_limit amount=50
-                                |&nbsp;
-                                |&nbsp;
-                                |&nbsp;
-                                |of 
-                                span.ui.small.inline.header(title='total results') #{current_delta.total}
-                                |&nbsp;
-                                |&nbsp;
-                                with current_delta
-                                    +key_value_edit key='view_mode' value='list' icon='list'
-                                    +key_value_edit key='view_mode' value='cards' icon='th'
-                                // +set_view_mode title='list' icon='list'
-                                // +set_view_mode title='cards' icon='clone'
-                                // .ui.inline.small.grey.header view
-                                // .ui.simple.dropdown.item
-                                //     |#{current_delta.view_mode}
-                                //     i.dropdown.icon
-                                //     .menu
-                                //         //+set_view_mode title='table' icon='table'
-                                //         +set_view_mode title='items' icon='list'
-                                //         +set_view_mode title='map' icon='map'
-                                //         +set_view_mode title='graph' icon='graph'
-                                // .ui.compact.small.icon.button.toggle_right_panel
-                                //     i.table.large.icon
-                                // .spacer
-                        .scrolling
-                            //- each current_delta.result_ids
-                            //-     .ui.header #{this}
-                            // if delta_key_value_is 'view_mode' 'cards'
-                            unless delta_key_value_is 'view_mode' 'list'
-                                .ui.stackable.cards
-                                    if is_loading
-                                        each current_delta.result_ids
-                                            .ui.card
-                                                .ui.placeholder
-                                                    .rectangular.image
-                                                .content
-                                                    .ui.fluid.placeholder
-                                                        .header
-                                                            .line
-                                                        .line
-                                                        .line
-                                                        .line
-                                                        .line
-                                    else
-                                        each current_delta.result_ids
-                                            +delta_result_card
-                            if delta_key_value_is 'view_mode' 'list'
-                                //- .ui.segments
-                                each current_delta.result_ids
-                                    if is_loading
-                                        .ui.basic.segment
-                                            .ui.fluid.placeholder
-                                                .line
-                                                .line
-                                                .line
-                                                .line
-                                    else 
-                                        +delta_list_result
-                                        // .ui.divider
-                        // - +Template.dynamic template=view_mode_template
-                .row 
-                    .sixteen.wide.column
-                        if model_stats_exists
-                            +Template.dynamic template=model_stats
-            unless current_model
-                if subs_ready
-                    if currentUser
-                        .ui.big.button.create_model create model
-                    //- else 
-                        //- .ui.header model not found
-                //- else
-                .ui.basic.segment
-                    .ui.header
-                        i.massive.loading.grey.yin.yang.icon
+    // else 
+    .ui.stackable.padded.grid
+        if currentUser.admin_mode
+            unless current_delta 
+                .ui.button.create_delta 
+                    |make delta
                 
+            unless current_model
+                .ui.button.create_model
+                    |create model
+                
+        with current_model
+            // unless current_model.show_facets
+            // .middle.aligned.row
+            //     .sixteen.wide.column
+            //         +model_top
+            .ui.header #{column_count},#{row_count}
+            // The equal width variation will automatically divide column width evenly. This is useful with dynamic content where you do not know the column count in advance.
+            .ui.grid
+                each model_column_docs
+                    div(class=column_class)
+                        .ui.header i'm a colum #{width} wide
+            .row
+                // if current_model.show_facets
+                //     .four.wide.column
+                //         each sorted_facets
+                //             +facet
+                // div(class=result_column_class)
+                .ui.sixteen.wide.column
+                    // unless current_model.show_facets
+                    +model_top
+                    if current_model.show_filter_bar
+                        |&nbsp;
+                        .ui.icon.input(class=query_class)
+                            if current_delta.search_query
+                                i.link.remove.large.icon.clear_query
+                            else
+                                i.search.icon
+                            input#search(type='text' autocomplete="off" value=current_delta.search_query)
+                        unless single_doc
+                            // - .ui.segment(class=loading_class)
+                            span.ui.inline.small.grey.header(title='change sort direction')
+                                |sort
+                            if sortable_fields.count
+                                .ui.simple.large.dropdown(title='sort by')
+                                    strong #{current_delta.sort_key}
+                                    i.dropdown.icon
+                                    .menu
+                                        each sortable_fields
+                                            .item.set_sort_key 
+                                                if icon 
+                                                    +i name=icon
+                                                |#{title}
+                                .ui.tertiary.icon.button.set_sort_direction(title='sort direction')
+                                    if sorting_up
+                                        i.sort.amount.down.large.icon
+                                    else
+                                        i.sort.amount.up.large.icon
+                            //- .ui.compact.button.set_sort_direction
+                            //-     |#{current_delta.sort_direction}
+                            |&nbsp;
+                            |&nbsp;
+                            .ui.inline.small.grey.header
+                                |viewing
+                            .ui.simple.dropdown(title='visible fields')
+                                | fields
+                                i.dropdown.icon
+                                .menu
+                                    each model_fields
+                                        +toggle_visible_field
+                            |&nbsp;
+                            |&nbsp;
+                            |&nbsp;
+                        
+                            .ui.simple.dropdown(title='result limit')
+                                .text.large #{current_delta.limit}
+                                i.dropdown.icon
+                                .menu
+                                    +set_limit amount=1
+                                    +set_limit amount=5
+                                    +set_limit amount=10
+                                    +set_limit amount=20
+                                    +set_limit amount=50
+                            |&nbsp;
+                            |&nbsp;
+                            |&nbsp;
+                            |of 
+                            span.ui.small.inline.header(title='total results') #{current_delta.total}
+                            |&nbsp;
+                            |&nbsp;
+                            with current_delta
+                                +key_value_edit key='view_mode' value='list' icon='list'
+                                +key_value_edit key='view_mode' value='cards' icon='th'
+                            // +set_view_mode title='list' icon='list'
+                            // +set_view_mode title='cards' icon='clone'
+                            // .ui.inline.small.grey.header view
+                            // .ui.simple.dropdown.item
+                            //     |#{current_delta.view_mode}
+                            //     i.dropdown.icon
+                            //     .menu
+                            //         //+set_view_mode title='table' icon='table'
+                            //         +set_view_mode title='items' icon='list'
+                            //         +set_view_mode title='map' icon='map'
+                            //         +set_view_mode title='graph' icon='graph'
+                            // .ui.compact.small.icon.button.toggle_right_panel
+                            //     i.table.large.icon
+                            // .spacer
+                    .scrolling
+                        //- each current_delta.result_ids
+                        //-     .ui.header #{this}
+                        // if delta_key_value_is 'view_mode' 'cards'
+                        unless delta_key_value_is 'view_mode' 'list'
+                            .ui.stackable.cards
+                                if is_loading
+                                    each current_delta.result_ids
+                                        .ui.card
+                                            .ui.placeholder
+                                                .rectangular.image
+                                            .content
+                                                .ui.fluid.placeholder
+                                                    .header
+                                                        .line
+                                                    .line
+                                                    .line
+                                                    .line
+                                                    .line
+                                else
+                                    each current_delta.result_ids
+                                        +delta_result_card
+                        if delta_key_value_is 'view_mode' 'list'
+                            //- .ui.segments
+                            each current_delta.result_ids
+                                if is_loading
+                                    .ui.basic.segment
+                                        .ui.fluid.placeholder
+                                            .line
+                                            .line
+                                            .line
+                                            .line
+                                else 
+                                    +delta_list_result
+                                    // .ui.divider
+                    // - +Template.dynamic template=view_mode_template
+            .row 
+                .sixteen.wide.column
+                    if model_stats_exists
+                        +Template.dynamic template=model_stats
+        unless current_model
+            if subs_ready
+                if currentUser
+                    .ui.big.button.create_model create model
+                //- else 
+                    //- .ui.header model not found
+            //- else
+            .ui.basic.segment
+                .ui.header
+                    i.massive.loading.grey.yin.yang.icon
+            
             
 template(name='model_top')
     if is_loading

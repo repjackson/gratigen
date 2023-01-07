@@ -1355,6 +1355,13 @@ if Meteor.isClient
                 parent_id: Router.current().params.doc_id
                 view_roles: ['dev', 'admin', 'user', 'public']
                 edit_roles: ['dev', 'admin', 'user']
+        'click .add_column': ->
+            Docs.insert
+                model:'model_column'
+                parent_model: Router.current().params.model_slug
+                # parent_id: Router.current().params.doc_id
+                view_roles: ['dev', 'admin', 'user', 'public']
+                edit_roles: ['dev', 'admin', 'user']
 
     Template.field_edit.helpers
         is_ref: ->
