@@ -127,16 +127,17 @@ template(name='model_edit')
                         i.large.paint.icon
                         |ux
                     +number_edit key='row_count' label='# of rows' direct=true
-                    .ui.header columns 
-                    .ui.icon.large.compact.button.add_column
+                    .ui.header 
+                        i.layout.icon
+                        |widgets 
+                    .ui.icon.large.compact.button.add_widget
                         i.plus.green.icon
-
                     .ui.list 
-                        each column_docs 
-                            .item #{_id} 
+                        each widget_docs 
+                            .item
                                 +text_edit key='title' label='title' direct=true
                                 +number_edit key='column_width' label='width' direct=true
-                                i.remove.red.large.icon(title='remove column')
+                                i.remove.red.large.link.icon.zoomer(title='remove widget')
                 .twelve.wide.column
                     .ui.header active blocks
                     each active_block_docs
@@ -168,10 +169,11 @@ template(name='permission_settings')
                     
 template(name='block_editor')
     .ui.fluid.styled.accordion
-        .active.title
+        .active.title.zoomer
             a.ui.icon.circular.red.button.invert.remove_block(title='delete block')
                 i.large.remove.icon
             .ui.inline.header(title=_id) #{type}
+            i.large.dropdown.icon
             // .ui.label #{_id}
         .active.content
             // +multi_doc_edit key='parent_model_ids' label='parent models' ref_model='model' direct=true icon='fork'

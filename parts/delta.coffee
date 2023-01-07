@@ -1267,7 +1267,7 @@ if Meteor.isClient
         # @autorun -> Meteor.subscribe 'doc', Router.current().params.doc_id
         # @autorun -> Meteor.subscribe 'model_fields_from_id', Router.current().params.doc_id
         @autorun -> Meteor.subscribe 'model_from_slug', Router.current().params.model_slug, ->
-        @autorun -> Meteor.subscribe 'model_docs', 'column_doc', ->
+        @autorun -> Meteor.subscribe 'model_docs', 'widget', ->
         @autorun -> Meteor.subscribe 'block_instances', Router.current().params.model_slug, ->
 
     Template.model_edit.onRendered ->
@@ -1286,12 +1286,12 @@ if Meteor.isClient
                 model:'block_instance'
                 parent_model:Router.current().params.model_slug
                 # parent_id:current_model._id
-        column_docs: ->
+        widget_docs: ->
             current_model = Docs.findOne slug:Router.current().params.model_slug 
             # console.log current_model
             # current_model.active_blocks
             Docs.find 
-                model:'model_column'
+                model:'widget'
                 parent_model:Router.current().params.model_slug
                 # parent_id:current_model._id
     Template.model_edit.events
@@ -1305,17 +1305,10 @@ if Meteor.isClient
                 Docs.remove Router.current().params.doc_id, ->
                     Router.go "/"
 
-        'click .add_column': ->
+        'click .add_widget': ->
             Docs.insert
-                model:'model_column'
+                model:'widget'
                 parent_model:Router.current().params.model_slug
-                # parent_id: Router.current().params.doc_id
-                view_roles: ['dev', 'admin', 'user', 'public']
-                edit_roles: ['dev', 'admin', 'user']
-        'click .add_column': ->
-            Docs.insert
-                model:'model_column'
-                parent_model: Router.current().params.model_slug
                 # parent_id: Router.current().params.doc_id
                 view_roles: ['dev', 'admin', 'user', 'public']
                 edit_roles: ['dev', 'admin', 'user']
@@ -1324,9 +1317,9 @@ if Meteor.isClient
 
 
     Template.block_editor.events 
-        'click .remove_block': (event,template)->
+        'click .remove_block_instance': (event,template)->
             if confirm 'delete?'
-                $(event.currentTarget).closest('.segment').transition('fly right', 1000)
+                $(event.currentTarget).closest('.accordion').transition('fly right', 1000)
                 Meteor.setTimeout ->
                     Docs.remove @_id
                 , 1000
