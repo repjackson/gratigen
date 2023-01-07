@@ -145,10 +145,11 @@ if Meteor.isClient
             model = Docs.findOne 
                 slug:Router.current().params.model_slug
                 model:'model'
-            if Meteor.user().editing_model_id is model._id
-                true 
-            else 
-                false 
+            if model
+                if Meteor.user().editing_model_id is model._id
+                    true 
+                else 
+                    false 
         result_column_class: ->
             delta = Docs.findOne model:'delta'
             model = Docs.findOne model:'model'
@@ -1266,7 +1267,7 @@ if Meteor.isClient
         # @autorun -> Meteor.subscribe 'doc', Router.current().params.doc_id
         # @autorun -> Meteor.subscribe 'model_fields_from_id', Router.current().params.doc_id
         @autorun -> Meteor.subscribe 'model_from_slug', Router.current().params.model_slug, ->
-        # @autorun -> Meteor.subscribe 'model_docs', 'block_instance', ->
+        @autorun -> Meteor.subscribe 'model_docs', 'column_doc', ->
         @autorun -> Meteor.subscribe 'block_instances', Router.current().params.model_slug, ->
 
     Template.model_edit.onRendered ->
@@ -1276,8 +1277,6 @@ if Meteor.isClient
 
     # object['key']['subkey']
     # object.key
-    
-
     Template.model_edit.helpers 
         active_block_docs: ->
             current_model = Docs.findOne slug:Router.current().params.model_slug 
@@ -1287,6 +1286,42 @@ if Meteor.isClient
                 model:'block_instance'
                 parent_model:Router.current().params.model_slug
                 # parent_id:current_model._id
+        column_docs: ->
+            current_model = Docs.findOne slug:Router.current().params.model_slug 
+            # console.log current_model
+            # current_model.active_blocks
+            Docs.find 
+                model:'model_column'
+                parent_model:Router.current().params.model_slug
+                # parent_id:current_model._id
+    Template.model_edit.events
+        'click .save_model': ->
+            Meteor.users.update Meteor.userId(),
+                $set:editing_model_id:null
+                
+                
+        'click #delete_model': (e,t)->
+            if confirm 'delete model?'
+                Docs.remove Router.current().params.doc_id, ->
+                    Router.go "/"
+
+        'click .add_column': ->
+            Docs.insert
+                model:'model_column'
+                parent_model:Router.current().params.model_slug
+                # parent_id: Router.current().params.doc_id
+                view_roles: ['dev', 'admin', 'user', 'public']
+                edit_roles: ['dev', 'admin', 'user']
+        'click .add_column': ->
+            Docs.insert
+                model:'model_column'
+                parent_model: Router.current().params.model_slug
+                # parent_id: Router.current().params.doc_id
+                view_roles: ['dev', 'admin', 'user', 'public']
+                edit_roles: ['dev', 'admin', 'user']
+
+
+
 
     Template.block_editor.events 
         'click .remove_block': (event,template)->
@@ -1338,30 +1373,6 @@ if Meteor.isClient
                         parent_id:cm._id
                         type:@type
                 console.log new_id
-    Template.model_edit.events
-        'click .save_model': ->
-            Meteor.users.update Meteor.userId(),
-                $set:editing_model_id:null
-                
-                
-        'click #delete_model': (e,t)->
-            if confirm 'delete model?'
-                Docs.remove Router.current().params.doc_id, ->
-                    Router.go "/"
-
-        'click .add_field': ->
-            Docs.insert
-                model:'field'
-                parent_id: Router.current().params.doc_id
-                view_roles: ['dev', 'admin', 'user', 'public']
-                edit_roles: ['dev', 'admin', 'user']
-        'click .add_column': ->
-            Docs.insert
-                model:'model_column'
-                parent_model: Router.current().params.model_slug
-                # parent_id: Router.current().params.doc_id
-                view_roles: ['dev', 'admin', 'user', 'public']
-                edit_roles: ['dev', 'admin', 'user']
 
     Template.field_edit.helpers
         is_ref: ->

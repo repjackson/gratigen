@@ -122,16 +122,15 @@ template(name='model_edit')
                         
                                 +multi_doc_edit key='actions' label='actions' ref_model='action' direct=true
                                 +text_edit key='app' label='app' direct=true
-                    .ui.header
-                        +i name='shield'
-                        |permissions
-                    +multi_doc_edit key='view_roles' label='view roles' ref_model='role' direct=true
-                    +multi_doc_edit key='edit_roles' label='edit roles' ref_model='role' direct=true
+                    +permission_settings
                     .ui.header 
                         i.large.paint.icon
                         |ux
                     +number_edit key='row_count' label='# of rows' direct=true
                     .ui.header columns 
+                    .ui.icon.large.compact.button.add_column
+                        i.plus.green.icon
+
                     .ui.list 
                         each column_docs 
                             .item #{_id} 
@@ -156,6 +155,15 @@ template(name='model_edit')
                     +model_edit_fields
                     .spacer
                     // +comments
+                    
+                    
+template(name='permission_settings')
+    .ui.header
+        +i name='shield'
+        |permissions
+    +multi_doc_edit key='view_roles' label='view roles' ref_model='role' direct=true
+    +multi_doc_edit key='edit_roles' label='edit roles' ref_model='role' direct=true
+
                     
                     
 template(name='block_editor')
@@ -195,8 +203,6 @@ template(name='model_edit_fields')
     .ui.inline.header 
         +i name='list'
         |fields
-    .ui.icon.large.compact.button.add_field
-        i.plus.green.icon
     .spacer
     .ui.segments
         each fields
@@ -253,29 +259,28 @@ template(name='field_edit')
                 +key_value_edit key='field_type' value='multi_doc' icon='clone'
                 +key_value_edit key='field_type' value='single_user' icon='clone'
                 +key_value_edit key='field_type' value='multi_user' icon='clone'
-                if currentUser
+                if can_edit
                     i.large.code.icon
                     +single_doc_edit key='field_type' ref_model='field_type' label='field type' direct=true        
                     .spacer
                     // +text_edit key='field_type_id' label='field type id' direct=true        
                     // +single_doc_edit key='field_type_id' ref_model_slug='field_type' label='field type id' direct=true        
                     .spacer
-                    +multi_doc_edit key='view_roles' ref_model_slug='role' label='view roles' direct=true icon='eye'          
-                    .spacer
-                    +multi_doc_edit key='edit_roles' ref_model_slug='role' label='edit roles' direct=true icon='pencil'        
-                    +text_edit key='ref_model' label='reference model' direct=true
+                    +permission_settings
                 .spacer
+                +boolean_edit key='searchable' label='searchable' icon='search' direct=true
                 +boolean_edit key='faceted' label='faceted' icon='diamond' direct=true
                 +boolean_edit key='sortable' label='sortable' icon='chevron-down' direct=true
-                .spacer
-                if is_ref  
-                    +single_doc_edit key='ref_model' ref_model_slug='model' label='reference model' direct=true
-                else if is_user_ref
-                    +single_doc_edit key='role_filter' ref_model_slug='role' label='role filter' direct=true
-                div             
+                // .spacer
+                // if is_ref  
+                //     +single_doc_edit key='ref_model' ref_model_slug='model' label='reference model' direct=true
+                // else if is_user_ref
+                //     +single_doc_edit key='role_filter' ref_model_slug='role' label='role filter' direct=true
+                // div                  
+
                 +remove_button
-                if is_admin
-                    +print_this
+                // if is_admin
+                //     +print_this
 
 
 // adding model_edit above becaue will merge with below
