@@ -542,6 +542,16 @@ Template.single_doc_edit.helpers
 
 
 Template.single_doc_edit.events
+    'click .remove': ->
+        ref_field = Template.currentData()
+        if ref_field.direct
+            parent = Template.parentData(1)
+        else
+            parent = Template.parentData(5)
+
+        Docs.update parent._id,
+            $unset:"#{ref_field.key}":1
+
     'click .select_choice': ->
         selection = @
         console.log @

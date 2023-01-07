@@ -533,10 +533,10 @@ if Meteor.isClient
 
 
 if Meteor.isServer
-    Meteor.publish 'model_blocks', (model_slug)->
+    Meteor.publish 'block_instances', (model_slug)->
         if model_slug
             Docs.find 
-                model:'model_block'
+                model:'block_instance'
                 parent_model:model_slug
     Meteor.publish 'model_from_slug', (model_slug)->
         # if model_slug in ['model','brick','field','tribe','block','page']
@@ -1266,13 +1266,17 @@ if Meteor.isClient
         # @autorun -> Meteor.subscribe 'doc', Router.current().params.doc_id
         # @autorun -> Meteor.subscribe 'model_fields_from_id', Router.current().params.doc_id
         @autorun -> Meteor.subscribe 'model_from_slug', Router.current().params.model_slug, ->
-        # @autorun -> Meteor.subscribe 'model_docs', 'model_block', ->
-        @autorun -> Meteor.subscribe 'model_blocks', Router.current().params.model_slug, ->
+        # @autorun -> Meteor.subscribe 'model_docs', 'block_instance', ->
+        @autorun -> Meteor.subscribe 'block_instances', Router.current().params.model_slug, ->
 
     Template.model_edit.onRendered ->
         Meteor.setTimeout ->
             $('.accordion').accordion()
         , 1000
+
+    # object['key']['subkey']
+    # object.key
+    
 
     Template.model_edit.helpers 
         active_block_docs: ->
@@ -1280,14 +1284,17 @@ if Meteor.isClient
             # console.log current_model
             # current_model.active_blocks
             Docs.find 
-                model:'model_block'
+                model:'block_instance'
                 parent_model:Router.current().params.model_slug
                 # parent_id:current_model._id
 
     Template.block_editor.events 
-        'click .remove_block': ->
+        'click .remove_block': (event,template)->
             if confirm 'delete?'
-                Docs.remove @_id
+                $(event.currentTarget).closest('.segment').transition('fly right', 1000)
+                Meteor.setTimeout ->
+                    Docs.remove @_id
+                , 1000
 
 
 
@@ -1326,7 +1333,7 @@ if Meteor.isClient
             if cm
                 new_id = 
                     Docs.insert
-                        model:'model_block'
+                        model:'block_instance'
                         parent_model:Router.current().params.model_slug
                         parent_id:cm._id
                         type:@type

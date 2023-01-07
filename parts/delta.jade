@@ -127,6 +127,11 @@ template(name='model_edit')
                         |permissions
                     +multi_doc_edit key='view_roles' label='view roles' ref_model='role' direct=true
                     +multi_doc_edit key='edit_roles' label='edit roles' ref_model='role' direct=true
+                    .ui.header 
+                        i.large.paint.icon
+                        |ux
+                    +number_edit key='column_count' label='# of columns' direct=true
+                    +number_edit key='row_count' label='# of rows' direct=true
                 .twelve.wide.column
                     .ui.header active blocks
                     each active_block_docs
@@ -134,7 +139,9 @@ template(name='model_edit')
                     .ui.header
                         +i name='module'
                         |blocks/fields/actions
-                    +model_block_menu_item type='model_ref' label='model reference' icon='databse'
+                    +model_block_menu_item type='model_ref' label='model reference' icon='database'
+                    +model_block_menu_item type='title' label='title' icon='header'
+                    +model_block_menu_item type='field' label='field' icon='list'
                     +boolean_edit key='show_comments' label='comments' icon='chat' direct=true
                     +boolean_edit key='show_voting' label='voting' icon='elections' direct=true
                     +boolean_edit key='show_filter_bar' label='show filter bar' direct=true
@@ -149,11 +156,22 @@ template(name='block_editor')
     .ui.segment 
         a.ui.icon.circular.red.button.invert.remove_block(title='delete block')
             i.large.remove.icon
-        .ui.header #{type}
-        .ui.label #{_id}
+        .ui.inline.header(title=_id) #{type}
+        // .ui.label #{_id}
         // +multi_doc_edit key='parent_model_ids' label='parent models' ref_model='model' direct=true icon='fork'
-        +single_doc_edit key='model_ref_id' label='referenced model' ref_model='model' direct=true icon='fork'
-                    
+        if _is 'type' 'model_ref'
+            +single_doc_edit key='model_ref_id' label='referenced model' ref_model='model' direct=true icon='fork'
+        else if _is 'type' 'title'
+            .ui.header title
+        else _is 'type' 'field'
+            .ui.header 
+                |field
+        .ui.inline.header
+            i.paint.brush.icon
+            |ux
+        +number_edit key='column' min=0 max=../column_count direct=true
+        +number_edit key='row' min=0 max=../row_count direct=true
+        
                     
 template(name='model_block_menu_item')
     .ui.button.add_new_block

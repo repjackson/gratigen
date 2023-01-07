@@ -948,14 +948,18 @@ template(name='single_doc_edit')
             //- i.grey.icon(class=icon)
             +i name=icon
         |#{label} #{title}
-    each choices
-        .ui.compact.button.select_choice(class=choice_class)
-            if icon
-                //- i.grey.icon(class=icon)
-                +i name=icon cl='ui middle aligned mini image'
-                //- +i name=icon cl='ui mini inline image'
-            |#{calculated_label}
-            |#{slug} #{title}
+    .ui.large.label
+        |#{field_value}
+        i.remove.icon(title='clear selection')
+    unless field_value
+        each choices
+            .ui.compact.button.select_choice(class=choice_class)
+                if icon
+                    //- i.grey.icon(class=icon)
+                    +i name=icon cl='ui middle aligned mini image'
+                    //- +i name=icon cl='ui mini inline image'
+                |#{calculated_label}
+                |#{slug} #{title}
 
 
 template(name='multi_doc_edit')
