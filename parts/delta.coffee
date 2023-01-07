@@ -132,6 +132,7 @@ if Meteor.isClient
         @autorun -> Meteor.subscribe 'model_fields_from_slug', Router.current().params.model_slug
         @autorun -> Meteor.subscribe 'my_delta'
         @autorun -> Meteor.subscribe 'all_users'
+        @autorun -> Meteor.subscribe 'model_docs', 'widget', ->
 
         Session.set 'loading', true
         Meteor.call 'set_facets', Router.current().params.model_slug, ->
@@ -140,6 +141,21 @@ if Meteor.isClient
     #     Meteor.call 'log_view', @_id, ->
 
     Template.delta.helpers
+        column_class: ->
+            console.log @
+            if @column_width is 3
+                'three wide colum'
+            else if @column_width is 4
+                'four wide colum'
+        widget_docs: ->
+            current_model = Docs.findOne slug:Router.current().params.model_slug 
+            # console.log current_model
+            # current_model.active_blocks
+            Docs.find 
+                model:'widget'
+                parent_model:Router.current().params.model_slug
+                # parent_id:current_model._id
+    
         editing_model: ->
             # user = Meteor.user()
             model = Docs.findOne 

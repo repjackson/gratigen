@@ -188,6 +188,7 @@ template(name='block_editor')
             .ui.inline.header
                 i.paint.brush.icon
                 |ux
+            +number_edit key='width' min=0 direct=true
             +number_edit key='column' min=0 max=../column_count direct=true
             +number_edit key='row' min=0 max=../row_count direct=true
         
@@ -308,12 +309,12 @@ template(name='delta')
             // .middle.aligned.row
             //     .sixteen.wide.column
             //         +model_top
-            .ui.header #{column_count},#{row_count}
+            // .ui.header #{column_count},#{row_count}
             // The equal width variation will automatically divide column width evenly. This is useful with dynamic content where you do not know the column count in advance.
             .ui.grid
-                each model_column_docs
+                each widget_docs
                     div(class=column_class)
-                        .ui.header i'm a colum #{width} wide
+                        .ui.header i'm a colum #{column_width} wide
             .row
                 // if current_model.show_facets
                 //     .four.wide.column
