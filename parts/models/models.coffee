@@ -246,7 +246,8 @@ if Meteor.isClient
     Template.eft_view_item_small.helpers 
         in_list: ()->
             # cd = Docs.findOne Router.current().params.doc_id 
-            @label in Template.parentData().efts
+            if Template.parentData().efts
+                @label in Template.parentData().efts
             # @label in cd.efts
     Template.eft_picker.events 
         'click .toggle_eft': ->

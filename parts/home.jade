@@ -157,15 +157,15 @@ template(name='home')
                             +home_card
         // .eight.wide.column.bordered
         .bordered(class=right_column_class)
-            +my_things
+            // +my_things
             if session_is 'show_map' true
                 +mapbox
             if session_is 'show_calendar' true 
                 +calendar_view
             +online_allies
-               //.ui.container
-                    |my things
-                       // this needs to display list of "my_thing" (and its direct parent) corellated with search parameters, and click to pull up modal of thing
+            //.ui.container
+            // |my things
+        // this needs to display list of "my_thing" (and its direct parent) corellated with search parameters, and click to pull up modal of thing
         // +thing_maker
         // if current_thing.
         //     if _is 'model'_edit
@@ -185,11 +185,11 @@ template(name='home')
                     +Template.dynamic template=view_template
 
 
-template(name='my_things')
+// template(name='my_things')
     .ui.segment
-        |my_things
+        // |my_things
         div
-        |eft_categories x gratigen_thing_type x mainpage_search_bar x datetime_range x selected_map_area x my_things
+        // |eft_categories x gratigen_thing_type x mainpage_search_bar x datetime_range x selected_map_area x my_things
         //(displays small cards of dashboard search parameters)
         div
         +home_card
