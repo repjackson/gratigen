@@ -16,6 +16,9 @@ template(name='nav')
 
         a.icon.item.zoomer(href='/m/model' title='delta')
             i.large.database.icon
+        if currentUser.admin_mode
+            +nav_item route='dev' icon='code' label='dev'
+            
         // +toggle_nav_item key='invert_mode' icon='lightbulb' label='invert mode'
         // .search.item.zoomer.mobile.hidden(title='search')
         //     .ui.icon.transparent.input
@@ -26,7 +29,8 @@ template(name='nav')
         //         input.search_site(type='text' autocomplete="off" value=current_product_search)
         // .column.centered
         // .ui.top.attached.tabular.menu  
-        a.center.item.toggle_addmode.zoomer(data-tab='add' title='add thing')
+        // a.center.item.toggle_addmode.zoomer(data-tab='add' title='add thing')
+        a.item.toggle_addmode.zoomer(data-tab='add' title='add thing')
             +i name='play-button-circled--v1' color='40C057'
             // .active.item(data-tab='viewing')
             //     |viewing

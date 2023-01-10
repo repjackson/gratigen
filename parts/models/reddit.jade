@@ -4,7 +4,8 @@ template(name='reddit_posts')
         .row
             .sixteen.wide.column
                 .ui.inline.header(title='result count')
-                    |{{comma total_reddit_post_count}}
+                    +i name='reddit'
+                    |{{comma total_reddit_post_count}} reddit posts
                 // unless full_doc_id
                 // if currentUser
                 each picked_tags
@@ -24,7 +25,7 @@ template(name='reddit_posts')
                 // +session_toggle key='view_external' label='external' icon='external'
                 .ui.big.icon.input.invert
                     i.search.icon
-                    input#search(type='text' autofocus='' autocomplete="off" placeholder='search/add tags...')
+                    input#search(type='text' autofocus='' autocomplete="off" placeholder='search...')
                 // .ui.icon.input(class=search_class title="#{emotion_avg_result.avg_sent_score} sentiment")
                     // if is_loading
                     //     if home_subs_ready
