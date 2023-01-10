@@ -107,6 +107,15 @@ template(name='reddit_posts')
             .sixteen.wide.column
                 +doc_results
                 
+template(name='flat_tag_picker')
+    a.ui.large.label.pick_flat_tag.zoomer(title='add tag') 
+        |#{this}
+    if currentUser
+        i.remove.link.circular.icon.remove_tag.zoomer(title='remove tag')
+
+                
+                
+                
 template(name='doc_results')
     if subs_ready
         if session_is 'view_mode' 'list'
@@ -138,6 +147,36 @@ template(name='doc_results')
                 +ibig name='news' cl='spinning'
                 +ibig name='reddit' cl='spinning'
                 // i.massive.yin.yang.grey.loading.icon
+                        
+                        
+template(name='agg_tag')
+    // button.ui.big.compact.active.fade.animated.button.result(tabindex="0" title=count)
+    button.ui.image.big.black.label.result.zoomer.invert(tabindex="0" title=count)
+        // .visible.content
+        with term
+            if is_image
+                if url
+                    img.ui.image.zoomer.invert(src=url)
+        if subs_ready
+            if term.watson.metadata.image
+                img.ui.image.superzoomer(src=term.watson.metadata.image)
+        else 
+            i.yin.yang.grey.loading.icon
+        | #{name}
+        // .hidden.content
+        //     |+ #{title}
+        if term.image
+            //- button.ui.compact.button(tabindex="0" title=count)
+            //- img.ui.mini.inline.image(src=term.image)
+            img.ui.mini.inline.image(src=term.image)
+            .ui.inline.small.thin.header(class=tag_result_class) #{title}
+        // else
+            //- button.ui.compact.button(tabindex="0" title=count)
+        //- small #{count}
+                
+                
+                        
+                        
                             
 template(name='unpick_tag')
     button.ui.big.image.link.label.zoomer.unpick_tag.pointer(tabindex="0" class="#{loading_class} #{active_term_class}")
@@ -322,3 +361,93 @@ template(name='reddit_post_card_big')
                 .ui.icon.big.button.autotag.zoomer(title='breakdown emotions') 
                     i.large.chess.grey.icon
                 // +call_watson key=rd.selftext
+                
+                
+template(name='reddit_post_view')
+    with current_doc
+        if image_id
+            img.ui.fluid.image.checkin_banner(src="{{c.url 'frontrange' width=1000 height=1000 crop='crop'}}")
+        else if watson.metadata.image
+            img.ui.fluid.image.checkin_banner(src=watson.metadata.image)
+        else
+            img.ui.fluid.image.checkin_banner(src=url)
+        .ui.stackable.padded.grid 
+            .eleven.wide.column
+                a.ui.big.button.fly_left.zoomer(href="/" title='back to browse')
+                    i.chevron.left.large.icon
+                    |back
+                .ui.segment.alpha.scrollin
+                    .ui.inline.header !{title}
+                    if rd.selftext_html
+                        |!{unescaped}
+                    // blockquote(class="imgur-embed-pub" lang="en" data-id="UsxLSe0")
+                    //     a(href=rd.url) Lauren, supergirl, batgirl [Super best friends &amp; lauren faust])
+                    // script(async src="//s.imgur.com/min/embed.js" charset="utf-8")
+                    a.ui.header(href=rd.url target='_window') #{rd.url}
+                    
+                    // with rd
+                    //     embed(src=url)
+                    // if rd.media_embed
+                    //     // 
+                    //     |!{unescaped_content}
+                    // +call_watson key=rd.selftext
+                    if watson 
+                        +watson_view
+                    if in_dev
+                        +print_this
+                    if is_image
+                        img.ui.image.invert(src=url)
+                    .ui.button.get_comments     
+                        |get comments
+                    if comments 
+                        .ui.header comments
+            .five.wide.column
+                if thumbnail
+                    img.ui.centered.rounded.image.invert(src=thumbnail)
+                .ui.list 
+                    .item domain #{domain}
+                    .item.goto_subreddit subreddit #{subreddit}
+                    // .item model #{model}
+                    .item permalink #{permalink}
+                    // .item post_id #{post_id}
+                    .item 
+                        small mined by
+                        strong #{_author_username}
+                .ui.button.pull_post
+                    i.download.icon
+                    |get post
+                .ui.large.label.zoomer
+                    +i name='chat'
+                    |#{comment_count} comments
+                if over_18
+                    .ui.large.red.label.zoomer(title='adult content')
+                        +i name='18-plus'
+                a.ui.large.button.zoomer(href=url target='_window')
+                    i.external.icon
+                    | #{url}
+                each tags 
+                    a.ui.large.label.zoomer.pick_flat_tag(title='search tag') #{this}
+                a.ui.big.label.zoomer.picker.goto_subreddit(title='browse subpost')
+                    +i name='post'
+                    |tribe #{subreddit}
+                .ui.big.label 
+                    +i name='facebook-like'
+                    | #{ups} upvotes
+                .ui.big.label 
+                    +i name='chat'
+                    | #{num_comments} comments
+            .sixteen.wide.column.scrollin
+                .ui.big.center.aligned.inline.header(class=emotion_color) 
+                    if price
+                        i.large.coins.icon(title='price')
+                    if private 
+                        i.large.lock.icon(title='private')
+                    if sentiment 
+                        if is sentiment 'positive'
+                            +i name='happy'
+                        else 
+                            +i name='sad'
+                if subtitle
+                    .ui.small.header #{subtitle}
+                // a.ui.header(href="/user/#{target.username}")
+                //     |#{target.username}
