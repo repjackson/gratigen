@@ -1,3 +1,9 @@
+template(name='field_type_edit')
+    +text_edit key='title' direct=true
+    +icon_edit key='icon' direct=true
+
+
+
 //parties, games, conferences, classes, ceremonies, meetups, ski-trips/adventures, 
 // protests, farm swarms
 template(name='event_card')
@@ -569,7 +575,30 @@ template(name='org_edit')
                 +text_edit key='contact_info' label='contact info' icon='info' 
                 +multi_user_edit key='member_ids' label='members' 
                 +boolean_edit key='private' label='private' 
-                +multi_user_edit key='leader_ids' label='tribe leaders' 
+                +multi_user_edit key='leader_ids' label='tribe leaders'
+                    //- +org_account_miniview
+                    //- +org_roles_miniview
+                  
+                    //- +org_units (departments, stakeholder classes, ticketholders etc. unit structure widgets)
+                            +org_users_miniview
+                            
+                        objectives
+                        key results
+                        sprint plan
+                                                    
+                    //- +role_quick_create
+                    //- +project_quick_create
+                    //- +event_quick_create
+                    //- +task_quick_create
+                    //- +badge_quick_create
+                    //- +token_quick_create
+                    //- +resource_quick_create
+                    //- +skill_quick_create
+                    //- +service_quick_create
+                    //- +trip_quick_create
+                    //- +food_quick_create
+                    //- +product_quick_create
+
 
                     
 template(name='org_view')

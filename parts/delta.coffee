@@ -275,7 +275,10 @@ if Meteor.isClient
                 model:'model'
                 slug: Router.current().params.model_slug
             new_model = Docs.findOne new_model_id
-            Router.go "/model/edit/#{new_model._id}"
+            Meteor.users.update Meteor.userId(),
+                $set:
+                    editing_model_id: new_model_id
+            Router.go "/m/#{new_model._id}"
 
 
         'click .clear_query': ->
@@ -561,10 +564,16 @@ if Meteor.isClient
 
 
 if Meteor.isServer
-    Meteor.publish 'block_instances', (model_slug)->
+    Meteor.publish 'model_block_instances', (model_slug)->
+        console.log 'blocks for', model_slug
         if model_slug
             Docs.find 
                 model:'block_instance'
+                parent_model:model_slug
+    Meteor.publish 'model_widgets', (model_slug)->
+        if model_slug
+            Docs.find 
+                model:'widget'
                 parent_model:model_slug
     Meteor.publish 'model_from_slug', (model_slug)->
         # if model_slug in ['model','brick','field','tribe','block','page']
@@ -1283,10 +1292,10 @@ if Meteor.isClient
 
 
 if Meteor.isClient
-    Router.route '/model/edit/:doc_id/', (->
-        @layout 'layout'
-        @render 'model_edit'
-        ), name:'model_edit'
+    # Router.route '/model/edit/:doc_id/', (->
+    #     @layout 'layout'
+    #     @render 'model_edit'
+    #     ), name:'model_edit'
 
 
     Template.model_edit.onCreated ->
@@ -1294,8 +1303,8 @@ if Meteor.isClient
         # @autorun -> Meteor.subscribe 'doc', Router.current().params.doc_id
         # @autorun -> Meteor.subscribe 'model_fields_from_id', Router.current().params.doc_id
         @autorun -> Meteor.subscribe 'model_from_slug', Router.current().params.model_slug, ->
-        @autorun -> Meteor.subscribe 'model_docs', 'widget', ->
-        @autorun -> Meteor.subscribe 'block_instances', Router.current().params.model_slug, ->
+        @autorun -> Meteor.subscribe 'model_widgets', Router.current().params.model_slug, ->
+        @autorun -> Meteor.subscribe 'model_block_instances', Router.current().params.model_slug, ->
 
     Template.model_edit.onRendered ->
         Meteor.setTimeout ->
@@ -1306,9 +1315,6 @@ if Meteor.isClient
     # object.key
     Template.model_edit.helpers 
         active_block_docs: ->
-            current_model = Docs.findOne slug:Router.current().params.model_slug 
-            # console.log current_model
-            # current_model.active_blocks
             Docs.find 
                 model:'block_instance'
                 parent_model:Router.current().params.model_slug
@@ -1325,7 +1331,6 @@ if Meteor.isClient
         'click .save_model': ->
             Meteor.users.update Meteor.userId(),
                 $set:editing_model_id:null
-                
                 
         'click #delete_model': (e,t)->
             if confirm 'delete model?'
