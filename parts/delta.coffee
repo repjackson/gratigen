@@ -143,10 +143,21 @@ if Meteor.isClient
     Template.delta.helpers
         column_class: ->
             console.log @
-            if @column_width is 3
-                'three wide colum'
-            else if @column_width is 4
-                'four wide colum'
+            switch @column_width
+                when 3 then 'three wide column'
+                when 4 then 'four wide column'
+                when 5 then 'five wide column'
+                when 6 then 'six wide column'
+                when 7 then 'seven wide column'
+                when 8 then 'eight wide column'
+                when 9 then 'nine wide column'
+                when 10 then 'ten wide column'
+                when 11 then 'eleven wide column'
+                when 12 then 'twelve wide column'
+                when 13 then 'thirteen wide column'
+                when 14 then 'fourteen wide column'
+                when 15 then 'fifteen wide column'
+                when 16 then 'sixteen wide column'
         widget_docs: ->
             current_model = Docs.findOne slug:Router.current().params.model_slug 
             # console.log current_model

@@ -931,3 +931,19 @@ template(name='appearance_settings')
         div
         .ui.inline.header invert 
         +boolean_edit key='darkmode' label='darkmode' icon='light'
+
+
+
+template(name='user_sessions')
+    .column
+        .ui.inline.header 
+            +i name='time-machine'
+            |#{services.resume.loginTokens.length} user sessions
+        .ui.button.signout_others 
+            i.sign.out.icon
+            |sign out other sessions
+        .ui.large.list.smallscroll
+            each services.resume.loginTokens
+                .item(title=hashedToken)
+                    |#{when}
+                    i.remove.link.circular.zoomer.icon.clear_session(title='clear login session')

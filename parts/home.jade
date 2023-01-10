@@ -145,6 +145,7 @@ template(name='home')
                             .item
                                 .content
                                     .header #{title}
+                                    |mini_card
                 if session_is 'view_mode' 'feed'
                     .centered
                         .ui.centered.cards.one.scrolling

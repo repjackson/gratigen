@@ -1,0 +1,45 @@
+template(name='user_drafts')
+    if user_draft_docs.count
+        .ui.inline.header 
+            +i name='save'
+            |#{user_draft_docs.count} drafts
+        // if subs_ready
+        |sort by
+        +session_set key='sort_key' value='points' label='points'
+        +session_set key='sort_key' value='_timestamp' label='added'
+        .ui.selection.animated.link.divided.list
+            each user_draft_docs
+                .item
+                    .content
+                        .inline.header
+                            a.inline.fly_up(href="/#{model}/#{_id}")
+                                img.ui.avatar.image(src="{{c.url image_id height=300 width=300 crop='crop'}}")
+                                .ui.inline.header #{title}
+                            +when
+                            +model_label
+                            each three_tags
+                                .ui.small.label #{this}
+        // else 
+        //     +loading_segment
+                        
+template(name='user_favorites')
+    if user_favorite_docs.count
+        .ui.inline.header 
+            +i name='heart'
+            |#{user_favorite_docs.count} favorites
+        each user_favorite_docs
+            // +model_label
+            img.ui.avatar.image(src="{{c.url image_id height=300 width=300 crop='crop'}}" title="#{model}:#{title}")
+        .ui.selection.animated.link.divided.large.list
+            each user_favorite_docs
+                .item
+                    .content
+                        +model_label
+                        a.inline.header.fly_right(href="/#{model}/#{_id}")
+                            img.ui.avatar.image(src="{{c.url image_id height=300 width=300 crop='crop'}}")
+                            | #{title}
+                        +favorite_icon_toggle
+                        +when
+                        each three_tags
+                            .ui.small.label #{this}
+                        

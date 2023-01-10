@@ -1,10 +1,13 @@
 if Meteor.isClient
-    Router.route '/user/:username/edit', -> @render 'user_edit'
+    Router.route '/user/:username/edit', (->
+        @layout 'account_layout'
+        @render 'account_dashboard'
+        ), name:'account'
 
-    Template.user_edit.onCreated ->
+    Template.account_layout.onCreated ->
         @autorun -> Meteor.subscribe 'user_from_username', Router.current().params.username
 
-    Template.user_edit.onRendered ->
+    Template.account_layout.onRendered ->
         Meteor.setTimeout ->
             $('.button').popup()
         , 2000
@@ -78,7 +81,7 @@ if Meteor.isClient
                                 toastr.success 'Your verification code does not match.'
 
 
-    Template.user_edit.events
+    Template.account_layout.events
         'click .remove_user': ->
             if confirm "confirm delete #{@username}?  cannot be undone."
                 Meteor.users.remove @_id
@@ -178,11 +181,11 @@ if Meteor.isClient
                 
                 
 if Meteor.isClient
-    Template.user_edit.onCreated ->
+    Template.account_layout.onCreated ->
         @autorun -> Meteor.subscribe 'user_from_username', Router.current().params.username
         # @autorun -> Meteor.subscribe 'user_from_id', Router.current().params.user_id
 
-    Template.user_edit.onRendered ->
+    Template.account_layout.onRendered ->
         # Meteor.setTimeout ->
         #     $('.button').popup()
         # , 2000
@@ -193,7 +196,7 @@ if Meteor.isClient
     #     'newNumber': ->
     #         Phoneformat.formatLocal 'US', Meteor.user().profile.phone
 
-    Template.user_edit.events
+    Template.account_layout.events
         'click .remove_user': ->
             if confirm "confirm delete #{@username}?  cannot be undone."
                 Meteor.users.remove @_id
@@ -292,7 +295,7 @@ if Meteor.isClient
                 
                 
 if Meteor.isClient
-    Template.user_edit_finance.onCreated ->
+    Template.account_finance.onCreated ->
         # if Meteor.isDevelopment
         #     pub_key = Meteor.settings.public.stripe_test_publishable
         # else if Meteor.isProduction
@@ -327,9 +330,9 @@ if Meteor.isClient
         #                 )
         # )
 
-    Template.user_edit_finance.onRendered ->
+    Template.account_finance.onRendered ->
 
-    Template.user_edit_finance.events
+    Template.account_finance.events
         'click .add_five_credits': ->
             console.log Template.instance()
             if confirm 'add 5 credits?'

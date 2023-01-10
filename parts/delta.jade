@@ -310,14 +310,16 @@ template(name='delta')
             //     .sixteen.wide.column
             //         +model_top
             // .ui.header #{column_count},#{row_count}
+            //      +block_#{block_id}
             // The equal width variation will automatically divide column width evenly. This is useful with dynamic content where you do not know the column count in advance.
             .ui.grid
-                each widget_docs
-                    div(class=column_class)
-                        .ui.header i'm a colum #{column_width} wide
+                .row
+                    each widget_docs
+                        div(class=column_class)
+                            .ui.header i'm a colum #{column_width} wide
             .row
                 // if current_model.show_facets
-                //     .four.wide.column
+                //     .four.wide.colum
                 //         each sorted_facets
                 //             +facet
                 // div(class=result_column_class)
@@ -451,6 +453,9 @@ template(name='delta')
                 .ui.header
                     i.massive.loading.grey.yin.yang.icon
             
+            
+template(name='template_dynamic')
+
             
 template(name='model_top')
     if is_loading

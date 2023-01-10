@@ -11,6 +11,8 @@ template(name='nav')
             span.mobile.hidden Gratigen
         if currentUser.admin
             +toggle_nav_item key='admin_mode' icon='shield' label='admin mode'
+        +nav_item route='users' icon='groups' label='users'
+
         a.icon.item.zoomer(href='/m/model' title='delta')
             i.large.database.icon
         // +toggle_nav_item key='invert_mode' icon='lightbulb' label='invert mode'
