@@ -134,8 +134,11 @@ template(name='delta')
                 //             +facet
                 // div(class=result_column_class)
                 .ui.sixteen.wide.column
+                    if model_template
+                        +Template.dynamic template=model_template
                     // unless current_model.show_facets
                     +model_top
+                    
                     if current_model.show_filter_bar
                         |&nbsp;
                         .ui.icon.input(class=query_class)

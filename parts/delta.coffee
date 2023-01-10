@@ -141,6 +141,10 @@ if Meteor.isClient
     #     Meteor.call 'log_view', @_id, ->
 
     Template.delta.helpers
+        model_template: ->
+            cm = Docs.findOne slug:Router.current().params.model_slug
+            console.log "#{cm.model}s"
+            "#{@slug}s"
         column_class: ->
             console.log @
             switch @column_width
@@ -881,7 +885,7 @@ if Meteor.isServer
             if delta.limit
                 limit = delta.limit
             else
-                limit = 10
+                limit = 42
             modifier =
                 {
                     fields:_id:1
@@ -1061,7 +1065,7 @@ if Meteor.isClient
 
         model_template: ->
             current_model = Router.current().params.model_slug
-            "#{current_model}_card"
+            "#{current_model}_item"
 
         toggle_value_class: ->
             facet = Template.parentData()
@@ -1292,10 +1296,10 @@ if Meteor.isClient
 
 
 if Meteor.isClient
-    # Router.route '/model/edit/:doc_id/', (->
-    #     @layout 'layout'
-    #     @render 'model_edit'
-    #     ), name:'model_edit'
+    Router.route '/model/edit/:doc_id/', (->
+        @layout 'layout'
+        @render 'model_edit'
+        ), name:'model_edit'
 
 
     Template.model_edit.onCreated ->
