@@ -7,7 +7,7 @@ template(name='nav')
                 .icon.item
                     i.big.loading.grey.refresh.icon.cancel
             else 
-                img.ui.tiny.circular.image(src="/logo.png")
+                img.ui.mini.circular.image.zoomer(src="/logo.png")
             span.mobile.hidden Gratigen
         if currentUser.admin
             +toggle_nav_item key='admin_mode' icon='shield' label='admin mode'

@@ -23,7 +23,7 @@ template(name='delta_result_card')
                     //-     |view model
                     //-     i.right.chevron.green.icon
                         //- +i name='chevron-right' clases='ui avatar image'
-                    if is_admin
+                    if currentUser.admin_mode
                         a.ui.circular.icon.button.route_model(href="/model/edit/#{_id}" title='edit model')
                             i.cog.icon
                             // |edit model
@@ -50,7 +50,7 @@ template(name='delta_result_card')
                     each viewer_usernames
                         .ui.small.inverted.label #{this}
                 //- +comments
-                if is_admin
+                if currentUser.admin_mode
                     +print_this
                     +remove_button
             if template_exists
