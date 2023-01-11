@@ -31,7 +31,7 @@ template(name='youtube_view')
         //- iframe(src="https://www.youtube.com/embed/#{field_value}" frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen='')
 template(name='color_edit')
     .ui.large.form
-        .field
+        .large.field
             label 
                 if icon
                     +i name=icon
@@ -43,7 +43,7 @@ template(name='color_edit')
                 else
                     |#{this}
             .ui.large.label #{field_value}
-            input.edit_color(type='color' value=field_value placeholder='color' autocomplete="off" class=invert_class)
+            input.edit_color.invert(type='color' value=field_value placeholder='color' autocomplete="off" class=invert_class)
 
 
 

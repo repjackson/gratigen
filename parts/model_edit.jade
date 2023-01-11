@@ -6,9 +6,11 @@ template(name='model_edit')
                     small editing model
                     .ui.header
                         // i.icon(class=icon)
-                        +i name=icon
+                        +i name=icon color=stripped_icon_color
                         |#{title}
                     div
+                    if currentUser.admin_mode 
+                        +print_this
                     +creation_info
                     div
                     // a.ui.big.icon.green.circular.button(href="/m/#{slug}")
@@ -48,6 +50,7 @@ template(name='model_edit')
                                 +text_edit key='title' label='title' direct=true
                                 +slug_edit key='slug' label='slug' direct=true
                                 +icon_edit key='icon' label='icon' direct=true
+                                +color_edit key='icon_color' label='icon color' direct=true
                                 +text_edit key='description' label='description' direct=true
                                 +array_edit key='tags' label='tags' direct=true
                                 //- +text_edit key='collection' label='collection' direct=true

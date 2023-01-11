@@ -8,6 +8,13 @@ Template.registerHelper 'parent_doc', () ->
     Docs.findOne @parent_id
     # Template.parentData()
 
+Template.registerHelper 'stripped_icon_color', () ->
+    console.log @icon_color 
+    stripped = @icon_color.substring(1);
+
+
+    
+    
 Template.registerHelper 'is_admin', (model) ->
     Meteor.user() and Meteor.user().admin
 Template.registerHelper 'user_bookmark_docs', (model) ->

@@ -180,6 +180,7 @@ template(name='delta')
             .ui.basic.segment
                 .ui.header
                     i.massive.loading.grey.yin.yang.icon
+    // +grid_layout
             
 template(name='grid_layout')
     .ui.celled.centered.grid
@@ -264,7 +265,7 @@ template(name='model_top')
                 //     if currentUser
                 .ui.icon.basic.circular.button.add_model_doc.zoomer(title="add #{slug}")
                     i.plus.large.green.icon.invert
-                if currentUser.admin_mode
+                if can_edit
                     i.cog.large.circular.link.icon.edit_model.zoomer(title='edit model')
         //     //- +user_list_toggle key='bookmark_ids' add_icon='bookmark outline' remove_icon='bookmark' label="bookmark"
         if current_delta
