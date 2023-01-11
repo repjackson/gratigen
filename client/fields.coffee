@@ -19,11 +19,16 @@ Template.youtube_view.onRendered ->
 Template.youtube_edit.events
     'blur .youtube_id': (e,t)->
         parent = Template.parentData()
+        console.log @
+        console.log Template.parentData()
+        field = Template.currentData()
+        console.log Template.parentData(2)
+        console.log Template.parentData(3)
         val = t.$('.youtube_id').val()
         doc = Docs.findOne parent._id
         if doc
             Docs.update parent._id,
-                $set:"#{@key}":val
+                $set:"#{field.key}":val
 
 
 

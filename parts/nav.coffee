@@ -1,7 +1,7 @@
 if Meteor.isClient
     Template.nav.onCreated ->
-        @autorun => Meteor.subscribe 'me'
-        @autorun => Meteor.subscribe 'all_users'
+        @autorun => Meteor.subscribe 'me', ->
+        @autorun => Meteor.subscribe 'all_users', ->
         # @autorun => Meteor.subscribe 'model_docs', 'field', ->
         
         # @autorun => Meteor.subscribe 'my_cart'

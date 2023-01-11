@@ -602,7 +602,57 @@ template(name='org_edit')
 
                     
 template(name='org_view')
+    
     .ui.stackable.padded.grid
+        .ui.celled.centered.grid
+                    .three.column.row
+                        .centered.column
+                            .ui.centred.button button
+                        .column.centered
+                            .ui.celled.centered.grid
+                                .three.column.row
+                                    .column.centered
+                                        .ui.button button
+                                    .column.centered
+                                        .ui.button button
+                                    .column.centered
+                                        .ui.button button
+                        .column.centered
+                            .ui.centred.button button
+                    .two.columnd.row
+                        .column.centered
+                            .ui.top.attached.tabular.menu
+                                .active.item a
+                                .center.item b
+                                .item c
+                            .ui.bottom.attached.active.tab.segment
+                                .ui.button button
+                            .ui.bottom.attached.tab.segment
+                                |b
+                            .ui.bottom.attached.tab.segment
+                                |c
+                        .ui.celled.grid
+                            .two.column.row.celled
+                                .column
+                                    |a
+                                .column
+                                    |b
+                            .three.column.row.celled
+                                .column
+                                    |a
+                                .column
+                                    |b
+                                .column
+                                    .ui.celled.grid
+                                        .two.column.row.celled
+                                            .column
+                                                |c
+                                            .column
+                                                |d
+                    .one.column.row
+                        .column.centered
+                            .centered
+                                |a
         .row
             .eight.wide.column
                 .ui.header 
@@ -680,6 +730,8 @@ template(name='org_view')
                     .item #{total_credit_exchanged} credits exchanged
                 +comments
                 //+roles
+
+                                
 template(name='user_orgs')
     .scrolling
         if is_current_user
@@ -764,10 +816,7 @@ template(name='post_item')
 template(name='post_view')
     .ui.stackable.padded.grid
         .row 
-            .four.wide.column
-                .ui.basic.segment
-                    .ui.header #{title}
-            .eight.wide.column.scrolling
+            .sixteen.wide.column.scrolling
                 img.ui.image(src="{{c.url image_id }}" class=currentUser.invert_class)
                 // a.ui.header(href="/user/#{target.username}")
                 //     |#{target.username}
@@ -789,9 +838,11 @@ template(name='post_edit')
                 .ui.inline.header 
                     +icolor name='news' cl='ui image inline pointer'
                     |edit post
-                +text_edit key='title' label='title'
-                +html_edit key='content' label='content'
-                +youtube_edit key='youtube_id' label='youtube id'
+                +text_edit key='title' label='title' direct=true
+                +html_edit key='content' label='content' direct=true
+                +boolean_edit key='has_youtube' label='attach youtube' icon='youtube' direct=true
+                if has_youtube
+                    +youtube_edit key='youtube_id' label='youtube id' direct=true
             .six.wide.column
                 .ui.red.button.delete_post
                     i.remove.icon
@@ -800,9 +851,16 @@ template(name='post_edit')
                     small author
                     |#{_author.username}
                 if is_dev
-                    +single_user_edit key='_author_id' label='author'
-                +image_edit key='image_id' label='image'
+                    +single_user_edit key='_author_id' label='author' direct=true
+                +image_edit key='image_id' label='image' direct=true
                 div 
+                .ui.header
+                    +i name='audience'
+                    |audience
+                +boolean_edit key='private' label='private' 
+                if private 
+                    +multi_user_edit key='access_user_ids' label='user picker'
+                +group_picker
             .ten.wide.column
                 +text_edit key='location' 
                 +geolocate_button
@@ -819,14 +877,6 @@ template(name='post_edit')
                 // else
                 //     .ui.basic.button.unpublish 
                 //         |unpublish
-            .six.wide.column
-                .ui.header
-                    +i name='audience'
-                    |audience
-                +boolean_edit key='private' label='private' 
-                if private 
-                    +multi_user_edit key='access_user_ids' label='user picker'
-                +group_picker
 
 
 template(name='profile_org_item')
@@ -2291,6 +2341,7 @@ template(name='resource_edit')
                 +array_edit key='private_location_tags' label='private location tags' icon='marker'  tooltip='for handlers and buyers who are picking up'
                 +image_edit key='image_id' label='image' 
                 +image_link_edit key='image_link' label='image link' 
+
 
     
 template(name='profile_resource_item')

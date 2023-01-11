@@ -7,12 +7,22 @@ if Meteor.isClient
     Template.home.onCreated ->
         # @autorun => @subscribe 'my_current_thing', ->
         @autorun => @subscribe 'my_current_thing', Session.get('current_thing_id'),->
+        @autorun => @subscribe 'homepage_models',->
 if Meteor.isServer
     Meteor.publish 'my_current_thing', (current_thing_id)->
         # user = Meteor.user()
         Docs.find current_thing_id
+    Meteor.publish 'homepage_models', ()->
+        # user = Meteor.user()
+        Docs.find 
+            model:'model'
+            show_on_homepage:true
 if Meteor.isClient
     Template.home.helpers
+        homepage_models: ->
+            Docs.find 
+                model:'model'
+                show_on_homepage:true
         view_template: -> "#{@model}_view"
         edit_template: -> "#{@model}_edit"
         current_viewing_thing: ->

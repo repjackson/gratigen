@@ -13,6 +13,9 @@ template(name='delta')
     if editing_model
         .ui.segment
             +model_edit
+    if currentUser.admin_mode
+        +grid_layout
+
     // else 
     .ui.stackable.padded.grid
         if currentUser.admin_mode
@@ -177,6 +180,62 @@ template(name='delta')
             .ui.basic.segment
                 .ui.header
                     i.massive.loading.grey.yin.yang.icon
+            
+template(name='grid_layout')
+    .ui.celled.centered.grid
+        .three.column.row
+            .centered.column
+                .ui.centred.button button
+            .column.centered
+                .ui.celled.centered.grid
+                    .three.column.row
+                        .column.centered
+                            .ui.fluid.button button
+                        .column.centered
+                            .ui.fluid.button button
+                        .column.centered
+                            .ui.fluid.button button
+            .column.centered
+                .ui.centred.button button
+        
+        .two.columnd.row
+            .column.centered
+                .ui.top.attached.tabular.menu
+                    .active.item view
+                    .center.item edit
+                    .item permissions
+                .ui.bottom.attached.active.tab.segment
+                    .ui.segment Here is the display of the page you're building!
+                .ui.bottom.attached.tab.segment
+                    |b
+                .ui.bottom.attached.tab.segment
+                    |c
+        .one.column.row 
+            // input plain language commands
+            .ui.celled.grid
+                .two.column.row.celled
+                    .column
+                        |fields
+                    .column
+                        |blocks
+                .three.column.row.celled
+                    .column
+                        |a
+                    .column
+                        |b
+                    .column
+                        .ui.celled.grid
+                            .two.column.row.celled
+                                .column
+                                    |c
+                                .column
+                                    |d
+        .one.column.row
+            .column.centered
+                .centered
+                    |models
+
+    
             
             
 template(name='model_top')

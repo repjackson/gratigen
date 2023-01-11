@@ -16,6 +16,9 @@ template(name='model_edit')
                     a.ui.big.icon.green.circular.button.invert.save_model
                         i.big.checkmark.icon
                     i#delete_model.trash.red.circular.link.icon
+                    +boolean_edit key='show_filter_bar' label='show filter bar' direct=true
+                    +boolean_edit key='show_facets' label='show facets' direct=true
+                    +boolean_edit key='show_on_homepage' label='show on homepage' direct=true
                     .ui.divider
                     +permission_settings
                     .ui.header 
@@ -75,9 +78,6 @@ template(name='model_edit')
                             +model_block_menu_item type='field' label='field' icon='list'
                             +boolean_edit key='show_comments' label='comments' icon='chat' direct=true
                             +boolean_edit key='show_voting' label='voting' icon='elections' direct=true
-                            +boolean_edit key='show_filter_bar' label='show filter bar' direct=true
-                            +boolean_edit key='show_facets' label='show facets' direct=true
-                            +boolean_edit key='show_homepage' label='show on homepage' direct=true
                             +model_edit_fields
                             .spacer
                             // +comments
