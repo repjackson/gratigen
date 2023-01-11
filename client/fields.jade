@@ -46,7 +46,6 @@ template(name='color_edit')
             input.edit_color.invert(type='color' value=field_value placeholder='color' autocomplete="off" class=invert_class)
 
 
-
 template(name='color_view')
     .ui.form
         .field
@@ -216,7 +215,10 @@ template(name='ibig')
     // if is_hovering
     //     img.content.fade(src="https://img.icons8.com/color/96/000000/#{name}.png" class=cl title=title)
     // else
-    img.content.fade(src="https://img.icons8.com/ios/96/000000/#{name}.png" class=cl title=title)
+    if color
+        img.content.fade(src="https://img.icons8.com/ios/96/#{color}/#{name}.png" class=cl title=title)
+    else
+        img.content.fade(src="https://img.icons8.com/ios/96/000000/#{name}.png" class=cl title=title)
 // template(name='iios')
 //     img(src="https://img.icons8.com/ios/48/000000/#{name}.png" class=cl title=title)
 //     //- img(src="https://img.icons8.com/ultraviolet/48/000000/#{name}.png" class=cl title=title)
