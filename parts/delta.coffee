@@ -474,7 +474,7 @@ if Meteor.isClient
             @_id in delta.viewable_fields
 
     Template.set_limit.events
-        'click .set_limit': ->
+        'click .set': ->
             # console.log @
             delta = Docs.findOne model:'delta'
             Docs.update delta._id,

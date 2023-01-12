@@ -98,7 +98,7 @@ template(name='delta')
                             .ui.simple.dropdown(title='result limit')
                                 .text.large #{current_delta.limit}
                                 i.dropdown.icon
-                                .menu
+                                .vertical.menu
                                     +set_limit amount=1
                                     +set_limit amount=5
                                     +set_limit amount=10
