@@ -85,12 +85,12 @@ template(name='delta')
                             |&nbsp;
                             .ui.inline.small.grey.header
                                 |viewing
-                            .ui.simple.dropdown(title='visible fields')
-                                | fields
-                                i.dropdown.icon
-                                .menu
-                                    each model_fields
-                                        +toggle_visible_field
+                            // .ui.simple.dropdown(title='visible fields')
+                            //     | fields
+                            //     i.dropdown.icon
+                            //     .menu
+                            //         each model_fields
+                            //             +toggle_visible_field
                             |&nbsp;
                             |&nbsp;
                             |&nbsp;
@@ -128,42 +128,47 @@ template(name='delta')
                             // .ui.compact.small.icon.button.toggle_right_panel
                             //     i.table.large.icon
                             // .spacer
-                    .scrolling
-                        //- each current_delta.result_ids
-                        //-     .ui.header #{this}
-                        // if delta_key_value_is 'view_mode' 'cards'
-                        unless delta_key_value_is 'view_mode' 'list'
-                            .ui.stackable.cards
-                                if is_loading
-                                    each current_delta.result_ids
-                                        .ui.card
-                                            .ui.placeholder
-                                                .rectangular.image
-                                            .content
-                                                .ui.fluid.placeholder
-                                                    .header
-                                                        .line
+            .row
+                .three.wide.column   
+                    .ui.button.subscribe
+                        |subscribe
+                    +voting_full
+                .thirteen.wide.column.scrolling
+                    //- each current_delta.result_ids
+                    //-     .ui.header #{this}
+                    // if delta_key_value_is 'view_mode' 'cards'
+                    unless delta_key_value_is 'view_mode' 'list'
+                        .ui.stackable.cards
+                            if is_loading
+                                each current_delta.result_ids
+                                    .ui.card
+                                        .ui.placeholder
+                                            .rectangular.image
+                                        .content
+                                            .ui.fluid.placeholder
+                                                .header
                                                     .line
-                                                    .line
-                                                    .line
-                                                    .line
-                                else
-                                    each current_delta.result_ids
-                                        +delta_result_card
-                        if delta_key_value_is 'view_mode' 'list'
-                            //- .ui.segments
-                            each current_delta.result_ids
-                                if is_loading
-                                    .ui.basic.segment
-                                        .ui.fluid.placeholder
-                                            .line
-                                            .line
-                                            .line
-                                            .line
-                                else 
-                                    +delta_list_result
-                                    // .ui.divider
-                    // - +Template.dynamic template=view_mode_template
+                                                .line
+                                                .line
+                                                .line
+                                                .line
+                            else
+                                each current_delta.result_ids
+                                    +delta_result_card
+                    if delta_key_value_is 'view_mode' 'list'
+                        //- .ui.segments
+                        each current_delta.result_ids
+                            if is_loading
+                                .ui.basic.segment
+                                    .ui.fluid.placeholder
+                                        .line
+                                        .line
+                                        .line
+                                        .line
+                            else 
+                                +delta_list_result
+                                // .ui.divider
+                // - +Template.dynamic template=view_mode_template
             .row 
                 .sixteen.wide.column
                     if model_stats_exists

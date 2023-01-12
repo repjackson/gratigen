@@ -1,7 +1,7 @@
 template(name='nav')
     // https://fomantic-ui.com/elements/icon.html#/icon
     //#topnav.topnav
-    #topnav.ui.attached.borderless.menu.topnav(class=invert_class)
+    #topnav.ui.attached.borderless.big.menu.topnav(class=invert_class)
         a.header.image.item.zoomer(href='/' class="{{isActivePath '/'}}" title='gratihome')
             if is_loading
                 .icon.item
@@ -11,13 +11,14 @@ template(name='nav')
             span.mobile.hidden Gratigen
         if currentUser.admin
             +toggle_nav_item key='admin_mode' icon='shield' label='admin mode'
-        +nav_item route='users' icon='groups' label='users'
-        +nav_item route='reddit' icon='reddit' label='reddit'
+        +nav_item route='/users' icon='groups' label='users'
+        // +nav_item route='reddit' icon='reddit' label='reddit'
 
-        a.icon.item.zoomer(href='/m/model' title='delta')
-            i.large.database.icon
+        +nav_item route='/m/model' icon='network' label='models'
+        // a.icon.item.zoomer(href='/m/model' title='delta')
+        //     i.large.database.icon
         if currentUser.admin_mode
-            +nav_item route='dev' icon='code' label='dev'
+            +nav_item route='/dev' icon='network' label='dev'
             
         // +toggle_nav_item key='invert_mode' icon='lightbulb' label='invert mode'
         // .search.item.zoomer.mobile.hidden(title='search')
@@ -115,8 +116,8 @@ template(name='nav')
                 
 template(name='toggle_nav_item')
     a.icon.item.toggle(class=toggle_item_class title="toggle #{label}")
-        i.big.icon(class=icon)
-        // +i name=icon color='ffffff'
+        // i.big.icon(class=icon)
+        +i name=icon color='ffffff'
           
           
                 
@@ -154,11 +155,11 @@ template(name='secnav')
 
                  
 template(name='nav_item')
-    a.item.zoomer(href="/{{route}}" class="{{isActiveRoute route }}")
+    a.item.zoomer(href="{{route}}" class="{{isActiveRoute route }}")
         // i.large.icon(class=icon)
-        +i name=icon color='ffffff' cl='ui avatar image zoomer'
+        +i name=icon color='ffffff' cl='ui image zoomer'
         // |&nbsp;
-        // |&nbsp;
+        |&nbsp;
         span.zoomer #{label}
 
                  
