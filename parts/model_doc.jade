@@ -34,6 +34,14 @@ template(name='model_doc_view')
                     +comments
                     +viewing
                 .twelve.wide.column.scrolling
+                    if title 
+                        .ui.header #{title}
+                    if description 
+                        |!{description}
+                    if body
+                        |!{body}
+                    if image_id 
+                        +image_view key='image_id' 
                     if template_exists
                         +Template.dynamic template=model_template
                     .ui.header
@@ -57,7 +65,9 @@ template(name='model_doc_view')
                     //-     +watson_view
 
 template(name='model_doc_edit')
-    .ui.header editing model
+    .ui.grey.header 
+        i.pencil.icon
+        |editing model
     with current_doc
         .ui.stackable.padded.grid
             .centered.row
@@ -72,6 +82,12 @@ template(name='model_doc_edit')
                     if is_user
                         +boolean_edit key='private' direct=true
                 .twelve.wide.column
+                    if parent_model.has_title 
+                        +text_edit key='title' label='title' icon='header'
+                    if parent_model.has_body
+                        +html_edit key='body' label='body' icon='content'
+                    if parent_model.has_image
+                        +image_edit key='image_id' label='image' icon='image'
                     if template_exists
                         +Template.dynamic template=model_template
                     //- |#{model}

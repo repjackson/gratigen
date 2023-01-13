@@ -487,37 +487,37 @@ if Meteor.isServer
                         return true
                 )
     
-    Meteor.publish 'redditor_tags', (picked_tags)->
-        # reddito = Meteor.redditors.findOne @redditoId
-        # current_herd = reddito.profile.current_herd
+    # Meteor.publish 'redditor_tags', (picked_tags)->
+    #     # reddito = Meteor.redditors.findOne @redditoId
+    #     # current_herd = reddito.profile.current_herd
     
-        self = @
-        match = {}
+    #     self = @
+    #     match = {}
     
-        # picked_tags.push current_herd
-        if picked_tags.length > 0
-            match.tags = $all: picked_tags
-        count = Meteor.redditors.find(match).count()
-        cloud = Meteor.redditors.aggregate [
-            { $match: match }
-            { $project: tags: 1 }
-            { $unwind: "$tags" }
-            { $group: _id: '$tags', count: $sum: 1 }
-            { $match: _id: $nin: picked_tags }
-            { $sort: count: -1, _id: 1 }
-            { $match: count: $lt: count }
-            { $limit: 20 }
-            { $project: _id: 0, name: '$_id', count: 1 }
-            ]
-        cloud.forEach (tag, i) ->
+    #     # picked_tags.push current_herd
+    #     if picked_tags.length > 0
+    #         match.tags = $all: picked_tags
+    #     count = Meteor.redditors.find(match).count()
+    #     cloud = Meteor.redditors.aggregate [
+    #         { $match: match }
+    #         { $project: tags: 1 }
+    #         { $unwind: "$tags" }
+    #         { $group: _id: '$tags', count: $sum: 1 }
+    #         { $match: _id: $nin: picked_tags }
+    #         { $sort: count: -1, _id: 1 }
+    #         { $match: count: $lt: count }
+    #         { $limit: 20 }
+    #         { $project: _id: 0, name: '$_id', count: 1 }
+    #         ]
+    #     cloud.forEach (tag, i) ->
     
-            self.added 'results', Random.id(),
-                name: tag.name
-                count: tag.count
-                model:'redditor_tag'
-                index: i
+    #         self.added 'results', Random.id(),
+    #             name: tag.name
+    #             count: tag.count
+    #             model:'redditor_tag'
+    #             index: i
     
-        self.ready()
+    #     self.ready()
         
         
     Meteor.publish 'redditor_tags', (

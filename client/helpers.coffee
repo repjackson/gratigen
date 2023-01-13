@@ -13,7 +13,10 @@ Template.registerHelper 'stripped_icon_color', () ->
     stripped = @icon_color.substring(1);
 
 
-    
+Template.registerHelper 'parent_model', (model) ->
+    Docs.findOne 
+        model:'model'
+        slug:@model
     
 Template.registerHelper 'is_admin', (model) ->
     Meteor.user() and Meteor.user().admin

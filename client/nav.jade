@@ -1,7 +1,7 @@
 template(name='nav')
     // https://fomantic-ui.com/elements/icon.html#/icon
     //#topnav.topnav
-    #topnav.ui.attached.borderless.big.menu.topnav(class=invert_class)
+    #topnav.ui.attached.borderless.big.menu.topnav.hscroll(class=invert_class)
         a.header.image.item.zoomer(href='/' class="{{isActivePath '/'}}" title='gratihome')
             if is_loading
                 .icon.item
@@ -112,12 +112,14 @@ template(name='nav')
                     span.mobile.hidden login
             // if session_is 'viewing_alerts'
             //     +topbar
+    if currentUser.show_secnav
+        +secnav
                 
                 
 template(name='toggle_nav_item')
     a.icon.item.toggle(class=toggle_item_class title="toggle #{label}")
         // i.big.icon(class=icon)
-        +i name=icon color='ffffff'
+        +i name=icon color='ffffff' cl='ui avatar image'
           
           
                 
@@ -157,10 +159,10 @@ template(name='secnav')
 template(name='nav_item')
     a.item.zoomer(href="{{route}}" class="{{isActiveRoute route }}")
         // i.large.icon(class=icon)
-        +i name=icon color='ffffff' cl='ui image zoomer'
+        +i name=icon color='ffffff' cl='ui avatar image zoomer'
         // |&nbsp;
         |&nbsp;
-        span.zoomer #{label}
+        span.zoomer.mobile.hidden #{label}
 
                  
 template(name='top_nav_item')

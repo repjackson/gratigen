@@ -18,9 +18,13 @@ template(name='model_edit')
                     a.ui.big.icon.green.circular.button.invert.save_model
                         i.big.checkmark.icon
                     i#delete_model.trash.red.circular.link.icon
-                    +boolean_edit key='show_filter_bar' label='show filter bar' direct=true
-                    +boolean_edit key='show_facets' label='show facets' direct=true
-                    +boolean_edit key='show_on_homepage' label='show on homepage' direct=true
+                    +boolean_edit key='show_filter_bar' label='show filter bar' icon='filter' direct=true
+                    +boolean_edit key='show_facets' label='show facets' icon='yin yang' direct=true
+                    +boolean_edit key='show_on_homepage' label='show on homepage' icon='home' direct=true
+                    +boolean_edit key='has_title' label='has title' icon='header' direct=true
+                    +boolean_edit key='has_body' label='has description' icon='content' direct=true
+                    +boolean_edit key='has_image' label='has image' direct=true
+                    // +boolean_edit key='has_image' label='has image' direct=true
                     .ui.divider
                     +permission_settings
                     .ui.header 

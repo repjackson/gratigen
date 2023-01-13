@@ -802,7 +802,7 @@ if Meteor.isServer
                 model:'model'
                 slug:delta.model_filter
     
-            console.log 'running fum,', delta, model
+            # console.log 'running fum,', delta, model
             built_query = {}
             if delta.search_query
                 if model.collection and model.collection is 'users'

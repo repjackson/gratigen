@@ -108,6 +108,9 @@ template(name='profile_layout')
                         |sponsor
                     +yield    
 
+
+
+
 template(name='profile_link')
     a.ui.compact.circular.button(href="/user/#{current_user.username}/#{route}" class="{{isActiveRoute 'user_dashboard'}}" title="#{current_user.username} dashboard")
         // i.dashboard.icon
@@ -120,10 +123,14 @@ template(name='profile_link')
 template(name='user_credit')
     .ui.stackable.padded.grid
         .eight.wide.column 
-            .ui.header user credit
+            .ui.header  
+                +i name='coins'
+                |user credit
             .ui.large.button.calc_points 
+                i.calculator.icon
                 |calc points
-            .ui.header 
+            .ui.header
+                i.eye.icon
                 |read docs 
             .ui.selection.animated.list 
                 each read_docs 
@@ -132,6 +139,7 @@ template(name='user_credit')
                         |#{title}
                 
         with current_user
+            .ui.header total post points: #{total_post_points}
             .ui.header total debit amount: #{total_debit_amount}
             .ui.header total credit amount: #{total_credit_amount}
             .ui.header total read docs: #{total_read_docs}

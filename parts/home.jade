@@ -34,34 +34,39 @@ template(name='home')
 
             if session_is 'expand_leftbar' true
                 .ui.vertical.fluid.menu.mobile.hidden
-                    +side_menu_item color="ff72f3" icon='food' label='food'
-                    +side_menu_item color="c472ff" icon='home' label='housing'
-                    +side_menu_item color="5c1c8a" icon='tshirt' label='clothing'
-                    +side_menu_item color="2c36f8" icon='car' label='transportation'
-                    +side_menu_item color="00c6f8" icon='dog' label='animals'
-                    +side_menu_item color="00f8be" icon='recycle' label='reuse'
-                    +side_menu_item color="148023" icon='leaf' label='plants'
-                    +side_menu_item color="35ca2d" icon='heart' label='wellness'
-                    +side_menu_item color="ffff00" icon='lightning' label='energy'
-                    +side_menu_item color="d3a212" icon='university' label='education'
-                    +side_menu_item color="ff6f00" icon='paint brush' label='art'
-                    +side_menu_item color="FF0000" icon='users' label='community'
-                    +side_menu_item color="ffffff" icon='ambulance' label='emergency'
+                    each eft_docs
+                        +side_menu_item color=icon_color icon=icon label=title
+                    // +side_menu_item color="ff72f3" icon='food' label='food'
+                    // +side_menu_item color="c472ff" icon='home' label='housing'
+                    // +side_menu_item color="5c1c8a" icon='tshirt' label='clothing'
+                    // +side_menu_item color="2c36f8" icon='car' label='transportation'
+                    // +side_menu_item color="00c6f8" icon='dog' label='animals'
+                    // +side_menu_item color="00f8be" icon='recycle' label='reuse'
+                    // +side_menu_item color="148023" icon='leaf' label='plants'
+                    // +side_menu_item color="35ca2d" icon='heart' label='wellness'
+                    // +side_menu_item color="ffff00" icon='lightning' label='energy'
+                    // +side_menu_item color="d3a212" icon='university' label='education'
+                    // +side_menu_item color="ff6f00" icon='paint brush' label='art'
+                    // +side_menu_item color="FF0000" icon='users' label='community'
+                    // +side_menu_item color="ffffff" icon='ambulance' label='emergency'
             else 
                 .ui.vertical.fluid.icon.menu.mobile.hidden
-                    +side_menu_item color="ff72f3" icon='food' label='food'
-                    +side_menu_item color="c472ff" icon='home' label='housing'
-                    +side_menu_item color="5c1c8a" icon='tshirt' label='clothing'
-                    +side_menu_item color="2c36f8" icon='car' label='transportation'
-                    +side_menu_item color="00c6f8" icon='dog' label='animals'
-                    +side_menu_item color="00f8be" icon='recycle' label='reuse'
-                    +side_menu_item color="148023" icon='leaf' label='plants'
-                    +side_menu_item color="35ca2d" icon='heart' label='wellness'
-                    +side_menu_item color="ffff00" icon='lightning' label='energy'
-                    +side_menu_item color="d3a212" icon='university' label='education'
-                    +side_menu_item color="ff6f00" icon='paint brush' label='art'
-                    +side_menu_item color="FF0000" icon='users' label='community'
-                    +side_menu_item color="ffffff" icon='ambulance' label='emergency'
+                    each eft_docs 
+                        +side_menu_item color=icon_color icon=icon label=title
+                        
+                    // +side_menu_item color="ff72f3" icon='food' label='food'
+                    // +side_menu_item color="c472ff" icon='home' label='housing'
+                    // +side_menu_item color="5c1c8a" icon='tshirt' label='clothing'
+                    // +side_menu_item color="2c36f8" icon='car' label='transportation'
+                    // +side_menu_item color="00c6f8" icon='dog' label='animals'
+                    // +side_menu_item color="00f8be" icon='recycle' label='reuse'
+                    // +side_menu_item color="148023" icon='leaf' label='plants'
+                    // +side_menu_item color="35ca2d" icon='heart' label='wellness'
+                    // +side_menu_item color="ffff00" icon='lightning' label='energy'
+                    // +side_menu_item color="d3a212" icon='university' label='education'
+                    // +side_menu_item color="ff6f00" icon='paint brush' label='art'
+                    // +side_menu_item color="FF0000" icon='users' label='community'
+                    // +side_menu_item color="ffffff" icon='ambulance' label='emergency'
                 
             // .ui.button create request
         .bordered.scrolling(class=main_column_class)
