@@ -34,6 +34,8 @@ template(name='model_doc_view')
                     +comments
                     +viewing
                 .twelve.wide.column.scrolling
+                    if icon 
+                        +i name=icon
                     if title 
                         .ui.header #{title}
                     if description 
@@ -82,12 +84,18 @@ template(name='model_doc_edit')
                     if is_user
                         +boolean_edit key='private' direct=true
                 .twelve.wide.column
+                    if icon 
+                        +i name=icon
                     if parent_model.has_title 
-                        +text_edit key='title' label='title' icon='header'
+                        +text_edit key='title' label='title' icon='header' direct=true
+                    if parent_model.has_icon
+                        +icon_edit key='icon' label='icon' icon='art' direct=true
+                    if parent_model.has_icon_color
+                        +text_edit key='icon_color' label='icon color' icon='color' direct=true
                     if parent_model.has_body
-                        +html_edit key='body' label='body' icon='content'
+                        +html_edit key='body' label='body' icon='content' direct=true
                     if parent_model.has_image
-                        +image_edit key='image_id' label='image' icon='image'
+                        +image_edit key='image_id' label='image' icon='image' direct=true
                     if template_exists
                         +Template.dynamic template=model_template
                     //- |#{model}

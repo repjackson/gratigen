@@ -4,6 +4,8 @@ template(name='delta_result_card')
             .content.result.pointer.zoomer.fly_right
                 unless key_value_is 'model' 'model'
                     i.grey.database.icon(title='delta')
+                if icon 
+                    +i name=icon
                 if key_value_is 'model' 'model'
                     .ui.header
                         // i.icon(class=icon)
