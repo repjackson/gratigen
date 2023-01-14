@@ -79,7 +79,6 @@ mongo-livedata@1.0.12
 mousetrap:mousetrap@1.4.6_1
 mquandalle:jade@0.4.9
 mquandalle:jade-compiler@0.4.5
-mrgalaxy:stripe@2.2.2
 multiply:iron-router-progress@1.0.2
 npm-bcrypt@0.9.4
 npm-mongo@3.9.0

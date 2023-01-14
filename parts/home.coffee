@@ -108,27 +108,27 @@ if Meteor.isServer
         #     match.model = model
         # else 
         #     match.model = model:$in:['product','service','project','resource', 'comment','event']
-        
-        if model_filters.length > 1
-            Docs.find {model:$in: model_filters},
-                limit:20
-                sort:
-                    _timestamp:-1
-        else 
-            Docs.find {},{
-                limit:20
-                sort:
-                    _timestamp:-1
-                fields:
-                    title:1
-                    image_id:1
-                    _author_id:1
-                    _timestamp:1
-                    model:1
-                    _author_username:1
-                    icon:1
-                    icon_color:1
-            }
+        if Meteor.user()
+            if model_filters.length > 1
+                Docs.find {model:$in: model_filters},
+                    limit:20
+                    sort:
+                        "#{Meteor.user().sort_key}":Meteor.user().sort_direction
+            else 
+                Docs.find {},{
+                    limit:20
+                    sort:
+                        "#{Meteor.user().sort_key}":Meteor.user().sort_direction
+                    # fields:
+                    #     title:1
+                    #     image_id:1
+                    #     _author_id:1
+                    #     _timestamp:1
+                    #     model:1
+                    #     _author_username:1
+                    #     icon:1
+                    #     icon_color:1
+                }
             
     
 if Meteor.isClient
@@ -226,7 +226,6 @@ if Meteor.isClient
     
     
     Template.home.events 
-
         'click .check_notifications': ->
             Notification.requestPermission (result) ->
                 console.log result
@@ -258,13 +257,15 @@ if Meteor.isClient
         doc_results: ->
             if model_filters.array().length
                 Docs.find {model:$in:model_filters.array()},{
-                    limit:Session.get('home_limit')
-                    sort:Session.get('sort_key'):Session.get('sort_direction')
+                    limit:20
+                    sort:
+                        "#{Meteor.user().sort_key}":Meteor.user().sort_direction
                 }
             else 
                 Docs.find {},
-                    sort:_timestamp:-1
                     limit:20
+                    sort:
+                        "#{Meteor.user().sort_key}":Meteor.user().sort_direction
                     
         
     Template.home.onRendered ->

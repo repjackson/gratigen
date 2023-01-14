@@ -46,7 +46,8 @@ template(name='home')
                     +session_toggle key='show_calendar' icon='calendar'
                     each model_docs_helper 'sort_key'
                         +profile_key_value_edit key='sort_key' value=title title=title icon=icon color=icon_color
-                        
+                    +profile_key_value_edit key='sort_direction' value=1 icon='sort-up'
+                    +profile_key_value_edit key='sort_direction' value=-1 icon='sort-down'
                 if session_is 'view_mode' 'list'
                     .ui.items 
                         each doc_results 

@@ -820,9 +820,9 @@ if Meteor.isClient
                 response += @cl
             # if Session.equals(@key,@value)
             if user["#{@key}"]  is @value
-                response += ' blue'
+                response += ' orange large'
             else 
-                response += ' basic'
+                response += ' '
             # console.log response
             response
 
