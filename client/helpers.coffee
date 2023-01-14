@@ -9,8 +9,9 @@ Template.registerHelper 'parent_doc', () ->
     # Template.parentData()
 
 Template.registerHelper 'stripped_icon_color', () ->
-    console.log @icon_color 
-    stripped = @icon_color.substring(1);
+    # console.log @icon_color 
+    if @icon_color
+        stripped = @icon_color.substring(1);
 
 
 Template.registerHelper 'parent_model', () ->
@@ -300,7 +301,7 @@ Template.registerHelper 'current_model', (input) ->
 
 Template.registerHelper 'in_list', (key) ->
     if Meteor.userId()
-        if Meteor.userId() in @["#{key}"] then true else false
+        if Meteor.userId() and @["#{key}"] and Meteor.userId() in @["#{key}"] then true else false
 
 
 

@@ -405,7 +405,7 @@ template(name='text_edit')
     div
     if icon
         //- i.grey.icon(class=icon)
-        +i name=icon
+        +i name=icon cl='ui avatar image' cl='FFFFFF'
     .ui.inline.small.header
         if title
             |#{title}
@@ -727,14 +727,14 @@ template(name='skvs')
 
 template(name='boolean_edit')
     //- div
-    .ui.large.button.toggle_boolean(class="#{boolean_toggle_class} #{cl}" title=tooltip)
+    .ui.large.circular.button.toggle_boolean(class="#{boolean_toggle_class} #{cl}" title=tooltip)
         if field_value
             i.green.checkmark.icon
         else
             i.circle.outline.icon
         //- .ui.compact.button.toggle_boolean(class=boolean_toggle_class)
         if icon
-            +i name=icon
+            +i name=icon cl='ui avatar image' color='FFFFFF'
         .inline
             //- if field_value
             //-     i.checkmark.icon
@@ -896,7 +896,7 @@ template(name='float_view')
 template(name='slug_edit')
     // if icon
     // i.grey.icon(class=icon)
-    // +i name='slug'
+    +i name='slug' cl='ui avatar image' color='FFFFFF'
     .ui.inline.header.pointer.slugify_title
         if title
             |#{title}

@@ -129,7 +129,7 @@ template(name='secnav')
         each model_docs_helper 'model'
            a.item.zoomer(href="/m/#{slug}")
                 // i.large.inbox.icon
-                +i name=icon color=stripped_icon_color
+                +i name=icon color=stripped_icon_color cl='ui avatar image zoomer'
                 span.mobile.hidden #{title}
                  
 template(name='nav_item')

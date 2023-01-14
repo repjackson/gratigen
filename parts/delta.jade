@@ -182,9 +182,9 @@ template(name='delta')
                 //- else 
                     //- .ui.header model not found
             //- else
-            .ui.basic.segment
+            .ui.basic.center.aligned.segment
                 .ui.header
-                    i.massive.loading.grey.yin.yang.icon
+                    i.big.loading.grey.asterisk.circular.colored.blue.icon.invert
     // +grid_layout
             
 template(name='grid_layout')
@@ -247,7 +247,8 @@ template(name='grid_layout')
 template(name='model_top')
     if is_loading
         .ui.header
-            i.grey.loading.yin.yang.big.icon
+            // i.grey.loading.yin.yang.big.icon
+            i.big.loading.grey.asterisk.circular.colored.blue.icon.invert
             | loading #{current_model.title}...
     else
         unless key_value_is current_delta.model_filter 'model'

@@ -11,8 +11,8 @@ template(name='home')
                 //     i.chevron.left.icon
                 .ui.hidden.divider
             +dash_user_info
-            a.ui.button.tertiary.delta(href="/m/model")
-                |manage models
+            // a.ui.button.tertiary.delta(href="/m/model")
+            //     |manage models
             div
             img.ui.small.circular.centered.image(src="/12-color-code.png")
             div
@@ -22,7 +22,7 @@ template(name='home')
             if session_is 'expand_leftbar' true
                 .ui.vertical.fluid.menu.mobile.hidden
                     each model_docs_helper 'eft'
-                        +side_menu_item
+                        +side_menu_item color=icon_color icon=icon label=title
             else 
                 .ui.vertical.fluid.icon.menu.mobile.hidden
                     each model_docs_helper 'eft'
@@ -125,17 +125,19 @@ template(name='my_things')
 
 //template(name='thing_maker_modal')        
 template(name='home_card')
-    a.ui.link.card.show_modal
+    .ui.card
         // if youtube_id 
         //     +youtube_view key='youtube_id' direct=true
         .content 
-            a.inline.header
+            a.inline.header(href="/m/#{model}/#{_id}")
                 with parent_model
                     span(title=title)
                         +i name=icon color=stripped_icon_color
                 |#{title} 
+        if image_id 
+            a.inline.header(href="/m/#{model}/#{_id}")
+                img.ui.image(src="{{c.url image_id width=400 height=400}}")
             
-        img.ui.image(src="{{c.url image_id width=400 height=400}}")
         if card_template_exists
             +Template.dynamic template=model_card_template
 
@@ -160,7 +162,8 @@ template(name='home_card')
                 +voting
                 +eft_view_item_small
                 //like/dislike, comment, share(sms,email,dm), comments (expand)    
-
+                .ui.basic.circular.icon.button.show_modal(title='quick view')
+                    i.large.search.icon
 
 template(name='thing_picker_template')
     .column.bordered

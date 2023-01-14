@@ -19,13 +19,13 @@ template(name='model_edit')
                         i.big.checkmark.icon
                     i#delete_model.trash.red.circular.link.icon
                     +boolean_edit key='show_filter_bar' label='show filter bar' icon='filter' direct=true
-                    +boolean_edit key='show_facets' label='show facets' icon='yin yang' direct=true
+                    +boolean_edit key='show_facets' label='show facets' icon='filter' direct=true
                     +boolean_edit key='show_on_homepage' label='show on homepage' icon='home' direct=true
                     +boolean_edit key='has_title' label='title' icon='header' direct=true
                     +boolean_edit key='has_body' label='body' icon='content' direct=true
-                    +boolean_edit key='has_image' label='image' direct=true
-                    +boolean_edit key='has_icon' label='icon' direct=true
-                    +boolean_edit key='has_icon_color' label='icon color' direct=true
+                    +boolean_edit key='has_image' label='image' icon='image' direct=true
+                    +boolean_edit key='has_icon' label='icon' icon='icon' direct=true
+                    +boolean_edit key='has_icon_color' label='icon color' icon='paint brush' direct=true
                     // +boolean_edit key='has_image' label='has image' direct=true
                     .ui.divider
                     +permission_settings
@@ -46,19 +46,20 @@ template(name='model_edit')
                                 i.remove.red.large.link.icon.zoomer.delete_widget(title='remove widget')
                 .twelve.wide.column
                     .ui.fluid.styled.accordion
-                        .title.zoomer
+                        .active.title.zoomer
                             .ui.inline.header 
                                 +i name='info'
                                 |#{current_model.model} info
                             i.dropdown.icon
-                        .content
+                        .active.content
                             .ui.form
-                                +text_edit key='title' label='title' direct=true
+                                +text_edit key='title' label='title' icon='header' direct=true
                                 +slug_edit key='slug' label='slug' direct=true
                                 +icon_edit key='icon' label='icon' direct=true
                                 +color_edit key='icon_color' label='icon color' direct=true
                                 +text_edit key='icon_color' label='icon color hex' direct=true
-
+                                div
+                                +number_edit key='ranking' label='sort ranking' icon='sort' direct=true
                                 +text_edit key='description' label='description' direct=true
                                 +array_edit key='tags' label='tags' direct=true
                                 //- +text_edit key='collection' label='collection' direct=true
