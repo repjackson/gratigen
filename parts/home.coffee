@@ -106,9 +106,27 @@ if Meteor.isServer
         #     match.model = model
         # else 
         #     match.model = model:$in:['product','service','project','resource', 'comment','event']
-        Docs.find {model:$in: model_filters},
-            limit:20
-            sort:_timestamp:-1
+        
+        if model_filters.length > 1
+            Docs.find {model:$in: model_filters},
+                limit:20
+                sort:
+                    _timestamp:-1
+        else 
+            Docs.find {},{
+                limit:20
+                sort:
+                    _timestamp:-1
+                fields:
+                    title:1
+                    image_id:1
+                    _author_id:1
+                    _timestamp:1
+                    model:1
+                    _author_username:1
+                    icon:1
+                    icon_color:1
+            }
             
     
 if Meteor.isClient
@@ -148,20 +166,31 @@ if Meteor.isClient
                     title:@title
                     lat: "#{@lat}"
                     lng:"#{@lng}"
-                
+    Template.home_card.helpers 
+        model_card_template: -> "#{@model}_card"
+        card_template_exists: ->
+            # current_model = Router.current().params.model_slug
+            if @model
+                if Template["#{@model}_card"]
+                    return true
+                else
+                    return false
+
             
     Template.home.onCreated ->
         # @autorun => @subscribe 'post_docs',
         #     picked_tags.array()
         #     Session.get('post_title_filter')
         
-        @autorun => @subscribe 'all_markers',->
-        @autorun => @subscribe 'latest_home_docs',model_filters.array(),->
+        # @autorun => @subscribe 'all_markers',->
         
-        @autorun => @subscribe 'all_users', ->
-        @autorun => @subscribe 'post_facets',
-            picked_tags.array()
-            Session.get('post_title_filter')
+        @autorun => @subscribe 'latest_home_docs',model_filters.array(),->
+        @autorun => @subscribe 'model_docs','model',->
+        
+        # @autorun => @subscribe 'all_users', ->
+        # @autorun => @subscribe 'post_facets',
+        #     picked_tags.array()
+        #     Session.get('post_title_filter')
 
     
     
@@ -224,10 +253,17 @@ if Meteor.isClient
                 'no_show'
                 
         doc_results: ->
-            # Docs.find {model:$ne:'comment'},
-            Docs.find {},
-                sort:_timestamp:-1
-                
+            if model_filters.array().length
+                Docs.find {model:$in:model_filters.array()},{
+                    limit:20
+                    sort:_timestamp:-1
+                }
+            else 
+                Docs.find {},
+                    sort:_timestamp:-1
+                    limit:20
+                    
+        
     Template.home.onRendered ->
         categoryContent = [
             { category:'eft', title:'food', color:"FF73EA", icon:'food' }

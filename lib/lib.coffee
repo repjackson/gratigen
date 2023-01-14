@@ -2,61 +2,6 @@
 @Results = new Meteor.Collection 'results'
 @Markers = new Meteor.Collection 'markers'
 
-@eft_list = [
-    {
-        color:"FF73EA" 
-        icon:'food' 
-        label:'food'
-    }
-    {
-        color:"B785E1" 
-        icon:'home' 
-        label:'housing'
-    }
-    {
-        color:"7229AF" 
-        icon:'tshirt' 
-        label:'clothing'
-    }
-    {
-        color:"1255B8" 
-        icon:'car' 
-        label:'transportation'
-    }
-    {
-        color:"83DFF4" 
-        icon:'lightning' 
-        label:'energy'
-    }
-    {
-        color:"42E8C4" 
-        icon:'leaf' 
-        label:'zero waste'
-    }
-    {
-        color:"40C057" 
-        icon:'smile' 
-        label:'wellness'
-    }
-    {
-        color:"FAB005" 
-        icon:'university' 
-        label:'education'
-    }
-    {
-        color:"FD7E14" 
-        icon:'paint b
-        rush':label='art'
-    }
-    {
-        color:"FF0000" 
-        icon:'users' 
-        label:'community core'
-    }
-
-    
-]    
-
 
 Meteor.users.helpers
     name: ->
@@ -65,7 +10,7 @@ Meteor.users.helpers
         else if @first_name
             "#{@first_name} #{@last_name}"
         else
-            "#{@username}"
+            @username
     shortname: ->
         if @nickname
             "#{@nickname}"

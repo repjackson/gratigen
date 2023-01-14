@@ -13,10 +13,11 @@ Template.registerHelper 'stripped_icon_color', () ->
     stripped = @icon_color.substring(1);
 
 
-Template.registerHelper 'parent_model', (model) ->
-    Docs.findOne 
-        model:'model'
-        slug:@model
+Template.registerHelper 'parent_model', () ->
+    if @model
+        Docs.findOne 
+            model:'model'
+            slug:@model
     
 Template.registerHelper 'is_admin', (model) ->
     Meteor.user() and Meteor.user().admin
@@ -132,7 +133,10 @@ Template.registerHelper 'fixed', (input) ->
 Template.registerHelper 'int', (input) -> 
     if input
         input.toFixed(0)
+        
 Template.registerHelper 'when', () -> moment(@_timestamp).fromNow()
+
+
 Template.registerHelper 'from_now', (input) -> moment(input).fromNow()
 Template.registerHelper 'cal_time', (input) -> moment(input).calendar()
 Template.registerHelper 'last_initial', (user) ->
@@ -165,7 +169,7 @@ Template.registerHelper 'hsd', () ->
 
 # Template.registerHelper 'grabber', () ->
 #     Meteor.users.findOne
-        _id:@grabber_id
+        # _id:@grabber_id
 
 
 

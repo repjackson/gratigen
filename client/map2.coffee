@@ -128,7 +128,7 @@ Template.mapbox.helpers
     current_markers: -> current_markers.array()
 
 Template.mapbox.onCreated ->
-    @autorun => @subscribe 'all_markers', ->
+    # @autorun => @subscribe 'all_markers', ->
         
 
 Template.map.onRendered =>

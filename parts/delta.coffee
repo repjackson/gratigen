@@ -663,9 +663,9 @@ if Meteor.isClient
 
 if Meteor.isClient
     Template.model_view.onCreated ->
-        @autorun -> Meteor.subscribe 'model', Router.current().params.model_slug
-        @autorun -> Meteor.subscribe 'model_fields_from_slug', Router.current().params.model_slug
-        @autorun -> Meteor.subscribe 'docs', picked_tags.array(), Router.current().params.model_slug
+        @autorun -> Meteor.subscribe 'model', Router.current().params.model_slug, ->
+        @autorun -> Meteor.subscribe 'model_fields_from_slug', Router.current().params.model_slug, ->
+        @autorun -> Meteor.subscribe 'docs', picked_tags.array(), Router.current().params.model_slug, ->
 
     Template.model_view.helpers
         current_model: ->
@@ -709,15 +709,17 @@ if Meteor.isServer
             slug:slug
 
     Meteor.publish 'model_fields_from_slug', (slug)->
-        console.log 'finding fields for model', slug
-        model = Docs.findOne
-            model:'model'
-            slug:slug
-        if model
-            Docs.find
-                model:'field'
-                parent_id:model._id
-        console.log 'no model found for ', slug
+        if slug
+            console.log 'finding fields for model', slug
+            model = Docs.findOne
+                model:'model'
+                slug:slug
+            if model
+                Docs.find
+                    model:'field'
+                    parent_id:model._id
+            else 
+                console.log 'no model found for ', slug
     
     Meteor.publish 'model_fields_from_id', (model_id)->
         model = Docs.findOne model_id
@@ -1097,7 +1099,8 @@ if Meteor.isClient
             # $(e.currentTarget).closest('.result').transition('fade')
             if Meteor.user()
                 Docs.update @_id,
-                    $inc: views: 1
+                    $inc: 
+                        views: 1
                     $addToSet:viewer_usernames:Meteor.user().username
             # else
             #     Docs.update @_id,
@@ -1144,7 +1147,7 @@ if Meteor.isClient
     Template.model_doc_edit.onCreated ->
         @autorun -> Meteor.subscribe 'me', ->
         @autorun -> Meteor.subscribe 'doc', Router.current().params.doc_id, ->
-        @autorun -> Meteor.subscribe 'model_fields_from_slug', Router.current().params.model_slug, ->
+        # @autorun -> Meteor.subscribe 'model_fields_from_slug', Router.current().params.model_slug, ->
         @autorun -> Meteor.subscribe 'model_from_slug', Router.current().params.model_slug, ->
         @autorun -> Meteor.subscribe 'model_docs', 'field_type', ->
 
