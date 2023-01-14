@@ -2,16 +2,16 @@ template(name='delta_result_card')
     with result
         .ui.card(class=loading_class tabindex="1")
             .content.result.pointer.zoomer.fly_right
-                unless key_value_is 'model' 'model'
-                    i.grey.database.icon(title='delta')
-                if icon 
-                    +i name=icon
+                // unless key_value_is 'model' 'model'
+                //     i.grey.database.icon(title='delta')
                 if key_value_is 'model' 'model'
                     .ui.header
                         // i.icon(class=icon)
                         +i name=icon color=stripped_icon_color 
                         |#{title}
                 else
+                    if icon 
+                        +i name=icon color=icon_color
                     if title 
                         .ui.inline.header #{title}
                     if image_id

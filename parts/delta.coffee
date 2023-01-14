@@ -429,13 +429,14 @@ if Meteor.isClient
             #             picked_tags.pop()
         'keyup #search': _.throttle((e,t)->
             query = $('#search').val()
-            Session.set('current_query', query)
-            delta = Docs.findOne model:'delta'
-            Docs.update delta._id,
-                $set:search_query:query
-            Session.set 'loading', true
-            Meteor.call 'fum', delta._id, ->
-                Session.set 'loading', false
+            if query.length > 1
+                Session.set('current_query', query)
+                delta = Docs.findOne model:'delta'
+                Docs.update delta._id,
+                    $set:search_query:query
+                Session.set 'loading', true
+                Meteor.call 'fum', delta._id, ->
+                    Session.set 'loading', false
 
             # console.log Session.get('current_query')
             if e.which is 13
@@ -1021,7 +1022,7 @@ if Meteor.isClient
             if @model is 'model'
                 Router.go "/m/#{@slug}"
             else
-                Router.go "/m/#{model_slug}/#{@_id}/view"
+                Router.go "/m/#{model_slug}/#{@_id}/"
 
         'click .set_model': ->
             Meteor.call 'set_delta_facets', @slug, Meteor.userId()
@@ -1129,6 +1130,9 @@ if Meteor.isClient
             # Meteor.call 'fum', delta._id, (err,res)->
 if Meteor.isClient
     Router.route '/m/:model_slug/:doc_id/view', (->
+        @render 'model_doc_view'
+        ), name:'doc_view_long'
+    Router.route '/m/:model_slug/:doc_id/', (->
         @render 'model_doc_view'
         ), name:'doc_view'
 

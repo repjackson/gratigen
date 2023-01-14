@@ -8,6 +8,7 @@ if Meteor.isClient
         # @autorun => @subscribe 'my_current_thing', ->
         @autorun => @subscribe 'my_current_thing', Session.get('current_thing_id'),->
         @autorun => @subscribe 'homepage_models',->
+        @autorun => @subscribe 'model_docs', 'eft',->
 if Meteor.isServer
     Meteor.publish 'my_current_thing', (current_thing_id)->
         # user = Meteor.user()

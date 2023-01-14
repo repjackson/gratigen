@@ -474,10 +474,15 @@ template(name='delta_list_result')
             .ui.fluid.basic.segment.result_segment
                 .content
                     if key_value_is 'model' 'model'
-                        a.ui.inline.header.route_model(href="/m/#{slug}")
-                            i.icon(class=icon)
+                        a.ui.inline.header.route_model.zoomer(href="/m/#{slug}")
+                            // i.icon(class=icon)
+                            +i name=icon color=icon_color
                             |#{title}
                     else
+                        a.ui.inline.header.route_model.zoomer(href="/m/#{slug}/#{_id}")
+                            +i name=icon color=icon_color
+                            // i.icon(class=icon)
+                            |#{title}
                         //- each visible_fields
                         each fields
                             +Template.dynamic template=view_template
@@ -485,16 +490,15 @@ template(name='delta_list_result')
                         if key_value_is 'model' 'model'
                             //- +user_list_toggle key='bookmark_ids' icon='bookmark' label='bookmark' color='red'
                             if currentUser.admin_mode
-                                a.ui.compact.basic.button.route_model(href="/model/edit/#{_id}")
+                                a.ui.compact.basic.button.route_model.zoomer(href="/model/edit/#{_id}")
                                     i.cog.icon
                                     |edit model
                                 span(title='views')
                                     i.grey.eye.icon
                                     | #{views}
                         else
-                            .ui.compact.basic.button.result
-                                |view
-                                i.right.chevron.icon
+                            .ui.compact.large.circular.basic.button.result.zoomer
+                                i.right.chevron.large.icon
                             if can_edit
                                 a.ui.icon.button(href="/m/#{current_model.slug}/#{_id}/edit" title='edit')
                                     i.pencil.large.icon
@@ -503,6 +507,7 @@ template(name='delta_list_result')
                             //-     i.right.chevron.yellow.large.icon
                             if _author_id
                                 +author_info
+                            +creation_info
                             .ui.small.inline.header #{views} views
                                 //- i.eye.icon
                                 each viewer_usernames
