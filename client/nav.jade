@@ -125,36 +125,12 @@ template(name='toggle_nav_item')
                 
                 
 template(name='secnav')
-    .ui.attached.small.borderless.inverted.menu.hscroll(class=invert_class)
-        a.item.zoomer(href="/resources" class="{{isActiveRoute 'resources'}}")
-            // i.large.inbox.icon
-            +i name='clock'
-            span.mobile.hidden resources
-        // a.icon.item.zoomer(href="/products" class="{{isActiveRoute 'products'}}")
-        //     // i.large.inbox.icon
-        //     +i name='shop'
-        //     span.mobile.hidden products
-        a.icon.item.zoomer(href="/transfers" class="{{isActiveRoute 'transfers'}}")
-            // i.large.inbox.icon
-            +i name='exchange'
-            span.mobile.hidden transfers
-        a.icon.item.zoomer(href="/posts" class="{{isActiveRoute 'posts'}}")
-            // i.large.inbox.icon
-            +i name='blog'
-            span.mobile.hidden posts
-        +nav_item route='roles' icon='shield' label='tasks'
-        // a.icon.disabled.item.zoomer(href="/map" class="{{isActiveRoute 'map'}}")
-        //     // i.large.inbox.icon
-        //     +i name='map'
-        //     span.mobile.hidden map
-        +nav_item route='tasks' icon='tasks' label='tasks'
-        +nav_item route='events' icon='calendar' label='events'
-        +nav_item route='orgs' icon='campfire' label='groups'
-        +nav_item route='services' icon='wrench' label='services'
-        +nav_item route='projects' icon='project' label='projects'
-        +nav_item route='requests' icon='hand-holding-heart' label='requests'
-        +nav_item route='badges' icon='prize' label='badges'
-
+    .ui.attached.small.borderless.inverted.menu.hscroll.invert(class=invert_class)
+        each model_docs_helper 'model'
+           a.item.zoomer(href="/m/#{slug}")
+                // i.large.inbox.icon
+                +i name=icon color=stripped_icon_color
+                span.mobile.hidden #{title}
                  
 template(name='nav_item')
     a.item.zoomer(href="{{route}}" class="{{isActiveRoute route }}")

@@ -1,4 +1,5 @@
 template(name='account_layout')
+    +nav
     with current_user          
         //- img.ui.fluid.image.checkin_banner(src="{{c.url banner_image_id width=1000 height=500 crop='crop'}}")    
         .ui.stackable.padded.grid
@@ -8,7 +9,7 @@ template(name='account_layout')
                         | #{current_user.first_name} #{current_user.last_name}
                     //- +i name='pencil'
                     .ui.small.inline.header @#{current_user.username}
-                    a.ui.green.icon.large.fluid.button.fly_left(href="/user/#{current_user.username}/") 
+                    a.ui.green.icon.large.fluid.button.fly_left.invert(href="/user/#{current_user.username}/") 
                         i.checkmark.big.icon
                     .ui.hidden.divider
                     +image_edit key='image_id' icon='picture' title='profile image' direct=true
@@ -28,56 +29,60 @@ template(name='account_layout')
 
 
 template(name='account_dashboard')
-    .six.wide.column.scrolling
-        .ui.form
-            +text_edit key='display_name' label='display name' direct=true
-            +text_edit key='first_name' label='first name' direct=true
-            +text_edit key='last_name' label='last name' direct=true
-            +text_edit key='tagline' label='tagline' direct=true
-            div
-            // .ui.header 
-            //     i.envelope.outline.icon
-            //     |emails
-            // +emails_edit
-            +text_edit key='email' label='email' direct=true
-            .ui.hidden.divider
-            +phone_edit key='phone' label='phone' icon='phone' direct=true
-            +html_edit key='description' label='description' direct=true
-    .six.wide.column
-        +date_edit key='birthday' label='birthday' icon='birthday' direct=true
-        +array_edit key='allergens' label='allergens' icon='no-milk' direct=true
-        +array_edit key='food_dislikes' label='food dislikes' icon='disgusting' direct=true
-        +link_edit key='profile_link' label='profile link' icon='link' direct=true
-    .six.wide.column
-        if in_dev
-            .ui.header
-                i.shield.icon
-                |admin
-            +boolean_edit key='admin' icon='shield' direct=true
-            +array_edit key='roles' icon='shield' direct=true
-        +array_edit key='tags' label='tags' icon='tags' direct=true
-        +array_edit key='skills' label='skills' icon='wrench' direct=true
-    .eight.wide.column
-        +account_genekeys
-    .eight.wide.column
-        +account_finance
-    .eight.wide.column
-        +account_badges
-    .six.wide.column
-        .ui.header food intolerances 
-        +array_picker key='food_intolerances' value='Dairy'
-        +array_picker key='food_intolerances' value='Egg'
-        +array_picker key='food_intolerances' value='Gluten'
-        +array_picker key='food_intolerances' value='Grain'
-        +array_picker key='food_intolerances' value='Peanut'
-        +array_picker key='food_intolerances' value='Seafood'
-        +array_picker key='food_intolerances' value='Sesame'
-        +array_picker key='food_intolerances' value='Shellfish'
-        +array_picker key='food_intolerances' value='Soy'
-        +array_picker key='food_intolerances' value='Sulfite'
-        +array_picker key='food_intolerances' value='Tree Nut'
-        +array_picker key='food_intolerances' value='Wheat'
-   
+    .ui.grid
+        .six.wide.column.scrolling
+            .ui.form
+                +text_edit key='display_name' label='display name' direct=true
+                +text_edit key='first_name' label='first name' direct=true
+                +text_edit key='last_name' label='last name' direct=true
+                +text_edit key='tagline' label='tagline' direct=true
+                div
+                // .ui.header 
+                //     i.envelope.outline.icon
+                //     |emails
+                // +emails_edit
+                +text_edit key='email' label='email' direct=true
+                .ui.hidden.divider
+                +phone_edit key='phone' label='phone' icon='phone' direct=true
+                +html_edit key='description' label='description' direct=true
+        .six.wide.column
+            +appearance_settings
+            +boolean_edit key='show_secnav' label='show model menu' direct=true
+        .six.wide.column
+            +date_edit key='birthday' label='birthday' icon='birthday' direct=true
+            +array_edit key='allergens' label='allergens' icon='no-milk' direct=true
+            +array_edit key='food_dislikes' label='food dislikes' icon='disgusting' direct=true
+            +link_edit key='profile_link' label='profile link' icon='link' direct=true
+        .six.wide.column
+            if in_dev
+                .ui.header
+                    i.shield.icon
+                    |admin
+                +boolean_edit key='admin' icon='shield' direct=true
+                +array_edit key='roles' icon='shield' direct=true
+            +array_edit key='tags' label='tags' icon='tags' direct=true
+            +array_edit key='skills' label='skills' icon='wrench' direct=true
+        .eight.wide.column
+            +account_genekeys
+        .eight.wide.column
+            +account_finance
+        .eight.wide.column
+            +account_badges
+        .six.wide.column
+            .ui.header food intolerances 
+            +array_picker key='food_intolerances' value='Dairy'
+            +array_picker key='food_intolerances' value='Egg'
+            +array_picker key='food_intolerances' value='Gluten'
+            +array_picker key='food_intolerances' value='Grain'
+            +array_picker key='food_intolerances' value='Peanut'
+            +array_picker key='food_intolerances' value='Seafood'
+            +array_picker key='food_intolerances' value='Sesame'
+            +array_picker key='food_intolerances' value='Shellfish'
+            +array_picker key='food_intolerances' value='Soy'
+            +array_picker key='food_intolerances' value='Sulfite'
+            +array_picker key='food_intolerances' value='Tree Nut'
+            +array_picker key='food_intolerances' value='Wheat'
+       
                
 template(name='array_picker')
     .ui.button.toggle_value
