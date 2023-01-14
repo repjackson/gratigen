@@ -237,16 +237,16 @@ template(name='grid_layout')
             
 template(name='model_top')
     if is_loading
-        .ui.header
+        .ui.inline.header
             // i.grey.loading.yin.yang.big.icon
             i.big.loading.grey.asterisk.circular.colored.blue.icon.invert
-            | loading #{current_model.title}...
+            | #{current_model.title}...
     else
         unless key_value_is current_delta.model_filter 'model'
             if currentUser
                 a.ui.icon.basic.compact.circular.button.go_home.zoomer
                     i.big.home.icon
-        a.ui.large.header.reset.inline(title="#{description}, #{views} views")
+        a.ui.header.reset.inline(title="#{description}, #{views} views")
             // i.large.icon(class=icon)
             // i.large.icon(class=icon)
             if icon
