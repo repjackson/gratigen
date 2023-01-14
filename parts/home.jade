@@ -45,9 +45,15 @@ template(name='home')
                     +session_toggle key='show_map' icon='map'
                     +session_toggle key='show_calendar' icon='calendar'
                     each model_docs_helper 'sort_key'
-                        +profile_key_value_edit key='sort_key' value=title title=title icon=icon color=icon_color
+                        +profile_key_value_edit key='sort_key' value=title label=title icon=icon color=icon_color
+                    .ui.inline.header sort
                     +profile_key_value_edit key='sort_direction' value=1 icon='sort-up'
                     +profile_key_value_edit key='sort_direction' value=-1 icon='sort-down'
+                    .ui.inline.header limit
+                    +profile_key_value_edit key='limit' value=1 label=1
+                    +profile_key_value_edit key='limit' value=10 label=10
+                    +profile_key_value_edit key='limit' value=25 label=25
+                    +profile_key_value_edit key='limit' value=50 label=50
                 if session_is 'view_mode' 'list'
                     .ui.items 
                         each doc_results 

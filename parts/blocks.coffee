@@ -808,6 +808,15 @@ if Meteor.isClient
                     $set:
                         "#{@key}":@value
             # Session.set(@key, @value)
+            $('body').toast(
+                showIcon: 'checkmark'
+                message: "#{@key}: #{@value} saved"
+                # showProgress: 'bottom'
+                class: 'error'
+                # displayTime: 'auto',
+                position: "bottom right"
+            )
+            
 
     Template.profile_key_value_edit.helpers
         calculated_class: ->
@@ -820,9 +829,9 @@ if Meteor.isClient
                 response += @cl
             # if Session.equals(@key,@value)
             if user["#{@key}"]  is @value
-                response += ' orange large'
+                response += ' blue large'
             else 
-                response += ' '
+                response += ' inverted tertiary'
             # console.log response
             response
 

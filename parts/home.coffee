@@ -111,12 +111,12 @@ if Meteor.isServer
         if Meteor.user()
             if model_filters.length > 1
                 Docs.find {model:$in: model_filters},
-                    limit:20
+                    limit:Meteor.user().limit
                     sort:
                         "#{Meteor.user().sort_key}":Meteor.user().sort_direction
             else 
                 Docs.find {},{
-                    limit:20
+                    limit:Meteor.user().limit
                     sort:
                         "#{Meteor.user().sort_key}":Meteor.user().sort_direction
                     # fields:
@@ -257,13 +257,13 @@ if Meteor.isClient
         doc_results: ->
             if model_filters.array().length
                 Docs.find {model:$in:model_filters.array()},{
-                    limit:20
+                    limit:Meteor.user().limit
                     sort:
                         "#{Meteor.user().sort_key}":Meteor.user().sort_direction
                 }
             else 
                 Docs.find {},
-                    limit:20
+                    limit:Meteor.user().limit
                     sort:
                         "#{Meteor.user().sort_key}":Meteor.user().sort_direction
                     
