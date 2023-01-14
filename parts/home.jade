@@ -17,28 +17,15 @@ template(name='home')
             img.ui.small.circular.centered.image(src="/12-color-code.png")
             div
             .ui.fluid.big.menu.hscroll.mobile.only
-                +side_menu_item color="ff72f3" icon='food' label='food'
-                +side_menu_item color="c472ff" icon='home' label='housing'
-                +side_menu_item color="5c1c8a" icon='tshirt' label='clothing'
-                +side_menu_item color="2c36f8" icon='car' label='transportation'
-                +side_menu_item color="00c6f8" icon='dog' label='animals'
-                +side_menu_item color="00f8be" icon='recycle' label='reuse'
-                +side_menu_item color="148023" icon='leaf' label='plants'
-                +side_menu_item color="35ca2d" icon='heart' label='wellness'
-                +side_menu_item color="ffff00" icon='lightning' label='energy'
-                +side_menu_item color="d3a212" icon='university' label='education'
-                +side_menu_item color="ff6f00" icon='paint brush' label='art'
-                +side_menu_item color="FF0000" icon='users' label='community'
-                +side_menu_item color="ffffff" icon='ambulance' label='emergency'
-
-
+                each model_docs_helper 'eft'
+                    +side_menu_item color=icon_color icon=icon label=title
             if session_is 'expand_leftbar' true
                 .ui.vertical.fluid.menu.mobile.hidden
                     each model_docs_helper 'eft'
                         +side_menu_item color=icon_color icon=icon label=title
             else 
                 .ui.vertical.fluid.icon.menu.mobile.hidden
-                    each model_docs_helper 'eft' 
+                    each model_docs_helper 'eft'
                         +side_menu_item color=icon_color icon=icon label=title
             // .ui.button create request
         .bordered.scrolling(class=main_column_class)
@@ -52,7 +39,7 @@ template(name='home')
                 //     .ui.bottom.attached.tab.segment.centered.ani(data-tab='add')
                 //         //select type of thing you're creating >> open thing type editor modal
                 //         if session_is 'addmode' true
-                       
+                //                each model_docs_helper
                 //             +thing_picker model='post' icon='for-you' color='1255B8'
                 //             //blue
                 //             +thing_picker model='offer' icon='hand-holding-heart' color='FF73EA'
@@ -93,32 +80,6 @@ template(name='home')
                 .centered
                     each homepage_models
                         +filter_model model=slug icon=icon color=stripped_icon_color
-                    // +filter_model model='post' icon='for-you' color='1255B8'
-                    // //blue
-                    // +filter_model model='offer' icon='hand-holding-heart' color='FF73EA'
-                    // //pink
-                    // +filter_model model='request' icon='commercial' color='40C057'     
-                    // //green
-
-                    // div
-                    // +filter_model model='org' icon='groups' color='83DFF4'
-                    // //light blue
-                    // +filter_model model='project' icon='project' color='7229AF' 
-                    // //violet
-                    // +filter_model model='event' icon='scenic-view' color='FAB005'
-                    // //yellow
-                    // +filter_model model='role' icon='what-i-do' color='42E8C4'
-                    // //turquoise
-                    // +filter_model model='task' icon='task' color='B785E1'
-                    // //lavender
-                    // +filter_model model='resource' icon='field-and-tractor' color='FD7E14'  
-                    // //orange
-                    // +filter_model model='skill' icon='wrench' color='ff0000'
-                    // //red
-                    // +filter_model model='trip' icon='car' color='40C057'
-
-                    
-                    // +filter_model model='food' icon='food' 83DFF4
                 .centered   
                     .ui.search
                         .ui.large.icon.input.search_bar

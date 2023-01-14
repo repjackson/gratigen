@@ -20,14 +20,18 @@ Template.registerHelper 'parent_model', (model) ->
     
 Template.registerHelper 'is_admin', (model) ->
     Meteor.user() and Meteor.user().admin
+    
+    
 Template.registerHelper 'user_bookmark_docs', (model) ->
     Docs.find 
         _id:$in:Meteor.user().bookmark_ids
 
-Template.registerHelper 'model_docs_helper', (model) ->
-    console.log model
-    Docs.find 
-        model:model
+Template.registerHelper 'model_docs_helper', (model,limit) ->
+    # console.log model
+    if limit 
+        Docs.find {model:model}, {limit:limit}
+    else 
+        Docs.find {model:model}
 Template.registerHelper 'subs_ready', () -> 
     Template.instance().subscriptionsReady()
 
