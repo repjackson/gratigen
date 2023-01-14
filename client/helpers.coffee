@@ -27,12 +27,12 @@ Template.registerHelper 'user_bookmark_docs', (model) ->
     Docs.find 
         _id:$in:Meteor.user().bookmark_ids
 
-Template.registerHelper 'model_docs_helper', (model,limit) ->
+Template.registerHelper 'model_docs_helper', (model) ->
     # console.log model
-    if limit 
-        Docs.find {model:model}, {limit:limit}
-    else 
-        Docs.find {model:model}
+    # if limit 
+    #     Docs.find {model:model}, {limit:limit}
+    # else 
+    Docs.find {model:model}
 Template.registerHelper 'subs_ready', () -> 
     Template.instance().subscriptionsReady()
 

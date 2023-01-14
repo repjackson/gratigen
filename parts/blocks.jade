@@ -204,15 +204,13 @@ template(name='session_boolean_toggle')
 
 template(name='session_set')
     .ui.compact.large.circular.button.set_session_value(class=calculated_class)
-        // if icon
-        //     +i name=icon cl='ui mini centered image'
+        // with ../
+        if icon
+            +i name=icon cl='ui avatar image' color=color
         // if icon_view 
-        i.icon(class=icon)
+        // i.icon(class=icon)
         // else 
-        if label
-            |#{label}
-        else 
-            |#{value}
+        |#{title}
                 
                 
                 

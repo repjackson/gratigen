@@ -22,7 +22,7 @@ template(name='home')
             if session_is 'expand_leftbar' true
                 .ui.vertical.fluid.menu.mobile.hidden
                     each model_docs_helper 'eft'
-                        +side_menu_item color=icon_color icon=icon label=title
+                        +side_menu_item
             else 
                 .ui.vertical.fluid.icon.menu.mobile.hidden
                     each model_docs_helper 'eft'
@@ -31,20 +31,20 @@ template(name='home')
         .bordered.scrolling(class=main_column_class)
             .ui.one.column.grid 
                 +thing_picker_template
-
-                    div
                 .centered
                     each homepage_models
                         +filter_model model=slug icon=icon color=stripped_icon_color
                 .centered   
-                    .ui.search
+                    .ui.inline.search
                         .ui.large.icon.input.search_bar
                             input.prompt(type='text' placeholder='add/request/search...')
                             i.search.icon
-                        .results    
-                    +session_set key='view_mode' value='grid' icon='th' 
-                    +session_set key='view_mode' value='list' icon='list'
-                    +session_set key='view_mode' value='feed' icon='stream'
+                        // .results    
+                    each model_docs_helper 'view_mode'
+                        +session_set key='view_mode' value=title title=title icon=icon color=icon_color
+                    // +session_set key='view_mode' value='grid' icon='th' 
+                    // +session_set key='view_mode' value='list' icon='list'
+                    // +session_set key='view_mode' value='feed' icon='stream'
                     +session_toggle key='show_map' icon='map'
                     +session_toggle key='show_calendar' icon='calendar'
                 
@@ -55,7 +55,7 @@ template(name='home')
                                 .content
                                     .header #{title}
                                     |mini_card
-                if session_is 'view_mode' 'feed'
+                else if session_is 'view_mode' 'feed'
                     .centered
                         .ui.centered.cards.one.scrolling
                             each doc_results
@@ -84,15 +84,17 @@ template(name='home')
     .ui.modal 
         with current_viewing_thing
             .header #{title}
-                .ui.button.button.toggle_editmode
-                    i.large.pencil.icon
             i.close.large.icon
             .scrolling.content
                 if session_is 'editmode' true
                     +Template.dynamic template=edit_template
                 else 
                     +Template.dynamic template=view_template
-
+            .content 
+                a.ui.big.circular.icon.button(href='/m/#{model}/{_id}')
+                    i.chevron.right.icon   
+                .ui.button.button.toggle_editmode
+                    i.large.pencil.icon
 
 template(name='my_things')
     .ui.segment
@@ -122,42 +124,9 @@ template(name='home_card')
         .content 
             a.inline.header
                 with parent_model
-                    +i name=icon color=stripped_icon_color
-                    .ui.label #{title}
-                // if _is 'model' 'org' 
-                //     +i name='groups' color='83DFF4'
-                //     +org_card
-                // if _is 'model' 'project'
-                //     +i name='project' color='7229AF'
-                //     +project_card
-                // if _is 'model' 'post'
-                //     +i name='for-you' color='1255B8'
-                //     +post_card
-                // if _is 'model' 'event'
-                //     +i name='scenic-view' color='FAB005'
-                //left
-                //+user icon, user name
-                // +event_card
-                // if _is 'model' 'task'
-                //     +i name='task' color='B785E1'
-                //     +task_card
-                // if _is 'model' 'offer'
-                //     +i name='hand-holding-heart' color='FF73EA'
-                //     +offer_card
-                // if _is 'model' 'request'
-                //     +i name='commercial' color='40C057'
-                //     +request_card
-                // if _is 'model' 'role'
-                //     +i name='what-i-do' color='42E8C4'
-                //     +role_card
-                // if _is 'model' 'resource'
-                //     +i name='field-and-tractor' color='42E8C4'   
-                //     +resource_card
-                //like/dislike, comment, share(sms,email,dm), comments (expand)    
-                    
-                    
-                // .ui.label #{model}
-                |#{title} #{body}
+                    span(title=title)
+                        +i name=icon color=stripped_icon_color
+                |#{title} 
             
         img.ui.image(src="{{c.url image_id width=400 height=400}}")
         if card_template_exists
@@ -165,6 +134,7 @@ template(name='home_card')
 
         .content 
             .description
+                |!{body}
                 // .ui.header lat: #{lat}
                 // .ui.header lng: #{lng}
                 //     // i.newspaper.large.icon
@@ -182,6 +152,7 @@ template(name='home_card')
                 //         .ui.basic.label #{this}
                 +voting
                 +eft_view_item_small
+                //like/dislike, comment, share(sms,email,dm), comments (expand)    
 
 
 template(name='thing_picker_template')

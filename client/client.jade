@@ -80,7 +80,8 @@ template(name='layout')
     //     +rightbar
     div(class=invert_class)
         +yield
-    // +footer
+    if currentUser.admin_mode
+        +footer
 
 
 template(name='mlayout')
@@ -121,12 +122,20 @@ template(name='shortcut_modal')
 
 template(name='footer')
     .ui.segment 
-        .ui.header footer 
+        .ui.header 
+            i.shield.icon
+            |footer 
+        .ui.header 
+            i.users.icon 
+            |users
         .ui.list
             each user_docs 
                 .item #{username}
         .ui.header 
+            i.database.icon
             |docs 
         .ui.list
             each doc_docs
-                .item #{title} #{model}
+                a.item(href="/m/#{model}/#{_id}") #{title} 
+                    .ui.label
+                        |#{model}
