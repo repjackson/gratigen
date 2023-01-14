@@ -42,12 +42,11 @@ template(name='home')
                         // .results    
                     each model_docs_helper 'view_mode'
                         +session_set key='view_mode' value=title title=title icon=icon color=icon_color
-                    // +session_set key='view_mode' value='grid' icon='th' 
-                    // +session_set key='view_mode' value='list' icon='list'
-                    // +session_set key='view_mode' value='feed' icon='stream'
                     +session_toggle key='show_map' icon='map'
                     +session_toggle key='show_calendar' icon='calendar'
-                
+                    each model_docs_helper 'sort_key'
+                        +profile_key_value_edit key='sort_key' value=title title=title icon=icon color=icon_color
+                        
                 if session_is 'view_mode' 'list'
                     .ui.items 
                         each doc_results 

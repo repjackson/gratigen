@@ -796,6 +796,37 @@ if Meteor.isClient
             res
 
 
+    Template.profile_key_value_edit.events
+        'click .set_key_value': ->
+            # console.log @key
+            # console.log @value
+            # Docs.update Router.current().params.doc_id,
+            # context = Template.parentData()
+            # if context
+            if Meteor.user()
+                Meteor.users.update Meteor.userId(), 
+                    $set:
+                        "#{@key}":@value
+            # Session.set(@key, @value)
+
+    Template.profile_key_value_edit.helpers
+        calculated_class: ->
+            response = ''
+            # doc = Docs.findOne Router.current().params.doc_id
+            doc = Template.parentData()
+            user = Meteor.user()
+            # console.log @
+            if @cl
+                response += @cl
+            # if Session.equals(@key,@value)
+            if user["#{@key}"]  is @value
+                response += ' blue'
+            else 
+                response += ' basic'
+            # console.log response
+            response
+
+
 
     
 
@@ -843,12 +874,12 @@ if Meteor.isServer
         
         
 if Meteor.isClient
-    Template.doc_array_togggle.helpers
+    Template.doc_array_toggle.helpers
         doc_array_toggle_class: ->
             parent = Template.parentData()
             # user = Meteor.users.findOne Router.current().params.username
             if parent["#{@key}"] and @value in parent["#{@key}"] then 'active' else 'basic'
-    Template.doc_array_togggle.events
+    Template.doc_array_toggle.events
         'click .toggle': (e,t)->
             parent = Template.parentData()
             if parent["#{@key}"]

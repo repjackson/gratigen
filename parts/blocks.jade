@@ -73,8 +73,19 @@ template(name='limit_menu')
 template(name='key_value_edit')
     .ui.button.set_key_value(class=calculated_class title=label)
         if icon 
-            // +i name=icon cl='ui avatar image'
-            i.large.icon(class=icon)
+            +i name=icon cl='ui avatar image'
+            // i.large.icon(class=icon)
+        if label
+            |#{label}
+        else 
+            |#{value}
+            
+        
+template(name='profile_key_value_edit')
+    .ui.button.set_key_value(class=calculated_class title=label)
+        if icon 
+            +i name=icon cl='ui avatar image'
+            // i.large.icon(class=icon)
         if label
             |#{label}
         else 
@@ -82,7 +93,7 @@ template(name='key_value_edit')
             
         
         
-template(name='doc_array_togggle')
+template(name='doc_array_toggle')
     // if currentUser
     .ui.button.toggle(class=doc_array_toggle_class title=label)
         if in_list
@@ -201,6 +212,9 @@ template(name='session_boolean_toggle')
                 |#{label}
             else 
                 |#{value}
+
+
+
 
 template(name='session_set')
     .ui.compact.large.circular.button.set_session_value(class=calculated_class)

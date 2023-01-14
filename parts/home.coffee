@@ -10,6 +10,7 @@ if Meteor.isClient
         @autorun => @subscribe 'homepage_models',->
         @autorun => @subscribe 'model_docs', 'eft',->
         @autorun => @subscribe 'model_docs', 'view_mode',->
+        @autorun => @subscribe 'model_docs', 'sort_key',->
 if Meteor.isServer
     Meteor.publish 'my_current_thing', (current_thing_id)->
         # user = Meteor.user()
@@ -257,8 +258,8 @@ if Meteor.isClient
         doc_results: ->
             if model_filters.array().length
                 Docs.find {model:$in:model_filters.array()},{
-                    limit:20
-                    sort:_timestamp:-1
+                    limit:Session.get('home_limit')
+                    sort:Session.get('sort_key'):Session.get('sort_direction')
                 }
             else 
                 Docs.find {},
