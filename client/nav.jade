@@ -31,41 +31,41 @@ template(name='nav')
         // .column.centered
         // .ui.top.attached.tabular.menu  
         // a.center.item.toggle_addmode.zoomer(data-tab='add' title='add thing')
-        a.item.toggle_addmode.zoomer(data-tab='add' title='add thing')
-            +i name='play-button-circled--v1' color='40C057'
-            // .active.item(data-tab='viewing')
-            //     |viewing
-        .ui.bottom.attached.tab.segment.centered.ani(data-tab='add')
+        // a.item.toggle_addmode.zoomer(data-tab='add' title='add thing')
+        //     +i name='play-button-circled--v1' color='40C057'
+        //     // .active.item(data-tab='viewing')
+        //     //     |viewing
+        // .ui.bottom.attached.tab.segment.centered.ani(data-tab='add')
             //select type of thing you're creating >> open thing type editor modal
-            if session_is 'addmode' true
-                +thing_picker model='post' icon='for-you' color='1255B8'
-                //blue
-                +thing_picker model='offer' icon='hand-holding-heart' color='FF73EA'
-                //pink
-                +thing_picker model='request' icon='commercial' color='40C057'     
-                //green
+            // if session_is 'addmode' true
+            //     +thing_picker model='post' icon='for-you' color='1255B8'
+            //     //blue
+            //     +thing_picker model='offer' icon='hand-holding-heart' color='FF73EA'
+            //     //pink
+            //     +thing_picker model='request' icon='commercial' color='40C057'     
+            //     //green
                 
-                div
-                +thing_picker model='org' icon='groups' color='83DFF4' 
-                //light blue
-                +thing_picker model='project' icon='project' color='7229AF' 
-                //violet
-                +thing_picker model='event' icon='calendar' color='FAB005'
-                //yellow
-                +thing_picker model='role' icon='what-i-do' color='42E8C4'
-                //turquoise
-                +thing_picker model='tasks' icon='task' color='B785E1'
-                //lavender
-                +thing_picker model='resource' icon='field-and-tractor' color='FD7E14'
-                +thing_picker model='skills' icon='wrench' color='ff0000'
-                //red
-                +thing_picker model='badges' icon='badge' color='1255B8'
-                //blue
-                div
-                +thing_picker model='datetime' icon='overtime--v1' color='FD7E14'
-                +thing_picker model='location' icon='worldwide-location' color='40C057'
-                +thing_picker model='accounts' icon='gold-bars' color='FAB005'
-                //people
+            //     div
+            //     +thing_picker model='org' icon='groups' color='83DFF4' 
+            //     //light blue
+            //     +thing_picker model='project' icon='project' color='7229AF' 
+            //     //violet
+            //     +thing_picker model='event' icon='calendar' color='FAB005'
+            //     //yellow
+            //     +thing_picker model='role' icon='what-i-do' color='42E8C4'
+            //     //turquoise
+            //     +thing_picker model='tasks' icon='task' color='B785E1'
+            //     //lavender
+            //     +thing_picker model='resource' icon='field-and-tractor' color='FD7E14'
+            //     +thing_picker model='skills' icon='wrench' color='ff0000'
+            //     //red
+            //     +thing_picker model='badges' icon='badge' color='1255B8'
+            //     //blue
+            //     div
+            //     +thing_picker model='datetime' icon='overtime--v1' color='FD7E14'
+            //     +thing_picker model='location' icon='worldwide-location' color='40C057'
+            //     +thing_picker model='accounts' icon='gold-bars' color='FAB005'
+            //     //people
         .right.menu
             if unread_count
                 a.item.alerts.select_term(href="#" class=alert_toggle_class)

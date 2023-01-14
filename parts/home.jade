@@ -29,8 +29,9 @@ template(name='home')
                         +side_menu_item color=icon_color icon=icon label=title
             // .ui.button create request
         .bordered.scrolling(class=main_column_class)
-            .ui.one.column.grid 
+            .ui.one.column.grid                 
                 +thing_picker_template
+                +online_users
                 .centered
                     each homepage_models
                         +filter_model model=slug icon=icon color=stripped_icon_color
@@ -162,13 +163,13 @@ template(name='home_card')
 
 
 template(name='thing_picker_template')
-    // .column.bordered
-    //     .ui.top.attached.tabular.menu  
-    //         a.center.item.toggle_addmode.zoomer(data-tab='add' title='add thing')
-    //             +i name='play-button-circled--v1' color='40C057'
-    //         // .active.item(data-tab='viewing')
-    //         //     |viewing
-    //     .ui.bottom.attached.tab.segment.centered.ani(data-tab='add')
+    .column.bordered
+        .ui.top.attached.tabular.menu  
+            a.center.item.toggle_addmode.zoomer(data-tab='add' title='add thing')
+                +i name='play-button-circled--v1' color='40C057'
+            // .active.item(data-tab='viewing')
+            //     |viewing
+        .ui.bottom.attached.tab.segment.centered.ani(data-tab='add')
     //         //select type of thing you're creating >> open thing type editor modal
     //         if session_is 'addmode' true
     //                each model_docs_helper

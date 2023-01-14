@@ -5,6 +5,20 @@ if Meteor.isClient
         ), name:'home'
     
     Template.home.onCreated ->
+        # @autorun => @subscribe 'post_docs',
+        #     picked_tags.array()
+        #     Session.get('post_title_filter')
+        
+        # @autorun => @subscribe 'all_markers',->
+        
+        @autorun => @subscribe 'latest_home_docs',model_filters.array(),->
+        @autorun => @subscribe 'model_docs','model',->
+        
+        # @autorun => @subscribe 'all_users', ->
+        # @autorun => @subscribe 'post_facets',
+        #     picked_tags.array()
+        #     Session.get('post_title_filter')
+        
         # @autorun => @subscribe 'my_current_thing', ->
         @autorun => @subscribe 'my_current_thing', Session.get('current_thing_id'),->
         @autorun => @subscribe 'homepage_models',->
@@ -109,7 +123,7 @@ if Meteor.isServer
         # else 
         #     match.model = model:$in:['product','service','project','resource', 'comment','event']
         if Meteor.user()
-            if model_filters.length > 1
+            if model_filters.length > 0
                 Docs.find {model:$in: model_filters},
                     limit:Meteor.user().limit
                     sort:
@@ -179,21 +193,6 @@ if Meteor.isClient
                     return false
 
             
-    Template.home.onCreated ->
-        # @autorun => @subscribe 'post_docs',
-        #     picked_tags.array()
-        #     Session.get('post_title_filter')
-        
-        # @autorun => @subscribe 'all_markers',->
-        
-        @autorun => @subscribe 'latest_home_docs',model_filters.array(),->
-        @autorun => @subscribe 'model_docs','model',->
-        @autorun => @subscribe 'model_docs','eft',->
-        
-        # @autorun => @subscribe 'all_users', ->
-        # @autorun => @subscribe 'post_facets',
-        #     picked_tags.array()
-        #     Session.get('post_title_filter')
 
     
     
