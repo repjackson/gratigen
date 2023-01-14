@@ -1,3 +1,13 @@
+template(name='permission_settings')
+    .ui.header
+        +i name='shield'
+        |permissions
+    +multi_doc_edit key='view_roles' label='view roles' ref_model='role' direct=true
+    +multi_doc_edit key='edit_roles' label='edit roles' ref_model='role' direct=true
+
+                    
+
+
 template(name='session_key_value_edit')
     .ui.button.set_key_value(class=set_key_value_class)
         if key_value_is 'key' 'sort_key'
@@ -75,10 +85,11 @@ template(name='key_value_edit')
         if icon 
             +i name=icon cl='ui avatar image' color='FFFFFF'
             // i.large.icon(class=icon)
-        if label
-            |#{label}
-        else 
-            |#{value}
+        unless hide_label
+            if label
+                |#{label}
+            else 
+                |#{value}
             
         
 template(name='profile_key_value_edit')

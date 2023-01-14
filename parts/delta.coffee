@@ -745,7 +745,11 @@ if Meteor.isServer
             model = Docs.findOne
                 model:'model'
                 slug:model_slug
-    
+            total_count = 
+                Docs.find 
+                    model:model_slug
+            Docs.update model._id, 
+                $set: total_count:total_count
             # if model_slug is delta.model_filter
             #     return
             # else

@@ -1,14 +1,3 @@
-template(name='permission_settings')
-    .ui.header
-        +i name='shield'
-        |permissions
-    +multi_doc_edit key='view_roles' label='view roles' ref_model='role' direct=true
-    +multi_doc_edit key='edit_roles' label='edit roles' ref_model='role' direct=true
-
-                    
-                    
-        
-// adding model_edit above becaue will merge with below
 template(name='delta')
     if editing_model
         .ui.segment
@@ -112,8 +101,8 @@ template(name='delta')
                             |&nbsp;
                             |&nbsp;
                             with current_delta
-                                +key_value_edit key='view_mode' value='list' icon='list'
-                                +key_value_edit key='view_mode' value='cards' icon='th'
+                                +key_value_edit key='view_mode' value='list' icon='list' hide_label=true
+                                +key_value_edit key='view_mode' value='cards' icon='grid' hide_label=true
                             // +set_view_mode title='list' icon='list'
                             // +set_view_mode title='cards' icon='clone'
                             // .ui.inline.small.grey.header view
@@ -133,6 +122,8 @@ template(name='delta')
                     .ui.button.subscribe
                         |subscribe
                     +voting_full
+                    +print_this
+                    .ui.small.header ranking:#{ranking}
                 .thirteen.wide.column.scrolling
                     //- each current_delta.result_ids
                     //-     .ui.header #{this}
@@ -260,7 +251,14 @@ template(name='model_top')
             // i.large.icon(class=icon)
             if icon
                 +ibig name=icon color=stripped_icon_color
+            if total_count
+                small(title='total children count')
+                    |#{current_model.total_count}
             | #{current_model.title}
+            if unread_count
+                small(title='total unread count')
+                    |(#{current_model.total_count})
+                
         // i.plus.large.green.circular.link.icon.add_model_doc(title="add #{slug}")
         unless is_loading
             if currentUser
@@ -277,8 +275,9 @@ template(name='model_top')
         if current_delta
             // if is_admin
             if currentUser
+                if currentUser.admin_mode
+                    i.code.link.icon.print_delta(title='print session doc')
                 i.refresh.link.reset.grey.circular.large.icon.zoomer(title='reload session')
-                // i.code.link.icon.print_delta(title='print session doc')
                 i.trash.delete_delta.link.icon(title='delete session')
         else
             .create_delta.ui.big.green.circular.button(title='new session')
