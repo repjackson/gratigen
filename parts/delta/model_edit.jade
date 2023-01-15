@@ -28,7 +28,7 @@ template(name='model_edit')
                     +boolean_edit key='has_icon_color' label='icon color' icon='paint brush' direct=true
                     // +boolean_edit key='has_image' label='has image' direct=true
                     .ui.divider
-                    +permission_settings
+                    // +permission_settings
                     .ui.header 
                         i.large.paint.icon
                         |ux
@@ -57,6 +57,8 @@ template(name='model_edit')
                                 +slug_edit key='slug' label='slug' direct=true
                                 +icon_edit key='icon' label='icon' direct=true
                                 +color_edit key='icon_color' label='icon color' direct=true
+                                +text_edit key='color_name' label='icon name' direct=true
+                                div
                                 +text_edit key='icon_color' label='icon color hex' direct=true
                                 div
                                 +number_edit key='ranking' label='sort ranking' icon='sort' direct=true
@@ -204,7 +206,7 @@ template(name='field_edit')
             // +text_edit key='field_type_id' label='field type id' direct=true        
             // +single_doc_edit key='field_type_id' ref_model_slug='field_type' label='field type id' direct=true        
             .spacer
-            +permission_settings
+            // +permission_settings
         .spacer
         +boolean_edit key='searchable' label='searchable' icon='search' direct=true
         +boolean_edit key='faceted' label='faceted' icon='diamond' direct=true

@@ -1,13 +1,3 @@
-template(name='permission_settings')
-    .ui.header
-        +i name='shield'
-        |permissions
-    +multi_doc_edit key='view_roles' label='view roles' ref_model='role' direct=true
-    +multi_doc_edit key='edit_roles' label='edit roles' ref_model='role' direct=true
-
-                    
-
-
 template(name='session_key_value_edit')
     .ui.button.set_key_value(class=set_key_value_class)
         if key_value_is 'key' 'sort_key'
@@ -81,15 +71,14 @@ template(name='limit_menu')
 
 
 template(name='key_value_edit')
-    .ui.circular.basic.button.set_key_value(class=calculated_class title=label)
+    .ui.button.set_key_value(class=calculated_class title=label)
         if icon 
-            +i name=icon cl='ui avatar image' color='FFFFFF'
+            +i name=icon cl='ui avatar image'
             // i.large.icon(class=icon)
-        unless hide_label
-            if label
-                |#{label}
-            else 
-                |#{value}
+        if label
+            |#{label}
+        else 
+            |#{value}
             
         
 template(name='profile_key_value_edit')
@@ -205,6 +194,7 @@ template(name='viewing')
     // each read_ids
     //     +user_info
 
+
 template(name='user_info')
     with user_from_id this
         a.ui.large.link.label(href="/user/#{username}")
@@ -225,22 +215,29 @@ template(name='session_boolean_toggle')
                 |#{value}
 
 
-
-
+template(name='eft_home_picker')
+    .ui.compact.large.circular.button.toggle_eft(class=eft_button_class)
+        // with ../
+        if icon
+            +i name=icon cl='ui image' color=stripped_icon_color
+        // if icon_view
+        // i.icon(class=icon)
+        // else
+        |#{title}
+                
 template(name='session_set')
     .ui.compact.large.circular.button.set_session_value(class=calculated_class)
         // with ../
         if icon
-            +i name=icon cl='ui avatar image' color=color
-        // if icon_view 
+            +i name=icon cl='ui image' color=color
+        // if icon_view
         // i.icon(class=icon)
-        // else 
+        // else
         |#{title}
                 
                 
-                
 template(name='set_sort_key')
-    .ui.circular.button.set_sort(class=sort_button_class)
+    .ui.circular.compact.button.set_sort(class=sort_button_class)
         if color
             .ui.label(class=color) #{label}
         else 

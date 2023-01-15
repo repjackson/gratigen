@@ -19,27 +19,26 @@ template(name='side_menu_item')
 
            
 template(name='dash_user_info') 
-    unless session_is 'expand_leftbar' true
+        // unless session_is 'expand_leftbar' true
+        img.ui.tiny.circular.image.centered(src="{{c.url currentUser.image_id width=600 height=600 gravity='face' crop='fill'}}")
         .ui.header.centered
             | #{currentUser.username}
-        img.ui.tiny.circular.image.centered(src="{{c.url currentUser.image_id width=600 height=600 gravity='face' crop='fill'}}")
         .ui.small
             | #{currentUser.points}pts
-        
         .ui.header
             | #{currentUser.tagline}
-    else     
-        a.ui.two.column.grid.zoomer(href="/user/#{currentUser.username}")
-            .column
-                img.ui.small.circular.image(src="{{c.url currentUser.image_id width=600 height=600 gravity='face' crop='fill'}}")
-            .column
-                .ui.header
-                    | #{currentUser.username}
-                .ui.small
-                    | #{currentUser.points}pts
-            div
-                .ui.header
-                    | #{currentUser.tagline}
+    // else     
+    //     a.ui.two.column.grid.zoomer(href="/user/#{currentUser.username}")
+    //         .column
+    //             img.ui.small.circular.image(src="{{c.url currentUser.image_id width=600 height=600 gravity='face' crop='fill'}}")
+    //         .column
+    //             .ui.header
+    //                 | #{currentUser.username}
+    //             .ui.small
+    //                 | #{currentUser.points}pts
+    //         div
+    //             .ui.header
+    //                 | #{currentUser.tagline}
 
     // i.user.icon
     // .ui.inline.header #{currentUser.name}
@@ -50,7 +49,7 @@ template(name='dash_user_info')
            
            
 template(name='filter_model')
-    .ui.compact.circular.secondary.basic.button.pick_model.zoomer(class=button_class)
-        +i name=icon color=color cl='ui mini inline image'
+    .ui.circular.secondary.basic.button.pick_model.zoomer(style="border-color:##{stripped_icon_color}" class=button_class color=stripped_icon_color)
+        +i name=icon color=stripped_icon_color cl='ui image'
         // i.exchange.large.icon
-        |#{model}s
+        span.invert(style="color:##{stripped_icon_color}") #{title}

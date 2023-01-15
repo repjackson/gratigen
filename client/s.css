@@ -9,14 +9,15 @@ body {
     /*line-height: 200% !important;*/
     /*transition: all 1s ease-in-out !important;*/
 
-    filter: invert(.9) !important;
-    background: rgba(0,0,0,.9) !important; 
+    /*filter: invert(.9) !important;*/
+    background: rgba(0,0,0,.1) !important; 
     /* background: rgba(200, 200, 200, .2) !important */
     /* background: #0e0e44 !important; */
 }
 
 
 .leftbar {
+  border-radius: 20px !important;
   width: 100%;
   position: absolute;
   top: 50px !important;
@@ -97,7 +98,7 @@ body {
 
 
 .image, .segment, .card, .button, .nav, .item, .header { 
-  animation: fadeIn 2s !important; 
+  animation: fadeIn 1s !important; 
 }
 
 .ui.header{
@@ -160,9 +161,9 @@ body {
   margin: 5px !important;
 }
 
-.invert, .ui.image {
-  filter: invert(1) !important;
-}
+/*.invert {*/
+/*  filter: invert(1) !important;*/
+/*}*/
 
 .hscroll{
 	overflow-y:hidden;

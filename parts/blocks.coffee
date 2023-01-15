@@ -756,9 +756,9 @@ if Meteor.isClient
             if @cl
                 res += @cl
             if Session.equals(@key,@value)
-                res += ' blue'
+                res += ' large'
             else 
-                res += ' '
+                res += ' basic'
             # console.log res
             res
 
@@ -830,9 +830,9 @@ if Meteor.isClient
                 response += @cl
             # if Session.equals(@key,@value)
             if user["#{@key}"]  is @value
-                response += ' blue large'
+                response += ' large'
             else 
-                response += ' inverted tertiary'
+                response += ' inverted basic tertiary'
             # console.log response
             response
 

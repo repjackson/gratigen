@@ -193,13 +193,34 @@ if Meteor.isClient
                     return false
 
             
-
+    @picked_efts = new ReactiveArray []
+    
+    
+    Template.eft_home_picker.helpers
+        eft_button_class:->
+            if @title in picked_efts.array()
+                'basic'
+            else 
+                'small seconary'
+            # if Session.equals('current_model_filter',@model) then 'blue large' else 'small'
+            # if  @model in Meteor.user().current_model_filters then 'blue big' else 'small basic'
+    Template.eft_home_picker.events
+        'click .toggle_eft': ->
+            # Session.set('current_model_filter',@model)
+            if @title in picked_efts.array()
+                picked_efts.remove @title 
+            else 
+                picked_efts.push @title 
+            console.log picked_efts.array()
+    
+    
     
     
     Template.filter_model.helpers
         button_class:->
-            if @model in model_filters.array()
-                'blue'
+            if @slug in model_filters.array()
+                "#{@color_name}"
+                # "blue"
             else 
                 'small secondary'
             # if Session.equals('current_model_filter',@model) then 'blue large' else 'small'
@@ -207,10 +228,10 @@ if Meteor.isClient
     Template.filter_model.events
         'click .pick_model': ->
             # Session.set('current_model_filter',@model)
-            if @model in model_filters.array()
-                model_filters.remove @model 
+            if @slug in model_filters.array()
+                model_filters.remove @slug 
             else 
-                model_filters.push @model 
+                model_filters.push @slug 
                 
             # # if @model in Meteor.user().current_model_filters 
             # if @model in Meteor.user().current_model_filters 
