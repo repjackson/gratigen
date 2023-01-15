@@ -4,6 +4,19 @@
 
 @current_markers = new ReactiveArray []
 
+
+Router.route '/add', (->
+    @layout 'layout'
+    @render 'add'
+    ), name:'add'
+
+Template.add_model_doc_button.events 
+    'click .add_model_doc': ->
+        new_id = 
+            Docs.insert 
+                model:@slug 
+        Router.go "/m/#{@slug}/#{new_id}/edit"
+
 Tracker.autorun ->
     current = Router.current()
     Tracker.afterFlush ->
@@ -99,10 +112,10 @@ Template.layout.events
     #     .transition('fade in', 5000)
 
 
-# Tracker.autorun ->
-#     current = Router.current()
-#     Tracker.afterFlush ->
-#         $(window).scrollTop 0
+Tracker.autorun ->
+    current = Router.current()
+    Tracker.afterFlush ->
+        $(window).scrollTop 0
 
 
 # Stripe.setPublishableKey Meteor.settings.public.stripe_publishable
