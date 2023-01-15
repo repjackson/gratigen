@@ -1,7 +1,7 @@
 template(name='nav')
     // https://fomantic-ui.com/elements/icon.html#/icon
     //#topnav.topnav
-    #topnav.ui.attached.borderless.big.menu.topnav.hscroll(class=invert_class)
+    #topnav.ui.attached.borderless.menu.topnav.hscroll.ani(class=invert_class)
         a.header.image.item.zoomer(href='/' class="{{isActivePath '/'}}" title='gratihome')
             if is_loading
                 .icon.item
@@ -76,15 +76,17 @@ template(name='nav')
                 a.icon.item(href="/inbox" class="{{isActiveRoute 'inbox'}}")
                     i.large.outline.bell.icon
             a.item.zoomer(href="/chat" class="{{isActiveRoute 'chat'}}")
-                i.large.chat.icon
-                // +i name='chat' color='blue'
-
+                if unread_chat_messages
+                    i.large.teal.chat.icon
+                    small #{unread_chat_messages.count}
+                else 
+                    i.large.chat.outline.icon
             if currentUser
                 // a.item(href='/user/#{currentUser.username}/credit' class="{{isActiveRoute 'user_credit'}}" title='current wallet balance')
                 a.item(href="/user/#{currentUser.username}/credit" class="{{isActiveRoute regex='user_credit'}}" title='your credits')
-                    strong
-                        |&nbsp;
-                        |#{currentUser.points}p
+                    i.coins.yellow.icon.invert
+                    |&nbsp;
+                    |#{currentUser.points}p
                 a.item(href="/user/#{currentUser.username}" class=user_nav_button_class title=user_nav_button_title)
                     if currentUser.image_id
                         img.ui.avatar.image(src="{{c.url currentUser.image_id width=200 height=200 gravity='face' crop='fill'}}")
@@ -101,7 +103,7 @@ template(name='nav')
                 //     i.bars.large.grey.icon
             unless subs_ready
                 .icon.item
-                    i.yin.yang.large.loading.icon
+                    i.fork.large.loading.icon
             unless currentUser
                 a.item(href="/register" title='register')
                     +i name='plus'
@@ -143,10 +145,12 @@ template(name='secnav')
         //                 .item post
         //                 .item model
         each model_docs_helper 'model'
-           a.item.zoomer(href="/m/#{slug}")
+           a.item.zoomer(href="/m/#{slug}" title=ranking)
                 // i.large.inbox.icon
                 +i name=icon color=stripped_icon_color cl='ui avatar image zoomer'
-                span.mobile.hidden #{title}
+                span.mobile.hidden 
+                    small #{total_count}
+                    |#{title}
                  
 template(name='nav_item')
     a.item.zoomer(href="{{route}}" class="{{isActiveRoute route }}")

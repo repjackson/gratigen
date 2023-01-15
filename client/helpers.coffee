@@ -33,7 +33,7 @@ Template.registerHelper 'model_docs_helper', (model) ->
     # if limit 
     #     Docs.find {model:model}, {limit:limit}
     # else 
-    Docs.find {model:model}
+    Docs.find {model:model}, {sort:ranking:1}
 Template.registerHelper 'subs_ready', () -> 
     Template.instance().subscriptionsReady()
 

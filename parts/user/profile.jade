@@ -114,7 +114,7 @@ template(name='profile_layout')
 template(name='profile_link')
     a.ui.compact.circular.button(href="/user/#{current_user.username}/#{route}" class="{{isActiveRoute 'user_dashboard'}}" title="#{current_user.username} dashboard")
         // i.dashboard.icon
-        +i name=icon color=color
+        +i name=icon color='white' cl='ui avatar image'
         span.mobile.hidden #{route}
 
 

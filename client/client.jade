@@ -45,8 +45,9 @@ head
     // script(src='https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.js')
     // link(href='https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.css' rel='stylesheet')
     
-    script(src='https://api.mapbox.com/mapbox-gl-js/v2.11.0/mapbox-gl.js')
-    link(href='https://api.mapbox.com/mapbox-gl-js/v2.11.0/mapbox-gl.css' rel='stylesheet')
+    // this one
+    // script(src='https://api.mapbox.com/mapbox-gl-js/v2.11.0/mapbox-gl.js')
+    // link(href='https://api.mapbox.com/mapbox-gl-js/v2.11.0/mapbox-gl.css' rel='stylesheet')
     
     // script(src='https://api.mapbox.com/mapbox-gl-js/v2.6.0/mapbox-gl.js')
     // link(href='https://api.mapbox.com/mapbox-gl-js/v2.6.0/mapbox-gl.css' rel='stylesheet')
@@ -69,9 +70,16 @@ head
         
         gtag('config', 'G-GLYPPRGJFQ');
 
-    
+    script.
+        $(window).on("load",function(){
+            $(".loader-wrapper").fadeOut("slow");
+        });
+
     
 template(name='layout')
+    .loader-wrapper
+        span.loader
+            span.loader-inner
     +nav
     // img.ui.fluid.image.home_banner(src="{{c.url 'frontrange'}}" class=darkmode_class)
     // #main.ui.bottom.attached.pushable.segment
