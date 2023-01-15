@@ -15,6 +15,37 @@ body {
     /* background: #0e0e44 !important; */
 }
 
+
+.leftbar {
+  width: 100%;
+  position: absolute;
+  top: 50px !important;
+  left: 0;
+  z-index: 10;
+  transition: width 1s ease-in-out;
+	overflow-y:scroll;
+	overflow-x:hidden;
+	max-height:500px;
+  filter: drop-shadow(10px 10px 10px rgba(250,250,250, 0.5)) !important;
+  box-shadow: 10px 5px 5px red !important;
+}
+.rightbar {
+  width: 100%;
+  /*height: 100%;*/
+  position: absolute;
+  top: 50px !important;
+  right: 0;
+  z-index: 10;
+  transition: width 1s ease-in-out;
+	overflow-y:scroll;
+	overflow-x:hidden;
+	max-height:500px;
+  filter: drop-shadow(10px 10px 10px rgba(250,250,250, 0.5)) !important;
+  box-shadow: 10px 5px 5px red !important;
+}
+
+
+
 .loader-wrapper {
   width: 100%;
   height: 100%;
@@ -134,7 +165,7 @@ body {
 }
 
 .hscroll{
-	/*overflow-y:hidden;*/
+	overflow-y:hidden;
 	overflow-x:scroll;
 	/*max-height:700px;*/
 	/*max-height:85vh;*/

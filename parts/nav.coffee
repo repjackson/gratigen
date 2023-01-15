@@ -29,44 +29,44 @@ if Meteor.isClient
             #     })
             #     .sidebar('attach events', '.toggle_leftbar')
         , 3000
-        Meteor.setTimeout ->
-            $('.item')
-                .popup()
-            $('.ui.left.sidebar')
-                .sidebar({
-                    context: $('.bottom.segment')
-                    transition:'push'
-                    mobileTransition:'push'
-                    exclusive:true
-                    duration:200
-                    scrollLock:true
-                })
-                .sidebar('attach events', '.toggle_leftbar')
-        , 3000
-        Meteor.setTimeout ->
-            $('.ui.rightbar')
-                .sidebar({
-                    context: $('.bottom.segment')
-                    transition:'push'
-                    mobileTransition:'push'
-                    exclusive:true
-                    duration:200
-                    scrollLock:true
-                })
-                .sidebar('attach events', '.toggle_rightbar')
-        , 3000
-        Meteor.setTimeout ->
-            $('.ui.topbar')
-                .sidebar({
-                    context: $('.bottom.segment')
-                    transition:'push'
-                    mobileTransition:'push'
-                    exclusive:true
-                    duration:200
-                    scrollLock:true
-                })
-                .sidebar('attach events', '.toggle_topbar')
-        , 2000
+        # Meteor.setTimeout ->
+        #     $('.item')
+        #         .popup()
+        #     $('.ui.left.sidebar')
+        #         .sidebar({
+        #             context: $('.bottom.segment')
+        #             transition:'push'
+        #             mobileTransition:'push'
+        #             exclusive:true
+        #             duration:200
+        #             scrollLock:true
+        #         })
+        #         .sidebar('attach events', '.toggle_leftbar')
+        # , 3000
+        # Meteor.setTimeout ->
+        #     $('.ui.rightbar')
+        #         .sidebar({
+        #             context: $('.bottom.segment')
+        #             transition:'push'
+        #             mobileTransition:'push'
+        #             exclusive:true
+        #             duration:200
+        #             scrollLock:true
+        #         })
+        #         .sidebar('attach events', '.toggle_rightbar')
+        # , 3000
+        # Meteor.setTimeout ->
+        #     $('.ui.topbar')
+        #         .sidebar({
+        #             context: $('.bottom.segment')
+        #             transition:'push'
+        #             mobileTransition:'push'
+        #             exclusive:true
+        #             duration:200
+        #             scrollLock:true
+        #         })
+        #         .sidebar('attach events', '.toggle_topbar')
+        # , 2000
         
         
     Template.nav.events
@@ -132,6 +132,26 @@ if Meteor.isClient
                     invert_mode:!Meteor.user().invert_mode
             Session.set('invert_mode', !Session.get('invert_mode'))
             console.log Session.get('invert_mode')
+        
+        'click .toggle_leftbar': ->
+            console.log Meteor.user().show_leftbar
+            Meteor.users.update Meteor.userId(),
+                $set:
+                    show_leftbar:!Meteor.user().show_leftbar
+        'click .toggle_rightbar': ->
+            console.log Meteor.user().show_rightbar
+            Meteor.users.update Meteor.userId(),
+                $set:
+                    show_rightbar:!Meteor.user().show_rightbar
+            # Session.set('invert_mode', !Session.get('invert_mode'))
+            # console.log Session.get('invert_mode')
+    Template.leftbar_item.events
+        'click .close_leftbar': ->
+            console.log Meteor.user().show_leftbar
+            Meteor.users.update Meteor.userId(),
+                $set:show_leftbar:false
+            # Session.set('invert_mode', !Session.get('invert_mode'))
+            # console.log Session.get('invert_mode')
         
     Template.toggle_nav_item.events 
         'click .toggle': ->
