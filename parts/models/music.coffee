@@ -4,21 +4,6 @@ if Meteor.isClient
     @picked_styles = new ReactiveArray []
     @picked_moods = new ReactiveArray []
     @picked_genres = new ReactiveArray []
-    Router.route '/music/', (->
-        @layout 'layout'
-        @render 'music'
-        ), name:'music'
-    
-    Router.route '/music/artist/:doc_id', (->
-        @layout 'layout'
-        @render 'music_artist'
-        ), name:'music_artist'
-    Router.route '/music/album/:doc_id', (->
-        @layout 'layout'
-        @render 'album_view'
-        ), name:'album_view'
-    
-    
     Template.music.onCreated ->
         document.title = 'gr music'
     Template.music.onCreated ->
@@ -34,11 +19,11 @@ if Meteor.isServer
 
 if Meteor.isClient                          
     Template.music_artist.onCreated ->
-        @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
-        @autorun => Meteor.subscribe 'albums_by_artist_doc_id', Router.current().params.doc_id, ->
+        @autorun => Meteor.subscribe 'doc_by_id', Template.parentData().doc_id, ->
+        @autorun => Meteor.subscribe 'albums_by_artist_doc_id', Template.parentData().doc_id, ->
     Template.album_view.onCreated ->
-        @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
-        @autorun => Meteor.subscribe 'tracks_by_album_doc_id', Router.current().params.doc_id, ->
+        @autorun => Meteor.subscribe 'doc_by_id', Template.parentData().doc_id, ->
+        @autorun => Meteor.subscribe 'tracks_by_album_doc_id', Template.parentData().doc_id, ->
 
 if Meteor.isServer 
     Meteor.publish 'albums_by_artist_doc_id', (artist_doc_id)->
@@ -64,7 +49,7 @@ if Meteor.isClient
     Template.album_view.events 
         'click .pull_tracks': -> 
             console.log 'pulling tracks'
-            Meteor.call 'pull_album_tracks', Router.current().params.doc_id, ()->
+            Meteor.call 'pull_album_tracks', Template.parentData().doc_id, ()->
                 console.log 'pulled'
         
     Template.music_artist.helpers
@@ -72,15 +57,15 @@ if Meteor.isClient
             Docs.find 
                 model:'album'
         current_artist: ->
-            Docs.findOne Router.current().params.doc_id
+            Docs.findOne Template.parentData().doc_id
     Template.album_view.helpers
         album_track_docs: ->
             Docs.find 
                 model:'track'
         current_album: ->
-            Docs.findOne Router.current().params.doc_id
+            Docs.findOne Template.parentData().doc_id
     Template.music_artist.onRendered ->
-        Meteor.call 'log_view', Router.current().params.doc_id, ->
+        Meteor.call 'log_view', Template.parentData().doc_id, ->
         Meteor.setTimeout ->
             $().popup(
                 inline: true
@@ -370,7 +355,7 @@ if Meteor.isClient
 
     Template.music_artist.events
         'click .pull_albums': ->
-            current_artist = Docs.findOne Router.current().params.doc_id
+            current_artist = Docs.findOne Template.parentData().doc_id
             console.log 'pulling', current_artist.strArtist
             Meteor.call 'pull_artist_albums', current_artist.strArtist, ->
         'click .pick_mood': ->

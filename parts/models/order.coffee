@@ -2,7 +2,7 @@ if Meteor.isClient
     Template.order.events
         'click .mark_viewed': ->
             # if confirm 'mark viewed?'
-            Docs.update Router.current().params.doc_id, 
+            Docs.update Template.parentData().doc_id, 
                 $set:
                     runner_viewed: true
                     runner_viewed_timestamp: Date.now()
@@ -11,7 +11,7 @@ if Meteor.isClient
       
         'click .mark_preparing': ->
             # if confirm 'mark mark_preparing?'
-            Docs.update Router.current().params.doc_id, 
+            Docs.update Template.parentData().doc_id, 
                 $set:
                     preparing: true
                     preparing_timestamp: Date.now()
@@ -19,7 +19,7 @@ if Meteor.isClient
        
         'click .mark_prepared': ->
             # if confirm 'mark prepared?'
-            Docs.update Router.current().params.doc_id, 
+            Docs.update Template.parentData().doc_id, 
                 $set:
                     prepared: true
                     prepared_timestamp: Date.now()
@@ -27,7 +27,7 @@ if Meteor.isClient
      
         'click .mark_arrived': ->
             # if confirm 'mark arrived?'
-            Docs.update Router.current().params.doc_id, 
+            Docs.update Template.parentData().doc_id, 
                 $set:
                     arrived: true
                     arrived_timestamp: Date.now()
@@ -35,7 +35,7 @@ if Meteor.isClient
         
         'click .mark_delivering': ->
             # if confirm 'mark delivering?'
-            Docs.update Router.current().params.doc_id, 
+            Docs.update Template.parentData().doc_id, 
                 $set:
                     delivering: true
                     delivering_timestamp: Date.now()
@@ -43,7 +43,7 @@ if Meteor.isClient
       
         'click .mark_delivered': ->
             # if confirm 'mark delivered?'
-            Docs.update Router.current().params.doc_id, 
+            Docs.update Template.parentData().doc_id, 
                 $set:
                     delivered: true
                     delivered_timestamp: Date.now()
@@ -59,7 +59,7 @@ if Meteor.isClient
             if confirm 'mark ready?'
                 Docs.insert 
                     model:'order_event'
-                    order_id: Router.current().params.doc_id
+                    order_id: Template.parentData().doc_id
                     order_status:'ready'
 
 
@@ -121,11 +121,11 @@ if Meteor.isClient
     Template.user_order_item.onCreated ->
         # @autorun => Meteor.subscribe 'product_from_order_id', @data._id
     Template.user_orders.onCreated ->
-        @autorun => Meteor.subscribe 'user_orders', Router.current().params.username
+        @autorun => Meteor.subscribe 'user_orders', Template.parentData().username
         @autorun => Meteor.subscribe 'model_docs', 'product'
     Template.user_orders.helpers
         orders: ->
-            current_user = Meteor.users.findOne username:Router.current().params.username
+            current_user = Meteor.users.findOne username:Template.parentData().username
             Docs.find {
                 model:'order'
             }, sort:_timestamp:-1

@@ -2,8 +2,6 @@
 
 # # # # @picked_tags = new ReactiveArray []
 
-# # Router.route '/map2', -> @render 'map2'
-# # Router.route '/mapgl', -> @render 'mapgl'
 # # @current_markers = new ReactiveArray []
 
 # # # # @onpush = (event)->

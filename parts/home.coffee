@@ -1,9 +1,4 @@
 if Meteor.isClient
-    Router.route '/', (->
-        @layout 'layout'
-        @render 'home'
-        ), name:'home'
-    
     Template.home.onCreated ->
         # @autorun => @subscribe 'post_docs',
         #     picked_tags.array()
@@ -185,7 +180,7 @@ if Meteor.isClient
     Template.home_card.helpers 
         model_card_template: -> "#{@model}_card"
         card_template_exists: ->
-            # current_model = Router.current().params.model_slug
+            # current_model = Template.parentData().model_slug
             if @model
                 if Template["#{@model}_card"]
                     return true

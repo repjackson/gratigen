@@ -5,11 +5,6 @@
 @current_markers = new ReactiveArray []
 
 
-Router.route '/add', (->
-    @layout 'layout'
-    @render 'add'
-    ), name:'add'
-
 Template.add_model_doc_button.events 
     'click .add_model_doc': ->
         new_id = 

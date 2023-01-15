@@ -1,6 +1,4 @@
 if Meteor.isClient
-    Router.route '/users', -> @render 'users'
-
     Template.users.onCreated ->
         Session.setDefault 'view_mode', 'cards', ->
         # @autorun -> Meteor.subscribe('users')

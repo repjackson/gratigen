@@ -1,6 +1,4 @@
 if Meteor.isClient
-    Router.route '/login', -> @render 'login'
-    
     Template.login.onCreated ->
         Session.set 'username', null
 
@@ -78,13 +76,6 @@ if Meteor.isClient
         
         
 if Meteor.isClient
-    Router.route '/register', (->
-        @layout 'layout'
-        @render 'register'
-        ), name:'register'
-
-
-
     Template.register.onCreated ->
         Session.setDefault 'email', null
         Session.setDefault 'email_status', 'invalid'

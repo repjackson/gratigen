@@ -1,14 +1,9 @@
 if Meteor.isClient
-    Router.route '/inbox', (->
-        @layout 'layout'
-        @render 'inbox'
-        ), name:'inbox'
-
     Template.inbox.onCreated ->
-        @autorun -> Meteor.subscribe 'user_model_docs', 'message', Router.current().params.username
+        @autorun -> Meteor.subscribe 'user_model_docs', 'message', Template.parentData().username
         @autorun => Meteor.subscribe 'my_received_messages'
         @autorun => Meteor.subscribe 'my_sent_messages'
-        # @autorun => Meteor.subscribe 'inbox', Router.current().params.username
+        # @autorun => Meteor.subscribe 'inbox', Template.parentData().username
         @autorun => Meteor.subscribe 'model_docs', 'stat'
 
     Template.inbox.events
@@ -22,7 +17,7 @@ if Meteor.isClient
 
     Template.inbox.helpers
         my_sent_messages: ->
-            current_user = Meteor.users.findOne(username:Router.current().params.username)
+            current_user = Meteor.users.findOne(username:Template.parentData().username)
             Docs.find {
                 model:'message'
                 _author_id: Meteor.userId()
@@ -31,7 +26,7 @@ if Meteor.isClient
                 sort:_timestamp:-1
 
         my_received_messages: ->
-            current_user = Meteor.users.findOne(username:Router.current().params.username)
+            current_user = Meteor.users.findOne(username:Template.parentData().username)
             Docs.find {
                 model:'message'
                 recipient_id: Meteor.userId()

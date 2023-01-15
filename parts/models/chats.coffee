@@ -181,8 +181,6 @@ if Meteor.isServer
         
         
 if Meteor.isClient
-    Router.route '/chat', -> @render 'view_chats'
-
     @selected_theme_tags = new ReactiveArray []
     @selected_participant_ids = new ReactiveArray []
     Template.view_chats.onCreated ->
@@ -253,7 +251,7 @@ if Meteor.isClient
 
 
         # subscribed: ->
-        #     @_id in Docs.findOne(Router.current().params._id).subscribers
+        #     @_id in Docs.findOne(Template.parentData()._id).subscribers
 
 
     Template.chat_messages_pane.onCreated ->

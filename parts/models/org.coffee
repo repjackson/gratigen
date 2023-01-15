@@ -1,9 +1,4 @@
 if Meteor.isClient
-    Router.route '/org/:doc_id', (->
-        @layout 'org_layout'
-        @render 'org_view'
-        ), name:'org_view'
-    
     Template.orgs_small.onCreated ->
         @autorun => Meteor.subscribe 'model_docs', 'org', ->
     Template.orgs_small.helpers
@@ -18,11 +13,11 @@ if Meteor.isClient
         # current_org: ->
         #     Docs.findOne
         #         model:'org'
-        #         slug: Router.current().params.doc_id
+        #         slug: Template.parentData().doc_id
 
     Template.org_view.events
         'click .refresh_org_stats': ->
-            Meteor.call 'calc_org_stats', Router.current().params.doc_id, ->
+            Meteor.call 'calc_org_stats', Template.parentData().doc_id, ->
         'click .join': ->
             if Meteor.userId()
                 Docs.update @_id, 
@@ -48,7 +43,7 @@ if Meteor.isClient
         'click .add_option': ->
             Docs.insert
                 model:'org_option'
-                ballot_id: Router.current().params.doc_id
+                ballot_id: Template.parentData().doc_id
     Template.org_edit.helpers
         options: ->
             Docs.find
@@ -213,47 +208,39 @@ if Meteor.isClient
     #     self.ready()
 
 
-# Router.route '/org/:doc_id/', (->
-#     @render 'org_view'
-#     ), name:'org_view'
-# Router.route '/org/:doc_id/edit', (->
-#     @render 'org_edit'
-#     ), name:'org_edit'
-
-
 if Meteor.isClient
     Template.org_history.onCreated ->
-        @autorun => Meteor.subscribe 'children', 'log_event', Router.current().params.doc_id
+        @autorun => Meteor.subscribe 'children', 'log_event', Template.parentData().doc_id
     Template.org_history.helpers
         org_events: ->
             Docs.find
                 model:'log_event'
-                parent_id:Router.current().params.doc_id
+                parent_id:Template.parentData().doc_id
 
 
     Template.org_subscription.onCreated ->
-        # @autorun => Meteor.subscribe 'children', 'log_event', Router.current().params.doc_id
+        # @autorun => Meteor.subscribe 'children', 'log_event', Template.parentData().doc_id
     Template.org_subscription.events
         'click .subscribe': ->
             Docs.insert
                 model:'log_event'
                 log_type:'subscribe'
-                parent_id:Router.current().params.doc_id
+                parent_id:Template.parentData().doc_id
                 text: "#{Meteor.user().username} subscribed to org order."
 
 
     Template.org_reservations.onCreated ->
-        @autorun => Meteor.subscribe 'org_reservations', Router.current().params.doc_id
+        @autorun => Meteor.subscribe 'org_reservations', Template.parentData().doc_id
     Template.org_reservations.helpers
         reservations: ->
             Docs.find
                 model:'reservation'
-                org_id: Router.current().params.doc_id
+                org_id: Template.parentData().doc_id
     Template.org_reservations.events
         'click .new_reservation': ->
             Docs.insert
                 model:'reservation'
-                org_id: Router.current().params.doc_id
+                org_id: Template.parentData().doc_id
 
 
 if Meteor.isServer
@@ -284,7 +271,7 @@ if Meteor.isServer
 
 if Meteor.isClient
     Template.user_orgs.onCreated ->
-        @autorun => Meteor.subscribe 'user_orgs', Router.current().params.username
+        @autorun => Meteor.subscribe 'user_orgs', Template.parentData().username
     Template.user_orgs.events
         'click .add_org': ->
             new_id =
@@ -294,7 +281,7 @@ if Meteor.isClient
 
     Template.user_orgs.helpers
         orgs: ->
-            current_user = Meteor.users.findOne username:Router.current().params.username
+            current_user = Meteor.users.findOne username:Template.parentData().username
             Docs.find {
                 model:'org'
                 _author_id: current_user._id

@@ -1,9 +1,6 @@
 # if Meteor.isClient
 #     # # @picked_tags = new ReactiveArray []
     
-#     Router.route '/map', -> @render 'map'
-#     # Router.route '/map', -> @render 'localmap'
-#     # Router.route '/map2', -> @render 'map2'
 #     @current_markers = new ReactiveArray []
     
 #     # # @onpush = (event)->

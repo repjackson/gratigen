@@ -71,7 +71,7 @@ if Meteor.isClient
         
     Template.nav.events
         'click .reset': ->
-            # model_slug =  Router.current().params.model_slug
+            # model_slug =  Template.parentData().model_slug
             Session.set 'loading', true
             Meteor.call 'set_facets', @slug, true, ->
                 Session.set 'loading', false

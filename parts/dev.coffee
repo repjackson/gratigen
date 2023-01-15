@@ -1,9 +1,4 @@
 if Meteor.isClient
-    Router.route '/dev', (->
-        @layout 'layout'
-        @render 'dev'
-        ), name:'dev'
-    
     Template.dev.onCreated ->
         # @autorun => @subscribe 'my_current_thing', ->
         @autorun => @subscribe 'my_current_thing', Session.get('current_thing_id'),->

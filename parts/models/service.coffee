@@ -1,6 +1,6 @@
 if Meteor.isClient
     Template.user_services.onCreated ->
-        @autorun => Meteor.subscribe 'user_services', Router.current().params.username, ->
+        @autorun => Meteor.subscribe 'user_services', Template.parentData().username, ->
     Template.user_services.helpers
         service_docs: ->
             Docs.find {

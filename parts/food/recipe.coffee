@@ -64,13 +64,13 @@ if Meteor.isClient
     
     Template.recipe_page.onRendered ->
         # console.log @
-        found_doc = Docs.findOne Router.current().params.doc_id
+        found_doc = Docs.findOne Template.parentData().doc_id
         if found_doc 
             unless found_doc.watson
-                Meteor.call 'call_watson',Router.current().params.doc_id,'content','html', ->
+                Meteor.call 'call_watson',Template.parentData().doc_id,'content','html', ->
                     console.log 'autoran watson'
             unless found_doc.details 
-                Meteor.call 'recipe_details', Router.current().params.doc_id, ->
+                Meteor.call 'recipe_details', Template.parentData().doc_id, ->
                     console.log 'pulled recipe details'
     # Template.recipe_card.onRendered ->
     # Template.recipe_card. ->

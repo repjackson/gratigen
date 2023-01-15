@@ -1,17 +1,10 @@
 if Meteor.isClient
-    Router.route '/redditors', -> @render 'redditors'
     @picked_porn_tags = new ReactiveArray []
     Template.redditor_item.onCreated ->
         @autorun => Meteor.subscribe 'redditor_groups_small', @data.redditor_name, -> 
         
-        
-    Router.route '/u/:name', (->
-        @layout 'layout'
-        @render 'redditor_view'
-        ), name:'redditor_view'
-        
     Template.redditor_view.onCreated ->
-        @autorun => @subscribe 'redditor_by_name', Router.current().params.name, ->
+        @autorun => @subscribe 'redditor_by_name', Template.parentData().name, ->
     Template.redditor_view.helpers
         current_redditor: ->
             Docs.findOne 
@@ -87,16 +80,16 @@ if Meteor.isClient
                   hideDuration : 250
                 })
     Template.redditor_view.onCreated ->
-        @autorun => @subscribe 'redditor_posts', Router.current().params.name, ->
+        @autorun => @subscribe 'redditor_posts', Template.parentData().name, ->
     Template.redditor_view.helpers
         user_post_docs: ->
             Docs.find
                 model:'reddit'
     Template.redditor_view.events
         'click .calc_redditor_stats': ->
-            Meteor.call 'calc_redditor_stats', Router.current().params.name, ->
+            Meteor.call 'calc_redditor_stats', Template.parentData().name, ->
         'click .get_user_posts': ->
-            Meteor.call 'get_user_posts', Router.current().params.name, ->
+            Meteor.call 'get_user_posts', Template.parentData().name, ->
         'click .pick_flat_tag': ->
             picked_user_tags.clear()
             picked_user_tags.push @valueOf()

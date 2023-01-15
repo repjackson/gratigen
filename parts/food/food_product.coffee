@@ -1,13 +1,4 @@
 if Meteor.isClient
-    Router.route '/food_products/', (->
-        @layout 'layout'
-        @render 'food_products'
-        ), name:'food_products'
-    Router.route '/food_product/:doc_id', (->
-        @layout 'layout'
-        @render 'food_product_page'
-        ), name:'food_product_page'
-        
     @picked_food_product_tags = new ReactiveArray()
     
     
@@ -111,7 +102,7 @@ if Meteor.isClient
                 Session.set('searching', false)
     
     Template.food_product_page.onCreated ->
-        @autorun => @subscribe 'doc_by_id', Router.current().params.doc_id, ->
+        @autorun => @subscribe 'doc_by_id', Template.parentData().doc_id, ->
     Template.food_products.onCreated ->
         document.title = 'gr food_product'
         
@@ -128,13 +119,13 @@ if Meteor.isClient
 
     Template.food_product_page.onRendered ->
         # console.log @
-        found_doc = Docs.findOne Router.current().params.doc_id
+        found_doc = Docs.findOne Template.parentData().doc_id
         if found_doc 
             unless found_doc.watson
-                Meteor.call 'call_watson',Router.current().params.doc_id,'content','html', ->
+                Meteor.call 'call_watson',Template.parentData().doc_id,'content','html', ->
                     console.log 'autoran watson'
             unless found_doc.details 
-                Meteor.call 'recipe_details', Router.current().params.doc_id, ->
+                Meteor.call 'recipe_details', Template.parentData().doc_id, ->
                     console.log 'pulled recipe details'
     # Template.food_product_card.onRendered ->
     # Template.food_product_card. ->

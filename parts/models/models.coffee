@@ -9,11 +9,6 @@ if Meteor.isServer
 
 
 if Meteor.isClient
-    # Router.route '/e/:doc_slug/', (->
-    #     @layout 'layout'
-    #     @render 'event_view'
-    #     ), name:'event_view_by_slug'
-        
     Template.registerHelper 'facilitator', () ->    
         Meteor.users.findOne @facilitator_id
     Template.registerHelper 'fac', () ->    
@@ -59,7 +54,7 @@ if Meteor.isClient
         Docs.find 
             model:'order'
             order_type:'ticket_purchase'
-            event_id: Router.current().params.doc_id
+            event_id: Template.parentData().doc_id
 
 
     Template.event_view.onCreated ->
@@ -166,7 +161,7 @@ if Meteor.isServer
         #
         #
         #
-        #     Docs.update Router.current().params.doc_id,
+        #     Docs.update Template.parentData().doc_id,
         #         $set:
         #             submitted:true
 
@@ -178,9 +173,9 @@ if Meteor.isServer
 
 
     Template.ticket_view.onCreated ->
-        @autorun => Meteor.subscribe 'event_from_ticket_id', Router.current().params.doc_id
-        @autorun => Meteor.subscribe 'author_from_doc_id', Router.current().params.doc_id
-        @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
+        @autorun => Meteor.subscribe 'event_from_ticket_id', Template.parentData().doc_id
+        @autorun => Meteor.subscribe 'author_from_doc_id', Template.parentData().doc_id
+        @autorun => Meteor.subscribe 'doc', Template.parentData().doc_id
         @autorun => Meteor.subscribe 'all_users'
         
     Template.ticket_view.onRendered ->
@@ -228,14 +223,9 @@ if Meteor.isServer
             
             
 if Meteor.isClient
-    Router.route '/event/:doc_id/edit', (->
-        @layout 'layout'
-        @render 'event_edit'
-        ), name:'event_edit'
-
     Template.eft_view_item.helpers 
         in_list: ()->
-            # cd = Docs.findOne Router.current().params.doc_id 
+            # cd = Docs.findOne Template.parentData().doc_id 
             @label in Template.parentData().efts
             # @label in cd.efts
     Template.eft_view_item_small.onRendered ->
@@ -245,13 +235,13 @@ if Meteor.isClient
         , 2000
     Template.eft_view_item_small.helpers 
         in_list: ()->
-            # cd = Docs.findOne Router.current().params.doc_id 
+            # cd = Docs.findOne Template.parentData().doc_id 
             if Template.parentData().efts
                 @label in Template.parentData().efts
             # @label in cd.efts
     Template.eft_picker.events 
         'click .toggle_eft': ->
-            current_doc = Docs.findOne Router.current().params.doc_id 
+            current_doc = Docs.findOne Template.parentData().doc_id 
             if current_doc.efts
                 if @label in current_doc.efts 
                     Docs.update current_doc._id,
@@ -267,13 +257,13 @@ if Meteor.isClient
                         efts:@label
     Template.eft_picker.helpers 
         toggled: -> 
-            current_doc = Docs.findOne Router.current().params.doc_id 
+            current_doc = Docs.findOne Template.parentData().doc_id 
             if current_doc.efts
                 @label in current_doc.efts
             else 
                 false
         eft_picker_class: ->
-            current_doc = Docs.findOne Router.current().params.doc_id 
+            current_doc = Docs.findOne Template.parentData().doc_id 
             if current_doc.efts
                 if @label in current_doc.efts
                     'basic'
@@ -284,7 +274,7 @@ if Meteor.isClient
 
 
     Template.event_edit.onCreated ->
-        @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id, ->
+        @autorun => Meteor.subscribe 'doc', Template.parentData().doc_id, ->
         @autorun => Meteor.subscribe 'model_docs', 'room_reservation', ->
         @autorun => Meteor.subscribe 'model_docs', 'room', ->
     Template.event_edit.onRendered ->
@@ -307,13 +297,13 @@ if Meteor.isClient
                     date:event.date
             console.log reservation_exists
             unless reservation_exists            
-                Docs.update Router.current().params.doc_id,
+                Docs.update Template.parentData().doc_id,
                     $set:
                         room_id:@_id
                         room_title:@title
 
         'click .submit': ->
-            Docs.update Router.current().params.doc_id,
+            Docs.update Template.parentData().doc_id,
                 $set:published:true
             if confirm 'confirm?'
                 Meteor.call 'send_event', @_id, =>
@@ -322,13 +312,13 @@ if Meteor.isClient
 
     Template.event_edit.helpers
         reservation_exists: ->
-            event = Docs.findOne Router.current().params.doc_id
+            event = Docs.findOne Template.parentData().doc_id
             Docs.findOne
                 model:'room_reservation'
                 # room_id:event.room_id 
                 date:event.date
         room_button_class: ->
-            event = Docs.findOne Router.current().params.doc_id
+            event = Docs.findOne Template.parentData().doc_id
             room = Docs.findOne _id:event.room_id
             reservation_exists = 
                 Docs.findOne
@@ -348,7 +338,7 @@ if Meteor.isClient
             res
     
         room_reservations: ->
-            event = Docs.findOne Router.current().params.doc_id
+            event = Docs.findOne Template.parentData().doc_id
             room = Docs.findOne _id:event.room_id
             Docs.find 
                 model:'room_reservation'
@@ -357,10 +347,10 @@ if Meteor.isClient
                 
     Template.reserve_button.helpers
         event_room: ->
-            event = Docs.findOne Router.current().params.doc_id
+            event = Docs.findOne Template.parentData().doc_id
             room = Docs.findOne _id:event.room_id
         slot_res: ->
-            event = Docs.findOne Router.current().params.doc_id
+            event = Docs.findOne Template.parentData().doc_id
             room = Docs.findOne _id:event.room_id
             Docs.findOne
                 model:'room_reservation'
@@ -384,7 +374,7 @@ if Meteor.isClient
                     Docs.remove @_id
             )
         'click .reserve_slot': ->
-            event = Docs.findOne Router.current().params.doc_id
+            event = Docs.findOne Template.parentData().doc_id
             room = Docs.findOne _id:event.room_id
             Docs.insert 
                 model:'room_reservation'
@@ -414,7 +404,7 @@ if Meteor.isServer
 
 
 
-            Docs.update Router.current().params.doc_id,
+            Docs.update Template.parentData().doc_id,
                 $set:
                     submitted:true
 
@@ -422,13 +412,13 @@ if Meteor.isServer
 
 if Meteor.isClient
     Template.event_view.onCreated ->
-        @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
-        @autorun => Meteor.subscribe 'doc_by_slug', Router.current().params.doc_slug
-        @autorun => Meteor.subscribe 'author_by_doc_id', Router.current().params.doc_id
-        # @autorun => Meteor.subscribe 'author_by_doc_slug', Router.current().params.doc_slug
+        @autorun => Meteor.subscribe 'doc', Template.parentData().doc_id
+        @autorun => Meteor.subscribe 'doc_by_slug', Template.parentData().doc_slug
+        @autorun => Meteor.subscribe 'author_by_doc_id', Template.parentData().doc_id
+        # @autorun => Meteor.subscribe 'author_by_doc_slug', Template.parentData().doc_slug
 
-        @autorun => Meteor.subscribe 'event_tickets', Router.current().params.doc_id, ->
-        @autorun => Meteor.subscribe 'event_orders', Router.current().params.doc_id, ->
+        @autorun => Meteor.subscribe 'event_tickets', Template.parentData().doc_id, ->
+        @autorun => Meteor.subscribe 'event_orders', Template.parentData().doc_id, ->
         # @autorun => Meteor.subscribe 'model_docs', 'room'
         
         if Meteor.isDevelopment
@@ -442,7 +432,7 @@ if Meteor.isClient
             zipCode: true
             token: (token) =>
                 # amount = parseInt(Session.get('topup_amount'))
-                event = Docs.findOne Router.current().params.doc_id
+                event = Docs.findOne Template.parentData().doc_id
                 charge =
                     amount: event.price_usd*100
                     event_id:event._id
@@ -467,7 +457,7 @@ if Meteor.isClient
         )
     
     Template.event_view.onRendered ->
-        Docs.update Router.current().params.doc_id, 
+        Docs.update Template.parentData().doc_id, 
             $inc: views: 1
 
     Template.event_view.helpers 
@@ -545,7 +535,7 @@ if Meteor.isClient
 
             instance = Template.instance()
             event = 
-                Docs.findOne Router.current().params.doc_id
+                Docs.findOne Template.parentData().doc_id
             console.log event
             if event.price_usd
                 Swal.fire({
@@ -585,12 +575,12 @@ if Meteor.isClient
     
     Template.attendance.events
         'click .mark_maybe': ->
-            event = Docs.findOne Router.current().params.doc_id
-            Meteor.call 'mark_maybe', Router.current().params.doc_id, ->
+            event = Docs.findOne Template.parentData().doc_id
+            Meteor.call 'mark_maybe', Template.parentData().doc_id, ->
     
         'click .mark_not': ->
-            event = Docs.findOne Router.current().params.doc_id
-            Meteor.call 'mark_not', Router.current().params.doc_id, ->
+            event = Docs.findOne Template.parentData().doc_id
+            Meteor.call 'mark_not', Template.parentData().doc_id, ->
 
     Template.event_card.events
         'click .mark_maybe': ->
@@ -604,7 +594,7 @@ if Meteor.isClient
                 Docs.find({ 
                     model:'order'
                     # order_type:'ticket_purchase'
-                    event_id: Router.current().params.doc_id
+                    event_id: Template.parentData().doc_id
                 }).count()
             @max_attendees-ticket_count
         event_orders: ->
@@ -680,14 +670,14 @@ if Meteor.isClient
     
     Template.request_view.events
         'click .claim': ->
-            Docs.update Router.current().params.doc_id,
+            Docs.update Template.parentData().doc_id,
                 $set:
                     claimed_user_id: Meteor.userId()
                     status:'claimed'
             
                             
         'click .unclaim': ->
-            Docs.update Router.current().params.doc_id,
+            Docs.update Template.parentData().doc_id,
                 $unset:
                     claimed_user_id: 1
                 $set:
@@ -695,7 +685,7 @@ if Meteor.isClient
             
                             
         'click .mark_complete': ->
-            Docs.update Router.current().params.doc_id,
+            Docs.update Template.parentData().doc_id,
                 $set:
                     complete: true
                     completed_by_user_id:@claimed_user_id
@@ -705,7 +695,7 @@ if Meteor.isClient
                 $inc:points:@point_bounty
                             
         'click .mark_incomplete': ->
-            Docs.update Router.current().params.doc_id,
+            Docs.update Template.parentData().doc_id,
                 $set:
                     complete: false
                     completed_by_user_id: null
@@ -748,22 +738,15 @@ if Meteor.isClient
         #
         #
         #
-        #     Docs.update Router.current().params.doc_id,
+        #     Docs.update Template.parentData().doc_id,
         #         $set:
         #             submitted:true
 
 
 if Meteor.isClient
-    Router.route '/request/:doc_id/edit', (->
-        @layout 'layout'
-        @render 'request_edit'
-        ), name:'request_edit'
-
-
-
     Template.request_edit.onCreated ->
-        @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id
-        # @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
+        @autorun => Meteor.subscribe 'doc_by_id', Template.parentData().doc_id
+        # @autorun => Meteor.subscribe 'doc', Template.parentData().doc_id
         # @autorun => Meteor.subscribe 'model_docs', 'menu_section'
     
     Template.request_edit.onRendered ->
@@ -1004,7 +987,7 @@ if Meteor.isServer
 
 if Meteor.isClient
     Template.user_posts.onCreated ->
-        @autorun => Meteor.subscribe 'user_posts', Router.current().params.username, ->
+        @autorun => Meteor.subscribe 'user_posts', Template.parentData().username, ->
     Template.user_posts.helpers
         post_docs: ->
             Docs.find {
@@ -1012,7 +995,7 @@ if Meteor.isClient
             }, sort:_timestamp:-1    
     
     Template.post_view.onRendered ->
-        Meteor.call 'mark_doc_read', Router.current().params.doc_id, ->
+        Meteor.call 'mark_doc_read', Template.parentData().doc_id, ->
 
 if Meteor.isServer 
     Meteor.methods 
@@ -1025,7 +1008,7 @@ if Meteor.isServer
 if Meteor.isClient
     Template.post_view.helpers
         read_users: ->
-            doc = Docs.findOne Router.current().params.doc_id
+            doc = Docs.findOne Template.parentData().doc_id
             Meteor.users.find 
                 _id:$in:doc.read_by_user_ids
     # Template.favorite_icon_toggle.helpers
@@ -1171,14 +1154,14 @@ if Meteor.isClient
         'click .record_work': ->
             new_id = Docs.insert 
                 model:'work'
-                task_id: Router.current().params.doc_id
+                task_id: Template.parentData().doc_id
             Router.go "/work/#{new_id}/edit"    
     
                 
            
     Template.task_view.helpers
         possible_locations: ->
-            task = Docs.findOne Router.current().params.doc_id
+            task = Docs.findOne Template.parentData().doc_id
             Docs.find
                 model:'location'
                 _id:$in:task.location_ids
@@ -1186,7 +1169,7 @@ if Meteor.isClient
         task_work: ->
             Docs.find 
                 model:'work'
-                task_id:Router.current().params.doc_id
+                task_id:Template.parentData().doc_id
                 
     Template.task_edit.helpers
         task_locations: ->
@@ -1194,24 +1177,24 @@ if Meteor.isClient
                 model:'location'
                 
         location_class: ->
-            task = Docs.findOne Router.current().params.doc_id
+            task = Docs.findOne Template.parentData().doc_id
             if task.location_ids and @_id in task.location_ids then 'blue' else 'basic'
             
                 
     Template.task_edit.events
         'click .mark_complete': ->
-            Docs.update Router.current().params.doc_id, 
+            Docs.update Template.parentData().doc_id, 
                 $set:
                     complete:true
                     complete_timestamp: Date.now()
                     
         'click .select_location': ->
-            task = Docs.findOne Router.current().params.doc_id
+            task = Docs.findOne Template.parentData().doc_id
             if task.location_ids and @_id in task.location_ids
-                Docs.update Router.current().params.doc_id, 
+                Docs.update Template.parentData().doc_id, 
                     $pull:location_ids:@_id
             else
-                Docs.update Router.current().params.doc_id, 
+                Docs.update Template.parentData().doc_id, 
                     $addToSet:location_ids:@_id
             
 if Meteor.isServer
@@ -1250,7 +1233,7 @@ if Meteor.isClient
                 cancelButtonText: 'cancel'
             }).then((result) =>
                 if result.value
-                    task = Docs.findOne Router.current().params.doc_id
+                    task = Docs.findOne Template.parentData().doc_id
                     Meteor.users.update Meteor.userId(),
                         $inc:credit:-@amount
                     Docs.update task._id,
@@ -1347,14 +1330,14 @@ if Meteor.isClient
                 
     Template.work_edit.events
         'click .pick_staff': ->
-            Docs.update Router.current().params.doc_id, 
+            Docs.update Template.parentData().doc_id, 
                 $set:
                     staff_id:@_id
                     staff_name: "#{@first_name} #{@last_name}"
                     staff_image_id: @image_id
         
         'click .pick_location': ->
-            Docs.update Router.current().params.doc_id, 
+            Docs.update Template.parentData().doc_id, 
                 $set:
                     location_id:@_id
                     location_title: @title
@@ -1374,11 +1357,11 @@ if Meteor.isClient
                 model:'staff'
                 
         # staff_picker_class: ->
-        #     work = Docs.findOne Router.current().params.doc_id
+        #     work = Docs.findOne Template.parentData().doc_id
         #     if work.staff_id is @_id then 'blue big' else 'basic large'
             
         location_picker_class: ->
-            work = Docs.findOne Router.current().params.doc_id
+            work = Docs.findOne Template.parentData().doc_id
             if work.location_id is @_id then 'blue massive' else 'basic big'
             
         
@@ -1402,17 +1385,10 @@ if Meteor.isServer
             
             
 if Meteor.isClient
-    Router.route '/work/:doc_id/edit', (->
-        @layout 'layout'
-        @render 'work_edit'
-        ), name:'work_edit'
-
-
-
     Template.work_edit.onCreated ->
-        @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id
-        @autorun => Meteor.subscribe 'work_task', Router.current().params.doc_id
-        # @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
+        @autorun => Meteor.subscribe 'doc_by_id', Template.parentData().doc_id
+        @autorun => Meteor.subscribe 'work_task', Template.parentData().doc_id
+        # @autorun => Meteor.subscribe 'doc', Template.parentData().doc_id
         # @autorun => Meteor.subscribe 'model_docs', 'menu_section'
 
 
@@ -1427,7 +1403,7 @@ if Meteor.isClient
         #         cancelButtonText: 'cancel'
         #     }).then((result) =>
         #         if result.value
-        #             work = Docs.findOne Router.current().params.doc_id
+        #             work = Docs.findOne Template.parentData().doc_id
         #             Meteor.users.update Meteor.userId(),
         #                 $inc:credit:-@amount
         #             Docs.update work._id,
@@ -1500,24 +1476,10 @@ if Meteor.isServer
             
             
 if Meteor.isClient
-    Router.route '/role/:doc_id/edit', (->
-        @layout 'layout'
-        @render 'role_edit'
-        ), name:'role_edit'
-    Router.route '/role/:doc_id', (->
-        @layout 'layout'
-        @render 'role_view'
-        ), name:'role_view'
-    Router.route '/role/:doc_id/view', (->
-        @layout 'layout'
-        @render 'role_view'
-        ), name:'role_view_long'
-    
-    
     Template.role_view.onCreated ->
-        @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
+        @autorun => Meteor.subscribe 'doc_by_id', Template.parentData().doc_id, ->
     Template.role_edit.onCreated ->
-        @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
+        @autorun => Meteor.subscribe 'doc_by_id', Template.parentData().doc_id, ->
     Template.role_item.events
         'click .view_role': ->
             Router.go "/role/#{@_id}"
@@ -1779,17 +1741,6 @@ if Meteor.isServer
 
 
 if Meteor.isClient
-    Router.route '/resource/:doc_id/', (->
-        @layout 'layout'
-        @render 'resource_view'
-        ), name:'resource_view'
-    Router.route '/resource/:doc_id/edit', (->
-        @layout 'layout'
-        @render 'resource_edit'
-        ), name:'resource_edit'
-
-
-    
     Template.resource_big_card.onCreated ->
         @autorun => @subscribe 'resource_orders',@data._id, ->
     
@@ -1797,7 +1748,7 @@ if Meteor.isClient
         future_order_docs: ->
             Docs.find 
                 model:'order'
-                resource_id:Router.current().params.doc_id
+                resource_id:Template.parentData().doc_id
                 
                 
                 
@@ -1806,7 +1757,7 @@ if Meteor.isClient
         
     Template.resource_view.events
         'click .new_order': (e,t)->
-            resource = Docs.findOne Router.current().params.doc_id
+            resource = Docs.findOne Template.parentData().doc_id
             new_order_id = Docs.insert
                 model:'order'
                 resource_id: @_id
@@ -2000,7 +1951,7 @@ if Meteor.isClient
         child_tasks: ->
             Docs.find
                 model:'task'
-                project_id: Router.current().params.doc_id
+                project_id: Template.parentData().doc_id
                 
     # Template.favorite_icon_toggle.helpers
     #     icon_class: ->
@@ -2138,11 +2089,11 @@ if Meteor.isClient
             
 if Meteor.isClient
     Template.product_view.onCreated ->
-        @autorun => Meteor.subscribe 'product_source', Router.current().params.doc_id, ->
-        @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id, ->
-        @autorun => Meteor.subscribe 'ingredients_from_product_id', Router.current().params.doc_id, ->
-        @autorun => Meteor.subscribe 'orders_from_product_id', Router.current().params.doc_id, ->
-        @autorun => Meteor.subscribe 'subs_from_product_id', Router.current().params.doc_id, ->
+        @autorun => Meteor.subscribe 'product_source', Template.parentData().doc_id, ->
+        @autorun => Meteor.subscribe 'doc', Template.parentData().doc_id, ->
+        @autorun => Meteor.subscribe 'ingredients_from_product_id', Template.parentData().doc_id, ->
+        @autorun => Meteor.subscribe 'orders_from_product_id', Template.parentData().doc_id, ->
+        @autorun => Meteor.subscribe 'subs_from_product_id', Template.parentData().doc_id, ->
     Template.product_view.events
         # 'click .generate_qrcode': (e,t)->
         #     qrcode = new QRCode(document.getElementById("qrcode"), {
@@ -2155,17 +2106,17 @@ if Meteor.isClient
         #     })
 
         'click .calc_stats': (e,t)->
-            Meteor.call 'calc_product_data', Router.current().params.doc_id, ->
+            Meteor.call 'calc_product_data', Template.parentData().doc_id, ->
         'click .goto_source': (e,t)->
             $(e.currentTarget).closest('.pushable').transition('fade right', 240)
-            product = Docs.findOne Router.current().params.doc_id
+            product = Docs.findOne Template.parentData().doc_id
             Meteor.setTimeout =>
                 Router.go "/source/#{product.source_id}"
             , 240
         
         'click .goto_ingredient': (e,t)->
             # $(e.currentTarget).closest('.pushable').transition('fade right', 240)
-            product = Docs.findOne Router.current().params.doc_id
+            product = Docs.findOne Template.parentData().doc_id
             console.log @
             found_ingredient = 
                 Docs.findOne 
@@ -2203,38 +2154,38 @@ if Meteor.isClient
     Template.product_subscriptions.events
         'click .subscribe': ->
             if confirm 'subscribe?'
-                Docs.update Router.current().params.doc_id,
+                Docs.update Template.parentData().doc_id,
                     $addToSet: 
                         subscribed_ids: Meteor.userId()
                 new_sub_id = 
                     Docs.insert 
                         model:'product_subscription'
-                        product_id:Router.current().params.doc_id
+                        product_id:Template.parentData().doc_id
                 Router.go "/subscription/#{new_sub_id}/edit"
                     
         'click .unsubscribe': ->
             if confirm 'unsubscribe?'
-                Docs.update Router.current().params.doc_id,
+                Docs.update Template.parentData().doc_id,
                     $pull: 
                         subscribed_ids: Meteor.userId()
                                     
     
         'click .mark_ready': ->
             if confirm 'mark product ready?'
-                Docs.update Router.current().params.doc_id,
+                Docs.update Template.parentData().doc_id,
                     $set:
                         ready:true
                         ready_timestamp:Date.now()
 
         'click .unmark_ready': ->
             if confirm 'unmark product ready?'
-                Docs.update Router.current().params.doc_id,
+                Docs.update Template.parentData().doc_id,
                     $set:
                         ready:false
                         ready_timestamp:null
 
     Template.product_inventory.onCreated ->
-        @autorun => Meteor.subscribe 'inventory_from_product_id', Router.current().params.doc_id
+        @autorun => Meteor.subscribe 'inventory_from_product_id', Template.parentData().doc_id
             
     Template.product_inventory.events
         'click .add_inventory': ->
@@ -2262,7 +2213,7 @@ if Meteor.isClient
         product_subs: ->
             Docs.find
                 model:'product_subscription'
-                product_id:Router.current().params.doc_id
+                product_id:Template.parentData().doc_id
 
     Template.product_view.helpers
         product_order_total: ->
@@ -2278,7 +2229,7 @@ if Meteor.isClient
                 
 
         can_cancel: ->
-            product = Docs.findOne Router.current().params.doc_id
+            product = Docs.findOne Template.parentData().doc_id
             if Meteor.userId() is product._author_id
                 if product.ready
                     false
@@ -2322,7 +2273,7 @@ if Meteor.isClient
         #             Docs.insert
         #                 model:'order'
         #                 waitlist:true
-        #                 product_id: Router.current().params.doc_id
+        #                 product_id: Template.parentData().doc_id
         #             Swal.fire(
         #                 'wait list joined',
         #                 "you'll be alerted if accepted"
@@ -2336,7 +2287,7 @@ if Meteor.isClient
             #     model:'order'
             #     status:'pending'
             #     complete:false
-            #     product_id: Router.current().params.doc_id
+            #     product_id: Template.parentData().doc_id
             #     if @serving_unit
             #         serving_text = @serving_unit
             #     else
@@ -2401,15 +2352,9 @@ if Meteor.isServer
 
 
 if Meteor.isClient
-    Router.route '/product/:doc_id/edit', (->
-        @layout 'layout'
-        @render 'product_edit'
-        ), name:'product_edit'
-
-
     Template.product_edit.onCreated ->
-        @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id
-        # @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
+        @autorun => Meteor.subscribe 'doc_by_id', Template.parentData().doc_id
+        # @autorun => Meteor.subscribe 'doc', Template.parentData().doc_id
         # @autorun => Meteor.subscribe 'model_docs', 'source'
 
     Template.product_edit.onRendered ->
@@ -2428,7 +2373,7 @@ if Meteor.isClient
         #     Docs.find
         #         model:'product'
         can_delete: ->
-            product = Docs.findOne Router.current().params.doc_id
+            product = Docs.findOne Template.parentData().doc_id
             if product.reservation_ids
                 if product.reservation_ids.length > 1
                     false
@@ -2448,10 +2393,10 @@ if Meteor.isClient
     Template.product_edit.events
         'click .remove_source': (e,t)->
             if confirm 'remove source?'
-                Docs.update Router.current().params.doc_id,
+                Docs.update Template.parentData().doc_id,
                     $set:source_id:null
         'click .pick_source': (e,t)->
-            Docs.update Router.current().params.doc_id,
+            Docs.update Template.parentData().doc_id,
                 $set:source_id:@_id
         'keyup .source_search': (e,t)->
             # if e.which is '13'
@@ -2461,13 +2406,13 @@ if Meteor.isClient
                 
             
         'click .save_product': ->
-            product_id = Router.current().params.doc_id
+            product_id = Template.parentData().doc_id
             Meteor.call 'calc_product_data', product_id, ->
             Router.go "/product/#{product_id}"
 
 
         'click .save_availability': ->
-            doc_id = Router.current().params.doc_id
+            doc_id = Template.parentData().doc_id
             availability = $('.ui.calendar').calendar('get date')[0]
             console.log availability
             formatted = moment(availability).format("YYYY-MM-DD[T]HH:mm")
@@ -2482,14 +2427,14 @@ if Meteor.isClient
 
 
         # 'click .select_product': ->
-        #     Docs.update Router.current().params.doc_id,
+        #     Docs.update Template.parentData().doc_id,
         #         $set:
         #             product_id: @_id
         #
         #
         # 'click .clear_product': ->
         #     if confirm 'clear product?'
-        #         Docs.update Router.current().params.doc_id,
+        #         Docs.update Template.parentData().doc_id,
         #             $set:
         #                 product_id: null
 
@@ -2497,7 +2442,7 @@ if Meteor.isClient
 
         'click .delete_product': ->
             if confirm 'refund orders and cancel product?'
-                Docs.remove Router.current().params.doc_id
+                Docs.remove Template.parentData().doc_id
                 Router.go "/"
 
 if Meteor.isServer 
@@ -2518,7 +2463,7 @@ if Meteor.isClient
                 title: {$regex:"#{Session.get('ingredient_search')}",$options:'i'}
                 
         product_ingredients: ->
-            product = Docs.findOne Router.current().params.doc_id
+            product = Docs.findOne Template.parentData().doc_id
             Docs.find 
                 # model:'ingredient'
                 _id:$in:product.ingredient_ids
@@ -2533,12 +2478,12 @@ if Meteor.isClient
             
         'click .remove_ingredient': (e,t)->
             if confirm "remove #{@title} ingredient?"
-                Docs.update Router.current().params.doc_id,
+                Docs.update Template.parentData().doc_id,
                     $pull:
                         ingredient_ids:@_id
                         ingredient_titles:@title
         'click .pick_ingredient': (e,t)->
-            Docs.update Router.current().params.doc_id,
+            Docs.update Template.parentData().doc_id,
                 $addToSet:
                     ingredient_ids:@_id
                     ingredient_titles:@title
@@ -2575,12 +2520,6 @@ if Meteor.isServer
         
         
 if Meteor.isClient
-    Router.route '/products', (->
-        @layout 'layout'
-        @render 'products'
-        ), name:'products'
-
-
     Template.product_card.events
         'click .add_to_cart': (e,t)->
             $(e.currentTarget).closest('.card').transition('bounce',500)

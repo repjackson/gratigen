@@ -8,7 +8,7 @@ globalHotkeys.add
 globalHotkeys.add
 	combo: "d r"
 	callback: ->
-        model_slug =  Router.current().params.model_slug
+        model_slug =  Template.parentData().model_slug
         Session.set 'loading', true
         Meteor.call 'set_facets', model_slug, ->
             Session.set 'loading', false
@@ -30,19 +30,19 @@ globalHotkeys.add
 	    if 'admin' in Meteor.user().roles
             model = Docs.findOne
                 model:'model'
-                slug: Router.current().params.model_slug
+                slug: Template.parentData().model_slug
             Router.go "/model/edit/#{model._id}"
 
 globalHotkeys.add
 	combo: "d s"
 	callback: ->
-        model = Docs.findOne Router.current().params.doc_id
+        model = Docs.findOne Template.parentData().doc_id
         Router.go "/m/#{model.slug}"
 
 globalHotkeys.add
 	combo: "d e"
 	callback: ->
-        doc = Docs.findOne Router.current().params.doc_id
+        doc = Docs.findOne Template.parentData().doc_id
         Router.go "/m/#{doc.model}/#{doc._id}/edit"
 
 
@@ -109,12 +109,12 @@ globalHotkeys.add
 	callback: ->
         current_model = Docs.findOne
             model:'model'
-            slug: Router.current().params.model_slug
-        Router.go "/m/#{current_model.slug}/#{Router.current().params.doc_id}/view"
+            slug: Template.parentData().model_slug
+        Router.go "/m/#{current_model.slug}/#{Template.parentData().doc_id}/view"
 globalHotkeys.add
 	combo: "g u"
 	callback: ->
-        model_slug =  Router.current().params.model_slug
+        model_slug =  Template.parentData().model_slug
         Session.set 'loading', true
         Meteor.call 'set_facets', model_slug, ->
             Session.set 'loading', false
@@ -138,7 +138,7 @@ globalHotkeys.add
 	callback: ->
         model = Docs.findOne
             model:'model'
-            slug: Router.current().params.model_slug
+            slug: Template.parentData().model_slug
         # console.log model
         if model.collection and model.collection is 'users'
             name = prompt 'first and last name'

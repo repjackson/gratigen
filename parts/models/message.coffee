@@ -8,17 +8,17 @@ if Meteor.isServer
 if Meteor.isClient
     Template.message_edit.helpers
         recipient: ->
-            message = Docs.findOne Router.current().params.doc_id
+            message = Docs.findOne Template.parentData().doc_id
             if message.recipient_id
                 Meteor.users.findOne
                     _id: message.recipient_id
         members: ->
-            message = Docs.findOne Router.current().params.doc_id
+            message = Docs.findOne Template.parentData().doc_id
             Meteor.users.find 
                 # levels: $in: ['member']
                 _id: $ne: Meteor.userId()
         # subtotal: ->
-        #     message = Docs.findOne Router.current().params.doc_id
+        #     message = Docs.findOne Template.parentData().doc_id
         #     message.amount*message.recipient_ids.length
         
         point_max: ->
@@ -29,28 +29,28 @@ if Meteor.isClient
         
         can_submit: ->
             true
-            message = Docs.findOne Router.current().params.doc_id
+            message = Docs.findOne Template.parentData().doc_id
             message.description and message.recipient_id
     Template.message_edit.events
         'click .add_recipient': ->
-            Docs.update Router.current().params.doc_id,
+            Docs.update Template.parentData().doc_id,
                 $set:
                     recipient_id:@_id
         'click .remove_recipient': ->
-            Docs.update Router.current().params.doc_id,
+            Docs.update Template.parentData().doc_id,
                 $unset:
                     recipient_id:1
         'keyup .new_element': (e,t)->
             if e.which is 13
                 element_val = t.$('.new_element').val().toLowerCase().trim()
-                Docs.update Router.current().params.doc_id,
+                Docs.update Template.parentData().doc_id,
                     $addToSet:tags:element_val
                 t.$('.new_element').val('')
     
         'click .remove_element': (e,t)->
             element = @valueOf()
             field = Template.currentData()
-            Docs.update Router.current().params.doc_id,
+            Docs.update Template.parentData().doc_id,
                 $pull:tags:element
             t.$('.new_element').focus()
             t.$('.new_element').val(element)
