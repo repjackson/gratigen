@@ -2,8 +2,8 @@ template(name='nav')
     // https://fomantic-ui.com/elements/icon.html#/icon
     //#topnav.topnav
     #topnav.ui.attached.borderless.menu.topnav.hscroll.ani(class=invert_class)
-        .icon.item.toggle_leftbar
-            i.bars.icon
+        a.icon.item.sidebar_toggler.zoomer
+            i.bars.large.icon
         a.header.image.item.zoomer(href='/' class="{{isActivePath '/'}}" title='gratihome')
             if is_loading
                 .icon.item
@@ -78,7 +78,7 @@ template(name='nav')
             else
                 a.icon.item(href="/inbox" class="{{isActiveRoute 'inbox'}}")
                     i.large.outline.bell.icon
-            a.item.zoomer(href="/chat" class="{{isActiveRoute 'chat'}}")
+            a.icon.item.zoomer(href="/chat" class="{{isActiveRoute 'chat'}}")
                 if unread_chat_messages
                     i.large.teal.chat.icon
                     small #{unread_chat_messages.count}
@@ -116,7 +116,7 @@ template(name='nav')
                     +i name='internal'
                     span.mobile.hidden login
             if currentUser.viewing_coinbar
-                +topbar
+                +coinbar
     if currentUser.show_secnav
         +secnav
                 
@@ -174,6 +174,15 @@ template(name='top_nav_item')
 
                  
                     
+template(name='coinbar')
+    .ui.fluid.large.attached.segment.topbar
+        .ui.middle.aligned.divided.list
+            each recent_alerts
+                +recent_alert
+        a.ui.icon.attached.basic.button.item.close_topbar(href="/inbox")
+            i.coins.large.icon
+            |accounts
+        
 template(name='topbar')
     .ui.fluid.large.attached.segment.topbar
         .ui.middle.aligned.divided.list
@@ -211,7 +220,8 @@ template(name='rightbar')
                 else
                     +i name='light'
                 |dark mode
-            +nav_item route='my_accounts' label='accounts' icon='data-in-both-directions' color='40C057'
+            each profile_nav_items
+                +nav_item
             +nav_item route='my_organizations' icon='groups' color='83DFF4' label='organizations'
             +nav_item route='my_projects' icon='project' color='7229AF' label='projects'
             +nav_item route='my_events' icon='calendar' color='FAB005' label='events'
@@ -265,21 +275,12 @@ template(name='right_nav_item')
 
 template(name='leftbar')
     .ui.left.thin.sidebar.ui.vertical.borderless.menu
-        +leftbar_item key='posts' icon='newspaper'
-        +leftbar_item key='products' icon='shop'
-        +leftbar_item key='food' icon='food'
-        +leftbar_item key='music' icon='music'
-        +leftbar_item key='transfers' icon='exchange'
-        +leftbar_item key='orders' icon='history'
-        +leftbar_item key='groups' icon='fire'
-        +leftbar_item key='requests' icon='hand holding heart'
-        +leftbar_item key='services' icon='wrench'
-        +leftbar_item key='rentals' icon='clock'
-        +leftbar_item key='users' icon='users'
+        each model_docs_helper 'model'
+            +leftbar_item
+        
             
 template(name='leftbar_item')    
-    a.item.zoomer.fly_right.toggle_leftbar(href="/#{key}")
-        i.large.icon(class=icon)
-        // +i name=icon
-        span #{key}
+    a.item.zoomer.fly_right.toggle_leftbar(href="/#{slug}")
+        +i name=icon color=stripped_icon_color cl='ui avatar image'
+        span #{slug}
                 

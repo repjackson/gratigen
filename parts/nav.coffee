@@ -10,6 +10,10 @@ if Meteor.isClient
 
     Template.nav.onRendered ->
         Session.setDefault('invert_mode', true)
+    Template.secnav.onRendered ->
+        # Meteor.setTimeout ->
+        #     $('.ui.dropdown').dropdown()
+        # , 2000
     Template.nav.onRendered ->
         Meteor.setTimeout ->
             $('.menu .item')
@@ -25,11 +29,6 @@ if Meteor.isClient
             #     })
             #     .sidebar('attach events', '.toggle_leftbar')
         , 3000
-    Template.secnav.onRendered ->
-        # Meteor.setTimeout ->
-        #     $('.ui.dropdown').dropdown()
-        # , 2000
-    Template.nav.onRendered ->
         Meteor.setTimeout ->
             $('.item')
                 .popup()

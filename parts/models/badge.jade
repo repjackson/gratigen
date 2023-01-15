@@ -54,14 +54,6 @@ template(name='badge_view')
 
 template(name='badge_edit')
     .ui.stackable.padded.grid
-        .centered.middle.aligned.row 
-            .sixteen.wide.column
-                a.ui.green.cicular.icon.big.button.fly_left(href="/badge/#{_id}" title='save')
-                    i.checkmark.big.icon
-                .ui.inline.header
-                    small edit badge
-                    |#{title}
-                i.remove.circular.link.icon.delete_item
         .row 
             .eight.wide.column
                 +text_edit key='title' icon='header' direct=true

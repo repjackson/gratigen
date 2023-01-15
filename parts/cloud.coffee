@@ -1,7 +1,7 @@
 if Meteor.isClient
     Template.cloud.onCreated ->
-        @autorun => Meteor.subscribe('tags', selected_tags.array())
-        @autorun => Meteor.subscribe('docs', selected_tags.array())
+        @autorun => Meteor.subscribe('tags', picked_tags.array())
+        @autorun => Meteor.subscribe('docs', picked_tags.array())
 
 
     Template.cloud.helpers
@@ -16,7 +16,7 @@ if Meteor.isClient
                 when @index <= 20 then 'small'
             return button_class
 
-        selected_tags: -> selected_tags.array()
+        picked_tags: -> picked_tags.array()
 
         settings: -> {
             position: 'bottom'
@@ -32,6 +32,6 @@ if Meteor.isClient
         }
 
     Template.cloud.events
-        'click .select_tag': -> selected_tags.push @name
-        'click .unselect_tag': -> selected_tags.remove @valueOf()
-        'click #clear_tags': -> selected_tags.clear()
+        'click .select_tag': -> picked_tags.push @name
+        'click .unselect_tag': -> picked_tags.remove @valueOf()
+        'click #clear_tags': -> picked_tags.clear()

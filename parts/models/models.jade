@@ -373,16 +373,8 @@ template(name='eft_viewer')
     +eft_view_item color="FF0000" icon='users' label='community core'
     
 template(name='eft_viewer_small')
-    +eft_view_item_small color="FF73EA" icon='food' label='food'
-    +eft_view_item_small color="B785E1" icon='home' label='housing'
-    +eft_view_item_small color="7229AF" icon='tshirt' label='clothing'
-    +eft_view_item_small color="1255B8" icon='car' label='transportation'
-    +eft_view_item_small color="83DFF4" icon='lightning' label='energy'
-    +eft_view_item_small color="42E8C4" icon='leaf' label='zero waste'
-    +eft_view_item_small color="40C057" icon='smile' label='wellness'
-    +eft_view_item_small color="FAB005" icon='university' label='education'
-    +eft_view_item_small color="FD7E14" icon='paint brush' label='art'
-    +eft_view_item_small color="FF0000" icon='users' label='community core'
+    each model_docs_helper 'eft'
+        +eft_view_item_small
 
 
 

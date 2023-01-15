@@ -77,6 +77,9 @@ head
 
 // body
 template(name='layout')
+    +sidebar
+    +leftbar
+    +rightbar
     // .ui.flyout
     //     i.close.icon
     //     .ui.header hi
@@ -90,9 +93,7 @@ template(name='layout')
     +nav
     // img.ui.fluid.image.home_banner(src="{{c.url 'frontrange'}}" class=darkmode_class)
     #main.ui.bottom.attached.pushable.segment.scrolling
-        +topbar
-        +leftbar
-        +rightbar
+        // +topbar
         div(class=invert_class)
             +yield
     +footer
