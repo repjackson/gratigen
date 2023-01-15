@@ -1,0 +1,58 @@
+// template(name='cloud')
+//     #cloud.ui.center.aligned.fluid.segment
+//         if currentUser
+//             .ui.icon.input
+//                 i.plus.icon
+//                 input#quick_add(type='text')
+//             // #add.ui.button
+//             //     i.plus.icon
+//             //     | Full Add
+//         .ui.label
+//             +loginButtons
+//         .ui.hidden.divider
+//         .ui.left.icon.input
+//             i.search.icon
+//             +inputAutocomplete settings=settings id="search" class="" autofocus='' autocomplete="off" placeholder=''
+//         if selected_tags
+//             #clear_tags.ui.primary.icon.compact.button
+//                 i.remove.icon
+//             each selected_tags
+//                 .unselect_tag.ui.primary.compact.button
+//                     strong #{this}
+//         each all_tags
+//             .ui.compact.button.select_tag(class=cloud_tag_class) #{this.name}
+//                 small #{this.count}
+
+
+template(name='cloud')
+    //- #cloud
+        //- .ui.left.icon.input
+        //-     i.search.icon
+        //-     +inputAutocomplete settings=settings id="search" class="" autocomplete="off" 
+        // .ui.hidden.fitted.divider
+    if selected_tags
+        #clear_tags.ui.active.icon.large.circular.button
+            i.remove.icon
+        each selected_tags
+            .unselect_tag.ui.active.large.circular.button
+                strong #{this}
+    each all_tags
+        .ui.circular.large.button.select_tag(class=cloud_tag_class) 
+            strong #{this.name}
+
+
+
+template(name='doc_cloud')
+    #cloud.ui.segment.container
+        //- .ui.left.icon.input
+        //-     i.search.icon
+        //-     +inputAutocomplete settings=settings id="search" class="" autocomplete="off" 
+        if selected_tags
+            #clear_tags.ui.primary.icon.large.button
+                i.remove.icon
+            each selected_tags
+                .unselect_tag.ui.primary.large.button
+                    strong #{this}
+        each all_tags
+            .ui.button.select_tag(class=cloud_tag_class) 
+                strong #{this.name}

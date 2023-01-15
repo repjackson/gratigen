@@ -75,9 +75,9 @@ template(name='nav')
             else
                 a.icon.item(href="/inbox" class="{{isActiveRoute 'inbox'}}")
                     i.large.outline.bell.icon
-            // a.item.zoomer(href="/chat" class="{{isActiveRoute 'chat'}}")
-            //     // i.large.inbox.icon
-            //     +i name='chat' color='blue'
+            a.item.zoomer(href="/chat" class="{{isActiveRoute 'chat'}}")
+                i.large.chat.icon
+                // +i name='chat' color='blue'
 
             if currentUser
                 // a.item(href='/user/#{currentUser.username}/credit' class="{{isActiveRoute 'user_credit'}}" title='current wallet balance')
@@ -125,7 +125,23 @@ template(name='toggle_nav_item')
                 
                 
 template(name='secnav')
+    // .input.item 
+    //     .ui.input 
+    //         input(type='text')
     .ui.attached.small.borderless.inverted.menu.hscroll.invert(class=invert_class)
+        // .item
+        .ui.icon.small.transparent.input
+            input.filter_models(type='text' placeholder='filter')
+            i.search.link.icon
+        // .ui.dropdown.icon.item
+        //     i.wrench.icon
+        //     .menu 
+        //         .item
+        //             i.dropdown.icon
+        //             span.text new 
+        //             .menu 
+        //                 .item post
+        //                 .item model
         each model_docs_helper 'model'
            a.item.zoomer(href="/m/#{slug}")
                 // i.large.inbox.icon

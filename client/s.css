@@ -22,7 +22,7 @@ body {
 
 
 .image, .segment, .card, .button, .nav, .item, .header { 
-  animation: fadeIn 1s !important; 
+  animation: fadeIn 2s !important; 
 }
 
 .ui.header{
@@ -90,7 +90,7 @@ body {
 }
 
 .hscroll{
-	overflow-y:hidden;
+	/*overflow-y:hidden;*/
 	overflow-x:scroll;
 	/*max-height:700px;*/
 	/*max-height:85vh;*/

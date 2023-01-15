@@ -1,7 +1,5 @@
 globalHotkeys = new Hotkeys();
 
-
-
 globalHotkeys.add
 	combo: "c"
 	callback: ->

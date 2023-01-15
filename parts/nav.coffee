@@ -25,6 +25,25 @@ if Meteor.isClient
             #     })
             #     .sidebar('attach events', '.toggle_leftbar')
         , 3000
+    Template.secnav.onRendered ->
+        # Meteor.setTimeout ->
+        #     $('.ui.dropdown').dropdown()
+        # , 2000
+    Template.home_card.onRendered ->
+        Meteor.setTimeout ->
+            $('.card')
+                .popup()
+            # $('.ui.left.sidebar')
+            #     .sidebar({
+            #         context: $('.bottom.segment')
+            #         transition:'push'
+            #         mobileTransition:'push'
+            #         exclusive:true
+            #         duration:200
+            #         scrollLock:true
+            #     })
+            #     .sidebar('attach events', '.toggle_leftbar')
+        , 3000
         # Meteor.setTimeout ->
         #     $('.ui.rightbar')
         #         .sidebar({
