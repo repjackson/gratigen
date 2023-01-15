@@ -143,7 +143,7 @@ if Meteor.isClient
     Template.delta.helpers
         model_template: ->
             cm = Docs.findOne slug:Router.current().params.model_slug
-            console.log "#{cm.model}s"
+            # console.log "#{cm.model}s"
             "#{@slug}s"
         column_class: ->
             console.log @

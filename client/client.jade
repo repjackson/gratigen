@@ -16,7 +16,7 @@ head
     
     
     
-    link(rel='stylesheet' type='text/css' href='https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.8/dist/semantic.min.css')
+    link(rel='stylesheet' type='text/css' href='https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.0/dist/semantic.min.css')
     link(href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet")
     link(href="https://fonts.googleapis.com/css?family=Varela+Round&display=swap" rel="stylesheet")
     link(href="https://fonts.googleapis.com/css?family=Ubuntu:300,400&display=swap" rel="stylesheet")
@@ -39,8 +39,8 @@ head
     
     
     // script(src='./qrcode.min.js')
-    script(src='https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js')
-    script(src='https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.8/dist/semantic.min.js')
+    script(src='https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js')
+    script(src='https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.0/dist/semantic.min.js')
     
     // script(src='https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.js')
     // link(href='https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.css' rel='stylesheet')
@@ -75,7 +75,15 @@ head
             $(".loader-wrapper").fadeOut("slow");
         });
 
-    
+body
+    .ui.flyout
+        i.close.icon
+        .ui.header hi
+        .image.content
+            .ui.header content
+        .actions
+            .ui.button hi
+    .pusher
 template(name='layout')
     .loader-wrapper
         span.loader
@@ -88,8 +96,7 @@ template(name='layout')
     //     +rightbar
     div(class=invert_class)
         +yield
-    if currentUser.admin_mode
-        +footer
+    +footer
 
 
 template(name='mlayout')
