@@ -45,7 +45,6 @@ template(name='home')
                         // .results    
                     each model_docs_helper 'view_mode'
                         +session_set key='view_mode' value=title title=title icon=icon color=icon_color
-                    +session_icon_button key='view_mode' value='grid' icon='th' 
                     +session_toggle key='show_map' icon='map'
                     +session_toggle key='show_calendar' icon='calendar'
                     each model_docs_helper 'sort_key'

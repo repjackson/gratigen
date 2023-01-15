@@ -75,7 +75,8 @@ head
             $(".loader-wrapper").fadeOut("slow");
         });
 
-// body
+body
+    +nav
 template(name='layout')
     // .ui.flyout
     //     i.close.icon
@@ -87,16 +88,16 @@ template(name='layout')
     // .loader-wrapper
     //     span.loader
     //         span.loader-inner
-    +nav
-    if currentUser.show_leftbar
-        +leftbar
-    if currentUser.show_rightbar
-        +rightbar
+    div(class=invert_class)
+        +nav
+        if currentUser.show_leftbar
+            +leftbar
+        if currentUser.show_rightbar
+            +rightbar
+        +yield
     // img.ui.fluid.image.home_banner(src="{{c.url 'frontrange'}}" class=darkmode_class)
     // #main.ui.bottom.attached.pushable.segment.scrolling
         // +topbar
-    div(class=invert_class)
-        +yield
     +footer
 
 

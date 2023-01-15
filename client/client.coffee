@@ -47,6 +47,11 @@ Meteor.users.find(_id:Meteor.userId()).observe({
 })
 
 
+Template.layout.helpers 
+    invert_class: ->
+        if Meteor.user().invert_mode 
+            'invert'
+
 Template.footer.helpers
     doc_docs: ->
         Docs.find {}
