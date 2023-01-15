@@ -75,27 +75,26 @@ head
             $(".loader-wrapper").fadeOut("slow");
         });
 
-body
-    .ui.flyout
-        i.close.icon
-        .ui.header hi
-        .image.content
-            .ui.header content
-        .actions
-            .ui.button hi
-    .pusher
+// body
 template(name='layout')
-    .loader-wrapper
-        span.loader
-            span.loader-inner
+    // .ui.flyout
+    //     i.close.icon
+    //     .ui.header hi
+    //     .image.content
+    //         .ui.header content
+    //     .actions
+    //         .ui.button hi
+    // .loader-wrapper
+    //     span.loader
+    //         span.loader-inner
     +nav
     // img.ui.fluid.image.home_banner(src="{{c.url 'frontrange'}}" class=darkmode_class)
-    // #main.ui.bottom.attached.pushable.segment
-    //     // +topbar
-    //     +leftbar
-    //     +rightbar
-    div(class=invert_class)
-        +yield
+    #main.ui.bottom.attached.pushable.segment
+        +topbar
+        +leftbar
+        +rightbar
+        div(class=invert_class)
+            +yield
     +footer
 
 

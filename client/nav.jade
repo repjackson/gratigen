@@ -2,6 +2,8 @@ template(name='nav')
     // https://fomantic-ui.com/elements/icon.html#/icon
     //#topnav.topnav
     #topnav.ui.attached.borderless.menu.topnav.hscroll.ani(class=invert_class)
+        .icon.item.toggle_leftbar
+            i.bars.icon
         a.header.image.item.zoomer(href='/' class="{{isActivePath '/'}}" title='gratihome')
             if is_loading
                 .icon.item
@@ -82,8 +84,8 @@ template(name='nav')
                 else 
                     i.large.chat.outline.icon
             if currentUser
-                // a.item(href='/user/#{currentUser.username}/credit' class="{{isActiveRoute 'user_credit'}}" title='current wallet balance')
-                a.item(href="/user/#{currentUser.username}/credit" class="{{isActiveRoute regex='user_credit'}}" title='your credits')
+                // a.item(href="/user/#{currentUser.username}/credit" class="{{isActiveRoute regex='user_credit'}}" title='your credits')
+                a.item.toggle_coinbar(title='current wallet balance')
                     i.coins.yellow.icon.invert
                     |&nbsp;
                     |#{currentUser.points}p
@@ -93,14 +95,14 @@ template(name='nav')
                     else
                         i.user.icon
                     strong #{currentUser.name}
-                // a.icon.item.toggle_rightbar.no_blink
-                //     // .ui.avatar.image
-                //     //     if currentUser.image_id
-                //     //         img.ui.mini.inline.image(src="{{c.url currentUser.image_id width=200 height=200 gravity='face' crop='fill'}}")
-                //     //     else
-                //     //         i.user.large.icon
-                //     // strong.mobile.hidden #{currentUser.name}
-                //     i.bars.large.grey.icon
+                a.icon.item.toggle_rightbar.no_blink
+                    // .ui.avatar.image
+                    //     if currentUser.image_id
+                    //         img.ui.mini.inline.image(src="{{c.url currentUser.image_id width=200 height=200 gravity='face' crop='fill'}}")
+                    //     else
+                    //         i.user.large.icon
+                    // strong.mobile.hidden #{currentUser.name}
+                    i.bars.large.grey.icon
             unless subs_ready
                 .icon.item
                     i.fork.large.loading.icon
@@ -112,8 +114,8 @@ template(name='nav')
                     // i.sign.in.large.icon
                     +i name='internal'
                     span.mobile.hidden login
-            // if session_is 'viewing_alerts'
-            //     +topbar
+            if currentUser.viewing_coinbar
+                +topbar
     if currentUser.show_secnav
         +secnav
                 
