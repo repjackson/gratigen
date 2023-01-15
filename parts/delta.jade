@@ -53,27 +53,27 @@ template(name='delta')
                             // - .ui.segment(class=loading_class)
                             span.ui.inline.small.grey.header(title='change sort direction')
                                 |sort
-                            if sortable_fields.count
-                                .ui.simple.large.dropdown(title='sort by')
-                                    strong #{current_delta.sort_key}
-                                    i.dropdown.icon
-                                    .menu
-                                        each sortable_fields
-                                            .item.set_sort_key 
-                                                if icon 
-                                                    +i name=icon
-                                                |#{title}
-                                .ui.tertiary.icon.button.set_sort_direction(title='sort direction')
-                                    if sorting_up
-                                        i.sort.amount.down.large.icon
-                                    else
-                                        i.sort.amount.up.large.icon
+                            // if sortable_fields.count
+                            .ui.simple.large.dropdown(title='sort by')
+                                strong #{current_delta.sort_key}
+                                i.dropdown.icon
+                                .menu
+                                    each sortable_fields
+                                        .item.set_sort_key 
+                                            if icon 
+                                                +i name=icon
+                                            |#{title}
+                            .ui.tertiary.icon.button.set_sort_direction(title='sort direction')
+                                if sorting_up
+                                    i.sort.amount.down.large.icon
+                                else
+                                    i.sort.amount.up.large.icon
                             //- .ui.compact.button.set_sort_direction
                             //-     |#{current_delta.sort_direction}
                             |&nbsp;
                             |&nbsp;
-                            .ui.inline.small.grey.header
-                                |viewing
+                            // .ui.inline.small.grey.header
+                            //     |viewing
                             // .ui.simple.dropdown(title='visible fields')
                             //     | fields
                             //     i.dropdown.icon
@@ -236,53 +236,48 @@ template(name='grid_layout')
             
             
 template(name='model_top')
-    if is_loading
-        .ui.inline.header
-            // i.grey.loading.yin.yang.big.icon
-            i.big.loading.grey.asterisk.circular.colored.blue.icon.invert
-            | #{current_model.title}...
-    else
-        unless key_value_is current_delta.model_filter 'model'
-            if currentUser
-                a.ui.icon.basic.compact.circular.button.go_home.zoomer
-                    i.big.home.icon
-        a.ui.header.reset.inline(title="#{description}, #{views} views")
-            // i.large.icon(class=icon)
-            // i.large.icon(class=icon)
+    unless key_value_is current_delta.model_filter 'model'
+        if currentUser
+            a.ui.icon.basic.compact.circular.button.go_home.zoomer
+                i.big.home.icon
+    a.ui.header.reset.inline(title="#{description}, #{views} views")
+        if is_loading
+            i.large.loading.grey.asterisk.circular.colored.blue.icon.invert
+        else
             if icon
                 +ibig name=icon color=stripped_icon_color
-            if total_count
-                small(title='total children count')
-                    |#{current_model.total_count}
-            | #{current_model.title}
-            if unread_count
-                small(title='total unread count')
-                    |(#{current_model.total_count})
-                
-        // i.plus.large.green.circular.link.icon.add_model_doc(title="add #{slug}")
-        unless is_loading
-            if currentUser
-                // unless key_value_is current_delta.model_filter 'model'
-                //     unless key_value_is current_model.collection 'user'
-                // if is_admin
-                // else 
-                //     if currentUser
-                .ui.icon.basic.circular.button.add_model_doc.zoomer(title="add #{slug}")
-                    i.plus.large.green.icon.invert
-                if can_edit
-                    i.cog.large.circular.link.icon.edit_model.zoomer(title='edit model')
-        //     //- +user_list_toggle key='bookmark_ids' add_icon='bookmark outline' remove_icon='bookmark' label="bookmark"
-        if current_delta
+        if total_count
+            small(title='total children count')
+                |#{current_model.total_count}
+        | #{current_model.title}
+        if unread_count
+            small(title='total unread count')
+                |(#{current_model.total_count})
+            
+    // i.plus.large.green.circular.link.icon.add_model_doc(title="add #{slug}")
+    unless is_loading
+        if currentUser
+            // unless key_value_is current_delta.model_filter 'model'
+            //     unless key_value_is current_model.collection 'user'
             // if is_admin
-            if currentUser
-                if currentUser.admin_mode
-                    i.code.link.icon.print_delta(title='print session doc')
-                i.refresh.link.reset.grey.circular.large.icon.zoomer(title='reload session')
-                i.trash.delete_delta.link.icon(title='delete session')
-        else
-            .create_delta.ui.big.green.circular.button(title='new session')
-                i.plus.icon
-                |create session
+            // else 
+            //     if currentUser
+            .ui.icon.basic.circular.button.add_model_doc.zoomer(title="add #{slug}")
+                i.plus.large.green.icon.invert
+            if can_edit
+                i.cog.large.circular.link.icon.edit_model.zoomer(title='edit model')
+    //     //- +user_list_toggle key='bookmark_ids' add_icon='bookmark outline' remove_icon='bookmark' label="bookmark"
+    if current_delta
+        // if is_admin
+        if currentUser
+            if currentUser.admin_mode
+                i.code.link.icon.print_delta(title='print session doc')
+            i.refresh.link.reset.grey.circular.large.icon.zoomer(title='reload session')
+            i.trash.delete_delta.link.icon(title='delete session')
+    else
+        .create_delta.ui.big.green.circular.button(title='new session')
+            i.plus.icon
+            |create session
             
 template(name='toggle_visible_field')            
     .item.toggle_visibility

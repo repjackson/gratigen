@@ -121,21 +121,21 @@ template(name='shortcut_modal')
 
 
 template(name='footer')
-    .ui.segment 
-        .ui.header 
-            i.shield.icon
-            |footer 
-        .ui.header 
-            i.users.icon 
-            |users
-        .ui.list
+    .ui.segment.grid
+        .eight.wide.column.smallscroll
+            .ui.header 
+                i.shield.icon
+                |footer 
+            .ui.header 
+                i.users.icon 
+                |users
             each user_docs 
-                .item #{username}
-        .ui.header 
-            i.database.icon
-            |docs 
-        .ui.list
+                .ui.large.button #{username}
+        .eight.wide.column.smallscroll
+            .ui.header 
+                i.database.icon
+                |docs 
             each doc_docs
-                a.item(href="/m/#{model}/#{_id}") #{title} 
+                a.ui.large.button(href="/m/#{model}/#{_id}") #{title} 
                     .ui.label
                         |#{model}

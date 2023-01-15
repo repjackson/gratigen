@@ -127,11 +127,11 @@ if Meteor.isClient
         ), name:'delta'
 
     Template.delta.onCreated ->
-        @autorun -> Meteor.subscribe 'me'
-        @autorun -> Meteor.subscribe 'model_from_slug', Router.current().params.model_slug
-        @autorun -> Meteor.subscribe 'model_fields_from_slug', Router.current().params.model_slug
-        @autorun -> Meteor.subscribe 'my_delta'
-        @autorun -> Meteor.subscribe 'all_users'
+        @autorun -> Meteor.subscribe 'me', ->
+        @autorun -> Meteor.subscribe 'model_from_slug', Router.current().params.model_slug, ->
+        # @autorun -> Meteor.subscribe 'model_fields_from_slug', Router.current().params.model_slug
+        @autorun -> Meteor.subscribe 'my_delta', ->
+        # @autorun -> Meteor.subscribe 'all_users', ->
         @autorun -> Meteor.subscribe 'model_docs', 'widget', ->
 
         Session.set 'loading', true
