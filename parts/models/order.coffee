@@ -53,7 +53,7 @@ if Meteor.isClient
             thing_count = Docs.find(model:'thing').count()
             if confirm "delete? #{thing_count} things still"
                 Docs.remove @_id
-                Router.go "/orders"
+                gstate_set "/orders"
     
         'click .mark_ready': ->
             if confirm 'mark ready?'

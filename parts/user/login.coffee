@@ -37,9 +37,9 @@ if Meteor.isClient
                     # console.log res
                     $(e.currentTarget).closest('.grid').transition('fly right', 500)                    
                     Meteor.setTimeout ->
-                        Router.go "/"
+                        gstate_set "/"
                     , 500
-                    # Router.go "/user/#{username}"
+                    # gstate_set "/user/#{username}"
 
         'keyup .password, keyup .username': (e,t)->
             if e.which is 13
@@ -59,8 +59,8 @@ if Meteor.isClient
                                 message: err.reason
                             })
                         else
-                            # Router.go "/user/#{username}"
-                            Router.go "/"
+                            # gstate_set "/user/#{username}"
+                            gstate_set "/"
 
 
     Template.login.helpers
@@ -154,7 +154,7 @@ if Meteor.isClient
                     #         # last_name: Session.get('last_name')
                     #         # app:'nf'
                     #         username:username
-                    Router.go "/user/#{username}"
+                    gstate_set "/user/#{username}"
                     # Meteor.loginWithPassword username, password, (err,res)=>
                     #     if err
                     #         alert err.reason
@@ -163,7 +163,7 @@ if Meteor.isClient
                     #         #     Session.set 'enter_mode', 'register'
                     #         #     Session.set 'username', "#{username}"
                     #     else
-                    #         Router.go '/'
+                    #         gstate_set '/'
                 # else
                 #     Meteor.loginWithPassword username, password, (err,res)=>
                 #         if err
@@ -172,7 +172,7 @@ if Meteor.isClient
                 #                 Session.set 'enter_mode', 'register'
                 #                 Session.set 'username', "#{username}"
                 #         else
-                #             Router.go '/'
+                #             gstate_set '/'
 
 
     Template.register.helpers

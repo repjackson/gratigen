@@ -27,7 +27,7 @@ if Meteor.isClient
                     $addToSet:
                         org_ids:@_id
             else 
-                Router.go '/login'
+                gstate_set '/login'
                 
         'click .org_leave': ->
             Docs.update @_id, 
@@ -277,7 +277,7 @@ if Meteor.isClient
             new_id =
                 Docs.insert
                     model:'org'
-            Router.go "/org/#{new_id}/edit"
+            gstate_set "/org/#{new_id}/edit"
 
     Template.user_orgs.helpers
         orgs: ->

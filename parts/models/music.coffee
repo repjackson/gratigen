@@ -361,11 +361,11 @@ if Meteor.isClient
         'click .pick_mood': ->
             picked_moods.clear()
             picked_moods.push @strMood
-            Router.go '/music'
+            gstate_set '/music'
         'click .pick_genre': ->
             picked_genres.clear()
             picked_genres.push @strGenre
-            Router.go '/music'
+            gstate_set '/music'
         'click .pick_music_tag': ->
             picked_music_tags.clear()
             picked_music_tags.push @valueOf()
@@ -387,7 +387,7 @@ if Meteor.isClient
                     # displayTime: 'auto',
                     position: "bottom right"
                 )
-            Router.go "/music"
+            gstate_set "/music"
     Template.music.events
         'click .clear': (e,t)->
             Session.set('artist_search',null)

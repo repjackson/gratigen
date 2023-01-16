@@ -94,7 +94,7 @@ if Meteor.isClient
             picked_user_tags.clear()
             picked_user_tags.push @valueOf()
             Meteor.call 'search_redditors', picked_user_tags.array(),true, ->
-            Router.go "/users"
+            gstate_set "/users"
             $('body').toast({
                 title: "browsing #{@valueOf()}"
                 # message: 'Please see desk staff for key.'
@@ -225,7 +225,7 @@ if Meteor.isClient
         #                 first_name:splitted[0]
         #                 last_name:splitted[1]
 
-        #         Router.go "/user/#{formatted}"
+        #         gstate_set "/user/#{formatted}"
         #         $('body').toast({
         #             title: "user created"
         #             # message: 'Please see desk staff for key.'
@@ -258,7 +258,7 @@ if Meteor.isClient
     
         # 'click #add_user': ->
         #     id = Docs.insert model:'person'
-        #     Router.go "/person/edit/#{id}"
+        #     gstate_set "/person/edit/#{id}"
         # 'keyup .username_search': (e,t)->
         #     username_search = $('.username_search').val()
         #     if e.which is 8

@@ -80,7 +80,7 @@ if Meteor.isClient
             Meteor.logoutOtherClients()
 
         'click .logout': ->
-            Router.go '/login'
+            gstate_set '/login'
             Meteor.logout()
             
     Template.locate_me.events
@@ -231,7 +231,7 @@ if Meteor.isClient
                 Docs.insert 
                     model:'transfer'
                     amount:10
-            Router.go "/transfer/#{new_id}/edit"
+            gstate_set "/transfer/#{new_id}/edit"
 
 
     Template.user_credit.helpers

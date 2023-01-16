@@ -265,7 +265,7 @@ if Meteor.isClient
 
         'click .go_home': ->
             Session.set 'loading', true
-            Router.go "/m/model"
+            gstate_set "/m/model"
             # Meteor.call 'log_view', @_id, ->
             Meteor.call 'set_facets', 'model', ->
                 Session.set 'loading', false
@@ -278,7 +278,7 @@ if Meteor.isClient
             Meteor.users.update Meteor.userId(),
                 $set:
                     editing_model_id: new_model_id
-            Router.go "/m/#{new_model._id}"
+            gstate_set "/m/#{new_model._id}"
 
 
         'click .clear_query': ->
@@ -361,20 +361,20 @@ if Meteor.isClient
                             $set:
                                 first_name:first_name
                                 last_name:last_name
-                        Router.go "/m/#{model.slug}/#{res}/edit"
+                        gstate_set "/m/#{model.slug}/#{res}/edit"
             # else if model.slug is 'gift'
             #     new_doc_id = Docs.insert
             #         model:model.slug
-            #     Router.go "/debit/#{new_doc_id}/edit"
+            #     gstate_set "/debit/#{new_doc_id}/edit"
             else if model.slug is 'model'
                 new_doc_id = Docs.insert
                     model:'model'
-                Router.go "/model/edit/#{new_doc_id}"
+                gstate_set "/model/edit/#{new_doc_id}"
             else
                 console.log model
                 new_doc_id = Docs.insert
                     model:model.slug
-                Router.go "/m/#{model.slug}/#{new_doc_id}/edit"
+                gstate_set "/m/#{model.slug}/#{new_doc_id}/edit"
 
 
         'click .edit_model': ->
@@ -385,7 +385,7 @@ if Meteor.isClient
                 $set:
                     editing_model_id:model._id
             
-            # Router.go "/model/edit/#{model._id}"
+            # gstate_set "/model/edit/#{model._id}"
 
         # 'click .page_up': (e,t)->
         #     delta = Docs.findOne model:'delta'
@@ -651,7 +651,7 @@ if Meteor.isClient
                 Session.set 'loading', false
             $(e.currentTarget).closest('.grid').transition('fade left', 250)
             Meteor.setTimeout ->
-                Router.go "/m/#{current_model}"
+                gstate_set "/m/#{current_model}"
             , 100
 
 
@@ -695,7 +695,7 @@ if Meteor.isClient
             console.log model
             # new_id = Docs.insert
             #     model: Template.parentData().model_slug
-            # Router.go "/edit/#{new_id}"
+            # gstate_set "/edit/#{new_id}"
 
 
 if Meteor.isServer
@@ -1021,9 +1021,9 @@ if Meteor.isClient
                     Session.set 'loading', false
 
             if @model is 'model'
-                Router.go "/m/#{@slug}"
+                gstate_set "/m/#{@slug}"
             else
-                Router.go "/m/#{model_slug}/#{@_id}/"
+                gstate_set "/m/#{model_slug}/#{@_id}/"
 
         'click .set_model': ->
             Meteor.call 'set_delta_facets', @slug, Meteor.userId()
@@ -1114,9 +1114,9 @@ if Meteor.isClient
                     Session.set 'loading', false
 
             if @model is 'model'
-                Router.go "/m/#{@slug}"
+                gstate_set "/m/#{@slug}"
             else
-                Router.go "/m/#{model_slug}/#{@_id}/view"
+                gstate_set "/m/#{model_slug}/#{@_id}/view"
 
         'click .set_model': ->
             Meteor.call 'set_delta_facets', @slug, Meteor.userId()
@@ -1169,7 +1169,7 @@ if Meteor.isClient
         'click #delete_doc': ->
             if confirm 'Confirm delete doc'
                 Docs.remove @_id
-                Router.go "/m/#{@model}"
+                gstate_set "/m/#{@model}"
 
 if Meteor.isClient
     Template.delta_result_table_row.onRendered ->
@@ -1248,7 +1248,7 @@ if Meteor.isClient
             # console.log @
             found = Docs.findOne @_id
             console.log found
-            Router.go "/m/#{found.model}/#{found._id}/view"
+            gstate_set "/m/#{found.model}/#{found._id}/view"
 
         'click .result': (e,t)->
             # console.log @
@@ -1271,9 +1271,9 @@ if Meteor.isClient
                     Session.set 'loading', false
 
             if @model is 'model'
-                Router.go "/m/#{@slug}"
+                gstate_set "/m/#{@slug}"
             else
-                Router.go "/m/#{model_slug}/#{@_id}/view"
+                gstate_set "/m/#{model_slug}/#{@_id}/view"
 
         'click .set_model': ->
             Meteor.call 'set_delta_facets', @slug, Meteor.userId()
@@ -1327,7 +1327,7 @@ if Meteor.isClient
         'click #delete_model': (e,t)->
             if confirm 'delete model?'
                 Docs.remove Template.parentData().doc_id, ->
-                    Router.go "/"
+                    gstate_set "/"
 
         'click .add_widget': ->
             Docs.insert
@@ -1411,6 +1411,6 @@ if Meteor.isClient
     #     'click #delete_model': ->
     #         if confirm 'Confirm delete doc'
     #             Docs.remove @_id
-    #             Router.go "/m/model"
+    #             gstate_set "/m/model"
     
     

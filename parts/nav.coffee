@@ -83,7 +83,7 @@ if Meteor.isClient
         #     # $(e.currentTarget).closest('.input').transition('pulse', 100)
 
         #     unless current_name is 'shop'
-        #         Router.go '/shop'
+        #         gstate_set '/shop'
         #     query = $('.search_site').val()
         #     Session.set('product_query', query)
         #     # console.log Session.get('product_query')

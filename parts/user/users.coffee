@@ -21,7 +21,7 @@ if Meteor.isClient
             Meteor.call 'add_user', new_username, (err,res)->
                 console.log res
                 new_user = Meteor.users.findOne res
-                Router.go "/user/#{new_user.username}"
+                gstate_set "/user/#{new_user.username}"
         'keyup .username_search': (e,t)->
             username_query = $('.username_search').val()
             if e.which is 8

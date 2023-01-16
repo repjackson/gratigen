@@ -177,7 +177,7 @@ if Meteor.isClient
                 })
     Template.food_product_page.events
         'click .pick_food_product_tag': ->
-            Router.go "/food_product"
+            gstate_set "/food_product"
             picked_food_product_tags.clear()
             picked_food_product_tags.push @valueOf()
             $('body').toast({

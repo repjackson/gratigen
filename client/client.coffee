@@ -10,12 +10,7 @@ Template.add_model_doc_button.events
         new_id = 
             Docs.insert 
                 model:@slug 
-        Router.go "/m/#{@slug}/#{new_id}/edit"
-
-Tracker.autorun ->
-    current = Router.current()
-    Tracker.afterFlush ->
-        $(window).scrollTop 0
+        gstate_set "/m/#{@slug}/#{new_id}/edit"
 
 
 Meteor.users.find(_id:Meteor.userId()).observe({
@@ -110,12 +105,5 @@ Template.layout.events
     #     $('.global_container')
     #     .transition('fade out', 5000)
     #     .transition('fade in', 5000)
-
-
-Tracker.autorun ->
-    current = Router.current()
-    Tracker.afterFlush ->
-        $(window).scrollTop 0
-
 
 # Stripe.setPublishableKey Meteor.settings.public.stripe_publishable

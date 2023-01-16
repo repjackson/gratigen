@@ -298,7 +298,7 @@ Template.array_edit.events
         # console.log @
         picked_tags.clear()
         picked_tags.push @valueOf()
-        Router.go "/#{Template.parentData().group}"
+        gstate_set "/#{Template.parentData().group}"
 
     'keyup .new_element': (e,t)->
         if e.which is 13

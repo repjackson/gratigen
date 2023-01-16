@@ -48,7 +48,7 @@
 #         'click .delete_transfer':->
 #             if confirm 'delete?'
 #                 Docs.remove @_id
-#                 Router.go "/transfers"
+#                 gstate_set "/transfers"
 
             
 #     Template.transfer_edit.helpers
@@ -173,7 +173,7 @@ if Meteor.isClient
             }).then((result)=>
                 if result.value
                     Docs.remove @_id
-                    Router.go '/'
+                    gstate_set '/'
             )
             
         'click .submit': ->
@@ -196,7 +196,7 @@ if Meteor.isClient
                             position: 'top-end',
                             timer: 1000
                         )
-                        Router.go "/transfer/#{@_id}"
+                        gstate_set "/transfer/#{@_id}"
             )
 
 

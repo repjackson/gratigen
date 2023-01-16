@@ -390,7 +390,7 @@
 #     #             .transition('fade out', 250)
 #     #             .transition('fade in', 250)
             
-#     #         Router.go "/user/#{@username}"
+#     #         gstate_set "/user/#{@username}"
         
     
         

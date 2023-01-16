@@ -258,7 +258,7 @@ if Meteor.isClient
                 Docs.insert 
                     model:'model'
                     title:Session.get('model_search')
-            Router.go "/model/#{new_id}/edit"
+            gstate_set "/model/#{new_id}/edit"
 
 
 if Meteor.isServer 
@@ -321,7 +321,7 @@ if Meteor.isClient
                 Docs.insert 
                     model:'group'
                     title:Session.get('group_search')
-            Router.go "/group/#{new_id}/edit"
+            gstate_set "/group/#{new_id}/edit"
 
 
 if Meteor.isServer 
@@ -381,7 +381,7 @@ if Meteor.isClient
                 Docs.insert 
                     model:'role'
                     title:Session.get('role_search')
-            Router.go "/role/#{new_id}/edit"
+            gstate_set "/role/#{new_id}/edit"
 
 
 if Meteor.isServer 
@@ -443,7 +443,7 @@ if Meteor.isClient
                 Docs.insert 
                     model:'badge'
                     title:Session.get('badge_search')
-            Router.go "/badge/#{new_id}/edit"
+            gstate_set "/badge/#{new_id}/edit"
 
 
 if Meteor.isServer 
@@ -502,7 +502,7 @@ if Meteor.isClient
                 Docs.insert 
                     model:'task'
                     title:Session.get('task_search')
-            Router.go "/task/#{new_id}/edit"
+            gstate_set "/task/#{new_id}/edit"
 
 
 if Meteor.isServer 
@@ -589,9 +589,9 @@ if Meteor.isClient
     #     'click .goto_profile': ->
     #         user = Meteor.users.findOne username:@valueOf()
     #         if user.is_current_member
-    #             Router.go "/member/#{user.username}/"
+    #             gstate_set "/member/#{user.username}/"
     #         else
-    #             Router.go "/user/#{user.username}/"
+    #             gstate_set "/user/#{user.username}/"
     # Template.username_info.helpers
     #     user: -> Meteor.users.findOne username:@valueOf()
 
@@ -602,7 +602,7 @@ if Meteor.isClient
                     model:@model
                     published:false
                     # purchased:false
-            Router.go "/#{@model}/#{new_id}/edit"
+            gstate_set "/#{@model}/#{new_id}/edit"
             
             
     Template.search_input.events
@@ -707,7 +707,7 @@ if Meteor.isClient
         'click .add': ->
             new_id = Docs.insert
                 model: @model
-            Router.go "/m/#{@model}/#{new_id}/edit"
+            gstate_set "/m/#{@model}/#{new_id}/edit"
 
 
     Template.remove_button.events

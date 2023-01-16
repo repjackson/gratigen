@@ -122,7 +122,7 @@ if Meteor.isClient
                 })
     Template.recipe_page.events
         'click .pick_recipe_tag': ->
-            Router.go '/recipes'
+            gstate_set '/recipes'
             picked_recipe_tags.clear()
             picked_recipe_tags.push @valueOf()
             $('body').toast({

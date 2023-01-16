@@ -11,7 +11,7 @@ if Meteor.isClient
             new_message_id =
                 Docs.insert
                     model:'message'
-            Router.go "/m/message/#{new_message_id}/edit"
+            gstate_set "/m/message/#{new_message_id}/edit"
 
 
 

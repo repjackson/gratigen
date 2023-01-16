@@ -5,7 +5,7 @@ Meteor.methods
             model: 'chat'
             subscribers: [Meteor.userId()]
             participant_ids: [Meteor.userId()]
-        # Router.go "/chat/#{id}"
+        # gstate_set "/chat/#{id}"
 
     close_chat: (chat_id)->
         Docs.remove chat_id
@@ -79,14 +79,14 @@ if Meteor.isClient
             Meteor.call 'create_', (err,id)->
                 Session.set 'current_chat_id', id
 
-                # Router.go "/view/#{id}"
+                # gstate_set "/view/#{id}"
 
 
     # 'click #create_chat': ->
     #     id = Docs.insert
     #         model: 'chat'
     #         participant_ids: [Meteor.userId()]
-    #     Router.go "/chat/#{id}"
+    #     gstate_set "/chat/#{id}"
 
 
         'click #view_private_chats': (e,t)->
@@ -291,7 +291,7 @@ if Meteor.isClient
     #     'click #delete_doc': ->
     #         if confirm 'Delete this chat?'
     #             Docs.remove @_id
-    #             Router.go '/chat'
+    #             gstate_set '/chat'
 
 if Meteor.isServer
     Meteor.methods

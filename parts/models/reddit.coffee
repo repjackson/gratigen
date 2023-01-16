@@ -509,10 +509,10 @@ if Meteor.isClient
             Session.set('loading',true)
             Meteor.call 'search_reddit', picked_tags.array(), ->
                 Session.set('loading',false)
-            Router.go "/reddit_posts"
+            gstate_set "/reddit_posts"
         'click .goto_subreddit': ->
             Meteor.call 'find_tribe', @subreddit, (err,res)->
-                Router.go "/group/#{res}"
+                gstate_set "/group/#{res}"
         'click .get_comments': ->
             Meteor.call 'get_reddit_comments', (Template.parentData().doc_id), ->
                 

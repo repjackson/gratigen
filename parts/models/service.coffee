@@ -56,7 +56,7 @@ if Meteor.isClient
                         showConfirmButton: false,
                         timer: 1500
                     )
-                    Router.go "/services"
+                    gstate_set "/services"
             )
 
 if Meteor.isServer
@@ -120,7 +120,7 @@ if Meteor.isClient
         'click .goto_food': (e,t)->
             # $(e.currentTarget).closest('.card').transition('zoom',420)
             # $('.global_container').transition('scale', 500)
-            Router.go("/food/#{@_id}")
+            gstate_set("/food/#{@_id}")
             # Meteor.setTimeout =>
             # , 100
 

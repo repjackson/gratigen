@@ -103,7 +103,7 @@ if Meteor.isClient
                             showConfirmButton: false
                             timer: 1000
                         )
-                        Router.go "/message/#{@_id}/view"
+                        gstate_set "/message/#{@_id}/view"
             )
 
 if Meteor.isServer

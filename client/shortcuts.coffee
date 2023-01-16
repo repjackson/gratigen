@@ -31,19 +31,19 @@ globalHotkeys.add
             model = Docs.findOne
                 model:'model'
                 slug: Template.parentData().model_slug
-            Router.go "/model/edit/#{model._id}"
+            gstate_set "/model/edit/#{model._id}"
 
 globalHotkeys.add
 	combo: "d s"
 	callback: ->
         model = Docs.findOne Template.parentData().doc_id
-        Router.go "/m/#{model.slug}"
+        gstate_set "/m/#{model.slug}"
 
 globalHotkeys.add
 	combo: "d e"
 	callback: ->
         doc = Docs.findOne Template.parentData().doc_id
-        Router.go "/m/#{doc.model}/#{doc._id}/edit"
+        gstate_set "/m/#{doc.model}/#{doc._id}/edit"
 
 
 globalHotkeys.add
@@ -84,33 +84,33 @@ globalHotkeys.add
 
 globalHotkeys.add
 	combo: "g h"
-	callback: -> Router.go '/'
+	callback: -> gstate_set '/'
 globalHotkeys.add
 	combo: "g d"
 	callback: ->
         if Meteor.userId() and Meteor.userId() in ['vwCi2GTJgvBJN5F6c','YFPxjXCgjhMYEPADS']
-            Router.go '/dev'
+            gstate_set '/dev'
 globalHotkeys.add
 	combo: "g p"
-	callback: -> Router.go "/user/#{Meteor.user().username}"
+	callback: -> gstate_set "/user/#{Meteor.user().username}"
 
 
 
 globalHotkeys.add
 	combo: "g h"
-	callback: -> Router.go '/'
+	callback: -> gstate_set '/'
 globalHotkeys.add
 	combo: "g d"
 	callback: ->
         if Meteor.userId() and Meteor.userId() in ['vwCi2GTJgvBJN5F6c']
-            Router.go '/dev'
+            gstate_set '/dev'
 globalHotkeys.add
 	combo: "s d"
 	callback: ->
         current_model = Docs.findOne
             model:'model'
             slug: Template.parentData().model_slug
-        Router.go "/m/#{current_model.slug}/#{Template.parentData().doc_id}/view"
+        gstate_set "/m/#{current_model.slug}/#{Template.parentData().doc_id}/view"
 globalHotkeys.add
 	combo: "g u"
 	callback: ->
@@ -118,19 +118,19 @@ globalHotkeys.add
         Session.set 'loading', true
         Meteor.call 'set_facets', model_slug, ->
             Session.set 'loading', false
-        Router.go "/m/#{model_slug}/"
+        gstate_set "/m/#{model_slug}/"
 globalHotkeys.add
 	combo: "g p"
-	callback: -> Router.go "/user/#{Meteor.user().username}"
+	callback: -> gstate_set "/user/#{Meteor.user().username}"
 globalHotkeys.add
 	combo: "g i"
-	callback: -> Router.go "/inbox"
+	callback: -> gstate_set "/inbox"
 # globalHotkeys.add
 # 	combo: "g m"
-# 	callback: -> Router.go "/students"
+# 	callback: -> gstate_set "/students"
 globalHotkeys.add
 	combo: "g a"
-	callback: -> Router.go "/admin"
+	callback: -> gstate_set "/admin"
 
 
 globalHotkeys.add
@@ -155,9 +155,9 @@ globalHotkeys.add
                         $set:
                             first_name:first_name
                             last_name:last_name
-                    Router.go "/m/#{model.slug}/#{res}/edit"
+                    gstate_set "/m/#{model.slug}/#{res}/edit"
         else
             new_doc_id = Docs.insert
                 model:model.slug
-            Router.go "/m/#{model.slug}/#{new_doc_id}/edit"
+            gstate_set "/m/#{model.slug}/#{new_doc_id}/edit"
 	

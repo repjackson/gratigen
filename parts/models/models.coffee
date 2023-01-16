@@ -203,7 +203,7 @@ if Meteor.isServer
             #                     showConfirmButton: false,
             #                     timer: 1500
             #                 )
-            #                 Router.go "/event/#{event}/view"
+            #                 gstate_set "/event/#{event}/view"
             #         )
             # )_
 
@@ -307,7 +307,7 @@ if Meteor.isClient
                 $set:published:true
             if confirm 'confirm?'
                 Meteor.call 'send_event', @_id, =>
-                    Router.go "/event/#{@_id}"
+                    gstate_set "/event/#{@_id}"
 
 
     Template.event_edit.helpers
@@ -773,7 +773,7 @@ if Meteor.isClient
                         showConfirmButton: false,
                         timer: 1500
                     )
-                    Router.go "/m/request"
+                    gstate_set "/m/request"
             )
 
 
@@ -1057,7 +1057,7 @@ if Meteor.isClient
                         showConfirmButton: false,
                         timer: 1500
                     )
-                    Router.go "/posts"
+                    gstate_set "/posts"
             )
 
             
@@ -1122,7 +1122,7 @@ if Meteor.isClient
         'click .goto_food': (e,t)->
             # $(e.currentTarget).closest('.card').transition('zoom',420)
             # $('.global_container').transition('scale', 500)
-            Router.go("/food/#{@_id}")
+            gstate_set("/food/#{@_id}")
             # Meteor.setTimeout =>
             # , 100
 
@@ -1155,7 +1155,7 @@ if Meteor.isClient
             new_id = Docs.insert 
                 model:'work'
                 task_id: Template.parentData().doc_id
-            Router.go "/work/#{new_id}/edit"    
+            gstate_set "/work/#{new_id}/edit"    
     
                 
            
@@ -1244,14 +1244,14 @@ if Meteor.isClient
                         'task sent',
                         ''
                         'success'
-                    Router.go "/task/#{@_id}/"
+                    gstate_set "/task/#{@_id}/"
                     )
             )
 
         'click .delete_task':->
             if confirm 'delete?'
                 Docs.remove @_id
-                Router.go "/tasks"
+                gstate_set "/tasks"
             
     Template.task_edit.helpers
         all_shop: ->
@@ -1320,12 +1320,12 @@ if Meteor.isClient
         'click .add_work': ->
             new_id = Docs.insert 
                 model:'work'
-            Router.go "/work/#{new_id}/edit"    
+            gstate_set "/work/#{new_id}/edit"    
       
         'click .add_task': ->
             new_id = Docs.insert 
                 model:'task'
-            Router.go "/task/#{new_id}/edit"    
+            gstate_set "/task/#{new_id}/edit"    
     
                 
     Template.work_edit.events
@@ -1414,7 +1414,7 @@ if Meteor.isClient
         #                 'work sent',
         #                 ''
         #                 'success'
-        #             Router.go "/work/#{@_id}/"
+        #             gstate_set "/work/#{@_id}/"
         #             )
         #     )
 
@@ -1431,7 +1431,7 @@ if Meteor.isClient
             $(e.currentTarget).closest('.grid').transition('fly right', 750)
             Meteor.setTimeout =>
                 Docs.remove @_id
-                Router.go "/work"
+                gstate_set "/work"
             , 750    
                 
             $('body').toast(
@@ -1445,7 +1445,7 @@ if Meteor.isClient
         'click .submit_work':(e,t)->
             $(e.currentTarget).closest('.grid').transition('fly left', 750)
             Meteor.setTimeout =>
-                Router.go "/work"
+                gstate_set "/work"
             , 750
             $('body').toast(
                 showIcon: 'checkmark'
@@ -1482,7 +1482,7 @@ if Meteor.isClient
         @autorun => Meteor.subscribe 'doc_by_id', Template.parentData().doc_id, ->
     Template.role_item.events
         'click .view_role': ->
-            Router.go "/role/#{@_id}"
+            gstate_set "/role/#{@_id}"
 
     Template.role_view.events
         'click .add_role_recipe': ->
@@ -1490,7 +1490,7 @@ if Meteor.isClient
                 Docs.insert 
                     model:'recipe'
                     role_ids:[@_id]
-            Router.go "/recipe/#{new_id}/edit"
+            gstate_set "/recipe/#{new_id}/edit"
 
     # Template.favorite_icon_toggle.helpers
     #     icon_class: ->
@@ -1538,7 +1538,7 @@ if Meteor.isClient
                         showConfirmButton: false,
                         timer: 1500
                     )
-                    Router.go "/roles"
+                    gstate_set "/roles"
             )
 
             
@@ -1603,7 +1603,7 @@ if Meteor.isClient
         'click .goto_food': (e,t)->
             # $(e.currentTarget).closest('.card').transition('zoom',420)
             # $('.global_container').transition('scale', 500)
-            Router.go("/food/#{@_id}")
+            gstate_set("/food/#{@_id}")
             # Meteor.setTimeout =>
             # , 100
 
@@ -1766,11 +1766,11 @@ if Meteor.isClient
                 resource_image_id:resource.image_id
                 resource_image_link:resource.image_link
                 resource_daily_rate:resource.daily_rate
-            Router.go "/order/#{new_order_id}/edit"
+            gstate_set "/order/#{new_order_id}/edit"
             
         'click .goto_tag': ->
             picked_tags.push @valueOf()
-            Router.go '/'
+            gstate_set '/'
             
         'click .cancel_order': ->
             console.log 'hi'
@@ -1999,7 +1999,7 @@ if Meteor.isClient
                         showConfirmButton: false,
                         timer: 1500
                     )
-                    Router.go "/projects"
+                    gstate_set "/projects"
             )
 
             
@@ -2064,7 +2064,7 @@ if Meteor.isClient
         'click .goto_food': (e,t)->
             # $(e.currentTarget).closest('.card').transition('zoom',420)
             # $('.global_container').transition('scale', 500)
-            Router.go("/food/#{@_id}")
+            gstate_set("/food/#{@_id}")
             # Meteor.setTimeout =>
             # , 100
 
@@ -2111,7 +2111,7 @@ if Meteor.isClient
             $(e.currentTarget).closest('.pushable').transition('fade right', 240)
             product = Docs.findOne Template.parentData().doc_id
             Meteor.setTimeout =>
-                Router.go "/source/#{product.source_id}"
+                gstate_set "/source/#{product.source_id}"
             , 240
         
         'click .goto_ingredient': (e,t)->
@@ -2123,20 +2123,20 @@ if Meteor.isClient
                     model:'ingredient'
                     title:@valueOf()
             if found_ingredient
-                Router.go "/ingredient/#{found_ingredient._id}"
+                gstate_set "/ingredient/#{found_ingredient._id}"
             else 
                 new_id = 
                     Docs.insert 
                         model:'ingredient'
                         title:@valueOf()
-                Router.go "/ingredient/#{new_id}/edit"
+                gstate_set "/ingredient/#{new_id}/edit"
                 
             # found_ingredient = 
             #     Docs.findOne 
             #         model:'ingredient'
             #         title:@valueOf()
             # Meteor.setTimeout =>
-            #     Router.go "/source/#{product.source_id}"
+            #     gstate_set "/source/#{product.source_id}"
             # , 240
         
         'click .add_to_cart': ->
@@ -2161,7 +2161,7 @@ if Meteor.isClient
                     Docs.insert 
                         model:'product_subscription'
                         product_id:Template.parentData().doc_id
-                Router.go "/subscription/#{new_sub_id}/edit"
+                gstate_set "/subscription/#{new_sub_id}/edit"
                     
         'click .unsubscribe': ->
             if confirm 'unsubscribe?'
@@ -2310,7 +2310,7 @@ if Meteor.isClient
                     )
                     console.log err
                 else
-                    Router.go "/order/#{res}/edit"
+                    gstate_set "/order/#{res}/edit"
                     # Swal.fire(
                     #     'order and payment processed'
                     #     ''
@@ -2408,7 +2408,7 @@ if Meteor.isClient
         'click .save_product': ->
             product_id = Template.parentData().doc_id
             Meteor.call 'calc_product_data', product_id, ->
-            Router.go "/product/#{product_id}"
+            gstate_set "/product/#{product_id}"
 
 
         'click .save_availability': ->
@@ -2443,7 +2443,7 @@ if Meteor.isClient
         'click .delete_product': ->
             if confirm 'refund orders and cancel product?'
                 Docs.remove Template.parentData().doc_id
-                Router.go "/"
+                gstate_set "/"
 
 if Meteor.isServer 
     Meteor.publish 'source_search_results', (source_title_queary)->
@@ -2501,7 +2501,7 @@ if Meteor.isClient
                 Docs.insert 
                     model:'ingredient'
                     title:Session.get('ingredient_search')
-            Router.go "/ingredient/#{new_id}/edit"
+            gstate_set "/ingredient/#{new_id}/edit"
 
 
 if Meteor.isServer 
@@ -2806,7 +2806,7 @@ if Meteor.isClient
         'click .goto_food': (e,t)->
             # $(e.currentTarget).closest('.card').transition('zoom',420)
             # $('.global_container').transition('scale', 500)
-            Router.go("/food/#{@_id}")
+            gstate_set("/food/#{@_id}")
             # Meteor.setTimeout =>
             # , 100
 

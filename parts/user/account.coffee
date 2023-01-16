@@ -77,7 +77,7 @@ if Meteor.isClient
         'click .remove_user': ->
             if confirm "confirm delete #{@username}?  cannot be undone."
                 Meteor.users.remove @_id
-                Router.go "/users"
+                gstate_set "/users"
 
         # "change input[name='profile_image']": (e) ->
         #     files = e.currentTarget.files
@@ -105,7 +105,7 @@ if Meteor.isClient
                         if err
                             alert err
                         else
-                            Router.go("/user/#{new_username}")
+                            gstate_set("/user/#{new_username}")
 
 
 
@@ -192,7 +192,7 @@ if Meteor.isClient
         'click .remove_user': ->
             if confirm "confirm delete #{@username}?  cannot be undone."
                 Meteor.users.remove @_id
-                Router.go "/users"
+                gstate_set "/users"
 
         "change input[name='profile_image']": (e) ->
             files = e.currentTarget.files
@@ -220,7 +220,7 @@ if Meteor.isClient
                         if err
                             alert err
                         else
-                            Router.go("/user/#{new_username}")
+                            gstate_set("/user/#{new_username}")
 
 
 

@@ -21,7 +21,7 @@ if Meteor.isClient
         'click .publish': ->
             if confirm 'confirm?'
                 Meteor.call 'send_badge', @_id, =>
-                    Router.go "/badge/#{@_id}/view"
+                    gstate_set "/badge/#{@_id}/view"
 
 
 # if Meteor.isServer
@@ -62,7 +62,7 @@ if Meteor.isClient
         'click .delete_item': ->
             if confirm 'delete badge?'
                 Docs.remove @_id
-                Router.go "/m/badge"
+                gstate_set "/m/badge"
 
         'click .add_badger': ->
             Docs.update Template.parentData().doc_id, 
