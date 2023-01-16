@@ -4,7 +4,7 @@ template(name='nav')
     #topnav.ui.attached.borderless.menu.topnav.hscroll.ani(class=invert_class)
         a.icon.item.toggle_leftbar.zoomer
             i.bars.large.icon
-        a.header.image.item.zoomer(href='/' class="{{isActivePath '/'}}" title='gratihome')
+        a.header.image.item.zoomer.set_home(class="{{isActivePath 'home'}}" title='gratihome')
             if is_loading
                 .icon.item
                     i.big.loading.grey.refresh.icon.cancel

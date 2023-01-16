@@ -76,8 +76,20 @@ head
         });
 
 body
+    +app
+
+
+template(name='app')
+    // if currentUser
     +nav
-    +home
+    +Template.dynamic template=ct
+    // +home
+    // else 
+    //     +login
+    
+    
+    
+    
 template(name='layout')
     // .ui.flyout
     //     i.close.icon

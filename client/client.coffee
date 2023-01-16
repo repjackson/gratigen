@@ -5,6 +5,14 @@
 @current_markers = new ReactiveArray []
 
 
+Template.app.helpers
+    ct: -> 
+        console.log Meteor.user().current_template
+        Meteor.user().current_template
+
+
+
+
 Template.add_model_doc_button.events 
     'click .add_model_doc': ->
         new_id = 
