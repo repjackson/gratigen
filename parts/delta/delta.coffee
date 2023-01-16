@@ -612,18 +612,18 @@ if Meteor.isClient
     Template.model_view.onCreated ->
         @autorun -> Meteor.subscribe 'model_from_slug', Meteor.user().current_model
         @autorun -> Meteor.subscribe 'model_fields_from_slug', Meteor.user().current_model
-        @autorun -> Meteor.subscribe 'doc', Template.parentData().doc_id
+        @autorun -> Meteor.subscribe 'doc', Meteor.user().current_doc_id
 
 
 
 if Meteor.isClient
     Template.model_doc_view.onCreated ->
-        @autorun -> Meteor.subscribe 'model_from_slug', Meteor.user().current_model
-        @autorun -> Meteor.subscribe 'model_fields_from_slug', Meteor.user().current_model
-        # console.log Template.parentData().doc_id
-        @autorun -> Meteor.subscribe 'doc', Template.parentData().doc_id
-        @autorun -> Meteor.subscribe 'upvoters', Template.parentData().doc_id
-        @autorun -> Meteor.subscribe 'downvoters', Template.parentData().doc_id
+        @autorun -> Meteor.subscribe 'model_from_slug', Meteor.user().current_model, ->
+        @autorun -> Meteor.subscribe 'model_fields_from_slug', Meteor.user().current_model, ->
+        # console.log Meteor.user().current_doc_id
+        @autorun -> Meteor.subscribe 'doc', Meteor.user().current_doc_id, ->
+        @autorun -> Meteor.subscribe 'upvoters', Meteor.user().current_doc_id
+        @autorun -> Meteor.subscribe 'downvoters', Meteor.user().current_doc_id
         @autorun -> Meteor.subscribe 'model_docs', 'field_type'
 
     Template.model_doc_view.helpers
@@ -691,7 +691,7 @@ if Meteor.isClient
 
         fields: ->
             Docs.find { model:'field' }, sort:rank:1
-                # parent_id: Template.parentData().doc_id
+                # parent_id: Meteor.user().current_doc_id
 
     Template.model_view.events
         'click .add_child': ->
@@ -1006,7 +1006,7 @@ if Meteor.isClient
                 Meteor.users.findOne @_id
 
     Template.delta_result_card.events
-        'click .result': (e,t)->
+        'click .goto_doc': (e,t)->
             # console.log @
             model_slug =  Meteor.user().current_model
             # $(e.currentTarget).closest('.result').transition('fade')
@@ -1014,13 +1014,17 @@ if Meteor.isClient
                 Docs.update @_id,
                     $inc: views: 1
                     $addToSet:viewer_usernames:Meteor.user().username
+                
             # else
             #     Docs.update @_id,
             #         $inc: views: 1
             delta = Docs.findOne model:'delta'
-            Docs.update delta._id,
-                $set:search_query:null
-
+            Meteor.users.update Meteor.userId(),
+                $set:
+                    search_query:null
+                    current_template:'model_doc_view'
+                    current_doc_id:@_id
+                    
             if model_slug is 'model'
                 Session.set 'loading', true
                 Meteor.call 'set_facets', @slug, ->
@@ -1139,14 +1143,14 @@ if Meteor.isClient
 if Meteor.isClient
     Template.model_doc_edit.onCreated ->
         @autorun -> Meteor.subscribe 'me', ->
-        @autorun -> Meteor.subscribe 'doc', Template.parentData().doc_id, ->
+        @autorun -> Meteor.subscribe 'doc', Meteor.user().current_doc_id, ->
         # @autorun -> Meteor.subscribe 'model_fields_from_slug', Meteor.user().current_model, ->
         @autorun -> Meteor.subscribe 'model_from_slug', Meteor.user().current_model, ->
         @autorun -> Meteor.subscribe 'model_docs', 'field_type', ->
 
     Template.model_doc_edit.helpers
         template_exists: ->
-            current_model = Docs.findOne(Template.parentData().doc_id).model
+            current_model = Docs.findOne(Meteor.user().current_doc_id).model
             unless current_model is 'model'
                 if Template["#{current_model}_edit"]
                     return true
@@ -1297,9 +1301,9 @@ if Meteor.isClient
 
 if Meteor.isClient
     Template.model_edit.onCreated ->
-        # @autorun -> Meteor.subscribe 'child_docs', Template.parentData().doc_id, ->
-        # @autorun -> Meteor.subscribe 'doc', Template.parentData().doc_id
-        # @autorun -> Meteor.subscribe 'model_fields_from_id', Template.parentData().doc_id
+        # @autorun -> Meteor.subscribe 'child_docs', Meteor.user().current_doc_id, ->
+        # @autorun -> Meteor.subscribe 'doc', Meteor.user().current_doc_id
+        # @autorun -> Meteor.subscribe 'model_fields_from_id', Meteor.user().current_doc_id
         @autorun -> Meteor.subscribe 'model_from_slug', Meteor.user().current_model, ->
         @autorun -> Meteor.subscribe 'model_widgets', Meteor.user().current_model, ->
         @autorun -> Meteor.subscribe 'model_block_instances', Meteor.user().current_model, ->
@@ -1332,14 +1336,14 @@ if Meteor.isClient
                 
         'click #delete_model': (e,t)->
             if confirm 'delete model?'
-                Docs.remove Template.parentData().doc_id, ->
+                Docs.remove Meteor.user().current_doc_id, ->
                     Meteor.call 'change_state', "/", ->
 
         'click .add_widget': ->
             Docs.insert
                 model:'widget'
                 parent_model:Meteor.user().current_model
-                # parent_id: Template.parentData().doc_id
+                # parent_id: Meteor.user().current_doc_id
                 view_roles: ['dev', 'admin', 'user', 'public']
                 edit_roles: ['dev', 'admin', 'user']
 
@@ -1381,7 +1385,7 @@ if Meteor.isClient
         fields: ->
             Docs.find {
                 model:'field'
-                parent_id: Template.parentData().doc_id
+                parent_id: Meteor.user().current_doc_id
             }, sort:rank:1
 
     Template.model_block_menu_item.events

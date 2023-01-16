@@ -1,7 +1,7 @@
 template(name='delta_result_card')
     with result
-        .ui.card(class=loading_class tabindex="1")
-            .content.result.pointer.zoomer.fly_right
+        .ui.card.goto_doc(class=loading_class tabindex="1")
+            .content.pointer.zoomer.fly_right
                 // unless key_value_is 'model' 'model'
                 //     i.grey.database.icon(title='delta')
                 if key_value_is 'model' 'model'
