@@ -650,15 +650,15 @@ if Meteor.isClient
             # false
             # console.log @
             # current_model = Meteor.user().current_model
-            console.log "#{@}"
+            # console.log "#{@}"
             if Template["#{@}_field"]
-                console.log 'true'
+                # console.log 'true'
                 return true
             else
-                console.log 'false'
+                # console.log 'false'
                 return false
         field_template: ->
-            console.log "#{@}_field"
+            # console.log "#{@}_field"
             "#{@}_field"
 
 

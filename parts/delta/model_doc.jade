@@ -33,14 +33,12 @@ template(name='model_doc_view')
                             +array_view key='tags' label='tags' direct=true
                     +comments
                     +viewing
+                .twelve.wide.column.scrollin
                     +array_edit key='found_fields' direct=true
-                .twelve.wide.column.scrolling
                     a.ui.header.calc found fields
-                    .ui.four.column.grid
-                        each found_fields
-                            .column
-                                // .ui.header #{this}
-                                +found_field
+                    each found_fields
+                        // .ui.header #{this}
+                        +found_field
                     // .ui.header
                         // each fields
                             // if header
@@ -62,19 +60,18 @@ template(name='model_doc_view')
                     //-     +watson_view
 
 template(name='found_field')
-    .item #{this}
-        // +Template.dynamic template=this data=current_doc
-        
-        if field_temp_exists
-            // +print_this
-            +Template.dynamic template=field_template data=current_doc
+    // +Template.dynamic template=this data=current_doc
+    
+    if field_temp_exists
+        // +print_this
+        +Template.dynamic template=field_template data=current_doc
 
 template(name='title_field')
     +print_this
-    .ui.header title: #{title}
+    .ui.inline.header title: #{title}
 
 template(name='tags_field')
-    .ui.header tags 
+    .ui.inline.header tags 
     each tags 
         .ui.label #{this}
         
@@ -85,10 +82,10 @@ template(name='roles_field')
     +role_picker
         
 template(name='_author_id_field')   
-    .ui.header 
-        i.user.icon
-        |author
-        |#{_author_id}
+    // .ui.inline.header 
+    //     i.user.icon
+    //     |author
+        // |#{_author_id}
     +author_info
     with _author
         +user_card

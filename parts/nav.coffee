@@ -3,6 +3,7 @@ if Meteor.isClient
         @autorun => Meteor.subscribe 'me', ->
         @autorun => Meteor.subscribe 'all_users', ->
         @autorun => Meteor.subscribe 'model_docs', 'model', ->
+        @autorun => Meteor.subscribe 'history',->
         
         # @autorun => Meteor.subscribe 'my_cart'
         # @autorun => Meteor.subscribe 'my_cart_order'
@@ -229,6 +230,9 @@ if Meteor.isClient
             ).count()
 
 if Meteor.isServer
+    Meteor.publish 'history', ->
+        Docs.find 
+            _id: $in: Meteor.user().doc_history
     Meteor.publish 'models', ->
         Docs.find 
             model:'model'

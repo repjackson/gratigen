@@ -127,8 +127,8 @@ body {
 }
 
 .item:active, .button:active, .card:active {
-   transform:scale(.9) !important;
-   box-shadow:2px 2px 10px rgba(0,0,0,0.3) !important;
+   /*transform:scale(.9) !important;*/
+   /*box-shadow:2px 2px 10px rgba(0,0,0,0.3) !important;*/
 }
 #topnav .item:active {
   /*border:1px solid grey !important;*/

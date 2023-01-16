@@ -186,6 +186,10 @@ Template.registerHelper 'total_potential_revenue', () ->
 #     @price_per_serving * @servings_amount
 
 
+Template.registerHelper 'doc_from_id', ->
+    console.log @,@valueof()
+    Docs.findOne @valueof()
+
 Template.registerHelper 'key_value_is', (key, value)->
     # console.log 'key', key
     # console.log 'value', value

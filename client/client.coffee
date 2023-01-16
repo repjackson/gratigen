@@ -11,6 +11,11 @@ Template.app.helpers
         Meteor.user().current_template
 
 
+Template.doc_history_button.helpers 
+    doc_from_id:->
+        # console.log @, @valueOf()
+        Docs.findOne @valueOf()
+        
 # Template.app.events 
 #     'click .goto_doc': ->
 #         Meteor.users.update Meteor.userId(),

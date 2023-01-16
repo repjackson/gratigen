@@ -89,8 +89,7 @@ template(name='app')
         .ui.inline.header 
             |history
         each doc_history 
-            .ui.tertiary.button.goto_string_doc
-                |#{this}
+            +doc_history_button
         +text_edit key='current_template' direct=true
         +text_edit key='current_model' direct=true
     .ui.label temp #{currentUser.current_template}
@@ -101,7 +100,11 @@ template(name='app')
     // else 
     //     +login
     
-    
+template(name='doc_history_button')
+    .ui.button #{this}
+        with doc_from_id
+            .ui.tertiary.button.goto_string_doc
+                |#{title}
     
     
 template(name='layout')
