@@ -647,7 +647,12 @@ if Meteor.isClient
 
 
 
+    Template.model_doc_edit.events
+        'click .save_doc':->
+            Meteor.call 'change_state', {current_template:'model_doc_view',current_doc_id:@_id}, ->
     Template.model_doc_view.events
+        'click .edit_doc':->
+            Meteor.call 'change_state', {current_template:'model_doc_edit',current_doc_id:@_id}, ->
         'click .back_to_model': (e,t)->
             Session.set 'loading', true
             current_model = Meteor.user().current_model

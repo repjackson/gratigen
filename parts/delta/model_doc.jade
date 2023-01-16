@@ -9,7 +9,7 @@ template(name='model_doc_view')
                         +i name=current_model.icon
                         |#{current_model.title}
                     // if can_edit
-                    a.ui.large.icon.circular.button(href="/m/#{current_model.slug}/#{_id}/edit" title='Edit')
+                    a.ui.large.icon.circular.button.edit_doc(title='Edit')
                         i.pencil.blue.large.icon
                     if is_admin
                         .ui.header 
@@ -77,7 +77,7 @@ template(name='model_doc_edit')
                     .ui.header(title="model: #{model}")
                         |edit #{model}
                     +creation_info
-                    a.ui.big.icon.green.circular.button(href="/m/#{model}/#{_id}/view")
+                    a.ui.big.icon.green.circular.button.save_doc
                         i.big.checkmark.icon
                     #delete_doc.ui.icon.circular.button
                         i.trash.icon
