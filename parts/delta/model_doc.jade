@@ -35,20 +35,9 @@ template(name='model_doc_view')
                     +viewing
                 .twelve.wide.column.scrolling
                     a.ui.header.calc found fields
-                    each found_fields 
-                        |#{this}
-                    if icon 
-                        +i name=icon color=icon_color
-                    if title 
-                        .ui.header #{title}
-                    if description 
-                        |!{description}
-                    if body
-                        |!{body}
-                    if image_id 
-                        +image_view key='image_id' 
-                    if template_exists
-                        +Template.dynamic template=model_template
+                    .ui.list
+                        each found_fields 
+                            +found_field
                     .ui.header
                         each fields
                             // if header
@@ -68,6 +57,16 @@ template(name='model_doc_view')
                     //- div
                     //- if watson
                     //-     +watson_view
+
+template(name='found_field')
+    .item #{this}
+        if field_template_exists
+            +Template.dynamic template=field_template data=current_doc
+
+template(name='title')
+    +print_this
+    .ui.header title: #{title}
+
 
 template(name='model_doc_edit')
     .ui.grey.header 

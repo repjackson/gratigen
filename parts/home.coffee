@@ -177,10 +177,23 @@ if Meteor.isClient
                     title:@title
                     lat: "#{@lat}"
                     lng:"#{@lng}"
+    Template.model_doc_view.helpers 
+        field_template: -> 
+            console.log @
+            "#{@model}_card"
+        field_template_exists: ->
+            # current_model = Router.current().params.model_slug
+            if @model
+                if Template["#{@model}_card"]
+                    return true
+                else
+                    return false
+
+            
     Template.home_card.helpers 
         model_card_template: -> "#{@model}_card"
         card_template_exists: ->
-            # current_model = Template.parentData().model_slug
+            # current_model = Router.current().params.model_slug
             if @model
                 if Template["#{@model}_card"]
                     return true

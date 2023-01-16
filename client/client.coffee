@@ -7,7 +7,7 @@
 
 Template.app.helpers
     ct: -> 
-        console.log Meteor.user().current_template
+        # console.log Meteor.user().current_template
         Meteor.user().current_template
 
 

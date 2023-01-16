@@ -645,24 +645,21 @@ if Meteor.isServer
                         found_fields:keys
             
 if Meteor.isClient
-    Template.model_doc_view.helpers
-        # current_model: ->
-
-            # Meteor.user().current_model
-        template_exists: ->
+    Template.found_field.helpers
+        field_template_exists: ->
             # false
-            current_model = Meteor.user().current_model
-            console.log "#{current_model}_view"
-            if Template["#{current_model}_view"]
-                # console.log 'true'
+            console.log @
+            # current_model = Meteor.user().current_model
+            console.log "#{@}"
+            if Template["#{@}"]
+                console.log 'true'
                 return true
             else
-                # console.log 'false'
+                console.log 'false'
                 return false
-        model_template: ->
-            current_model = Meteor.user().current_model
-            console.log "#{current_model}_view"
-            "#{current_model}_view"
+        field_template: ->
+            console.log "#{@}"
+            "#{@}"
 
 
 
