@@ -61,8 +61,7 @@ body {
 	overflow-y:scroll;
 	overflow-x:hidden;
 	max-height:500px;
-  filter: drop-shadow(20px 10px 10px blue) !important;
-  box-shadow: 10px 5px 5px red !important;
+  filter: drop-shadow(5px 5px 20px blue) !important;
 }
 /*.rightbar {*/
 /*  width: 100%;*/

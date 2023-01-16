@@ -142,7 +142,11 @@ if Meteor.isClient
         #     Meteor.users.update Meteor.userId(),
         #         $set:
         #             show_leftbar:!Meteor.user().show_leftbar
-        'click .toggle_modelbar': ->
+        'click .toggle_modelbar': (e,t)->
+            $('.item').transition('bounce', 1000)
+            $('.cubes').transition('jiggle', 1000)
+            # $(e.currentTarget).closest('.item').transition('bounce', 1000)
+            # $(e.currentTarget).closest('.cubes').transition('jiggle', 1000)
             console.log Meteor.user().show_modelbar
             if Meteor.user().show_modelbar
                 $('.modelbar').transition('swing right', 1000)
@@ -187,6 +191,9 @@ if Meteor.isClient
 
         
     Template.nav.helpers
+        modelbar_class: ->
+            if Meteor.user().show_modelbar
+                'large inverted'
         model_docs: ->
             Docs.find 
                 model:'model'
