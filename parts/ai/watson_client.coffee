@@ -3,9 +3,6 @@ if Meteor.isClient
         Meteor.setTimeout ->
             $('.progress').progress()
         , 1000
-        Meteor.setTimeout ->
-            $('.ui.accordion').accordion()
-        , 1000
     
     Template.small_sentiment.onCreated ->
         Meteor.setTimeout ->

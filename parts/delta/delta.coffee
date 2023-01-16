@@ -501,10 +501,6 @@ if Meteor.isClient
     Template.facet.onCreated ->
         @viewing_facet = new ReactiveVar true
     
-    Template.facet.onRendered ->
-        Meteor.setTimeout ->
-            $('.accordion').accordion()
-        , 1500
 
     Template.facet.events
         # 'click .ui.accordion': ->
@@ -1354,10 +1350,6 @@ if Meteor.isClient
         @autorun -> Meteor.subscribe 'model_widgets', Meteor.user().current_model, ->
         @autorun -> Meteor.subscribe 'model_block_instances', Meteor.user().current_model, ->
 
-    Template.model_edit.onRendered ->
-        Meteor.setTimeout ->
-            $('.accordion').accordion()
-        , 1000
 
     # object['key']['subkey']
     # object.key

@@ -898,22 +898,26 @@ template(name='online_allies')
                         .ui.basic.label #{this}
                         
 template(name='online_users')
-    .ui.header 
-        // +i name='conference-background-selected' color='83DFF4'
-        // |online users
-    //.ui.selectable.animated.list.smallscroll
-    .ui.fluid.menu.hscroll.secondary
-        each online_user_docs 
-            a.item.fly_right(href="/user/#{username}")
-                img.ui.circular.tiny.image(src="{{c.url image_id width=400 height=400 gravity='face' crop='fill'}}")
-                //click needs to pop up modal of user page
-                
-                // make sure comments aren't indented under code, it'll break
-            div
-                |#{username}
-                if tags 
-                    each tags 
-                        .ui.basic.label #{this}
+    details.ui.accordion 
+        summary.active.title
+            .ui.header 
+                +i name='conference-background-selected' color='83DFF4'
+                |#{online_user_docs.count} online players
+                i.right.dropdown.icon
+        .active.content
+            .ui.fluid.secondary.menu.hscroll
+                //.ui.selectable.animated.list.smallscroll
+                each online_user_docs 
+                    a.item.fly_right(href="/user/#{username}")
+                        img.ui.circular.tiny.image(src="{{c.url image_id width=400 height=400 gravity='face' crop='fill'}}")
+                        //click needs to pop up modal of user page
+                        
+                        // make sure comments aren't indented under code, it'll break
+                    div
+                        |#{username}
+                        if tags 
+                            each tags 
+                                .ui.basic.label #{this}
 
 template(name='open_requests')
     .ui.header open requests

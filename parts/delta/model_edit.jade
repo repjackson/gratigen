@@ -45,8 +45,8 @@ template(name='model_edit')
                                 +number_edit key='column_width' label='width' direct=true
                                 i.remove.red.large.link.icon.zoomer.delete_widget(title='remove widget')
                 .twelve.wide.column
-                    .ui.fluid.styled.accordion
-                        .active.title.zoomer
+                    details.ui.fluid.styled.accordion
+                        summary.active.title.zoomer
                             .ui.inline.header 
                                 +i name='info'
                                 |#{current_model.model} info
@@ -70,8 +70,8 @@ template(name='model_edit')
                         
                                 +multi_doc_edit key='actions' label='actions' ref_model='action' direct=true
                                 +text_edit key='app' label='app' direct=true
-                    .ui.fluid.styled.accordion
-                        .active.title.zoomer
+                    details.ui.fluid.styled.accordion
+                        summary.active.title.zoomer
                             .ui.inline.header 
                                 // i.large.cubes.icon
                                 +i name='template'

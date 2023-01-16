@@ -139,11 +139,6 @@ if Meteor.isClient
                 )
                 
    
-    Template.comments.onRendered ->
-        Meteor.setTimeout ->
-            $('.accordion').accordion()
-        , 1000
-        
         
     Template.comments.onCreated ->
         console.log Template.parentData(3)

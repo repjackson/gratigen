@@ -80,6 +80,7 @@ head
 
 body
     +leftbar
+    +rightbar
     .ui.flyout
         i.close.icon
         .ui.header hi
@@ -100,7 +101,6 @@ template(name='app')
         if currentUser.show_modelbar
             +modelbar
         // if currentUser.show_rightbar
-        +rightbar
         .layout
             with currentUser
                 // .ui.label doc #{currentUser.current_doc_id}
@@ -111,9 +111,9 @@ template(name='app')
                 // img.ui.fluid.image.home_banner(src="{{c.url 'frontrange'}}" class=darkmode_class)
                 // #main.ui.bottom.attached.pushable.segment.scrolling
                 // +topbar
-                +footer
             else 
                 +login
+        +footer
     else 
         i.massive.asterisk.loading.blue.icon
     
@@ -155,7 +155,7 @@ template(name='footer')
     .ui.small.compact.bottom.fixed.menu.hscroll
         .icon.item(title='node history')
             i.large.clock.icon(title='node history')
-        each doc_history 
+        each currentUser.doc_history 
             +doc_history_button
         .ui.label temp #{currentUser.current_template}
         .ui.label model #{currentUser.current_model}
@@ -231,7 +231,7 @@ template(name='nav')
             +nav_item route='/dev' icon='network' label='dev'
         a.icon.item.zoomer(href='/add' title='add new doc')
             i.large.play.icon
-        +toggle_nav_item key='invert_mode' icon='light' label='invert mode'
+        +toggle_nav_item key='invert_mode' icon='lightbulb' label='invert mode'
         // .search.item.zoomer.mobile.hidden(title='search')
         //     .ui.icon.transparent.input
         //         if current_product_search
@@ -331,8 +331,8 @@ template(name='nav')
                 
 template(name='toggle_nav_item')
     a.icon.item.toggle(class=toggle_item_class title="toggle #{label}")
-        // i.big.icon(class=icon)
-        +i name=icon color='ffffff' cl='ui avatar image'
+        i.big.icon(class=icon)
+        // +i name=icon color='ffffff' cl='ui avatar image'
           
           
 template(name='secnav')

@@ -252,7 +252,7 @@ Template.registerHelper 'template_parent', () ->
 Template.registerHelper 'fields', () ->
     model = Docs.findOne
         model:'model'
-        slug:Meteor.user().model_slug
+        slug:Meteor.user().current_model
     if model
         match = {}
         # if Meteor.user()
@@ -268,7 +268,7 @@ Template.registerHelper 'fields', () ->
 # Template.registerHelper 'edit_fields', () ->
 #     model = Docs.findOne
 #         model:'model'
-#         slug:Meteor.user().model_slug
+#         slug:Meteor.user().current_model
 #     if model
 #         Docs.find {
 #             model:'field'
@@ -279,7 +279,7 @@ Template.registerHelper 'fields', () ->
 Template.registerHelper 'sortable_fields', () ->
     model = Docs.findOne
         model:'model'
-        slug:Meteor.user().model_slug
+        slug:Meteor.user().current_model
     if model
         Docs.find {
             model:'field'
@@ -303,7 +303,7 @@ Template.registerHelper 'loading_class', () ->
 Template.registerHelper 'current_model', (input) ->
     Docs.findOne
         model:'model'
-        slug: Meteor.user().model_slug
+        slug: Meteor.user().current_model
 
 Template.registerHelper 'in_list', (key) ->
     if Meteor.userId()
