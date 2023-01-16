@@ -22,12 +22,8 @@ body {
   }
 }
 
-header {  
+.modelbar {  
   /* This section calls the slideInFromLeft animation we defined above */
-  animation: 1s ease-out 0s 1 slideInFromLeft;
-  
-  background: #333;
-  padding: 30px;
 }
 
 
@@ -54,6 +50,7 @@ header {
 /*  box-shadow: 10px 5px 5px red !important;*/
 /*}*/
 .modelbar {
+  animation: 1s ease-out 0s 1 slideInFromLeft;
   border-radius: 20px !important;
   width: 100%;
   position: absolute;
@@ -64,7 +61,7 @@ header {
 	overflow-y:scroll;
 	overflow-x:hidden;
 	max-height:500px;
-  filter: drop-shadow(10px 10px 10px rgba(250,250,250, 0.5)) !important;
+  filter: drop-shadow(20px 10px 10px blue) !important;
   box-shadow: 10px 5px 5px red !important;
 }
 /*.rightbar {*/

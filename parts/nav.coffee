@@ -144,9 +144,17 @@ if Meteor.isClient
         #             show_leftbar:!Meteor.user().show_leftbar
         'click .toggle_modelbar': ->
             console.log Meteor.user().show_modelbar
-            Meteor.users.update Meteor.userId(),
-                $set:
-                    show_modelbar:!Meteor.user().show_modelbar
+            if Meteor.user().show_modelbar
+                $('.modelbar').transition('swing right', 1000)
+                Meteor.setTimeout ->
+                    Meteor.users.update Meteor.userId(),
+                        $set:
+                            show_modelbar:false
+                , 1000
+            else 
+                Meteor.users.update Meteor.userId(),
+                    $set:
+                        show_modelbar:true
         'click .toggle_rightbar': ->
             console.log Meteor.user().show_rightbar
             Meteor.users.update Meteor.userId(),
