@@ -86,8 +86,7 @@ template(name='app')
     +nav
     // #draggable
     with currentUser
-        .ui.inline.header 
-            |history
+        i.large.clock.icon
         each doc_history 
             +doc_history_button
         +text_edit key='current_template' direct=true
@@ -101,10 +100,13 @@ template(name='app')
     //     +login
     
 template(name='doc_history_button')
-    .ui.button #{this}
-        with doc_from_id
-            .ui.tertiary.button.goto_string_doc
-                |#{title}
+    with doc_from_id
+        .ui.tertiary.button.goto_string_doc
+            with parent_model
+                +i name=icon color=stripped_icon_color
+            if image_id
+                img.ui.tiny.inline.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+            |#{title}
     
     
 template(name='layout')
