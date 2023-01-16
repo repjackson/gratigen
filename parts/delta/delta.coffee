@@ -661,6 +661,22 @@ if Meteor.isClient
             # console.log "#{@}_field"
             "#{@}_field"
 
+    Template.model_field.helpers
+        model_temp_exists: ->
+            # false
+            # console.log @
+            # current_model = Meteor.user().current_model
+            # console.log "#{@}"
+            if Template["#{@model}_view"]
+                # console.log 'true'
+                return true
+            else
+                # console.log 'false'
+                return false
+        model_temp: ->
+            # console.log "#{@}_field"
+            "#{@model}_view"
+
 
 
     Template.model_doc_edit.events

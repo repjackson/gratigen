@@ -135,9 +135,9 @@ template(name='secnav')
     //         input(type='text')
     .ui.attached.small.borderless.inverted.menu.hscroll.invert(class=invert_class)
         // .item
-        .ui.icon.small.transparent.input
-            input.filter_models(type='text' placeholder='filter')
-            i.search.link.icon
+        // .ui.icon.small.transparent.input
+        //     input.filter_models(type='text' placeholder='filter')
+        //     i.search.link.icon
         // .ui.dropdown.icon.item
         //     i.wrench.icon
         //     .menu 
@@ -150,7 +150,7 @@ template(name='secnav')
         each model_docs_helper 'model'
            a.item.zoomer.goto_model(title=ranking)
                 // i.large.inbox.icon
-                +i name=icon color=stripped_icon_color cl='ui image zoomer'
+                +i name=icon color=stripped_icon_color cl='ui avatar image zoomer'
                 span.mobile.hidden 
                     small #{total_count}
                     |#{title}

@@ -560,6 +560,55 @@ template(name='model_picker')
                         |#{title}
                         i.remove.link.circular.red.icon.zoomer.remove_model
                     
+template(name='title_field')
+    +print_this
+    .ui.inline.header title: #{title}
+
+template(name='tags_field')
+    .ui.inline.header tags 
+    each tags 
+        .ui.label #{this}
+        
+template(name='roles_field')    
+    .ui.header 
+        i.shield.icon
+        |roles
+    +role_picker
+        
+template(name='_author_id_field')   
+    // .ui.inline.header 
+    //     i.user.icon
+    //     |author
+        // |#{_author_id}
+    +author_info
+    with _author
+        +user_card
+    
+template(name='_author_username_field')   
+    .ui.header 
+        i.user.icon
+        |author
+        |#{_author_username}
+        
+        
+template(name='icon_field')
+    +i name=icon
+    .ui.header #{icon}
+        
+template(name='_timestamp_field')
+    // +when
+    .ui.label #{_timestamp} #{when}
+        
+template(name='model_field')
+    .ui.inline.header model 
+    .ui.big.label
+        i.database.icon
+        |#{model}
+    if model_temp_exists
+        +Template.dynamic template=model_temp
+
+
+
 
 template(name='role_picker')
     .ui.header 

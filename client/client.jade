@@ -89,10 +89,11 @@ template(name='app')
         i.large.clock.icon
         each doc_history 
             +doc_history_button
-        +text_edit key='current_template' direct=true
-        +text_edit key='current_model' direct=true
+        // +text_edit key='current_template' direct=true
+        // +text_edit key='current_model' direct=true
     .ui.label temp #{currentUser.current_template}
     .ui.label model #{currentUser.current_model}
+    // .ui.label doc #{currentUser.current_doc_id}
     if ct.length
         +Template.dynamic template=ct
     // +home
