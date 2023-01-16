@@ -37,7 +37,7 @@ if Meteor.isClient
             $('.ui.leftbar')
                 .sidebar({
                     context: $('.layout')
-                    transition:'push'
+                    transition:'scale down'
                     mobileTransition:'push'
                     exclusive:true
                     duration:200
@@ -49,7 +49,7 @@ if Meteor.isClient
             $('.ui.rightbar')
                 .sidebar({
                     context: $('.layout')
-                    transition:'push'
+                    transition:'scale down'
                     mobileTransition:'push'
                     exclusive:true
                     duration:200
@@ -61,7 +61,7 @@ if Meteor.isClient
             $('.ui.topbar')
                 .sidebar({
                     context: $('.layout')
-                    transition:'push'
+                    transition:'scale down'
                     mobileTransition:'push'
                     exclusive:true
                     duration:200
