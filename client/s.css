@@ -12,9 +12,13 @@ body {
     /*filter: invert(.9) !important;*/
     /* background: #0e0e44 !important; */
 }
-.layout:not(.invert) .segment{
-  background: rgba(0, 0, 0, 1) !important;
+
+.goto_string_doc {
+  max-width: 200px !important;
 }
+/*.layout:not(.invert) .segment{*/
+/*  background: rgba(0, 0, 0, 1) !important;*/
+/*}*/
 .leftbar {
   border-radius: 20px !important;
   width: 100%;
@@ -111,7 +115,7 @@ body {
 
 
 .image, .segment, .card, .button, .nav, .item, .header { 
-  animation: fadeIn 1s !important; 
+  animation: fadeIn 1.5s !important; 
 }
 
 .ui.header{
@@ -173,9 +177,9 @@ body {
 .input {
   margin: 5px !important;
 }
-.layout.invert{
+/*.layout.invert{*/
   /*background: rgba(0,0,0,1) !important; */
-}
+/*}*/
 .invert {
   filter: invert(1) hue-rotate(180deg);
 }

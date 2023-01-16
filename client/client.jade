@@ -90,33 +90,30 @@ body
 
 
 template(name='app')
-    +nav
-    // #draggable
-    if currentUser.show_leftbar
+    if Template.subscriptionsReady
+        +nav
+        // #draggable
+        // if currentUser.show_leftbar
         +leftbar
-    if currentUser.show_modelbar
-        +modelbar
-    if currentUser.show_rightbar
+        if currentUser.show_modelbar
+            +modelbar
+        // if currentUser.show_rightbar
         +rightbar
-    with currentUser
-        .ui.attached.small.compact.menu.hscroll
-            .icon.item(title='node history')
-                i.large.clock.icon(title='node history')
-            each doc_history 
-                +doc_history_button
-            .ui.label temp #{currentUser.current_template}
-            .ui.label model #{currentUser.current_model}
-        // .ui.label doc #{currentUser.current_doc_id}
-        // div.layout(class=invert_class)
-        if ct.length
-            +Template.dynamic template=ct
-            // +home
-        // img.ui.fluid.image.home_banner(src="{{c.url 'frontrange'}}" class=darkmode_class)
-        // #main.ui.bottom.attached.pushable.segment.scrolling
-        // +topbar
-        +footer
+        .pusher.layout
+            with currentUser
+                // .ui.label doc #{currentUser.current_doc_id}
+                // div.layout(class=invert_class)
+                if ct.length
+                    +Template.dynamic template=ct
+                    // +home
+                // img.ui.fluid.image.home_banner(src="{{c.url 'frontrange'}}" class=darkmode_class)
+                // #main.ui.bottom.attached.pushable.segment.scrolling
+                // +topbar
+                +footer
+            else 
+                +login
     else 
-        +login
+        i.massive.asterisk.loading.blue.icon
     
 template(name='doc_history_button')
     with doc_from_id
@@ -153,6 +150,13 @@ template(name='shortcut_modal')
 
 
 template(name='footer')
+    .ui.small.compact.bottom.fixed.menu.hscroll
+        .icon.item(title='node history')
+            i.large.clock.icon(title='node history')
+        each doc_history 
+            +doc_history_button
+        .ui.label temp #{currentUser.current_template}
+        .ui.label model #{currentUser.current_model}
     .ui.segment.grid
         .eight.wide.column.smallscroll
             .ui.header 
