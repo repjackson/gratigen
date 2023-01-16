@@ -154,7 +154,7 @@ template(name='shortcut_modal')
 
 template(name='footer')
     .ui.small.compact.bottom.fixed.menu.hscroll
-        .icon.item(title='node history')
+        .icon.item(title="#{doc_history.length} node history")
             i.large.clock.icon(title='node history')
         each currentUser.doc_history.reverse
             +doc_history_button
@@ -222,14 +222,14 @@ template(name='nav')
             span.mobile.hidden Gratigen
         if currentUser.admin
             +toggle_nav_item key='admin_mode' icon='shield' label='admin mode'
-        +nav_item route='/users' icon='users' label='users' hide_label=true
-        // +nav_item route='reddit' icon='reddit' label='reddit'
+        +nav_item template='users' icon='users' label='users' hide_label=true
+        // +nav_item template='reddit' icon='reddit' label='reddit'
 
-        // +nav_item route='/m/model' icon='cubes' label='models'
+        // +nav_item template='/m/model' icon='cubes' label='models'
         // a.icon.item.zoomer(href='/m/model' title='delta')
         //     i.large.database.icon
         if currentUser.admin_mode
-            +nav_item route='/dev' icon='network' label='dev'
+            +nav_item template='dev' icon='network' label='dev'
         a.icon.item.zoomer.goto_add(title='add new doc')
             i.large.play.icon
         +toggle_nav_item key='invert_mode' icon='lightbulb' label='invert mode'
@@ -285,16 +285,16 @@ template(name='nav')
                     if unread_count
                         |#{unread_count}
             else
-                a.icon.item(href="/inbox" class="{{isActiveRoute 'inbox'}}")
+                a.icon.item(href="/inbox" class="{{is_active_template 'inbox'}}")
                     i.large.outline.bell.icon
-            a.icon.item.zoomer(href="/chat" class="{{isActiveRoute 'chat'}}")
+            a.icon.item.zoomer(href="/chat" class="{{is_active_template 'chat'}}")
                 if unread_chat_messages
                     i.large.teal.chat.icon
                     small #{unread_chat_messages.count}
                 else 
                     i.large.chat.outline.icon
             if currentUser
-                // a.item(href="/user/#{currentUser.username}/credit" class="{{isActiveRoute regex='user_credit'}}" title='your credits')
+                // a.item(href="/user/#{currentUser.username}/credit" class="{{is_active_template regex='user_credit'}}" title='your credits')
                 a.item.toggle_coinbar(title='current wallet balance')
                     i.coins.yellow.icon.invert
                     |&nbsp;
@@ -371,7 +371,7 @@ template(name='secnav')
                     |#{title}
                  
 template(name='nav_item')
-    a.item.zoomer.nav_item(href="{{route}}" class="{{isActiveRoute route }}" title=label)
+    a.item.zoomer.nav_item(class="{{is_active_template template }}" title=label)
         i.large.icon(class=icon)
         // +i name=icon color='ffffff' cl='ui avatar image zoomer'
         // |&nbsp;
@@ -381,7 +381,7 @@ template(name='nav_item')
 
                  
 template(name='top_nav_item')
-    a.item.zoomer.mobile.hidden(href="/{{route}}" class="{{isActiveRoute route }}")
+    a.item.zoomer.mobile.hidden(href="/{{route}}" class="{{is_active_template route }}")
         // i.large.icon(class=icon)
         +i name=icon color=color cl='ui mini inline image'
         // |&nbsp;
@@ -423,10 +423,10 @@ template(name='recent_alert')
 template(name='rightbar')
     .ui.vertical.menu.right.sidebar.rightbar
         with currentUser
-            a.item.toggle_rightbar.no_blink(href="/user/#{currentUser.username}" class="{{isActiveRoute 'user_layout'}}")
+            a.item.toggle_rightbar.no_blink(href="/user/#{currentUser.username}" class="{{is_active_template 'user_layout'}}")
                 img.ui.avatar.compact.image(src="{{c.url currentUser.image_id height=200 width=200 gravity='face' crop='fill'}}")
                 |#{currentUser.name}
-            a.item.toggle_rightbar(href="/user/#{username}" class="{{isActiveRoute regex='user_dashboard'}}")
+            a.item.toggle_rightbar(href="/user/#{username}" class="{{is_active_template regex='user_dashboard'}}")
                 +i name='dashboard'
                 // i.dashboard.icon
                 |dashboard
@@ -438,30 +438,30 @@ template(name='rightbar')
                 |dark mode
             each profile_nav_items
                 +nav_item
-            +nav_item route='my_organizations' icon='groups' color='83DFF4' label='organizations'
-            +nav_item route='my_projects' icon='project' color='7229AF' label='projects'
-            +nav_item route='my_events' icon='calendar' color='FAB005' label='events'
-            +nav_item route='my_roles' icon='what-i-do' color='42E8C4' label='roles'
-            +nav_item route='my_tasks' icon='task' color='B785E1' label='tasks'
-            +nav_item route='my_resources' icon='car' color='FD7E14' label='resources'
-            +nav_item route='my_skills' icon='wrench' color='ff0000' label='skills'
-            +nav_item route='my_badges' label='badges' icon='badge' color='1255B8'
+            +nav_item template='my_organizations' icon='groups' color='83DFF4' label='organizations'
+            +nav_item template='my_projects' icon='project' color='7229AF' label='projects'
+            +nav_item template='my_events' icon='calendar' color='FAB005' label='events'
+            +nav_item template='my_roles' icon='what-i-do' color='42E8C4' label='roles'
+            +nav_item template='my_tasks' icon='task' color='B785E1' label='tasks'
+            +nav_item template='my_resources' icon='car' color='FD7E14' label='resources'
+            +nav_item template='my_skills' icon='wrench' color='ff0000' label='skills'
+            +nav_item template='my_badges' label='badges' icon='badge' color='1255B8'
                 
-            +right_nav_item route='credit' label='credit' icon='money'
-            +right_nav_item route='orders' label='orders' icon='check'
-            +right_nav_item route='subscriptions' label='subscriptions' icon='check'
-            +right_nav_item route='friends' label='friends' icon='friends'
-            // a.item.toggle_rightbar(href="/user/#{username}/pantry" class="{{isActiveRoute 'user_pantry'}}")
+            +right_nav_item template='credit' label='credit' icon='money'
+            +right_nav_item template='orders' label='orders' icon='check'
+            +right_nav_item template='subscriptions' label='subscriptions' icon='check'
+            +right_nav_item template='friends' label='friends' icon='friends'
+            // a.item.toggle_rightbar(href="/user/#{username}/pantry" class="{{is_active_template 'user_pantry'}}")
             //     +i name='cupboard' cl='ui avatar image'
             //     |pantry
-            +right_nav_item route='cart' label='cart' icon='shopping-cart'
-            // a.item.toggle_rightbar(href="/work" class="{{isActiveRoute 'work'}}")
+            +right_nav_item template='cart' label='cart' icon='shopping-cart'
+            // a.item.toggle_rightbar(href="/work" class="{{is_active_template 'work'}}")
             //     +i name='trust' cl='ui avatar image'
             //     |work
-            // a.item.toggle_rightbar(href="/user/#{username}/trips" class="{{isActiveRoute 'user_trips'}}")
+            // a.item.toggle_rightbar(href="/user/#{username}/trips" class="{{is_active_template 'user_trips'}}")
             //     +i name='bicycle' cl='ui avatar image'
             //     |trips
-            a.item.toggle_rightbar(href="/user/#{currentUser._id}/edit" class="{{isActiveRoute 'user_trips'}}")
+            a.item.toggle_rightbar(href="/user/#{currentUser._id}/edit" class="{{is_active_template 'user_trips'}}")
                 +i name='settings' 
                 |account
             // .ui.divider
@@ -473,17 +473,17 @@ template(name='rightbar')
                     // i.sign.out.icon
                 |logout
         else 
-            a.item.toggle_rightbar(href="/login" class="{{isActiveRoute 'login'}}")
+            a.item.toggle_rightbar(href="/login" class="{{is_active_template 'login'}}")
                 +i name='internal' cl='ui avatar image'
                 |login
-            a.item.toggle_rightbar(href="/register" class="{{isActiveRoute 'register'}}")
+            a.item.toggle_rightbar(href="/register" class="{{is_active_template 'register'}}")
                 +i name='plus' cl='ui avatar image'
                 |register
 
 
 
 template(name='right_nav_item')
-    a.item.toggle_rightbar(href="/user/#{currentUser.username}/#{route}" class="{{isActiveRoute regex='user_dashboard'}}")
+    a.item.toggle_rightbar(href="/user/#{currentUser.username}/#{route}" class="{{is_active_template regex='user_dashboard'}}")
         // +i name=icon cl='ui avatar image'
         i.large.icon(class=icon)
         |#{label}

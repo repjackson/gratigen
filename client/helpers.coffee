@@ -9,7 +9,11 @@ Template.registerHelper 'parent_doc', () ->
     # Template.parentData()
 
 Template.registerHelper 'isActivePath', () ->
-Template.registerHelper 'isActiveRoute', () ->
+Template.registerHelper 'is_active_template', () ->
+    if @template is Meteor.user().current_template
+        'active'
+    else 
+        ''
 Template.registerHelper 'stripped_icon_color', () ->
     # console.log @icon_color 
     if @icon_color

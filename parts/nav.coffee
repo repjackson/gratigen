@@ -71,6 +71,10 @@ if Meteor.isClient
         , 2000
         
         
+    Template.nav_item.events
+        'click .nav_item': ->
+            Meteor.users.update Meteor.userId(),
+                $set:current_template:@template
     Template.nav.events
         'mouseover .item': (e)->
             # $(e.currentTarget).closest('.icon').transition('bounce', 1000)
