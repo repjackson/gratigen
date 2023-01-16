@@ -639,7 +639,7 @@ if Meteor.isServer
             # template = Docs.findOne Meteor.user().current_template
             if doc 
                 keys = _.keys doc 
-                console.log 'doc keys', keys
+                console.log 'doc keys type', typeof keys
                 Docs.update doc._id,
                     $set:
                         found_fields:keys
@@ -651,15 +651,15 @@ if Meteor.isClient
             # console.log @
             # current_model = Meteor.user().current_model
             console.log "#{@}"
-            if Template["#{@}"]
+            if Template["#{@}_field"]
                 console.log 'true'
                 return true
             else
                 console.log 'false'
                 return false
         field_template: ->
-            console.log "#{@}"
-            # "#{@}"
+            console.log "#{@}_field"
+            "#{@}_field"
 
 
 

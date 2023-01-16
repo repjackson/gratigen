@@ -151,8 +151,8 @@ if Meteor.isClient
                 
         if Template.parentData(4)
             parent = Template.parentData(4)
-        else if Template.parentData().doc_id
-            parent = Docs.findOne Template.parentData().doc_id
+        else if Meteor.user().current_doc_id
+            parent = Docs.findOne Meteor.user().current_doc_id
         else
             parent = Template.parentData()
         if parent
@@ -161,8 +161,8 @@ if Meteor.isClient
         doc_comments: ->
             if Template.parentData(4)
                 parent = Template.parentData(4)
-            else if Template.parentData().doc_id
-                parent = Docs.findOne Template.parentData().doc_id
+            else if Meteor.user().current_doc_id
+                parent = Docs.findOne Meteor.user().current_doc_id
             else
                 parent = Docs.findOne Template.parentData()._id
             if parent
@@ -178,11 +178,11 @@ if Meteor.isClient
                 # console.log Template.parentData(3)
                 if Template.parentData(4)
                     parent = Template.parentData(4)
-                else if Template.parentData().doc_id
-                    parent = Docs.findOne Template.parentData().doc_id
+                else if Meteor.user().current_doc_id
+                    parent = Docs.findOne Meteor.user().current_doc_id
                 else
                     parent = Docs.findOne Template.parentData()._id
-                # parent = Docs.findOne Template.parentData().doc_id
+                # parent = Docs.findOne Meteor.user().current_doc_id
                 comment = t.$('.add_comment').val()
                 Docs.insert
                     parent_id: parent._id
@@ -218,7 +218,7 @@ if Meteor.isClient
                 # title: {$regex:"#{Session.get('model_search')}",$options:'i'}
                 
         picked_model: ->
-            parent_doc = Docs.findOne Template.parentData().doc_id
+            parent_doc = Docs.findOne Meteor.user().current_doc_id
             # _id:parent_doc["#{Template.currentData().model}_id"]
             console.log Template.currentData().model
             Docs.findOne
@@ -235,12 +235,12 @@ if Meteor.isClient
             
         'click .remove_model': (e,t)->
             if confirm "remove #{@title} model?"
-                Docs.update Template.parentData().doc_id,
+                Docs.update Meteor.user().current_doc_id,
                     $unset:
                         "#{Template.currentData().model}_id":@_id
                         "#{Template.currentData().model}_title":@title
         'click .pick_model': (e,t)->
-            Docs.update Template.parentData().doc_id,
+            Docs.update Meteor.user().current_doc_id,
                 $set:
                     "#{Template.currentData().model}_id":@_id
                     "#{Template.currentData().model}_title":@title
@@ -283,7 +283,7 @@ if Meteor.isClient
                 title: {$regex:"#{Session.get('group_search')}",$options:'i'}
                 
         product_groups: ->
-            product = Docs.findOne Template.parentData().doc_id
+            product = Docs.findOne Meteor.user().current_doc_id
             Docs.find 
                 # model:'group'
                 _id:$in:product.group_ids
@@ -298,12 +298,12 @@ if Meteor.isClient
             
         'click .remove_group': (e,t)->
             if confirm "remove #{@title} group?"
-                Docs.update Template.parentData().doc_id,
+                Docs.update Meteor.user().current_doc_id,
                     $pull:
                         group_ids:@_id
                         group_titles:@title
         'click .pick_group': (e,t)->
-            Docs.update Template.parentData().doc_id,
+            Docs.update Meteor.user().current_doc_id,
                 $addToSet:
                     group_ids:@_id
                     group_titles:@title
@@ -343,7 +343,7 @@ if Meteor.isClient
                 title: {$regex:"#{Session.get('role_search')}",$options:'i'}
                 
         product_roles: ->
-            product = Docs.findOne Template.parentData().doc_id
+            product = Docs.findOne Meteor.user().current_doc_id
             Docs.find 
                 # model:'role'
                 _id:$in:product.role_ids
@@ -358,12 +358,12 @@ if Meteor.isClient
             
         'click .remove_role': (e,t)->
             if confirm "remove #{@title} role?"
-                Docs.update Template.parentData().doc_id,
+                Docs.update Meteor.user().current_doc_id,
                     $pull:
                         role_ids:@_id
                         role_titles:@title
         'click .pick_role': (e,t)->
-            Docs.update Template.parentData().doc_id,
+            Docs.update Meteor.user().current_doc_id,
                 $addToSet:
                     role_ids:@_id
                     role_titles:@title
@@ -405,7 +405,7 @@ if Meteor.isClient
                 title: {$regex:"#{Session.get('badge_search')}",$options:'i'}
                 
         product_badges: ->
-            product = Docs.findOne Template.parentData().doc_id
+            product = Docs.findOne Meteor.user().current_doc_id
             Docs.find 
                 # model:'badge'
                 _id:$in:product.badge_ids
@@ -420,12 +420,12 @@ if Meteor.isClient
             
         'click .remove_badge': (e,t)->
             if confirm "remove #{@title} badge?"
-                Docs.update Template.parentData().doc_id,
+                Docs.update Meteor.user().current_doc_id,
                     $pull:
                         badge_ids:@_id
                         badge_titles:@title
         'click .pick_badge': (e,t)->
-            Docs.update Template.parentData().doc_id,
+            Docs.update Meteor.user().current_doc_id,
                 $addToSet:
                     badge_ids:@_id
                     badge_titles:@title
@@ -464,7 +464,7 @@ if Meteor.isClient
                 title: {$regex:"#{Session.get('task_search')}",$options:'i'}
                 
         product_tasks: ->
-            product = Docs.findOne Template.parentData().doc_id
+            product = Docs.findOne Meteor.user().current_doc_id
             Docs.find 
                 # model:'task'
                 _id:$in:product.task_ids
@@ -479,12 +479,12 @@ if Meteor.isClient
             
         'click .remove_task': (e,t)->
             if confirm "remove #{@title} task?"
-                Docs.update Template.parentData().doc_id,
+                Docs.update Meteor.user().current_doc_id,
                     $pull:
                         task_ids:@_id
                         task_titles:@title
         'click .pick_task': (e,t)->
-            Docs.update Template.parentData().doc_id,
+            Docs.update Meteor.user().current_doc_id,
                 $addToSet:
                     task_ids:@_id
                     task_titles:@title
@@ -545,7 +545,7 @@ if Meteor.isClient
 
     # Template.call_watson.events
     #     'click .autotag': ->
-    #         doc = Docs.findOne Template.parentData().doc_id
+    #         doc = Docs.findOne Meteor.user().current_doc_id
     #         console.log doc
     #         console.log @
     #
@@ -647,13 +647,13 @@ if Meteor.isClient
 
     # Template.user_field.helpers
     #     key_value: ->
-    #         user = Meteor.users.findOne Template.parentData().doc_id
+    #         user = Meteor.users.findOne Meteor.user().current_doc_id
     #         user["#{@key}"]
 
     # Template.user_field.events
     #     'blur .user_field': (e,t)->
     #         value = t.$('.user_field').val()
-    #         Meteor.users.update Template.parentData().doc_id,
+    #         Meteor.users.update Meteor.user().current_doc_id,
     #             $set:"#{@key}":value
 
 
@@ -770,7 +770,7 @@ if Meteor.isClient
         'click .set_key_value': ->
             # console.log @key
             # console.log @value
-            # Docs.update Template.parentData().doc_id,
+            # Docs.update Meteor.user().current_doc_id,
             context = Template.parentData()
             if context
                 Session.set('loading', true)
@@ -782,7 +782,7 @@ if Meteor.isClient
     Template.key_value_edit.helpers
         calculated_class: ->
             res = ''
-            # doc = Docs.findOne Template.parentData().doc_id
+            # doc = Docs.findOne Meteor.user().current_doc_id
             doc = Template.parentData()
             
             # console.log @
@@ -801,7 +801,7 @@ if Meteor.isClient
         'click .set_key_value': ->
             # console.log @key
             # console.log @value
-            # Docs.update Template.parentData().doc_id,
+            # Docs.update Meteor.user().current_doc_id,
             # context = Template.parentData()
             # if context
             if Meteor.user()
@@ -822,7 +822,7 @@ if Meteor.isClient
     Template.profile_key_value_edit.helpers
         calculated_class: ->
             response = ''
-            # doc = Docs.findOne Template.parentData().doc_id
+            # doc = Docs.findOne Meteor.user().current_doc_id
             doc = Template.parentData()
             user = Meteor.user()
             # console.log @
@@ -922,7 +922,7 @@ if Meteor.isClient
     #                     t.user_results.set res
     
     #     'click .select_user': (e,t) ->
-    #         page_doc = Docs.findOne Template.parentData().doc_id
+    #         page_doc = Docs.findOne Meteor.user().current_doc_id
     #         field = Template.currentData()
     
     #         # console.log @
@@ -965,7 +965,7 @@ if Meteor.isClient
     #                 Meteor.users.update parent._id,
     #                     $unset:"#{field.key}":1
     
-    #         #     page_doc = Docs.findOne Template.parentData().doc_id
+    #         #     page_doc = Docs.findOne Meteor.user().current_doc_id
     #             # Meteor.call 'unassign_user', page_doc._id, @
     
     
