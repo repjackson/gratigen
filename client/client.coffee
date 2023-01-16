@@ -84,9 +84,6 @@ Template.not_found.events
 
 $.cloudinary.config
     cloud_name:"facet"
-# Router.notFound =
-    # action: 'not_found'
-
 Template.layout.events
     'click .fly_right': (e,t)-> $(e.currentTarget).closest('.card').transition('fly right', 500)
     'click .zoom': (e,t)-> $(e.currentTarget).closest('.card').transition('drop', 500)

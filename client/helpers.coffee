@@ -228,8 +228,8 @@ Template.registerHelper 'parent_key_value_is', (key, value)->
 
 
 # Template.registerHelper 'checkin_guest_docs', () ->
-#     Docs.findOne Router.current().params.doc_id
-#     session_document = Docs.findOne Router.current().params.doc_id
+#     Docs.findOne Meteor.user().current_doc_id
+#     session_document = Docs.findOne Meteor.user().current_doc_id
 #     # console.log session_document.guest_ids
 #     Docs.find
 #         _id:$in:session_document.guest_ids
@@ -248,7 +248,7 @@ Template.registerHelper 'template_parent', () ->
 Template.registerHelper 'fields', () ->
     model = Docs.findOne
         model:'model'
-        slug:Router.current().params.model_slug
+        slug:Meteor.user().model_slug
     if model
         match = {}
         # if Meteor.user()
@@ -264,7 +264,7 @@ Template.registerHelper 'fields', () ->
 # Template.registerHelper 'edit_fields', () ->
 #     model = Docs.findOne
 #         model:'model'
-#         slug:Router.current().params.model_slug
+#         slug:Meteor.user().model_slug
 #     if model
 #         Docs.find {
 #             model:'field'
@@ -275,7 +275,7 @@ Template.registerHelper 'fields', () ->
 Template.registerHelper 'sortable_fields', () ->
     model = Docs.findOne
         model:'model'
-        slug:Router.current().params.model_slug
+        slug:Meteor.user().model_slug
     if model
         Docs.find {
             model:'field'
@@ -284,7 +284,7 @@ Template.registerHelper 'sortable_fields', () ->
         }, sort:rank:1
 
 # Template.registerHelper 'current_user', (input) ->
-#     Meteor.user() and Meteor.user().username is Router.current().params.username
+#     Meteor.user() and Meteor.user().username is Meteor.user().username
 
 
 
@@ -299,7 +299,7 @@ Template.registerHelper 'loading_class', () ->
 Template.registerHelper 'current_model', (input) ->
     Docs.findOne
         model:'model'
-        slug: Router.current().params.model_slug
+        slug: Meteor.user().model_slug
 
 Template.registerHelper 'in_list', (key) ->
     if Meteor.userId()
@@ -362,10 +362,10 @@ Template.registerHelper 'is_dev', () ->
 
 # Template.registerHelper 'is_eric', () -> if Meteor.userId() and Meteor.userId() in ['ytjpFxiwnWaJELZEd','rDqxdcTBTszjeMh9T'] then true else false
 
-Template.registerHelper 'current_user', () ->  Meteor.users.findOne username:Router.current().params.username
+Template.registerHelper 'current_user', () ->  Meteor.users.findOne username:Meteor.user().username
 Template.registerHelper 'is_current_user', () ->
     if Meteor.user()
-        if Meteor.user().username is Router.current().params.username
+        if Meteor.user().username is Meteor.user().username
             true
         else
             if Meteor.user().roles and 'dev' in Meteor.user().roles
@@ -406,8 +406,8 @@ Template.registerHelper 'ingredient_products', () ->
 
 
 Template.registerHelper 'current_doc', ->
-    doc = Docs.findOne Router.current().params.doc_id
-    # user = Meteor.users.findOne Router.current().params.doc_id
+    doc = Docs.findOne Meteor.user().current_doc_id
+    # user = Meteor.users.findOne Meteor.user().current_doc_id
     # console.log doc
     # console.log user
     # if doc then doc else if user then user
@@ -415,7 +415,7 @@ Template.registerHelper 'current_doc', ->
 
 
 # Template.registerHelper 'current_user', () ->
-#     found = Meteor.users.findOne username:Router.current().params.username
+#     found = Meteor.users.findOne username:Meteor.user().username
 #     # console.log found
 #     if found
 #         found

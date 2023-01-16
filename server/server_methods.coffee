@@ -1,10 +1,15 @@
 Meteor.methods
-    update_state: (route,model)->
-        console.log route, model
-        Meteor.users.update Meteor.userId(),
-            $set:
-                current_template:route 
-                current_model:model
+    change_state: (change_object)->
+        keys = _.keys change_object
+        console.log keys
+        console.log change_object
+        # console.log route, model
+        for key in keys 
+            console.log change_object[key]
+            Meteor.users.update Meteor.userId(),
+                $set:
+                    "#{key}":change_object[key]
+            
     convert_groups:->
         Docs.update {model:'group'},
             {$set:model:'org'},

@@ -20,7 +20,12 @@ if Meteor.isClient
         Session.setDefault('invert_mode', true)
     Template.secnav.events
         'click .goto_model': ->
-            Meteor.call 'update_state', 'delta', @model, ->
+            console.log @
+            Session.set 'loading', true
+            Meteor.call 'change_state', { current_template:'delta', current_model:@slug }, ->
+                Meteor.call 'set_facets', @slug, true, ->
+                    Session.set 'loading', false
+
         # Meteor.setTimeout ->
         #     $('.ui.dropdown').dropdown()
         # , 2000

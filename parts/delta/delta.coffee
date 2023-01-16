@@ -265,7 +265,7 @@ if Meteor.isClient
 
         'click .go_home': ->
             Session.set 'loading', true
-            Meteor.call 'update_state', "delta", 'model',->
+            Meteor.call 'change_state', "delta", 'model',->
             # Meteor.call 'log_view', @_id, ->
             Meteor.call 'set_facets', 'model', ->
                 Session.set 'loading', false
@@ -278,7 +278,7 @@ if Meteor.isClient
             Meteor.users.update Meteor.userId(),
                 $set:
                     editing_model_id: new_model_id
-            Meteor.call 'update_state', "/m/#{new_model._id}", ->
+            Meteor.call 'change_state', "/m/#{new_model._id}", ->
 
 
         'click .clear_query': ->
@@ -371,9 +371,9 @@ if Meteor.isClient
                     model:'model'
                 ob = {
                     template:'doc_edit'
-                    
+                    current_doc_id:new_doc_id
                     }
-                Meteor.call 'change_state', 'doc_edit', 'model', 'new_doc_id', ->
+                Meteor.call 'change_state', ob, ->
             else
                 console.log model
                 new_doc_id = Docs.insert
@@ -732,7 +732,7 @@ if Meteor.isServer
 
 if Meteor.isServer
     Meteor.methods
-        set_facets: (model_slug='model', force)->
+        set_facets: (model_slu, force)->
             if Meteor.userId()
                 delta = Docs.findOne
                     model:'delta'
@@ -742,6 +742,8 @@ if Meteor.isServer
                     model:'delta'
                     _author_id:null
             # console.log 'delta doc', delta
+            model_slug =
+                Meteor.user().current_model
             model = Docs.findOne
                 model:'model'
                 slug:model_slug
@@ -806,7 +808,7 @@ if Meteor.isServer
     
             model = Docs.findOne
                 model:'model'
-                slug:delta.model_filter
+                slug:Meteor.user().current_model
     
             # console.log 'running fum,', delta, model
             built_query = {}
@@ -1331,7 +1333,7 @@ if Meteor.isClient
         'click #delete_model': (e,t)->
             if confirm 'delete model?'
                 Docs.remove Template.parentData().doc_id, ->
-                    Meteor.call 'update_state', "/", ->
+                    Meteor.call 'change_state', "/", ->
 
         'click .add_widget': ->
             Docs.insert
@@ -1415,6 +1417,6 @@ if Meteor.isClient
     #     'click #delete_model': ->
     #         if confirm 'Confirm delete doc'
     #             Docs.remove @_id
-    #             Met  eor.call 'update_state', "delta", ->
+    #             Met  eor.call 'change_state', "delta", ->
     
     
