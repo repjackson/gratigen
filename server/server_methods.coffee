@@ -1,4 +1,10 @@
 Meteor.methods
+    update_state: (route,model)->
+        console.log route, model
+        Meteor.users.update Meteor.userId(),
+            $set:
+                current_template:route 
+                current_model:model
     convert_groups:->
         Docs.update {model:'group'},
             {$set:model:'org'},

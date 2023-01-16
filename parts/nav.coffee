@@ -8,9 +8,19 @@ if Meteor.isClient
         # @autorun => Meteor.subscribe 'my_cart_order'
         # @autorun => Meteor.subscribe 'my_cart_products'
 
+    Template.leftbar_item.events
+        'click .click_item': ->
+            console.log @
+            Meteor.users.update Meteor.userId(),
+                $set:
+                    current_template:'delta'
+                    current_model:@slug
+
     Template.nav.onRendered ->
         Session.setDefault('invert_mode', true)
-    Template.secnav.onRendered ->
+    Template.secnav.events
+        'click .goto_model': ->
+            Meteor.call 'update_state', 'delta', @model, ->
         # Meteor.setTimeout ->
         #     $('.ui.dropdown').dropdown()
         # , 2000

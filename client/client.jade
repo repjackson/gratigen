@@ -80,8 +80,12 @@ body
 
 
 template(name='app')
-    // if currentUser
     +nav
+    with currentUser
+        +text_edit key='current_template' direct=true
+        +text_edit key='current_model' direct=true
+    .ui.label temp #{currentUser.current_template}
+    .ui.label model #{currentUser.current_model}
     +Template.dynamic template=ct
     // +home
     // else 

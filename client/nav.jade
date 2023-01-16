@@ -117,8 +117,8 @@ template(name='nav')
                     span.mobile.hidden login
             if currentUser.viewing_coinbar
                 +coinbar
-    if currentUser.show_secnav
-        +secnav
+    +secnav
+    // if currentUser.show_secnav
                 
                 
 template(name='toggle_nav_item')
@@ -148,7 +148,7 @@ template(name='secnav')
         //                 .item post
         //                 .item model
         each model_docs_helper 'model'
-           a.item.zoomer(href="/m/#{slug}" title=ranking)
+           a.item.zoomer.goto_model(title=ranking)
                 // i.large.inbox.icon
                 +i name=icon color=stripped_icon_color cl='ui avatar image zoomer'
                 span.mobile.hidden 
@@ -156,7 +156,7 @@ template(name='secnav')
                     |#{title}
                  
 template(name='nav_item')
-    a.item.zoomer(href="{{route}}" class="{{isActiveRoute route }}")
+    a.item.zoomer.nav_item(href="{{route}}" class="{{isActiveRoute route }}")
         // i.large.icon(class=icon)
         +i name=icon color='ffffff' cl='ui avatar image zoomer'
         // |&nbsp;
@@ -281,7 +281,7 @@ template(name='leftbar')
         
             
 template(name='leftbar_item')    
-    a.item.zoomer.close_leftbar(href="/m/#{slug}")
+    a.item.zoomer.close_leftbar.click_item
         +i name=icon color=stripped_icon_color cl='ui avatar image'
         span #{title}
                 
