@@ -56,7 +56,7 @@ Meteor.users.find(_id:Meteor.userId()).observe({
 })
 
 
-Template.layout.helpers 
+Template.app.helpers 
     invert_class: ->
         if Meteor.user().invert_mode 
             'invert'
@@ -95,7 +95,7 @@ Template.not_found.events
 
 $.cloudinary.config
     cloud_name:"facet"
-Template.layout.events
+Template.app.events
     'click .fly_right': (e,t)-> $(e.currentTarget).closest('.card').transition('fly right', 500)
     'click .zoom': (e,t)-> $(e.currentTarget).closest('.card').transition('drop', 500)
     'click .fly_left': (e,t)-> 

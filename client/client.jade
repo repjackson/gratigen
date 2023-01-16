@@ -88,13 +88,18 @@ body
             .ui.header content
         .actions
             .ui.button hi
-
     +app
 
 
 template(name='app')
     +nav
     // #draggable
+    if currentUser.show_leftbar
+        +leftbar
+    if currentUser.show_modelbar
+        +rightbar
+    if currentUser.show_rightbar
+        +modelbar
     with currentUser
         .ui.attached.menu.hscroll
             .icon.item(title='node history')
@@ -106,9 +111,13 @@ template(name='app')
             .ui.label temp #{currentUser.current_template}
             .ui.label model #{currentUser.current_model}
         // .ui.label doc #{currentUser.current_doc_id}
-        if ct.length
-            +Template.dynamic template=ct
+        div(class=invert_class)
+            if ct.length
+                +Template.dynamic template=ct
             // +home
+        // img.ui.fluid.image.home_banner(src="{{c.url 'frontrange'}}" class=darkmode_class)
+        // #main.ui.bottom.attached.pushable.segment.scrolling
+        // +topbar
         +footer
     else 
         +login
@@ -123,21 +132,6 @@ template(name='doc_history_button')
             |#{title}
     
     
-template(name='layout')
-    // .loader-wrapper
-    //     span.loader
-    //         span.loader-inner
-    div(class=invert_class)
-        +nav
-        if currentUser.show_leftbar
-            +leftbar
-        if currentUser.show_rightbar
-            +rightbar
-        +yield
-    // img.ui.fluid.image.home_banner(src="{{c.url 'frontrange'}}" class=darkmode_class)
-    // #main.ui.bottom.attached.pushable.segment.scrolling
-        // +topbar
-    +footer
 
 
 template(name='mlayout')

@@ -4,6 +4,8 @@ template(name='nav')
     #topnav.ui.attached.borderless.menu.topnav.hscroll.ani(class=invert_class)
         a.icon.item.toggle_leftbar.zoomer
             i.bars.large.icon
+        a.icon.item.toggle_modelbar.zoomer
+            i.cubes.large.icon
         a.header.image.item.zoomer.set_home(class="{{isActivePath 'home'}}" title='gratihome')
             if is_loading
                 .icon.item
@@ -13,10 +15,10 @@ template(name='nav')
             span.mobile.hidden Gratigen
         if currentUser.admin
             +toggle_nav_item key='admin_mode' icon='shield' label='admin mode'
-        +nav_item route='/users' icon='groups' label='users'
+        +nav_item route='/users' icon='users' label='users'
         // +nav_item route='reddit' icon='reddit' label='reddit'
 
-        +nav_item route='/m/model' icon='network' label='models'
+        +nav_item route='/m/model' icon='cubes' label='models'
         // a.icon.item.zoomer(href='/m/model' title='delta')
         //     i.large.database.icon
         if currentUser.admin_mode
@@ -156,12 +158,12 @@ template(name='secnav')
                     |#{title}
                  
 template(name='nav_item')
-    a.item.zoomer.nav_item(href="{{route}}" class="{{isActiveRoute route }}")
-        // i.large.icon(class=icon)
-        +i name=icon color='ffffff' cl='ui avatar image zoomer'
+    a.item.zoomer.nav_item(href="{{route}}" class="{{isActiveRoute route }}" title=label)
+        i.large.icon(class=icon)
+        // +i name=icon color='ffffff' cl='ui avatar image zoomer'
         // |&nbsp;
         |&nbsp;
-        span.zoomer.mobile.hidden #{label}
+        // span.zoomer.mobile.hidden #{label}
 
                  
 template(name='top_nav_item')
@@ -275,6 +277,12 @@ template(name='right_nav_item')
 
 template(name='leftbar')
     .ui.vertical.borderless.menu.leftbar
+        .item leftbar
+        each model_docs_helper 'model'
+            +leftbar_item
+        
+template(name='modelbar')
+    .ui.vertical.borderless.menu.modelbarbar
         .item leftbar
         each model_docs_helper 'model'
             +leftbar_item

@@ -153,11 +153,16 @@ if Meteor.isClient
             Session.set('invert_mode', !Session.get('invert_mode'))
             console.log Session.get('invert_mode')
         
-        'click .toggle_leftbar': ->
-            console.log Meteor.user().show_leftbar
+        # 'click .toggle_leftbar': ->
+        #     console.log Meteor.user().show_leftbar
+        #     Meteor.users.update Meteor.userId(),
+        #         $set:
+        #             show_leftbar:!Meteor.user().show_leftbar
+        'click .toggle_modelbar': ->
+            console.log Meteor.user().show_modelbar
             Meteor.users.update Meteor.userId(),
                 $set:
-                    show_leftbar:!Meteor.user().show_leftbar
+                    show_modelbar:!Meteor.user().show_modelbar
         'click .toggle_rightbar': ->
             console.log Meteor.user().show_rightbar
             Meteor.users.update Meteor.userId(),
