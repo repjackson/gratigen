@@ -101,6 +101,7 @@ template(name='app')
         if currentUser.show_modelbar
             +modelbar
         // if currentUser.show_rightbar
+        +delta_nav
         .layout
             with currentUser
                 // .ui.label doc #{currentUser.current_doc_id}
@@ -155,7 +156,7 @@ template(name='footer')
     .ui.small.compact.bottom.fixed.menu.hscroll
         .icon.item(title='node history')
             i.large.clock.icon(title='node history')
-        each currentUser.doc_history 
+        each currentUser.doc_history.reverse
             +doc_history_button
         .ui.label temp #{currentUser.current_template}
         .ui.label model #{currentUser.current_model}
@@ -333,6 +334,14 @@ template(name='toggle_nav_item')
     a.icon.item.toggle(class=toggle_item_class title="toggle #{label}")
         i.big.icon(class=icon)
         // +i name=icon color='ffffff' cl='ui avatar image'
+          
+          
+template(name='delta_nav')
+    .ui.attached.menu.hscroll
+        .item 
+            |delta sessions
+        each delta_docs 
+            .item #{when}
           
           
 template(name='secnav')
