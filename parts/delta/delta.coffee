@@ -659,7 +659,7 @@ if Meteor.isClient
                 return false
         field_template: ->
             console.log "#{@}"
-            "#{@}"
+            # "#{@}"
 
 
 
