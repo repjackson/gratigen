@@ -79,6 +79,16 @@ head
     //     });
 
 body
+    +leftbar
+    +rightbar
+    .ui.flyout
+        i.close.icon
+        .ui.header hi
+        .image.content
+            .ui.header content
+        .actions
+            .ui.button hi
+
     +app
 
 
@@ -86,38 +96,34 @@ template(name='app')
     +nav
     // #draggable
     with currentUser
-        i.large.clock.icon
-        each doc_history 
-            +doc_history_button
-        // +text_edit key='current_template' direct=true
-        // +text_edit key='current_model' direct=true
-    .ui.label temp #{currentUser.current_template}
-    .ui.label model #{currentUser.current_model}
-    // .ui.label doc #{currentUser.current_doc_id}
-    if ct.length
-        +Template.dynamic template=ct
-    // +home
-    // else 
-    //     +login
+        .ui.attached.menu.hscroll
+            .icon.item(title='node history')
+                i.large.clock.icon(title='node history')
+            each doc_history 
+                +doc_history_button
+            // +text_edit key='current_template' direct=true
+            // +text_edit key='current_model' direct=true
+            .ui.label temp #{currentUser.current_template}
+            .ui.label model #{currentUser.current_model}
+        // .ui.label doc #{currentUser.current_doc_id}
+        if ct.length
+            +Template.dynamic template=ct
+            // +home
+        +footer
+    else 
+        +login
     
 template(name='doc_history_button')
     with doc_from_id
-        .ui.tertiary.button.goto_string_doc
+        a.ui.item.zoomer.goto_string_doc(title=model)
             with parent_model
-                +i name=icon color=stripped_icon_color
+                +i name=icon color=stripped_icon_color cl='ui avatar image'
             if image_id
-                img.ui.tiny.inline.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+                img.ui.mini.inline.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
             |#{title}
     
     
 template(name='layout')
-    // .ui.flyout
-    //     i.close.icon
-    //     .ui.header hi
-    //     .image.content
-    //         .ui.header content
-    //     .actions
-    //         .ui.button hi
     // .loader-wrapper
     //     span.loader
     //         span.loader-inner

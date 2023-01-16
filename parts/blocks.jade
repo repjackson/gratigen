@@ -219,7 +219,7 @@ template(name='eft_home_picker')
     .ui.compact.large.circular.button.toggle_eft(class=eft_button_class)
         // with ../
         if icon
-            +i name=icon cl='ui image' color=stripped_icon_color
+            +i name=icon cl='ui avatar image' color=stripped_icon_color
         // if icon_view
         // i.icon(class=icon)
         // else
@@ -421,6 +421,12 @@ template(name='creation_info')
         small added 
         strong #{when}
 
+template(name='_timestamp_long_field')
+    .ui.large.basic.label 
+        i.grey.clock.icon
+        small added 
+        strong #{when}
+
 
 template(name='user_list_toggle')
     if currentUser
@@ -593,7 +599,7 @@ template(name='_author_username_field')
         
 template(name='icon_field')
     +i name=icon
-    .ui.header #{icon}
+    .ui.inline.header #{icon}
         
 template(name='_timestamp_field')
     // +when

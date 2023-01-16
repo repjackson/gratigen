@@ -1,8 +1,8 @@
 if Meteor.isClient
-    Template.home.onRendered ->
-        Meteor.setTimeout ->
-            $( "#draggable" ).draggable();
-        ,1000
+    # Template.home.onRendered ->
+    #     Meteor.setTimeout ->
+    #         $( "#draggable" ).draggable();
+    #     ,1000
     Template.home.onCreated ->
         # @autorun => @subscribe 'post_docs',
         #     picked_tags.array()

@@ -173,7 +173,7 @@ body {
 	overflow-y:hidden;
 	overflow-x:scroll;
 	/*max-height:700px;*/
-	/*max-height:85vh;*/
+	max-height:10em;
 	/*padding-top: 1em;*/
 	/*padding-left: 1em;*/
 }
