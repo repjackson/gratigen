@@ -99,19 +99,17 @@ template(name='app')
     if currentUser.show_rightbar
         +rightbar
     with currentUser
-        .ui.attached.menu.hscroll
+        .ui.attached.small.compact.menu.hscroll
             .icon.item(title='node history')
                 i.large.clock.icon(title='node history')
             each doc_history 
                 +doc_history_button
-            // +text_edit key='current_template' direct=true
-            // +text_edit key='current_model' direct=true
             .ui.label temp #{currentUser.current_template}
             .ui.label model #{currentUser.current_model}
         // .ui.label doc #{currentUser.current_doc_id}
-        div.layout(class=invert_class)
-            if ct.length
-                +Template.dynamic template=ct
+        // div.layout(class=invert_class)
+        if ct.length
+            +Template.dynamic template=ct
             // +home
         // img.ui.fluid.image.home_banner(src="{{c.url 'frontrange'}}" class=darkmode_class)
         // #main.ui.bottom.attached.pushable.segment.scrolling
@@ -130,20 +128,6 @@ template(name='doc_history_button')
             |#{title}
     
     
-
-
-template(name='mlayout')
-    .global_container(class=invert_class)
-        unless is_frontdesk
-            +nav
-        //- img.ui.fluid.image.checkin_banner(src="{{c.url 'frontrange' width=1000 height=1000 crop='crop'}}")    
-        +yield
-
-
-template(name='dashboard')
-    // .ui.padded.stackable.grid
-    //     .ui.big.button
-
 template(name='not_found')
     .ui.center.aligned.padded.basic.segment
         +ibig name='park-bench' 
@@ -175,6 +159,9 @@ template(name='footer')
                 i.shield.icon
                 |footer 
             with currentUser
+                +text_edit key='current_template' label='template' direct=true
+                +text_edit key='current_model' label='model' direct=true
+                +text_edit key='current_doc_id' label='doc' direct=true
                 +boolean_edit key='show_leftbar' label='leftbar' direct=true
                 +boolean_edit key='show_rightbar' label='rightbar' direct=true
                 +boolean_edit key='show_modelbar' label='modelbar' icon='cubes' direct=true
@@ -189,7 +176,7 @@ template(name='footer')
                 i.database.icon
                 |docs 
             each doc_docs
-                a.ui.large.button(href="/m/#{model}/#{_id}") #{title} 
+                a.ui.compact.button(href="/m/#{model}/#{_id}") #{title} 
                     .ui.label
                         |#{model}
                         
