@@ -37,6 +37,7 @@ template(name='model_doc_view')
                     a.ui.header.calc found fields
                     .ui.list
                         each found_fields 
+                            .ui.header #{this}
                             +found_field
                     .ui.header
                         each fields
@@ -60,13 +61,17 @@ template(name='model_doc_view')
 
 template(name='found_field')
     .item #{this}
-        if field_template_exists
-            +Template.dynamic template=field_template data=current_doc
+        // +Template.dynamic template=this data=current_doc
+        
+        if field_temp_exists
+            .ui.header hi
+            // +Template.dynamic template=field_template data=current_doc
 
 template(name='title')
     +print_this
     .ui.header title: #{title}
 
+template(name='')
 
 template(name='model_doc_edit')
     .ui.grey.header 

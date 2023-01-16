@@ -633,9 +633,9 @@ if Meteor.isServer
     Meteor.methods 
         alpha:->
             doc = Docs.findOne Meteor.user().current_doc_id
-            model = Docs.findOne 
-                model:'model'
-                slug:Meteor.user().current_model
+            # model = Docs.findOne 
+            #     model:'model'
+            #     slug:Meteor.user().current_model
             # template = Docs.findOne Meteor.user().current_template
             if doc 
                 keys = _.keys doc 
@@ -646,9 +646,9 @@ if Meteor.isServer
             
 if Meteor.isClient
     Template.found_field.helpers
-        field_template_exists: ->
+        field_temp_exists: ->
             # false
-            console.log @
+            # console.log @
             # current_model = Meteor.user().current_model
             console.log "#{@}"
             if Template["#{@}"]
@@ -729,24 +729,24 @@ if Meteor.isServer
             model:'model'
             slug:slug
 
-    Meteor.publish 'model_fields_from_slug', (slug)->
-        if slug
-            console.log 'finding fields for model', slug
-            model = Docs.findOne
-                model:'model'
-                slug:slug
-            if model
-                Docs.find
-                    model:'field'
-                    parent_id:model._id
-            else 
-                console.log 'no model found for ', slug
+    # Meteor.publish 'model_fields_from_slug', (slug)->
+    #     if slug
+    #         console.log 'finding fields for model', slug
+    #         model = Docs.findOne
+    #             model:'model'
+    #             slug:slug
+    #         if model
+    #             Docs.find
+    #                 model:'field'
+    #                 parent_id:model._id
+    #         else 
+    #             console.log 'no model found for ', slug
     
-    Meteor.publish 'model_fields_from_id', (model_id)->
-        model = Docs.findOne model_id
-        Docs.find
-            model:'field'
-            parent_id:model._id
+    # Meteor.publish 'model_fields_from_id', (model_id)->
+    #     model = Docs.findOne model_id
+    #     Docs.find
+    #         model:'field'
+    #         parent_id:model._id
 
 
 

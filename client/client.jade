@@ -86,7 +86,8 @@ template(name='app')
         +text_edit key='current_model' direct=true
     .ui.label temp #{currentUser.current_template}
     .ui.label model #{currentUser.current_model}
-    +Template.dynamic template=ct
+    if ct.length
+        +Template.dynamic template=ct
     // +home
     // else 
     //     +login
