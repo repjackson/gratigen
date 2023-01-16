@@ -590,7 +590,7 @@ template(name='role_picker')
             each product_roles
                 .ui.item
                     img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
-                    |#{title}
+                    a.goto_doc #{title}
                     i.remove.link.icon.zoomer.remove_role
                     
                     

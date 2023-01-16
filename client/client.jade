@@ -36,6 +36,9 @@ head
     // <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin=""/>
     // <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
 
+
+    link(rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css")
+
     
     
     // script(src='./qrcode.min.js')
@@ -70,10 +73,10 @@ head
         
         gtag('config', 'G-GLYPPRGJFQ');
 
-    script.
-        $(window).on("load",function(){
-            $(".loader-wrapper").fadeOut("slow");
-        });
+    // script.
+    //     $(window).on("load",function(){
+    //         $(".loader-wrapper").fadeOut("slow");
+    //     });
 
 body
     +app
@@ -81,7 +84,13 @@ body
 
 template(name='app')
     +nav
+    // #draggable
     with currentUser
+        .ui.inline.header 
+            |history
+        each doc_history 
+            .ui.tertiary.button.goto_string_doc
+                |#{this}
         +text_edit key='current_template' direct=true
         +text_edit key='current_model' direct=true
     .ui.label temp #{currentUser.current_template}

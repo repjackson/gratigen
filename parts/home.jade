@@ -1,7 +1,7 @@
 template(name='home')
     if currentUser.admin_mode
         img.ui.fluid.image.home_banner(src="{{c.url 'gratigenlayout'}}" class=darkmode_class)
-    .ui.stackable.padded.divided.celled.grid
+    .ui.stackable.padded.divided.celled.grid.draggable
         .bordered(class=left_column_class)
             // +session_toggle key='expand_leftbar' icon='heart outline'
                 // +session_toggle key='add_mode' icon='plus'

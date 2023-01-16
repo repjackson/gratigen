@@ -36,10 +36,11 @@ template(name='model_doc_view')
                     +array_edit key='found_fields' direct=true
                 .twelve.wide.column.scrolling
                     a.ui.header.calc found fields
-                    .ui.list
-                        each found_fields 
-                            // .ui.header #{this}
-                            +found_field
+                    .ui.four.column.grid
+                        each found_fields
+                            .column
+                                // .ui.header #{this}
+                                +found_field
                     // .ui.header
                         // each fields
                             // if header

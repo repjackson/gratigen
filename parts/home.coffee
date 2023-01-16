@@ -1,4 +1,8 @@
 if Meteor.isClient
+    Template.home.onRendered ->
+        Meteor.setTimeout ->
+            $( "#draggable" ).draggable();
+        ,1000
     Template.home.onCreated ->
         # @autorun => @subscribe 'post_docs',
         #     picked_tags.array()
@@ -177,19 +181,6 @@ if Meteor.isClient
                     title:@title
                     lat: "#{@lat}"
                     lng:"#{@lng}"
-    Template.model_doc_view.helpers 
-        field_template: -> 
-            console.log @
-            "#{@model}_card"
-        field_template_exists: ->
-            # current_model = Router.current().params.model_slug
-            if @model
-                if Template["#{@model}_card"]
-                    return true
-                else
-                    return false
-
-            
     Template.home_card.helpers 
         model_card_template: -> "#{@model}_card"
         card_template_exists: ->

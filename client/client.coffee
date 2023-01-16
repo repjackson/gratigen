@@ -11,7 +11,13 @@ Template.app.helpers
         Meteor.user().current_template
 
 
-
+# Template.app.events 
+#     'click .goto_doc': ->
+#         Meteor.users.update Meteor.userId(),
+#             $set:
+#                 current_doc_id:@_id
+#             $addToSet:
+#                 doc_history:@_id
 
 Template.add_model_doc_button.events 
     'click .add_model_doc': ->

@@ -1026,7 +1026,14 @@ if Meteor.isClient
                 # console.log 'user'
                 Meteor.users.findOne @_id
 
-    Template.delta_result_card.events
+    Template.app.events
+        'click .goto_string_doc': (e,t)->
+            Meteor.users.update Meteor.userId(),
+                $set:
+                    search_query:null
+                    current_template:'model_doc_view'
+                    current_doc_id:@valueOf()
+            
         'click .goto_doc': (e,t)->
             # console.log @
             model_slug =  Meteor.user().current_model
@@ -1045,7 +1052,9 @@ if Meteor.isClient
                     search_query:null
                     current_template:'model_doc_view'
                     current_doc_id:@_id
-                    
+                $addToSet:
+                    doc_history:@_id
+
             if model_slug is 'model'
                 Session.set 'loading', true
                 Meteor.call 'set_facets', @slug, ->
