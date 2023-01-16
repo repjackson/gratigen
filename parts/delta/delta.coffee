@@ -626,6 +626,25 @@ if Meteor.isClient
         @autorun -> Meteor.subscribe 'downvoters', Meteor.user().current_doc_id
         @autorun -> Meteor.subscribe 'model_docs', 'field_type'
 
+    Template.model_doc_view.events 
+        'click .calc': ->
+            Meteor.call 'alpha', ->
+if Meteor.isServer 
+    Meteor.methods 
+        alpha:->
+            doc = Docs.findOne Meteor.user().current_doc_id
+            model = Docs.findOne 
+                model:'model'
+                slug:Meteor.user().current_model
+            # template = Docs.findOne Meteor.user().current_template
+            if doc 
+                keys = _.keys doc 
+                console.log 'doc keys', keys
+                Docs.update doc._id,
+                    $set:
+                        found_fields:keys
+            
+if Meteor.isClient
     Template.model_doc_view.helpers
         # current_model: ->
 

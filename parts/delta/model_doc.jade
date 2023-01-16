@@ -34,6 +34,9 @@ template(name='model_doc_view')
                     +comments
                     +viewing
                 .twelve.wide.column.scrolling
+                    a.ui.header.calc found fields
+                    each found_fields 
+                        |#{this}
                     if icon 
                         +i name=icon color=icon_color
                     if title 
