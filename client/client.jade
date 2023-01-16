@@ -79,8 +79,6 @@ head
     //     });
 
 body
-    +leftbar
-    +rightbar
     .ui.flyout
         i.close.icon
         .ui.header hi
@@ -97,9 +95,9 @@ template(name='app')
     if currentUser.show_leftbar
         +leftbar
     if currentUser.show_modelbar
-        +rightbar
-    if currentUser.show_rightbar
         +modelbar
+    if currentUser.show_rightbar
+        +rightbar
     with currentUser
         .ui.attached.menu.hscroll
             .icon.item(title='node history')
@@ -111,7 +109,7 @@ template(name='app')
             .ui.label temp #{currentUser.current_template}
             .ui.label model #{currentUser.current_model}
         // .ui.label doc #{currentUser.current_doc_id}
-        div(class=invert_class)
+        div.layout(class=invert_class)
             if ct.length
                 +Template.dynamic template=ct
             // +home
@@ -176,6 +174,11 @@ template(name='footer')
             .ui.header 
                 i.shield.icon
                 |footer 
+            with currentUser
+                +boolean_edit key='show_leftbar' label='leftbar' direct=true
+                +boolean_edit key='show_rightbar' label='rightbar' direct=true
+                +boolean_edit key='show_modelbar' label='modelbar' icon='cubes' direct=true
+                
             .ui.header 
                 i.users.icon 
                 |users

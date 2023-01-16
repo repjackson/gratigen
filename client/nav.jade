@@ -1,8 +1,8 @@
 template(name='nav')
     // https://fomantic-ui.com/elements/icon.html#/icon
     //#topnav.topnav
-    #topnav.ui.attached.borderless.menu.topnav.hscroll.ani(class=invert_class)
-        a.icon.item.toggle_leftbar.zoomer
+    #topnav.ui.attached.menu.topnav.hscroll.ani(class=invert_class)
+        a.icon.item.toggle_leftbar.zoomer(title='toggle leftbar')
             i.bars.large.icon
         a.icon.item.toggle_modelbar.zoomer
             i.cubes.large.icon
@@ -129,13 +129,11 @@ template(name='toggle_nav_item')
         +i name=icon color='ffffff' cl='ui avatar image'
           
           
-                
-                
 template(name='secnav')
     // .input.item 
     //     .ui.input 
     //         input(type='text')
-    .ui.attached.small.borderless.inverted.menu.hscroll.invert(class=invert_class)
+    .ui.attached.small.inverted.menu.hscroll.invert(class=invert_class)
         // .item
         // .ui.icon.small.transparent.input
         //     input.filter_models(type='text' placeholder='filter')
@@ -207,7 +205,7 @@ template(name='recent_alert')
                     
                     
 template(name='rightbar')
-    .ui.vertical.small.borderless.menu.rightbar
+    .ui.vertical.menu.sidebar.rightbar
         with currentUser
             a.item.toggle_rightbar.no_blink(href="/user/#{currentUser.username}" class="{{isActiveRoute 'user_layout'}}")
                 img.ui.avatar.compact.image(src="{{c.url currentUser.image_id height=200 width=200 gravity='face' crop='fill'}}")
@@ -276,14 +274,16 @@ template(name='right_nav_item')
 
 
 template(name='leftbar')
-    .ui.vertical.borderless.menu.leftbar
+    .ui.vertical.menu.sidebar.leftbar
         .item leftbar
         each model_docs_helper 'model'
             +leftbar_item
         
 template(name='modelbar')
-    .ui.vertical.borderless.menu.modelbarbar
-        .item leftbar
+    .ui.vertical.menu.modelbar
+        .item 
+            i.cubes.icon
+            |models
         each model_docs_helper 'model'
             +leftbar_item
         
