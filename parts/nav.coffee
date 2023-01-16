@@ -72,10 +72,8 @@ if Meteor.isClient
         
         
     Template.nav.events
-        'click .set_home': ->
-            Meteor.users.update Meteor.userId(), 
-                $set:
-                    current_template:'home'
+        'click .goto_add': -> Meteor.users.update({_id:Meteor.userId()},{$set:current_template:'add'})
+        'click .set_home': -> Meteor.users.update({_id:Meteor.userId()},{$set:current_template:'home'})
         'click .reset': ->
             # model_slug =  Template.parentData().model_slug
             Session.set 'loading', true

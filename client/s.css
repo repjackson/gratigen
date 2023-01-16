@@ -2,8 +2,8 @@ body {
      /*font-family: 'Raleway', sans-serif !important; */
      /*font-family: 'Roboto', sans-serif !important; */
     /* font-family: 'Ubuntu+Mono', sans-serif !important; */
-    /*font-family: 'Ubuntu', sans-serif !important;*/
-    font-family: 'Varela Round', sans-serif !important;
+    font-family: 'Ubuntu', sans-serif !important;
+    /*font-family: 'Varela Round', sans-serif !important;*/
     /*font-family: 'Goudy Bookletter 1911', sans-serif !important;*/
     /*font-size: 110% !important; */
     /*line-height: 200% !important;*/
@@ -12,6 +12,26 @@ body {
     /*filter: invert(.9) !important;*/
     /* background: #0e0e44 !important; */
 }
+
+@keyframes slideInFromLeft {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+header {  
+  /* This section calls the slideInFromLeft animation we defined above */
+  animation: 1s ease-out 0s 1 slideInFromLeft;
+  
+  background: #333;
+  padding: 30px;
+}
+
+
+
 
 .goto_string_doc {
   max-width: 200px !important;
