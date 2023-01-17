@@ -10,11 +10,10 @@ template(name='delta')
         if currentUser.admin_mode
             unless current_delta 
                 .ui.button.create_delta 
-                    |make delta
-                
+                    |+ delta
             unless current_model
                 .ui.button.create_model
-                    |create model
+                    |+ model
                 
         with current_model
             // unless current_model.show_facets

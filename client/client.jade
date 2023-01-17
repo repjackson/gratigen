@@ -214,9 +214,10 @@ template(name='nav')
                     i.big.loading.grey.refresh.icon.cancel
             else 
                 img.ui.mini.circular.image.zoomer(src="/logo.png")
-            span.mobile.hidden Gratigen
-        // if currentUser.admin
-        //     +toggle_nav_item key='admin_mode' icon='shield' label='admin mode'
+            // span.mobile.hidden Gratigen
+            
+        if currentUser.admin
+            +toggle_nav_item key='admin_mode' icon='shield' label='admin mode'
         // +nav_item template='users' icon='users' label='users' hide_label=true
         // +nav_item template='reddit' icon='reddit' label='reddit'
 
@@ -225,9 +226,14 @@ template(name='nav')
         //     i.large.database.icon
         // if currentUser.admin_mode
         //     +nav_item template='dev' icon='network' label='dev'
+        .item
+            with model_doc 'global'
+                |#{latest_info}
+                if currentUser.admin_mode
+                    +text_edit key='latest_info' direct=true
         a.icon.item.zoomer.goto_add(title='add new doc')
             i.large.play.icon
-        // +toggle_nav_item key='invert_mode' icon='lightbulb' label='invert mode'
+        +toggle_nav_item key='invert_mode' icon='lightbulb' label='invert mode'
         .right.menu
             if unread_count
                 a.item.alerts.select_term(href="#" class=alert_toggle_class)
@@ -245,6 +251,9 @@ template(name='nav')
                     i.large.chat.outline.icon
             if currentUser
                 // a.item(href="/user/#{currentUser.username}/credit" class="{{is_active_template regex='user_credit'}}" title='your credits')
+                a.item.toggle_cartbar(title='current cart balance')
+                    |#{currentUser.cart_item_count}
+                    i.shopping.cart.icon
                 a.item.toggle_coinbar(title='current wallet balance')
                     i.coins.yellow.icon.invert
                     |&nbsp;
@@ -292,7 +301,11 @@ template(name='delta_nav')
             i.yin.yang.icon
             |sessions
         each model_docs_helper 'delta' 
-            .item #{when}
+            a.item.pick_delta(class=delta_item_class)
+                if currentUser.admin_mode
+                    +text_edit key='title' direct=true
+                |#{title}
+                |#{when}
           
           
 template(name='secnav')
