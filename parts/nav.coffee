@@ -74,9 +74,10 @@ if Meteor.isClient
     Template.nav_item.events
         'click .nav_item': ->
             Meteor.users.update Meteor.userId(),
-                $set:current_template:@template
+                $set:
+                    current_template:@template
     Template.nav.events
-        'mouseover .item': (e)->
+        # 'mouseover .item': (e)->
             # $(e.currentTarget).closest('.icon').transition('bounce', 1000)
 
         'click .goto_add': -> Meteor.users.update({_id:Meteor.userId()},{$set:current_template:'add'})

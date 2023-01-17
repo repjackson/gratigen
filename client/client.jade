@@ -79,15 +79,15 @@ head
     //     });
 
 body
-    +leftbar
-    +rightbar
-    .ui.flyout
-        i.close.icon
-        .ui.header hi
-        .image.content
-            .ui.header content
-        .actions
-            .ui.button hi
+    // +leftbar
+    // +rightbar
+    // .ui.flyout
+    //     i.close.icon
+    //     .ui.header hi
+    //     .image.content
+    //         .ui.header content
+    //     .actions
+    //         .ui.button hi
     
     .pusher
         +app
@@ -102,16 +102,17 @@ template(name='app')
             +modelbar
         // if currentUser.show_rightbar
         +delta_nav
+        .ui.small.compact.attached.menu.hscroll
+            .icon.item(title="#{doc_history.length} node history")
+                i.large.clock.icon(title='node history')
+            each currentUser.doc_history.reverse
+                +doc_history_button
+            .ui.label temp #{currentUser.current_template}
+            .ui.label model #{currentUser.current_model}
         .layout
             with currentUser
-                // .ui.label doc #{currentUser.current_doc_id}
-                // div.layout(class=invert_class)
                 if ct.length
                     +Template.dynamic template=ct
-                    // +home
-                // img.ui.fluid.image.home_banner(src="{{c.url 'frontrange'}}" class=darkmode_class)
-                // #main.ui.bottom.attached.pushable.segment.scrolling
-                // +topbar
             else 
                 +login
         +footer
@@ -125,21 +126,9 @@ template(name='doc_history_button')
                 +i name=icon color=stripped_icon_color cl='ui avatar image'
             if image_id
                 img.ui.mini.inline.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
-            |#{title}
+            |{{truncated title}}
     
     
-template(name='not_found')
-    .ui.center.aligned.padded.basic.segment
-        +ibig name='park-bench' 
-            |browser_back
-        .ui.center.aligned.header page not found
-        a.ui.big.basic.button(href="/") 
-            +i name='home' 
-            // |home
-        .ui.basic.big.button.browser_back
-            i.large.undo.icon
-            |go back
-
 
 template(name='shortcut_modal')
     .ui.shortcut.modal
@@ -153,41 +142,35 @@ template(name='shortcut_modal')
 
 
 template(name='footer')
-    .ui.small.compact.bottom.fixed.menu.hscroll
-        .icon.item(title="#{doc_history.length} node history")
-            i.large.clock.icon(title='node history')
-        each currentUser.doc_history.reverse
-            +doc_history_button
-        .ui.label temp #{currentUser.current_template}
-        .ui.label model #{currentUser.current_model}
-    .ui.segment.grid
-        .eight.wide.column.smallscroll
-            .ui.header 
-                i.shield.icon
-                |footer 
-            with currentUser
-                +text_edit key='current_template' label='template' direct=true
-                +text_edit key='current_model' label='model' direct=true
-                +text_edit key='current_doc_id' label='doc' direct=true
-                +boolean_edit key='show_leftbar' label='leftbar' direct=true
-                +boolean_edit key='show_rightbar' label='rightbar' direct=true
-                +boolean_edit key='show_modelbar' label='modelbar' icon='cubes' direct=true
-                
-            .ui.header 
-                i.users.icon 
-                |users
-            each user_docs 
-                .ui.large.button #{username}
-        .eight.wide.column.smallscroll
-            .ui.header 
-                i.database.icon
-                |docs 
-            each doc_docs
-                a.ui.compact.button(href="/m/#{model}/#{_id}") #{title} 
-                    .ui.label
-                        |#{model}
-                        
-                        
+    if currentUser.admin_mode
+        .ui.segment.grid
+            .eight.wide.column.smallscroll
+                .ui.header 
+                    i.shield.icon
+                    |footer 
+                with currentUser
+                    +text_edit key='current_template' label='template' direct=true
+                    +text_edit key='current_model' label='model' direct=true
+                    +text_edit key='current_doc_id' label='doc' direct=true
+                    +boolean_edit key='show_leftbar' label='leftbar' direct=true
+                    +boolean_edit key='show_rightbar' label='rightbar' direct=true
+                    +boolean_edit key='show_modelbar' label='modelbar' icon='cubes' direct=true
+                    
+                .ui.header 
+                    i.users.icon 
+                    |users
+                each user_docs 
+                    .ui.large.button #{username}
+            .eight.wide.column.smallscroll
+                .ui.header 
+                    i.database.icon
+                    |docs 
+                each doc_docs
+                    a.ui.compact.button(href="/m/#{model}/#{_id}") #{title} 
+                        .ui.label
+                            |#{model}
+                            
+                            
                         
 template(name='add')
     .ui.padded.grid 
@@ -220,64 +203,19 @@ template(name='nav')
             else 
                 img.ui.mini.circular.image.zoomer(src="/logo.png")
             span.mobile.hidden Gratigen
-        if currentUser.admin
-            +toggle_nav_item key='admin_mode' icon='shield' label='admin mode'
-        +nav_item template='users' icon='users' label='users' hide_label=true
+        // if currentUser.admin
+        //     +toggle_nav_item key='admin_mode' icon='shield' label='admin mode'
+        // +nav_item template='users' icon='users' label='users' hide_label=true
         // +nav_item template='reddit' icon='reddit' label='reddit'
 
         // +nav_item template='/m/model' icon='cubes' label='models'
         // a.icon.item.zoomer(href='/m/model' title='delta')
         //     i.large.database.icon
-        if currentUser.admin_mode
-            +nav_item template='dev' icon='network' label='dev'
+        // if currentUser.admin_mode
+        //     +nav_item template='dev' icon='network' label='dev'
         a.icon.item.zoomer.goto_add(title='add new doc')
             i.large.play.icon
-        +toggle_nav_item key='invert_mode' icon='lightbulb' label='invert mode'
-        // .search.item.zoomer.mobile.hidden(title='search')
-        //     .ui.icon.transparent.input
-        //         if current_product_search
-        //             i.remove.large.red.link.icon.clear_search
-        //         else
-        //             i.search.large.icon
-        //         input.search_site(type='text' autocomplete="off" value=current_product_search)
-        // .column.centered
-        // .ui.top.attached.tabular.menu  
-        // a.center.item.toggle_addmode.zoomer(data-tab='add' title='add thing')
-        // a.item.toggle_addmode.zoomer(data-tab='add' title='add thing')
-        //     +i name='play-button-circled--v1' color='40C057'
-        //     // .active.item(data-tab='viewing')
-        //     //     |viewing
-        // .ui.bottom.attached.tab.segment.centered.ani(data-tab='add')
-            //select type of thing you're creating >> open thing type editor modal
-            // if session_is 'addmode' true
-            //     +thing_picker model='post' icon='for-you' color='1255B8'
-            //     //blue
-            //     +thing_picker model='offer' icon='hand-holding-heart' color='FF73EA'
-            //     //pink
-            //     +thing_picker model='request' icon='commercial' color='40C057'     
-            //     //green
-                
-            //     div
-            //     +thing_picker model='org' icon='groups' color='83DFF4' 
-            //     //light blue
-            //     +thing_picker model='project' icon='project' color='7229AF' 
-            //     //violet
-            //     +thing_picker model='event' icon='calendar' color='FAB005'
-            //     //yellow
-            //     +thing_picker model='role' icon='what-i-do' color='42E8C4'
-            //     //turquoise
-            //     +thing_picker model='tasks' icon='task' color='B785E1'
-            //     //lavender
-            //     +thing_picker model='resource' icon='field-and-tractor' color='FD7E14'
-            //     +thing_picker model='skills' icon='wrench' color='ff0000'
-            //     //red
-            //     +thing_picker model='badges' icon='badge' color='1255B8'
-            //     //blue
-            //     div
-            //     +thing_picker model='datetime' icon='overtime--v1' color='FD7E14'
-            //     +thing_picker model='location' icon='worldwide-location' color='40C057'
-            //     +thing_picker model='accounts' icon='gold-bars' color='FAB005'
-            //     //people
+        // +toggle_nav_item key='invert_mode' icon='lightbulb' label='invert mode'
         .right.menu
             if unread_count
                 a.item.alerts.select_term(href="#" class=alert_toggle_class)
@@ -371,13 +309,13 @@ template(name='secnav')
                     |#{title}
                  
 template(name='nav_item')
-    a.item.zoomer.nav_item(class="{{is_active_template template }}" title=label)
+    a.item.zoomer.nav_item(class="{{ is_active_template template }}" title=label)
         i.large.icon(class=icon)
         // +i name=icon color='ffffff' cl='ui avatar image zoomer'
         // |&nbsp;
         |&nbsp;
-        unless hide_label
-            span.zoomer.mobile.hidden #{label}
+        // unless hide_label
+        //     span.zoomer.mobile.hidden #{label}
 
                  
 template(name='top_nav_item')
@@ -509,3 +447,49 @@ template(name='leftbar_item')
         +i name=icon color=stripped_icon_color cl='ui avatar image'
         span #{title}
                 
+// template(name='nav_thing_picker')
+    // .search.item.zoomer.mobile.hidden(title='search')
+    //     .ui.icon.transparent.input
+    //         if current_product_search
+    //             i.remove.large.red.link.icon.clear_search
+    //         else
+    //             i.search.large.icon
+    //         input.search_site(type='text' autocomplete="off" value=current_product_search)
+    // .column.centered
+    // .ui.top.attached.tabular.menu  
+    // a.center.item.toggle_addmode.zoomer(data-tab='add' title='add thing')
+    // a.item.toggle_addmode.zoomer(data-tab='add' title='add thing')
+    //     +i name='play-button-circled--v1' color='40C057'
+    //     // .active.item(data-tab='viewing')
+    //     //     |viewing
+    // .ui.bottom.attached.tab.segment.centered.ani(data-tab='add')
+        //select type of thing you're creating >> open thing type editor modal
+        // if session_is 'addmode' true
+        //     +thing_picker model='post' icon='for-you' color='1255B8'
+        //     //blue
+        //     +thing_picker model='offer' icon='hand-holding-heart' color='FF73EA'
+        //     //pink
+        //     +thing_picker model='request' icon='commercial' color='40C057'     
+        //     //green
+            
+        //     div
+        //     +thing_picker model='org' icon='groups' color='83DFF4' 
+        //     //light blue
+        //     +thing_picker model='project' icon='project' color='7229AF' 
+        //     //violet
+        //     +thing_picker model='event' icon='calendar' color='FAB005'
+        //     //yellow
+        //     +thing_picker model='role' icon='what-i-do' color='42E8C4'
+        //     //turquoise
+        //     +thing_picker model='tasks' icon='task' color='B785E1'
+        //     //lavender
+        //     +thing_picker model='resource' icon='field-and-tractor' color='FD7E14'
+        //     +thing_picker model='skills' icon='wrench' color='ff0000'
+        //     //red
+        //     +thing_picker model='badges' icon='badge' color='1255B8'
+        //     //blue
+        //     div
+        //     +thing_picker model='datetime' icon='overtime--v1' color='FD7E14'
+        //     +thing_picker model='location' icon='worldwide-location' color='40C057'
+        //     +thing_picker model='accounts' icon='gold-bars' color='FAB005'
+        //     //people

@@ -328,10 +328,10 @@ if Meteor.isServer
         
         
 if Meteor.isClient
-    Template.role_picker.onCreated ->
+    Template.roles_field.onCreated ->
         @autorun => @subscribe 'role_search_results', Session.get('role_search'), ->
         @autorun => @subscribe 'model_docs', 'role', ->
-    Template.role_picker.helpers
+    Template.roles_field.helpers
         role_results: ->
             Docs.find 
                 model:'role'
@@ -345,7 +345,7 @@ if Meteor.isClient
         role_search_value: ->
             Session.get('role_search')
         
-    Template.role_picker.events
+    Template.roles_field.events
         'click .clear_search': (e,t)->
             Session.set('role_search', null)
             t.$('.role_search').val('')

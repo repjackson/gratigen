@@ -303,7 +303,7 @@ template(name='session_boolean_toggle')
 
 
 template(name='eft_home_picker')
-    .ui.compact.large.circular.button.toggle_eft(class=eft_button_class)
+    .ui.compact.basic.large.circular.button.toggle_eft(class=eft_button_class)
         // with ../
         if icon
             +i name=icon cl='ui image' color=stripped_icon_color
@@ -372,9 +372,6 @@ template(name='events_column')
                                     |#{when}
                                 if is_dev
                                     +remove_button
-
-
-
 
 template(name='follow')
     .ui.segment
@@ -662,11 +659,6 @@ template(name='tags_field')
     each tags 
         .ui.label #{this}
         
-template(name='roles_field')    
-    .ui.header 
-        i.shield.icon
-        |roles
-    +role_picker
         
 template(name='_author_id_field')   
     // .ui.inline.header 
@@ -703,7 +695,7 @@ template(name='model_field')
 
 
 
-template(name='role_picker')
+template(name='roles_field')
     .ui.header 
         +i name='shield'
         | roles

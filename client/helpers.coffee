@@ -10,10 +10,16 @@ Template.registerHelper 'parent_doc', () ->
 
 Template.registerHelper 'isActivePath', () ->
 Template.registerHelper 'is_active_template', () ->
-    if @template is Meteor.user().current_template
-        'active'
-    else 
-        ''
+    false
+    # if @template is Meteor.user().current_template
+    #     'active'
+    # else 
+    #     ''
+Template.registerHelper 'truncated', (input) ->
+    res = "#{input[..20]}"
+    if input[21]
+        res += "..."
+    res
 Template.registerHelper 'stripped_icon_color', () ->
     # console.log @icon_color 
     if @icon_color

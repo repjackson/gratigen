@@ -87,12 +87,6 @@ Template.footer.helpers
 #     @autorun => @subscribe 'user_count'
         
         
-Template.not_found.events
-    'click .browser_back': ->
-          window.history.back();
-
-
-
 $.cloudinary.config
     cloud_name:"facet"
 Template.app.events

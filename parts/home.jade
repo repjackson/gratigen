@@ -2,7 +2,8 @@ template(name='home')
     if currentUser.admin_mode
         img.ui.fluid.image.home_banner(src="{{c.url 'gratigenlayout'}}" class=darkmode_class)
     .ui.stackable.padded.divided.celled.grid.draggable
-        .bordered(class=left_column_class)
+        // .four.wide.column.bordered.scrolling(class=left_column_class)
+        .four.wide.column.bordered.scrolling
             // +session_toggle key='expand_leftbar' icon='heart outline'
                 // +session_toggle key='add_mode' icon='plus'
                 //.ui.icon.button.show_model
@@ -17,9 +18,8 @@ template(name='home')
             img.ui.small.circular.centered.image(src="/12-color-code.png")
             div
             .ui.two.wide.column
-                .smallscroll
-                    each model_docs_helper 'eft'
-                        +eft_home_picker
+                each model_docs_helper 'eft'
+                    +eft_home_picker
                     
             // if session_is 'expand_leftbar' true
             //     .ui.vertical.fluid.menu.mobile.hidden
@@ -31,7 +31,8 @@ template(name='home')
             //             +side_menu_item color=icon_color icon=icon label=title
             //             //.ui.button
             // .ui.button create request
-        .bordered.scrolling(class=main_column_class)
+        // .eight.wide.column.bordered.scrolling(class=main_column_class)
+        .eight.wide.column.bordered.scrolling
             .ui.one.column.grid                 
                 +thing_picker_template
                 +online_users
@@ -75,12 +76,13 @@ template(name='home')
                         each doc_results
                             +home_card
         // .eight.wide.column.bordered
-        .bordered(class=right_column_class)
+        // .four.wide.columnbordered(class=right_column_class)
+        .four.wide.column.bordered
             +my_things
-            if session_is 'show_map' true
-                +mapbox
-            if session_is 'show_calendar' true 
-                +calendar_view
+            // if session_is 'show_map' true
+            +mapbox
+            // if session_is 'show_calendar' true 
+            +calendar_view
             +online_allies
                //.ui.container
                     |my things

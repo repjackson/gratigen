@@ -31,6 +31,7 @@ body {
 
 .goto_string_doc {
   max-width: 200px !important;
+  overflow-y: hidden !important;
 }
 /*.layout:not(.invert) .segment{*/
 /*  background: rgba(0, 0, 0, 1) !important;*/
