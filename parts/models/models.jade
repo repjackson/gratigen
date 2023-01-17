@@ -1670,7 +1670,7 @@ template(name='role_edit')
             .column
                 .ui.header required badges
                 +badge_picker
-                +task_picker
+                +tasks_field
             .column
                 +model_picker model='event' icon='calendar'
                 
@@ -2179,6 +2179,6 @@ template(name='project_edit')
                     +multi_user_edit key='access_user_ids' label='user picker' direct=true
                 +group_picker
                 +roles_field
-                +task_picker
+                +tasks_field
                 
 

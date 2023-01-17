@@ -35,10 +35,14 @@ template(name='model_doc_view')
                     +comments
                     +viewing
                 .twelve.wide.column.scrollin
-                    a.ui.header.calc found fields
-                    each found_fields
-                        // .ui.header #{this}
-                        +found_field
+                    a.ui.header.calc.zoomer
+                        i.calculator.icon
+                        |found fields
+                    .ui.three.column.stackable.grid
+                        each found_fields
+                            .column
+                                // .ui.header #{this}
+                                +found_field
                     // .ui.header
                         // each fields
                             // if header

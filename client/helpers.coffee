@@ -4,6 +4,7 @@ Template.registerHelper 'comma', (input) ->
     input.toLocaleString("en-US")
 
 Template.registerHelper 'parent', () -> Template.parentData()
+Template.registerHelper 'parent', () -> Template.parentData()
 Template.registerHelper 'parent_doc', () ->
     Docs.findOne @parent_id
     # Template.parentData()
@@ -40,6 +41,8 @@ Template.registerHelper 'user_bookmark_docs', (model) ->
     Docs.find 
         _id:$in:Meteor.user().bookmark_ids
 
+Template.registerHelper 'model_doc', (model) ->
+    Docs.findOne slug:model
 Template.registerHelper 'model_docs_helper', (model) ->
     # console.log model
     # if limit 

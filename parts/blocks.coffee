@@ -372,11 +372,17 @@ if Meteor.isClient
             Session.set('role_search', val)
 
         'click .create_role': ->
+            title = Session.get('role_search')
             new_id = 
                 Docs.insert 
                     model:'role'
-                    title:Session.get('role_search')
-            gstate_set "/role/#{new_id}/edit"
+                    title:title
+            # gstate_set "/role/#{new_id}/edit"
+            Docs.update Meteor.user().current_doc_id,
+                $addToSet:
+                    role_ids:new_id
+                    role_titles:title
+
 
 
 if Meteor.isServer 
@@ -449,10 +455,10 @@ if Meteor.isServer
         
         
 if Meteor.isClient
-    Template.task_picker.onCreated ->
+    Template.tasks_field.onCreated ->
         @autorun => @subscribe 'task_search_results', Session.get('task_search'), ->
         @autorun => @subscribe 'model_docs', 'task', ->
-    Template.task_picker.helpers
+    Template.tasks_field.helpers
         task_results: ->
             Docs.find 
                 model:'task'
@@ -466,7 +472,7 @@ if Meteor.isClient
         task_search_value: ->
             Session.get('task_search')
         
-    Template.task_picker.events
+    Template.tasks_field.events
         'click .clear_search': (e,t)->
             Session.set('task_search', null)
             t.$('.task_search').val('')
