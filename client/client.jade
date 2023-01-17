@@ -96,7 +96,7 @@ template(name='app')
             +modelbar
         // if currentUser.show_rightbar
         +delta_nav
-        .ui.small.compact.attached.menu.hscroll
+        .ui.small.compact.attached.borderless.menu.hscroll
             .icon.item(title="#{doc_history.length} node history")
                 i.large.clock.icon(title='node history')
             each currentUser.doc_history.reverse
@@ -201,7 +201,7 @@ template(name='add_model_doc_button')
 template(name='nav')
     // https://fomantic-ui.com/elements/icon.html#/icon
     //#topnav.topnav
-    #topnav.ui.attached.menu.topnav.hscroll.ani(class=invert_class)
+    #topnav.ui.attached.borderless.menu.topnav.hscroll.ani(class=invert_class)
         a.icon.item.toggle_leftbar.zoomer(title='toggle leftbar')
             i.bars.large.icon
         a.icon.item.toggle_modelbar.zoomer(class=modelbar_class)
@@ -232,7 +232,7 @@ template(name='nav')
         a.icon.item.zoomer.goto_add(title='add new doc')
             i.large.play.icon
         +toggle_nav_item key='invert_mode' icon='lightbulb' label='invert mode'
-        .right.menu
+        .right.borderless.menu
             if unread_count
                 a.item.alerts.select_term(href="#" class=alert_toggle_class)
                     i.large.bell.icon
@@ -294,7 +294,7 @@ template(name='toggle_nav_item')
           
           
 template(name='delta_nav')
-    .ui.attached.menu.hscroll
+    .ui.attached.borderless.menu.hscroll
         .item 
             i.yin.yang.icon
             |sessions
@@ -310,18 +310,18 @@ template(name='secnav')
     // .input.item 
     //     .ui.input 
     //         input(type='text')
-    .ui.attached.small.inverted.menu.hscroll.invert(class=invert_class)
+    .ui.attached.small.inverted.borderless.menu.hscroll.invert(class=invert_class)
         // .item
         // .ui.icon.small.transparent.input
         //     input.filter_models(type='text' placeholder='filter')
         //     i.search.link.icon
         // .ui.dropdown.icon.item
         //     i.wrench.icon
-        //     .menu 
+        //     .borderless.menu 
         //         .item
         //             i.dropdown.icon
         //             span.text new 
-        //             .menu 
+        //             .borderless.menu 
         //                 .item post
         //                 .item model
         each model_docs_helper 'model'
@@ -383,7 +383,7 @@ template(name='recent_alert')
                     
                     
 template(name='rightbar')
-    .ui.vertical.menu.right.sidebar.rightbar
+    .ui.vertical.borderless.menu.right.sidebar.rightbar
         with currentUser
             a.item.toggle_rightbar.no_blink(href="/user/#{currentUser.username}" class="{{is_active_template 'user_layout'}}")
                 img.ui.avatar.compact.image(src="{{c.url currentUser.image_id height=200 width=200 gravity='face' crop='fill'}}")
@@ -452,13 +452,13 @@ template(name='right_nav_item')
 
 
 template(name='leftbar')
-    .ui.vertical.menu.sidebar.leftbar
+    .ui.vertical.borderless.menu.sidebar.leftbar
         .item leftbar
         each model_docs_helper 'model'
             +leftbar_item
         
 template(name='modelbar')
-    .ui.vertical.menu.modelbar
+    .ui.vertical.borderless.menu.modelbar
         .item 
             i.cubes.icon
             |models
@@ -480,7 +480,7 @@ template(name='leftbar_item')
     //             i.search.large.icon
     //         input.search_site(type='text' autocomplete="off" value=current_product_search)
     // .column.centered
-    // .ui.top.attached.tabular.menu  
+    // .ui.top.attached.tabular.borderless.menu  
     // a.center.item.toggle_addmode.zoomer(data-tab='add' title='add thing')
     // a.item.toggle_addmode.zoomer(data-tab='add' title='add thing')
     //     +i name='play-button-circled--v1' color='40C057'
