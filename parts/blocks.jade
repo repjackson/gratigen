@@ -286,7 +286,7 @@ template(name='mini_view')
         +mini_card
         
 template(name='mini_card')
-    .ui.horizontal.card
+    .ui.horizontal.card.show_modal
         .image
             img.ui.image(src="{{c.url image_id width=500 height=500 gravity='face' crop='fill'}}")
         .content
@@ -715,22 +715,23 @@ template(name='model_field')
     if model_temp_exists
         +Template.dynamic template=model_temp
 
-
-
+                    
 
 template(name='roles_field')
-    .ui.segment.six.wide.column
+    .ui.fluid.segment
         with model_doc 'role'    
             .ui.header 
                 +i name=icon color=stripped_icon_color
                 | #{title}
         // if is_admin
-        .ui.icon.large.input 
+        .ui.left.icon.right.action.large.fluid.input 
             if role_search_value
                 i.large.red.remove.link.icon.zoomer.clear_search
             else 
                 i.search.icon
             input.role_search(type='text' placeholder='search' value=role_search_value)
+            .ui.button.create_role
+                |add #{role_search_value}
         if role_results
             .ui.selection.link.animated.list
                 each role_results
@@ -738,119 +739,20 @@ template(name='roles_field')
                         img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
                         |#{title}
         // else if role_search_value
-        .ui.button.create_role
-            |add #{role_search_value}
         
-        if product_roles
-            .ui.header 
-                |#{product_roles.length}
-                |picked roles
-            .ui.list
-                each product_roles
-                    +mini_card
-                    // .ui.item
-                    //     img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
-                    //     a.goto_doc #{title}
-                    //     i.remove.link.icon.zoomer.remove_role
+        // if child_roles
+        .ui.header
+            i.shield.icon
+            |#{child_roles.count}
+            |picked roles
+        .ui.list.smallscroll
+            each child_roles
+                +mini_card
+                // .ui.item
+                //     img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+                //     a.goto_doc #{title}
+                //     i.remove.link.icon.zoomer.remove_role
                     
-                    
-template(name='tasks_field')
-    .ui.header 
-        +i name='tasks'
-        | tasks
-    // if is_admin
-    .ui.icon.large.input 
-        if task_search_value
-            i.large.red.remove.link.icon.zoomer.clear_search
-        else 
-            i.search.icon
-        input.task_search(type='text' placeholder='search' value=task_search_value)
-    if task_results
-        .ui.selection.link.animated.list
-            each task_results
-                .ui.item.pick_task.zoomer
-                    img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
-                    |#{title}
-    // else if task_search_value
-    .ui.button.create_task
-        |add #{task_search_value}
-    
-    if product_tasks
-        .ui.header 
-            |#{product_tasks.length}
-            |picked tasks
-        .ui.list
-            each product_tasks
-                .ui.item
-                    img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
-                    |#{title}
-                    i.remove.link.icon.zoomer.remove_task
-                    
-                    
-template(name='badge_picker')
-    .ui.header 
-        +i name='shield'
-        | badges
-    // if is_admin
-    .ui.icon.large.input 
-        if badge_search_value
-            i.large.red.remove.link.icon.zoomer.clear_search
-        else 
-            i.search.icon
-        input.badge_search(type='text' placeholder='search' value=badge_search_value)
-    if badge_results
-        .ui.selection.link.animated.list
-            each badge_results
-                .ui.item.pick_badge.zoomer
-                    img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
-                    |#{title}
-    // else if badge_search_value
-    .ui.button.create_badge
-        |add #{badge_search_value}
-    
-    if product_badges
-        .ui.header 
-            |#{product_badges.length}
-            |picked badges
-        .ui.list
-            each product_badges
-                .ui.item
-                    img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
-                    |#{title}
-                    i.remove.link.icon.zoomer.remove_badge
-
-template(name='events_field')
-    .ui.header 
-        +i name='shield'
-        | events
-    // if is_admin
-    .ui.icon.large.input 
-        if event_search_value
-            i.large.red.remove.link.icon.zoomer.clear_search
-        else 
-            i.search.icon
-        input.event_search(type='text' placeholder='search' value=event_search_value)
-    if event_results
-        .ui.selection.link.animated.list
-            each event_results
-                .ui.item.pick_event.zoomer
-                    img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
-                    |#{title}
-    // else if event_search_value
-    .ui.button.create_event
-        |add #{event_search_value}
-    
-    if product_events
-        .ui.header 
-            |#{product_events.length}
-            |picked events
-        .ui.list
-            each product_events
-                .ui.item
-                    img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
-                    |#{title}
-                    i.remove.link.icon.zoomer.remove_event
-
 
 template(name='save_button')
     a.ui.button.large.icon.save(title='Save' href="/m/#{model}/#{_id}/view")

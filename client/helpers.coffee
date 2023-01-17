@@ -3,7 +3,9 @@ Template.registerHelper 'cal_time', (input)-> moment(input).calendar()
 Template.registerHelper 'comma', (input) ->
     input.toLocaleString("en-US")
 
-Template.registerHelper 'parent', () -> Template.parentData()
+Template.registerHelper 'modal_doc', () ->
+    Docs.findOne Meteor.user().modal_doc_id
+
 Template.registerHelper 'parent', () -> Template.parentData()
 Template.registerHelper 'parent_doc', () ->
     Docs.findOne @parent_id

@@ -81,13 +81,14 @@ head
 body
     // +leftbar
     // +rightbar
-    // .ui.flyout
-    //     i.close.icon
-    //     .ui.header hi
-    //     .image.content
-    //         .ui.header content
-    //     .actions
-    //         .ui.button hi
+    +global_modal
+    .ui.flyout
+        i.close.icon
+        .ui.header hi
+        .image.content
+            .ui.header content
+        .actions
+            .ui.button hi
     
     .pusher
         +app
@@ -121,7 +122,7 @@ template(name='app')
     
 template(name='doc_history_button')
     with doc_from_id
-        a.ui.item.zoomer.goto_string_doc(title=model)
+        a.ui.item.zoomer.goto_doc(title=model)
             with parent_model
                 +i name=icon color=stripped_icon_color cl='ui avatar image'
             if image_id
@@ -140,6 +141,13 @@ template(name='shortcut_modal')
                         .header #{combo}
                         .content #{action}
 
+template(name='global_modal')
+    with modal_doc
+        .ui.modal.global
+            .ui.header #{title}
+            .content
+                .ui.header #{body}
+                .ui.label #{model}
 
 template(name='footer')
     if currentUser.admin_mode

@@ -266,66 +266,6 @@ if Meteor.isServer
 
 
 # sdkfjvnkdf
-
-if Meteor.isClient
-    Template.group_picker.onCreated ->
-        @autorun => @subscribe 'group_search_results', Session.get('group_search'), ->
-        @autorun => @subscribe 'model_docs', 'group', ->
-    Template.group_picker.helpers
-        group_results: ->
-            Docs.find 
-                model:'group'
-                title: {$regex:"#{Session.get('group_search')}",$options:'i'}
-                
-        product_groups: ->
-            product = Docs.findOne Meteor.user().current_doc_id
-            Docs.find 
-                # model:'group'
-                _id:$in:product.group_ids
-        group_search_value: ->
-            Session.get('group_search')
-        
-    Template.group_picker.events
-        'click .clear_search': (e,t)->
-            Session.set('group_search', null)
-            t.$('.group_search').val('')
-
-            
-        'click .remove_group': (e,t)->
-            if confirm "remove #{@title} group?"
-                Docs.update Meteor.user().current_doc_id,
-                    $pull:
-                        group_ids:@_id
-                        group_titles:@title
-        'click .pick_group': (e,t)->
-            Docs.update Meteor.user().current_doc_id,
-                $addToSet:
-                    group_ids:@_id
-                    group_titles:@title
-            Session.set('group_search',null)
-            t.$('.group_search').val('')
-                    
-        'keyup .group_search': (e,t)->
-            # if e.which is '13'
-            val = t.$('.group_search').val()
-            console.log val
-            Session.set('group_search', val)
-
-        'click .create_group': ->
-            new_id = 
-                Docs.insert 
-                    model:'group'
-                    title:Session.get('group_search')
-            gstate_set "/group/#{new_id}/edit"
-
-
-if Meteor.isServer 
-    Meteor.publish 'group_search_results', (group_title_queary)->
-        Docs.find 
-            model:'group'
-            title: {$regex:"#{group_title_queary}",$options:'i'}
-        
-        
         
 if Meteor.isClient
     Template.roles_field.onCreated ->
@@ -333,15 +273,23 @@ if Meteor.isClient
         @autorun => @subscribe 'model_docs', 'role', ->
     Template.roles_field.helpers
         role_results: ->
-            Docs.find 
-                model:'role'
-                title: {$regex:"#{Session.get('role_search')}",$options:'i'}
-                
-        product_roles: ->
-            product = Docs.findOne Meteor.user().current_doc_id
-            Docs.find 
-                # model:'role'
-                _id:$in:product.role_ids
+            parent = Docs.findOne Meteor.user().current_doc_id
+            
+            match = {}
+            match._id = $nin:parent.role_ids
+            match.title = {$regex:"#{Session.get('role_search')}",$options:'i'}
+            match.model = 'role'
+            
+            Docs.find match
+        child_roles: ->
+            parent = Docs.findOne Meteor.user().current_doc_id
+            search = Session.get('role_search')
+            match = {}    
+            if search and search.length > 0
+                match.title = {$regex:"#{search}",$options:'i'}
+            match.model = 'role'
+            match._id = $in:parent.role_ids
+            Docs.find match
         role_search_value: ->
             Session.get('role_search')
         
@@ -349,7 +297,6 @@ if Meteor.isClient
         'click .clear_search': (e,t)->
             Session.set('role_search', null)
             t.$('.role_search').val('')
-
             
         'click .remove_role': (e,t)->
             if confirm "remove #{@title} role?"
@@ -365,26 +312,28 @@ if Meteor.isClient
             Session.set('role_search',null)
             t.$('.role_search').val('')
                     
+        # 'keyup .role_search': _.throttle((e,t)->
         'keyup .role_search': (e,t)->
             # if e.which is '13'
             val = t.$('.role_search').val()
             console.log val
             Session.set('role_search', val)
+            # , 200
 
-        'click .create_role': ->
+        'click .create_role': (e,t)->
             title = Session.get('role_search')
             new_id = 
                 Docs.insert 
                     model:'role'
                     title:title
             # gstate_set "/role/#{new_id}/edit"
-            Docs.update Meteor.user().current_doc_id,
+            console.log Meteor.user().current_doc_id
+            Docs.update {_id:Meteor.user().current_doc_id},
                 $addToSet:
                     role_ids:new_id
                     role_titles:title
-
-
-
+            Session.set('role_search', null)
+            val = t.$('.role_search').val('')
 if Meteor.isServer 
     Meteor.publish 'role_search_results', (title_query)->
         Docs.find 
@@ -394,123 +343,6 @@ if Meteor.isServer
         
         
         
-        
-if Meteor.isClient
-    Template.badge_picker.onCreated ->
-        @autorun => @subscribe 'badge_search_results', Session.get('badge_search'), ->
-        @autorun => @subscribe 'model_docs', 'badge', ->
-    Template.badge_picker.helpers
-        badge_results: ->
-            Docs.find 
-                model:'badge'
-                title: {$regex:"#{Session.get('badge_search')}",$options:'i'}
-                
-        product_badges: ->
-            product = Docs.findOne Meteor.user().current_doc_id
-            Docs.find 
-                # model:'badge'
-                _id:$in:product.badge_ids
-        badge_search_value: ->
-            Session.get('badge_search')
-        
-    Template.badge_picker.events
-        'click .clear_search': (e,t)->
-            Session.set('badge_search', null)
-            t.$('.badge_search').val('')
-
-            
-        'click .remove_badge': (e,t)->
-            if confirm "remove #{@title} badge?"
-                Docs.update Meteor.user().current_doc_id,
-                    $pull:
-                        badge_ids:@_id
-                        badge_titles:@title
-        'click .pick_badge': (e,t)->
-            Docs.update Meteor.user().current_doc_id,
-                $addToSet:
-                    badge_ids:@_id
-                    badge_titles:@title
-            Session.set('badge_search',null)
-            t.$('.badge_search').val('')
-                    
-        'keyup .badge_search': (e,t)->
-            # if e.which is '13'
-            val = t.$('.badge_search').val()
-            console.log val
-            Session.set('badge_search', val)
-
-        'click .create_badge': ->
-            new_id = 
-                Docs.insert 
-                    model:'badge'
-                    title:Session.get('badge_search')
-            gstate_set "/badge/#{new_id}/edit"
-
-
-if Meteor.isServer 
-    Meteor.publish 'badge_search_results', (badge_title_query)->
-        Docs.find 
-            model:'badge'
-            title: {$regex:"#{title_query}",$options:'i'}
-        
-        
-if Meteor.isClient
-    Template.tasks_field.onCreated ->
-        @autorun => @subscribe 'task_search_results', Session.get('task_search'), ->
-        @autorun => @subscribe 'model_docs', 'task', ->
-    Template.tasks_field.helpers
-        task_results: ->
-            Docs.find 
-                model:'task'
-                title: {$regex:"#{Session.get('task_search')}",$options:'i'}
-                
-        product_tasks: ->
-            product = Docs.findOne Meteor.user().current_doc_id
-            Docs.find 
-                # model:'task'
-                _id:$in:product.task_ids
-        task_search_value: ->
-            Session.get('task_search')
-        
-    Template.tasks_field.events
-        'click .clear_search': (e,t)->
-            Session.set('task_search', null)
-            t.$('.task_search').val('')
-
-            
-        'click .remove_task': (e,t)->
-            if confirm "remove #{@title} task?"
-                Docs.update Meteor.user().current_doc_id,
-                    $pull:
-                        task_ids:@_id
-                        task_titles:@title
-        'click .pick_task': (e,t)->
-            Docs.update Meteor.user().current_doc_id,
-                $addToSet:
-                    task_ids:@_id
-                    task_titles:@title
-            Session.set('task_search',null)
-            t.$('.task_search').val('')
-                    
-        'keyup .task_search': (e,t)->
-            # if e.which is '13'
-            val = t.$('.task_search').val()
-            console.log val
-            Session.set('task_search', val)
-
-        'click .create_task': ->
-            new_id = 
-                Docs.insert 
-                    model:'task'
-                    title:Session.get('task_search')
-            gstate_set "/task/#{new_id}/edit"
-
-
-if Meteor.isServer 
-    Meteor.publish 'task_search_results', (title_query)->
-        Docs.find 
-            model:'task'
-            title: {$regex:"#{title_query}",$options:'i'}
         
         
 if Meteor.isClient

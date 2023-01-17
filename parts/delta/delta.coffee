@@ -625,21 +625,20 @@ if Meteor.isClient
     Template.model_doc_view.events 
         'click .calc': ->
             Meteor.call 'alpha', ->
-if Meteor.isServer 
-    Meteor.methods 
-        alpha:->
-            doc = Docs.findOne Meteor.user().current_doc_id
-            # model = Docs.findOne 
-            #     model:'model'
-            #     slug:Meteor.user().current_model
-            # template = Docs.findOne Meteor.user().current_template
-            if doc 
-                keys = _.keys doc 
-                console.log 'doc keys type', typeof keys
-                Docs.update doc._id,
-                    $set:
-                        found_fields:keys
-            
+Meteor.methods 
+    alpha:->
+        doc = Docs.findOne Meteor.user().current_doc_id
+        # model = Docs.findOne 
+        #     model:'model'
+        #     slug:Meteor.user().current_model
+        # template = Docs.findOne Meteor.user().current_template
+        if doc 
+            keys = _.keys doc 
+            console.log 'doc keys type', typeof keys
+            Docs.update doc._id,
+                $set:
+                    found_fields:keys
+        
 if Meteor.isClient
     Template.found_field.helpers
         field_temp_exists: ->
@@ -1040,6 +1039,7 @@ if Meteor.isClient
 
     Template.app.events
         'click .goto_string_doc': (e,t)->
+            console.log @valueOf()
             Meteor.users.update Meteor.userId(),
                 $set:
                     search_query:null
@@ -1073,9 +1073,9 @@ if Meteor.isClient
                     Session.set 'loading', false
 
             if @model is 'model'
-                Meteor.call 'change_state', "/m/#{@slug}", ->
+                Meteor.call 'change_state', {current_template:'delta'}, ->
             else
-                Meteor.call 'change_state', "/m/#{model_slug}/#{@_id}/", ->
+                Meteor.call 'change_state', {current_template:'model_doc_view'}, ->
 
         'click .set_model': ->
             Meteor.call 'set_delta_facets', @slug, Meteor.userId()

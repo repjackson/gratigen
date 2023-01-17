@@ -90,6 +90,18 @@ Template.footer.helpers
 $.cloudinary.config
     cloud_name:"facet"
 Template.app.events
+    'click .fly_out': -> $('.ui.flyout').flyout('toggle')
+    'click .show_modal': ->
+        console.log @
+        Meteor.users.update Meteor.userId(), 
+            $set:
+                modal_doc_id:@_id
+        $('.ui.modal').modal({
+            inverted:true
+            # blurring:true
+            }).modal('show')
+
+
     'click .fly_right': (e,t)-> $(e.currentTarget).closest('.card').transition('fly right', 500)
     'click .zoom': (e,t)-> $(e.currentTarget).closest('.card').transition('drop', 500)
     'click .fly_left': (e,t)-> 
