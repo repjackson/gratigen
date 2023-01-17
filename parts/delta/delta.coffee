@@ -687,7 +687,7 @@ if Meteor.isClient
                 Session.set 'loading', false
             $(e.currentTarget).closest('.grid').transition('fade left', 250)
             Meteor.setTimeout ->
-                Meteor.call 'change_state', "/m/#{current_model}", ->
+                Meteor.call 'change_state', {current_template:'delta',current_model:@model}, ->
             , 100
 
 

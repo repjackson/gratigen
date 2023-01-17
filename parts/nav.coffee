@@ -4,6 +4,7 @@ if Meteor.isClient
         @autorun => Meteor.subscribe 'all_users', ->
         @autorun => Meteor.subscribe 'model_docs', 'model', ->
         @autorun => Meteor.subscribe 'history',->
+        @autorun => Meteor.subscribe 'model_docs','delta',->
         
         # @autorun => Meteor.subscribe 'my_cart'
         # @autorun => Meteor.subscribe 'my_cart_order'
@@ -200,7 +201,7 @@ if Meteor.isClient
         
     Template.nav.helpers
         modelbar_class: ->
-            if Meteor.user().show_modelbar
+            if Meteor.user() and Meteor.user().show_modelbar
                 'large inverted'
         model_docs: ->
             Docs.find 

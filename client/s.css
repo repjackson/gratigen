@@ -13,6 +13,10 @@ body {
     /* background: #0e0e44 !important; */
 }
 
+.modal {
+  border-radius: 20px !important;
+}
+
 @keyframes slideInFromLeft {
   0% {
     transform: translateX(-100%);

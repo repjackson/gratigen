@@ -77,25 +77,15 @@ Template.footer.helpers
 #         Docs.findOne
 #             model:'stats'
 
-# Template.nav.onCreated ->
-#     @autorun => @subscribe 'order_count'
-#     @autorun => @subscribe 'product_count'
-#     @autorun => @subscribe 'ingredient_count'
-#     @autorun => @subscribe 'subscription_count'
-#     @autorun => @subscribe 'source_count'
-#     @autorun => @subscribe 'giftcard_count'
-#     @autorun => @subscribe 'user_count'
-        
-        
 $.cloudinary.config
     cloud_name:"facet"
 Template.app.events
-    'click .fly_out': -> $('.ui.flyout').flyout('toggle')
+    'click .fly_out': -> 
+        Meteor.users.update({_id:Meteor.userId()}, {$set:flyout_doc_id:@_id})
+        $('.ui.flyout').flyout('toggle')
     'click .show_modal': ->
         console.log @
-        Meteor.users.update Meteor.userId(), 
-            $set:
-                modal_doc_id:@_id
+        Meteor.users.update({_id:Meteor.userId()}, {$set:modal_doc_id:@_id})
         $('.ui.modal').modal({
             inverted:true
             # blurring:true

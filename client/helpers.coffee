@@ -5,6 +5,8 @@ Template.registerHelper 'comma', (input) ->
 
 Template.registerHelper 'modal_doc', () ->
     Docs.findOne Meteor.user().modal_doc_id
+Template.registerHelper 'flyout_doc', () ->
+    Docs.findOne Meteor.user().flyout_doc_id
 
 Template.registerHelper 'parent', () -> Template.parentData()
 Template.registerHelper 'parent_doc', () ->
@@ -20,7 +22,7 @@ Template.registerHelper 'is_active_template', () ->
     #     ''
 Template.registerHelper 'truncated', (input) ->
     res = "#{input[..20]}"
-    if input[21]
+    if input and input[21]
         res += "..."
     res
 Template.registerHelper 'stripped_icon_color', () ->

@@ -720,9 +720,13 @@ template(name='model_field')
 template(name='roles_field')
     .ui.fluid.segment
         with model_doc 'role'    
-            .ui.header 
+            .ui.inline.header 
                 +i name=icon color=stripped_icon_color
                 | #{title}
+            if parent_model is 'org'
+                each org_groups
+                    .ui.button 
+                        |#{title}
         // if is_admin
         .ui.left.icon.right.action.large.fluid.input 
             if role_search_value

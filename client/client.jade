@@ -82,14 +82,7 @@ body
     // +leftbar
     // +rightbar
     +global_modal
-    .ui.flyout
-        i.close.icon
-        .ui.header hi
-        .image.content
-            .ui.header content
-        .actions
-            .ui.button hi
-    
+    +global_flyout
     .pusher
         +app
 
@@ -129,7 +122,18 @@ template(name='doc_history_button')
                 img.ui.mini.inline.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
             |{{truncated title}}
     
-    
+template(name='global_flyout')
+    with flyout_doc
+        .ui.flyout
+            i.close.icon
+            .ui.header #{title}
+            if image_id
+                .image.content
+                    img.ui.image(src="{{c.url image_id }}")
+            .actions
+                .ui.button hi
+
+
 
 template(name='shortcut_modal')
     .ui.shortcut.modal
@@ -285,8 +289,9 @@ template(name='toggle_nav_item')
 template(name='delta_nav')
     .ui.attached.menu.hscroll
         .item 
-            |delta sessions
-        each delta_docs 
+            i.yin.yang.icon
+            |sessions
+        each model_docs_helper 'delta' 
             .item #{when}
           
           
