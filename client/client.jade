@@ -101,8 +101,6 @@ template(name='app')
                 i.large.clock.icon(title='node history')
             each currentUser.doc_history.reverse
                 +doc_history_button
-            .ui.label temp #{currentUser.current_template}
-            .ui.label model #{currentUser.current_model}
         .layout
             with currentUser
                 if ct.length

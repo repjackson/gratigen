@@ -201,10 +201,10 @@ body {
   /*background: rgba(0,0,0,1) !important; */
 /*}*/
 .invert {
-  filter: invert(1) hue-rotate(180deg);
+  filter: invert(1)
 }
 img {
-  filter: invert(1) hue-rotate(180deg) !important;
+  filter: invert(1) !important;
 }
 
 .hscroll{
