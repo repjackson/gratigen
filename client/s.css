@@ -8,9 +8,8 @@ body {
     /*font-size: 110% !important; */
     /*line-height: 200% !important;*/
     /*transition: all 1s ease-in-out !important;*/
-
-    /*filter: invert(.9) !important;*/
-    /* background: #0e0e44 !important; */
+    filter: invert(.9) !important;
+    background: rgba(0,0,0,.9) !important; 
 }
 
 .modal {
@@ -204,7 +203,7 @@ body {
 .invert {
   filter: invert(1) hue-rotate(180deg);
 }
-.invert img {
+img {
   filter: invert(1) hue-rotate(180deg) !important;
 }
 
@@ -373,15 +372,6 @@ body {
   }
 }
 
-
-#iron-router-progress {
-	background-color : blue;
-	box-shadow       : 0 0 10px red;
-}
-
-#iron-router-progress.spinner:before {
-	border-color : green;
-}
 
 #map {
   height:300px !important;
