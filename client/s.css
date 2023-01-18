@@ -2,16 +2,19 @@ body {
      /*font-family: 'Raleway', sans-serif !important; */
      /*font-family: 'Roboto', sans-serif !important; */
     /* font-family: 'Ubuntu+Mono', sans-serif !important; */
-    font-family: 'Ubuntu', sans-serif !important;
     /*font-family: 'Varela Round', sans-serif !important;*/
     /*font-family: 'Goudy Bookletter 1911', sans-serif !important;*/
+    font-family: 'Ubuntu', sans-serif !important;
     /*font-size: 110% !important; */
     /*line-height: 200% !important;*/
     /*transition: all 1s ease-in-out !important;*/
     filter: invert(.9) !important;
     background: rgba(0,0,0,.9) !important; 
 }
-
+.ui.menu {
+    font-family: 'Ubuntu', sans-serif !important;
+  
+}
 .modal {
   border-radius: 20px !important;
 }
@@ -139,8 +142,8 @@ body {
 }
 
 .ui.header{
-     font-family: 'Raleway', sans-serif !important; 
-     /*font-family: 'Ubuntu', sans-serif !important; */
+     /*font-family: 'Raleway', sans-serif !important; */
+     font-family: 'Ubuntu', sans-serif !important; 
      /*font-family: 'Varela Round' !important; */
     /*font-family: 'Goudy Bookletter 1911', sans-serif !important;*/
 }

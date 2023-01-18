@@ -612,6 +612,7 @@ if Meteor.isClient
 if Meteor.isClient
     Template.model_doc_view.onRendered ->
         Meteor.call 'mark_doc_read', Meteor.user()._model, ->
+        Meteor.call 'alpha', ->
 
 
     Template.model_doc_view.onCreated ->
@@ -619,9 +620,9 @@ if Meteor.isClient
         @autorun -> Meteor.subscribe 'model_fields_from_slug', Meteor.user()._model, ->
         # console.log Meteor.user()._doc_id
         @autorun -> Meteor.subscribe 'doc', Meteor.user()._doc_id, ->
-        @autorun -> Meteor.subscribe 'upvoters', Meteor.user()._doc_id
-        @autorun -> Meteor.subscribe 'downvoters', Meteor.user()._doc_id
-        @autorun -> Meteor.subscribe 'model_docs', 'field_type'
+        @autorun -> Meteor.subscribe 'upvoters', Meteor.user()._doc_id, ->
+        @autorun -> Meteor.subscribe 'downvoters', Meteor.user()._doc_id, ->
+        @autorun -> Meteor.subscribe 'model_docs', 'field_type', ->
 
     Template.model_doc_view.events 
         'click .call_alpha': ->
