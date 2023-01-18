@@ -994,8 +994,6 @@ if Meteor.isClient
                 model:'post'
             }, sort:_timestamp:-1    
     
-    Template.post_view.onRendered ->
-        Meteor.call 'mark_doc_read', Meteor.user()._model, ->
 
 if Meteor.isServer 
     Meteor.methods 
@@ -1006,11 +1004,6 @@ if Meteor.isServer
             
 
 if Meteor.isClient
-    Template.post_view.helpers
-        read_users: ->
-            doc = Docs.findOne Meteor.user()._model
-            Meteor.users.find 
-                _id:$in:doc.read_by_user_ids
     # Template.favorite_icon_toggle.helpers
     #     icon_class: ->
     #         if @favorite_ids and Meteor.userId() in @favorite_ids

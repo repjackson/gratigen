@@ -13,6 +13,13 @@ Template.registerHelper 'parent_doc', () ->
     Docs.findOne @parent_id
     # Template.parentData()
 
+Template.registerHelper 'read_users', () ->
+    read_users: ->
+        doc = Docs.findOne Meteor.user()._doc_id
+        Meteor.users.find 
+            _id:$in:doc.read_by_user_ids
+
+
 Template.registerHelper 'isActivePath', () ->
 Template.registerHelper 'is_active_template', () ->
     false

@@ -11,7 +11,10 @@ template(name='model_doc_view')
                     // if can_edit
                     a.ui.large.icon.circular.button.edit_doc(title='Edit')
                         i.pencil.blue.large.icon
-                    +array_edit key='found_fields' direct=true
+                    a.ui.header.zoomer.call_alpha(title='recalc')
+                        i.calculator.icon
+                        |alpha fields
+                    +array_edit key='_keys' direct=true
                     if is_admin
                         .ui.header 
                             i.clock.icon
@@ -35,12 +38,12 @@ template(name='model_doc_view')
                             +array_view key='tags' label='tags' direct=true
                     +comments
                     +viewing
-                .twelve.wide.column.scrollin.fly_out
-                    a.ui.header.calc.zoomer
-                        i.calculator.icon
-                        |found fields
+                .twelve.wide.column.scrollin
+                    .ui.button.fly_out
+                        i.bars.icon
+                        |fly out
                     .ui.one.column.stackable.grid
-                        each found_fields
+                        each _keys
                             .column
                                 +found_field
                     // .ui.header
@@ -65,7 +68,6 @@ template(name='model_doc_view')
 
 template(name='found_field')
     // +Template.dynamic template=this data=current_doc
-    
     if field_temp_exists
         // +print_this
         +Template.dynamic template=this data=current_doc

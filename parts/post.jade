@@ -95,18 +95,6 @@ template(name='post_item')
             .ui.basic.small.label #{this}
         
 
-template(name='post_view')
-    .ui.stackable.padded.grid
-        .row 
-            .sixteen.wide.column.scrolling
-                img.ui.image(src="{{c.url image_id }}" class=currentUser.invert_class)
-                // a.ui.header(href="/user/#{target.username}")
-                //     |#{target.username}
-                if youtube_id 
-                    +youtube_view key='youtube_id'
-                |!{content}
-                    
-                    
 template(name='post_edit')
     .ui.stackable.padded.grid
         .row 

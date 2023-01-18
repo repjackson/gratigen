@@ -717,26 +717,12 @@ if Meteor.isServer
 
 
 
-if Meteor.isServer
-    Meteor.publish 'user_requests', (username)->
-        Docs.find
-            model:'request'
-                                    
-                                    
-                                    
-                             
-                                    
-                                    
 if Meteor.isClient
-    
     Template.user_genekeys.onCreated ->
         @autorun => Meteor.subscribe 'docs', picked_tags.array(), 'thought'
-
-
     Template.user_genekeys.onCreated ->
         @autorun => Meteor.subscribe 'user_genekeys', Template.parentData().username
         @autorun => Meteor.subscribe 'model_docs', 'message'
-
     Template.user_genekeys.events
         'keyup .new_public_message': (e,t)->
             if e.which is 13
@@ -784,9 +770,6 @@ if Meteor.isClient
                 is_private:true
                 target_user_id: target_user._id
             val = $('.new_private_message').val('')
-
-
-
     Template.user_genekeys.helpers
         user_public_genekeys: ->
             target_user = Meteor.users.findOne(username:Template.parentData().username)
@@ -802,9 +785,6 @@ if Meteor.isClient
                 target_user_id: target_user._id
                 is_private:true
                 _author_id:Meteor.userId()
-
-
-
 if Meteor.isServer
     Meteor.publish 'user_public_genekeys', (username)->
         target_user = Meteor.users.findOne(username:Template.parentData().username)
@@ -825,15 +805,11 @@ if Meteor.isServer
                                     
                                     
 if Meteor.isClient
-    
     Template.user_delivery.onCreated ->
         @autorun => Meteor.subscribe 'docs', picked_tags.array(), 'thought'
-
-
     Template.user_delivery.onCreated ->
         @autorun => Meteor.subscribe 'user_delivery', Template.parentData().username
         @autorun => Meteor.subscribe 'model_docs', 'message'
-
     Template.user_delivery.events
         'keyup .new_public_message': (e,t)->
             if e.which is 13

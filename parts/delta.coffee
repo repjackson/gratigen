@@ -610,6 +610,10 @@ if Meteor.isClient
 
 
 if Meteor.isClient
+    Template.model_doc_view.onRendered ->
+        Meteor.call 'mark_doc_read', Meteor.user()._model, ->
+
+
     Template.model_doc_view.onCreated ->
         @autorun -> Meteor.subscribe 'model_from_slug', Meteor.user()._model, ->
         @autorun -> Meteor.subscribe 'model_fields_from_slug', Meteor.user()._model, ->
@@ -620,10 +624,12 @@ if Meteor.isClient
         @autorun -> Meteor.subscribe 'model_docs', 'field_type'
 
     Template.model_doc_view.events 
-        'click .calc': ->
+        'click .call_alpha': ->
+            console.log 'alpha'
             Meteor.call 'alpha', ->
 Meteor.methods 
     alpha:->
+        console.log 'alpha'
         doc = Docs.findOne Meteor.user()._doc_id
         # model = Docs.findOne 
         #     model:'model'
@@ -634,8 +640,7 @@ Meteor.methods
             console.log 'doc keys type', typeof keys
             Docs.update doc._id,
                 $set:
-                    found_fields:keys
-        
+                    _keys:keys
 if Meteor.isClient
     Template.found_field.helpers
         field_temp_exists: ->
