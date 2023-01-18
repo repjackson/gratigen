@@ -15,7 +15,7 @@ if Meteor.isClient
     Template.registerHelper 'sortable_fields', () ->
         model = Docs.findOne
             model:'model'
-            slug:Meteor.user().current_model
+            slug:Meteor.user()._model
         if model
             Docs.find {
                 model:'field'
@@ -48,7 +48,7 @@ if Meteor.isClient
     Template.registerHelper 'fields', () ->
         model = Docs.findOne
             model:'model'
-            slug:Meteor.user().current_model
+            slug:Meteor.user()._model
         if model
             match = {}
             # if Meteor.user()
@@ -65,7 +65,7 @@ if Meteor.isClient
         console.log 'finding edit fields'
         model = Docs.findOne
             model:'model'
-            slug:Meteor.user().current_model
+            slug:Meteor.user()._model
         if model
             Docs.find {
                 model:'field'
@@ -77,10 +77,10 @@ if Meteor.isClient
     Template.registerHelper 'view_template', -> "#{@field_type}_view"
     Template.registerHelper 'edit_template', -> "#{@field_type}_edit"
 
-    Template.registerHelper 'current_model', ->
+    Template.registerHelper '_model', ->
         Docs.findOne
             model:'model'
-            slug: Meteor.user().current_model
+            slug: Meteor.user()._model
 
     Template.registerHelper 'is_loading', () ->
             
@@ -124,21 +124,21 @@ if Meteor.isClient
 
     Template.delta.onCreated ->
         @autorun -> Meteor.subscribe 'me', ->
-        @autorun -> Meteor.subscribe 'model_from_slug', Meteor.user().current_model, ->
-        # @autorun -> Meteor.subscribe 'model_fields_from_slug', Meteor.user().current_model
+        @autorun -> Meteor.subscribe 'model_from_slug', Meteor.user()._model, ->
+        # @autorun -> Meteor.subscribe 'model_fields_from_slug', Meteor.user()._model
         @autorun -> Meteor.subscribe 'my_delta', ->
         # @autorun -> Meteor.subscribe 'all_users', ->
         @autorun -> Meteor.subscribe 'model_docs', 'widget', ->
 
         Session.set 'loading', true
-        Meteor.call 'set_facets', Meteor.user().current_model, ->
+        Meteor.call 'set_facets', Meteor.user()._model, ->
             Session.set 'loading', false
     # Template.delta.onRendered ->
     #     Meteor.call 'log_view', @_id, ->
 
     Template.delta.helpers
         model_template: ->
-            cm = Docs.findOne slug:Meteor.user().current_model
+            cm = Docs.findOne slug:Meteor.user()._model
             # console.log "#{cm.model}s"
             "#{@slug}s"
         column_class: ->
@@ -159,18 +159,18 @@ if Meteor.isClient
                 when 15 then 'fifteen wide column'
                 when 16 then 'sixteen wide column'
         widget_docs: ->
-            current_model = Docs.findOne slug:Meteor.user().current_model 
-            # console.log current_model
-            # current_model.active_blocks
+            _model = Docs.findOne slug:Meteor.user()._model 
+            # console.log _model
+            # _model.active_blocks
             Docs.find 
                 model:'widget'
-                parent_model:Meteor.user().current_model
-                # parent_id:current_model._id
+                parent_model:Meteor.user()._model
+                # parent_id:_model._id
     
         editing_model: ->
             # user = Meteor.user()
             model = Docs.findOne 
-                slug:Meteor.user().current_model
+                slug:Meteor.user()._model
                 model:'model'
             if model
                 if Meteor.user().editing_model_id is model._id
@@ -210,10 +210,10 @@ if Meteor.isClient
             console.log 'delta',delta
             console.log 'model',model
 
-        current_model: ->
+        _model: ->
             Docs.findOne
                 model:'model'
-                slug: Meteor.user().current_model
+                slug: Meteor.user()._model
 
         sorting_up: ->
             delta = Docs.findOne model:'delta'
@@ -246,14 +246,14 @@ if Meteor.isClient
             # if count is 1 then true else false
 
         model_stats_exists: ->
-            current_model = Meteor.user().current_model
-            if Template["#{current_model}_stats"]
+            _model = Meteor.user()._model
+            if Template["#{_model}_stats"]
                 return true
             else
                 return false
         model_stats: ->
-            current_model = Meteor.user().current_model
-            "#{current_model}_stats"
+            _model = Meteor.user()._model
+            "#{_model}_stats"
 
 
     Template.delta.events
@@ -273,7 +273,7 @@ if Meteor.isClient
         'click .create_model': ->
             new_model_id = Docs.insert
                 model:'model'
-                slug: Meteor.user().current_model
+                slug: Meteor.user()._model
             new_model = Docs.findOne new_model_id
             Meteor.users.update Meteor.userId(),
                 $set:
@@ -320,14 +320,14 @@ if Meteor.isClient
                 model:'delta'
                 view_mode:'cards'
                 app:'gratigen'
-                model_filter: Meteor.user().current_model
+                model_filter: Meteor.user()._model
 
         'click .print_delta': (e,t)->
             delta = Docs.findOne model:'delta'
             console.log delta
 
         'click .reset': ->
-            model_slug =  Meteor.user().current_model
+            model_slug =  Meteor.user()._model
             Session.set 'loading', true
             Meteor.call 'set_facets', model_slug, true, ->
                 Session.set 'loading', false
@@ -344,7 +344,7 @@ if Meteor.isClient
         'click .add_model_doc': ->
             model = Docs.findOne
                 model:'model'
-                slug: Meteor.user().current_model
+                slug: Meteor.user()._model
             # console.log model
             if model.collection and model.collection is 'users'
                 name = prompt 'first and last name'
@@ -371,7 +371,7 @@ if Meteor.isClient
                     model:'model'
                 ob = {
                     template:'doc_edit'
-                    current_doc_id:new_doc_id
+                    _doc_id:new_doc_id
                     }
                 Meteor.call 'change_state', ob, ->
             else
@@ -384,7 +384,7 @@ if Meteor.isClient
         'click .edit_model': ->
             model = Docs.findOne
                 model:'model'
-                slug: Meteor.user().current_model
+                slug: Meteor.user()._model
             Meteor.users.update Meteor.userId(),
                 $set:
                     editing_model_id:model._id
@@ -606,20 +606,20 @@ if Meteor.isServer
 
 if Meteor.isClient
     Template.model_view.onCreated ->
-        @autorun -> Meteor.subscribe 'model_from_slug', Meteor.user().current_model
-        @autorun -> Meteor.subscribe 'model_fields_from_slug', Meteor.user().current_model
-        @autorun -> Meteor.subscribe 'doc', Meteor.user().current_doc_id
+        @autorun -> Meteor.subscribe 'model_from_slug', Meteor.user()._model
+        @autorun -> Meteor.subscribe 'model_fields_from_slug', Meteor.user()._model
+        @autorun -> Meteor.subscribe 'doc', Meteor.user()._doc_id
 
 
 
 if Meteor.isClient
     Template.model_doc_view.onCreated ->
-        @autorun -> Meteor.subscribe 'model_from_slug', Meteor.user().current_model, ->
-        @autorun -> Meteor.subscribe 'model_fields_from_slug', Meteor.user().current_model, ->
-        # console.log Meteor.user().current_doc_id
-        @autorun -> Meteor.subscribe 'doc', Meteor.user().current_doc_id, ->
-        @autorun -> Meteor.subscribe 'upvoters', Meteor.user().current_doc_id
-        @autorun -> Meteor.subscribe 'downvoters', Meteor.user().current_doc_id
+        @autorun -> Meteor.subscribe 'model_from_slug', Meteor.user()._model, ->
+        @autorun -> Meteor.subscribe 'model_fields_from_slug', Meteor.user()._model, ->
+        # console.log Meteor.user()._doc_id
+        @autorun -> Meteor.subscribe 'doc', Meteor.user()._doc_id, ->
+        @autorun -> Meteor.subscribe 'upvoters', Meteor.user()._doc_id
+        @autorun -> Meteor.subscribe 'downvoters', Meteor.user()._doc_id
         @autorun -> Meteor.subscribe 'model_docs', 'field_type'
 
     Template.model_doc_view.events 
@@ -627,11 +627,11 @@ if Meteor.isClient
             Meteor.call 'alpha', ->
 Meteor.methods 
     alpha:->
-        doc = Docs.findOne Meteor.user().current_doc_id
+        doc = Docs.findOne Meteor.user()._doc_id
         # model = Docs.findOne 
         #     model:'model'
-        #     slug:Meteor.user().current_model
-        # template = Docs.findOne Meteor.user().current_template
+        #     slug:Meteor.user()._model
+        # template = Docs.findOne Meteor.user()._template
         if doc 
             keys = _.keys doc 
             console.log 'doc keys type', typeof keys
@@ -644,7 +644,7 @@ if Meteor.isClient
         field_temp_exists: ->
             # false
             # console.log @
-            # current_model = Meteor.user().current_model
+            # _model = Meteor.user()._model
             # console.log "#{@}"
             if Template["#{@}_field"]
                 # console.log 'true'
@@ -660,7 +660,7 @@ if Meteor.isClient
         model_temp_exists: ->
             # false
             # console.log @
-            # current_model = Meteor.user().current_model
+            # _model = Meteor.user()._model
             # console.log "#{@}"
             if Template["#{@model}_view"]
                 # console.log 'true'
@@ -676,18 +676,18 @@ if Meteor.isClient
 
     Template.model_doc_edit.events
         'click .save_doc':->
-            Meteor.call 'change_state', {current_template:'model_doc_view',current_doc_id:@_id}, ->
+            Meteor.call 'change_state', {_template:'model_doc_view',_doc_id:@_id}, ->
     Template.model_doc_view.events
         'click .edit_doc':->
-            Meteor.call 'change_state', {current_template:'model_doc_edit',current_doc_id:@_id}, ->
+            Meteor.call 'change_state', {_template:'model_doc_edit',_doc_id:@_id}, ->
         'click .back_to_model': (e,t)->
             Session.set 'loading', true
-            current_model = Meteor.user().current_model
-            Meteor.call 'set_facets', current_model, ->
+            _model = Meteor.user()._model
+            Meteor.call 'set_facets', _model, ->
                 Session.set 'loading', false
             $(e.currentTarget).closest('.grid').transition('fade left', 250)
             Meteor.setTimeout ->
-                Meteor.call 'change_state', {current_template:'delta',current_model:@model}, ->
+                Meteor.call 'change_state', {_template:'delta',_model:@model}, ->
             , 100
 
 
@@ -695,22 +695,22 @@ if Meteor.isClient
 
 if Meteor.isClient
     Template.model_view.onCreated ->
-        @autorun -> Meteor.subscribe 'model', Meteor.user().current_model, ->
-        @autorun -> Meteor.subscribe 'model_fields_from_slug', Meteor.user().current_model, ->
-        @autorun -> Meteor.subscribe 'docs', picked_tags.array(), Meteor.user().current_model, ->
+        @autorun -> Meteor.subscribe 'model', Meteor.user()._model, ->
+        @autorun -> Meteor.subscribe 'model_fields_from_slug', Meteor.user()._model, ->
+        @autorun -> Meteor.subscribe 'docs', picked_tags.array(), Meteor.user()._model, ->
 
     Template.model_view.helpers
-        current_model: ->
-            Meteor.user().current_model
+        _model: ->
+            Meteor.user()._model
         model: ->
             Docs.findOne
                 model:'model'
-                slug: Meteor.user().current_model
+                slug: Meteor.user()._model
 
         model_docs: ->
             model = Docs.findOne
                 model:'model'
-                slug: Meteor.user().current_model
+                slug: Meteor.user()._model
 
             Docs.find
                 model:model.slug
@@ -718,19 +718,19 @@ if Meteor.isClient
         model_doc: ->
             model = Docs.findOne
                 model:'model'
-                slug: Meteor.user().current_model
+                slug: Meteor.user()._model
             "#{model.slug}_view"
 
         fields: ->
             Docs.find { model:'field' }, sort:rank:1
-                # parent_id: Meteor.user().current_doc_id
+                # parent_id: Meteor.user()._doc_id
 
     Template.model_view.events
         'click .add_child': ->
-            model = Docs.findOne slug:Meteor.user().current_model
+            model = Docs.findOne slug:Meteor.user()._model
             console.log model
             # new_id = Docs.insert
-            #     model: Meteor.user().current_model
+            #     model: Meteor.user()._model
             # Met  eor.call 'change_state', "/edit/#{new_id}", ->
 
 
@@ -775,7 +775,7 @@ if Meteor.isServer
                     _author_id:null
             # console.log 'delta doc', delta
             model_slug =
-                Meteor.user().current_model
+                Meteor.user()._model
             model = Docs.findOne
                 model:'model'
                 slug:model_slug
@@ -840,7 +840,7 @@ if Meteor.isServer
     
             model = Docs.findOne
                 model:'model'
-                slug:Meteor.user().current_model
+                slug:Meteor.user()._model
     
             # console.log 'running fum,', delta, model
             built_query = {}
@@ -1004,16 +1004,16 @@ if Meteor.isClient
 
     Template.delta_result_card.helpers
         template_exists: ->
-            current_model = Meteor.user().current_model
-            if current_model
-                if Template["#{current_model}_card"]
+            _model = Meteor.user()._model
+            if _model
+                if Template["#{_model}_card"]
                     return true
                 else
                     return false
 
         model_template: ->
-            current_model = Meteor.user().current_model
-            "#{current_model}_card"
+            _model = Meteor.user()._model
+            "#{_model}_card"
 
         toggle_value_class: ->
             facet = Template.parentData()
@@ -1043,12 +1043,12 @@ if Meteor.isClient
             Meteor.users.update Meteor.userId(),
                 $set:
                     search_query:null
-                    current_template:'model_doc_view'
-                    current_doc_id:@valueOf()
+                    _template:'model_doc_view'
+                    _doc_id:@valueOf()
             
         'click .goto_doc': (e,t)->
             # console.log @
-            model_slug =  Meteor.user().current_model
+            model_slug =  Meteor.user()._model
             # $(e.currentTarget).closest('.result').transition('fade')
             if Meteor.user()
                 Docs.update @_id,
@@ -1062,8 +1062,8 @@ if Meteor.isClient
             Meteor.users.update Meteor.userId(),
                 $set:
                     search_query:null
-                    current_template:'model_doc_view'
-                    current_doc_id:@_id
+                    _template:'model_doc_view'
+                    _doc_id:@_id
                 $addToSet:
                     doc_history:@_id
 
@@ -1073,9 +1073,9 @@ if Meteor.isClient
                     Session.set 'loading', false
 
             if @model is 'model'
-                Meteor.call 'change_state', {current_template:'delta'}, ->
+                Meteor.call 'change_state', {_template:'delta'}, ->
             else
-                Meteor.call 'change_state', {current_template:'model_doc_view'}, ->
+                Meteor.call 'change_state', {_template:'model_doc_view'}, ->
 
         'click .set_model': ->
             Meteor.call 'set_delta_facets', @slug, Meteor.userId()
@@ -1108,9 +1108,9 @@ if Meteor.isClient
                 delta.visible_fields
 
         template_exists: ->
-            current_model = Meteor.user().current_model
-            if current_model
-                if Template["#{current_model}_card"]
+            _model = Meteor.user()._model
+            if _model
+                if Template["#{_model}_card"]
                     # console.log 'true'
                     return true
                 else
@@ -1118,8 +1118,8 @@ if Meteor.isClient
                     return false
 
         model_template: ->
-            current_model = Meteor.user().current_model
-            "#{current_model}_item"
+            _model = Meteor.user()._model
+            "#{_model}_item"
 
         toggle_value_class: ->
             facet = Template.parentData()
@@ -1146,7 +1146,7 @@ if Meteor.isClient
     Template.delta_list_result.events
         'click .result': (e,t)->
             # console.log @
-            model_slug =  Meteor.user().current_model
+            model_slug =  Meteor.user()._model
             # $(e.currentTarget).closest('.result').transition('fade')
             if Meteor.user()
                 Docs.update @_id,
@@ -1185,16 +1185,16 @@ if Meteor.isClient
 if Meteor.isClient
     Template.model_doc_edit.onCreated ->
         @autorun -> Meteor.subscribe 'me', ->
-        @autorun -> Meteor.subscribe 'doc', Meteor.user().current_doc_id, ->
-        # @autorun -> Meteor.subscribe 'model_fields_from_slug', Meteor.user().current_model, ->
-        @autorun -> Meteor.subscribe 'model_from_slug', Meteor.user().current_model, ->
+        @autorun -> Meteor.subscribe 'doc', Meteor.user()._doc_id, ->
+        # @autorun -> Meteor.subscribe 'model_fields_from_slug', Meteor.user()._model, ->
+        @autorun -> Meteor.subscribe 'model_from_slug', Meteor.user()._model, ->
         @autorun -> Meteor.subscribe 'model_docs', 'field_type', ->
 
     Template.model_doc_edit.helpers
         template_exists: ->
-            current_model = Docs.findOne(Meteor.user().current_doc_id).model
-            unless current_model is 'model'
-                if Template["#{current_model}_edit"]
+            _model = Docs.findOne(Meteor.user()._doc_id).model
+            unless _model is 'model'
+                if Template["#{_model}_edit"]
                     return true
                 else
                     return false
@@ -1202,9 +1202,9 @@ if Meteor.isClient
                 return false
             # false
             # false
-            # # current_model = Docs.findOne(slug:Meteor.user().current_model).model
-            # current_model = Meteor.user().current_model
-            # if Template["#{current_model}_doc_edit"]
+            # # _model = Docs.findOne(slug:Meteor.user()._model).model
+            # _model = Meteor.user()._model
+            # if Template["#{_model}_doc_edit"]
             #     # console.log 'true'
             #     return true
             # else
@@ -1212,9 +1212,9 @@ if Meteor.isClient
             #     return false
 
         model_template: ->
-            # current_model = Docs.findOne(slug:Meteor.user().current_model).model
-            current_model = Meteor.user().current_model
-            "#{current_model}_edit"
+            # _model = Docs.findOne(slug:Meteor.user()._model).model
+            _model = Meteor.user()._model
+            "#{_model}_edit"
 
 
     Template.model_doc_edit.events
@@ -1242,9 +1242,9 @@ if Meteor.isClient
 
 
         template_exists: ->
-            current_model = Meteor.user().current_model
-            if current_model
-                if Template["#{current_model}_card"]
+            _model = Meteor.user()._model
+            if _model
+                if Template["#{_model}_card"]
                     # console.log 'true'
                     return true
                 else
@@ -1252,8 +1252,8 @@ if Meteor.isClient
                     return false
 
         model_template: ->
-            current_model = Meteor.user().current_model
-            "#{current_model}_card"
+            _model = Meteor.user()._model
+            "#{_model}_card"
 
         toggle_value_class: ->
             facet = Template.parentData()
@@ -1304,7 +1304,7 @@ if Meteor.isClient
 
         'click .result': (e,t)->
             # console.log @
-            model_slug =  Meteor.user().current_model
+            model_slug =  Meteor.user()._model
             $(e.currentTarget).closest('.result').transition('fade')
             if Meteor.user()
                 Docs.update @_id,
@@ -1343,12 +1343,12 @@ if Meteor.isClient
 
 if Meteor.isClient
     Template.model_edit.onCreated ->
-        # @autorun -> Meteor.subscribe 'child_docs', Meteor.user().current_doc_id, ->
-        # @autorun -> Meteor.subscribe 'doc', Meteor.user().current_doc_id
-        # @autorun -> Meteor.subscribe 'model_fields_from_id', Meteor.user().current_doc_id
-        @autorun -> Meteor.subscribe 'model_from_slug', Meteor.user().current_model, ->
-        @autorun -> Meteor.subscribe 'model_widgets', Meteor.user().current_model, ->
-        @autorun -> Meteor.subscribe 'model_block_instances', Meteor.user().current_model, ->
+        # @autorun -> Meteor.subscribe 'child_docs', Meteor.user()._doc_id, ->
+        # @autorun -> Meteor.subscribe 'doc', Meteor.user()._doc_id
+        # @autorun -> Meteor.subscribe 'model_fields_from_id', Meteor.user()._doc_id
+        @autorun -> Meteor.subscribe 'model_from_slug', Meteor.user()._model, ->
+        @autorun -> Meteor.subscribe 'model_widgets', Meteor.user()._model, ->
+        @autorun -> Meteor.subscribe 'model_block_instances', Meteor.user()._model, ->
 
 
     # object['key']['subkey']
@@ -1357,16 +1357,16 @@ if Meteor.isClient
         active_block_docs: ->
             Docs.find 
                 model:'block_instance'
-                parent_model:Meteor.user().current_model
-                # parent_id:current_model._id
+                parent_model:Meteor.user()._model
+                # parent_id:_model._id
         widget_docs: ->
-            current_model = Docs.findOne slug:Meteor.user().current_model 
-            # console.log current_model
-            # current_model.active_blocks
+            _model = Docs.findOne slug:Meteor.user()._model 
+            # console.log _model
+            # _model.active_blocks
             Docs.find 
                 model:'widget'
-                parent_model:Meteor.user().current_model
-                # parent_id:current_model._id
+                parent_model:Meteor.user()._model
+                # parent_id:_model._id
     Template.model_edit.events
         'click .save_model': ->
             Meteor.users.update Meteor.userId(),
@@ -1374,14 +1374,14 @@ if Meteor.isClient
                 
         'click #delete_model': (e,t)->
             if confirm 'delete model?'
-                Docs.remove Meteor.user().current_doc_id, ->
+                Docs.remove Meteor.user()._doc_id, ->
                     Meteor.call 'change_state', "/", ->
 
         'click .add_widget': ->
             Docs.insert
                 model:'widget'
-                parent_model:Meteor.user().current_model
-                # parent_id: Meteor.user().current_doc_id
+                parent_model:Meteor.user()._model
+                # parent_id: Meteor.user()._doc_id
                 view_roles: ['dev', 'admin', 'user', 'public']
                 edit_roles: ['dev', 'admin', 'user']
 
@@ -1423,18 +1423,18 @@ if Meteor.isClient
         fields: ->
             Docs.find {
                 model:'field'
-                parent_id: Meteor.user().current_doc_id
+                parent_id: Meteor.user()._doc_id
             }, sort:rank:1
 
     Template.model_block_menu_item.events
         'click .add_new_block': ->
             # alert 'hi'
-            cm = Docs.findOne slug:Meteor.user().current_model
+            cm = Docs.findOne slug:Meteor.user()._model
             if cm
                 new_id = 
                     Docs.insert
                         model:'block_instance'
-                        parent_model:Meteor.user().current_model
+                        parent_model:Meteor.user()._model
                         parent_id:cm._id
                         type:@type
                 console.log new_id

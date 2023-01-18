@@ -19,11 +19,11 @@ if Meteor.isServer
 
 if Meteor.isClient                          
     Template.music_artist.onCreated ->
-        @autorun => Meteor.subscribe 'doc_by_id', Template.parentData().doc_id, ->
-        @autorun => Meteor.subscribe 'albums_by_artist_doc_id', Template.parentData().doc_id, ->
+        @autorun => Meteor.subscribe 'doc_by_id', Meteor.user()._model, ->
+        @autorun => Meteor.subscribe 'albums_by_artist_doc_id', Meteor.user()._model, ->
     Template.album_view.onCreated ->
-        @autorun => Meteor.subscribe 'doc_by_id', Template.parentData().doc_id, ->
-        @autorun => Meteor.subscribe 'tracks_by_album_doc_id', Template.parentData().doc_id, ->
+        @autorun => Meteor.subscribe 'doc_by_id', Meteor.user()._model, ->
+        @autorun => Meteor.subscribe 'tracks_by_album_doc_id', Meteor.user()._model, ->
 
 if Meteor.isServer 
     Meteor.publish 'albums_by_artist_doc_id', (artist_doc_id)->
@@ -49,7 +49,7 @@ if Meteor.isClient
     Template.album_view.events 
         'click .pull_tracks': -> 
             console.log 'pulling tracks'
-            Meteor.call 'pull_album_tracks', Template.parentData().doc_id, ()->
+            Meteor.call 'pull_album_tracks', Meteor.user()._model, ()->
                 console.log 'pulled'
         
     Template.music_artist.helpers
@@ -57,15 +57,15 @@ if Meteor.isClient
             Docs.find 
                 model:'album'
         current_artist: ->
-            Docs.findOne Template.parentData().doc_id
+            Docs.findOne Meteor.user()._model
     Template.album_view.helpers
         album_track_docs: ->
             Docs.find 
                 model:'track'
         current_album: ->
-            Docs.findOne Template.parentData().doc_id
+            Docs.findOne Meteor.user()._model
     Template.music_artist.onRendered ->
-        Meteor.call 'log_view', Template.parentData().doc_id, ->
+        Meteor.call 'log_view', Meteor.user()._model, ->
         Meteor.setTimeout ->
             $().popup(
                 inline: true
@@ -355,7 +355,7 @@ if Meteor.isClient
 
     Template.music_artist.events
         'click .pull_albums': ->
-            current_artist = Docs.findOne Template.parentData().doc_id
+            current_artist = Docs.findOne Meteor.user()._model
             console.log 'pulling', current_artist.strArtist
             Meteor.call 'pull_artist_albums', current_artist.strArtist, ->
         'click .pick_mood': ->

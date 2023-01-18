@@ -299,7 +299,7 @@ if Meteor.isClient
         #     zipCode: true
         #     token: (token) ->
         #         amount = parseInt(Session.get('topup_amount'))
-        #         # product = Docs.findOne Template.parentData().doc_id
+        #         # product = Docs.findOne Meteor.user()._model
         #         charge =
         #             amount: amount*100
         #             currency: 'usd'

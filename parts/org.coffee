@@ -13,11 +13,11 @@ if Meteor.isClient
         # current_org: ->
         #     Docs.findOne
         #         model:'org'
-        #         slug: Template.parentData().doc_id
+        #         slug: Meteor.user()._model
 
     Template.org_view.events
         'click .refresh_org_stats': ->
-            Meteor.call 'calc_org_stats', Template.parentData().doc_id, ->
+            Meteor.call 'calc_org_stats', Meteor.user()._model, ->
         'click .join': ->
             if Meteor.userId()
                 Docs.update @_id, 
@@ -43,7 +43,7 @@ if Meteor.isClient
         'click .add_option': ->
             Docs.insert
                 model:'org_option'
-                ballot_id: Template.parentData().doc_id
+                ballot_id: Meteor.user()._model
     Template.org_edit.helpers
         options: ->
             Docs.find
@@ -210,37 +210,37 @@ if Meteor.isClient
 
 if Meteor.isClient
     Template.org_history.onCreated ->
-        @autorun => Meteor.subscribe 'children', 'log_event', Template.parentData().doc_id
+        @autorun => Meteor.subscribe 'children', 'log_event', Meteor.user()._model
     Template.org_history.helpers
         org_events: ->
             Docs.find
                 model:'log_event'
-                parent_id:Template.parentData().doc_id
+                parent_id:Meteor.user()._model
 
 
     Template.org_subscription.onCreated ->
-        # @autorun => Meteor.subscribe 'children', 'log_event', Template.parentData().doc_id
+        # @autorun => Meteor.subscribe 'children', 'log_event', Meteor.user()._model
     Template.org_subscription.events
         'click .subscribe': ->
             Docs.insert
                 model:'log_event'
                 log_type:'subscribe'
-                parent_id:Template.parentData().doc_id
+                parent_id:Meteor.user()._model
                 text: "#{Meteor.user().username} subscribed to org order."
 
 
     Template.org_reservations.onCreated ->
-        @autorun => Meteor.subscribe 'org_reservations', Template.parentData().doc_id
+        @autorun => Meteor.subscribe 'org_reservations', Meteor.user()._model
     Template.org_reservations.helpers
         reservations: ->
             Docs.find
                 model:'reservation'
-                org_id: Template.parentData().doc_id
+                org_id: Meteor.user()._model
     Template.org_reservations.events
         'click .new_reservation': ->
             Docs.insert
                 model:'reservation'
-                org_id: Template.parentData().doc_id
+                org_id: Meteor.user()._model
 
 
 if Meteor.isServer

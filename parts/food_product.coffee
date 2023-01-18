@@ -97,7 +97,7 @@ if Meteor.isClient
                 Session.set('searching', false)
     
     Template.food_product_page.onCreated ->
-        @autorun => @subscribe 'doc_by_id', Template.parentData().doc_id, ->
+        @autorun => @subscribe 'doc_by_id', Meteor.user()._model, ->
     Template.food_products.onCreated ->
         document.title = 'gr food_product'
         
@@ -114,13 +114,13 @@ if Meteor.isClient
 
     Template.food_product_page.onRendered ->
         # console.log @
-        found_doc = Docs.findOne Template.parentData().doc_id
+        found_doc = Docs.findOne Meteor.user()._model
         if found_doc 
             unless found_doc.watson
-                Meteor.call 'call_watson',Template.parentData().doc_id,'content','html', ->
+                Meteor.call 'call_watson',Meteor.user()._model,'content','html', ->
                     console.log 'autoran watson'
             unless found_doc.details 
-                Meteor.call 'recipe_details', Template.parentData().doc_id, ->
+                Meteor.call 'recipe_details', Meteor.user()._model, ->
                     console.log 'pulled recipe details'
     # Template.food_product_card.onRendered ->
     # Template.food_product_card. ->

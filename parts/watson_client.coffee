@@ -68,7 +68,7 @@ if Meteor.isClient
             # console.log Template.parentData(2)
             # console.log Template.parentData(3)
             parent = Template.parentData()
-            Meteor.call 'call_watson', Template.parentData().doc_id, parent.key, @mode, ->
+            Meteor.call 'call_watson', Meteor.user()._model, parent.key, @mode, ->
     
     
     

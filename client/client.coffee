@@ -7,8 +7,8 @@
 
 Template.app.helpers
     ct: -> 
-        # console.log Meteor.user().current_template
-        Meteor.user().current_template
+        # console.log Meteor.user()._template
+        Meteor.user()._template
 
 
 Template.doc_history_button.helpers 
@@ -20,7 +20,7 @@ Template.doc_history_button.helpers
 #     'click .goto_doc': ->
 #         Meteor.users.update Meteor.userId(),
 #             $set:
-#                 current_doc_id:@_id
+#                 _doc_id:@_id
 #             $addToSet:
 #                 doc_history:@_id
 

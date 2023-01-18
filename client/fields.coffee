@@ -1,7 +1,7 @@
 Template.geolocate_button.events 
     'click .geolocate': ->
         # alert @location
-        Meteor.call 'geolocate', Template.parentData().doc_id, @location, (err,res)->
+        Meteor.call 'geolocate', Meteor.user()._model, @location, (err,res)->
             console.log res
 
 
@@ -245,7 +245,7 @@ Template.image_edit.events
                             
                         
     'click .call_cloud_visual': (e,t)->
-        Meteor.call 'call_visual', Template.parentData().doc_id, 'cloud', ->
+        Meteor.call 'call_visual', Meteor.user()._model, 'cloud', ->
             $('body').toast(
                 showIcon: 'dna'
                 message: 'image autotagged'
@@ -431,7 +431,7 @@ Template.slug_edit.events
 
 
 #     'click .slugify_title': (e,t)->
-#         page_doc = Docs.findOne Template.parentData().doc_id
+#         page_doc = Docs.findOne Meteor.user()._model
 #         # val = t.$('.edit_text').val()
 #         parent = Template.parentData()
 #         doc = Docs.findOne parent._id
@@ -687,7 +687,7 @@ Template.multi_user_edit.events
                     t.user_results.set res
 
     'click .select_user': (e,t) ->
-        page_doc = Docs.findOne Template.parentData().doc_id
+        page_doc = Docs.findOne Meteor.user()._model
         field = Template.currentData()
 
         # console.log @
@@ -738,7 +738,7 @@ Template.multi_user_edit.events
                         "#{field.key}":@_id
                         "#{field.key}_usernames":@username
 
-        #     page_doc = Docs.findOne Template.parentData().doc_id
+        #     page_doc = Docs.findOne Meteor.user()._model
             # Meteor.call 'unassign_user', page_doc._id, @
 
 
@@ -760,7 +760,7 @@ Template.single_user_edit.events
                     t.user_results.set res
 
     'click .select_user': (e,t) ->
-        page_doc = Docs.findOne Template.parentData().doc_id
+        page_doc = Docs.findOne Meteor.user()._model
         field = Template.currentData()
 
         # console.log @
@@ -803,7 +803,7 @@ Template.single_user_edit.events
                 Meteor.users.update parent._id,
                     $unset:"#{field.key}":1
 
-        #     page_doc = Docs.findOne Template.parentData().doc_id
+        #     page_doc = Docs.findOne Meteor.user()._model
             # Meteor.call 'unassign_user', page_doc._id, @
 
 

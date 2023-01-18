@@ -16,7 +16,7 @@ Template.registerHelper 'parent_doc', () ->
 Template.registerHelper 'isActivePath', () ->
 Template.registerHelper 'is_active_template', () ->
     false
-    # if @template is Meteor.user().current_template
+    # if @template is Meteor.user()._template
     #     'active'
     # else 
     #     ''
@@ -249,8 +249,8 @@ Template.registerHelper 'parent_key_value_is', (key, value)->
 
 
 # Template.registerHelper 'checkin_guest_docs', () ->
-#     Docs.findOne Meteor.user().current_doc_id
-#     session_document = Docs.findOne Meteor.user().current_doc_id
+#     Docs.findOne Meteor.user()._doc_id
+#     session_document = Docs.findOne Meteor.user()._doc_id
 #     # console.log session_document.guest_ids
 #     Docs.find
 #         _id:$in:session_document.guest_ids
@@ -269,7 +269,7 @@ Template.registerHelper 'template_parent', () ->
 Template.registerHelper 'fields', () ->
     model = Docs.findOne
         model:'model'
-        slug:Meteor.user().current_model
+        slug:Meteor.user()._model
     if model
         match = {}
         # if Meteor.user()
@@ -285,7 +285,7 @@ Template.registerHelper 'fields', () ->
 # Template.registerHelper 'edit_fields', () ->
 #     model = Docs.findOne
 #         model:'model'
-#         slug:Meteor.user().current_model
+#         slug:Meteor.user()._model
 #     if model
 #         Docs.find {
 #             model:'field'
@@ -296,7 +296,7 @@ Template.registerHelper 'fields', () ->
 Template.registerHelper 'sortable_fields', () ->
     model = Docs.findOne
         model:'model'
-        slug:Meteor.user().current_model
+        slug:Meteor.user()._model
     if model
         Docs.find {
             model:'field'
@@ -317,10 +317,10 @@ Template.registerHelper 'nl2br', (text)->
 Template.registerHelper 'loading_class', () ->
     if Session.get 'loading' then 'disabled' else ''
 
-Template.registerHelper 'current_model', (input) ->
+Template.registerHelper '_model', (input) ->
     Docs.findOne
         model:'model'
-        slug: Meteor.user().current_model
+        slug: Meteor.user()._model
 
 Template.registerHelper 'in_list', (key) ->
     if Meteor.userId()
@@ -427,8 +427,8 @@ Template.registerHelper 'ingredient_products', () ->
 
 
 Template.registerHelper 'current_doc', ->
-    doc = Docs.findOne Meteor.user().current_doc_id
-    # user = Meteor.users.findOne Meteor.user().current_doc_id
+    doc = Docs.findOne Meteor.user()._doc_id
+    # user = Meteor.users.findOne Meteor.user()._doc_id
     # console.log doc
     # console.log user
     # if doc then doc else if user then user

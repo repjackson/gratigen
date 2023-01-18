@@ -36,13 +36,13 @@ globalHotkeys.add
 globalHotkeys.add
 	combo: "d s"
 	callback: ->
-        model = Docs.findOne Template.parentData().doc_id
+        model = Docs.findOne Meteor.user()._model
         gstate_set "/m/#{model.slug}"
 
 globalHotkeys.add
 	combo: "d e"
 	callback: ->
-        doc = Docs.findOne Template.parentData().doc_id
+        doc = Docs.findOne Meteor.user()._model
         gstate_set "/m/#{doc.model}/#{doc._id}/edit"
 
 
@@ -107,10 +107,10 @@ globalHotkeys.add
 globalHotkeys.add
 	combo: "s d"
 	callback: ->
-        current_model = Docs.findOne
+        _model = Docs.findOne
             model:'model'
             slug: Template.parentData().model_slug
-        gstate_set "/m/#{current_model.slug}/#{Template.parentData().doc_id}/view"
+        gstate_set "/m/#{_model.slug}/#{Meteor.user()._model}/view"
 globalHotkeys.add
 	combo: "g u"
 	callback: ->

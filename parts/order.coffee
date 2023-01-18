@@ -2,7 +2,7 @@ if Meteor.isClient
     Template.order.events
         'click .mark_viewed': ->
             # if confirm 'mark viewed?'
-            Docs.update Template.parentData().doc_id, 
+            Docs.update Meteor.user()._model, 
                 $set:
                     runner_viewed: true
                     runner_viewed_timestamp: Date.now()
@@ -11,7 +11,7 @@ if Meteor.isClient
       
         'click .mark_preparing': ->
             # if confirm 'mark mark_preparing?'
-            Docs.update Template.parentData().doc_id, 
+            Docs.update Meteor.user()._model, 
                 $set:
                     preparing: true
                     preparing_timestamp: Date.now()
@@ -19,7 +19,7 @@ if Meteor.isClient
        
         'click .mark_prepared': ->
             # if confirm 'mark prepared?'
-            Docs.update Template.parentData().doc_id, 
+            Docs.update Meteor.user()._model, 
                 $set:
                     prepared: true
                     prepared_timestamp: Date.now()
@@ -27,7 +27,7 @@ if Meteor.isClient
      
         'click .mark_arrived': ->
             # if confirm 'mark arrived?'
-            Docs.update Template.parentData().doc_id, 
+            Docs.update Meteor.user()._model, 
                 $set:
                     arrived: true
                     arrived_timestamp: Date.now()
@@ -35,7 +35,7 @@ if Meteor.isClient
         
         'click .mark_delivering': ->
             # if confirm 'mark delivering?'
-            Docs.update Template.parentData().doc_id, 
+            Docs.update Meteor.user()._model, 
                 $set:
                     delivering: true
                     delivering_timestamp: Date.now()
@@ -43,7 +43,7 @@ if Meteor.isClient
       
         'click .mark_delivered': ->
             # if confirm 'mark delivered?'
-            Docs.update Template.parentData().doc_id, 
+            Docs.update Meteor.user()._model, 
                 $set:
                     delivered: true
                     delivered_timestamp: Date.now()
@@ -59,7 +59,7 @@ if Meteor.isClient
             if confirm 'mark ready?'
                 Docs.insert 
                     model:'order_event'
-                    order_id: Template.parentData().doc_id
+                    order_id: Meteor.user()._model
                     order_status:'ready'
 
 

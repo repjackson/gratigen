@@ -21,24 +21,24 @@
             
 # if Meteor.isClient
 #     Template.transfer_edit.onCreated ->
-#         @autorun => Meteor.subscribe 'doc_by_id', Template.parentData().doc_id
-#         # @autorun => Meteor.subscribe 'doc', Template.parentData().doc_id
+#         @autorun => Meteor.subscribe 'doc_by_id', Meteor.user()._model
+#         # @autorun => Meteor.subscribe 'doc', Meteor.user()._model
 #         @autorun => Meteor.subscribe 'username_search', Session.get('username_query'), ->
 
 
 #     Template.user_picker.helpers
 #         unpicked_users: ->
-#             current_transfer = Docs.findOne Template.parentData().doc_id
+#             current_transfer = Docs.findOne Meteor.user()._model
 #             Meteor.users.find 
 #                 _id:$ne:current_transfer.recipient
 #         picked_user: ->
-#             current_transfer = Docs.findOne Template.parentData().doc_id
+#             current_transfer = Docs.findOne Meteor.user()._model
 #             Meteor.users.findOne 
 #                 _id:current_transfer.recipient
                 
 #     Template.user_picker.events
 #         'click .pick_user': ->
-#             Docs.update Template.parentData().doc_id,
+#             Docs.update Meteor.user()._model,
 #                 $set:recipient:@_id
 #         'keyup .search_user': ->
 #             val = $('.search_user').val()
@@ -65,7 +65,7 @@
 
 if Meteor.isClient
     Template.transfer_edit.onCreated ->
-        @autorun => Meteor.subscribe 'recipient_from_transfer_id', Template.parentData().doc_id
+        @autorun => Meteor.subscribe 'recipient_from_transfer_id', Meteor.user()._model
 
 
     Template.transfer_edit.helpers
@@ -74,12 +74,12 @@ if Meteor.isClient
         suggestions: ->
             Tags.find()
         recipient: ->
-            transfer = Docs.findOne Template.parentData().doc_id
+            transfer = Docs.findOne Meteor.user()._model
             if transfer.recipient_id
                 Meteor.users.findOne
                     _id: transfer.recipient_id
         members: ->
-            transfer = Docs.findOne Template.parentData().doc_id
+            transfer = Docs.findOne Meteor.user()._model
             Meteor.users.find({
                 # levels: $in: ['member','domain']
                 _id: $ne: Meteor.userId()
@@ -88,7 +88,7 @@ if Meteor.isClient
                 limit:10
                 })
         # subtotal: ->
-        #     transfer = Docs.findOne Template.parentData().doc_id
+        #     transfer = Docs.findOne Meteor.user()._model
         #     transfer.amount*transfer.recipient_ids.length
         
         point_max: ->
@@ -98,15 +98,15 @@ if Meteor.isClient
                 Meteor.user().points
         
         can_submit: ->
-            transfer = Docs.findOne Template.parentData().doc_id
+            transfer = Docs.findOne Meteor.user()._model
             transfer.amount and transfer.recipient_id
     Template.transfer_edit.events
         'click .add_recipient': ->
-            Docs.update Template.parentData().doc_id,
+            Docs.update Meteor.user()._model,
                 $set:
                     recipient_id:@_id
         'click .remove_recipient': ->
-            Docs.update Template.parentData().doc_id,
+            Docs.update Meteor.user()._model,
                 $unset:
                     recipient_id:1
         'keyup .new_tag': _.throttle((e,t)->
@@ -119,7 +119,7 @@ if Meteor.isClient
             
             if e.which is 13
                 element_val = t.$('.new_tag').val().toLowerCase().trim()
-                Docs.update Template.parentData().doc_id,
+                Docs.update Meteor.user()._model,
                     $addToSet:tags:element_val
                 picked_tags.push element_val
                 Meteor.call 'log_term', element_val, ->
@@ -133,7 +133,7 @@ if Meteor.isClient
             element = @valueOf()
             field = Template.currentData()
             picked_tags.remove element
-            Docs.update Template.parentData().doc_id,
+            Docs.update Meteor.user()._model,
                 $pull:tags:element
             t.$('.new_tag').focus()
             t.$('.new_tag').val(element)
@@ -142,7 +142,7 @@ if Meteor.isClient
     
         'click .select_term': (e,t)->
             # picked_tags.push @title
-            Docs.update Template.parentData().doc_id,
+            Docs.update Meteor.user()._model,
                 $addToSet:tags:@title
             picked_tags.push @title
             $('.new_tag').val('')
@@ -155,7 +155,7 @@ if Meteor.isClient
         'blur .point_amount': (e,t)->
             # console.log @
             val = parseInt t.$('.point_amount').val()
-            Docs.update Template.parentData().doc_id,
+            Docs.update Meteor.user()._model,
                 $set:amount:val
 
 

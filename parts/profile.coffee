@@ -165,7 +165,7 @@ if Meteor.isClient
         #     locale: 'auto'
         #     # zipCode: true
         #     token: (token) ->
-        #         # product = Docs.findOne Template.parentData().doc_id
+        #         # product = Docs.findOne Meteor.user()._model
         #         user = Meteor.users.findOne username:Template.parentData().username
         #         deposit_amount = parseInt $('.deposit_amount').val()*100
         #         stripe_charge = deposit_amount*100*1.02+20

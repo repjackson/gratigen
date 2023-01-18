@@ -1,5 +1,5 @@
 template(name='model_edit')
-    with current_model
+    with _model
         .ui.stackable.padded.grid            
             .centered.row
                 .four.wide.column
@@ -49,7 +49,7 @@ template(name='model_edit')
                         summary.active.title.zoomer
                             .ui.inline.header 
                                 +i name='info'
-                                |#{current_model.model} info
+                                |#{_model.model} info
                             i.dropdown.icon
                         .active.content
                             .ui.form

@@ -116,7 +116,7 @@ if Meteor.isServer
     Meteor.publish 'latest_home_docs', (model_filters=[])->
         match = {}
         # user = Meteor.user()
-        # console.log Meteor.user().current_model_filters
+        # console.log Meteor.user()._model_filters
         # if model 
         #     match.model = model
         # else 
@@ -184,7 +184,7 @@ if Meteor.isClient
     Template.home_card.helpers 
         model_card_template: -> "#{@model}_card"
         card_template_exists: ->
-            # current_model = Router.current().params.model_slug
+            # _model = Router.current().params.model_slug
             if @model
                 if Template["#{@model}_card"]
                     return true
@@ -201,11 +201,11 @@ if Meteor.isClient
                 'basic'
             else 
                 'small seconary'
-            # if Session.equals('current_model_filter',@model) then 'blue large' else 'small'
-            # if  @model in Meteor.user().current_model_filters then 'blue big' else 'small basic'
+            # if Session.equals('_model_filter',@model) then 'blue large' else 'small'
+            # if  @model in Meteor.user()._model_filters then 'blue big' else 'small basic'
     Template.eft_home_picker.events
         'click .toggle_eft': ->
-            # Session.set('current_model_filter',@model)
+            # Session.set('_model_filter',@model)
             if @title in picked_efts.array()
                 picked_efts.remove @title 
             else 
@@ -222,25 +222,25 @@ if Meteor.isClient
                 # "blue"
             else 
                 'small secondary'
-            # if Session.equals('current_model_filter',@model) then 'blue large' else 'small'
-            # if  @model in Meteor.user().current_model_filters then 'blue big' else 'small basic'
+            # if Session.equals('_model_filter',@model) then 'blue large' else 'small'
+            # if  @model in Meteor.user()._model_filters then 'blue big' else 'small basic'
     Template.filter_model.events
         'click .pick_model': ->
-            # Session.set('current_model_filter',@model)
+            # Session.set('_model_filter',@model)
             if @slug in model_filters.array()
                 model_filters.remove @slug 
             else 
                 model_filters.push @slug 
                 
-            # # if @model in Meteor.user().current_model_filters 
-            # if @model in Meteor.user().current_model_filters 
+            # # if @model in Meteor.user()._model_filters 
+            # if @model in Meteor.user()._model_filters 
             #     Meteor.users.update Meteor.userId(),
             #         $pull:
-            #             current_model_filters:@model
+            #             _model_filters:@model
             # else 
             #     Meteor.users.update Meteor.userId(),
             #         $addToSet:
-            #             current_model_filters:@model
+            #             _model_filters:@model
                 
     
     

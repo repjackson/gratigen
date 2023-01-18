@@ -11,12 +11,12 @@ template(name='delta')
             unless current_delta 
                 .ui.button.create_delta 
                     |+ delta
-            unless current_model
+            unless _model
                 .ui.button.create_model
                     |+ model
                 
-        with current_model
-            // unless current_model.show_facets
+        with _model
+            // unless _model.show_facets
             // .middle.aligned.row
             //     .sixteen.wide.column
             //         +model_top
@@ -29,7 +29,7 @@ template(name='delta')
                         div(class=column_class)
                             .ui.header i'm a colum #{column_width} wide
             .row
-                // if current_model.show_facets
+                // if _model.show_facets
                 //     .four.wide.colum
                 //         each sorted_facets
                 //             +facet
@@ -37,10 +37,10 @@ template(name='delta')
                 .ui.sixteen.wide.column
                     if model_template
                         +Template.dynamic template=model_template
-                    // unless current_model.show_facets
+                    // unless _model.show_facets
                     +model_top
                     
-                    if current_model.show_filter_bar
+                    if _model.show_filter_bar
                         |&nbsp;
                         .ui.icon.input(class=query_class)
                             if current_delta.search_query
@@ -163,7 +163,7 @@ template(name='delta')
                 .sixteen.wide.column
                     if model_stats_exists
                         +Template.dynamic template=model_stats
-        unless current_model
+        unless _model
             if subs_ready
                 if currentUser.admin_mode
                     .ui.big.button.create_model 
@@ -247,17 +247,17 @@ template(name='model_top')
                 +ibig name=icon color=stripped_icon_color
         if total_count
             small(title='total children count')
-                |#{current_model.total_count}
-        | #{current_model.title}
+                |#{_model.total_count}
+        | #{_model.title}
         if unread_count
             small(title='total unread count')
-                |(#{current_model.total_count})
+                |(#{_model.total_count})
             
     // i.plus.large.green.circular.link.icon.add_model_doc(title="add #{slug}")
     unless is_loading
         if currentUser
             // unless key_value_is current_delta.model_filter 'model'
-            //     unless key_value_is current_model.collection 'user'
+            //     unless key_value_is _model.collection 'user'
             // if is_admin
             // else 
             //     if currentUser
@@ -392,9 +392,9 @@ template(name='model_view')
             .row
                 .sixteen.wide.column
                     .ui.breadcrumb
-                        a.section(href="/m/#{current_model}" title=current_model)
+                        a.section(href="/m/#{_model}" title=_model)
                             .ui.compact.button
-                                |#{current_model.title}
+                                |#{_model.title}
                         .divider
                             i.chevron.right.icon
                         .active.section
@@ -494,10 +494,10 @@ template(name='delta_list_result')
                             .ui.compact.large.circular.basic.button.result.zoomer
                                 i.right.chevron.large.icon
                             if can_edit
-                                a.ui.icon.button(href="/m/#{current_model.slug}/#{_id}/edit" title='edit')
+                                a.ui.icon.button(href="/m/#{_model.slug}/#{_id}/edit" title='edit')
                                     i.pencil.large.icon
                                     //- |edit
-                            //- a.ui.icon.large.button(href="/m/#{current_model.slug}/#{_id}/view" title='view')
+                            //- a.ui.icon.large.button(href="/m/#{_model.slug}/#{_id}/view" title='view')
                             //-     i.right.chevron.yellow.large.icon
                             if _author_id
                                 +author_info

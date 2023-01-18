@@ -38,7 +38,8 @@ Meteor.methods
         console.log doc_id
         console.log key
         console.log mode
-        doc = Docs.findOne doc_id
+        doc_id = Meteor.user()._doc_id
+        doc = Docs.findOne Meteor.user()._doc_id
         # if doc.skip_watson is true
         #     console.log 'skipping flagged doc', doc.title
         # else
@@ -56,11 +57,11 @@ Meteor.methods
                     sentiment: true
                     # limit: 2
                 concepts: {}
-                # categories: {}
+                categories: {}
                 emotion: {}
                 metadata: {}
-                # relations: {}
-                # semantic_roles: {}
+                relations: {}
+                semantic_roles: {}
                 sentiment: {}
 
         switch mode

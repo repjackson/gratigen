@@ -16,7 +16,7 @@ if Meteor.isClient
             Meteor.users.update Meteor.userId(),
                 $set:
                     _template:'delta'
-                    current_model:@slug
+                    _model:@slug
 
     Template.nav.onRendered ->
         Session.setDefault('invert_mode', true)
@@ -24,7 +24,7 @@ if Meteor.isClient
         'click .goto_model': ->
             console.log @
             Session.set 'loading', true
-            Meteor.call 'change_state', { _template:'delta', current_model:@slug }, ->
+            Meteor.call 'change_state', { _template:'delta', _model:@slug }, ->
                 Meteor.call 'set_facets', @slug, true, ->
                     Session.set 'loading', false
 
@@ -38,33 +38,45 @@ if Meteor.isClient
             $('.ui.leftbar')
                 .sidebar({
                     context: $('.layout')
-                    transition:'scale down'
+                    transition:'overlay'
                     mobileTransition:'push'
-                    exclusive:true
+                    exclusive:false
                     duration:200
                     scrollLock:true
                 })
                 .sidebar('attach events', '.toggle_leftbar')
-        , 3000
+        , 2000
         Meteor.setTimeout ->
             $('.ui.rightbar')
                 .sidebar({
                     context: $('.layout')
-                    transition:'scale down'
+                    transition:'overlay'
                     mobileTransition:'push'
-                    exclusive:true
+                    exclusive:false
                     duration:200
                     scrollLock:true
                 })
                 .sidebar('attach events', '.toggle_rightbar')
-        , 3000
+        , 2000
+        Meteor.setTimeout ->
+            $('.ui.modelbar')
+                .sidebar({
+                    context: $('.layout')
+                    transition:'overlay'
+                    mobileTransition:'push'
+                    exclusive:false
+                    duration:200
+                    scrollLock:true
+                })
+                .sidebar('attach events', '.toggle_modelbar')
+        , 2000
         Meteor.setTimeout ->
             $('.ui.topbar')
                 .sidebar({
                     context: $('.layout')
-                    transition:'scale down'
+                    transition:'overlay'
                     mobileTransition:'push'
-                    exclusive:true
+                    exclusive:false
                     duration:200
                     scrollLock:true
                 })
@@ -151,28 +163,28 @@ if Meteor.isClient
         #     Meteor.users.update Meteor.userId(),
         #         $set:
         #             show_leftbar:!Meteor.user().show_leftbar
-        'click .toggle_modelbar': (e,t)->
-            $('.item').transition('bounce', 1000)
-            $('.cubes').transition('jiggle', 1000)
-            # $(e.currentTarget).closest('.item').transition('bounce', 1000)
-            # $(e.currentTarget).closest('.cubes').transition('jiggle', 1000)
-            console.log Meteor.user().show_modelbar
-            if Meteor.user().show_modelbar
-                $('.modelbar').transition('swing right', 1000)
-                Meteor.setTimeout ->
-                    Meteor.users.update Meteor.userId(),
-                        $set:
-                            show_modelbar:false
-                , 1000
-            else 
-                Meteor.users.update Meteor.userId(),
-                    $set:
-                        show_modelbar:true
-        'click .toggle_rightbar': ->
-            console.log Meteor.user().show_rightbar
-            Meteor.users.update Meteor.userId(),
-                $set:
-                    show_rightbar:!Meteor.user().show_rightbar
+        # 'click .toggle_modelbar': (e,t)->
+        #     # $('.item').transition('bounce', 1000)
+        #     $('.cubes').transition('jiggle', 1000)
+        #     # $(e.currentTarget).closest('.item').transition('bounce', 1000)
+        #     # $(e.currentTarget).closest('.cubes').transition('jiggle', 1000)
+        #     console.log Meteor.user().show_modelbar
+        #     if Meteor.user().show_modelbar
+        #         # $('.modelbar').transition('swing right', 1000)
+        #         Meteor.setTimeout ->
+        #             Meteor.users.update Meteor.userId(),
+        #                 $set:
+        #                     show_modelbar:false
+        #         , 1000
+        #     else 
+        #         Meteor.users.update Meteor.userId(),
+        #             $set:
+        #                 show_modelbar:true
+        # 'click .toggle_rightbar': ->
+        #     console.log Meteor.user().show_rightbar
+        #     Meteor.users.update Meteor.userId(),
+        #         $set:
+        #             show_rightbar:!Meteor.user().show_rightbar
             # Session.set('invert_mode', !Session.get('invert_mode'))
             # console.log Session.get('invert_mode')
     Template.leftbar_item.events

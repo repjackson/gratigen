@@ -41,12 +41,12 @@ if Meteor.isClient
 
 
     Template.reddit_post_view.onCreated ->
-        @autorun => @subscribe 'doc_by_id', Template.parentData().doc_id, ->
+        @autorun => @subscribe 'doc_by_id', Meteor.user()._model, ->
     Template.reddit_post_view.onRendered ->
-        found_doc = Docs.findOne Template.parentData().doc_id
+        found_doc = Docs.findOne Meteor.user()._model
         if found_doc 
             unless found_doc.watson
-                Meteor.call 'call_watson',Template.parentData().doc_id,'rd.selftext', ->
+                Meteor.call 'call_watson',Meteor.user()._model,'rd.selftext', ->
 
 
     Template.agg_tag.onCreated ->
@@ -297,13 +297,13 @@ if Meteor.isClient
             # html.unescape(@rd.selftext_html)
     Template.reddit_post_view.events 
         'click .get_comments':->
-            Meteor.call 'get_comments', Template.parentData().doc_id, ->
+            Meteor.call 'get_comments', Meteor.user()._model, ->
                 
     Template.reddit_post_view.helpers
         comment_docs: ->
             Docs.find 
                 model:'comment'
-                parent_id:Template.parentData().doc_id
+                parent_id:Meteor.user()._model
     Template.reddit_posts.helpers
         porn_class: ->
             if Session.get('porn') then 'large red' else 'compact'
@@ -420,7 +420,7 @@ if Meteor.isClient
         home_subs_ready: ->
             Template.instance().subscriptionsReady()
             
-        #     @autorun => Meteor.subscribe 'current_doc', Template.parentData().doc_id
+        #     @autorun => Meteor.subscribe 'current_doc', Meteor.user()._model
         # Template.array_view.events
         #     'click .toggle_reddit_post_filter': ->
         #         value = @valueOf()
@@ -497,9 +497,9 @@ if Meteor.isClient
   
 if Meteor.isClient
     Template.reddit_post_view.onCreated ->
-        @autorun => @subscribe 'related_group',Template.parentData().doc_id, ->
+        @autorun => @subscribe 'related_group',Meteor.user()._model, ->
     Template.reddit_post_view.onCreated ->
-        @autorun => @subscribe 'reddit_post_tips',Template.parentData().doc_id, ->
+        @autorun => @subscribe 'reddit_post_tips',Meteor.user()._model, ->
     Template.reddit_post_view.events 
         'click .pick_flat_tag': (e)-> 
             picked_tags.push @valueOf()
@@ -514,7 +514,7 @@ if Meteor.isClient
             Meteor.call 'find_tribe', @subreddit, (err,res)->
                 gstate_set "/group/#{res}"
         'click .get_comments': ->
-            Meteor.call 'get_reddit_comments', (Template.parentData().doc_id), ->
+            Meteor.call 'get_reddit_comments', (Meteor.user()._model), ->
                 
                 
 if Meteor.isServer 

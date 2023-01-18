@@ -83,6 +83,8 @@ body
     +rightbar
     +global_modal
     +global_flyout
+    // if currentUser.show_modelbar
+    +modelbar
     .pusher
         +app
 
@@ -92,8 +94,6 @@ template(name='app')
         +nav
         // #draggable
         // if currentUser.show_leftbar
-        if currentUser.show_modelbar
-            +modelbar
         // if currentUser.show_rightbar
         +delta_nav
         .ui.small.compact.attached.borderless.menu.hscroll
@@ -159,12 +159,15 @@ template(name='footer')
                     i.shield.icon
                     |footer 
                 with currentUser
-                    +text_edit key='current_template' label='template' direct=true
-                    +text_edit key='current_model' label='model' direct=true
-                    +text_edit key='current_doc_id' label='doc' direct=true
+                    +text_edit key='_template' label='_template' direct=true
+                    div
+                    +text_edit key='_model' label='_model' direct=true
+                    div
+                    +text_edit key='_doc_id' label='_doc_id' direct=true
                     +boolean_edit key='show_leftbar' label='leftbar' direct=true
                     +boolean_edit key='show_rightbar' label='rightbar' direct=true
-                    +boolean_edit key='show_modelbar' label='modelbar' icon='cubes' direct=true
+                    +boolean_edit key='show_modelbar' label='sidebar modelbar' icon='cubes' direct=true
+                    +boolean_edit key='show_secnav' label='secnav modelbar' icon='network' direct=true
                     
                 .ui.header 
                     i.users.icon 
@@ -283,8 +286,8 @@ template(name='nav')
                     span.mobile.hidden login
             if currentUser.viewing_coinbar
                 +coinbar
-    +secnav
-    // if currentUser.show_secnav
+    if currentUser.show_secnav
+        +secnav
                 
                 
 template(name='toggle_nav_item')
@@ -458,7 +461,7 @@ template(name='leftbar')
             +leftbar_item
         
 template(name='modelbar')
-    .ui.vertical.borderless.menu.modelbar
+    .ui.vertical.borderless.sidebar.menu.modelbar
         .item 
             i.cubes.icon
             |models

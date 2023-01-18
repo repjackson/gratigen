@@ -37,10 +37,10 @@ template(name='delta_result_card')
                         //     |#{app}
                 else
                     if can_edit
-                        a.ui.icon.button(href="/m/#{current_model.slug}/#{_id}/edit" title='edit')
+                        a.ui.icon.button(href="/m/#{_model.slug}/#{_id}/edit" title='edit')
                             i.pencil.large.icon
                             //- |edit
-                    //- a.ui.icon.large.button(href="/m/#{current_model.slug}/#{_id}/view" title='view')
+                    //- a.ui.icon.large.button(href="/m/#{_model.slug}/#{_id}/view" title='view')
                 //-     i.right.chevron.yellow.large.icon
                 // if is_admin
             .content

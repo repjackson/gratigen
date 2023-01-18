@@ -1,13 +1,13 @@
 if Meteor.isClient
     @selected_user_levels = new ReactiveArray []
     Template.registerHelper 'badgers', () ->
-        # badge = Docs.findOne Template.parentData().doc_id
+        # badge = Docs.findOne Meteor.user()._model
         if @badger_ids
             Meteor.users.find   
                 _id:$in:@badger_ids
     
     Template.registerHelper 'honey_badgers', () ->
-        badge = Docs.findOne Template.parentData().doc_id
+        badge = Docs.findOne Meteor.user()._model
         if badge.honey_badger_ids
             Meteor.users.find   
                 _id:$in:badge.honey_badger_ids
@@ -45,7 +45,7 @@ if Meteor.isClient
         #
         #
         #
-        #     Docs.update Template.parentData().doc_id,
+        #     Docs.update Meteor.user()._model,
         #         $set:
         #             submitted:true
 
@@ -53,7 +53,7 @@ if Meteor.isClient
 if Meteor.isClient
 
     Template.badge_edit.onCreated ->
-        @autorun => Meteor.subscribe 'doc', Template.parentData().doc_id
+        @autorun => Meteor.subscribe 'doc', Meteor.user()._model
         @autorun => Meteor.subscribe 'all_users'
     Template.badge_edit.onRendered ->
 
@@ -65,28 +65,28 @@ if Meteor.isClient
                 gstate_set "/m/badge"
 
         'click .add_badger': ->
-            Docs.update Template.parentData().doc_id, 
+            Docs.update Meteor.user()._model, 
                 $addToSet: 
                     badger_ids: @_id
 
         'click .remove_badger': ->
-            Docs.update Template.parentData().doc_id, 
+            Docs.update Meteor.user()._model, 
                 $pull: 
                     badger_ids: @_id
         
         'click .add_honey_badger': ->
-            Docs.update Template.parentData().doc_id, 
+            Docs.update Meteor.user()._model, 
                 $addToSet: 
                     honey_badger_ids: @_id
 
         'click .remove_honey_badger': ->
-            Docs.update Template.parentData().doc_id, 
+            Docs.update Meteor.user()._model, 
                 $pull: 
                     honey_badger_ids: @_id
 
     Template.badge_edit.helpers
         unselected_badgers: ->
-            badge = Docs.findOne Template.parentData().doc_id
+            badge = Docs.findOne Meteor.user()._model
             if @badger_ids
                 Meteor.users.find({
                     _id:$nin:@badger_ids
@@ -95,7 +95,7 @@ if Meteor.isClient
                 Meteor.users.find({
                 })
         unselected_honey_badgers: ->
-            badge = Docs.findOne Template.parentData().doc_id
+            badge = Docs.findOne Meteor.user()._model
             Meteor.users.find {},
                 limit:10
                 sort:points:-1

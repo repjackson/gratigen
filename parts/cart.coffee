@@ -5,8 +5,8 @@
 
 if Meteor.isClient
     Template.cart.onCreated ->
-        @autorun => Meteor.subscribe 'doc', Template.parentData().doc_id, ->
-        @autorun => Meteor.subscribe 'cart_items', Template.parentData().doc_id, ->
+        @autorun => Meteor.subscribe 'doc', Meteor.user()._model, ->
+        @autorun => Meteor.subscribe 'cart_items', Meteor.user()._model, ->
     Template.cart.helpers 
         cart_items: ->
             Docs.find

@@ -5,9 +5,9 @@ template(name='model_doc_view')
                 .four.wide.column
                     .ui.circular.basic.large.button.back_to_model
                         i.chevron.left.icon
-                        // i.big.icon(class=current_model.icon)
-                        +i name=current_model.icon
-                        |#{current_model.title}
+                        // i.big.icon(class=_model.icon)
+                        +i name=_model.icon
+                        |#{_model.title}
                     // if can_edit
                     a.ui.large.icon.circular.button.edit_doc(title='Edit')
                         i.pencil.blue.large.icon
@@ -29,6 +29,7 @@ template(name='model_doc_view')
                     +creation_info
                     //- +points_transaction
                     +voting_full
+                    +print_this
                     .smallscroll
                         if tags
                             +array_view key='tags' label='tags' direct=true
@@ -55,7 +56,7 @@ template(name='model_doc_view')
                         // unless header
                         .item
                             +Template.dynamic template=view_template 
-                    each current_model.actions
+                    each _model.actions
                         +Template.dynamic template=this data=current_doc
 
                     //- +comments

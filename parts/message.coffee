@@ -8,17 +8,17 @@ if Meteor.isServer
 if Meteor.isClient
     Template.message_edit.helpers
         recipient: ->
-            message = Docs.findOne Template.parentData().doc_id
+            message = Docs.findOne Meteor.user()._model
             if message.recipient_id
                 Meteor.users.findOne
                     _id: message.recipient_id
         members: ->
-            message = Docs.findOne Template.parentData().doc_id
+            message = Docs.findOne Meteor.user()._model
             Meteor.users.find 
                 # levels: $in: ['member']
                 _id: $ne: Meteor.userId()
         # subtotal: ->
-        #     message = Docs.findOne Template.parentData().doc_id
+        #     message = Docs.findOne Meteor.user()._model
         #     message.amount*message.recipient_ids.length
         
         point_max: ->
@@ -29,28 +29,28 @@ if Meteor.isClient
         
         can_submit: ->
             true
-            message = Docs.findOne Template.parentData().doc_id
+            message = Docs.findOne Meteor.user()._model
             message.description and message.recipient_id
     Template.message_edit.events
         'click .add_recipient': ->
-            Docs.update Template.parentData().doc_id,
+            Docs.update Meteor.user()._model,
                 $set:
                     recipient_id:@_id
         'click .remove_recipient': ->
-            Docs.update Template.parentData().doc_id,
+            Docs.update Meteor.user()._model,
                 $unset:
                     recipient_id:1
         'keyup .new_element': (e,t)->
             if e.which is 13
                 element_val = t.$('.new_element').val().toLowerCase().trim()
-                Docs.update Template.parentData().doc_id,
+                Docs.update Meteor.user()._model,
                     $addToSet:tags:element_val
                 t.$('.new_element').val('')
     
         'click .remove_element': (e,t)->
             element = @valueOf()
             field = Template.currentData()
-            Docs.update Template.parentData().doc_id,
+            Docs.update Meteor.user()._model,
                 $pull:tags:element
             t.$('.new_element').focus()
             t.$('.new_element').val(element)
