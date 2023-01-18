@@ -314,7 +314,7 @@ img {
 }
 
 .hscroll::-webkit-scrollbar {
-  height: 1px;
+  height: 0px !important;
 }
 
  .button {
