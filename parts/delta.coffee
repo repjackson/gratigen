@@ -25,24 +25,24 @@ if Meteor.isClient
 
 
     Template.registerHelper 'current_delta', () -> Docs.findOne model:'delta'
-    Template.registerHelper 'view_template', ->
-        # console.log 'view template this', @
-        field_type_doc =
-            Docs.findOne
-                model:'field_type'
-                _id: @field_type_id
-        # console.log 'field type doc', field_type_doc
-        "#{field_type_doc.slug}_view"
+    # Template.registerHelper 'view_template', ->
+    #     # console.log 'view template this', @
+    #     field_type_doc =
+    #         Docs.findOne
+    #             model:'field_type'
+    #             _id: @field_type_id
+    #     # console.log 'field type doc', field_type_doc
+    #     "#{field_type_doc.slug}_view"
 
 
-    Template.registerHelper 'edit_template', ->
-        field_type_doc =
-            Docs.findOne
-                model:'field_type'
-                _id: @field_type_id
+    # Template.registerHelper 'edit_template', ->
+    #     field_type_doc =
+    #         Docs.findOne
+    #             model:'field_type'
+    #             _id: @field_type_id
 
-        # console.log 'field type doc', field_type_doc
-        "#{field_type_doc.slug}_edit"
+    #     # console.log 'field type doc', field_type_doc
+    #     "#{field_type_doc.slug}_edit"
 
 
     Template.registerHelper 'fields', () ->
@@ -73,9 +73,6 @@ if Meteor.isClient
                 # edit_roles:$in:Meteor.user().roles
             }, sort:rank:1
 
-
-    Template.registerHelper 'view_template', -> "#{@field_type}_view"
-    Template.registerHelper 'edit_template', -> "#{@field_type}_edit"
 
     Template.registerHelper '_model', ->
         Docs.findOne
@@ -654,7 +651,7 @@ if Meteor.isClient
                 return false
         field_template: ->
             # console.log "#{@}_field"
-            "#{@}_field"
+            "#{@}"
 
     Template.model_field.helpers
         model_temp_exists: ->

@@ -105,11 +105,11 @@ template(name='html_edit')
     +call_watson mode='html' key=key
     div
     //- +tone mode='html'
-    // if watson
-    //     .ui.header watson
-    //     +watson_view
+    if watson
+        .ui.header watson
+        +watson
         
-    // +watson_view
+    // +watson
 
 
 

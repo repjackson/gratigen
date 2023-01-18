@@ -336,10 +336,6 @@ template(name='redditor_view')
                 //     // 
                 //     |!{unescaped_content}
                 // +call_watson key=rd.selftext
-                if watson 
-                    +watson_view
-                if in_dev
-                    +print_this
                 // +comments
             .five.wide.column
                 i.large.refresh.icon.calc_redditor_stats(title='calc stats')

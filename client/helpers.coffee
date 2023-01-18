@@ -395,8 +395,8 @@ Template.registerHelper 'is_current_user', () ->
                 false
     else 
         false
-Template.registerHelper 'view_template', -> "#{@field_type}_view"
-Template.registerHelper 'edit_template', -> "#{@field_type}_edit"
+# Template.registerHelper 'view_template', -> "#{@field_type}_view"
+# Template.registerHelper 'edit_template', -> "#{@field_type}_edit"
 # Template.registerHelper 'is_model', -> @model is 'model'
 
 Template.registerHelper 'order_product', ->

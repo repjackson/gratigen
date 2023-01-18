@@ -354,12 +354,6 @@ template(name='recipe_card_big')
                                         strong #{unit}
                                 if currentUser.admin_mode
                                     +print_this
-                if currentUser.admin_mode
-                    +print_this
-    
-            if watson
-                .sixteen.wide.column
-                    +watson_view
 
             
 template(name='recipe_page')
@@ -526,14 +520,6 @@ template(name='recipe_page')
                                         small unit:
                                         strong #{unit}
                                 +print_this
-
-                +print_this
-
-            if watson
-                .sixteen.wide.column
-                    +watson_view
-            
-            
             
             
 template(name='user_recipe')

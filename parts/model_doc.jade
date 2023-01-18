@@ -62,7 +62,7 @@ template(name='model_doc_view')
                     //- +comments
                     //- div
                     //- if watson
-                    //-     +watson_view
+                    //-     +watson
 
 template(name='found_field')
     // +Template.dynamic template=this data=current_doc
@@ -110,8 +110,3 @@ template(name='model_doc_edit')
                         +Template.dynamic template=edit_template 
                         .spacer
                         // .ui.header #{key} [#{field}] #{label}
-            //- if watson 
-            //-     .row
-            //-         .sixteen.wide.column
-            //-             +watson_view
-                

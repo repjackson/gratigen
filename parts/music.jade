@@ -402,10 +402,7 @@ template(name='music_artist')
                             .content 
                                 .ui.header #{strAlbum}
                                 +print_this
-                    
-            .sixteen.wide.column
-                if watson 
-                    +watson_view
+
 template(name='album_view')
     with current_album
         if strAlbumBanner
@@ -505,7 +502,6 @@ template(name='album_view')
                 .f7 #{strBiographyEN}
                 if currentUser.admin_mod
                     +call_watson key='strBiographyEN'
-                +comments
                 .ui.button.pull_tracks
                     |download tracks
                 .ui.cards
@@ -517,7 +513,3 @@ template(name='album_view')
                                 .ui.header #{strAlbum}
                                 |#{strTrackLyrics}
                                 +print_this
-                    
-            .sixteen.wide.column
-                if watson 
-                    +watson_view

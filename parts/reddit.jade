@@ -354,7 +354,7 @@ template(name='reddit_post_card_big')
             //         i.alert.icon
             //         // +i name='nsfw'
             if watson 
-                +watson_view
+                +watson
             if doc_sentiment_label
                 +doc_sentiment
                 +doc_emotion
@@ -393,7 +393,7 @@ template(name='reddit_post_view')
                     //     |!{unescaped_content}
                     // +call_watson key=rd.selftext
                     if watson 
-                        +watson_view
+                        +watson
                     if in_dev
                         +print_this
                     if is_image

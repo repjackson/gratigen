@@ -1037,10 +1037,6 @@ template(name='service_view')
             +youtube_view key='youtube_id' 
         |!{content}
         div 
-        .spacer
-        .spacer
-        if watson 
-            +watson_view
     // .four.wide.column
         //- .ui.fluid.green.button.submit
         //-     i.checkmark.icon
@@ -1612,10 +1608,6 @@ template(name='role_view')
                 .ui.header #{title}
                 // div
                 // .ui.inline.grey.header {{from_now start_datetime}}
-                
-                if can_edit
-                    a.ui.circular.icon.button.edit_role(href="/role/#{_id}/edit" title='edit')
-                        i.big.link.pencil.icon
                 .ui.segment
                     .ui.header 
                         small author
@@ -1633,8 +1625,6 @@ template(name='role_view')
                 +array_view key='badge_titles' label='badges' direct=true
                 +eft_viewer
                 //- +array_view key='location_tags' label='location_tags' direct=true
-                +comments
-
             .column
                 img.ui.image(src="{{c.url image_id }}" class=currentUser.invert_class)
                 // a.ui.header(href="/user/#{target.username}")
@@ -1643,10 +1633,6 @@ template(name='role_view')
                     +youtube_view key='youtube_id' direct=true
                 |!{content}
                 div 
-                .spacer
-                .spacer
-                if watson 
-                    +watson_view
             // .four.wide.column
                 //- .ui.fluid.green.button.submit
                 //-     i.checkmark.icon
@@ -1692,7 +1678,6 @@ template(name='role_edit')
                     +eft_picker color="FAB005" icon='university' label='education'
                     +eft_picker color="FD7E14" icon='paint brush' label='art'
                     +eft_picker color="FF0000" icon='users' label="community core \n"
-                    
             .column
                 if is_dev
                     +single_user_edit key='_author_id' label='author' direct=true
@@ -1743,6 +1728,8 @@ template(name='resource_card')
         .right.floated.meta
             | added #{when}
         +author_info
+        
+        
 template(name='resource_big_card')
     .ui.fluid.segment
         .ui.fluid.two.column.grid(class=resource_card_class)
@@ -1752,8 +1739,6 @@ template(name='resource_big_card')
                         img.ui.zoomer.pointer.goto_resource.image(src="{{c.url image_id width=400 height=300 crop='pad'}}")
                     if image_link
                         img.ui.zoomer.pointer.goto_resource.image(src=image_link)
-    
-    
             .column
                 a.header.zoomer.fly_right(href="/resource/#{_id}/") 
                     | #{title}
@@ -1891,8 +1876,8 @@ template(name='resource_view')
                                 |#{order_date}, {{from_now order_date}}
                 +resource_stats
                 // +last_viewed
-                +creation_info
-                +comments
+
+
 template(name='quickbuy')
     .ui.green.button.buy(class=button_class)
         i.lightning.icon
@@ -1908,8 +1893,6 @@ template(name='resource_edit')
                     small editing
                     |'#{title}'
                     small resource
-                a.ui.big.icon.green.fluid.button(href="/resource/#{_id}/")
-                    i.checkmark.big.icon
                 +text_edit key='title' icon='header' 
                 +number_edit key='daily_rate' label='daily rate' icon='exchange' 
                 .ui.icon.small.red.button.delete_resource_item 
@@ -2119,10 +2102,6 @@ template(name='project_view')
                     +youtube_view key='youtube_id' direct=true
                 |!{content}
                 div 
-                .spacer
-                .spacer
-                if watson 
-                    +watson_view
             // .four.wide.column
                 //- .ui.fluid.green.button.submit
                 //-     i.checkmark.icon
