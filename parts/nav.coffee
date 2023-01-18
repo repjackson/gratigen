@@ -86,9 +86,12 @@ if Meteor.isClient
         
     Template.nav_item.events
         'click .nav_item': ->
-            Meteor.users.update Meteor.userId(),
-                $set:
-                    _template:@template
+            Session.set 'loading', true
+            Meteor.call 'change_state', { _template:@template, _model:@slug }, ->
+                Meteor.call 'set_facets', @slug, true, ->
+                    Session.set 'loading', false
+                    
+                    
     Template.nav.events
         # 'mouseover .item': (e)->
             # $(e.currentTarget).closest('.icon').transition('bounce', 1000)

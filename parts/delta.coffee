@@ -1,12 +1,12 @@
 if Meteor.isClient
     Template.registerHelper 'delta_key_value_is', (key, value) ->
         # console.log 'key', key
-        delta = Docs.findOne model:'delta'
+        delta = Docs.findOne Meteor.user().delta_id
         # console.log 'value', value
         delta["#{key}"] is value
     Template.registerHelper 'key_value_is', (key, value) ->
         # console.log 'key', key
-        # delta = Docs.findOne model:'delta'
+        # delta = Docs.findOne Meteor.user().delta_id
         # console.log 'value', value
         @["#{key}"] is value
     Template.registerHelper 'fixed', (input) ->
@@ -24,7 +24,7 @@ if Meteor.isClient
             }, sort:rank:1
 
 
-    Template.registerHelper 'current_delta', () -> Docs.findOne model:'delta'
+    Template.registerHelper 'current_delta', () -> Docs.findOne Meteor.user().delta_id
     # Template.registerHelper 'view_template', ->
     #     # console.log 'view template this', @
     #     field_type_doc =
@@ -175,7 +175,7 @@ if Meteor.isClient
                 else 
                     false 
         result_column_class: ->
-            delta = Docs.findOne model:'delta'
+            delta = Docs.findOne Meteor.user().delta_id
             model = Docs.findOne model:'model'
             if model.show_facets
                 'twelve wide column'
@@ -189,20 +189,20 @@ if Meteor.isClient
 
 
         model_fields: ->
-            delta = Docs.findOne model:'delta'
+            delta = Docs.findOne Meteor.user().delta_id
             model = Docs.findOne model:'model'
             Docs.find
                 model:'field'
                 parent_id: model._id
         query_class:->
-            delta = Docs.findOne model:'delta'
+            delta = Docs.findOne Meteor.user().delta_id
             if delta
                 if delta.search_query
                     'focus'
                 else
                     'small'
         current_delta_model: ->
-            delta = Docs.findOne model:'delta'
+            delta = Docs.findOne Meteor.user().delta_id
             model = Docs.findOne model:'model'
             console.log 'delta',delta
             console.log 'model',model
@@ -213,14 +213,14 @@ if Meteor.isClient
                 slug: Meteor.user()._model
 
         sorting_up: ->
-            delta = Docs.findOne model:'delta'
+            delta = Docs.findOne Meteor.user().delta_id
             if delta
                 if delta.sort_direction is 1 then true
 
         picked_tags: -> picked_tags.list()
         view_mode_template: ->
             # console.log @
-            delta = Docs.findOne model:'delta'
+            delta = Docs.findOne Meteor.user().delta_id
             if delta
                 "delta_#{delta.view_mode}"
 
@@ -238,7 +238,7 @@ if Meteor.isClient
 
         single_doc: ->
             false
-            # delta = Docs.findOne model:'delta'
+            # delta = Docs.findOne Meteor.user().delta_id
             # count = delta.result_ids.length
             # if count is 1 then true else false
 
@@ -256,7 +256,7 @@ if Meteor.isClient
     Template.delta.events
         'click .toggle_sort_column': ->
             console.log @
-            delta = Docs.findOne model:'delta'
+            delta = Docs.findOne Meteor.user().delta_id
             console.log delta
 
 
@@ -280,7 +280,7 @@ if Meteor.isClient
 
         'click .clear_query': ->
             # console.log @
-            delta = Docs.findOne model:'delta'
+            delta = Docs.findOne Meteor.user().delta_id
             Docs.update delta._id,
                 $unset:search_query:1
             Session.set 'loading', true
@@ -289,7 +289,7 @@ if Meteor.isClient
 
         'click .set_sort_key': ->
             # console.log @
-            delta = Docs.findOne model:'delta'
+            delta = Docs.findOne Meteor.user().delta_id
             Docs.update delta._id,
                 $set:sort_key:@key
             Session.set 'loading', true
@@ -300,7 +300,7 @@ if Meteor.isClient
             # console.log @
             # $(e.currentTarget).closest('.button').transition('pulse', 250)
 
-            delta = Docs.findOne model:'delta'
+            delta = Docs.findOne Meteor.user().delta_id
             if delta.sort_direction is -1
                 Docs.update delta._id,
                     $set:sort_direction:1
@@ -320,7 +320,7 @@ if Meteor.isClient
                 model_filter: Meteor.user()._model
 
         'click .print_delta': (e,t)->
-            delta = Docs.findOne model:'delta'
+            delta = Docs.findOne Meteor.user().delta_id
             console.log delta
 
         'click .reset': ->
@@ -330,7 +330,7 @@ if Meteor.isClient
                 Session.set 'loading', false
 
         'click .delete_delta': (e,t)->
-            delta = Docs.findOne model:'delta'
+            delta = Docs.findOne Meteor.user().delta_id
             if delta
                 if confirm "delete  #{delta._id}?"
                     Docs.remove delta._id
@@ -389,7 +389,7 @@ if Meteor.isClient
             # Met  eor.call 'change_state', "/model/edit/#{model._id}", ->
 
         # 'click .page_up': (e,t)->
-        #     delta = Docs.findOne model:'delta'
+        #     delta = Docs.findOne Meteor.user().delta_id
         #     Docs.update delta._id,
         #         $inc: current_page:1
         #     Session.set 'is_calculating', true
@@ -399,7 +399,7 @@ if Meteor.isClient
         #             Session.set 'is_calculating', false
         #
         # 'click .page_down': (e,t)->
-        #     delta = Docs.findOne model:'delta'
+        #     delta = Docs.findOne Meteor.user().delta_id
         #     Docs.update delta._id,
         #         $inc: current_page:-1
         #     Session.set 'is_calculating', true
@@ -428,7 +428,7 @@ if Meteor.isClient
             query = $('#search').val()
             if query.length > 1
                 Session.set('current_query', query)
-                delta = Docs.findOne model:'delta'
+                delta = Docs.findOne Meteor.user().delta_id
                 Docs.update delta._id,
                     $set:search_query:query
                 Session.set 'loading', true
@@ -457,7 +457,7 @@ if Meteor.isClient
     Template.toggle_visible_field.events
         'click .toggle_visibility': ->
             console.log @
-            delta = Docs.findOne model:'delta'
+            delta = Docs.findOne Meteor.user().delta_id
             console.log 'viewable fields', delta.viewable_fields
             if @_id in delta.viewable_fields
                 Docs.update delta._id,
@@ -468,13 +468,13 @@ if Meteor.isClient
 
     Template.toggle_visible_field.helpers
         field_visible: ->
-            delta = Docs.findOne model:'delta'
+            delta = Docs.findOne Meteor.user().delta_id
             @_id in delta.viewable_fields
 
     Template.set_limit.events
         'click .set': ->
             # console.log @
-            delta = Docs.findOne model:'delta'
+            delta = Docs.findOne Meteor.user().delta_id
             Docs.update delta._id,
                 $set:limit:@amount
             Session.set 'loading', true
@@ -484,7 +484,7 @@ if Meteor.isClient
     Template.set_view_mode.events
         'click .set_view_mode': ->
             # console.log @
-            delta = Docs.findOne model:'delta'
+            delta = Docs.findOne Meteor.user().delta_id
             Docs.update delta._id,
                 $set:view_mode:@title
             Session.set 'loading', true
@@ -506,7 +506,7 @@ if Meteor.isClient
             t.viewing_facet.set !t.viewing_facet.get()
 
         'click .toggle_selection': ->
-            delta = Docs.findOne model:'delta'
+            delta = Docs.findOne Meteor.user().delta_id
             facet = Template.currentData()
 
             Session.set 'loading', true
@@ -520,7 +520,7 @@ if Meteor.isClient
         'keyup .add_filter': (e,t)->
             # console.log @
             if e.which is 13
-                delta = Docs.findOne model:'delta'
+                delta = Docs.findOne Meteor.user().delta_id
                 facet = Template.currentData()
                 if @field_type is 'number'
                     filter = parseInt t.$('.add_filter').val()
@@ -538,7 +538,7 @@ if Meteor.isClient
         viewing_results: ->
             Template.instance().viewing_facet.get()
         filtering_res: ->
-            delta = Docs.findOne model:'delta'
+            delta = Docs.findOne Meteor.user().delta_id
             filtering_res = []
             if @key is '_keys'
                 @res
@@ -551,7 +551,7 @@ if Meteor.isClient
                 filtering_res
         toggle_value_class: ->
             facet = Template.parentData()
-            delta = Docs.findOne model:'delta'
+            delta = Docs.findOne Meteor.user().delta_id
             if Session.equals 'loading', true
                  'disabled basic'
             else if facet.filters.length > 0 and @name in facet.filters
@@ -1020,7 +1020,7 @@ if Meteor.isClient
 
         toggle_value_class: ->
             facet = Template.parentData()
-            delta = Docs.findOne model:'delta'
+            delta = Docs.findOne Meteor.user().delta_id
             if Session.equals 'loading', true
                  'disabled'
             else if facet.filters.length > 0 and @name in facet.filters
@@ -1061,7 +1061,7 @@ if Meteor.isClient
             # else
             #     Docs.update @_id,
             #         $inc: views: 1
-            delta = Docs.findOne model:'delta'
+            delta = Docs.findOne Meteor.user().delta_id
             Meteor.users.update Meteor.userId(),
                 $set:
                     search_query:null
@@ -1087,7 +1087,7 @@ if Meteor.isClient
             Session.set 'loading', true
             Meteor.call 'set_facets', @slug, ->
                 Session.set 'loading', false
-            # delta = Docs.findOne model:'delta'
+            # delta = Docs.findOne Meteor.user().delta_id
             # Docs.update delta._id,
             #     $set:model_filter:@slug
             #
@@ -1106,7 +1106,7 @@ if Meteor.isClient
 
     Template.delta_list_result.helpers
         visible_fields: ->
-            delta = Docs.findOne model:'delta'
+            delta = Docs.findOne Meteor.user().delta_id
             if delta.visible_fields
                 delta.visible_fields
 
@@ -1126,7 +1126,7 @@ if Meteor.isClient
 
         toggle_value_class: ->
             facet = Template.parentData()
-            delta = Docs.findOne model:'delta'
+            delta = Docs.findOne Meteor.user().delta_id
             if Session.equals 'loading', true
                  'disabled'
             else if facet.filters.length > 0 and @name in facet.filters
@@ -1159,7 +1159,7 @@ if Meteor.isClient
             # else
             #     Docs.update @_id,
             #         $inc: views: 1
-            delta = Docs.findOne model:'delta'
+            delta = Docs.findOne Meteor.user().delta_id
             Docs.update delta._id,
                 $set:search_query:null
 
@@ -1180,7 +1180,7 @@ if Meteor.isClient
             Session.set 'loading', true
             Meteor.call 'set_facets', @slug, ->
                 Session.set 'loading', false
-            # delta = Docs.findOne model:'delta'
+            # delta = Docs.findOne Meteor.user().delta_id
             # Docs.update delta._id,
             #     $set:model_filter:@slug
             #
@@ -1239,7 +1239,7 @@ if Meteor.isClient
 
     Template.delta_result_table_row.helpers
         visible_fields: ->
-            delta = Docs.findOne model:'delta'
+            delta = Docs.findOne Meteor.user().delta_id
             if delta.visible_fields
                 delta.visible_fields
 
@@ -1260,7 +1260,7 @@ if Meteor.isClient
 
         toggle_value_class: ->
             facet = Template.parentData()
-            delta = Docs.findOne model:'delta'
+            delta = Docs.findOne Meteor.user().delta_id
             if Session.equals 'loading', true
                  'disabled'
             else if facet.filters.length > 0 and @name in facet.filters
@@ -1316,7 +1316,7 @@ if Meteor.isClient
             # else
             #     Docs.update @_id,
             #         $inc: views: 1
-            delta = Docs.findOne model:'delta'
+            delta = Docs.findOne Meteor.user().delta_id
             Docs.update delta._id,
                 $set:search_query:null
 
@@ -1337,7 +1337,7 @@ if Meteor.isClient
             Session.set 'loading', true
             Meteor.call 'set_facets', @slug, ->
                 Session.set 'loading', false
-            # delta = Docs.findOne model:'delta'
+            # delta = Docs.findOne Meteor.user().delta_id
             # Docs.update delta._id,
             #     $set:model_filter:@slug
             #

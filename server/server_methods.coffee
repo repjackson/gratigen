@@ -3,10 +3,12 @@ Meteor.methods
         keys = _.keys change_object
         console.log keys
         console.log change_object
+        
+        delta = Docs.findOne Meteor.user().delta_id
         # console.log route, model
         for key in keys 
             console.log change_object[key]
-            Meteor.users.update Meteor.userId(),
+            Docs.update Meteor.user().delta_id,
                 $set:
                     "#{key}":change_object[key]
             

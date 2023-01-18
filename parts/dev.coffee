@@ -8,9 +8,6 @@ if Meteor.isServer
         Docs.find
             model:'dev'
     
-    Meteor.publish 'my_current_thing', (current_thing_id)->
-        # user = Meteor.user()
-        Docs.find current_thing_id
 if Meteor.isClient
     Template.dev.events 
     Template.dev.helpers 

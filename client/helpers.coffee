@@ -187,7 +187,7 @@ Template.registerHelper 'current_month', () -> moment(Date.now()).format("MMMM")
 Template.registerHelper 'current_day', () -> moment(Date.now()).format("DD")
 
 
-Template.registerHelper 'current_delta', () -> Docs.findOne model:'delta'
+Template.registerHelper 'current_delta', () -> Docs.findOne Meteor.user().delta_id
 
 Template.registerHelper 'hsd', () ->
     Docs.findOne
@@ -527,5 +527,5 @@ Template.registerHelper 'in_dev', () -> Meteor.isDevelopment
 #     # console.log 'key', key
 #     # console.log 'value', value
 #     # console.log 'this', this
-#     delta = Docs.findOne model:'delta'
+#     delta = Docs.findOne Meteor.user().delta_id
 #     delta["#{key}"] is value

@@ -9,6 +9,21 @@ Template.app.helpers
     ct: -> 
         # console.log Meteor.user()._template
         Meteor.user()._template
+        delta = Docs.findOne Meteor.user().delta_id
+        delta._template
+
+Template.delta_nav.helpers
+    delta_item_class: ->
+        if @_id is Meteor.user().delta_id
+            'active blue large invert'
+        else 
+            'small'
+Template.delta_nav.events 
+    'click .pick_delta': ->
+        Meteor.users.update Meteor.userId(),
+            $set:delta_id:@_id
+        console.log @_id
+        console.log Meteor.user().delta_id
 
 
 Template.doc_history_button.helpers 
@@ -18,11 +33,12 @@ Template.doc_history_button.helpers
         
 Template.app.events 
     'click .goto_doc': ->
-        Meteor.users.update Meteor.userId(),
+        delta = Docs.findOne Meteor.user().delta_id
+        Docs.update Meteor.user().delta_id,
             $set:
                 _doc_id:@_id
             $addToSet:
-                doc_history:@_id
+                _doc_history:@_id
 
 Template.add_model_doc_button.events 
     'click .add_model_doc': ->
