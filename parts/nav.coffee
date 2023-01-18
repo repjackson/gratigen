@@ -15,7 +15,7 @@ if Meteor.isClient
             console.log @
             Meteor.users.update Meteor.userId(),
                 $set:
-                    current_template:'delta'
+                    _template:'delta'
                     current_model:@slug
 
     Template.nav.onRendered ->
@@ -24,7 +24,7 @@ if Meteor.isClient
         'click .goto_model': ->
             console.log @
             Session.set 'loading', true
-            Meteor.call 'change_state', { current_template:'delta', current_model:@slug }, ->
+            Meteor.call 'change_state', { _template:'delta', current_model:@slug }, ->
                 Meteor.call 'set_facets', @slug, true, ->
                     Session.set 'loading', false
 
@@ -76,13 +76,13 @@ if Meteor.isClient
         'click .nav_item': ->
             Meteor.users.update Meteor.userId(),
                 $set:
-                    current_template:@template
+                    _template:@template
     Template.nav.events
         # 'mouseover .item': (e)->
             # $(e.currentTarget).closest('.icon').transition('bounce', 1000)
 
-        'click .goto_add': -> Meteor.users.update({_id:Meteor.userId()},{$set:current_template:'add'})
-        'click .set_home': -> Meteor.users.update({_id:Meteor.userId()},{$set:current_template:'home'})
+        'click .goto_add': -> Meteor.users.update({_id:Meteor.userId()},{$set:_template:'add'})
+        'click .set_home': -> Meteor.users.update({_id:Meteor.userId()},{$set:_template:'home'})
         'click .reset': ->
             # model_slug =  Template.parentData().model_slug
             Session.set 'loading', true

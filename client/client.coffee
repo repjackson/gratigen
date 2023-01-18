@@ -29,7 +29,7 @@ Template.add_model_doc_button.events
         new_id = 
             Docs.insert 
                 model:@slug 
-        gstate_set "/m/#{@slug}/#{new_id}/edit"
+        Meteor.call 'change_state',{ _template:'model_doc_edit', _model:@slug, _doc_id:new_id }, ->
 
 
 Meteor.users.find(_id:Meteor.userId()).observe({
