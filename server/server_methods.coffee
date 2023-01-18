@@ -13,7 +13,7 @@ Meteor.methods
                     "#{key}":change_object[key]
             
     nuke_alpha: ->
-        res = Docs.remove({model:'delta'},{multi:true}
+        res = Docs.remove({model:'delta'},{multi:true})
         console.log 'nuked alpha', res    
     convert_groups:->
         Docs.update {model:'group'},

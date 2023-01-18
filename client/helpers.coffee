@@ -13,25 +13,19 @@ Template.registerHelper 'parent_doc', () ->
     Docs.findOne @parent_id
     # Template.parentData()
 
-Template.registerHelper 'read_users', () ->
-    read_users: ->
-        doc = Docs.findOne Meteor.user()._doc_id
-        Meteor.users.find 
-            _id:$in:doc.read_by_user_ids
-
-
 Template.registerHelper 'isActivePath', () ->
 Template.registerHelper 'is_active_template', () ->
     false
-    # if @template is Meteor.user()._template
+    # if @template is Meteor.user().current_template
     #     'active'
     # else 
     #     ''
 Template.registerHelper 'truncated', (input) ->
-    res = "#{input[..20]}"
-    if input and input[21]
-        res += "..."
-    res
+    if input
+        res = "#{input[..20]}"
+        if input and input[21]
+            res += "..."
+        res
 Template.registerHelper 'stripped_icon_color', () ->
     # console.log @icon_color 
     if @icon_color
@@ -187,7 +181,7 @@ Template.registerHelper 'current_month', () -> moment(Date.now()).format("MMMM")
 Template.registerHelper 'current_day', () -> moment(Date.now()).format("DD")
 
 
-Template.registerHelper 'current_delta', () -> Docs.findOne Meteor.user().delta_id
+Template.registerHelper 'current_delta', () -> Docs.findOne model:'delta'
 
 Template.registerHelper 'hsd', () ->
     Docs.findOne
@@ -256,8 +250,8 @@ Template.registerHelper 'parent_key_value_is', (key, value)->
 
 
 # Template.registerHelper 'checkin_guest_docs', () ->
-#     Docs.findOne Meteor.user()._doc_id
-#     session_document = Docs.findOne Meteor.user()._doc_id
+#     Docs.findOne Meteor.user().current_doc_id
+#     session_document = Docs.findOne Meteor.user().current_doc_id
 #     # console.log session_document.guest_ids
 #     Docs.find
 #         _id:$in:session_document.guest_ids
@@ -276,7 +270,7 @@ Template.registerHelper 'template_parent', () ->
 Template.registerHelper 'fields', () ->
     model = Docs.findOne
         model:'model'
-        slug:Meteor.user()._model
+        slug:Meteor.user().current_model
     if model
         match = {}
         # if Meteor.user()
@@ -292,7 +286,7 @@ Template.registerHelper 'fields', () ->
 # Template.registerHelper 'edit_fields', () ->
 #     model = Docs.findOne
 #         model:'model'
-#         slug:Meteor.user()._model
+#         slug:Meteor.user().current_model
 #     if model
 #         Docs.find {
 #             model:'field'
@@ -303,7 +297,7 @@ Template.registerHelper 'fields', () ->
 Template.registerHelper 'sortable_fields', () ->
     model = Docs.findOne
         model:'model'
-        slug:Meteor.user()._model
+        slug:Meteor.user().current_model
     if model
         Docs.find {
             model:'field'
@@ -324,10 +318,10 @@ Template.registerHelper 'nl2br', (text)->
 Template.registerHelper 'loading_class', () ->
     if Session.get 'loading' then 'disabled' else ''
 
-Template.registerHelper '_model', (input) ->
+Template.registerHelper 'current_model', (input) ->
     Docs.findOne
         model:'model'
-        slug: Meteor.user()._model
+        slug: Meteor.user().current_model
 
 Template.registerHelper 'in_list', (key) ->
     if Meteor.userId()
@@ -402,8 +396,8 @@ Template.registerHelper 'is_current_user', () ->
                 false
     else 
         false
-# Template.registerHelper 'view_template', -> "#{@field_type}_view"
-# Template.registerHelper 'edit_template', -> "#{@field_type}_edit"
+Template.registerHelper 'view_template', -> "#{@field_type}_view"
+Template.registerHelper 'edit_template', -> "#{@field_type}_edit"
 # Template.registerHelper 'is_model', -> @model is 'model'
 
 Template.registerHelper 'order_product', ->
@@ -434,8 +428,8 @@ Template.registerHelper 'ingredient_products', () ->
 
 
 Template.registerHelper 'current_doc', ->
-    doc = Docs.findOne Meteor.user()._doc_id
-    # user = Meteor.users.findOne Meteor.user()._doc_id
+    doc = Docs.findOne Meteor.user().current_doc_id
+    # user = Meteor.users.findOne Meteor.user().current_doc_id
     # console.log doc
     # console.log user
     # if doc then doc else if user then user
@@ -527,5 +521,5 @@ Template.registerHelper 'in_dev', () -> Meteor.isDevelopment
 #     # console.log 'key', key
 #     # console.log 'value', value
 #     # console.log 'this', this
-#     delta = Docs.findOne Meteor.user().delta_id
+#     delta = Docs.findOne model:'delta'
 #     delta["#{key}"] is value

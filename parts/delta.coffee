@@ -685,14 +685,16 @@ if Meteor.isClient
         'click .edit_doc':->
             Meteor.call 'change_state', {_template:'model_doc_edit',_doc_id:@_id}, ->
         'click .back_to_model': (e,t)->
+            console.log 'going to model'
             Session.set 'loading', true
-            _model = Meteor.user()._model
-            Meteor.call 'set_facets', _model, ->
-                Session.set 'loading', false
-            $(e.currentTarget).closest('.grid').transition('fade left', 250)
-            Meteor.setTimeout ->
-                Meteor.call 'change_state', {_template:'delta',_model:@model}, ->
-            , 100
+            delta = Docs.findOne Meteor.user().delta_id
+            if delta and delta._model
+                Meteor.call 'set_facets', delta._model, ->
+                    Session.set 'loading', false
+                $(e.currentTarget).closest('.grid').transition('fade left', 250)
+                Meteor.setTimeout ->
+                    Meteor.call 'change_state', {_template:'delta',_model:@model}, ->
+                , 100
 
 
 

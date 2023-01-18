@@ -5,6 +5,8 @@
 @current_markers = new ReactiveArray []
 
 
+
+
 Template.app.helpers
     ct: -> 
         # console.log Meteor.user()._template
@@ -18,7 +20,50 @@ Template.delta_nav.helpers
             'active blue large invert'
         else 
             'small'
+    editing_delta: ->
+        Session.equals('editing_id', @_id)
 Template.delta_nav.events 
+    'dblclick .pick_delta': ->
+        Session.set('editing_id', @_id)
+    'keyup .pick_delta':(e)->
+        if e.which is 13
+            Session.set('editing_id', null)
+            $('body').toast({
+                title: "#{name} saved"
+                # message: 'Please see desk staff for key.'
+                class : 'success invert'
+                showIcon:'checkmark'
+                # showProgress:'bottom'
+                position:'bottom right'
+                })
+
+    'click .add_session': ->
+        name = prompt 'name session'
+        if name
+            new_id = 
+                Docs.insert 
+                    model:'delta'
+                    name:name
+            Meteor.users.update Meteor.userId(),
+                $set:
+                    delta_id:new_id
+            $('body').toast({
+                title: "#{name} session made"
+                # message: 'Please see desk staff for key.'
+                class : 'success'
+                showIcon:'yin yang'
+                # showProgress:'bottom'
+                position:'bottom right'
+                # className:
+                #     toast: 'ui massive message'
+                # displayTime: 5000
+                transition:
+                  showMethod   : 'zoom',
+                  showDuration : 250,
+                  hideMethod   : 'fade',
+                  hideDuration : 250
+                })
+
     'click .pick_delta': ->
         Meteor.users.update Meteor.userId(),
             $set:delta_id:@_id
@@ -33,12 +78,29 @@ Template.doc_history_button.helpers
         
 Template.app.events 
     'click .goto_doc': ->
-        delta = Docs.findOne Meteor.user().delta_id
+        # delta = Docs.findOne Meteor.user().delta_id
         Docs.update Meteor.user().delta_id,
             $set:
                 _doc_id:@_id
             $addToSet:
                 _doc_history:@_id
+    'click .goto_profile': ->
+        # delta = Docs.findOne Meteor.user().delta_id
+        if Meteor.user().delta_id
+            Docs.update Meteor.user().delta_id,
+                $set:
+                    _template:'profile'
+                    _username:Meteor.user().username
+                $addToSet:
+                    _doc_history:'profile'
+    'click .goto_template': ->
+        console.log @
+        # delta = Docs.findOne Meteor.user().delta_id
+        # Docs.update Meteor.user().delta_id,
+        #     $set:
+        #         _doc_id:@_id
+        #     $addToSet:
+        #         _doc_history:@_id
 
 Template.add_model_doc_button.events 
     'click .add_model_doc': ->
