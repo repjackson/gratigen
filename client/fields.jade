@@ -286,6 +286,27 @@ template(name='image_view')
         //- a(href="{{c.url field_value gravity='face' crop='fit'}}")
         //-     |download
     //- +call_visual
+template(name='image_id')
+    .ui.header view image id 
+    img.ui.centered.rounded.image(src="{{c.url image_id gravity='face' crop='fit'}}" class=cl)
+    // if field_value
+        //- .ui.inline.header
+        //-     if icon
+        //-         +i name=icon
+                //- i.grey.icon(class=icon)
+        //-     if title
+        //-         |#{title}
+        //- else if key
+        //-     |#{key}
+        //- else
+        //-     |#{this}
+        //- if cl
+        //-     img(src="{{c.url field_value gravity='face' crop='fit'}}" class=cl)
+        //- else 
+        // a(href="{{c.url field_value }}" target='_window')
+        //- a(href="{{c.url field_value gravity='face' crop='fit'}}")
+        //-     |download
+    //- +call_visual
     
 template(name='image_edit')
     .ui.form

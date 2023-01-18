@@ -268,10 +268,10 @@ if Meteor.isServer
 # sdkfjvnkdf
         
 if Meteor.isClient
-    Template.roles_field.onCreated ->
+    Template.roles.onCreated ->
         @autorun => @subscribe 'role_search_results', Session.get('role_search'), ->
         @autorun => @subscribe 'model_docs', 'role', ->
-    Template.roles_field.helpers
+    Template.roles.helpers
         role_results: ->
             parent = Docs.findOne Meteor.user()._doc_id
             
@@ -293,7 +293,7 @@ if Meteor.isClient
         role_search_value: ->
             Session.get('role_search')
         
-    Template.roles_field.events
+    Template.roles.events
         'click .clear_search': (e,t)->
             Session.set('role_search', null)
             t.$('.role_search').val('')
@@ -478,12 +478,12 @@ if Meteor.isClient
 
 
 
-    # Template.user_field.helpers
+    # Template.user.helpers
     #     key_value: ->
     #         user = Meteor.users.findOne Meteor.user()._doc_id
     #         user["#{@key}"]
 
-    # Template.user_field.events
+    # Template.user.events
     #     'blur .user_field': (e,t)->
     #         value = t.$('.user_field').val()
     #         Meteor.users.update Meteor.user()._doc_id,

@@ -16,13 +16,13 @@ Template.doc_history_button.helpers
         # console.log @, @valueOf()
         Docs.findOne @valueOf()
         
-# Template.app.events 
-#     'click .goto_doc': ->
-#         Meteor.users.update Meteor.userId(),
-#             $set:
-#                 _doc_id:@_id
-#             $addToSet:
-#                 doc_history:@_id
+Template.app.events 
+    'click .goto_doc': ->
+        Meteor.users.update Meteor.userId(),
+            $set:
+                _doc_id:@_id
+            $addToSet:
+                doc_history:@_id
 
 Template.add_model_doc_button.events 
     'click .add_model_doc': ->

@@ -1,90 +1,3 @@
-// // //template(name='one_card')
-// //     a.ui.link.card.show_modal
-// //         .content 
-// //             a.ui.six.wide.column
-       
-// //                 if _is 'model' '[model]' 
-// //                     +i name='[[model]_icon]' color='[[model]_color]'
-// //                     |#{title}
-                    
-// //                     +[[model]_created_at]
-// //                     +[[model]_user_image]
-// //                     +[[model]_owner_name]
-                    
-// //                     +[model]main_image]
-// //                     +[model]body
-// //                     +[[model]card_buttons]
-// //                     +[model]_reactions
-                    
-// //                     +[model]_who_reacted
-// //                         template(name='who_reacted)
-                    
-// //                     div
-// //                     .ui.three.column.grid
-// //                     +react_button
-// //                           //template(name='react_button')
-// //                             .ui.
-// //                                 joy, sadness, andger, fear, awe, love, care, like, dislike 
-// //                     +comments_button
-// //                         //template(name='comments_button')
-// //                             .ui.tertiary.button
-                                
-// //                     +
-// //                     +[model]comments]
-// //                         //template(name='comments')
-// //                         .ui.segment.boardered
-// //                             left
-// //                             +veiw_previous_comments_button
-// //                             right
-// //                             +comments_sort_toggle
-// //                                 all_comments
-// //                                 recent_comments
-// //                                 relevant_comments
-// //                             div
-// //                                 .ui.inline
-// //                                     tiny user image
-// //                                     text input
-// //                                         left
-// //                                         |write a comment
-// //                                         right
-// //                                         +insert_attachment
-// //                                             or emoji
-// //                                     stackable.cards
-// //                                         comments
-// //                                             like button
-// //                                             reply button
-// //                                             time since created
-// //                                         view [#] more comments
-//                     //     div
-//                     //     |#{when}
-//                     // div
-//                     //     |#{body}
-//                     //     +[model}_image]
-//                     //(like/dislike, comment, share(sms,email,dm), comments (expand))
-
-//             img.ui.image(src="{{c.url image_id width=400 height=400}}")
-            
-//             .content 
-//                 .description
-//                     .ui.header lat: #{lat}
-//                     .ui.header lng: #{lng}
-//                         i.newspaper.large.icon
-//                     if location 
-//                         .ui.label.basic
-//                             i.marker.icon
-//                             |#{location}
-//                     .ui.image.large.basic.label
-//                         img.ui.image(src="{{c.url _author.image_id width=400 height=400}}")
-//                         // i.user.icon
-//                         |#{_author_username}
-//                     // if tags 
-//                     //     each seven_tags 
-//                     //         .ui.basic.label #{this}
-//                     +voting
-//                     +eft_view_item_small
-
-
-
 template(name='session_key_value_edit')
     .ui.button.set_key_value(class=set_key_value_class)
         if key_value_is 'key' 'sort_key'
@@ -281,28 +194,6 @@ template(name='viewing')
     // each read_ids
     //     +user_info
 
-template(name='mini_view')
-    .ui.grid
-        +mini_card
-        
-template(name='mini_card')
-    .ui.horizontal.card.show_modal
-        .image
-            img.ui.image(src="{{c.url image_id width=500 height=500 gravity='face' crop='fill'}}")
-        .content
-            .ui.two.column.grid
-                .column
-                    .header #{title}
-                    .meta  _
-                        .category
-                            .right.floated
-                                |#{_author_username}
-                            .left.floated    
-                                +eft_view_item_small
-                    .description
-                        |#{body}
-        .extra.content
-
 
 template(name='user_info')
     with user_from_id this
@@ -325,7 +216,7 @@ template(name='session_boolean_toggle')
 
 
 template(name='eft_home_picker')
-    .ui.compact.basic.large.circular.button.toggle_eft(class=eft_button_class)
+    .ui.compact.large.circular.button.toggle_eft(class=eft_button_class)
         // with ../
         if icon
             +i name=icon cl='ui image' color=stripped_icon_color
@@ -394,6 +285,9 @@ template(name='events_column')
                                     |#{when}
                                 if is_dev
                                     +remove_button
+
+
+
 
 template(name='follow')
     .ui.segment
@@ -527,7 +421,7 @@ template(name='creation_info')
         small added 
         strong #{when}
 
-template(name='_timestamp_long_field')
+template(name='_timestamp_long')
     .ui.large.basic.label 
         i.grey.clock.icon
         small added 
@@ -663,7 +557,6 @@ template(name='model_picker')
         
         if picked_model
             .ui.header 
-                i.cubes.icon
                 // |#{picked_models.length}
                 |picked model
             .ui.list
@@ -673,17 +566,22 @@ template(name='model_picker')
                         |#{title}
                         i.remove.link.circular.red.icon.zoomer.remove_model
                     
-template(name='title_field')
+template(name='title')
     +print_this
     .ui.inline.header title: #{title}
 
-template(name='tags_field')
+template(name='tags')
     .ui.inline.header tags 
     each tags 
         .ui.label #{this}
         
+template(name='roles')    
+    .ui.header 
+        i.shield.icon
+        |roles
+    +role_picker
         
-template(name='_author_id_field')   
+template(name='_author_id')   
     // .ui.inline.header 
     //     i.user.icon
     //     |author
@@ -692,22 +590,22 @@ template(name='_author_id_field')
     with _author
         +user_card
     
-template(name='_author_username_field')   
+template(name='_author_username')   
     .ui.header 
         i.user.icon
         |author
         |#{_author_username}
         
         
-template(name='icon_field')
+template(name='icon')
     +i name=icon
     .ui.inline.header #{icon}
         
-template(name='_timestamp_field')
+template(name='_timestamp')
     // +when
     .ui.label #{_timestamp} #{when}
         
-template(name='model_field')
+template(name='model')
     .ui.inline.header model 
     .ui.big.label
         i.database.icon
@@ -715,48 +613,139 @@ template(name='model_field')
     if model_temp_exists
         +Template.dynamic template=model_temp
 
-                    
 
-template(name='roles_field')
-    .ui.fluid.segment
-        with model_doc 'role'    
-            .ui.inline.header 
-                +i name=icon color=stripped_icon_color
-                | #{title}
-            if parent_model is 'org'
-                each org_groups
-                    .ui.button 
-                        |#{title}
-        // if is_admin
-        .ui.left.icon.right.action.large.fluid.input 
-            if role_search_value
-                i.large.red.remove.link.icon.zoomer.clear_search
-            else 
-                i.search.icon
-            input.role_search(type='text' placeholder='search' value=role_search_value)
-            .ui.button.create_role
-                |add #{role_search_value}
-        if role_results
-            .ui.selection.link.animated.list
-                each role_results
-                    .ui.item.pick_role.zoomer
-                        img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
-                        |#{title}
-        // else if role_search_value
-        
-        // if child_roles
-        .ui.header
-            i.shield.icon
-            |#{child_roles.count}
+
+
+template(name='role_picker')
+    .ui.header 
+        +i name='shield'
+        | roles
+    // if is_admin
+    .ui.icon.large.input 
+        if role_search_value
+            i.large.red.remove.link.icon.zoomer.clear_search
+        else 
+            i.search.icon
+        input.role_search(type='text' placeholder='search' value=role_search_value)
+    if role_results
+        .ui.selection.link.animated.list
+            each role_results
+                .ui.item.pick_role.zoomer
+                    img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+                    |#{title}
+    // else if role_search_value
+    .ui.button.create_role
+        |add #{role_search_value}
+    
+    if product_roles
+        .ui.header 
+            |#{product_roles.length}
             |picked roles
-        .ui.list.smallscroll
-            each child_roles
-                +mini_card
-                // .ui.item
-                //     img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
-                //     a.goto_doc #{title}
-                //     i.remove.link.icon.zoomer.remove_role
+        .ui.list
+            each product_roles
+                .ui.item
+                    img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+                    a.goto_doc #{title}
+                    i.remove.link.icon.zoomer.remove_role
                     
+                    
+template(name='task_picker')
+    .ui.header 
+        +i name='tasks'
+        | tasks
+    // if is_admin
+    .ui.icon.large.input 
+        if task_search_value
+            i.large.red.remove.link.icon.zoomer.clear_search
+        else 
+            i.search.icon
+        input.task_search(type='text' placeholder='search' value=task_search_value)
+    if task_results
+        .ui.selection.link.animated.list
+            each task_results
+                .ui.item.pick_task.zoomer
+                    img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+                    |#{title}
+    // else if task_search_value
+    .ui.button.create_task
+        |add #{task_search_value}
+    
+    if product_tasks
+        .ui.header 
+            |#{product_tasks.length}
+            |picked tasks
+        .ui.list
+            each product_tasks
+                .ui.item
+                    img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+                    |#{title}
+                    i.remove.link.icon.zoomer.remove_task
+                    
+                    
+template(name='badge_picker')
+    .ui.header 
+        +i name='shield'
+        | badges
+    // if is_admin
+    .ui.icon.large.input 
+        if badge_search_value
+            i.large.red.remove.link.icon.zoomer.clear_search
+        else 
+            i.search.icon
+        input.badge_search(type='text' placeholder='search' value=badge_search_value)
+    if badge_results
+        .ui.selection.link.animated.list
+            each badge_results
+                .ui.item.pick_badge.zoomer
+                    img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+                    |#{title}
+    // else if badge_search_value
+    .ui.button.create_badge
+        |add #{badge_search_value}
+    
+    if product_badges
+        .ui.header 
+            |#{product_badges.length}
+            |picked badges
+        .ui.list
+            each product_badges
+                .ui.item
+                    img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+                    |#{title}
+                    i.remove.link.icon.zoomer.remove_badge
+
+template(name='events')
+    .ui.header 
+        +i name='shield'
+        | events
+    // if is_admin
+    .ui.icon.large.input 
+        if event_search_value
+            i.large.red.remove.link.icon.zoomer.clear_search
+        else 
+            i.search.icon
+        input.event_search(type='text' placeholder='search' value=event_search_value)
+    if event_results
+        .ui.selection.link.animated.list
+            each event_results
+                .ui.item.pick_event.zoomer
+                    img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+                    |#{title}
+    // else if event_search_value
+    .ui.button.create_event
+        |add #{event_search_value}
+    
+    if product_events
+        .ui.header 
+            |#{product_events.length}
+            |picked events
+        .ui.list
+            each product_events
+                .ui.item
+                    img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+                    |#{title}
+                    i.remove.link.icon.zoomer.remove_event
+
 
 template(name='save_button')
     a.ui.button.large.icon.save(title='Save' href="/m/#{model}/#{_id}/view")
@@ -822,26 +811,22 @@ template(name='online_allies')
                         .ui.basic.label #{this}
                         
 template(name='online_users')
-    details.ui.accordion 
-        summary.active.title
-            .ui.header 
-                +i name='conference-background-selected' color='83DFF4'
-                |#{online_user_docs.count} online players
-                i.right.dropdown.icon
-        .active.content
-            .ui.fluid.secondary.menu.hscroll
-                //.ui.selectable.animated.list.smallscroll
-                each online_user_docs 
-                    a.item.fly_right(href="/user/#{username}")
-                        img.ui.circular.tiny.image(src="{{c.url image_id width=400 height=400 gravity='face' crop='fill'}}")
-                        //click needs to pop up modal of user page
-                        
-                        // make sure comments aren't indented under code, it'll break
-                    div
-                        |#{username}
-                        if tags 
-                            each tags 
-                                .ui.basic.label #{this}
+    .ui.header 
+        // +i name='conference-background-selected' color='83DFF4'
+        // |online users
+    //.ui.selectable.animated.list.smallscroll
+    .ui.fluid.menu.hscroll.secondary
+        each online_user_docs 
+            a.item.fly_right(href="/user/#{username}")
+                img.ui.circular.tiny.image(src="{{c.url image_id width=400 height=400 gravity='face' crop='fill'}}")
+                //click needs to pop up modal of user page
+                
+                // make sure comments aren't indented under code, it'll break
+            div
+                |#{username}
+                if tags 
+                    each tags 
+                        .ui.basic.label #{this}
 
 template(name='open_requests')
     .ui.header open requests

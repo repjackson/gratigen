@@ -643,7 +643,8 @@ if Meteor.isClient
             # console.log @
             # _model = Meteor.user()._model
             # console.log "#{@}"
-            if Template["#{@}_field"]
+            # if Template["#{@}_field"]
+            if Template["#{@}"]
                 # console.log 'true'
                 return true
             else
@@ -653,7 +654,7 @@ if Meteor.isClient
             # console.log "#{@}_field"
             "#{@}"
 
-    Template.model_field.helpers
+    Template.model.helpers
         model_temp_exists: ->
             # false
             # console.log @

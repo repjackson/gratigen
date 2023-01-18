@@ -42,7 +42,6 @@ template(name='model_doc_view')
                     .ui.one.column.stackable.grid
                         each found_fields
                             .column
-                                // .ui.header #{this}
                                 +found_field
                     // .ui.header
                         // each fields
@@ -52,12 +51,12 @@ template(name='model_doc_view')
                         // if icon
                         //     i.icon(class=icon)
                         // |#{title}
-                    each fields
-                        // unless header
-                        .item
-                            +Template.dynamic template=view_template 
-                    each _model.actions
-                        +Template.dynamic template=this data=current_doc
+                    // each fields
+                    //     // unless header
+                    //     .item
+                    //         +Template.dynamic template=view_template 
+                    // each _model.actions
+                    //     +Template.dynamic template=this data=current_doc
 
                     //- +comments
                     //- div
@@ -69,7 +68,7 @@ template(name='found_field')
     
     if field_temp_exists
         // +print_this
-        +Template.dynamic template=field_template data=current_doc
+        +Template.dynamic template=this data=current_doc
 
 
 template(name='model_doc_edit')
