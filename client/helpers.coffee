@@ -432,7 +432,7 @@ Template.registerHelper 'ingredient_products', () ->
 
 
 Template.registerHelper 'current_doc', ->
-    doc = Docs.findOne Meteor.user().current_doc_id
+    doc = Docs.findOne Meteor.user()._doc_id
     # user = Meteor.users.findOne Meteor.user().current_doc_id
     # console.log doc
     # console.log user

@@ -1302,49 +1302,6 @@ if Meteor.isClient
 
 
     Template.delta_result_table_row.events
-        'click .goto_doc': ->
-            # console.log @
-            found = Docs.findOne @_id
-            console.log found
-            Meteor.call 'change_state', "/m/#{found.model}/#{found._id}/view", ->
-
-        'click .result': (e,t)->
-            # console.log @
-            model_slug =  Meteor.user()._model
-            $(e.currentTarget).closest('.result').transition('fade')
-            if Meteor.user()
-                Docs.update @_id,
-                    $inc: views: 1
-                    $addToSet:viewer_usernames:Meteor.user().username
-            # else
-            #     Docs.update @_id,
-            #         $inc: views: 1
-            delta = Docs.findOne Meteor.user().delta_id
-            Docs.update delta._id,
-                $set:search_query:null
-
-            if model_slug is 'model'
-                Session.set 'loading', true
-                Meteor.call 'set_facets', @slug, ->
-                    Session.set 'loading', false
-
-            if @model is 'model'
-                Meteor.call 'change_state', "/m/#{@slug}", ->
-            else
-                Meteor.call 'change_state', "/m/#{model_slug}/#{@_id}/view", ->
-
-        'click .set_model': ->
-            Meteor.call 'set_delta_facets', @slug, Meteor.userId()
-
-        'click .route_model': ->
-            Session.set 'loading', true
-            Meteor.call 'set_facets', @slug, ->
-                Session.set 'loading', false
-            # delta = Docs.findOne Meteor.user().delta_id
-            # Docs.update delta._id,
-            #     $set:model_filter:@slug
-            #
-            # Meteor.call 'fum', delta._id, (err,res)->
 
 
 if Meteor.isClient

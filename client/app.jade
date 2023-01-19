@@ -114,12 +114,12 @@ template(name='app')
     
 template(name='doc_history_button')
     with doc_from_id
-        .ui.item.zoomer(title=model)
+        .item.zoomer(title=model)
             a.goto_doc(title=model)
                 with parent_model
                     +i name=icon color=stripped_icon_color cl='ui avatar image'
                 if image_id
-                    img.ui.mini.inline.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+                    img.ui.mini.inline.rounded.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
                 |{{truncated title}}
             i.remove.link.icon.delete_history_item.zoomer(title='remove history record')
     

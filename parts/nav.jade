@@ -101,7 +101,7 @@ template(name='delta_nav')
         a.item.add_session(title='new session')
             i.plus.icon
         each model_docs_helper 'delta' 
-            a.item.pick_delta(class=delta_item_class title=when)
+            a.item.pick_delta.pointer(class=delta_item_class title=when)
                 if editing_delta
                     +text_edit key='name' direct=true
                 else 

@@ -10,8 +10,8 @@
 Template.app.helpers
     ct: -> 
         # console.log Meteor.user()._template
-        Meteor.user()._template
         delta = Docs.findOne Meteor.user().delta_id
+        # console.log delta
         delta._template
 
 Template.delta_nav.helpers
@@ -105,6 +105,7 @@ Template.app.events
         if @model is 'model'
             Docs.update Meteor.user().delta_id,
                 $set:
+                    _template:'delta'
                     _doc_id:@_id
                     _model:@slug
                 $addToSet:
@@ -112,6 +113,7 @@ Template.app.events
         else 
             Docs.update Meteor.user().delta_id,
                 $set:
+                    _template:'model_doc_view'
                     _doc_id:@_id
                 $addToSet:
                     _doc_history:@_id
