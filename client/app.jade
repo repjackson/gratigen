@@ -105,7 +105,7 @@ template(name='app')
         .layout
             with currentUser
                 if ct.length
-                    +Template.dynamic template=currentUser._template
+                    +Template.dynamic template=current_delta._template
             else 
                 +login
         +footer
@@ -114,12 +114,14 @@ template(name='app')
     
 template(name='doc_history_button')
     with doc_from_id
-        a.ui.item.zoomer.goto_doc(title=model)
-            with parent_model
-                +i name=icon color=stripped_icon_color cl='ui avatar image'
-            if image_id
-                img.ui.mini.inline.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
-            |{{truncated title}}
+        .ui.item.zoomer(title=model)
+            a.goto_doc(title=model)
+                with parent_model
+                    +i name=icon color=stripped_icon_color cl='ui avatar image'
+                if image_id
+                    img.ui.mini.inline.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+                |{{truncated title}}
+            i.remove.link.icon.delete_history_item.zoomer(title='remove history record')
     
 template(name='global_flyout')
     with flyout_doc
@@ -153,36 +155,36 @@ template(name='global_modal')
                 .ui.label #{model}
 
 template(name='footer')
-    if currentUser.admin_mode
-        .ui.segment.grid
-            .eight.wide.column.smallscroll
-                .ui.header 
-                    i.shield.icon
-                    |footer 
-                with current_delta
-                    +text_edit key='_template' label='_template' direct=true
-                    div
-                    +text_edit key='_model' label='_model' direct=true
-                    div
-                    +text_edit key='_doc_id' label='_doc_id' direct=true
-                    +boolean_edit key='show_leftbar' label='leftbar' direct=true
-                    +boolean_edit key='show_rightbar' label='rightbar' direct=true
-                    +boolean_edit key='show_modelbar' label='sidebar modelbar' icon='cubes' direct=true
-                    +boolean_edit key='show_secnav' label='secnav modelbar' icon='network' direct=true
-                    
-                .ui.header 
-                    i.users.icon 
-                    |users
-                each user_docs 
-                    .ui.large.button #{username}
-            .eight.wide.column.smallscroll
-                .ui.header 
-                    i.database.icon
-                    |docs 
-                each doc_docs
-                    a.ui.compact.button(href="/m/#{model}/#{_id}") #{title} 
-                        .ui.label
-                            |#{model}
+    // if currentUser.admin_mode
+    .ui.segment.grid
+        .eight.wide.column.smallscroll
+            .ui.header 
+                i.shield.icon
+                |footer 
+            with current_delta
+                +text_edit key='_template' label='_template' direct=true
+                div
+                +text_edit key='_model' label='_model' direct=true
+                div
+                +text_edit key='_doc_id' label='_doc_id' direct=true
+                +boolean_edit key='show_leftbar' label='leftbar' direct=true
+                +boolean_edit key='show_rightbar' label='rightbar' direct=true
+                +boolean_edit key='show_modelbar' label='sidebar modelbar' icon='cubes' direct=true
+                +boolean_edit key='show_secnav' label='secnav modelbar' icon='network' direct=true
+                
+            .ui.header 
+                i.users.icon 
+                |users
+            each user_docs 
+                .ui.large.button #{username}
+        .eight.wide.column.smallscroll
+            .ui.header 
+                i.database.icon
+                |docs 
+            each doc_docs
+                a.ui.compact.button(href="/m/#{model}/#{_id}") #{title} 
+                    .ui.label
+                        |#{model}
                             
                             
                         

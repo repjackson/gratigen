@@ -64,15 +64,24 @@ Template.delta_nav.events
                   hideDuration : 250
                 })
 
-    'click .pick_delta': ->
+    'click .pick_delta': (e)->
         if Meteor.user().delta_id and @_id is Meteor.user().delta_id
             Meteor.users.update({_id:Meteor.userId()},{$unset:delta_id:1})
+            $(e.currentTarget).closest('.item').transition('shake', 500)
         else 
             Meteor.users.update({_id:Meteor.userId()},{$set:delta_id:@_id})
+            $(e.currentTarget).closest('.item').transition('bounce', 500)
+
         # console.log @_id
         # console.log Meteor.user().delta_id
 
 
+Template.doc_history_button.events 
+    'click .delete_history_item': ->
+        console.log @
+        Docs.update Meteor.user().delta_id, 
+            $pull:
+                _doc_history:@_id
 Template.doc_history_button.helpers 
     doc_from_id:->
         # console.log @, @valueOf()
@@ -91,12 +100,21 @@ Template.nav.events
                     _doc_history:'profile'
 Template.app.events 
     'click .goto_doc': ->
+        console.log 'going to', @title
         # delta = Docs.findOne Meteor.user().delta_id
-        Docs.update Meteor.user().delta_id,
-            $set:
-                _doc_id:@_id
-            $addToSet:
-                _doc_history:@_id
+        if @model is 'model'
+            Docs.update Meteor.user().delta_id,
+                $set:
+                    _doc_id:@_id
+                    _model:@slug
+                $addToSet:
+                    _doc_history:@_id
+        else 
+            Docs.update Meteor.user().delta_id,
+                $set:
+                    _doc_id:@_id
+                $addToSet:
+                    _doc_history:@_id
     'click .goto_template': ->
         console.log @
         # delta = Docs.findOne Meteor.user().delta_id

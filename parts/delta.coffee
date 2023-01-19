@@ -1052,36 +1052,36 @@ if Meteor.isClient
                     _template:'model_doc_view'
                     _doc_id:@valueOf()
             
-        'click .goto_doc': (e,t)->
-            # console.log @
-            model_slug =  Meteor.user()._model
-            # $(e.currentTarget).closest('.result').transition('fade')
-            if Meteor.user()
-                Docs.update @_id,
-                    $inc: views: 1
-                    $addToSet:viewer_usernames:Meteor.user().username
+        # 'click .goto_doc': (e,t)->
+        #     # console.log @
+        #     model_slug =  Meteor.user()._model
+        #     # $(e.currentTarget).closest('.result').transition('fade')
+        #     if Meteor.user()
+        #         Docs.update @_id,
+        #             $inc: views: 1
+        #             $addToSet:viewer_usernames:Meteor.user().username
                 
-            # else
-            #     Docs.update @_id,
-            #         $inc: views: 1
-            delta = Docs.findOne Meteor.user().delta_id
-            Meteor.users.update Meteor.userId(),
-                $set:
-                    search_query:null
-                    _template:'model_doc_view'
-                    _doc_id:@_id
-                $addToSet:
-                    doc_history:@_id
+        #     # else
+        #     #     Docs.update @_id,
+        #     #         $inc: views: 1
+        #     delta = Docs.findOne Meteor.user().delta_id
+        #     Meteor.users.update Meteor.userId(),
+        #         $set:
+        #             search_query:null
+        #             _template:'model_doc_view'
+        #             _doc_id:@_id
+        #         $addToSet:
+        #             doc_history:@_id
 
-            if model_slug is 'model'
-                Session.set 'loading', true
-                Meteor.call 'set_facets', @slug, ->
-                    Session.set 'loading', false
+        #     if model_slug is 'model'
+        #         Session.set 'loading', true
+        #         Meteor.call 'set_facets', @slug, ->
+        #             Session.set 'loading', false
 
-            if @model is 'model'
-                Meteor.call 'change_state', {_template:'delta'}, ->
-            else
-                Meteor.call 'change_state', {_template:'model_doc_view'}, ->
+        #     if @model is 'model'
+        #         Meteor.call 'change_state', {_template:'delta'}, ->
+        #     else
+        #         Meteor.call 'change_state', {_template:'model_doc_view'}, ->
 
         'click .set_model': ->
             Meteor.call 'set_delta_facets', @slug, Meteor.userId()
