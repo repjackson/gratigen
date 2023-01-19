@@ -5,8 +5,6 @@
 @current_markers = new ReactiveArray []
 
 
-
-
 Template.app.helpers
     ct: -> 
         # console.log Meteor.user()._template
