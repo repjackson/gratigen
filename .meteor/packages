@@ -33,5 +33,3 @@ flowkey:hotkeys
 mdg:geolocation
 http
 reactive-var
-modules
-d3js:d3
