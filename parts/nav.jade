@@ -99,20 +99,27 @@ template(name='toggle_nav_item')
           
           
 template(name='delta_nav')
-    .ui.attached.menu.hscroll
+    // .ui.top.attached.tabular.menu  
+    //     a.center.item.toggle_addmode.zoomer(data-tab='add' title='add thing')
+    //         +i name='play-button-circled--v1' color='40C057'
+        // .active.item(data-tab='viewing')
+        //     |viewing
+    .ui.attached.tabular.menu.hscroll
         .item 
-            i.yin.yang.icon
+            i.window.restore.icon
             |sessions
         a.item.add_session(title='new session')
             i.plus.icon
         each model_docs_helper 'delta' 
-            a.item.pick_delta.pointer(class=delta_item_class title=when)
+            a.item.pick_delta.pointer(data-tab="#{_id}" class=delta_item_class title="switch to #{name} session")
                 if editing_delta
                     +text_edit key='name' direct=true
                 else 
                     |#{name}
-          
-        //   border: 0px solid #d4d4d5;
+    //   border: 0px solid #d4d4d5;
+
+
+
 template(name='secnav')
     // .input.item 
     //     .ui.input 

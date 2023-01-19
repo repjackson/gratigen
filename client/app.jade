@@ -103,9 +103,12 @@ template(name='app')
         // if currentUser.show_leftbar
         // if currentUser.show_rightbar
         if currentUser.delta_id
-            .ui.small.compact.attached.menu.hscroll
-                .icon.item(title="#{doc_history.length} node history")
-                    i.large.clock.icon(title='node history')
+            // .ui.small.compact.attached.menu.hscroll
+            // .icon.item(title="#{doc_history.length} node history")
+            // .ui.hidden.divider
+            // .ui.bottom.attached.tab.segment.centered(data-tab=current_delta._id)
+            i.large.clock.icon(title='node history')
+            .ui.breadcrumb.hscroll
                 each current_delta._doc_history.reverse
                     +doc_history_button
         .layout
@@ -120,14 +123,14 @@ template(name='app')
     
 template(name='doc_history_button')
     with doc_from_id
-        .item.zoomer(title=model)
-            a.goto_doc(title=model)
-                with parent_model
-                    +i name=icon color=stripped_icon_color cl='ui avatar image'
-                if image_id
-                    img.ui.mini.inline.rounded.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
-                |{{truncated title}}
-            i.remove.link.icon.delete_history_item.zoomer(title='remove history record')
+        a.section.goto_doc.zoomer(title=model)
+            with parent_model
+                +i name=icon color=stripped_icon_color cl='ui avatar image'
+            if image_id
+                img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+            |{{truncated title}}
+            // i.remove.link.icon.delete_history_item.zoomer(title='remove history record')
+            i.right.chevron.icon.divider
     
 template(name='global_flyout')
     with flyout_doc
