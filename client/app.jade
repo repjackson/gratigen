@@ -85,6 +85,7 @@ head
     
 
 body
+    +delta_nav
     +leftbar
     +rightbar
     +global_modal
@@ -101,7 +102,6 @@ template(name='app')
         // #draggable
         // if currentUser.show_leftbar
         // if currentUser.show_rightbar
-        +delta_nav
         if currentUser.delta_id
             .ui.small.compact.attached.menu.hscroll
                 .icon.item(title="#{doc_history.length} node history")
@@ -191,7 +191,7 @@ template(name='footer')
         .eight.wide.column.smallscroll
             .ui.header 
                 i.database.icon
-                |docs 
+                |#{doc_docs.count} docs 
             each doc_docs
                 a.ui.compact.button(href="/m/#{model}/#{_id}") #{title} 
                     .ui.label
