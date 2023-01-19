@@ -1,7 +1,7 @@
 if Meteor.isClient
     Template.nav.onCreated ->
         @autorun => Meteor.subscribe 'me', ->
-        # @autorun => Meteor.subscribe 'all_users', ->
+        @autorun => Meteor.subscribe 'users_min', ->
         @autorun => Meteor.subscribe 'model_docs', 'model', ->
         @autorun => Meteor.subscribe 'history',->
         @autorun => Meteor.subscribe 'model_docs','delta',->
@@ -258,6 +258,15 @@ if Meteor.isClient
             ).count()
 
 if Meteor.isServer
+    Meteor.publish 'users_min', ->
+        Meteor.users.find {}, 
+            fields:
+                username:1
+                delta_id:1
+                image_id:1
+                tags:1
+                roles:1
+                
     Meteor.publish 'history', ->
         Docs.find 
             _id: $in: Meteor.user().doc_history

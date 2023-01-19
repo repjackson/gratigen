@@ -21,6 +21,9 @@ Template.delta_nav.helpers
             'small'
     editing_delta: ->
         Session.equals('editing_id', @_id)
+    delta_users: ->
+        Meteor.users.find
+            delta_id:@_id
 Template.delta_nav.events 
     'dblclick .pick_delta': ->
         Session.set('editing_id', @_id)

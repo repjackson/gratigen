@@ -30,9 +30,10 @@ template(name='nav')
         //         if currentUser.admin_mode
         //             +text_edit key='latest_info' direct=true
         // .ui.input.item
-        .ui.large.icon.input.item.search_bar
-            input.global_search(type='text' placeholder='add/request/search...')
-            i.search.icon
+        .input.item
+            .ui.icon.large.input.search_bar
+                input.global_search(type='text' placeholder='add/request/search...')
+                i.search.icon
 
         a.icon.item.zoomer.goto_add(title='add new doc')
             i.large.play.icon
@@ -111,11 +112,15 @@ template(name='delta_nav')
         a.item.add_session(title='new session')
             i.plus.icon
         each model_docs_helper 'delta' 
-            a.item.pick_delta.pointer(data-tab="#{_id}" class=delta_item_class title="switch to #{name} session")
+            // a.item.pick_delta.pointer.zoomer(data-tab="#{_id}" class=delta_item_class title="switch to #{name} session")
+            a.item.pick_delta.pointer.zoomer(data-tab="#{_id}" class=delta_item_class)
                 if editing_delta
                     +text_edit key='name' direct=true
                 else 
                     |#{name}
+                each delta_users 
+                    img.ui.avatar.image(src="{{c.url image_id width=200 height=200 gravity='face' crop='fill'}}" title=username)
+
     //   border: 0px solid #d4d4d5;
 
 
