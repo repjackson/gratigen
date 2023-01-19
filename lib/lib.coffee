@@ -2,6 +2,8 @@
 @Tags = new Meteor.Collection 'tags'
 @Results = new Meteor.Collection 'results'
 @Markers = new Meteor.Collection 'markers'
+@Letters = new Mongo.Collection('letters');
+
 
 
 Meteor.users.helpers
