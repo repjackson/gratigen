@@ -2,8 +2,7 @@ template(name='home')
     if currentUser.admin_mode
         img.ui.fluid.image.home_banner(src="{{c.url 'gratigenlayout'}}" class=darkmode_class)
     .ui.stackable.padded.divided.celled.grid.draggable
-        // .four.wide.column.bordered.scrolling(class=left_column_class)
-        .four.wide.column.bordered.scrolling
+        .bordered(class=left_column_class)
             // +session_toggle key='expand_leftbar' icon='heart outline'
                 // +session_toggle key='add_mode' icon='plus'
                 //.ui.icon.button.show_model
@@ -31,8 +30,8 @@ template(name='home')
             //             +side_menu_item color=icon_color icon=icon label=title
             //             //.ui.button
             // .ui.button create request
-        // .eight.wide.column.bordered.scrolling(class=main_column_class)
-        .eight.wide.column.bordered.scrolling
+        .bordered.scrolling(class=main_column_class)
+            +chart
             .ui.one.column.grid                 
                 +thing_picker_template
                 +online_users
@@ -76,13 +75,12 @@ template(name='home')
                         each doc_results
                             +home_card
         // .eight.wide.column.bordered
-        // .four.wide.columnbordered(class=right_column_class)
-        .four.wide.column.bordered.scrolling
+        .bordered(class=right_column_class)
             +my_things
-            // if session_is 'show_map' true
-            +mapbox
-            // if session_is 'show_calendar' true 
-            +calendar_view
+            if session_is 'show_map' true
+                +mapbox
+            if session_is 'show_calendar' true 
+                +calendar_view
             +online_allies
                //.ui.container
                     |my things
