@@ -24,11 +24,16 @@ template(name='nav')
         //     i.large.database.icon
         // if currentUser.admin_mode
         //     +nav_item template='dev' icon='network' label='dev'
-        .item
-            with model_doc 'global'
-                |#{latest_info}
-                if currentUser.admin_mode
-                    +text_edit key='latest_info' direct=true
+        // .item
+        //     with model_doc 'global'
+        //         |#{latest_info}
+        //         if currentUser.admin_mode
+        //             +text_edit key='latest_info' direct=true
+        // .ui.input.item
+        .ui.large.icon.input.item.search_bar
+            input.global_search(type='text' placeholder='add/request/search...')
+            i.search.icon
+
         a.icon.item.zoomer.goto_add(title='add new doc')
             i.large.play.icon
         +toggle_nav_item key='invert_mode' icon='lightbulb' label='invert mode'

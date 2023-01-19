@@ -281,8 +281,8 @@ if Meteor.isClient
     
 
     Template.user_badges.onCreated ->
-        @autorun => Meteor.subscribe 'user_badges', Template.parentData().username
-        @autorun => Meteor.subscribe 'model_docs', 'badge'
+        # @autorun => Meteor.subscribe 'user_badges', Template.parentData().username
+        # @autorun => Meteor.subscribe 'model_docs', 'badge'
 
     Template.user_badges.events
         'keyup .new_badge': (e,t)->

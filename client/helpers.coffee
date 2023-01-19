@@ -4,7 +4,9 @@ Template.registerHelper 'comma', (input) ->
     input.toLocaleString("en-US")
 
 Template.registerHelper 'modal_doc', () ->
-    Docs.findOne Meteor.user().modal_doc_id
+    if Meteor.user()
+        delta = Docs.findOne {_id:Meteor.user().delta_id}
+        Docs.findOne delta._doc_id
 Template.registerHelper 'flyout_doc', () ->
     Docs.findOne Meteor.user().flyout_doc_id
 
@@ -47,7 +49,10 @@ Template.registerHelper 'user_bookmark_docs', (model) ->
         _id:$in:Meteor.user().bookmark_ids
 
 Template.registerHelper 'model_doc', (model) ->
-    Docs.findOne slug:model
+    if model
+        Docs.findOne 
+            model:'model'
+            slug:model
 Template.registerHelper 'model_docs_helper', (model) ->
     # console.log model
     # if limit 

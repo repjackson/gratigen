@@ -10,7 +10,8 @@ Template.app.helpers
         # console.log Meteor.user()._template
         delta = Docs.findOne Meteor.user().delta_id
         # console.log delta
-        delta._template
+        if delta
+            delta._template
 
 Template.delta_nav.helpers
     delta_item_class: ->

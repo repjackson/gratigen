@@ -110,8 +110,8 @@ template(name='app')
                     +doc_history_button
         .layout
             with currentUser
-                if ct.length
-                    +Template.dynamic template=current_delta._template
+                // if ct.length
+                +Template.dynamic template=ct
             else 
                 +login
         +footer
@@ -192,10 +192,11 @@ template(name='footer')
             .ui.header 
                 i.database.icon
                 |#{doc_docs.count} docs 
-            each doc_docs
-                a.ui.compact.button(href="/m/#{model}/#{_id}") #{title} 
-                    .ui.label
-                        |#{model}
+            .smallscroll
+                each doc_docs
+                    a.ui.compact.small.button(href="/m/#{model}/#{_id}") #{title} 
+                        .ui.label
+                            |#{model}
                             
                             
                         

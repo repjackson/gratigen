@@ -1,7 +1,7 @@
 if Meteor.isClient
     Template.nav.onCreated ->
         @autorun => Meteor.subscribe 'me', ->
-        @autorun => Meteor.subscribe 'all_users', ->
+        # @autorun => Meteor.subscribe 'all_users', ->
         @autorun => Meteor.subscribe 'model_docs', 'model', ->
         @autorun => Meteor.subscribe 'history',->
         @autorun => Meteor.subscribe 'model_docs','delta',->
@@ -103,33 +103,35 @@ if Meteor.isClient
                 Session.set 'loading', false
     
         'click .clear_search': -> Session.set('product_query',null)
-        # 'keyup .search_site': _.throttle((e,t)->
-        #     # console.log Router.current().route.getName()
-        #     current_name = Router.current().route.getName()
-        #     # $(e.currentTarget).closest('.input').transition('pulse', 100)
-
-        #     unless current_name is 'shop'
-        #         gstate_set '/shop'
-        #     query = $('.search_site').val()
-        #     Session.set('product_query', query)
-        #     # console.log Session.get('product_query')
-        #     if e.key == "Escape"
-        #         Session.set('product_query', null)
-                
-        #     if e.which is 13
-        #         search = $('.search_site').val().trim().toLowerCase()
-        #         if search.length > 0
-        #             picked_tags.push search
-        #             console.log 'search', search
-        #             # Meteor.call 'log_term', search, ->
-        #             $('.search_site').val('')
-        #             Session.set('product_query', null)
-        #             # # $('#search').val('').blur()
-        #             # # $( "p" ).blur();
-        #             # Meteor.setTimeout ->
-        #             #     Session.set('dummy', !Session.get('dummy'))
-        #             # , 10000
-        # , 500)
+        'keyup .global_search': _.throttle((e,t)->
+            if e.which is 13
+                # console.log Router.current().route.getName()
+                # current_name = Router.current().route.getName()
+                # $(e.currentTarget).closest('.input').transition('pulse', 100)
+    
+                # unless current_name is 'shop'
+                #     gstate_set '/shop'
+                # query = $('.search_site').val()
+                # Session.set('product_query', query)
+                # console.log Session.get('product_query')
+                # if e.key == "Escape"
+                #     Session.set('product_query', null)
+                    
+                # if e.which is 13
+                search = $('.global_search').val().trim().toLowerCase()
+                if search.length > 0
+                    Meteor.call 'change_state', {_template:'search', _search:search}
+                    picked_tags.push search
+                    console.log 'search', search
+                    # Meteor.call 'log_term', search, ->
+                    $('.global_search').val('')
+                    Session.set('product_query', null)
+                    # # $('#search').val('').blur()
+                    # # $( "p" ).blur();
+                    # Meteor.setTimeout ->
+                    #     Session.set('dummy', !Session.get('dummy'))
+                    # , 10000
+        , 500)
     
         'click .alerts': ->
             Session.set('viewing_alerts', !Session.get('viewing_alerts'))
