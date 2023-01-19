@@ -1,87 +1,113 @@
-Template.chart.onRendered = function(){
-  //we wrap everything in the Template.rendered() callback,
-  // so that we don't interfere with Blaze
-  var margin = {top: 20, right: 20, bottom: 30, left: 40},
-    width = 960 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
+var outerWidth = '100vw';
+var outerHeight = '100vh';
+var margin = {top: 25, right: 25, bottom: 25, left: 25};
 
-  //We are going to set the domains for x an y immediately
-  //(assuming the alphabet isn't going to change)
-  x = d3.scale.ordinal()
-  .domain('ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(''))
-  .rangeRoundBands([0, width], .1);
+var svg = d3.select('body').append('svg')
+            .attr('width', outerWidth)
+            .attr('height', outerHeight);
 
-  //ALSO: note that we *removed* the 'var' declarations,
-  //so that x and y are global / accessible
-  y = d3.scale.linear()
-  .domain([0,0.15])
-  .range([height, 0]);
+var div = d3.select('body').append('div')
+            .attr('class', 'tooltip')
+            .style('opacity', 0)
 
-  var xAxis = d3.svg.axis()
-  .scale(x)
-  .orient("bottom");
+var color = d3.scaleOrdinal(d3.schemeCategory20);
 
-  var yAxis = d3.svg.axis()
-  .scale(y)
-  .orient("left")
-  .ticks(10, "%");
+var projection = d3.geoMercator().scale(305);
+var path = d3.geoPath().projection(projection)
 
-  // We are moving the axes creation (and SVG init)
-  // to be *outside* our autorun()
-  var svg = d3.select("body").append("svg")
-  .attr("width", width + margin.left + margin.right)
-  .attr("height", height + margin.top + margin.bottom)
-  .append("g")
-  .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+d3.json('https://d3js.org/world-50m.v1.json', drawMap)
+d3.json('https://raw.githubusercontent.com/FreeCodeCamp/ProjectReferenceData/master/meteorite-strike-data.json', parse);
 
-  svg.append("g")
-  .attr("class", "x axis")
-  .attr("transform", "translate(0," + height + ")")
-  .call(xAxis);
+var mousedownX;
+var mousedownY;
+var mouseClicked = false;
+var mouse = [];
+var transform = [];
 
-  svg.append("g")
-  .attr("class", "y axis")
-  .call(yAxis)
-  .append("text")
-  .attr("transform", "rotate(-90)")
-  .attr("y", 6)
-  .attr("dy", ".71em")
-  .style("text-anchor", "end")
-  .text("Frequency");
+function parse(data) {
+  var parsedData = [];
+  for (var i = 0; i < data.features.length; ++i) {
+    if (data.features[i].geometry === null) continue;
+    else {
+      let temp = data.features[i].properties;
+      temp.location = data.features[i].geometry.coordinates;
+      parsedData.push(temp);
+    }
+  }
+  render(parsedData);
+}
+
+function render(data) {
+  svg.on('mousedown', mouseDown)
+     .on('mousemove', drag)
+     .on('mouseup', mouseUp)
+
+  var points = svg.append('g').raise()
+                  .attr('class', 'meteor')
+                  .selectAll('circle').data(data)
+                  .enter().append('circle')
+                    .attr('r', d => Math.pow(d.mass, 1/5))
+                    .attr('fill', d => color(d.recclass))
+                    .attr('cx', d => projection(d.location)[0])
+                    .attr('cy', d => projection(d.location)[1])
+                    .on('mouseover', addDiv)
+                    .on('mouseout', removeDiv)
+
+  window.setTimeout(() => d3.select('.meteor').raise(), 250);
+}
 
 
-  //We move D3.js rendering inside Tracker.autorun()
-  this.autorun(function(){
-    // Instead of reading data from a static file,
-    // we access the Letters collection
-    var data = Letters.find().fetch();
-    if (!data.length) return;
 
-    // To use D3.js's built-in update tracking,
-    // we need access to our d3.selectAll() object..
-    var bars = svg
-    .selectAll(".bar")
-    .data(data, function(d){return d._id;});
+function addDiv(d) {
+  var html = '';
+  Object.keys(d).map(function(e) {
+    if (d[e]) {
+      html += `${e}: ${d[e]} </br>`
+    }
+  })
+  div.transition()
+     .duration(100)
+     .style('opacity', 0.85)
+  div.html(html)
+     .style('left', `${d3.event.pageX}px`)
+     .style('top', `${d3.event.pageY}px`)
+}
+function removeDiv(d) {
+  div.transition().style('opacity', 0);
+}
 
-    // On new (when initializing), we append and animate
-    bars.enter()
-    .append("rect")
-    .attr("class", "bar")
-    .attr("x", function(d) { return x(d.letter); })
-    .attr("width", x.rangeBand())
-    .attr("height",0)
-    .attr("y", height)
-    .transition()
-    .attr("y", function(d) { return y(d.frequency); })
-    .attr("height", function(d) { return height - y(d.frequency); });
+function drawMap(data) {
+  svg.append('g').attr('class', 'map')
+     .selectAll('path')
+       .data(topojson.feature(data, data.objects.countries).features)
+       .enter().append('path')
+        .attr('fill', '#e2c776')
+        .attr('d', path)
+        .attr('stroke', '#fcdcb5')
+}
 
-    // On change, we just animate to the new position
-    bars
-    .transition()
-    .duration(200)
-    .ease("sin-out")
-    .attr("y", function(d) { return y(d.frequency); })
-    .attr("height", function(d) { return height -       y(d.frequency); });
+function mouseDown(e) {
+  mouseClicked = true;
+  mouse = [d3.mouse(this)[0],d3.mouse(this)[1]];
+  transform = getTranslate(document.querySelector('.map'));
+}
+function mouseUp(e) {
+  mouseClicked = false;
+}
+function getTranslate(el) {
+  var transformString = el.style.transform || '(0,0)';
+  var split = transformString.slice(transformString.indexOf('(')+1).split(',');
+  return [parseInt(split[0]), parseInt(split[1].slice(0, split[1].length-1))]
+}
 
-  });
-};
+function drag(e) {
+  if (mouseClicked) {
+    var map = document.querySelector('.map');
+    var body = document.querySelector('svg');
+    var newPos = d3.mouse(body);
+    map.style.transform = `translate(${newPos[0]-mouse[0]+transform[0]}px, ${newPos[1]-mouse[1]+transform[1]}px)`
+    d3.select('.meteor')
+      .attr('style', `transform: translate(${newPos[0]-mouse[0]+transform[0]}px, ${newPos[1]-mouse[1]+transform[1]}px)`)
+
+  }
+}
