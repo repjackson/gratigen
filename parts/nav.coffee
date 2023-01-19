@@ -12,11 +12,7 @@ if Meteor.isClient
 
     Template.leftbar_item.events
         'click .click_item': ->
-            console.log @
-            Meteor.users.update Meteor.userId(),
-                $set:
-                    _template:'delta'
-                    _model:@slug
+            Meteor.call 'change_state', {_template:'delta',_model:@slug}, ->
 
     Template.nav.onRendered ->
         Session.setDefault('invert_mode', true)
@@ -35,17 +31,17 @@ if Meteor.isClient
         Meteor.setTimeout ->
             $('.menu .item')
                 .popup()
-            $('.ui.leftbar')
-                .sidebar({
-                    context: $('.layout')
-                    transition:'overlay'
-                    mobileTransition:'push'
-                    exclusive:false
-                    duration:200
-                    scrollLock:true
-                })
-                .sidebar('attach events', '.toggle_leftbar')
-        , 2000
+            # $('.ui.leftbar')
+            #     .sidebar({
+            #         context: $('.layout')
+            #         transition:'overlay'
+            #         mobileTransition:'push'
+            #         exclusive:false
+            #         duration:200
+            #         scrollLock:true
+            #     })
+            #     .sidebar('attach events', '.toggle_leftbar')
+        , 1000
         Meteor.setTimeout ->
             $('.ui.rightbar')
                 .sidebar({

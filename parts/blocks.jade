@@ -82,7 +82,7 @@ template(name='key_value_edit')
             
         
 template(name='profile_key_value_edit')
-    .ui.circular.compact.button.set_key_value.zoomer.invert(class=calculated_class title=label)
+    .ui.mini.circular.compact.secondary.basic.button.set_key_value.zoomer.invert(class=calculated_class title=label)
         if icon 
             +i name=icon cl='ui avatar image'
             // i.large.icon(class=icon)
@@ -216,17 +216,20 @@ template(name='session_boolean_toggle')
 
 
 template(name='eft_home_picker')
-    .ui.compact.large.circular.button.toggle_eft(class=eft_button_class)
+    .ui.compact.circular.secondary.basic.button.toggle_eft(class=eft_button_class)
         // with ../
         if icon
-            +i name=icon cl='ui image' color=stripped_icon_color
+            +i name=icon cl='ui mini inline image' color=stripped_icon_color
         // if icon_view
         // i.icon(class=icon)
         // else
         |#{title}
+        
+//         .ui.compact.circular.secondary.basic.button.pick_model.zoomer(class=button_class)
+//             +i name=icon color=color cl='ui mini inline image'
                 
 template(name='session_set')
-    .ui.compact.large.circular.button.set_session_value(class=calculated_class)
+    .ui.compact.circular.secondary.basic.button.set_session_value(class=calculated_class)
         // with ../
         if icon
             +i name=icon cl='ui image' color=color

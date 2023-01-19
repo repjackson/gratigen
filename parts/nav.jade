@@ -2,10 +2,8 @@ template(name='nav')
     // https://fomantic-ui.com/elements/icon.html#/icon
     //#topnav.topnav
     #topnav.ui.attached.menu.topnav.hscroll.ani(class=invert_class)
-        a.icon.item.toggle_leftbar.zoomer(title='toggle leftbar')
-            i.bars.large.icon
-        a.icon.item.toggle_modelbar.zoomer(class=modelbar_class)
-            i.cubes.large.icon
+        // a.icon.item.toggle_leftbar.zoomer(title='toggle leftbar')
+        //     i.bars.large.icon
         a.header.image.item.zoomer.set_home(class="{{isActivePath 'home'}}" title='gratihome')
             if is_loading
                 .icon.item
@@ -13,6 +11,8 @@ template(name='nav')
             else 
                 img.ui.mini.circular.image.zoomer(src="/logo.png")
             // span.mobile.hidden Gratigen
+        a.icon.item.toggle_modelbar.zoomer(class=modelbar_class)
+            i.cubes.large.icon
             
         if currentUser.admin
             +toggle_nav_item key='admin_mode' icon='shield' label='admin mode'
@@ -269,7 +269,7 @@ template(name='modelbar')
         
             
 template(name='leftbar_item')    
-    a.item.zoomer.close_leftbar.click_item
+    a.item.zoomer.close_leftbar.click_item.toggle_modelbar
         +i name=icon color=stripped_icon_color cl='ui avatar image'
         span #{title}
                 

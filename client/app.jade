@@ -85,7 +85,6 @@ head
     
 
 body
-    +delta_nav
     +leftbar
     +rightbar
     +global_modal
@@ -99,6 +98,7 @@ body
 template(name='app')
     if Template.subscriptionsReady
         +nav
+        +delta_nav
         // #draggable
         // if currentUser.show_leftbar
         // if currentUser.show_rightbar

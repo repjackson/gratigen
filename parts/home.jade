@@ -46,8 +46,8 @@ template(name='home')
                         // .results    
                     each model_docs_helper 'view_mode'
                         +session_set key='view_mode' value=title title=title icon=icon color=icon_color
-                    +session_toggle key='show_map' icon='map'
-                    +session_toggle key='show_calendar' icon='calendar'
+                    // +session_toggle key='show_map' icon='map'
+                    // +session_toggle key='show_calendar' icon='calendar'
                     each model_docs_helper 'sort_key'
                         +profile_key_value_edit key='sort_key' value=title label=title icon=icon color=icon_color
                     .ui.inline.header sort
@@ -65,22 +65,23 @@ template(name='home')
                                 .content
                                     .header #{title}
                                     |mini_card
-                else if session_is 'view_mode' 'feed'
+                                    
+                else if session_is 'view_mode' 'cards'
+                    .ui.two.stackable.cards.scrolling
+                            each doc_results
+                                +home_card
+                else
                     .ui.eight.wide.column.centered
                         .ui.centered.cards.one.scrolling
                             each doc_results
                                 +home_card
-                else
-                    .ui.two.stackable.cards.scrolling
-                        each doc_results
-                            +home_card
-        // .eight.wide.column.bordered
+        
         .bordered(class=right_column_class)
             +my_things
-            if session_is 'show_map' true
-                +mapbox
-            if session_is 'show_calendar' true 
-                +calendar_view
+            // if session_is 'show_map' true
+            +mapbox
+            // if session_is 'show_calendar' true 
+            +calendar_view
             +online_allies
                //.ui.container
                     |my things
