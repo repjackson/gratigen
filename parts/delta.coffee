@@ -842,7 +842,7 @@ if Meteor.isServer
     
     
         fum: (delta_id)->
-            delta = Docs.findOne delta_id
+            delta = Docs.findOne Meteor.user().delta_id
     
             model = Docs.findOne
                 model:'model'

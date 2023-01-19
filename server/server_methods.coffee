@@ -11,6 +11,9 @@ Meteor.methods
             Docs.update Meteor.user().delta_id,
                 $set:
                     "#{key}":change_object[key]
+        if change_object._template
+            Docs.update Meteor.user().delta_id, 
+                $addToSet: _doc_history:change_object._template
             
     nuke_alpha: ->
         res = Docs.remove({model:'delta'},{multi:true})

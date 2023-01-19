@@ -96,11 +96,12 @@ template(name='app')
         // if currentUser.show_leftbar
         // if currentUser.show_rightbar
         +delta_nav
-        .ui.small.compact.attached.borderless.menu.hscroll
-            .icon.item(title="#{doc_history.length} node history")
-                i.large.clock.icon(title='node history')
-            each currentUser.doc_history.reverse
-                +doc_history_button
+        if currentUser.delta_id
+            .ui.small.compact.attached.menu.hscroll
+                .icon.item(title="#{doc_history.length} node history")
+                    i.large.clock.icon(title='node history')
+                each current_delta._doc_history.reverse
+                    +doc_history_button
         .layout
             with currentUser
                 if ct.length
@@ -158,7 +159,7 @@ template(name='footer')
                 .ui.header 
                     i.shield.icon
                     |footer 
-                with currentUser
+                with current_delta
                     +text_edit key='_template' label='_template' direct=true
                     div
                     +text_edit key='_model' label='_model' direct=true

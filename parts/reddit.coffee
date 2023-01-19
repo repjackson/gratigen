@@ -15,7 +15,7 @@ if Meteor.isClient
             Session.get('porn')
             Session.get('dummy')
             
-    Template.doc_results.onCreated ->
+    Template.reddit_doc_results.onCreated ->
         @autorun => @subscribe 'reddit_doc_results',
             picked_tags.array()
             Session.get('picked_subreddit')
@@ -477,7 +477,7 @@ if Meteor.isClient
             Results.find 
                 model:'subreddit'
                 
-    Template.doc_results.helpers
+    Template.reddit_doc_results.helpers
         doc_results: ->
             current_docs = Docs.find()
             # if Session.get('selected_doc_id') in current_docs.fetch()

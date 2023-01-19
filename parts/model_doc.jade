@@ -2,7 +2,7 @@ template(name='model_doc_view')
     with current_doc
         .ui.stackable.padded.grid
             .row
-                .four.wide.column
+                .four.wide.column.scrolling
                     a.ui.circular.basic.large.button.back_to_model
                         i.chevron.left.icon
                         // i.big.icon(class=_model.icon)
@@ -38,7 +38,7 @@ template(name='model_doc_view')
                             +array_view key='tags' label='tags' direct=true
                     +comments
                     +viewing
-                .twelve.wide.column.scrollin
+                .twelve.wide.column.scrolling
                     .ui.button.fly_out
                         i.bars.icon
                         |fly out

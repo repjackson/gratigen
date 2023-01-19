@@ -96,8 +96,10 @@ if Meteor.isClient
         # 'mouseover .item': (e)->
             # $(e.currentTarget).closest('.icon').transition('bounce', 1000)
 
-        'click .goto_add': -> Meteor.users.update({_id:Meteor.userId()},{$set:_template:'add'})
-        'click .set_home': -> Meteor.users.update({_id:Meteor.userId()},{$set:_template:'home'})
+        'click .goto_add': -> 
+            Meteor.call 'change_state', {_template:'add'}, ->
+        'click .set_home': -> 
+            Meteor.call 'change_state', {_template:'home'}, ->
         'click .reset': ->
             # model_slug =  Template.parentData().model_slug
             Session.set 'loading', true

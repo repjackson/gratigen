@@ -1,7 +1,7 @@
 template(name='nav')
     // https://fomantic-ui.com/elements/icon.html#/icon
     //#topnav.topnav
-    #topnav.ui.attached.borderless.menu.topnav.hscroll.ani(class=invert_class)
+    #topnav.ui.attached.menu.topnav.hscroll.ani(class=invert_class)
         a.icon.item.toggle_leftbar.zoomer(title='toggle leftbar')
             i.bars.large.icon
         a.icon.item.toggle_modelbar.zoomer(class=modelbar_class)
@@ -32,7 +32,7 @@ template(name='nav')
         a.icon.item.zoomer.goto_add(title='add new doc')
             i.large.play.icon
         +toggle_nav_item key='invert_mode' icon='lightbulb' label='invert mode'
-        .right.borderless.menu
+        .right.menu
             if unread_count
                 a.item.alerts.select_term(href="#" class=alert_toggle_class)
                     i.large.bell.icon
@@ -51,9 +51,9 @@ template(name='nav')
                 // a.item(href="/user/#{currentUser.username}/credit" class="{{is_active_template regex='user_credit'}}" title='your credits')
                 a.item.toggle_cartbar(title='current cart balance')
                     |#{currentUser.cart_item_count}
-                    i.shopping.cart.icon
+                    i.shopping.cart.large.icon
                 a.item.toggle_coinbar(title='current wallet balance')
-                    i.coins.yellow.icon.invert
+                    i.coins.large.icon
                     |&nbsp;
                     |#{currentUser.points}p
                 a.item.goto_profile(class=user_nav_button_class title='profile')
@@ -94,7 +94,7 @@ template(name='toggle_nav_item')
           
           
 template(name='delta_nav')
-    .ui.attached.borderless.menu.hscroll
+    .ui.attached.menu.hscroll
         .item 
             i.yin.yang.icon
             |sessions
@@ -112,18 +112,18 @@ template(name='secnav')
     // .input.item 
     //     .ui.input 
     //         input(type='text')
-    .ui.attached.small.borderless.menu.hscroll(class=invert_class)
+    .ui.attached.small.menu.hscroll(class=invert_class)
         // .item
         // .ui.icon.small.transparent.input
         //     input.filter_models(type='text' placeholder='filter')
         //     i.search.link.icon
         // .ui.dropdown.icon.item
         //     i.wrench.icon
-        //     .borderless.menu 
+        //     .menu 
         //         .item
         //             i.dropdown.icon
         //             span.text new 
-        //             .borderless.menu 
+        //             .menu 
         //                 .item post
         //                 .item model
         each model_docs_helper 'model'
@@ -185,7 +185,7 @@ template(name='recent_alert')
                     
                     
 template(name='rightbar')
-    .ui.vertical.borderless.menu.right.sidebar.rightbar
+    .ui.vertical.menu.right.sidebar.rightbar
         with currentUser
             a.item.toggle_rightbar.no_blink(href="/user/#{currentUser.username}" class="{{is_active_template 'user_layout'}}")
                 img.ui.avatar.compact.image(src="{{c.url currentUser.image_id height=200 width=200 gravity='face' crop='fill'}}")
@@ -254,13 +254,13 @@ template(name='right_nav_item')
 
 
 template(name='leftbar')
-    .ui.vertical.borderless.menu.sidebar.leftbar
+    .ui.vertical.menu.sidebar.leftbar
         .item leftbar
         each model_docs_helper 'model'
             +leftbar_item
         
 template(name='modelbar')
-    .ui.vertical.borderless.sidebar.menu.modelbar
+    .ui.vertical.sidebar.menu.modelbar
         .item 
             i.cubes.icon
             |models
@@ -282,7 +282,7 @@ template(name='leftbar_item')
     //             i.search.large.icon
     //         input.search_site(type='text' autocomplete="off" value=current_product_search)
     // .column.centered
-    // .ui.top.attached.tabular.borderless.menu  
+    // .ui.top.attached.tabular.menu  
     // a.center.item.toggle_addmode.zoomer(data-tab='add' title='add thing')
     // a.item.toggle_addmode.zoomer(data-tab='add' title='add thing')
     //     +i name='play-button-circled--v1' color='40C057'

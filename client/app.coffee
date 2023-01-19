@@ -25,8 +25,8 @@ Template.delta_nav.helpers
 Template.delta_nav.events 
     'dblclick .pick_delta': ->
         Session.set('editing_id', @_id)
-    'keyup .pick_delta':(e)->
-        if e.which is 13
+    'blur .pick_delta':(e)->
+        if Session.get('editing_id')
             Session.set('editing_id', null)
             $('body').toast({
                 title: "#{name} saved"
@@ -65,10 +65,12 @@ Template.delta_nav.events
                 })
 
     'click .pick_delta': ->
-        Meteor.users.update Meteor.userId(),
-            $set:delta_id:@_id
-        console.log @_id
-        console.log Meteor.user().delta_id
+        if Meteor.user().delta_id and @_id is Meteor.user().delta_id
+            Meteor.users.update({_id:Meteor.userId()},{$unset:delta_id:1})
+        else 
+            Meteor.users.update({_id:Meteor.userId()},{$set:delta_id:@_id})
+        # console.log @_id
+        # console.log Meteor.user().delta_id
 
 
 Template.doc_history_button.helpers 
@@ -76,15 +78,9 @@ Template.doc_history_button.helpers
         # console.log @, @valueOf()
         Docs.findOne @valueOf()
         
-Template.app.events 
-    'click .goto_doc': ->
-        # delta = Docs.findOne Meteor.user().delta_id
-        Docs.update Meteor.user().delta_id,
-            $set:
-                _doc_id:@_id
-            $addToSet:
-                _doc_history:@_id
+Template.nav.events 
     'click .goto_profile': ->
+        console.log 'profile'
         # delta = Docs.findOne Meteor.user().delta_id
         if Meteor.user().delta_id
             Docs.update Meteor.user().delta_id,
@@ -93,6 +89,14 @@ Template.app.events
                     _username:Meteor.user().username
                 $addToSet:
                     _doc_history:'profile'
+Template.app.events 
+    'click .goto_doc': ->
+        # delta = Docs.findOne Meteor.user().delta_id
+        Docs.update Meteor.user().delta_id,
+            $set:
+                _doc_id:@_id
+            $addToSet:
+                _doc_history:@_id
     'click .goto_template': ->
         console.log @
         # delta = Docs.findOne Meteor.user().delta_id

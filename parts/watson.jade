@@ -183,8 +183,8 @@ template(name='semantic_roles')
         .title
             .ui.header #{watson.semantic_roles.length} semantic roles
                 i.dropdown.icon
-        .content
-            +jsonView(json=watson.semantic_roles)
+        // .content
+        //     +jsonView(json=watson.semantic_roles)
             //- .ui.list
             //-     each watson.semantic_roles
             //-         .item
@@ -197,8 +197,8 @@ template(name='relations')
         .title
             .ui.inline.header #{watson.relations.length} relations
             i.dropdown.icon
-        .content    
-            +jsonView(json=watson.relations)
+        // .content    
+        //     +jsonView(json=watson.relations)
             //- .ui.list
             //-     each watson.relations
             //-         .item
@@ -287,24 +287,30 @@ template(name='tone')
 
 
 template(name='watson')
-    // +tone
-    +doc_sentiment
-    +doc_emotion
-    +concepts
-    +categories
-    +entities
-    //- +semantic_roles
-    // +keyword_list
-    +keywords
-    +concept_list
-    //- .ui.hidden.divider
-    //- +relations
-    //- if dev
-    //-     .ui.styled.accordion
-    //-         .title 
-    //-             i.code.icon
-    //-             i.dropdown.icon
-    //-         .content
-    //-             +jsonView(json=watson)
-    +personality
-    +consumption_preferences
+    details.ui.accordion 
+        summary.title.zoomer
+            i.brain.icon 
+            |emotional analysis
+            i.dropdown.icon
+            +doc_sentiment
+        .content
+            // +tone
+            +doc_emotion
+            +concepts
+            +categories
+            +entities
+            +semantic_roles
+            // +keyword_list
+            +keywords
+            +concept_list
+            //- .ui.hidden.divider
+            +relations
+            //- if dev
+            //-     .ui.styled.accordion
+            //-         .title 
+            //-             i.code.icon
+            //-             i.dropdown.icon
+            //-         .content
+            //-             +jsonView(json=watson)
+            // +personality
+            // +consumption_preferences

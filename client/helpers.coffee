@@ -53,7 +53,11 @@ Template.registerHelper 'model_docs_helper', (model) ->
     # if limit 
     #     Docs.find {model:model}, {limit:limit}
     # else 
-    Docs.find {model:model}, {sort:ranking:1}
+    Docs.find {model:model}, {
+        sort:
+            ranking:-1
+            _timestamp:-1
+        }
 Template.registerHelper 'subs_ready', () -> 
     Template.instance().subscriptionsReady()
 
@@ -181,7 +185,7 @@ Template.registerHelper 'current_month', () -> moment(Date.now()).format("MMMM")
 Template.registerHelper 'current_day', () -> moment(Date.now()).format("DD")
 
 
-Template.registerHelper 'current_delta', () -> Docs.findOne model:'delta'
+Template.registerHelper 'current_delta', () -> Docs.findOne Meteor.user().delta_id
 
 Template.registerHelper 'hsd', () ->
     Docs.findOne
