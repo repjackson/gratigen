@@ -11,6 +11,12 @@ body {
     filter: invert(.9) !important;
     background: rgba(0,0,0,.9) !important; 
 }
+
+.smaller_icon {
+  width:24px !important;
+  height:24px !important;
+}
+
 .ui.menu {
     font-family: 'Ubuntu', sans-serif !important;
   

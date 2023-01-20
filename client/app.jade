@@ -148,8 +148,11 @@ template(name='chat_flyout')
     with current_delta
         .ui.chat.right.flyout
             i.close.large.circular.link.icon.zoomer(title='close panel')
-            .ui.header #{name}
-            .ui.inverted.segment.content.invert(class=color)
+            .ui.header 
+                i.chat.outline.icon(class=color)
+                |#{name}
+                small chat
+            .ui.segment.content.invert(class=color)
                 +comments
                 +image_edit key='image_id' direct=true
                 +text_edit key='name' direct=true
