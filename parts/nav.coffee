@@ -31,16 +31,16 @@ if Meteor.isClient
         Meteor.setTimeout ->
             $('.menu .item')
                 .popup()
-            # $('.ui.leftbar')
-            #     .sidebar({
-            #         context: $('.layout')
-            #         transition:'overlay'
-            #         mobileTransition:'push'
-            #         exclusive:false
-            #         duration:200
-            #         scrollLock:true
-            #     })
-            #     .sidebar('attach events', '.toggle_leftbar')
+            $('.ui.leftbar')
+                .sidebar({
+                    context: $('.layout')
+                    transition:'overlay'
+                    mobileTransition:'push'
+                    exclusive:false
+                    duration:200
+                    scrollLock:true
+                })
+                .sidebar('attach events', '.toggle_leftbar')
         , 1000
         Meteor.setTimeout ->
             $('.ui.rightbar')
