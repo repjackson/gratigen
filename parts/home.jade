@@ -152,45 +152,45 @@ template(name='home_cloud')
     .ui.inline.header 
         i.tag.icon
     //     |tags
-    // if cd.picked_tags
-    //     // #clear_tags.ui.active.icon.large.circular.button
-    //     //     i.remove.icon
-    //     each cd.picked_tags
-    //         .unpick_tag.ui.active.large.circular.compact.button
-    //             strong #{this}
+    if cd.picked_tags
+        // #clear_tags.ui.active.icon.large.circular.button
+        //     i.remove.icon
+        each cd.picked_tags
+            .unpick_tag.ui.active.large.circular.compact.button
+                strong #{this}
     each result_helper 'tag'
-        .ui.circular.basic.compact.button.pick_tag(class=cloud_tag_class) 
-            strong #{this.name}
-            small #{count}
-    // // div
-    // .ui.inline.header 
-    //     // i.cubes.icon
-    //     +i name='network'
-    //     |models
-    // if cd.picked_models
-    //     // #clear_models.ui.active.icon.large.circular.button
-    //     //     i.remove.icon
-    //     each picked_models
-    //         .unpick_model.ui.active.large.compact.circular.button
-    //             strong #{this}
-    // each results 'model'
-    //     .ui.circular.compact.basic.button.pick_model(class=cloud_tag_class) 
-    //         strong #{this.name}
-    //         small #{count}
-    // div
-    // .ui.inline.header 
-    //     +i name='t-shirt'
-    //     |essentials
-    // if cd.picked_essentials
-    //     // #clear_essentials.ui.active.icon.large.circular.button
-    //     //     i.remove.icon
-    //     each picked_essentials
-    //         .unpick_essential.ui.active.large.circular.compact.button
-    //             strong #{this}
-    // each results 'essential'
-    //     .ui.circular.basic.compact.button.pick_essential(class=cloud_tag_class) 
-    //         strong #{this.name}
-    //         small #{count}
+        +pick_result
+    div
+    .ui.inline.header 
+        // i.cubes.icon
+        +i name='network'
+        |models
+    if cd.picked_models
+        // #clear_models.ui.active.icon.large.circular.button
+        //     i.remove.icon
+        each picked_models
+            .unpick_model.ui.active.large.compact.circular.button
+                strong #{this}
+    each result_helper 'model'
+        +pick_result
+    div
+    .ui.inline.header 
+        +i name='t-shirt'
+        |essentials
+    if cd.picked_essentials
+        // #clear_essentials.ui.active.icon.large.circular.button
+        //     i.remove.icon
+        each picked_essentials
+            .unpick_essential.ui.active.large.circular.compact.button
+                strong #{this}
+    each result_helper 'essential'
+        +pick_result
+
+
+template(name='pick_result')
+    .ui.circular.compact.basic.button.pick(class=cloud_tag_class) 
+        strong #{this.name}
+        small #{count}
 
 
 

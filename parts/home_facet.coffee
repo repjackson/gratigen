@@ -2,6 +2,15 @@ if Meteor.isClient
     Template.home_cloud.onCreated ->
         @autorun => Meteor.subscribe('home_facets')
         # @autorun => Meteor.subscribe('docs', picked_tags.array())
+    Template.pick_result.events
+        'click .pick': ->
+            console.log @
+            d = Docs.findOne Meteor.user().delta_id 
+            Docs.update d._id, 
+                $addToSet:
+                    "picked_#{@model}s":@name
+            d = Docs.findOne Meteor.user().delta_id 
+            console.log d
     Template.home_cloud.helpers
         result_helper: (model)-> 
             Results.find model:model
@@ -99,13 +108,13 @@ if Meteor.isServer
                 white_list = ['post', 'offer', 'request', 'org', 'event', 'role', 'task', 'skill', 'resource', 'product', 'service', 'trip']
                 match.model = $in: white_list
                 if d.picked_models
-                    if d.picked_models.length > 0 then match.model = $all: picked_models
+                    if d.picked_models.length > 0 then match.model = $all: d.picked_models
                 if d.picked_essentials
-                    if d.picked_essentials.length > 0 then match.efts = $all: picked_essentials
+                    if d.picked_essentials.length > 0 then match.efts = $all: d.picked_essentials
                 if d.picked_timestamp_tags
-                    if d.picked_timestamp_tags.length > 0 then match.timestamp_tags = $all: picked_timestamp_tags
+                    if d.picked_timestamp_tags.length > 0 then match.timestamp_tags = $all: d.picked_timestamp_tags
                 if d.picked_authors
-                    if d.picked_authors.length > 0 then match._author_username = $all: picked_authors
+                    if d.picked_authors.length > 0 then match._author_username = $all: d.picked_authors
         
                 # if tag_limit then limit=tag_limit else limit=50
                 # if author_id then match.author_id = author_id
@@ -180,25 +189,25 @@ if Meteor.isServer
                         # index: i
                 
                 
-                # model_cloud = Docs.aggregate [
-                #     { $match: match }
-                #     { $project: model: 1 }
-                #     # { $unwind: "$models" }
-                #     { $group: _id: '$model', count: $sum: 1 }
-                #     { $match: _id: $nin: picked_models }
-                #     { $match: _id: $in: white_list }
-                #     { $sort: count: -1, _id: 1 }
-                #     { $limit: limit }
-                #     { $project: _id: 0, name: '$_id', count: 1 }
-                #     ]
-                # # console.log 'home model cloud', model_cloud
-                # model_cloud.forEach (model) ->
-                #     # console.log model
-                #     self.added 'results', Random.id(),
-                #         name: model.name
-                #         count: model.count
-                #         model:'model'
-                #         # index: i
+                model_cloud = Docs.aggregate [
+                    { $match: match }
+                    { $project: model: 1 }
+                    # { $unwind: "$models" }
+                    { $group: _id: '$model', count: $sum: 1 }
+                    # { $match: _id: $nin: picked_models }
+                    { $match: _id: $in: white_list }
+                    { $sort: count: -1, _id: 1 }
+                    { $limit: limit }
+                    { $project: _id: 0, name: '$_id', count: 1 }
+                    ]
+                # console.log 'home model cloud', model_cloud
+                model_cloud.forEach (model) ->
+                    # console.log model
+                    self.added 'results', Random.id(),
+                        name: model.name
+                        count: model.count
+                        model:'model'
+                        # index: i
                 
                 # key_cloud = Docs.aggregate [
                 #     { $match: match }
@@ -218,23 +227,23 @@ if Meteor.isServer
                 #         count: key.count
                 #         model:'key'
                 #         # index: i
-                # essential_cloud = Docs.aggregate [
-                #     { $match: match }
-                #     { $project: efts: 1 }
-                #     { $unwind: "$efts" }
-                #     { $group: _id: '$efts', count: $sum: 1 }
-                #     { $match: _id: $nin: picked_essentials }
-                #     { $sort: count: -1, _id: 1 }
-                #     { $limit: limit }
-                #     { $project: _id: 0, name: '$_id', count: 1 }
-                #     ]
-                # # console.log 'home essential cloud', essential_cloud
-                # essential_cloud.forEach (essential) ->
-                #     self.added 'results', Random.id(),
-                #         name: essential.name
-                #         count: essential.count
-                #         model:'essential'
-                #         # index: i
+                essential_cloud = Docs.aggregate [
+                    { $match: match }
+                    { $project: efts: 1 }
+                    { $unwind: "$efts" }
+                    { $group: _id: '$efts', count: $sum: 1 }
+                    # { $match: _id: $nin: picked_essentials }
+                    { $sort: count: -1, _id: 1 }
+                    { $limit: limit }
+                    { $project: _id: 0, name: '$_id', count: 1 }
+                    ]
+                # console.log 'home essential cloud', essential_cloud
+                essential_cloud.forEach (essential) ->
+                    self.added 'results', Random.id(),
+                        name: essential.name
+                        count: essential.count
+                        model:'essential'
+                        # index: i
         
                 # # 
                 # #
