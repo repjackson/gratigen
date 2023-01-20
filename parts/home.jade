@@ -158,11 +158,11 @@ template(name='home_cloud')
     //     each cd.picked_tags
     //         .unpick_tag.ui.active.large.circular.compact.button
     //             strong #{this}
-    // each results 'tag'
-    //     .ui.circular.basic.compact.button.pick_tag(class=cloud_tag_class) 
-    //         strong #{this.name}
-    //         small #{count}
-    // div
+    each result_helper 'tag'
+        .ui.circular.basic.compact.button.pick_tag(class=cloud_tag_class) 
+            strong #{this.name}
+            small #{count}
+    // // div
     // .ui.inline.header 
     //     // i.cubes.icon
     //     +i name='network'

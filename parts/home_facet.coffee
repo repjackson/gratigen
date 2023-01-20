@@ -3,7 +3,8 @@ if Meteor.isClient
         @autorun => Meteor.subscribe('home_facets')
         # @autorun => Meteor.subscribe('docs', picked_tags.array())
     Template.home_cloud.helpers
-        results: (model)-> Results.find model;model
+        result_helper: (model)-> 
+            Results.find model:model
         # picked_tags: -> picked_tags.array()
         # tag_results: -> Results.find model:'tag'
     

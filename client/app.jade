@@ -233,6 +233,15 @@ template(name='footer')
                     a.ui.compact.small.button.print_me #{title} 
                         .ui.label
                             |#{model}
+        .eight.wide.column.smallscroll
+            .ui.header 
+                i.yin.yang.icon
+                |#{result_docs.count} docs 
+            .smallscroll
+                each result_docs
+                    a.ui.compact.small.label.print_me #{title} 
+                        .ui.label
+                            |#{model}: #{name}
                             
                             
                         

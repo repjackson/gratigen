@@ -168,11 +168,10 @@ Template.app.helpers
 Template.footer.events 
     'click .print_me': -> console.log @
 Template.footer.helpers
-    doc_docs: ->
-        Docs.find {}
+    doc_docs: -> Docs.find {}
+    result_docs: -> Results.find {}
 
-    user_docs: ->
-        Meteor.users.find()
+    user_docs: -> Meteor.users.find()
 
 $.cloudinary.config
     cloud_name:"facet"
