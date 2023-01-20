@@ -1,21 +1,21 @@
 if Meteor.isClient
-    @picked_home_models = new ReactiveArray []
-    @picked_home_essentials = new ReactiveArray []
+    @picked_models = new ReactiveArray []
+    @picked_essentials = new ReactiveArray []
     
     Template.home_cloud.onCreated ->
         @autorun => Meteor.subscribe('home_facets', 
-            picked_home_models.array()
-            picked_home_essentials.array()
+            picked_models.array()
+            picked_essentials.array()
         )
         # @autorun => Meteor.subscribe('docs', picked_tags.array())
     Template.home_cloud.helpers
         picked_tags: -> picked_tags.array()
         tag_results: -> Results.find model:'tag'
     
-        picked_essentials: -> picked_home_essentials.array()
+        picked_essentials: -> picked_essentials.array()
         essential_results: -> Results.find model:'essential'
         
-        picked_models: -> picked_home_models.array()
+        picked_models: -> picked_models.array()
         model_results: -> Results.find model:'model'
         # doc_count = Docs.find({}).count()
         # if 0 < doc_count < 3 then Tags.find { count: $lt: doc_count } else Tags.find()
@@ -50,12 +50,12 @@ if Meteor.isClient
         'click .unpick_tag': -> picked_tags.remove @valueOf()
         'click #clear_tags': -> picked_tags.clear()
         
-        'click .pick_model': -> picked_home_models.push @name
-        'click .unpick_model': -> picked_home_models.remove @valueOf()
+        'click .pick_model': -> picked_models.push @name
+        'click .unpick_model': -> picked_models.remove @valueOf()
 
 
-        'click .pick_essential': -> picked_home_essentials.push @name
-        'click .unpick_essential': -> picked_home_essentials.remove @valueOf()
+        'click .pick_essential': -> picked_essentials.push @name
+        'click .unpick_essential': -> picked_essentials.remove @valueOf()
         
 if Meteor.isServer
     Meteor.publish 'home_facets', (
@@ -97,6 +97,8 @@ if Meteor.isServer
             #     match.author_id = $in: picked_author_ids
             #     match.published = 1
             #     match.published = 1
+            white_list = ['post', 'offer', 'request', 'org', 'event', 'role', 'task', 'skill', 'resource', 'product', 'service', 'trip']
+            match.model = $in: white_list
             if picked_models.length > 0 then match.model = $all: picked_models
             if picked_essentials.length > 0 then match.efts = $all: picked_essentials
             if picked_timestamp_tags.length > 0 then match.timestamp_tags = $all: picked_timestamp_tags
@@ -170,7 +172,6 @@ if Meteor.isServer
                     model:'tag'
                     # index: i
             
-            white_list = ['post', 'offer', 'request', 'org', 'event', 'role', 'task', 'skill', 'resource', 'product', 'service', 'trip']
             
             model_cloud = Docs.aggregate [
                 { $match: match }

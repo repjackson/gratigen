@@ -290,17 +290,34 @@ if Meteor.isClient
                 'no_show'
                 
         doc_results: ->
-            if model_filters.array().length
-                Docs.find {model:$in:model_filters.array()},{
-                    limit:Meteor.user().limit
-                    sort:
-                        "#{Meteor.user().sort_key}":Meteor.user().sort_direction
-                }
+            white_list = ['post', 'offer', 'request', 'org', 'event', 'role', 'task', 'skill', 'resource', 'product', 'service', 'trip']
+            match = {}
+            if picked_models.array().length
+                match.model = $in: picked_models.array()
             else 
-                Docs.find {},
-                    limit:Meteor.user().limit
-                    sort:
-                        "#{Meteor.user().sort_key}":Meteor.user().sort_direction
+                match.model = $in: white_list
+            if picked_tags.array().length
+                match.tags = $in: picked_tags.array()
+            if picked_essentials.array().length
+                match.efts = $in: picked_essentials.array()
+            Docs.find match,
+                sort:_timestamp:-1
+                limit:20
+            # else 
+            #     Docs.find {model:$in:white_list},
+            #         sort:_timestamp:-1
+            #         limit:20
+            # if model_filters.array().length
+            #     Docs.find {model:$in:model_filters.array()},{
+            #         limit:Meteor.user().limit
+            #         sort:
+            #             "#{Meteor.user().sort_key}":Meteor.user().sort_direction
+            #     }
+            # else 
+            #     Docs.find {},
+            #         limit:Meteor.user().limit
+            #         sort:
+            #             "#{Meteor.user().sort_key}":Meteor.user().sort_direction
                     
         
     Template.home.onRendered ->
