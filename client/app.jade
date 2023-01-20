@@ -147,9 +147,9 @@ template(name='global_flyout')
 template(name='chat_flyout')
     with current_delta
         .ui.chat.right.flyout
-            i.close.icon
+            i.close.large.circular.link.icon.zoomer(title='close panel')
             .ui.header #{name}
-            .content
+            .ui.inverted.segment.content.invert(class=color)
                 +comments
                 +image_edit key='image_id' direct=true
                 +text_edit key='name' direct=true
@@ -161,8 +161,12 @@ template(name='chat_flyout')
                     .image.content
                         img.ui.image(src="{{c.url image_id }}")
             .actions
-                .ui.button edit session 
-                .ui.button delete session 
+                .ui.blue.button.invert 
+                    i.pencil.icon
+                    |edit session 
+                .ui.red.button.invert
+                    i.trash.icon
+                    |delete session 
 
 
 

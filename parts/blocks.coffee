@@ -141,25 +141,32 @@ if Meteor.isClient
    
         
     Template.comments.onCreated ->
-        console.log Template.parentData(3)
-        console.log Template.parentData(4)
+        # console.log Template.parentData(3)
+        # console.log Template.parentData(4)
                 
-        if Template.parentData(4)
-            parent = Template.parentData(4)
-        else if Meteor.user()._doc_id
-            parent = Docs.findOne Meteor.user()._doc_id
-        else
-            parent = Template.parentData()
+        # if Template.parentData(4)
+        #     parent = Template.parentData(4)
+        # else if Meteor.user()._doc_id
+        #     parent = Docs.findOne Meteor.user()._doc_id
+        # else
+        #     parent = Template.parentData()
+        parent = Template.currentData()
+            
         if parent
             @autorun => Meteor.subscribe 'children', 'comment', parent._id
     Template.comments.helpers
         doc_comments: ->
-            if Template.parentData(4)
-                parent = Template.parentData(4)
-            else if Meteor.user()._doc_id
-                parent = Docs.findOne Meteor.user()._doc_id
-            else
-                parent = Docs.findOne Template.parentData()._id
+            # console.log Template.parentData()
+            # console.log Template.parentData(1)
+            # console.log Template.parentData(2)
+            # console.log Template.parentData(3)
+            # if Template.parentData(4)
+            #     parent = Template.parentData(4)
+            # else if Meteor.user()._doc_id
+            #     parent = Docs.findOne Meteor.user()._doc_id
+            # else
+            #     parent = Docs.findOne Template.parentData()._id
+            parent = Template.currentData()
             if parent
                 Docs.find
                     parent_id:parent._id
@@ -167,16 +174,18 @@ if Meteor.isClient
     Template.comments.events
         'keyup .add_comment': (e,t)->
             if e.which is 13
+                # console.log Template.currentData()
                 # console.log Template.parentData()
                 # console.log Template.parentData(1)
                 # console.log Template.parentData(2)
                 # console.log Template.parentData(3)
-                if Template.parentData(4)
-                    parent = Template.parentData(4)
-                else if Meteor.user()._doc_id
-                    parent = Docs.findOne Meteor.user()._doc_id
-                else
-                    parent = Docs.findOne Template.parentData()._id
+                parent = Template.currentData()
+                # if Template.parentData(4)
+                #     parent = Template.parentData(4)
+                # else if Meteor.user()._doc_id
+                #     parent = Docs.findOne Meteor.user()._doc_id
+                # else
+                #     parent = Docs.findOne Template.parentData()._id
                 # parent = Docs.findOne Meteor.user()._doc_id
                 comment = t.$('.add_comment').val()
                 Docs.insert
@@ -710,11 +719,13 @@ if Meteor.isServer
         # console.log model
         # console.log parent_id
         limit = if limit then limit else 10
-        Docs.find {
-            model:model
-            parent_id:parent_id
-        }, limit:limit
-        
+        match = {parent_id:parent_id}
+        if model 
+            match.model = model
+            
+        Docs.find match, 
+            limit:limit
+            sort:_timestamp:-1
         
 if Meteor.isClient
     Template.doc_array_toggle.helpers
