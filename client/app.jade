@@ -154,6 +154,9 @@ template(name='chat_flyout')
                 i.chat.outline.icon(class=color)
                 |#{name} session chat
             .ui.segment.content.scrolling(class=color)
+                |#{name}
+                small chat
+            .ui.segment.content.invert.scrolling(class=color)
                 +comments
                 +image_edit key='image_id' direct=true
                 +text_edit key='name' direct=true
@@ -268,7 +271,6 @@ template(name='nav')
             i.tasks.large.icon
         a.icon.item.toggle_orgbar.zoomer(class=orgbar_class)
             i.fire.large.icon
-            
         if currentUser.admin
             +toggle_nav_item key='admin_mode' icon='shield' label='admin mode'
         // +nav_item template='users' icon='users' label='users' hide_label=true
@@ -293,6 +295,8 @@ template(name='nav')
         // a.icon.item.zoomer.goto_add.toggle_addbar(title='add new doc')
         a.icon.item.zoomer.toggle_addbar(title='add new doc')
             i.large.play.circular.icon
+        a.icon.item.zoomer.goto_add(title='add new doc')
+            i.large.play.icon
         +toggle_nav_item key='invert_mode' icon='lightbulb' label='invert mode'
         .right.menu
             if unread_count
@@ -436,8 +440,6 @@ template(name='coinbar')
         a.ui.icon.attached.basic.button.item.close_topbar(href="/inbox")
             i.coins.large.icon
             |accounts
-            
-            
 template(name='taskbar')
     .ui.top.sidebar.taskbar
         .ui.header tasks
