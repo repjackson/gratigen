@@ -12,6 +12,11 @@ body {
     background: rgba(0,0,0,.9) !important; 
 }
 
+
+.supazuma{
+  
+}
+
 .smaller_icon {
   width:24px !important;
   height:24px !important;
@@ -308,6 +313,20 @@ img {
     /*filter: drop-shadow(0px 0px 5px 5px rgba(200,200,200,.7)) !important;*/
     transition: scale 1s !important;
     transform: scale(1.1) !important; /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+    z-index:1000 !important;
+}
+.supazuma{
+    transition: transform 1s !important;
+     box-shadow: 0 2px 2px 2px rgba(50, 50, 100, 0.1) !important; 
+    transition: scale 1s !important;
+}
+.supazuma:hover {
+    /*box-shadow: inset 0px 0px 10px 10px rgba(250,250,250,0.8);*/
+    /*border-radius: 15px !important;*/
+    /*transition: scale 1s; */
+    filter: drop-shadow(0px 0px 5px 5px rgba(200,200,200,.7)) !important;
+    transition: scale 1s !important;
+    transform: scale(2) !important; /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
     z-index:1000 !important;
 }
 

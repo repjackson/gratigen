@@ -4,34 +4,6 @@ template(name='home')
     .ui.stackable.padded.divided.celled.grid.draggabl
         // .bordered(class=left_column_class)
         .four.wide.column.scrolling
-            // +session_toggle key='expand_leftbar' icon='heart outline'
-                // +session_toggle key='add_mode' icon='plus'
-                //.ui.icon.button.show_model
-                    i.large.plus.icon
-                // .ui.fluid.small.button.toggle_leftbar
-                //     i.chevron.left.icon
-                .ui.hidden.divider
-            +dash_user_info
-            // a.ui.button.tertiary.delta(href="/m/model")
-            //     |manage models
-            div
-            img.ui.small.circular.centered.image(src="/12-color-code.png")
-            div
-            .ui.two.wide.column
-                each model_docs_helper 'eft'
-                    +eft_home_picker
-                    
-            // if session_is 'expand_leftbar' true
-            //     .ui.vertical.fluid.menu.mobile.hidden
-            //         each model_docs_helper 'eft'
-            //             +side_menu_item
-            // else 
-            //     .ui.vertical.fluid.icon.menu.mobile.hidden
-            //         each model_docs_helper 'eft'
-            //             +side_menu_item color=icon_color icon=icon label=title
-            //             //.ui.button
-            // .ui.button create request
-        // .bordered.scrolling(class=main_column_class)
         .eight.wide.column.scrolling
             .ui.one.column.grid     
                 .column
