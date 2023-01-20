@@ -9,11 +9,13 @@ if Meteor.isClient
         )
         # @autorun => Meteor.subscribe('docs', picked_tags.array())
     Template.home_cloud.helpers
-        picked_home_models: -> picked_home_models.array()
-        picked_home_essentials: -> picked_home_essentials.array()
+        picked_tags: -> picked_tags.array()
+        tag_results: -> Results.find model:'tag'
     
-        essential_results: -> Results.find model:'tag'
+        picked_essentials: -> picked_home_essentials.array()
         essential_results: -> Results.find model:'essential'
+        
+        picked_models: -> picked_home_models.array()
         model_results: -> Results.find model:'model'
         # doc_count = Docs.find({}).count()
         # if 0 < doc_count < 3 then Tags.find { count: $lt: doc_count } else Tags.find()
@@ -44,23 +46,27 @@ if Meteor.isClient
         # }
 
     Template.home_cloud.events
-        'click .select_tag': -> picked_tags.push @name
-        'click .unselect_tag': -> picked_tags.remove @valueOf()
+        'click .pick_tag': -> picked_tags.push @name
+        'click .unpick_tag': -> picked_tags.remove @valueOf()
         'click #clear_tags': -> picked_tags.clear()
         
         'click .pick_model': -> picked_home_models.push @name
+        'click .unpick_model': -> picked_home_models.remove @valueOf()
+
+
         'click .pick_essential': -> picked_home_essentials.push @name
+        'click .unpick_essential': -> picked_home_essentials.remove @valueOf()
         
 if Meteor.isServer
     Meteor.publish 'home_facets', (
         picked_models=[]
         picked_essentials=[]
         picked_tags=[]
-        # picked_author_ids=[]
+        picked_author_usernames=[]
         # picked_location_tags
         # picked_building_tags
         # picked_unit_tags
-        # picked_timestamp_tags
+        picked_timestamp_tags=[]
         # model
         # author_id
         # parent_id
@@ -90,9 +96,11 @@ if Meteor.isServer
             # if picked_author_ids.length > 0
             #     match.author_id = $in: picked_author_ids
             #     match.published = 1
+            #     match.published = 1
             if picked_models.length > 0 then match.model = $all: picked_models
             if picked_essentials.length > 0 then match.efts = $all: picked_essentials
-            # if picked_timestamp_tags.length > 0 then match.timestamp_tags = $all: picked_timestamp_tags
+            if picked_timestamp_tags.length > 0 then match.timestamp_tags = $all: picked_timestamp_tags
+            if picked_author_usernames.length > 0 then match._author_username = $all: picked_author_usernames
     
             # if tag_limit then limit=tag_limit else limit=50
             # if author_id then match.author_id = author_id
@@ -154,7 +162,7 @@ if Meteor.isServer
                 { $limit: limit }
                 { $project: _id: 0, name: '$_id', count: 1 }
                 ]
-            console.log 'home tag cloud', tag_cloud
+            # console.log 'home tag cloud', tag_cloud
             tag_cloud.forEach (tag) ->
                 self.added 'results', Random.id(),
                     name: tag.name
@@ -162,8 +170,7 @@ if Meteor.isServer
                     model:'tag'
                     # index: i
             
-            
-            # needs to be: posts, offers, requests, orgs, events, roles, tasks, skills, resources, products, servixes, trips
+            white_list = ['post', 'offer', 'request', 'org', 'event', 'role', 'task', 'skill', 'resource', 'product', 'service', 'trip']
             
             model_cloud = Docs.aggregate [
                 { $match: match }
@@ -171,13 +178,14 @@ if Meteor.isServer
                 # { $unwind: "$models" }
                 { $group: _id: '$model', count: $sum: 1 }
                 { $match: _id: $nin: picked_models }
+                { $match: _id: $in: white_list }
                 { $sort: count: -1, _id: 1 }
                 { $limit: limit }
                 { $project: _id: 0, name: '$_id', count: 1 }
                 ]
             # console.log 'home model cloud', model_cloud
             model_cloud.forEach (model) ->
-                console.log model
+                # console.log model
                 self.added 'results', Random.id(),
                     name: model.name
                     count: model.count
@@ -220,22 +228,22 @@ if Meteor.isServer
             # #         count: keyword.count
             # #         index: i
             #
-            # timestamp_tags_cloud = Docs.aggregate [
-            #     { $match: match }
-            #     { $project: timestamp_tags: 1 }
-            #     { $unwind: "$_timestamp_tags" }
-            #     { $group: _id: '$_timestamp_tags', count: $sum: 1 }
-            #     { $match: _id: $nin: picked_timestamp_tags }
-            #     { $sort: count: -1, _id: 1 }
-            #     { $limit: 10 }
-            #     { $project: _id: 0, name: '$_id', count: 1 }
-            #     ]
-            # # console.log 'building timestamp_tags_cloud, ', timestamp_tags_cloud
-            # timestamp_tags_cloud.forEach (timestamp_tag, i) ->
-            #     self.added 'timestamp_tags', Random.id(),
-            #         name: timestamp_tag.name
-            #         count: timestamp_tag.count
-            #         index: i
+            timestamp_tags_cloud = Docs.aggregate [
+                { $match: match }
+                { $project: timestamp_tags: 1 }
+                { $unwind: "$_timestamp_tags" }
+                { $group: _id: '$_timestamp_tags', count: $sum: 1 }
+                { $match: _id: $nin: picked_timestamp_tags }
+                { $sort: count: -1, _id: 1 }
+                { $limit: 10 }
+                { $project: _id: 0, name: '$_id', count: 1 }
+                ]
+            # console.log 'building timestamp_tags_cloud, ', timestamp_tags_cloud
+            timestamp_tags_cloud.forEach (timestamp_tag, i) ->
+                self.added 'timestamp_tags', Random.id(),
+                    name: timestamp_tag.name
+                    count: timestamp_tag.count
+                    index: i
             #
             #
             # building_tag_cloud = Docs.aggregate [

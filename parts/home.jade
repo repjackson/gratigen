@@ -33,8 +33,9 @@ template(name='home')
             // .ui.button create request
         // .bordered.scrolling(class=main_column_class)
         .eight.wide.column.scrolling
-            .ui.one.column.grid          
-                +home_cloud
+            .ui.one.column.grid     
+                .column
+                    +home_cloud
                 // +thing_picker_template
                 .centered
                     .ui.inline.search

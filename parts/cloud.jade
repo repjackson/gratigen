@@ -54,29 +54,32 @@ template(name='home_cloud')
         each picked_tags
             .unselect_tag.ui.active.large.circular.button
                 strong #{this}
-    each all_tags
-        .ui.circular.large.button.select_tag(class=cloud_tag_class) 
+                small #{count}
+    each tag_results
+        .ui.circular.large.button.pick_tag(class=cloud_tag_class) 
             strong #{this.name}
     .ui.header models
     if picked_models
         #clear_models.ui.active.icon.large.circular.button
             i.remove.icon
         each picked_models
-            .unselect_model.ui.active.large.circular.button
+            .unpick_model.ui.active.large.circular.button
                 strong #{this}
-    each all_models
-        .ui.circular.large.button.select_model(class=cloud_tag_class) 
+    each model_results
+        .ui.circular.large.button.pick_model(class=cloud_tag_class) 
             strong #{this.name}
+            small #{count}
     .ui.header essentials
     if picked_essentials
         #clear_essentials.ui.active.icon.large.circular.button
             i.remove.icon
         each picked_essentials
-            .unselect_essential.ui.active.large.circular.button
+            .unpick_essential.ui.active.large.circular.button
                 strong #{this}
-    each all_essentials
-        .ui.circular.large.button.select_essential(class=cloud_tag_class) 
+    each essential_results
+        .ui.circular.large.button.pick_essential(class=cloud_tag_class) 
             strong #{this.name}
+            small #{count}
 
 
 
@@ -89,7 +92,7 @@ template(name='doc_cloud')
             #clear_tags.ui.primary.icon.large.button
                 i.remove.icon
             each picked_tags
-                .unselect_tag.ui.primary.large.button
+                .unpick_tag.ui.primary.large.button
                     strong #{this}
         each all_tags
             .ui.button.select_tag(class=cloud_tag_class) 
