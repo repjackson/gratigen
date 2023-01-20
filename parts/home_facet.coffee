@@ -12,6 +12,7 @@ if Meteor.isClient
         picked_home_models: -> picked_home_models.array()
         picked_home_essentials: -> picked_home_essentials.array()
     
+        essential_results: -> Results.find model:'tag'
         essential_results: -> Results.find model:'essential'
         model_results: -> Results.find model:'model'
         # doc_count = Docs.find({}).count()
@@ -54,7 +55,7 @@ if Meteor.isServer
     Meteor.publish 'home_facets', (
         picked_models=[]
         picked_essentials=[]
-        # picked_tags
+        picked_tags=[]
         # picked_author_ids=[]
         # picked_location_tags
         # picked_building_tags
@@ -159,6 +160,45 @@ if Meteor.isServer
                     name: tag.name
                     count: tag.count
                     model:'tag'
+                    # index: i
+            
+            
+            # needs to be: posts, offers, requests, orgs, events, roles, tasks, skills, resources, products, servixes, trips
+            
+            model_cloud = Docs.aggregate [
+                { $match: match }
+                { $project: model: 1 }
+                # { $unwind: "$models" }
+                { $group: _id: '$model', count: $sum: 1 }
+                { $match: _id: $nin: picked_models }
+                { $sort: count: -1, _id: 1 }
+                { $limit: limit }
+                { $project: _id: 0, name: '$_id', count: 1 }
+                ]
+            # console.log 'home model cloud', model_cloud
+            model_cloud.forEach (model) ->
+                console.log model
+                self.added 'results', Random.id(),
+                    name: model.name
+                    count: model.count
+                    model:'model'
+                    # index: i
+            essential_cloud = Docs.aggregate [
+                { $match: match }
+                { $project: efts: 1 }
+                { $unwind: "$efts" }
+                { $group: _id: '$efts', count: $sum: 1 }
+                { $match: _id: $nin: picked_essentials }
+                { $sort: count: -1, _id: 1 }
+                { $limit: limit }
+                { $project: _id: 0, name: '$_id', count: 1 }
+                ]
+            # console.log 'home essential cloud', essential_cloud
+            essential_cloud.forEach (essential) ->
+                self.added 'results', Random.id(),
+                    name: essential.name
+                    count: essential.count
+                    model:'essential'
                     # index: i
     
             # 
@@ -265,7 +305,7 @@ if Meteor.isServer
             #         count: author_id.count
     
             # doc_results = []
-            int_doc_limit = parseInt doc_limit
+            # int_doc_limit = parseInt doc_limit
             subHandle = Docs.find(match, {limit:20, sort: timestamp:-1}).observeChanges(
                 added: (id, fields) ->
                     # console.log 'added doc', id, fields
