@@ -41,6 +41,16 @@ if Meteor.isClient
                     scrollLock:true
                 })
                 .sidebar('attach events', '.toggle_leftbar')
+            $('.ui.taskbar')
+                .sidebar({
+                    context: $('.layout')
+                    transition:'overlay'
+                    mobileTransition:'push'
+                    exclusive:false
+                    duration:200
+                    scrollLock:true
+                })
+                .sidebar('attach events', '.toggle_taskbar')
         , 1000
         Meteor.setTimeout ->
             $('.ui.rightbar')
@@ -210,7 +220,7 @@ if Meteor.isClient
                     $set:"#{@key}":true
     Template.toggle_nav_item.helpers 
         toggle_item_class: ->
-            if Meteor.user()["#{@key}"]
+            if Meteor.user() and Meteor.user()["#{@key}"]
                 'active red'
             else 
                 ''

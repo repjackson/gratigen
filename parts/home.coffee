@@ -292,17 +292,20 @@ if Meteor.isClient
         doc_results: ->
             white_list = ['post', 'offer', 'request', 'org', 'event', 'role', 'task', 'skill', 'resource', 'product', 'service', 'trip']
             match = {}
-            if picked_models.array().length
-                match.model = $in: picked_models.array()
-            else 
-                match.model = $in: white_list
-            if picked_tags.array().length
-                match.tags = $in: picked_tags.array()
-            if picked_essentials.array().length
-                match.efts = $in: picked_essentials.array()
-            Docs.find match,
-                sort:_timestamp:-1
-                limit:20
+            d = Docs.findOne Meteor.user().delta_id
+            if d 
+                if d.picked_models and d.picked_models.length
+                    match.model = $in: picked_models.array()
+                else 
+                    match.model = $in: white_list
+                if d.picked_tags and d.picked_tags.length
+                    match.tags = $in: d.picked_tags
+                
+                if d.picked_essentials and d.picked_essentials.length
+                    match.efts = $in: d.picked_essentials
+                Docs.find match,
+                    sort:_timestamp:-1
+                    limit:20
             # else 
             #     Docs.find {model:$in:white_list},
             #         sort:_timestamp:-1

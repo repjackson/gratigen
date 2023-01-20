@@ -24,7 +24,6 @@ if Meteor.isClient
             }, sort:rank:1
 
 
-    Template.registerHelper 'current_delta', () -> Docs.findOne Meteor.user().delta_id
     # Template.registerHelper 'view_template', ->
     #     # console.log 'view template this', @
     #     field_type_doc =

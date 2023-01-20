@@ -10,8 +10,12 @@ Template.registerHelper 'modal_doc', () ->
             if delta._modal_doc_id
                 Docs.findOne delta._modal_doc_id
 Template.registerHelper 'flyout_doc', () ->
-    Docs.findOne Meteor.user().flyout_doc_id
+    if Meteor.user() and Meteor.user().flyout_doc_id
+        Docs.findOne Meteor.user().flyout_doc_id
 
+Template.registerHelper 'cd', () -> 
+    if Meteor.user() and Meteor.user().delta_id
+        Docs.findOne Meteor.user().delta_id
 Template.registerHelper 'parent', () -> Template.parentData()
 Template.registerHelper 'parent_doc', () ->
     Docs.findOne @parent_id
@@ -192,7 +196,9 @@ Template.registerHelper 'current_month', () -> moment(Date.now()).format("MMMM")
 Template.registerHelper 'current_day', () -> moment(Date.now()).format("DD")
 
 
-Template.registerHelper 'current_delta', () -> Docs.findOne Meteor.user().delta_id
+Template.registerHelper 'current_delta', () -> 
+    if Meteor.user() and Meteor.user().delta_id
+        Docs.findOne Meteor.user().delta_id
 
 Template.registerHelper 'hsd', () ->
     Docs.findOne
