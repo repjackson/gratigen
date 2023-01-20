@@ -6,7 +6,9 @@ Template.registerHelper 'comma', (input) ->
 Template.registerHelper 'modal_doc', () ->
     if Meteor.user()
         delta = Docs.findOne {_id:Meteor.user().delta_id}
-        Docs.findOne delta._doc_id
+        if delta
+            if delta._modal_doc_id
+                Docs.findOne delta._modal_doc_id
 Template.registerHelper 'flyout_doc', () ->
     Docs.findOne Meteor.user().flyout_doc_id
 
@@ -328,9 +330,13 @@ Template.registerHelper 'loading_class', () ->
     if Session.get 'loading' then 'disabled' else ''
 
 Template.registerHelper 'current_model', (input) ->
-    Docs.findOne
-        model:'model'
-        slug: Meteor.user().current_model
+    d = Docs.findOne Meteor.user().delta_id
+    
+    if d 
+        Docs.findOne
+            model:'model'
+            slug: d._model
+        
 
 Template.registerHelper 'in_list', (key) ->
     if Meteor.userId()

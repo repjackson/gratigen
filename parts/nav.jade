@@ -47,7 +47,7 @@ template(name='nav')
             else
                 a.icon.item(href="/inbox" class="{{is_active_template 'inbox'}}")
                     i.large.outline.bell.icon
-            a.icon.item.zoomer(href="/chat" class="{{is_active_template 'chat'}}")
+            a.icon.item.zoomer.popout_chat
                 if unread_chat_messages
                     i.large.teal.chat.icon
                     small #{unread_chat_messages.count}
@@ -113,7 +113,7 @@ template(name='delta_nav')
             i.plus.icon
         each model_docs_helper 'delta' 
             // a.item.pick_delta.pointer.zoomer(data-tab="#{_id}" class=delta_item_class title="switch to #{name} session")
-            a.item.pick_delta.pointer.zoomer(data-tab="#{_id}" class=delta_item_class)
+            a.item.pick_delta.pointer.zoomer(data-tab="#{_id}" class="{{delta_item_class}} {{color}}")
                 if editing_delta
                     +text_edit key='name' direct=true
                 else 

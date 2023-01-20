@@ -132,7 +132,9 @@ if Meteor.isClient
                     #     Session.set('dummy', !Session.get('dummy'))
                     # , 10000
         , 500)
-    
+        'click .popout_chat': ->
+            $('.ui.chat.flyout').flyout('toggle')
+
         'click .alerts': ->
             Session.set('viewing_alerts', !Session.get('viewing_alerts'))
             

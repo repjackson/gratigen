@@ -262,7 +262,7 @@ if Meteor.isClient
 
         'click .go_home': ->
             Session.set 'loading', true
-            Meteor.call 'change_state', "delta", 'model',->
+            Meteor.call 'change_state', {_template:"delta",_model:'model'},->
             # Meteor.call 'log_view', @_id, ->
             Meteor.call 'set_facets', 'model', ->
                 Session.set 'loading', false
@@ -275,13 +275,13 @@ if Meteor.isClient
             Meteor.users.update Meteor.userId(),
                 $set:
                     editing_model_id: new_model_id
-            Meteor.call 'change_state', "/m/#{new_model._id}", ->
+            Meteor.call 'change_state', {_template:'delta',_doc_id:new_model_id}, ->
 
 
         'click .clear_query': ->
             # console.log @
-            delta = Docs.findOne Meteor.user().delta_id
-            Docs.update delta._id,
+            # delta = Docs.findOne Meteor.user().delta_id
+            Docs.update Meteor.user().delta_id,
                 $unset:search_query:1
             Session.set 'loading', true
             Meteor.call 'fum', delta._id, ->
@@ -313,26 +313,31 @@ if Meteor.isClient
 
         'click .create_delta': (e,t)->
             console.log 'create delta'
-            Docs.insert
-                model:'delta'
-                view_mode:'cards'
-                app:'gratigen'
-                model_filter: Meteor.user()._model
+            new_id = 
+                Docs.insert
+                    model:'delta'
+                    view_mode:'cards'
+                    app:'gratigen'
+                    model_filter: 'model'
+            Meteor.users.update Meteor.userId(),
+                $set:delta_id:new_id
 
         'click .print_delta': (e,t)->
             delta = Docs.findOne Meteor.user().delta_id
             console.log delta
 
         'click .reset': ->
+            delta = Docs.findOne Meteor.user().delta_id
+            
             model_slug =  Meteor.user()._model
             Session.set 'loading', true
-            Meteor.call 'set_facets', model_slug, true, ->
+            Meteor.call 'set_facets', delta._model, true, ->
                 Session.set 'loading', false
 
         'click .delete_delta': (e,t)->
             delta = Docs.findOne Meteor.user().delta_id
             if delta
-                if confirm "delete  #{delta._id}?"
+                if confirm "delete #{delta.name} (#{delta._id})?"
                     Docs.remove delta._id
 
         # 'mouseenter .add_model_doc': (e,t)->
@@ -846,7 +851,7 @@ if Meteor.isServer
     
             model = Docs.findOne
                 model:'model'
-                slug:Meteor.user()._model
+                slug:d._model
     
             # console.log 'running fum,', delta, model
             built_query = {}
@@ -861,12 +866,12 @@ if Meteor.isServer
                     model:'field'
                     parent_id:model._id
             if model.collection and model.collection is 'users'
-                unless delta.model_filter is 'user'
+                unless delta._model is 'user'
                     # built_query.roles = $in:[delta.model_filter]
                     built_query.disabled = $ne:true
             else
                 # unless delta.model_filter is 'post'
-                built_query.model = delta.model_filter
+                built_query.model = delta._model
             # unless Meteor.user() and 'admin' in Meteor.user().roles
             #     built_query.app = 'stand'
     
@@ -1010,12 +1015,14 @@ if Meteor.isClient
 
     Template.delta_result_card.helpers
         template_exists: ->
-            _model = Meteor.user()._model
-            if _model
-                if Template["#{_model}_card"]
-                    return true
-                else
-                    return false
+            d = Docs.findOne Meteor.user().delta_id
+            if d
+                _model = d._model
+                if _model
+                    if Template["#{_model}_card"]
+                        return true
+                    else
+                        return false
 
         model_template: ->
             _model = Meteor.user()._model
@@ -1152,7 +1159,9 @@ if Meteor.isClient
     Template.delta_list_result.events
         'click .result': (e,t)->
             # console.log @
-            model_slug =  Meteor.user()._model
+            # d 
+            # model_slug =  Meteor.user()._model
+            delta = Docs.findOne Meteor.user().delta_id
             # $(e.currentTarget).closest('.result').transition('fade')
             if Meteor.user()
                 Docs.update @_id,
@@ -1162,19 +1171,18 @@ if Meteor.isClient
             # else
             #     Docs.update @_id,
             #         $inc: views: 1
-            delta = Docs.findOne Meteor.user().delta_id
             Docs.update delta._id,
                 $set:search_query:null
 
-            if model_slug is 'model'
+            if delta._model is 'model'
                 Session.set 'loading', true
                 Meteor.call 'set_facets', @slug, ->
                     Session.set 'loading', false
 
             if @model is 'model'
-                Meteor.call 'change_state', "/m/#{@slug}", ->
+                Meteor.call 'change_state', {_template:'delta', _model:@slug}, ->
             else
-                Meteor.call 'change_state', "/m/#{model_slug}/#{@_id}/view", ->
+                Meteor.call 'change_state', {_template:'model_doc_view', _model:@model, _doc_id:@_id}, ->
 
         'click .set_model': ->
             Meteor.call 'set_delta_facets', @slug, Meteor.userId()

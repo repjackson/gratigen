@@ -89,6 +89,7 @@ body
     +rightbar
     +global_modal
     +global_flyout
+    +chat_flyout
     // if currentUser.show_modelbar
     +modelbar
     .pusher
@@ -143,6 +144,26 @@ template(name='global_flyout')
             .actions
                 .ui.button hi
 
+template(name='chat_flyout')
+    with current_delta
+        .ui.chat.right.flyout
+            i.close.icon
+            .ui.header #{name}
+            .content
+                +comments
+                +image_edit key='image_id' direct=true
+                +text_edit key='name' direct=true
+                +text_edit key='color' direct=true
+                each delta_users 
+                    +user_card
+                
+                if image_id
+                    .image.content
+                        img.ui.image(src="{{c.url image_id }}")
+            .actions
+                .ui.button edit session 
+                .ui.button delete session 
+
 
 
 template(name='shortcut_modal')
@@ -176,6 +197,7 @@ template(name='footer')
                 i.shield.icon
                 |footer 
             with current_delta
+                +comments
                 +text_edit key='_template' label='_template' direct=true
                 div
                 +text_edit key='_model' label='_model' direct=true
