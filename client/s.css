@@ -13,10 +13,6 @@ body {
 }
 
 
-.supazuma{
-  
-}
-
 .smaller_icon {
   width:24px !important;
   height:24px !important;
@@ -149,10 +145,10 @@ body {
 
 
 .image, .segment, .card, .button, .nav, .item, .header { 
-  animation: fadeIn 1.5s !important; 
+  animation: fadeIn 2s !important; 
 }
 
-.ui.header{
+.ui.header, .button{
      /*font-family: 'Raleway', sans-serif !important; */
      font-family: 'Ubuntu', sans-serif !important; 
      /*font-family: 'Varela Round' !important; */
@@ -412,7 +408,7 @@ img {
 }
 
 input {
-  border-radius:10px !important;
+  border-radius:15px !important;
 }
 .scrolling{
 	overflow-y:scroll;

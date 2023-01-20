@@ -112,11 +112,13 @@ template(name='app')
             .ui.breadcrumb.hscroll
                 each current_delta._doc_history.reverse
                     +doc_history_button
-        .layout
+        .layout.scrolling
             with currentUser
                 // if ct.length
                 +Template.dynamic template=ct
-            // else 
+            else 
+                .ui.center.aligned.basic.segment 
+                    i.massive.yin.yang.loading.grey.icon
             //     +login
         +footer
     else 
@@ -522,7 +524,7 @@ template(name='right_nav_item')
 
 
 template(name='leftbar')
-    .ui.sidebar.leftbar
+    .ui.sidebar.segment.leftbar
         .item leftbar
         // +session_toggle key='expand_leftbar' icon='heart outline'
             // +session_toggle key='add_mode' icon='plus'

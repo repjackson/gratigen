@@ -34,7 +34,7 @@ if Meteor.isClient
             $('.ui.leftbar')
                 .sidebar({
                     context: $('.layout')
-                    transition:'overlay'
+                    transition:'push'
                     mobileTransition:'push'
                     exclusive:false
                     duration:200

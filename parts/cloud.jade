@@ -54,14 +54,16 @@ template(name='home_cloud')
         // #clear_tags.ui.active.icon.large.circular.button
         //     i.remove.icon
         each picked_tags
-            .unselect_tag.ui.active.large.circular.compact.button
+            .unpick_tag.ui.active.large.circular.compact.button
                 strong #{this}
     each tag_results
         .ui.circular.basic.compact.button.pick_tag(class=cloud_tag_class) 
             strong #{this.name}
             small #{count}
+    div
     .ui.inline.header 
-        i.cubes.icon
+        // i.cubes.icon
+        +i name='network'
         |models
     if picked_models
         // #clear_models.ui.active.icon.large.circular.button
@@ -73,8 +75,9 @@ template(name='home_cloud')
         .ui.circular.compact.basic.button.pick_model(class=cloud_tag_class) 
             strong #{this.name}
             small #{count}
+    div
     .ui.inline.header 
-        i.leaf.icon
+        +i name='t-shirt'
         |essentials
     if picked_essentials
         // #clear_essentials.ui.active.icon.large.circular.button
