@@ -41,6 +41,23 @@ template(name='cloud')
             strong #{this.name}
 
 
+template(name='home_cloud')
+    //- #cloud
+        //- .ui.left.icon.input
+        //-     i.search.icon
+        //-     +inputAutocomplete settings=settings id="search" class="" autocomplete="off" 
+        // .ui.hidden.fitted.divider
+    if picked_tags
+        #clear_tags.ui.active.icon.large.circular.button
+            i.remove.icon
+        each picked_tags
+            .unselect_tag.ui.active.large.circular.button
+                strong #{this}
+    each all_tags
+        .ui.circular.large.button.select_tag(class=cloud_tag_class) 
+            strong #{this.name}
+
+
 
 template(name='doc_cloud')
     #cloud.ui.segment.container

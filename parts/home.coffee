@@ -10,8 +10,7 @@ if Meteor.isClient
         
         # @autorun => @subscribe 'all_markers',->
         
-        @autorun => @subscribe 'latest_home_docs',model_filters.array(),->
-        @autorun => @subscribe 'model_docs','model',->
+        # @autorun => @subscribe 'latest_home_docs',model_filters.array(),->
         
         # @autorun => @subscribe 'all_users', ->
         # @autorun => @subscribe 'post_facets',
@@ -19,26 +18,31 @@ if Meteor.isClient
         #     Session.get('post_title_filter')
         
         # @autorun => @subscribe 'my_current_thing', ->
-        @autorun => @subscribe 'my_current_thing', Session.get('current_thing_id'),->
-        @autorun => @subscribe 'homepage_models',->
-        @autorun => @subscribe 'model_docs', 'eft',->
-        @autorun => @subscribe 'model_docs', 'view_mode',->
-        @autorun => @subscribe 'model_docs', 'sort_key',->
+        # @autorun => @subscribe 'model_docs','model',->
+        # @autorun => @subscribe 'my_current_thing', Session.get('current_thing_id'),->
+        # @autorun => @subscribe 'homepage_models',->
+        # @autorun => @subscribe 'model_docs', 'eft',->
+        # @autorun => @subscribe 'model_docs', 'view_mode',->
+        # @autorun => @subscribe 'model_docs', 'sort_key',->
 if Meteor.isServer
     Meteor.publish 'my_current_thing', (current_thing_id)->
         # user = Meteor.user()
         Docs.find current_thing_id
-    Meteor.publish 'homepage_models', ()->
-        # user = Meteor.user()
-        Docs.find 
-            model:'model'
-            show_on_homepage:true
+    # Meteor.publish 'homepage_models', ()->
+    #     # user = Meteor.user()
+    #     Docs.find 
+    #         model:'model'
+    #         show_on_homepage:true
 if Meteor.isClient
     Template.home.helpers
         homepage_models: ->
             Docs.find 
                 model:'model'
                 show_on_homepage:true
+        model_facet_results: ->
+            Results
+                model:'model'
+                # show_on_homepage:true
         view_template: -> "#{@model}_view"
         edit_template: -> "#{@model}_edit"
         current_viewing_thing: ->
@@ -82,13 +86,13 @@ if Meteor.isClient
                 'small'
                 
         
-    Template.latest_activity.onCreated ->
-        @autorun => @subscribe 'latest_home_docs', ->
-    Template.latest_activity.helpers 
-        latest_docs: ->
-            Docs.find {_updated_timestamp:$exists:true},
-                sort:
-                    _updated_timestamp:-1
+    # Template.latest_activity.onCreated ->
+    #     @autorun => @subscribe 'latest_home_docs', ->
+    # Template.latest_activity.helpers 
+    #     latest_docs: ->
+    #         Docs.find {_updated_timestamp:$exists:true},
+    #             sort:
+    #                 _updated_timestamp:-1
                 
 # if Meteor.isServer
 #     Meteor.publish 'latest_docs', ->
@@ -127,11 +131,23 @@ if Meteor.isServer
                     limit:Meteor.user().limit
                     sort:
                         "#{Meteor.user().sort_key}":Meteor.user().sort_direction
+                    fields:
+                        title:1
+                        model:1
+                        icon:1
+                        icon_color:1
+                        image_id:1
             else 
                 Docs.find {},{
                     limit:Meteor.user().limit
                     sort:
                         "#{Meteor.user().sort_key}":Meteor.user().sort_direction
+                    fields:
+                        title:1
+                        model:1
+                        icon:1
+                        icon_color:1
+                        image_id:1
                     # fields:
                     #     title:1
                     #     image_id:1

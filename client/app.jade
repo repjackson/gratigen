@@ -226,7 +226,7 @@ template(name='footer')
                 |#{doc_docs.count} docs 
             .smallscroll
                 each doc_docs
-                    a.ui.compact.small.button(href="/m/#{model}/#{_id}") #{title} 
+                    a.ui.compact.small.button.print_me #{title} 
                         .ui.label
                             |#{model}
                             

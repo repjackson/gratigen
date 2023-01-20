@@ -165,21 +165,14 @@ Template.app.helpers
         if Meteor.user().invert_mode 
             'invert'
 
+Template.footer.events 
+    'click .print_me': -> console.log @
 Template.footer.helpers
     doc_docs: ->
         Docs.find {}
 
     user_docs: ->
         Meteor.users.find()
-# Template.home.onCreated ->
-#     @autorun => @subscribe 'model_docs', 'stats', ->
-# Template.home.onRendered ->
-    #     Meteor.call 'log_homepage_view', ->
-    #         console.log '?'
-# Template.home.helpers
-#     stats: ->
-#         Docs.findOne
-#             model:'stats'
 
 $.cloudinary.config
     cloud_name:"facet"
