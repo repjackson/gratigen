@@ -37,11 +37,13 @@ head
     // <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
 
 
-    link(rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css")
-    script(src="https://unpkg.com/topojson@3")
-    script(src='https://d3js.org/d3.v4.min.js')
+    // link(rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css")
+    // script(src="https://unpkg.com/topojson@3")
+    // script(src='https://d3js.org/d3.v4.min.js')
 
     
+    link(rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gridstack@latest/dist/gridstack.min.css")
+    script(src="https://cdn.jsdelivr.net/npm/gridstack@latest/dist/gridstack.all.js")
     
     // script(src='./qrcode.min.js')
     script(src='https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js')
@@ -82,30 +84,15 @@ head
     // script(type="module")
     //     import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
     //     const div = d3.selectAll("div");
-    // link(rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gridstack@latest/dist/gridstack.min.css")
-    // script(src="https://cdn.jsdelivr.net/npm/gridstack@latest/dist/gridstack.all.js")
-
     // script(src='gridstack/dist/gridstack-h5.js')
     // link(href='gridstack/dist/gridstack.min.css' rel='stylesheet')
     // style(type='text/css').
     //   .grid-stack { background: #FAFAD2; height:400px; }
     //   .grid-stack-item-content { background-color: #18BC9C; }
       
-    // script(type='text/javascript').
-    //   var items = [
-    //   {content: 'my first widget'}, // will default to location (0,0) and 1x1
-    //   {w: 2, content: 'another longer widget!'} // will be placed next at (1,0) and 2x1
-    //   ];
-    //   var grid = GridStack.init();
-    //   grid.load(items);
-
-
-
-
 
 body
     +gridstack
-
     +leftbar
     +rightbar
     +global_modal
@@ -120,7 +107,100 @@ body
 template(name='gridstack')
     .ui.button.make
         |make
+    .ui.button.test 
+        |test
+    #float.ui.button.toggle_float toggle float
+    #float.ui.button.clear_all clear all
+    #float.ui.button.add add
+    #float.ui.button.enable enable
+    #float.ui.button.disable disable
     .grid-stack
+    //     section#advancedDemo.bg-primary
+    //   .row
+    //     .col-lg-12.text-white
+    //       ion-icon.float-right.md.hydrated(name='grid' style='font-size: 350%; margin-top: 10px' role='img' aria-label='grid')
+    //       h1 Advanced Demo
+    //       hr
+    //   .row
+    //     .col-md-2.d-none.d-md-block(style='border-right: 1px dashed white;')
+    //       #trash.text-center.text-white.ui-droppable(style='padding: 15px; margin-bottom: 15px;')
+    //         div
+    //           ion-icon.md.hydrated(name='trash' style='font-size: 400%' role='img' aria-label='trash')
+    //         div
+    //           span Drop here to remove widget!
+    //       .text-center.card.text-white.grid-stack-item.newWidget.ui-draggable(gs-x='2' gs-y='8' gs-w='2' gs-h='2')
+    //         .card-body.grid-stack-item-content
+    //           div
+    //             ion-icon.md.hydrated(name='add-circle' style='font-size: 400%' role='img' aria-label='add circle')
+    //           div
+    //             span Drag me into the dashboard!
+    //     .col-sm-12.col-md-10(style='padding-bottom: 25px;')
+    //       .grid-container
+    //         style(type='text/css' gs-style-id='grid-stack-instance-13').
+    //         #advanced-grid.grid-stack.grid-stack-instance-13.ui-droppable.ui-droppable-over.grid-stack-12.grid-stack-animate(gs-current-row='10' style='min-height: 713.333px;')
+    //           .grid-stack-item.ui-draggable.ui-resizable.ui-resizable-autohide(gs-x='1' gs-y='4' gs-w='4' gs-h='1' style='')
+    //             .grid-stack-item-content 1
+    //             .ui-resizable-handle.ui-resizable-se(style='z-index: 100; user-select: none;')
+    //           .grid-stack-item.ui-draggable-disabled.ui-resizable-disabled(gs-x='4' gs-y='0' gs-w='4' gs-h='4' gs-no-resize='true' gs-no-move='true' gs-locked='true')
+    //             .grid-stack-item-content
+    //               | I can&apos;t be moved or dragged!
+    //               br
+    //               ion-icon.md.hydrated(name='ios-lock' style='font-size:300%' role='img' aria-label='lock')
+    //           .grid-stack-item.ui-draggable.ui-resizable-disabled(gs-x='8' gs-y='0' gs-w='2' gs-h='2' gs-min-w='2' gs-no-resize='true')
+    //             .grid-stack-item-content
+    //               p.card-text.text-center(style='margin-bottom: 0') Drag me!
+    //               p.card-text.text-center(style='margin-bottom: 0')
+    //                 ion-icon.md.hydrated(name='hand' style='font-size: 300%' role='img' aria-label='hand')
+    //               p.card-text.text-center(style='margin-bottom: 0') ...but don&apos;t resize me!
+    //             .ui-resizable-handle.ui-resizable-se(style='z-index: 100; user-select: none;')
+    //           .grid-stack-item.ui-draggable.ui-resizable.ui-resizable-autohide(gs-x='10' gs-y='0' gs-w='2' gs-h='2')
+    //             .grid-stack-item-content 4
+    //             .ui-resizable-handle.ui-resizable-se(style='z-index: 100; user-select: none;')
+    //           .grid-stack-item.ui-draggable.ui-resizable.ui-resizable-autohide(gs-x='2' gs-y='5' gs-w='2' gs-h='2' style='')
+    //             .grid-stack-item-content 5
+    //             .ui-resizable-handle.ui-resizable-se(style='z-index: 100; user-select: none;')
+    //           .grid-stack-item.ui-draggable.ui-resizable.ui-resizable-autohide(gs-x='2' gs-y='0' gs-w='1' gs-h='1' style='')
+    //             .grid-stack-item-content 6
+    //             .ui-resizable-handle.ui-resizable-se(style='z-index: 100; user-select: none;')
+    //           .grid-stack-item.ui-draggable.ui-resizable.ui-resizable-autohide(gs-x='8' gs-y='2' gs-w='4' gs-h='2' style='')
+    //             .grid-stack-item-content 7
+    //             .ui-resizable-handle.ui-resizable-se(style='z-index: 100; user-select: none;')
+    //           .grid-stack-item.ui-draggable.ui-resizable.ui-resizable-autohide(gs-x='0' gs-y='5' gs-w='2' gs-h='2')
+    //             .grid-stack-item-content 8
+    //             .ui-resizable-handle.ui-resizable-se(style='z-index: 100; user-select: none;')
+    //           .grid-stack-item.ui-draggable.ui-resizable.ui-resizable-autohide(gs-x='4' gs-y='5' gs-w='4' gs-h='2')
+    //             .grid-stack-item-content 9
+    //             .ui-resizable-handle.ui-resizable-se(style='z-index: 100; user-select: none;')
+    //           .grid-stack-item.ui-draggable.ui-resizable.ui-resizable-autohide(gs-x='8' gs-y='4' gs-w='2' gs-h='2')
+    //             .grid-stack-item-content 10
+    //             .ui-resizable-handle.ui-resizable-se(style='z-index: 100; user-select: none;')
+    //           .grid-stack-item.ui-draggable.ui-resizable.ui-resizable-autohide(gs-x='10' gs-y='4' gs-w='2' gs-h='2')
+    //             .grid-stack-item-content 11
+    //             .ui-resizable-handle.ui-resizable-se(style='z-index: 100; user-select: none;')
+    //           .text-center.card.text-white.grid-stack-item.newWidget.ui-draggable.ui-resizable.ui-resizable-autohide(gs-x='3' gs-y='0' gs-w='1' gs-h='1' style='')
+    //             .card-body.grid-stack-item-content
+    //               div
+    //                 ion-icon.md.hydrated(name='add-circle' style='font-size: 400%' role='img' aria-label='add circle')
+    //               div
+    //                 span Drag me into the dashboard!
+    //             .ui-resizable-handle.ui-resizable-se(style='z-index: 100; user-select: none;')
+    //           .text-center.card.text-white.grid-stack-item.newWidget.ui-draggable.ui-resizable.ui-resizable-autohide(gs-x='2' gs-y='7' gs-w='2' gs-h='2' style='')
+    //             .card-body.grid-stack-item-content
+    //               div
+    //                 ion-icon.md.hydrated(name='add-circle' style='font-size: 400%' role='img' aria-label='add circle')
+    //               div
+    //                 span Drag me into the dashboard!
+    //             .ui-resizable-handle.ui-resizable-se(style='z-index: 100; user-select: none;')
+    //           .text-center.card.text-white.grid-stack-item.newWidget.ui-draggable.ui-resizable.ui-resizable-autohide(gs-x='0' gs-y='7' gs-w='2' gs-h='3' style='')
+    //             .card-body.grid-stack-item-content
+    //               div
+    //                 ion-icon.md.hydrated(name='add-circle' style='font-size: 400%' role='img' aria-label='add circle')
+    //               div
+    //                 span Drag me into the dashboard!
+    //             .ui-resizable-handle.ui-resizable-se(style='z-index: 100; user-select: none;')
+
+    
+    
 
 template(name='app')
     if Template.subscriptionsReady

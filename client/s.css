@@ -13,13 +13,16 @@ body {
 }
 
 
-<<<<<<< HEAD
-=======
-.supazuma{
-  
+.grid-stack {
+  background: lightgoldenrodyellow;
 }
 
->>>>>>> 67d45e61eaa5bbbb039d5ab3d8b60ca2f2069e7f
+.grid-stack-item-content {
+  color: #2c3e50;
+  text-align: center;
+  background-color: #18bc9c;
+}
+
 .smaller_icon {
   width:24px !important;
   height:24px !important;
