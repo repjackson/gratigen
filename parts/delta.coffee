@@ -654,7 +654,11 @@ if Meteor.isClient
             # _model = Meteor.user()._model
             # console.log "#{@}"
             # if Template["#{@}_field"]
-            if Template["#{@}"]
+            model_list = ['roles','skills','resources','tasks','organizations','groups','projects','events']
+            if @ in model_list
+                console.log 'found in list'
+                true
+            else if Template["#{@}"]
                 # console.log 'true'
                 return true
             else
@@ -850,7 +854,7 @@ if Meteor.isServer
     
             model = Docs.findOne
                 model:'model'
-                slug:d._model
+                slug:delta._model
     
             # console.log 'running fum,', delta, model
             built_query = {}

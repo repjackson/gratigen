@@ -1,9 +1,9 @@
 if Meteor.isClient
     Template.nav.onCreated ->
         @autorun => Meteor.subscribe 'me', ->
-        # @autorun => Meteor.subscribe 'users_min', ->
-        # @autorun => Meteor.subscribe 'model_docs', 'model', ->
-        # @autorun => Meteor.subscribe 'history',->
+        @autorun => Meteor.subscribe 'users_min', ->
+        @autorun => Meteor.subscribe 'model_docs', 'model', ->
+        @autorun => Meteor.subscribe 'history',->
         @autorun => Meteor.subscribe 'model_docs','delta',->
         
         # @autorun => Meteor.subscribe 'my_cart'

@@ -26,7 +26,7 @@ Template.gridstack.events
             minRow: 1, # don't let it collapse when empty
             cellHeight: '7rem'
             # alwaysShowResizeHandle: false
-            # animate: true
+            animate: true
             # auto: true
             # cellHeight: 7
             # cellHeightUnit: "rem"

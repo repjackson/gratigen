@@ -92,7 +92,6 @@ head
       
 
 body
-    +gridstack
     +leftbar
     +rightbar
     +global_modal
@@ -102,6 +101,7 @@ body
     +modelbar
     .pusher
         +app
+        +gridstack
 
 
 template(name='gridstack')
@@ -254,7 +254,7 @@ template(name='global_flyout')
 
 template(name='chat_flyout')
     with current_delta
-        .ui.chat.right.flyout
+        .ui.chat.flyout
             i.close.large.link.icon.zoomer(title='close panel')
             .ui.header 
                 i.chat.outline.icon(class=color)

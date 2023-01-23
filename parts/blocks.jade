@@ -535,6 +535,24 @@ template(name='add_button')
         //- |#{model}
 
 
+template(name='roles')
+    +model_picker model='role'
+template(name='skills')
+    +model_picker model='skill'
+template(name='resources')
+    +model_picker model='resource'
+template(name='tasks')
+    +model_picker model='task'
+template(name='organizations')
+    +model_picker model='organization'
+template(name='groups')
+    +model_picker model='group'
+template(name='projects')
+    +model_picker model='project'
+template(name='events')
+    +model_picker model='event'
+
+
 
 template(name='edit_button')
     a.ui.button.icon.edit(title='Edit' href="/m/#{model}/#{_id}/edit")
@@ -585,11 +603,37 @@ template(name='tags')
     each tags 
         .ui.label #{this}
         
-template(name='roles')    
-    .ui.header 
-        i.shield.icon
-        |roles
-    +role_picker
+// template(name='roles')    
+//     .ui.header 
+//         +i name='shield'
+//         | roles
+//     // if is_admin
+//     .ui.icon.large.input 
+//         if role_search_value
+//             i.large.red.remove.link.icon.zoomer.clear_search
+//         else 
+//             i.search.icon
+//         input.role_search(type='text' placeholder='search' value=role_search_value)
+//     if role_results
+//         .ui.selection.link.animated.list
+//             each role_results
+//                 .ui.item.pick_role.zoomer
+//                     img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+//                     |#{title}
+//     // else if role_search_value
+//     .ui.button.create_role
+//         |add #{role_search_value}
+    
+//     if product_roles
+//         .ui.header 
+//             |#{product_roles.length}
+//             |picked roles
+//         .ui.list
+//             each product_roles
+//                 .ui.item
+//                     img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+//                     a.goto_doc #{title}
+//                     i.remove.link.icon.zoomer.remove_role
         
 template(name='_author_id')   
     // .ui.inline.header 
@@ -626,37 +670,6 @@ template(name='model')
 
 
 
-template(name='role_picker')
-    .ui.header 
-        +i name='shield'
-        | roles
-    // if is_admin
-    .ui.icon.large.input 
-        if role_search_value
-            i.large.red.remove.link.icon.zoomer.clear_search
-        else 
-            i.search.icon
-        input.role_search(type='text' placeholder='search' value=role_search_value)
-    if role_results
-        .ui.selection.link.animated.list
-            each role_results
-                .ui.item.pick_role.zoomer
-                    img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
-                    |#{title}
-    // else if role_search_value
-    .ui.button.create_role
-        |add #{role_search_value}
-    
-    if product_roles
-        .ui.header 
-            |#{product_roles.length}
-            |picked roles
-        .ui.list
-            each product_roles
-                .ui.item
-                    img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
-                    a.goto_doc #{title}
-                    i.remove.link.icon.zoomer.remove_role
                     
                     
 template(name='task_picker')
@@ -724,37 +737,37 @@ template(name='badge_picker')
                     |#{title}
                     i.remove.link.icon.zoomer.remove_badge
 
-template(name='events')
-    .ui.header 
-        +i name='shield'
-        | events
-    // if is_admin
-    .ui.icon.large.input 
-        if event_search_value
-            i.large.red.remove.link.icon.zoomer.clear_search
-        else 
-            i.search.icon
-        input.event_search(type='text' placeholder='search' value=event_search_value)
-    if event_results
-        .ui.selection.link.animated.list
-            each event_results
-                .ui.item.pick_event.zoomer
-                    img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
-                    |#{title}
-    // else if event_search_value
-    .ui.button.create_event
-        |add #{event_search_value}
+// template(name='events')
+//     .ui.header 
+//         +i name='shield'
+//         | events
+//     // if is_admin
+//     .ui.icon.large.input 
+//         if event_search_value
+//             i.large.red.remove.link.icon.zoomer.clear_search
+//         else 
+//             i.search.icon
+//         input.event_search(type='text' placeholder='search' value=event_search_value)
+//     if event_results
+//         .ui.selection.link.animated.list
+//             each event_results
+//                 .ui.item.pick_event.zoomer
+//                     img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+//                     |#{title}
+//     // else if event_search_value
+//     .ui.button.create_event
+//         |add #{event_search_value}
     
-    if product_events
-        .ui.header 
-            |#{product_events.length}
-            |picked events
-        .ui.list
-            each product_events
-                .ui.item
-                    img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
-                    |#{title}
-                    i.remove.link.icon.zoomer.remove_event
+//     if product_events
+//         .ui.header 
+//             |#{product_events.length}
+//             |picked events
+//         .ui.list
+//             each product_events
+//                 .ui.item
+//                     img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+//                     |#{title}
+//                     i.remove.link.icon.zoomer.remove_event
 
 
 template(name='save_button')
