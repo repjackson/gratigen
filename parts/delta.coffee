@@ -620,13 +620,13 @@ if Meteor.isClient
 
 
     Template.model_doc_view.onCreated ->
-        @autorun -> Meteor.subscribe 'model_from_slug', Meteor.user()._model, ->
-        @autorun -> Meteor.subscribe 'model_fields_from_slug', Meteor.user()._model, ->
+        @autorun -> Meteor.subscribe 'current_model', ->
+        # @autorun -> Meteor.subscribe 'model_fields_from_slug', Meteor.user()._model, ->
         # console.log Meteor.user()._doc_id
-        @autorun -> Meteor.subscribe 'doc', Meteor.user()._doc_id, ->
-        @autorun -> Meteor.subscribe 'upvoters', Meteor.user()._doc_id, ->
-        @autorun -> Meteor.subscribe 'downvoters', Meteor.user()._doc_id, ->
-        @autorun -> Meteor.subscribe 'model_docs', 'field_type', ->
+        @autorun -> Meteor.subscribe 'current_doc', ->
+        # @autorun -> Meteor.subscribe 'upvoters', Meteor.user()._doc_id, ->
+        # @autorun -> Meteor.subscribe 'downvoters', Meteor.user()._doc_id, ->
+        # @autorun -> Meteor.subscribe 'model_docs', 'field_type', ->
 
     Template.model_doc_view.events 
         'click .call_alpha': ->
@@ -635,7 +635,8 @@ if Meteor.isClient
 Meteor.methods 
     alpha:->
         console.log 'alpha'
-        doc = Docs.findOne Meteor.user()._doc_id
+        d = Docs.findOne Meteor.user().delta_id
+        doc = Docs.findOne d._doc_id
         # model = Docs.findOne 
         #     model:'model'
         #     slug:Meteor.user()._model
@@ -686,7 +687,7 @@ if Meteor.isClient
 
 
 
-    Template.model_doc_edit.events
+    Template.model_doc_view.events
         'click .save_doc':->
             Meteor.call 'change_state', {_template:'model_doc_view',_doc_id:@_id}, ->
     Template.model_doc_view.events
@@ -1200,14 +1201,14 @@ if Meteor.isClient
             #
             # Meteor.call 'fum', delta._id, (err,res)->
 if Meteor.isClient
-    Template.model_doc_edit.onCreated ->
-        @autorun -> Meteor.subscribe 'me', ->
-        @autorun -> Meteor.subscribe 'doc', Meteor.user()._doc_id, ->
+    Template.model_doc_view.onCreated ->
+        # @autorun -> Meteor.subscribe 'me', ->
+        # @autorun -> Meteor.subscribe 'doc', Meteor.user()._doc_id, ->
         # @autorun -> Meteor.subscribe 'model_fields_from_slug', Meteor.user()._model, ->
-        @autorun -> Meteor.subscribe 'model_from_slug', Meteor.user()._model, ->
-        @autorun -> Meteor.subscribe 'model_docs', 'field_type', ->
+        # @autorun -> Meteor.subscribe 'model_from_slug', Meteor.user()._model, ->
+        # @autorun -> Meteor.subscribe 'model_docs', 'field_type', ->
 
-    Template.model_doc_edit.helpers
+    Template.model_doc_view.helpers
         template_exists: ->
             _model = Docs.findOne(Meteor.user()._doc_id).model
             unless _model is 'model'
@@ -1234,7 +1235,7 @@ if Meteor.isClient
             "#{_model}_edit"
 
 
-    Template.model_doc_edit.events
+    Template.model_doc_view.events
         'click #delete_doc': ->
             if confirm 'Confirm delete doc'
                 Docs.remove @_id

@@ -6,16 +6,20 @@ template(name='model_doc_view')
                     a.ui.circular.basic.large.button.back_to_model
                         i.chevron.left.icon
                         // i.big.icon(class=_model.icon)
-                        +i name=_model.icon
-                        |#{_model.title}
+                        +i name=current_model.icon
+                        |#{current_model.title}
                     // if can_edit
-                    a.ui.header.zoomer.call_alpha(title='recalc')
-                        i.calculator.icon
+                    with cd 
+                        +boolean_edit key='edit_mode' direct=true 
+                    div
+                    a.ui.header.zoomer.call_alpha.pointer(title='recalc')
+                        i.cubes.icon
                         |fields
                     if cd.edit_mode
                         +array_edit key='_keys' direct=true
                     else 
-                        +array_view key='_keys' direct=true
+                        .smallscroll
+                            +array_view key='_keys' direct=true
                     if is_admin
                         .ui.header 
                             i.clock.icon
@@ -32,10 +36,6 @@ template(name='model_doc_view')
                         i.bars.icon
                         |fly out
                         
-                    if header
-                        .ui.header #{title}
-                    with current_delta 
-                        +boolean_edit key='edit_mode' direct=true 
                     
                     +author_info
                     +creation_info
@@ -47,7 +47,9 @@ template(name='model_doc_view')
                             +array_view key='tags' label='tags' direct=true
                     +comments
                     +viewing
-                .twelve.wide.column.scrolling
+                .twelve.wide.column
+                    if header
+                        .ui.header #{title}
                         
                     .ui.two.column.stackable.grid.scrolling
                         each _keys
@@ -77,48 +79,8 @@ template(name='found_field')
     // +Template.dynamic template=this data=current_doc
     if current_delta.edit_mode
         .ui.input 
-            type='number' 
+            input(type='number')
             label ranking
     if field_temp_exists
         // +print_this
         +Template.dynamic template=this data=current_doc
-
-
-template(name='model_doc_edit')
-    .ui.grey.header 
-        i.pencil.icon
-        |editing model
-    with current_doc
-        .ui.stackable.padded.grid
-            .centered.row
-                .four.wide.column
-                    .ui.header(title="model: #{model}")
-                        |edit #{model}
-                    +creation_info
-                    a.ui.big.icon.green.circular.button.save_doc
-                        i.big.checkmark.icon
-                    #delete_doc.ui.icon.circular.button
-                        i.trash.icon
-                    if is_user
-                        +boolean_edit key='private' direct=true
-                .twelve.wide.column
-                    if icon 
-                        +i name=icon
-                    if parent_model.has_title 
-                        +text_edit key='title' label='title' icon='header' direct=true
-                    if parent_model.has_icon
-                        +icon_edit key='icon' label='icon' icon='art' direct=true
-                    if parent_model.has_icon_color
-                        +text_edit key='icon_color' label='icon color' icon='color' direct=true
-                    if parent_model.has_body
-                        +html_edit key='body' label='body' icon='content' direct=true
-                    if parent_model.has_image
-                        +image_edit key='image_id' label='image' icon='image' direct=true
-                    if template_exists
-                        +Template.dynamic template=model_template
-                    //- |#{model}
-                    each edit_fields
-                        .ui.header field #{title}
-                        +Template.dynamic template=edit_template 
-                        .spacer
-                        // .ui.header #{key} [#{field}] #{label}

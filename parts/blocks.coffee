@@ -235,7 +235,6 @@ if Meteor.isClient
         'click .clear_search': (e,t)->
             Session.set('model_search', null)
             t.$('.model_search').val('')
-
             
         'click .remove_model': (e,t)->
             if confirm "remove #{@title} model?"
