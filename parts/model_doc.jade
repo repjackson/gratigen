@@ -42,12 +42,11 @@ template(name='model_doc_view')
                     .ui.button.fly_out
                         i.bars.icon
                         |fly out
-                    .ui.one.column.stackable.grid
+                    .ui.two.column.stackable.grid
                         with current_delta 
                             +boolean_edit key='edit_mode' direct=true 
                         each _keys
                             .column
-                                    
                                 +found_field
                     // .ui.header
                         // each fields

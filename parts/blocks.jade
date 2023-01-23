@@ -565,35 +565,42 @@ template(name='model_picker')
         .ui.header 
             +i name=icon
             | #{model} picker
+        if can_edit 
+            with current_delta 
+                +boolean_edit key='edit_mode' label='edit' icon='cog' direct=true
         // if is_admin
         unless picked_model
-            .ui.icon.large.input 
-                if model_search_value
-                    i.large.red.remove.link.icon.zoomer.clear_search
-                else 
-                    i.search.icon
-                input.model_search(type='text' placeholder='search' value=model_search_value)
-            if model_results
-                .ui.selection.link.animated.list
-                    each model_results
-                        .ui.item.pick_model
-                            img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
-                            |#{title}
-            // else if model_search_value
-            .ui.button.create_model
-                |add #{model_search_value}
-        
+            if current_delta.edit_mode 
+                .ui.icon.large.input 
+                    if model_search_value
+                        i.large.red.remove.link.icon.zoomer.clear_search
+                    else 
+                        i.search.icon
+                    input.model_search(type='text' placeholder='search' value=model_search_value)
+                if model_results
+                    .ui.selection.link.animated.list
+                        each model_results
+                            .ui.item.pick_model
+                                img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+                                |#{title}
+                // else if model_search_value
+                .ui.button.create_model
+                    |add #{model_search_value}
+            
         if picked_model
             .ui.header 
                 // |#{picked_models.length}
                 |picked model
             .ui.list
                 with picked_model
-                    .ui.item
-                        img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
-                        |#{title}
-                        i.remove.link.circular.red.icon.zoomer.remove_model
-                    
+                    .ui.horizontal.card
+                        img.ui.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+                        .content 
+                            .header #{title}
+                            if cd.edit_mode
+                                i.remove.link.circular.red.icon.zoomer.remove_model
+                            +author_info 
+                            +creation_info
 template(name='title')
     +print_this
     .ui.inline.header title: #{title}
