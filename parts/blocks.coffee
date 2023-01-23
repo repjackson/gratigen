@@ -228,6 +228,13 @@ if Meteor.isClient
             Docs.findOne
                 # model:Template.currentData().model
                 _id:parent_doc["#{Template.currentData().model}_id"]
+        picked_models: ->
+            parent_doc = Docs.findOne Meteor.user()._doc_id
+            # _id:parent_doc["#{Template.currentData().model}_id"]
+            console.log Template.currentData().model
+            Docs.find
+                # model:Template.currentData().model
+                _id:parent_doc["#{Template.currentData().model}_ids"]
         model_search_value: ->
             Session.get('model_search')
         
@@ -239,16 +246,38 @@ if Meteor.isClient
         'click .remove_model': (e,t)->
             if confirm "remove #{@title} model?"
                 Docs.update Meteor.user()._doc_id,
-                    $unset:
-                        "#{Template.currentData().model}_id":@_id
-                        "#{Template.currentData().model}_title":@title
+                    $pull:
+                        "#{Template.currentData().model}_ids":@_id
+                        "#{Template.currentData().model}_titles":@title
+        # 'click .remove_model': (e,t)->
+        #     if confirm "remove #{@title} model?"
+        #         Docs.update Meteor.user()._doc_id,
+        #             $unset:
+        #                 "#{Template.currentData().model}_id":@_id
+        #                 "#{Template.currentData().model}_title":@title
         'click .pick_model': (e,t)->
             Docs.update Meteor.user()._doc_id,
                 $set:
-                    "#{Template.currentData().model}_id":@_id
-                    "#{Template.currentData().model}_title":@title
+                    "#{Template.currentData().model}_ids":@_id
+                    "#{Template.currentData().model}_titles":@title
             Session.set('model_search',null)
             t.$('.model_search').val('')
+            $('body').toast({
+                title: "#{@title} attached"
+                # message: 'Please see desk staff for key.'
+                class : 'success invert'
+                showIcon:'plus'
+                # showProgress:'bottom'
+                position:'bottom right'
+                })
+
+        # 'click .pick_model': (e,t)->
+        #     Docs.update Meteor.user()._doc_id,
+        #         $set:
+        #             "#{Template.currentData().model}_id":@_id
+        #             "#{Template.currentData().model}_title":@title
+        #     Session.set('model_search',null)
+        #     t.$('.model_search').val('')
                     
         'keyup .model_search': (e,t)->
             # if e.which is '13'
@@ -257,11 +286,18 @@ if Meteor.isClient
             Session.set('model_search', val)
 
         'click .create_model': ->
-            new_id = 
-                Docs.insert 
-                    model:'model'
-                    title:Session.get('model_search')
-            gstate_set "/model/#{new_id}/edit"
+            new_model = prompt 'new model name'
+            if new_model
+                new_id = 
+                    Docs.insert 
+                        model:'model'
+                        title:Session.get('model_search')
+                Meteor.call 'update_state', {
+                    _template:'delta'
+                    _model:new_model
+                    _doc_id:new_id
+                    edit_mode:true
+                }, ->
 
 
 if Meteor.isServer 

@@ -49,8 +49,8 @@ head
     script(src='https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js')
     script(src='https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.0/dist/semantic.min.js')
     
-    // script(src='https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.js')
-    // link(href='https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.css' rel='stylesheet')
+    script(src='https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.js')
+    link(href='https://api.mapbox.com/mapbox.js/v3.3.1/mapbox.css' rel='stylesheet')
     
     // this one
     // script(src='https://api.mapbox.com/mapbox-gl-js/v2.11.0/mapbox-gl.js')
@@ -226,9 +226,9 @@ template(name='app')
                 // if ct.length
                 +Template.dynamic template=ct
             else 
-                .ui.center.aligned.basic.segment 
-                    i.massive.yin.yang.loading.grey.icon
-            //     +login
+                +login
+                // .ui.center.aligned.basic.segment 
+                //     i.massive.yin.yang.loading.grey.icon
         +footer
     else 
         i.massive.asterisk.loading.blue.icon
@@ -313,6 +313,7 @@ template(name='footer')
     // if currentUser.admin_mode
     .ui.segment.grid
         .eight.wide.column.smallscroll
+            +loginButtons
             .ui.header 
                 i.shield.icon
                 |footer 
@@ -376,6 +377,8 @@ template(name='nav')
     #topnav.ui.attached.menu.topnav.hscroll.ani(class=invert_class)
         a.icon.item.toggle_leftbar.zoomer(title='toggle leftbar')
             i.bars.large.icon
+        .item
+            +loginButtons
         a.header.image.item.zoomer.set_home(class="{{isActivePath 'home'}}" title='gratihome')
             if is_loading
                 .icon.item
@@ -658,7 +661,7 @@ template(name='right_nav_item')
 
 
 template(name='leftbar')
-    .ui.sidebar.segment.leftbar
+    .ui.sidebar.segment.push.leftbar
         .item leftbar
         // +session_toggle key='expand_leftbar' icon='heart outline'
             // +session_toggle key='add_mode' icon='plus'
@@ -690,7 +693,7 @@ template(name='leftbar')
     // .bordered.scrolling(class=main_column_class)
         
 template(name='modelbar')
-    .ui.vertical.sidebar.menu.modelbar
+    .ui.top.sidebar.menu.push.modelbar
         .item 
             i.cubes.icon
             |models

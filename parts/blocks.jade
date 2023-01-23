@@ -419,14 +419,14 @@ template(name='role_editor')
 
 template(name='author_info')
     with author
-        a.ui.compact.button(href="/user/#{username}")
+        a.ui.compact.basic.tertiary.button(href="/user/#{username}")
             if image_id
                 img.ui.avatar.image(src="{{c.url image_id width=150 height=150 gravity='face' crop='fill'}}")
             |by #{first_name} #{last_name}
     .ui.label by #{_author_username}
 
 template(name='creation_info')
-    .ui.large.basic.label 
+    .ui.large.basic.tertiary.label 
         i.grey.clock.icon
         small added 
         strong #{when}
@@ -569,7 +569,7 @@ template(name='model_picker')
             with current_delta 
                 +boolean_edit key='edit_mode' label='edit' icon='cog' direct=true
         // if is_admin
-        unless picked_model
+        unless picked_models
             if current_delta.edit_mode 
                 .ui.icon.large.input 
                     if model_search_value
@@ -591,16 +591,19 @@ template(name='model_picker')
             .ui.header 
                 // |#{picked_models.length}
                 |picked model
-            .ui.list
-                with picked_model
+            .ui.list.smallscroll
+                with picked_models
                     .ui.horizontal.card
                         img.ui.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
                         .content 
                             .header #{title}
                             if cd.edit_mode
                                 i.remove.link.circular.red.icon.zoomer.remove_model
-                            +author_info 
-                            +creation_info
+                        .extra.content
+                            .right.floated
+                                +author_info 
+                            .left.floated
+                                +creation_info
 template(name='title')
     +print_this
     .ui.inline.header title: #{title}

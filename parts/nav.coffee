@@ -38,15 +38,19 @@ if Meteor.isClient
                     mobileTransition:'push'
                     exclusive:false
                     duration:200
+                    closable:false
+                    dimPage:false
                     scrollLock:true
                 })
                 .sidebar('attach events', '.toggle_leftbar')
             $('.ui.taskbar')
                 .sidebar({
                     context: $('.layout')
-                    transition:'overlay'
+                    transition:'push'
                     mobileTransition:'push'
                     exclusive:false
+                    closable:false
+                    dimPage:false
                     duration:200
                     scrollLock:true
                 })
@@ -56,9 +60,11 @@ if Meteor.isClient
             $('.ui.rightbar')
                 .sidebar({
                     context: $('.layout')
-                    transition:'overlay'
+                    transition:'push'
                     mobileTransition:'push'
-                    exclusive:false
+                    exclusive:true
+                    closable:false
+                    dimPage:false
                     duration:200
                     scrollLock:true
                 })
@@ -68,9 +74,10 @@ if Meteor.isClient
             $('.ui.modelbar')
                 .sidebar({
                     context: $('.layout')
-                    transition:'overlay'
+                    transition:'push'
                     mobileTransition:'push'
                     exclusive:false
+                    dimPage:false
                     duration:200
                     scrollLock:true
                 })
@@ -80,9 +87,9 @@ if Meteor.isClient
             $('.ui.topbar')
                 .sidebar({
                     context: $('.layout')
-                    transition:'overlay'
+                    transition:'push'
                     mobileTransition:'push'
-                    exclusive:false
+                    exclusive:true
                     duration:200
                     scrollLock:true
                 })
