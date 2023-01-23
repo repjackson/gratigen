@@ -9,12 +9,13 @@ template(name='model_doc_view')
                         +i name=_model.icon
                         |#{_model.title}
                     // if can_edit
-                    a.ui.large.icon.circular.button.edit_doc(title='Edit')
-                        i.pencil.blue.large.icon
                     a.ui.header.zoomer.call_alpha(title='recalc')
                         i.calculator.icon
-                        |alpha fields
-                    +array_edit key='_keys' direct=true
+                        |fields
+                    if cd.edit_mode
+                        +array_edit key='_keys' direct=true
+                    else 
+                        +array_view key='_keys' direct=true
                     if is_admin
                         .ui.header 
                             i.clock.icon
@@ -27,6 +28,14 @@ template(name='model_doc_view')
                     .ui.small.inline.header by
                     each viewer_usernames
                         .ui.small.label #{this}
+                    .ui.button.fly_out
+                        i.bars.icon
+                        |fly out
+                        
+                    if header
+                        .ui.header #{title}
+                    with current_delta 
+                        +boolean_edit key='edit_mode' direct=true 
                     
                     +author_info
                     +creation_info
@@ -39,12 +48,8 @@ template(name='model_doc_view')
                     +comments
                     +viewing
                 .twelve.wide.column.scrolling
-                    .ui.button.fly_out
-                        i.bars.icon
-                        |fly out
-                    .ui.two.column.stackable.grid
-                        with current_delta 
-                            +boolean_edit key='edit_mode' direct=true 
+                        
+                    .ui.two.column.stackable.grid.scrolling
                         each _keys
                             .column
                                 +found_field

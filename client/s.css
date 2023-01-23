@@ -160,8 +160,8 @@ body {
 
 .ui.header, .button{
      /*font-family: 'Raleway', sans-serif !important; */
-     font-family: 'Ubuntu', sans-serif !important; 
-     /*font-family: 'Varela Round' !important; */
+     /*font-family: 'Ubuntu', sans-serif !important; */
+     font-family: 'Varela Round' !important; 
     /*font-family: 'Goudy Bookletter 1911', sans-serif !important;*/
 }
 
@@ -215,7 +215,7 @@ body {
 }
 
 .input {
-  margin: 5px !important;
+  /*margin: 5px !important;*/
 }
 /*.layout.invert{*/
   /*background: rgba(0,0,0,1) !important; */
