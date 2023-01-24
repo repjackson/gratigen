@@ -2,7 +2,8 @@ template(name='home')
     if currentUser.admin_mode
         img.ui.fluid.image.home_banner(src="{{c.url 'gratigenlayout'}}" class=darkmode_class)
     .ui.stackable.padded.divided.celled.grid.draggabl
-        // .bordered(class=left_column_class)
+        .bordered(class=left_column_class)
+            +dash_user_info
         .twelve.wide.column.scrolling
             .ui.one.column.grid     
                 .column
@@ -156,7 +157,7 @@ template(name='home_cloud')
         // #clear_tags.ui.active.icon.large.circular.button
         //     i.remove.icon
         each cd.picked_tags
-            .unpick_tag.ui.active.large.circular.compact.button
+            .unpick_tag.ui.active.large.circular.compact.tertiary.button
                 strong #{this}
     each result_helper 'tag'
         +pick_result
@@ -166,10 +167,10 @@ template(name='home_cloud')
         +i name='network'
         |models
     if cd.picked_models
-        // #clear_models.ui.active.icon.large.circular.button
+        // #clear_models.ui.active.icon.large.circular.tertiary.button
         //     i.remove.icon
         each picked_models
-            .unpick_model.ui.active.large.compact.circular.button
+            .unpick_model.ui.active.large.compact.circular.tertiary.button
                 strong #{this}
     each result_helper 'model'
         +pick_result
@@ -178,10 +179,10 @@ template(name='home_cloud')
         +i name='t-shirt'
         |essentials
     if cd.picked_essentials
-        // #clear_essentials.ui.active.icon.large.circular.button
+        // #clear_essentials.ui.active.icon.large.circular.tertiary.button
         //     i.remove.icon
         each picked_essentials
-            .unpick_essential.ui.active.large.circular.compact.button
+            .unpick_essential.ui.active.large.circular.compact.tertiary.button
                 strong #{this}
     each result_helper 'essential'
         +pick_result

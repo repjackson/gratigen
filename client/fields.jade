@@ -42,7 +42,7 @@ template(name='color_edit')
                     |#{key}
                 else
                     |#{this}
-            .ui.large.label #{field_value}
+            .ui.large.basic.label #{field_value}
             input.edit_color.invert(type='color' value=field_value placeholder='color' autocomplete="off" class=invert_class)
 
 
@@ -59,7 +59,7 @@ template(name='color_view')
                     |#{key}
                 else
                     |#{this}
-            .ui.large.label(style="background:#{field_value}")
+            .ui.large.basic.label(style="background:#{field_value}")
             |#{field_value}
 
 template(name='html_view')
@@ -150,11 +150,11 @@ template(name='icon_edit')
         //     i.external.icon
         //     |fomantic icons
         if field_value 
-            a.ui.small.link.label.zoomer(href="https://icons8.com/icon/set/#{field_value}/ios" target='_window')
+            a.ui.small.link.basic.label.zoomer(href="https://icons8.com/icon/set/#{field_value}/ios" target='_window')
                 i.search.icon
                 |icons8 icons
         else         
-            a.ui.small.link.label.zoomer(href="https://www.icons8.com/icons/ios" target='_window')
+            a.ui.small.link.basic.label.zoomer(href="https://www.icons8.com/icons/ios" target='_window')
                 i.external.icon
                 |icons8 icons
         // +color_edit key='icon_color' direct=true
@@ -326,7 +326,7 @@ template(name='image_edit')
                 //- label Image
                 a(href="{{c.url field_value }}" target='_window')
                     img.ui.centered.fluid.rounded.image(src="{{c.url field_value height=500 gravity='face' crop='fill'}}" class=cl)
-                a#remove_photo.ui.right.corner.link.label
+                a#remove_photo.ui.right.corner.link.basic.label
                     i.remove.link.icon
                 // .ui.button.call_cloud_visual
                 //     i.dna.icon
@@ -337,7 +337,7 @@ template(name='image_edit')
 
 template(name='image_link_edit')
     .ui.fluid.input
-        .ui.label image link
+        .ui.basic.label image link
         i.image.icon
         input.image_link_val(type='link' value=field_value placeholder='image link'  autocomplete="off")
     if field_value
@@ -591,7 +591,7 @@ template(name='array_edit')
     if field_value
         each field_value
             // if in_dev
-            .ui.basic.large.label
+            .ui.basic.large.basic.label
                 i.delete.icon.remove_element
                 |#{this}
             // .ui.compact.button.pick_tag
@@ -637,7 +637,7 @@ template(name='array_view')
             .ui.inline.small.grey.header.say_body(title=title)
                 |#{label}
         each field_value
-            .ui.label.say_body #{this}
+            .ui.basic.label.say_body #{this}
 
 
 // template(name='children_edit')
@@ -958,7 +958,7 @@ template(name='single_doc_view')
             +i name=icon
         .ui.inline.header(title=key)
             |#{title}
-        .ui.label
+        .ui.basic.label
             if icon
                 //- i.grey.icon(class=icon)
                 +i name=icon
@@ -1030,7 +1030,7 @@ template(name='multi_doc_view')
         .ui.inline.header(title=key)
             |#{title} #{label}
         each sorted_field_values
-            .ui.large.label
+            .ui.large.basic.label
                 |#{this}
 
 
@@ -1107,7 +1107,7 @@ template(name='multi_user_edit')
     .ui.input
         input.multi_user_select_input(type='text' placeholder="lookup #{role_filter}.." autocomplete='off')
     each selections
-        a.ui.large.label(href="/user/#{username}")
+        a.ui.large.basic.label(href="/user/#{username}")
             |#{name}
     if user_results
         .ui.top.attached.segment
@@ -1145,7 +1145,7 @@ template(name='multi_doc_input')
         input#multi_doc_select_input(type='text' placeholder=title autocomplete="off")
         //- input#multi_doc_select_input(type='text' placeholder="Lookup #{ref_model}.." autocomplete="off")
     each selections
-        .ui.large.label
+        .ui.large.basic.label
             |#{guest_name} #{first_name} #{last_name}
     if doc_results
         .ui.attached.secondary.segment

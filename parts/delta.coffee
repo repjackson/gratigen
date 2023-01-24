@@ -343,43 +343,59 @@ if Meteor.isClient
     	# 	$(e.currentTarget).addClass('spinning')
 
         'click .add_model_doc': ->
+            delta = Docs.findOne Meteor.user().delta_id
             model = Docs.findOne
                 model:'model'
-                slug: Meteor.user()._model
+                slug: delta._model
             # console.log model
-            if model.collection and model.collection is 'users'
-                name = prompt 'first and last name'
-                split = name.split ' '
-                first_name = split[0]
-                last_name = split[1]
-                username = name.split(' ').join('_')
-                # console.log username
-                Meteor.call 'add_user', first_name, last_name, username, 'guest', (err,res)=>
-                    if err
-                        alert err
-                    else
-                        Meteor.users.update res,
-                            $set:
-                                first_name:first_name
-                                last_name:last_name
-                        Meteor.call 'change_state', "/m/#{model.slug}/#{res}/edit", ->
+            # if model.collection and model.collection is 'users'
+            #     name = prompt 'first and last name'
+            #     split = name.split ' '
+            #     first_name = split[0]
+            #     last_name = split[1]
+            #     username = name.split(' ').join('_')
+            #     # console.log username
+            #     Meteor.call 'add_user', first_name, last_name, username, 'guest', (err,res)=>
+            #         if err
+            #             alert err
+            #         else
+            #             Meteor.users.update res,
+            #                 $set:
+            #                     first_name:first_name
+            #                     last_name:last_name
+            #             Meteor.call 'change_state', "/m/#{model.slug}/#{res}/edit", ->
             # else if model.slug is 'gift'
             #     new_doc_id = Docs.insert
             #         model:model.slug
             #     Met  eor.call 'change_state', "/debit/#{new_doc_id}/edit", ->
-            else if model.slug is 'model'
-                new_doc_id = Docs.insert
-                    model:'model'
-                ob = {
-                    template:'doc_edit'
-                    _doc_id:new_doc_id
-                    }
-                Meteor.call 'change_state', ob, ->
+            if model.slug is 'model'
+                slug = prompt 'slug:'
+                if slug
+                    new_doc_id = Docs.insert
+                        model:'model'
+                        slug:slug
+                    ob = {
+                        _template:'model_doc_view'
+                        edit_mode:true
+                        _doc_id:new_doc_id
+                        _model:slug
+                        _view_permissions:['admin','dev', 'dev2','dj','_author']
+                        _edit_permissions:['admin','dev', 'dev2', 'dj','_author']
+                        _view_usernames:[]
+                        _view_groups:['friends','oracle house']
+                        }
+                    Meteor.call 'change_state', ob, ->
             else
                 console.log model
                 new_doc_id = Docs.insert
                     model:model.slug
-                Meteor.call 'change_state', "/m/#{model.slug}/#{new_doc_id}/edit", ->
+                # Meteor.call 'change_state', "/m/#{model.slug}/#{new_doc_id}/edit", ->
+                Meteor.call 'change_state', 
+                    {
+                        _template: model_doc_view,
+                        _model: model.slug 
+                        _doc_id:new_doc_id
+                    }, ->
 
 
         'click .edit_model': ->

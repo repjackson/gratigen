@@ -92,13 +92,13 @@ head
       
 
 body
+    +modelbar
     +leftbar
     +rightbar
     +global_modal
     +global_flyout
     +chat_flyout
     // if currentUser.show_modelbar
-    +modelbar
     .pusher
         +app
         +gridstack
@@ -307,7 +307,7 @@ template(name='global_modal')
             .ui.header #{title}
             .content
                 .ui.header #{body}
-                .ui.label #{model}
+                .ui.basic.label #{model}
 
 template(name='footer')
     // if currentUser.admin_mode
@@ -333,15 +333,15 @@ template(name='footer')
                 i.users.icon 
                 |users
             each user_docs 
-                .ui.large.button #{username}
+                .ui.large.basic.button #{username}
         .eight.wide.column.smallscroll
             .ui.header 
                 i.database.icon
                 |#{doc_docs.count} docs 
             .smallscroll
                 each doc_docs
-                    a.ui.compact.small.button.print_me #{title} 
-                        .ui.label
+                    a.ui.compact.small.tertiary.button.print_me #{title} 
+                        .ui.basic.label
                             |#{model}
         .eight.wide.column.smallscroll
             .ui.header 
@@ -349,8 +349,8 @@ template(name='footer')
                 |#{result_docs.count} docs 
             .smallscroll
                 each result_docs
-                    a.ui.compact.small.label.print_me #{title} 
-                        .ui.label
+                    a.ui.compact.small.basic.label.print_me #{title} 
+                        .ui.basic.label
                             |#{model}: #{name}
                             
                             

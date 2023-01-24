@@ -204,7 +204,7 @@ template(name='viewing')
 
 template(name='user_info')
     with user_from_id this
-        a.ui.large.link.label(href="/user/#{username}")
+        a.ui.basic.large.link.basic.label(href="/user/#{username}")
             img.ui.avatar.inline.image(src="{{c.url image_id width=200 height=200 gravity='face' crop='fill'}}")
             |#{username}
     // .ui.header #{this}
@@ -249,7 +249,7 @@ template(name='session_set')
 template(name='set_sort_key')
     .ui.circular.compact.button.set_sort(class=sort_button_class)
         if color
-            .ui.label(class=color) #{label}
+            .ui.basic.label(class=color) #{label}
         else 
             if emoji
                 em(data-emoji=emoji)
@@ -261,7 +261,7 @@ template(name='set_sort_key')
 // template(name='set_sort_key')
 //     .item.set_sort
 //         if color
-//             .ui.label(class=color) #{label}
+//             .ui.basic.label(class=color) #{label}
 //         else 
 //             if emoji
 //                 em(data-emoji=emoji)
@@ -286,7 +286,7 @@ template(name='events_column')
             .ui.feed
                 each log_events
                     .event
-                        .label
+                        .basic.label
                             img.ui.rounded.image(src="{{c.url object.image width=400 height=400 gravity='face' crop='fill'}}")
                         .content
                             .summary
@@ -330,13 +330,13 @@ template(name='view_full_button')
 
 template(name='user_status')
     if online 
-        // .ui.label(class='{{labelClass}}') 
-        .ui.empty.label(title='online')
+        // .ui.basic.label(class='{{labelClass}}') 
+        .ui.empty.basic.label(title='online')
         // img.ui.avatar.image(src="https://img.icons8.com/connection-user_status-on/color/48" title='Online' width="48" height="48")
         // |Online
     else if idle
-        .ui.empty.yellow.label(title='idle')
-        // .ui.label(class='{{labelClass}}') Idle
+        .ui.empty.yellow.basic.label(title='idle')
+        // .ui.basic.label(class='{{labelClass}}') Idle
     // else 
     //     |Offline
 
@@ -360,11 +360,11 @@ template(name='user_status')
 template(name='user_email')
     .ui.small.inline.header #{email_address}
     if email_verified
-        .ui.label 
+        .ui.basic.label 
             i.green.checkmark.icon
             |verified
     else
-        .ui.orange.label 
+        .ui.orange.basic.label 
             i.ban.icon
             |unverified
         
@@ -423,16 +423,16 @@ template(name='author_info')
             if image_id
                 img.ui.avatar.image(src="{{c.url image_id width=150 height=150 gravity='face' crop='fill'}}")
             |by #{first_name} #{last_name}
-    .ui.label by #{_author_username}
+    .ui.basic.label by #{_author_username}
 
 template(name='creation_info')
-    .ui.large.basic.tertiary.label 
+    .ui.large.basic.label 
         i.grey.clock.icon
         small added 
         strong #{when}
 
 template(name='_timestamp_long')
-    .ui.large.basic.label 
+    .ui.large.basic.basic.label 
         i.grey.clock.icon
         small added 
         strong #{when}
@@ -489,9 +489,9 @@ template(name='voting_full')
         i.thumbs.down.outline.icon(class=downvote_class)
         //- |dislike
     if points
-        .ui.large.basic.label(title='points') #{points}pts
+        .ui.large.basic.basic.label(title='points') #{points}pts
         if anon_points
-            .ui.large.label(title='anon points') #{anon_points} anon pts
+            .ui.large.basic.label(title='anon points') #{anon_points} anon pts
     if upvoter_ids
         .ui.small.inline.grey.header 
             i.thumbs.up.outline.icon
@@ -611,7 +611,7 @@ template(name='title')
 template(name='tags')
     .ui.inline.header tags 
     each tags 
-        .ui.label #{this}
+        .ui.basic.label #{this}
         
 // template(name='roles')    
 //     .ui.header 
@@ -667,11 +667,11 @@ template(name='icon')
         
 template(name='_timestamp')
     // +when
-    .ui.label #{_timestamp} #{when}
+    .ui.basic.label #{_timestamp} #{when}
         
 template(name='model')
     .ui.inline.header model 
-    .ui.big.label
+    .ui.big.basic.label
         i.database.icon
         |#{model}
     if model_temp_exists
@@ -817,7 +817,7 @@ template(name='email_validation_check')
             //- +i name='user-shield' cl='ui inline image'
             |resend verification email
         if times
-            .ui.label
+            .ui.basic.label
                 |#{times}
             //- else
                 //- |#{times}x sent
@@ -841,7 +841,7 @@ template(name='online_allies')
                 |#{username}
                 if tags 
                     each tags 
-                        .ui.basic.label #{this}
+                        .ui.basic.basic.label #{this}
                         
 template(name='online_users')
     .ui.header 
@@ -859,7 +859,7 @@ template(name='online_users')
                 |#{username}
                 if tags 
                     each tags 
-                        .ui.basic.label #{this}
+                        .ui.basic.basic.label #{this}
 
 template(name='open_requests')
     .ui.header open requests
