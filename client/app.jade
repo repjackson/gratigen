@@ -68,6 +68,7 @@ head
     script(src="https://cdn.jsdelivr.net/npm/sweetalert2@9")
     script(src="https://cdn.jsdelivr.net/npm/suneditor@latest/dist/suneditor.min.js")
     script(src="https://cdn.jsdelivr.net/npm/suneditor@latest/src/lang/en.js")
+    script(src="https://widget-js.cometchat.io/v3/cometchatwidget.js")
 
     //- script(async='', src='https://www.googletagmanager.com/gtag/js?id=UA-140259454-1')
     script.
@@ -92,6 +93,8 @@ head
       
 
 body
+    // .invert
+    +comet
     +modelbar
     +leftbar
     +rightbar
@@ -103,6 +106,8 @@ body
         +app
         +gridstack
 
+template(name='comet')
+    #comet.ui.button.doit
 
 template(name='gridstack')
     .ui.button.make

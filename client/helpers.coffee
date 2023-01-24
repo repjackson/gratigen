@@ -3,6 +3,10 @@ Template.registerHelper 'cal_time', (input)-> moment(input).calendar()
 Template.registerHelper 'comma', (input) ->
     input.toLocaleString("en-US")
 
+Template.registerHelper 'current_chat', () ->
+    # console.log @
+    if Meteor.user()
+        Meteor.user().username
 Template.registerHelper 'modal_doc', () ->
     if Meteor.user()
         delta = Docs.findOne {_id:Meteor.user().delta_id}

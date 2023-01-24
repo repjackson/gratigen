@@ -432,6 +432,11 @@ Template.app.events
         #     $addToSet:
         #         _doc_history:@_id
 
+Template.comet.helpers 
+    current_chat: ->
+        console.log Meteor.user().username
+
+
 Template.add_model_doc_button.events 
     'click .add_model_doc': ->
         new_id = 
