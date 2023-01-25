@@ -4,16 +4,8 @@
 @current_markers = new ReactiveArray []
 
 
-Accounts.ui.config({
-  requestPermissions: {
-    facebook: ['user_likes'],
-    github: ['user', 'repo']
-  },
-  requestOfflineToken: {
-    google: true
-  },
-  passwordSignupFields: 'USERNAME_AND_OPTIONAL_EMAIL'
-});
+Template.app.events
+    'click .hithere':-> console.log 'hi'
 
 
 # Template.gridstack.onRendered ->

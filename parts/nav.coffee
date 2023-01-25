@@ -292,8 +292,9 @@ if Meteor.isServer
                 roles:1
                 
     Meteor.publish 'history', ->
-        Docs.find 
-            _id: $in: Meteor.user().doc_history
+        if Meteor.user()
+            Docs.find 
+                _id: $in: Meteor.user().doc_history
     Meteor.publish 'models', ->
         Docs.find 
             model:'model'

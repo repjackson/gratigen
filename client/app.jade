@@ -107,8 +107,8 @@ body
     // if currentUser.show_modelbar
     .pusher
         +app
-        +comet
-        +gridstack
+        // +comet
+        // +gridstack
 
 template(name='comet')
     #comet.ui.circular.basic.icon.button.doit(title='init chat')
@@ -215,22 +215,23 @@ template(name='gridstack')
 template(name='app')
     if Template.subscriptionsReady
         +nav
-        +delta_nav
-        // #draggable
-        // if currentUser.show_leftbar
-        // if currentUser.show_rightbar
-        if currentUser.delta_id
-            // .ui.small.compact.attached.menu.hscroll
-            // .icon.item(title="#{doc_history.length} node history")
-            // .ui.hidden.divider
-            // .ui.bottom.attached.tab.segment.centered(data-tab=current_delta._id)
-            .ui.attached.small.menu.hscroll
-                .item
-                    i.large.clock.icon(title='node history')
-                    |#{current_delta._doc_history.count}
-                // .ui.breadcrumb.hscroll
-                each current_delta._doc_history.reverse
-                    +doc_history_button
+        if currentUser
+            +delta_nav
+            // #draggable
+            // if currentUser.show_leftbar
+            // if currentUser.show_rightbar
+            if currentUser.delta_id
+                // .ui.small.compact.attached.menu.hscroll
+                // .icon.item(title="#{doc_history.length} node history")
+                // .ui.hidden.divider
+                // .ui.bottom.attached.tab.segment.centered(data-tab=current_delta._id)
+                .ui.attached.small.menu.hscroll
+                    .item
+                        i.large.clock.icon(title='node history')
+                        |#{current_delta._doc_history.count}
+                    // .ui.breadcrumb.hscroll
+                    each current_delta._doc_history.reverse
+                        +doc_history_button
         .layout.scrolling
             with currentUser
                 // if ct.length

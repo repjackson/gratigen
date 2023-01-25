@@ -226,7 +226,7 @@ body {
 .invert {
   /*filter: invert(1)*/
 }
-img, .image {
+img, .image, .button {
   filter: invert(1) !important;
 }
 

@@ -1,8 +1,9 @@
 if Meteor.isClient
     Template.login.onCreated ->
-        Session.set 'username', null
+        Session.setDefault 'username', null
 
-    Template.login.events
+    Template.app.events
+        'click .hithere':-> console.log 'hi'
         'click .register':->
             Meteor.call 'change_state', {_template:'register'}, ->
         'keyup .username': ->
@@ -20,8 +21,9 @@ if Meteor.isClient
                 if res
                     Session.set('enter_mode', 'login')
 
-        'click .enter': (e,t)->
-            e.preventDefault()
+        'click .login_button': (e,t)->
+            # e.preventDefault()
+            console.log 'hi'
             username = $('.username').val()
             password = $('.password').val()
             options = {
@@ -70,10 +72,10 @@ if Meteor.isClient
         username: -> Session.get 'username'
         logging_in: -> Session.equals 'enter_mode', 'login'
         enter_class: ->
-            if Session.get('username') and Session.get('username').length
-                if Meteor.loggingIn() then 'loading disabled' else ''
-            else
-                'disabled'
+            if Meteor.loggingIn() then 'loading disabled' else ''
+            # if Session.get('username') and Session.get('username').length
+            # else
+            #     'disabled'
         is_logging_in: -> Meteor.loggingIn()
         
         

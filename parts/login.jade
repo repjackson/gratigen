@@ -3,11 +3,10 @@ template(name='login')
         .centered.row
             .eight.wide.column
                 // img.ui.image(src="{{c.url 'kitchen_logo' gravity='face' crop='fill'}}")
-                .ui.massive.center.aligned.header
+                .ui.massive.center.aligned.header.hithere
                     img.ui.circular.image(src="/logo.png")
                     // +ibig name='network'
                     |gratigen login
-                +loginButtons
                 unless Template.subscriptionsReady
                     i.massive.refresh.loading.icon
                 else 
@@ -27,7 +26,8 @@ template(name='login')
                     //- if username
                     //- if logging_in
                     .ui.hidden.divider
-                    .ui.fluid.big.green.button.enter(title="login #{username}" class=enter_class)
+                    // .ui.fluid.big.green.button.enter(title="login #{username}" class=enter_class)
+                    .ui.fluid.big.green.button.login_button(title="login #{username}")
                         +i name='internal' cl='ui mini inline image'
                         |login
                         strong #{username}
