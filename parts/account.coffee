@@ -182,7 +182,6 @@ if Meteor.isClient
         #     $('.button').popup()
         # , 2000
 
-    Template.registerHelper 'current_user', () -> Meteor.users.findOne username:Template.parentData().username
 
     # Template.phone_editor.helpers
     #     'newNumber': ->

@@ -397,14 +397,19 @@ Template.nav.events
     'click .goto_profile': ->
         console.log 'profile'
         # delta = Docs.findOne Meteor.user().delta_id
+        if @_id 
+            user = Meteor.users.findOne @_id
+        else 
+            user = Meteor.user()
         if Meteor.user().delta_id
             Docs.update Meteor.user().delta_id,
                 $set:
                     _template:'profile_layout'
-                    _username:Meteor.user().username
-                    _user_id:Meteor.userId()
+                    _username:user.username
+                    _user_id:user._id
                 $addToSet:
-                    _doc_history:'profile'
+                    _doc_history:user._id
+            
 Template.app.events 
     'click .edit_this': ->
         console.log 'editoing to', @title

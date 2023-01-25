@@ -52,8 +52,8 @@ if Meteor.isClient
     #         "user_#{Template.parentData().group}"
 
     Template.profile_layout.helpers
-        current_user: ->
-            Meteor.users.findOne username:Template.parentData().username
+        # current_user: ->
+        #     Meteor.users.findOne username:Template.parentData().username
         user: ->
             Meteor.users.findOne username:Template.parentData().username
         sponsored_by_users: ->
@@ -80,7 +80,7 @@ if Meteor.isClient
             Meteor.logoutOtherClients()
 
         'click .logout': ->
-            gstate_set '/login'
+            Meteor.call 'template', 'login', ->
             Meteor.logout()
             
     Template.locate_me.events

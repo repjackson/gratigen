@@ -26,6 +26,7 @@ Template.registerHelper 'parent_doc', () ->
     # Template.parentData()
 
 Template.registerHelper 'isActivePath', () ->
+Template.registerHelper 'isActiveRoute', () ->
 Template.registerHelper 'is_active_template', () ->
     false
     # if @template is Meteor.user().current_template

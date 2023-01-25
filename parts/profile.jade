@@ -1,16 +1,15 @@
 template(name='profile_layout')
-    .ui.header profile
     with current_user
         img.ui.image.checkin_banner(src="{{c.url image_id2 width=1000 }}")
         .ui.stackable.padded.grid
             .row
                 .four.wide.column.scrolling
-                    a.ui.big.circular.button.fly_left(href='/users')
+                    a.ui.big.circular.button.fly_left.change_template(data-template='users')
                         i.users.icon
                         // +i name='groups'
                         |users
                     .spacer
-                    a.item.mobile.hidden(href="/user/#{username}")
+                    a.item.mobile.hidden.ch(href="/user/#{username}")
                         img.ui.circular.centered.image(src="{{c.url image_id height=400 width=400 gravity='face' crop='fill'}}")
                     .ui.center.aligned.header.mobile.hidden
                         strong #{name}

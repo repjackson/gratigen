@@ -55,7 +55,7 @@ template(name='users')
 
 
 template(name='user_card')
-    a.ui.card.zoomer.fly_left(href="/user/#{username}")
+    a.ui.card.zoomer.fly_left.goto_profile
         unless avatar_image_id
             img.ui.centered.image(class=currentUser.invert_class src="{{c.url image_id width=400 height=400 gravity='face' crop='fill'}}")    
         // if avatar_image_id
