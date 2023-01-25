@@ -8,8 +8,8 @@ body {
     /*font-size: 110% !important; */
     /*line-height: 200% !important;*/
     /*transition: all 1s ease-in-out !important;*/
-    filter: invert(.9) !important;
-    background: rgba(0,0,0,.9) !important; 
+    /*filter: invert(.9) !important;*/
+    /*background: rgba(0,0,0,.9) !important; */
 }
 
 
@@ -211,7 +211,7 @@ body {
   
 /**/
 .darkmode {
-  filter: invert(1) !important;
+  /*filter: invert(1) !important;*/
 }
 
 .input {
@@ -221,10 +221,10 @@ body {
   /*background: rgba(0,0,0,1) !important; */
 /*}*/
 .invert {
-  filter: invert(1)
+  /*filter: invert(1)*/
 }
 img {
-  filter: invert(1) !important;
+  /*filter: invert(1) !important;*/
 }
 
 .hscroll{

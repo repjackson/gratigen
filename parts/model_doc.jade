@@ -17,6 +17,7 @@ template(name='model_doc_view')
                         |fields
                     if cd.edit_mode
                         +array_edit key='_keys' direct=true
+                        +field_edit
                     else 
                         .smallscroll
                             +array_view key='_keys' direct=true

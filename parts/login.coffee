@@ -3,6 +3,8 @@ if Meteor.isClient
         Session.set 'username', null
 
     Template.login.events
+        'click .register':->
+            Meteor.call 'change_state', {_template:'register'}, ->
         'keyup .username': ->
             username = $('.username').val()
             Session.set 'username', username
@@ -37,7 +39,7 @@ if Meteor.isClient
                     # console.log res
                     $(e.currentTarget).closest('.grid').transition('fly right', 500)                    
                     Meteor.setTimeout ->
-                        gstate_set "/"
+                        Meteor.call 'change_state',{_template:'home'}, ->
                     , 500
                     # gstate_set "/user/#{username}"
 
@@ -60,14 +62,15 @@ if Meteor.isClient
                             })
                         else
                             # gstate_set "/user/#{username}"
-                            gstate_set "/"
+                            Meteor.call 'change_state',{_template:'home'}, ->
+                            # gstate_set "/"
 
 
     Template.login.helpers
         username: -> Session.get 'username'
         logging_in: -> Session.equals 'enter_mode', 'login'
         enter_class: ->
-            if Session.get('username').length
+            if Session.get('username') and Session.get('username').length
                 if Meteor.loggingIn() then 'loading disabled' else ''
             else
                 'disabled'
@@ -154,7 +157,7 @@ if Meteor.isClient
                     #         # last_name: Session.get('last_name')
                     #         # app:'nf'
                     #         username:username
-                    gstate_set "/user/#{username}"
+                    Meteor.call 'change_state', {_template:'profile', _user_id:Meteor.userId()}, ->
                     # Meteor.loginWithPassword username, password, (err,res)=>
                     #     if err
                     #         alert err.reason

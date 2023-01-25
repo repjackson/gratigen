@@ -400,11 +400,32 @@ Template.nav.events
         if Meteor.user().delta_id
             Docs.update Meteor.user().delta_id,
                 $set:
-                    _template:'profile'
+                    _template:'profile_layout'
                     _username:Meteor.user().username
+                    _user_id:Meteor.userId()
                 $addToSet:
                     _doc_history:'profile'
 Template.app.events 
+    'click .edit_this': ->
+        console.log 'editoing to', @title
+        # delta = Docs.findOne Meteor.user().delta_id
+        if @model is 'model'
+            Docs.update Meteor.user().delta_id,
+                $set:
+                    _template:'delta'
+                    _doc_id:@_id
+                    _model:@slug
+                    edit_mode:true
+                $addToSet:
+                    _doc_history:@_id
+        else 
+            Docs.update Meteor.user().delta_id,
+                $set:
+                    _template:'model_doc_view'
+                    _doc_id:@_id
+                    edit_mode:true
+                $addToSet:
+                    _doc_history:@_id
     'click .goto_doc': ->
         console.log 'going to', @title
         # delta = Docs.findOne Meteor.user().delta_id

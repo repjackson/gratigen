@@ -409,7 +409,11 @@ Template.registerHelper 'is_dev', () ->
 
 # Template.registerHelper 'is_eric', () -> if Meteor.userId() and Meteor.userId() in ['ytjpFxiwnWaJELZEd','rDqxdcTBTszjeMh9T'] then true else false
 
-Template.registerHelper 'current_user', () ->  Meteor.users.findOne username:Meteor.user().username
+Template.registerHelper 'current_user', () ->  
+    d = Docs.findOne Meteor.user().delta_id
+    if d 
+        Meteor.users.findOne d._user_id
+        
 Template.registerHelper 'is_current_user', () ->
     if Meteor.user()
         if Meteor.user().username is Meteor.user().username

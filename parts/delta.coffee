@@ -392,7 +392,7 @@ if Meteor.isClient
                 # Meteor.call 'change_state', "/m/#{model.slug}/#{new_doc_id}/edit", ->
                 Meteor.call 'change_state', 
                     {
-                        _template: model_doc_view,
+                        _template: 'model_doc_view',
                         _model: model.slug 
                         _doc_id:new_doc_id
                     }, ->

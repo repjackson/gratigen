@@ -8,6 +8,10 @@ Meteor.publish 'current_doc', ->
     d = Docs.findOne Meteor.user().delta_id 
     Docs.find 
         _id:d._doc_id
+Meteor.publish 'current_user', ->
+    d = Docs.findOne Meteor.user().delta_id 
+    Meteor.users.find 
+        _id:d._user_id
 Meteor.publish 'current_model', ->
     d = Docs.findOne Meteor.user().delta_id 
     Docs.find 

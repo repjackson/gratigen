@@ -3,13 +3,13 @@ template(name='delta')
         .ui.segment
             +model_edit
     if currentUser.admin_mode
-        +grid_layout
+        // +grid_layout
 
     // else 
     .ui.stackable.padded.grid
         if currentUser.admin_mode
             unless current_delta 
-                .ui.button.create_delta 
+                .ui.button.create_delta
                     |+ delta
             unless _model
                 .ui.button.create_model
@@ -27,7 +27,7 @@ template(name='delta')
                 .row
                     each widget_docs
                         div(class=column_class)
-                            .ui.header i'm a colum #{column_width} wide
+                            .ui.header i'm a column #{column_width} wide
             .row
                 // if _model.show_facets
                 //     .four.wide.colum
@@ -315,6 +315,8 @@ template(name='delta_result_card')
                         +i name=icon color=icon_color
                     if title 
                         a.ui.inline.header.goto_doc #{title}
+                    if author
+                        img.ui.avatar.image(src="{{c.url _author.image_id}}")
                     if image_id
                         img.ui.image(src="{{c.url image_id width=500 height=500}}")
 
@@ -337,7 +339,7 @@ template(name='delta_result_card')
                         //     |#{app}
                 else
                     if can_edit
-                        a.ui.icon.button(href="/m/#{_model.slug}/#{_id}/edit" title='edit')
+                        a.ui.icon.button.edit_this
                             i.pencil.large.icon
                             //- |edit
                     //- a.ui.icon.large.button(href="/m/#{_model.slug}/#{_id}/view" title='view')
@@ -368,7 +370,7 @@ template(name='delta_list')
                         
 template(name='set_limit')
     // .item.set_limit #{amount}
-    .ui.compact.button.set
+    .ui.compact.basic.button.set
         |#{amount}
 
 template(name='set_view_mode')

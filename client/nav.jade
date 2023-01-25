@@ -1,0 +1,151 @@
+template(name='nav')
+    // https://fomantic-ui.com/elements/icon.html#/icon
+    //#topnav.topnav
+    #topnav.ui.attached.menu.topnav.hscroll.ani(class=invert_class)
+        a.icon.item.toggle_leftbar.zoomer(title='toggle leftbar')
+            i.bars.large.icon
+        // .item
+        //     +loginButtons
+        a.header.image.item.zoomer.set_home(class="{{isActivePath 'home'}}" title='gratihome')
+            if is_loading
+                .icon.item
+                    i.big.loading.grey.refresh.icon.cancel
+            else 
+                img.ui.mini.circular.image.zoomer(src="/logo.png")
+            // span.mobile.hidden Gratigen
+        a.icon.item.toggle_modelbar.zoomer(class=modelbar_class)
+            i.cubes.large.icon
+        // a.icon.item.toggle_taskbar.zoomer(class=taskbar_class)
+        //     i.tasks.large.icon
+        // a.icon.item.toggle_orgbar.zoomer(class=orgbar_class)
+        //     i.fire.large.icon
+        if currentUser.admin
+            +toggle_nav_item key='admin_mode' icon='shield' label='admin mode'
+        // +nav_item template='users' icon='users' label='users' hide_label=true
+        // +nav_item template='reddit' icon='reddit' label='reddit'
+
+        // +nav_item template='/m/model' icon='cubes' label='models'
+        // a.icon.item.zoomer(href='/m/model' title='delta')
+        //     i.large.database.icon
+        // if currentUser.admin_mode
+        //     +nav_item template='dev' icon='network' label='dev'
+        // .item
+        //     with model_doc 'global'
+        //         |#{latest_info}
+        //         if currentUser.admin_mode
+        //             +text_edit key='latest_info' direct=true
+        // .ui.input.item
+        .input.item
+            .ui.icon.large.input.search_bar
+                input.global_search(type='text' placeholder='add/request/search...')
+                i.search.icon
+
+        // a.icon.item.zoomer.goto_add.toggle_addbar(title='add new doc')
+        // a.icon.item.zoomer.toggle_addbar(title='add new doc')
+        //     i.large.play.circular.icon
+        a.icon.item.zoomer.goto_add(title='add new doc')
+            i.large.play.icon
+        // +toggle_nav_item key='invert_mode' icon='lightbulb' label='invert mode'
+        .right.menu
+            if unread_count
+                a.item.alerts.select_term(href="#" class=alert_toggle_class)
+                    i.large.bell.icon
+                    if unread_count
+                        |#{unread_count}
+            else
+                a.icon.item(href="/inbox" class="{{is_active_template 'inbox'}}")
+                    i.large.outline.bell.icon
+            a.icon.item.zoomer.popout_chat
+                if unread_chat_messages
+                    i.large.teal.chat.icon
+                    small #{unread_chat_messages.count}
+                else 
+                    i.large.chat.outline.icon
+            if currentUser
+                // a.item(href="/user/#{currentUser.username}/credit" class="{{is_active_template regex='user_credit'}}" title='your credits')
+                if currentUser.cart_item_count.length
+                    a.item.toggle_cartbar(title='current cart balance')
+                        |#{currentUser.cart_item_count}
+                        i.shopping.cart.large.icon
+                a.item.toggle_coinbar(title='current wallet balance')
+                    // i.coins.large.icon
+                    // |&nbsp;
+                    |#{currentUser.points}p
+                a.item.goto_profile(class=user_nav_button_class title='profile')
+                    if currentUser.image_id
+                        img.ui.avatar.image(src="{{c.url currentUser.image_id width=200 height=200 gravity='face' crop='fill'}}")
+                    else
+                        i.user.icon
+                    strong #{currentUser.name}
+                a.icon.item.toggle_rightbar.no_blink
+                    // .ui.avatar.image
+                    //     if currentUser.image_id
+                    //         img.ui.mini.inline.image(src="{{c.url currentUser.image_id width=200 height=200 gravity='face' crop='fill'}}")
+                    //     else
+                    //         i.user.large.icon
+                    // strong.mobile.hidden #{currentUser.name}
+                    i.bars.large.grey.icon
+            unless subs_ready
+                .icon.item
+                    i.fork.large.loading.icon
+            unless currentUser
+                a.item.goto_template(data-template='register' title='register')
+                    +i name='plus'
+                    span.mobile.hidden register            
+                a.item.goto_template(data-template='login' title='login') 
+                    // i.sign.in.large.icon
+                    +i name='internal'
+                    span.mobile.hidden login
+            if currentUser.viewing_coinbar
+                +coinbar
+    if currentUser.show_secnav
+        +secnav
+
+
+
+template(name='footer')
+    // if currentUser.admin_mode
+    .ui.segment.grid
+        .eight.wide.column.smallscroll
+            +loginButtons
+            .ui.header 
+                i.shield.icon
+                |footer 
+            with current_delta
+                +comments
+                +text_edit key='_template' label='_template' direct=true
+                div
+                +text_edit key='_model' label='_model' direct=true
+                +text_edit key='_user_id' label='user_id' direct=true
+                +text_edit key='_username' label='username' direct=true
+                div
+                +text_edit key='_doc_id' label='_doc_id' direct=true
+                +boolean_edit key='show_leftbar' label='leftbar' direct=true
+                +boolean_edit key='show_rightbar' label='rightbar' direct=true
+                +boolean_edit key='show_modelbar' label='sidebar modelbar' icon='cubes' direct=true
+                +boolean_edit key='show_secnav' label='secnav modelbar' icon='network' direct=true
+                
+            .ui.header 
+                i.users.icon 
+                |users
+            each user_docs 
+                .ui.large.basic.button #{username}
+        .eight.wide.column.smallscroll
+            .ui.header 
+                i.database.icon
+                |#{doc_docs.count} docs 
+            .smallscroll
+                each doc_docs
+                    a.ui.compact.basic.button.print_me #{title} 
+                        .ui.basic.label
+                            |#{model}
+        .eight.wide.column.smallscroll
+            .ui.header 
+                i.yin.yang.icon
+                |#{result_docs.count} docs 
+            .smallscroll
+                each result_docs
+                    a.ui.compact.small.basic.label.print_me #{title} 
+                        .ui.basic.label
+                            |#{model}: #{name}
+                            
