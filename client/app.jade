@@ -17,9 +17,13 @@ head
     
     
     link(rel='stylesheet' type='text/css' href='https://cdn.jsdelivr.net/npm/fomantic-ui@2.9.0/dist/semantic.min.css')
-    link(href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet")
-    link(href="https://fonts.googleapis.com/css?family=Varela+Round&display=swap" rel="stylesheet")
-    link(href="https://fonts.googleapis.com/css?family=Ubuntu:300,400&display=swap" rel="stylesheet")
+    // link(href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet")
+    // link(href="https://fonts.googleapis.com/css?family=Varela+Round&display=swap" rel="stylesheet")
+    link(href="https://fonts.googleapis.com/css?family=Inconsolata&300,400&display=swap" rel="stylesheet")
+    link(href="https://fonts.googleapis.com/css?family=Marmelad&300,400&display=swap" rel="stylesheet")
+    link(href="https://fonts.googleapis.com/css?family=Bangers&300,400&display=swap" rel="stylesheet")
+    link(href="https://fonts.googleapis.com/css?family=Kavoon&300,400&display=swap" rel="stylesheet")
+    // link(href="https://fonts.googleapis.com/css?family=Ubuntu:300,400&display=swap" rel="stylesheet")
     link(rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png")
     link(rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png")
     link(rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png")
@@ -103,10 +107,12 @@ body
     // if currentUser.show_modelbar
     .pusher
         +app
+        +comet
         +gridstack
 
 template(name='comet')
-    // #comet.ui.button.doit
+    #comet.ui.circular.basic.icon.button.doit(title='init chat')
+        i.large.chat.icon
 
 template(name='gridstack')
     .ui.button.make

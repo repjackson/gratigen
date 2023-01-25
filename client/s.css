@@ -4,12 +4,12 @@ body {
     /* font-family: 'Ubuntu+Mono', sans-serif !important; */
     /*font-family: 'Varela Round', sans-serif !important;*/
     /*font-family: 'Goudy Bookletter 1911', sans-serif !important;*/
-    font-family: 'Ubuntu', sans-serif !important;
+    font-family: 'Bangers', sans-serif !important;
     /*font-size: 110% !important; */
     /*line-height: 200% !important;*/
     /*transition: all 1s ease-in-out !important;*/
-    /*filter: invert(.9) !important;*/
-    /*background: rgba(0,0,0,.9) !important; */
+    filter: invert(.9) !important;
+    background: rgba(0,0,0,.9) !important; 
 }
 
 
@@ -32,7 +32,7 @@ body {
   zoom: 80% !important;  
 }
 .ui.menu {
-    font-family: 'Ubuntu', sans-serif !important;
+    font-family: 'Bangers', sans-serif !important;
   
 }
 .modal {
@@ -161,8 +161,8 @@ body {
   animation: fadeIn 2s !important; 
 }
 
-.ui.header, .button{
-     font-family: 'Raleway', sans-serif !important; 
+.ui.header, .button, .item {
+     font-family: 'Bangers', sans-serif !important; 
      /*font-family: 'Ubuntu', sans-serif !important; */
      /*font-family: 'Varela Round' !important; */
     /*font-family: 'Goudy Bookletter 1911', sans-serif !important;*/
@@ -226,8 +226,8 @@ body {
 .invert {
   /*filter: invert(1)*/
 }
-img {
-  /*filter: invert(1) !important;*/
+img, .image {
+  filter: invert(1) !important;
 }
 
 .hscroll{

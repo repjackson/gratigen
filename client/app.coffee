@@ -350,6 +350,7 @@ Template.delta_nav.events
                 Docs.insert 
                     model:'delta'
                     name:name
+            Session.set('loading',true)
             Meteor.users.update Meteor.userId(),
                 $set:
                     delta_id:new_id
@@ -369,14 +370,18 @@ Template.delta_nav.events
                   hideMethod   : 'fade',
                   hideDuration : 250
                 })
+            Session.set('loading',false)
 
     'click .pick_delta': (e)->
+        Session.set('loading',true)
         if Meteor.user().delta_id and @_id is Meteor.user().delta_id
             Meteor.users.update({_id:Meteor.userId()},{$unset:delta_id:1})
             $(e.currentTarget).closest('.item').transition('shake', 500)
+            Session.set('loading',false)
         else 
             Meteor.users.update({_id:Meteor.userId()},{$set:delta_id:@_id})
             $(e.currentTarget).closest('.item').transition('bounce', 500)
+            Session.set('loading',false)
 
         # console.log @_id
         # console.log Meteor.user().delta_id
@@ -515,11 +520,19 @@ $.cloudinary.config
     cloud_name:"facet"
 Template.app.events
     'click .fly_out': -> 
-        Meteor.users.update({_id:Meteor.userId()}, {$set:flyout_doc_id:@_id})
+        # Meteor.users.update({_id:Meteor.userId()}, {$set:flyout_doc_id:@_id})
+        d=Docs.findOne Meteor.user().delta_id 
+        Docs.update Meteor.user().delta_id, 
+            $set:
+                flyout_doc_id:@_id
         $('.ui.flyout').flyout('toggle')
     'click .show_modal': ->
         console.log @
-        Meteor.users.update({_id:Meteor.userId()}, {$set:modal_doc_id:@_id})
+        Docs.update Meteor.user().delta_id, 
+            $set:
+                modal_doc_id:@_id
+        # $('.ui.flyout').flyout('toggle')
+        # Meteor.users.update({_id:Meteor.userId()}, {$set:modal_doc_id:@_id})
         $('.ui.modal').modal({
             inverted:true
             # blurring:true

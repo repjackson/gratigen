@@ -13,7 +13,11 @@ if Meteor.isClient
 
     Template.leftbar_item.events
         'click .click_item': ->
+            console.log @
             Meteor.call 'change_state', {_template:'delta',_model:@slug}, ->
+    # Template.model.events
+    #     'click .click_item': ->
+    #         Meteor.call 'change_state', {_template:'delta',_model:@slug}, ->
 
     Template.nav.onRendered ->
         Session.setDefault('invert_mode', true)

@@ -52,7 +52,11 @@ if Meteor.isClient
 
     Template.home_cloud.events
         'click .pick_tag': -> picked_tags.push @name
-        'click .unpick_tag': -> picked_tags.remove @valueOf()
+        'click .unpick_tag': -> 
+            Docs.update Meteor.user().delta_id, 
+                $pull:picked_tags:@valueOf()
+            # picked_tags.remove @valueOf()
+        
         'click #clear_tags': -> picked_tags.clear()
         
         'click .pick_model': -> picked_models.push @name

@@ -15,7 +15,8 @@ Template.registerHelper 'modal_doc', () ->
                 Docs.findOne delta._modal_doc_id
 Template.registerHelper 'flyout_doc', () ->
     if Meteor.user() and Meteor.user().flyout_doc_id
-        Docs.findOne Meteor.user().flyout_doc_id
+        delta = Docs.findOne {_id:Meteor.user().delta_id}
+        Docs.findOne delta.flyout_doc_id
 
 Template.registerHelper 'cd', () -> 
     if Meteor.user() and Meteor.user().delta_id
