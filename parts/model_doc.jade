@@ -3,12 +3,13 @@ template(name='model_doc_view')
         .ui.stackable.padded.grid
             .row
                 .four.wide.column.scrolling
-                    a.ui.circular.basic.large.button.back_to_model
-                        i.chevron.left.icon
-                        // i.big.icon(class=_model.icon)
-                        +i name=current_model.icon
-                        |#{current_model.title}
-                    // if can_edit
+                    with current_model
+                        a.ui.circular.basic.large.button.goto_model
+                            // i.chevron.left.icon
+                            // i.big.icon(class=_model.icon)
+                            +i name=icon color=stripped_icon_color
+                            |#{title}
+                        // if can_edit
                     with cd 
                         +boolean_edit key='edit_mode' direct=true 
                     div

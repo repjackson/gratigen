@@ -89,10 +89,10 @@ template(name='nav')
                 .icon.item
                     i.fork.large.loading.icon
             unless currentUser
-                a.item.goto_template(data-template='register' title='register')
+                a.item.set_template(data-template='register' title='register')
                     +i name='plus'
                     span.mobile.hidden register            
-                a.item.goto_template(data-template='login' title='login') 
+                a.item.set_template(data-template='login' title='login') 
                     // i.sign.in.large.icon
                     +i name='internal'
                     span.mobile.hidden login

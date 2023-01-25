@@ -8,7 +8,7 @@ template(name='account')
                         | #{current_user.first_name} #{current_user.last_name}
                     //- +i name='pencil'
                     .ui.small.inline.header @#{current_user.username}
-                    a.ui.green.icon.large.fluid.button.fly_left.invert(href="/user/#{current_user.username}/") 
+                    a.ui.green.icon.large.fluid.button.fly_left.invert.set_template(data-template='profile') 
                         i.checkmark.big.icon
                     .ui.hidden.divider
                     +image_edit key='image_id' icon='picture' title='profile image' direct=true

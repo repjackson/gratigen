@@ -27,14 +27,14 @@ template(name='profile_layout')
                         +i name='coins'
                         |#{user.points}p
                     if is_current_user
-                        a.ui.circular.big.button.goto_template(data-template='account' title='profile settings')
+                        a.ui.circular.big.button.set_template(data-template='account' title='profile settings')
                             i.cog.large.icon
                             |edit profile
                         // a.ui.button.logout_other_clients(href="#" title='logout other clients')
                         //     i.globe.icon
                         //     |log out other clients
                     else if is_admin
-                        a.ui.circular.button.goto_template(data-template='account' title='profile settings')
+                        a.ui.circular.button.set_template(data-template='account' title='profile settings')
                             +i name='settings' cl='ui avatar image'
                             |edit profile
                     // unless is_current_user

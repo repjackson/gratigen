@@ -706,10 +706,10 @@ if Meteor.isClient
     Template.model_doc_view.events
         'click .save_doc':->
             Meteor.call 'change_state', {_template:'model_doc_view',_doc_id:@_id}, ->
-    Template.model_doc_view.events
+    Template.app.events
         'click .edit_doc':->
             Meteor.call 'change_state', {_template:'model_doc_edit',_doc_id:@_id}, ->
-        'click .back_to_model': (e,t)->
+        'click .goto_model': (e,t)->
             console.log 'going to model'
             Session.set 'loading', true
             delta = Docs.findOne Meteor.user().delta_id

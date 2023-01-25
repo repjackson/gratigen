@@ -323,9 +323,9 @@ template(name='delta_result_card')
                         a.ui.inline.header.goto_doc
                             // .ui.grid
                             |#{title}
+            if image_id
+                img.ui.fluid.image(src="{{c.url image_id width=500 height=500}}")
             .content          
-                if image_id
-                    img.ui.image(src="{{c.url image_id width=500 height=500}}")
 
                 each fields
                     +Template.dynamic template=view_template
