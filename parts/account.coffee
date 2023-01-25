@@ -1,8 +1,8 @@
 if Meteor.isClient
-    Template.account_layout.onCreated ->
+    Template.account.onCreated ->
         @autorun -> Meteor.subscribe 'user_from_username', Template.parentData().username
 
-    Template.account_layout.onRendered ->
+    Template.account.onRendered ->
         Meteor.setTimeout ->
             $('.button').popup()
         , 2000
@@ -73,7 +73,7 @@ if Meteor.isClient
                                 toastr.success 'Your verification code does not match.'
 
 
-    Template.account_layout.events
+    Template.account.events
         'click .remove_user': ->
             if confirm "confirm delete #{@username}?  cannot be undone."
                 Meteor.users.remove @_id
@@ -173,11 +173,11 @@ if Meteor.isClient
                 
                 
 if Meteor.isClient
-    Template.account_layout.onCreated ->
+    Template.account.onCreated ->
         @autorun -> Meteor.subscribe 'user_from_username', Template.parentData().username
         # @autorun -> Meteor.subscribe 'user_from_id', Template.parentData().user_id
 
-    Template.account_layout.onRendered ->
+    Template.account.onRendered ->
         # Meteor.setTimeout ->
         #     $('.button').popup()
         # , 2000
@@ -187,7 +187,7 @@ if Meteor.isClient
     #     'newNumber': ->
     #         Phoneformat.formatLocal 'US', Meteor.user().profile.phone
 
-    Template.account_layout.events
+    Template.account.events
         'click .remove_user': ->
             if confirm "confirm delete #{@username}?  cannot be undone."
                 Meteor.users.remove @_id

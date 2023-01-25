@@ -15,20 +15,20 @@ Meteor.methods
                 Docs.update Meteor.user().delta_id, 
                     $addToSet: _doc_history:change_object._template
             
-    template: (template)->
+    set_template: (template)->
         # keys = _.keys change_object
         # console.log keys
         # console.log change_object
-        
-        delta = Docs.findOne Meteor.user().delta_id
-        # console.log route, model
-        # for key in keys 
-        #     console.log change_object[key]
-        Docs.update Meteor.user().delta_id,
-            $set:
-                _template:template
-            $addToSet: _doc_history:template
-        # if change_object._template
+        if Meteor.user()
+            delta = Docs.findOne Meteor.user().delta_id
+            # console.log route, model
+            # for key in keys 
+            #     console.log change_object[key]
+            Docs.update Meteor.user().delta_id,
+                $set:
+                    _template:template
+                $addToSet: _doc_history:template
+            # if change_object._template
             
     nuke_alpha: ->
         res = Docs.remove({model:'delta'},{multi:true})

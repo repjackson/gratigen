@@ -1,5 +1,4 @@
-template(name='account_layout')
-    +nav
+template(name='account')
     with current_user          
         //- img.ui.fluid.image.checkin_banner(src="{{c.url banner_image_id width=1000 height=500 crop='crop'}}")    
         .ui.stackable.padded.grid
@@ -25,8 +24,8 @@ template(name='account_layout')
                                 |delete user
                         +print_this
                 .twelve.wide.column.scrolling
-                    +yield
-
+                    // +Template.dynamic template=account_subtemplate
+                    +account_dashboard
 
 template(name='account_dashboard')
     .ui.grid

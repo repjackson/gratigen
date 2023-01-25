@@ -446,8 +446,13 @@ Template.app.events
                     _doc_id:@_id
                 $addToSet:
                     _doc_history:@_id
-    'click .goto_template': ->
+    'click .goto_template': (e,t)->
         console.log @
+        
+        # console.log e.currentTarget.attributes[1].value
+        Session.set('loading',true)
+        Meteor.call 'set_template', e.currentTarget.attributes[1].value, ->
+            Session.set('loading',false)
         # delta = Docs.findOne Meteor.user().delta_id
         # Docs.update Meteor.user().delta_id,
         #     $set:

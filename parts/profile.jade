@@ -27,13 +27,14 @@ template(name='profile_layout')
                         +i name='coins'
                         |#{user.points}p
                     if is_current_user
-                        a.ui.circular.big.icon.button(href="/user/#{username}/edit" title='profile settings')
+                        a.ui.circular.big.button.goto_template(data-template='account' title='profile settings')
                             i.cog.large.icon
+                            |edit profile
                         // a.ui.button.logout_other_clients(href="#" title='logout other clients')
                         //     i.globe.icon
                         //     |log out other clients
                     else if is_admin
-                        a.ui.circular.button(href="/user/#{username}/edit" title='profile settings')
+                        a.ui.circular.button.goto_template(data-template='account' title='profile settings')
                             +i name='settings' cl='ui avatar image'
                             |edit profile
                     // unless is_current_user
@@ -67,19 +68,19 @@ template(name='profile_layout')
                             .ui.basic.circular.button.send(title='send points')
                                 i.red.gift.large.icon
                                 span send pts
-                            // .ui.basic.circular.button.request(title='request points')
-                            //     i.concierge.bell.large.teal.icon
-                            //     span request
+                            .ui.basic.circular.button.request(title='request points')
+                                i.concierge.bell.large.teal.icon
+                                span request
                         else
                             .ui.disabled.basic.circular.button(title='send points')
                                 i.red.gift.large.icon
                                 span send pts
-                            // .ui.disabled.basic.circular.button(title='request points')
-                            //     i.concierge.bell.teal.icon
-                            //     span request
+                            .ui.disabled.basic.circular.button(title='request points')
+                                i.concierge.bell.teal.icon
+                                span request
                         a.ui.large.compact.basic.circular.icon.button(href="/user/#{username}/messages" class="{{isActiveRoute 'user_messages'}}" title="#{user.username} messages")
                             i.chat.large.blue.icon
-                            // | message
+                            | message
                     if Meteor.inDevelopment
                         +print_this
         
