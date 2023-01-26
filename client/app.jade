@@ -364,30 +364,30 @@ template(name='app')
 //         // +i name=icon color='ffffff' cl='ui avatar image'
           
           
-// template(name='delta_nav')
-//     // // .ui.top.attached.tabular.menu  
-//     // //     a.center.item.toggle_addmode.zoomer(data-tab='add' title='add thing')
-//     // //         +i name='play-button-circled--v1' color='40C057'
-//     //     // .active.item(data-tab='viewing')
-//     //     //     |viewing
-//     // .ui.attached.vertical.menu.hscroll
-//     //     .item 
-//     //         i.window.restore.icon
-//     //         |sessions
-//     //         |&nbsp;
-//     //         i.plus.circular.link.icon.add_session(title='make session')
-//     //     each model_docs_helper 'delta' 
-//     //         // a.item.pick_delta.pointer.zoomer(data-tab="#{_id}" class=delta_item_class title="switch to #{name} session")
-//     //         a.item.pick_delta.pointer.zoomer(data-tab="#{_id}" class="{{delta_item_class}} {{color}}")
-//     //             if editing_delta
-//     //                 +text_edit key='name' direct=true
-//     //             else 
-//     //                 |#{name}
-//     //             |&nbsp;
-//     //             each delta_users 
-//     //                 img.ui.avatar.image.supazuma(src="{{c.url image_id width=200 height=200 gravity='face' crop='fill'}}" title=username)
+template(name='delta_nav')
+    // .ui.top.attached.tabular.menu  
+    //     a.center.item.toggle_addmode.zoomer(data-tab='add' title='add thing')
+    //         +i name='play-button-circled--v1' color='40C057'
+        // .active.item(data-tab='viewing')
+        //     |viewing
+    .ui.attached.vertical.menu.hscroll
+        .item 
+            i.window.restore.icon
+            |sessions
+            |&nbsp;
+            i.plus.circular.link.icon.add_session(title='make session')
+        each model_docs_helper 'delta' 
+            // a.item.pick_delta.pointer.zoomer(data-tab="#{_id}" class=delta_item_class title="switch to #{name} session")
+            a.item.pick_delta.pointer.zoomer(data-tab="#{_id}" class="{{delta_item_class}} {{color}}")
+                if editing_delta
+                    +text_edit key='name' direct=true
+                else 
+                    |#{name}
+                |&nbsp;
+                each delta_users 
+                    img.ui.avatar.image.supazuma(src="{{c.url image_id width=200 height=200 gravity='face' crop='fill'}}" title=username)
 
-//     // //   border: 0px solid #d4d4d5;
+    // //   border: 0px solid #d4d4d5;
 
 
 
@@ -582,14 +582,10 @@ template(name='modelbar')
             i.cubes.icon
             |models
         each model_docs_helper 'model'
-            +leftbar_item
-            .ui.label #{title}
+            +i name=icon color=stripped_icon_color cl='ui avatar image'
+            span #{title}
         
             
-// template(name='leftbar_item')    
-//     a.item.zoomer.close_leftbar.click_item.toggle_modelbar
-//         +i name=icon color=stripped_icon_color cl='ui avatar image'
-//         span #{title}
                 
 // template(name='nav_thing_picker')
     // .search.item.zoomer.mobile.hidden(title='search')
