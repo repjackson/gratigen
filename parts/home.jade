@@ -1,17 +1,15 @@
 template(name='home')
     // if currentUser.admin_mode
     //     img.ui.fluid.image.home_banner(src="{{c.url 'gratigenlayout'}}" class=darkmode_class)
-    .ui.stackable.padded.divided.celled.grid.draggabl
-        .bordered(class=left_column_class)
+    .ui.stackable.padded.grid
+        .sixteen.wide.column.scrolling
+            // .bordered(class=left_column_class)
             // unless session_is 'expand_leftbar' true
-            img.ui.mini.circular.image.centered(src="{{c.url currentUser.image_id width=600 height=600 gravity='face' crop='fill'}}")
             .ui.header.centered
+                img.ui.avatar.image(src="{{c.url currentUser.image_id width=600 height=600 gravity='face' crop='fill'}}")
                 | #{currentUser.username}
-            .ui.small
                 | #{currentUser.points}pts
-            .ui.header
                 | #{currentUser.tagline}
-        .twelve.wide.column.scrolling
             .ui.one.column.grid     
                 .column
                     +home_cloud
@@ -159,18 +157,6 @@ template(name='home_cloud')
         //-     +inputAutocomplete settings=settings id="search" class="" autocomplete="off" 
         // .ui.hidden.fitted.divider
     .ui.inline.header 
-        i.tag.icon
-    //     |tags
-    if cd.picked_tags
-        // #clear_tags.ui.active.icon.large.circular.button
-        //     i.remove.icon
-        each cd.picked_tags
-            .unpick_tag.ui.active.large.circular.compact.button
-                strong #{this}
-    each result_helper 'tag'
-        +pick_result
-    div
-    .ui.inline.header 
         // i.cubes.icon
         +i name='network'
         |models
@@ -182,6 +168,18 @@ template(name='home_cloud')
                 strong #{this}
     each result_helper 'model'
         +pick_result
+    .ui.inline.header 
+        i.tag.icon
+    //     |tags
+    if cd.picked_tags
+        // #clear_tags.ui.active.icon.large.circular.button
+        //     i.remove.icon
+        each cd.picked_tags
+            .unpick_tag.ui.active.large.circular.compact.button
+                strong #{this}
+    each result_helper 'tag'
+        +pick_result
+    div
     div
     .ui.inline.header 
         +i name='t-shirt'

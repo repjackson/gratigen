@@ -246,14 +246,14 @@ template(name='app')
     //     // .batman
     //     i.tree.loading.blue.icon
     
-// template(name='history_bar')
-//     .ui.attached.small.menu.hscroll
-//         .item
-//             i.large.clock.icon(title='node history')
-//             |#{current_delta._doc_history.count}
-//         // .ui.breadcrumb.hscroll
-//         each current_delta._doc_history.reverse
-//             +doc_history_button
+template(name='history_bar')
+    .ui.attached.small.menu.hscroll
+        .item
+            i.large.clock.icon(title='node history')
+            |#{current_delta._doc_history.count}
+        // .ui.breadcrumb.hscroll
+        each current_delta._doc_history.reverse
+            +doc_history_button
     
     
     
