@@ -106,9 +106,9 @@ body
     // +global_flyout
     // +chat_flyout
     // if currentUser.show_modelbar
-    // .pusher
-    +app
-    // +comet
+    .pusher
+        +app
+        +comet
     // +gridstack
 
 template(name='comet')
@@ -216,26 +216,26 @@ template(name='gridstack')
 template(name='app')
     if Template.subscriptionsReady
         +nav
-        // if currentUser
+        if currentUser
             // #draggable
             // if currentUser.show_leftbar
             // if currentUser.show_rightbar
-            // if currentUser.delta_id
+            if currentUser.delta_id
                 // .ui.small.compact.attached.menu.hscroll
                 // .icon.item(title="#{doc_history.length} node history")
                 // .ui.hidden.divider
                 // .ui.bottom.attached.tab.segment.centered(data-tab=current_delta._id)
-                // +history_bar
+                +history_bar
         .layout.scrolling
             if currentUser
                 // if ct.length
-                // +Template.dynamic template=ct
-                +home
+                +Template.dynamic template=ct
+                // +home
             else 
-                +login
+                i.massive.snowflake.grey.loading.icon
+                // +login
                 // .ui.center.aligned.basic.segment
                 //     // .batman
-                //     i.massive.snowflake.grey.icon
                     // img.ui.centered.image.zoomer(src="/logo.png")
 
                 // +login
@@ -257,23 +257,23 @@ template(name='history_bar')
     
     
     
-// template(name='doc_history_button')
-//     with doc_from_id
-//         a.item.goto_doc.zoomer
-//             with parent_model
-//                 +i name=icon color=stripped_icon_color cl='ui avatar image'
-//             if image_id
-//                 img.ui.mini.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
-//             |{{truncated title}}
-//             // i.remove.link.icon.delete_history_item.zoomer(title='remove history record')
-//             // i.right.chevron.icon.divider
-//         .ui.popup 
-//             .ui.header
-//                 |#{title}
-//                 .ui.label #{model}
-//             if image_id
-//                 img.ui.small.image(src="{{c.url image_id width=400 height=400 gravity='face' crop='fill'}}")
-//             +author_info
+template(name='doc_history_button')
+    with doc_from_id
+        a.item.goto_doc.zoomer
+            with parent_model
+                +i name=icon color=stripped_icon_color cl='ui avatar image'
+            if image_id
+                img.ui.mini.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+            |{{truncated title}}
+            // i.remove.link.icon.delete_history_item.zoomer(title='remove history record')
+            // i.right.chevron.icon.divider
+        .ui.popup 
+            .ui.header
+                |#{title}
+                .ui.label #{model}
+            if image_id
+                img.ui.small.image(src="{{c.url image_id width=400 height=400 gravity='face' crop='fill'}}")
+            +author_info
 // template(name='global_flyout')
 //     with flyout_doc
 //         .ui.flyout
@@ -341,12 +341,13 @@ template(name='history_bar')
                             
                         
 template(name='add')
-    .ui.menu.smallscroll
+    .ui.center.aligned.basic.segment    
+        .ui.header add doc
         each model_docs_helper 'model'
             +add_model_doc_button 
             
 template(name='add_model_doc_button')
-    .item.add_model_doc.zoomer
+    .ui.tertiary.big.button.add_model_doc.zoomer
         +i name=icon color=stripped_icon_color
         |#{title}
         

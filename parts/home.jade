@@ -1,15 +1,16 @@
 template(name='home')
     // if currentUser.admin_mode
     //     img.ui.fluid.image.home_banner(src="{{c.url 'gratigenlayout'}}" class=darkmode_class)
-    .ui.stackable.padded.grid
-        .sixteen.wide.column.scrolling
+    .ui.sixteen.wide.stackable.padded.celled.grid
+       .two.wide.column
             // .bordered(class=left_column_class)
             // unless session_is 'expand_leftbar' true
             .ui.header.centered
                 img.ui.avatar.image(src="{{c.url currentUser.image_id width=600 height=600 gravity='face' crop='fill'}}")
                 | #{currentUser.username}
-                | #{currentUser.points}pts
+                // | #{currentUser.points}pts
                 | #{currentUser.tagline}
+        .ten.wide.column.scrolling        
             .ui.one.column.grid     
                 .column
                     +home_cloud
@@ -47,7 +48,7 @@ template(name='home')
                                     |mini_card
                                     
                 else if session_is 'view_mode' 'cards'
-                    .ui.two.stackable.cards.scrolling
+                    .ui.stackable.cards.scrolling
                             each doc_results
                                 +home_card
                 else
@@ -55,40 +56,39 @@ template(name='home')
                         .ui.centered.cards.one.scrolling
                             each doc_results
                                 +home_card
-        
         // .bordered(class=right_column_class)
-        .four.wide.column.scrolling
-            +online_users
-            // +chart
-            +my_things
-            // if session_is 'show_map' true
-            // +mapbox
-            // if session_is 'show_calendar' true 
-            +calendar_view
-            +online_allies
-               //.ui.container
-                    |my things
-                       // this needs to display list of "my_thing" (and its direct parent) corellated with search parameters, and click to pull up modal of thing
+        .four.wide.column
+            // +online_users
+            // // +chart
+            // +my_things
+            // // if session_is 'show_map' true
+            // // +mapbox
+            // // if session_is 'show_calendar' true 
+            // +calendar_view
+            // +online_allies
+            .ui.container
+                |my things
+                |this needs to display list of "my_thing" (and its direct parent) corellated with search parameters, and click to pull up modal of thing
         // +thing_maker
         // if current_thing.
         //     if _is 'model'_edit
         // [current_thing_type]_edit
         //     +thing_picker
         //      +eft_picker
-    .ui.modal 
-        with current_viewing_thing
-            .header #{title}
-            i.close.large.icon
-            .scrolling.content
-                if session_is 'editmode' true
-                    +Template.dynamic template=edit_template
-                else 
-                    +Template.dynamic template=view_template
-            .content 
-                a.ui.big.circular.icon.button(href='/m/#{model}/{_id}')
-                    i.chevron.right.icon   
-                .ui.button.button.toggle_editmode
-                    i.large.pencil.icon
+    // .ui.modal 
+    //     with current_viewing_thing
+    //         .header #{title}
+    //         i.close.large.icon
+    //         .scrolling.content
+    //             if session_is 'editmode' true
+    //                 +Template.dynamic template=edit_template
+    //             else 
+    //                 +Template.dynamic template=view_template
+    //         .content 
+    //             a.ui.big.circular.icon.button(href='/m/#{model}/{_id}')
+    //                 i.chevron.right.icon   
+    //             .ui.button.button.toggle_editmode
+    //                 i.large.pencil.icon
 
 template(name='my_things')
     .ui.segment

@@ -500,12 +500,12 @@ Template.comet.helpers
         console.log Meteor.user().username
 
 
-# Template.add_model_doc_button.events 
-#     'click .add_model_doc': ->
-#         new_id = 
-#             Docs.insert 
-#                 model:@slug 
-#         Meteor.call 'change_state',{ _template:'model_doc_edit', _model:@slug, _doc_id:new_id }, ->
+Template.add_model_doc_button.events 
+    'click .add_model_doc': ->
+        new_id = 
+            Docs.insert 
+                model:@slug 
+        Meteor.call 'change_state',{ _template:'model_doc_view', _model:@slug, _doc_id:new_id, edit_mode:true }, ->
 
 
 # # Meteor.users.find(_id:Meteor.userId()).observe({

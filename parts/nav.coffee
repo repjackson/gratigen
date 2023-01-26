@@ -28,6 +28,8 @@ if Meteor.isClient
             forcePosition:true
             preserve:true
             hoverable:true
+            closable:false
+            on:'click'
           })
 
         Session.setDefault('invert_mode', true)

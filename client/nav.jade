@@ -48,20 +48,20 @@ template(name='nav')
         //             +text_edit key='latest_info' direct=true
         // .ui.input.item
         // .input.item
-        .icon.item
+        .icon.item.set_template(data-template='search' title='search')
             i.search.icon
-        .ui.popup
-            .ui.icon.large.transparent.input.search_bar
-                input.global_search(type='text' placeholder='add/request/search...')
-                i.search.icon
+        // .ui.popup
+        //     .ui.icon.large.transparent.input.search_bar
+        //         input.global_search(type='text' placeholder='add/request/search...')
+        //         i.search.icon
 
         // a.icon.item.zoomer.goto_add.toggle_addbar(title='add new doc')
         // a.icon.item.zoomer.toggle_addbar(title='add new doc')
         //     i.large.play.circular.icon
-        a.icon.item.zoomer.goto_add
+        a.icon.item.zoomer.set_template(data-template='add' title='add')
             i.large.play.icon
-        .ui.popup
-            +add
+        // .ui.popup
+        //     +add
         // +toggle_nav_item key='invert_mode' icon='lightbulb' label='invert mode'
         // .right.menu
         .item 
@@ -82,7 +82,10 @@ template(name='nav')
             else 
                 i.large.chat.outline.icon
         .ui.popup
-            +chat
+            .ui.header chat
+            with cd
+                +comments
+            // +chat
         if currentUser
             // a.item(href="/user/#{currentUser.username}/credit" class="{{is_active_template regex='user_credit'}}" title='your credits')
             if currentUser.cart_item_count.length
