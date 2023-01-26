@@ -229,7 +229,7 @@ body {
 .invert {
   /*filter: invert(1)*/
 }
-img, .image, .button {
+img, .image, .button, .toast, .message {
   filter: invert(1) !important;
 }
 
@@ -237,7 +237,7 @@ img, .image, .button {
 	/*overflow-y:hidden;*/
 	overflow-x:scroll;
 	/*max-height:700px;*/
-	max-height:10em;
+	/*max-height:10em;*/
 	/*padding-top: 1em;*/
 	/*padding-left: 1em;*/
 }
@@ -254,7 +254,9 @@ img, .image, .button {
     font-size: .78571429rem;
 }
 
-
+.popup {
+  border-radius: 20px !important;
+}
 .checkin_banner {
     background-attachment: fixed !important;
     position: absolute !important;

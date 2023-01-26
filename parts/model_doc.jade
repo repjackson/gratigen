@@ -50,10 +50,15 @@ template(name='model_doc_view')
                     +comments
                     +viewing
                 .twelve.wide.column
+                    if cd.edit_mode 
+                        .ui.fluid.blue.message 
+                            .header 
+                                i.pencil.icon
+                                |editing mode
                     if header
                         .ui.header #{title}
                         
-                    .ui.three.column.stackable.grid.scrolling
+                    .ui.two.column.stackable.grid.scrolling
                         each _keys
                             .column
                                 +found_field
