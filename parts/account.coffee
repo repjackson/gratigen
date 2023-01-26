@@ -6,6 +6,10 @@ if Meteor.isClient
         Meteor.setTimeout ->
             $('.button').popup()
         , 2000
+    Template.nav.onRendered ->
+        Meteor.setTimeout ->
+            $('.item').popup()
+        , 2000
 
 
     Template.user_single_doc_ref_editor.onCreated ->

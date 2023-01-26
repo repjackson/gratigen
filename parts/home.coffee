@@ -101,14 +101,6 @@ if Meteor.isClient
 #                 _updated_timestamp:-1
 #             limit:10
         
-if Meteor.isClient
-    Template.dash_user_info.events 
-        'click .print_me': ->
-            console.log Meteor.user()
-            alert Meteor.user()
-            Meteor.call 'print_me', ->
-            Meteor.users.update Meteor.userId(),
-                $unset:updated:true
             
 if Meteor.isServer
     Meteor.methods 

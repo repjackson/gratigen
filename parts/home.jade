@@ -3,7 +3,14 @@ template(name='home')
     //     img.ui.fluid.image.home_banner(src="{{c.url 'gratigenlayout'}}" class=darkmode_class)
     .ui.stackable.padded.divided.celled.grid.draggabl
         .bordered(class=left_column_class)
-            +dash_user_info
+            // unless session_is 'expand_leftbar' true
+            img.ui.mini.circular.image.centered(src="{{c.url currentUser.image_id width=600 height=600 gravity='face' crop='fill'}}")
+            .ui.header.centered
+                | #{currentUser.username}
+            .ui.small
+                | #{currentUser.points}pts
+            .ui.header
+                | #{currentUser.tagline}
         .twelve.wide.column.scrolling
             .ui.one.column.grid     
                 .column
@@ -54,10 +61,10 @@ template(name='home')
         // .bordered(class=right_column_class)
         .four.wide.column.scrolling
             +online_users
-            +chart
+            // +chart
             +my_things
             // if session_is 'show_map' true
-            +mapbox
+            // +mapbox
             // if session_is 'show_calendar' true 
             +calendar_view
             +online_allies

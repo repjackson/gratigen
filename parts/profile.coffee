@@ -1,7 +1,7 @@
 if Meteor.isClient
     Template.user_credit.onCreated ->
-        @autorun -> Meteor.subscribe 'user_from_username', Template.parentData().username, ->
-        @autorun -> Meteor.subscribe 'user_read_docs', Template.parentData().username, ->
+        # @autorun -> Meteor.subscribe 'user_from_username', Template.parentData().username, ->
+        # @autorun -> Meteor.subscribe 'user_read_docs', Template.parentData().username, ->
     
     Template.user_credit.events 
         'click .calc_points': ->
@@ -15,8 +15,8 @@ if Meteor.isClient
             Docs.find 
                 read_by_user_ids: $in: [user._id]
     
-    Template.profile_layout.onCreated ->
-        @autorun -> Meteor.subscribe 'user_from_username', Template.parentData().username, ->
+    Template.profile.onCreated ->
+        # @autorun -> Meteor.subscribe 'user_from_username', Template.parentData().username, ->
         # @autorun -> Meteor.subscribe 'user_referenced_docs', Template.parentData().username, ->
 if Meteor.isServer 
     Meteor.publish 'user_bookmark_docs', ->
@@ -28,7 +28,7 @@ if Meteor.isServer
             read_by_user_ids: $in: [user._id]
 
 if Meteor.isClient 
-    Template.profile_layout.onRendered ->
+    Template.profile.onRendered ->
         Meteor.setTimeout ->
             $('.button').popup()
         , 2000
@@ -51,7 +51,7 @@ if Meteor.isClient
     #     user_section_template: ->
     #         "user_#{Template.parentData().group}"
 
-    Template.profile_layout.helpers
+    Template.profile.helpers
         # current_user: ->
         #     Meteor.users.findOne username:Template.parentData().username
         user: ->
@@ -66,7 +66,7 @@ if Meteor.isClient
                 sponsoring_ids:$in:[Meteor.userId()]
 
 
-    Template.profile_layout.events
+    Template.profile.events
         'click .sponsor': ->
             current_user = Meteor.users.findOne username:Template.parentData().username
             Meteor.users Meteor.userId(), 
@@ -150,11 +150,11 @@ if Meteor.isServer
                 
 if Meteor.isClient
     Template.user_credit.onCreated ->
-        @autorun => Meteor.subscribe 'user_by_username', Template.parentData().username
+        # @autorun => Meteor.subscribe 'user_by_username', Template.parentData().username
         # @autorun => Meteor.subscribe 'model_docs', 'deposit'
         # @autorun => Meteor.subscribe 'model_docs', 'reservation'
         # @autorun => Meteor.subscribe 'model_docs', 'withdrawal'
-        @autorun => Meteor.subscribe 'my_topups'
+        # @autorun => Meteor.subscribe 'my_topups'
         # if Meteor.isDevelopment
         #     pub_key = Meteor.settings.public.stripe_test_publishable
         # else if Meteor.isProduction

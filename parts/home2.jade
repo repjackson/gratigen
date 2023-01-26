@@ -18,35 +18,6 @@ template(name='side_menu_item')
         //     i.large.checkmark.icon
 
            
-template(name='dash_user_info') 
-        // unless session_is 'expand_leftbar' true
-        img.ui.mini.circular.image.centered(src="{{c.url currentUser.image_id width=600 height=600 gravity='face' crop='fill'}}")
-        .ui.header.centered
-            | #{currentUser.username}
-        .ui.small
-            | #{currentUser.points}pts
-        .ui.header
-            | #{currentUser.tagline}
-    // else     
-    //     a.ui.two.column.grid.zoomer(href="/user/#{currentUser.username}")
-    //         .column
-    //             img.ui.small.circular.image(src="{{c.url currentUser.image_id width=600 height=600 gravity='face' crop='fill'}}")
-    //         .column
-    //             .ui.header
-    //                 | #{currentUser.username}
-    //             .ui.small
-    //                 | #{currentUser.points}pts
-    //         div
-    //             .ui.header
-    //                 | #{currentUser.tagline}
-
-    // i.user.icon
-    // .ui.inline.header #{currentUser.name}
-    // strong #{currentUser.points}p
-    // div
-    // .ui.inline.header #{currentUser.tagline}
-        
-           
            
 template(name='filter_model')
     .ui.circular.secondary.basic.button.pick_model.zoomer(style="border-color:##{stripped_icon_color}" class=button_class color=stripped_icon_color)

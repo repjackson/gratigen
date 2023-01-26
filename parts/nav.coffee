@@ -1,11 +1,11 @@
 if Meteor.isClient
     Template.nav.onCreated ->
         @autorun => Meteor.subscribe 'me', ->
-        # @autorun => Meteor.subscribe 'current_user', ->
-        # @autorun => Meteor.subscribe 'current_delta', ->
-        # @autorun => Meteor.subscribe 'current_model', ->
-        # @autorun => Meteor.subscribe 'current_doc', ->
-        # @autorun => Meteor.subscribe 'users_min', ->
+        @autorun => Meteor.subscribe 'current_user', ->
+        @autorun => Meteor.subscribe 'current_delta', ->
+        @autorun => Meteor.subscribe 'current_model', ->
+        @autorun => Meteor.subscribe 'current_doc', ->
+        @autorun => Meteor.subscribe 'users_min', ->
         # # @autorun => Meteor.subscribe 'model_docs', 'model', ->
         # @autorun => Meteor.subscribe 'history',->
         # @autorun => Meteor.subscribe 'model_docs','delta',->
@@ -14,13 +14,13 @@ if Meteor.isClient
         # @autorun => Meteor.subscribe 'my_cart_order'
         # @autorun => Meteor.subscribe 'my_cart_products'
 
-    Template.leftbar_item.events
-        'click .click_item': ->
-            console.log @
-            Meteor.call 'change_state', {_template:'delta',_model:@slug}, ->
-    # Template.model.events
+    # Template.leftbar_item.events
     #     'click .click_item': ->
+    #         console.log @
     #         Meteor.call 'change_state', {_template:'delta',_model:@slug}, ->
+    # # Template.model.events
+    # #     'click .click_item': ->
+    # #         Meteor.call 'change_state', {_template:'delta',_model:@slug}, ->
 
     Template.nav.onRendered ->
         $('.item').popup({
@@ -28,13 +28,13 @@ if Meteor.isClient
           })
 
         Session.setDefault('invert_mode', true)
-    Template.secnav.events
-        'click .goto_model': ->
-            console.log @
-            Session.set 'loading', true
-            Meteor.call 'change_state', { _template:'delta', _model:@slug }, ->
-                Meteor.call 'set_facets', @slug, true, ->
-                    Session.set 'loading', false
+    # Template.secnav.events
+    #     'click .goto_model': ->
+    #         console.log @
+    #         Session.set 'loading', true
+    #         Meteor.call 'change_state', { _template:'delta', _model:@slug }, ->
+    #             Meteor.call 'set_facets', @slug, true, ->
+    #                 Session.set 'loading', false
 
         # Meteor.setTimeout ->
         #     $('.ui.dropdown').dropdown()
@@ -221,28 +221,20 @@ if Meteor.isClient
         #             show_rightbar:!Meteor.user().show_rightbar
             # Session.set('invert_mode', !Session.get('invert_mode'))
             # console.log Session.get('invert_mode')
-    Template.leftbar_item.events
-        'click .close_leftbar': ->
-            console.log Meteor.user().show_leftbar
-            Meteor.users.update Meteor.userId(),
-                $set:show_leftbar:false
-            # Session.set('invert_mode', !Session.get('invert_mode'))
-            # console.log Session.get('invert_mode')
-        
-    Template.toggle_nav_item.events 
-        'click .toggle': ->
-            if Meteor.user()["#{@key}"]
-                Meteor.users.update Meteor.userId(),
-                    $set:"#{@key}":false
-            else 
-                Meteor.users.update Meteor.userId(),
-                    $set:"#{@key}":true
-    Template.toggle_nav_item.helpers 
-        toggle_item_class: ->
-            if Meteor.user() and Meteor.user()["#{@key}"]
-                'active red'
-            else 
-                ''
+    # Template.toggle_nav_item.events 
+    #     'click .toggle': ->
+    #         if Meteor.user()["#{@key}"]
+    #             Meteor.users.update Meteor.userId(),
+    #                 $set:"#{@key}":false
+    #         else 
+    #             Meteor.users.update Meteor.userId(),
+    #                 $set:"#{@key}":true
+    # Template.toggle_nav_item.helpers 
+    #     toggle_item_class: ->
+    #         if Meteor.user() and Meteor.user()["#{@key}"]
+    #             'active red'
+    #         else 
+    #             ''
 
         
     Template.nav.helpers
