@@ -2,8 +2,8 @@ template(name='nav')
     // https://fomantic-ui.com/elements/icon.html#/icon
     //#topnav.topnav
     #topnav.ui.attached.menu.topnav.hscroll.ani(class=invert_class)
-        // a.icon.item.toggle_leftbar.zoomer(title='toggle leftbar')
-        //     i.bars.large.icon
+        a.icon.item.toggle_leftbar.zoomer(title='toggle leftbar')
+            i.bars.large.icon
         a.header.image.item.zoomer.set_home(class="{{is_template 'home'}}" title='gratihome')
             if is_loading
                 // .icon.item
@@ -17,16 +17,9 @@ template(name='nav')
         // a.icon.item.toggle_modelbar.zoomer(class=modelbar_class)
         //     i.cubes.large.grey.icon
             // +i name='network' color='FFFFFF'
-        .ui.popup
-            +modelbar
-        a.icon.item.toggle_deltanav.zoomer(class=modelbar_class)
-            i.window.restore.large.grey.icon
-        .ui.popup
-            +delta_nav
-        a.icon.item.toggle_historynav.zoomer(class=modelbar_class)
-            i.history.large.grey.icon
-        .ui.popup
-            +history_bar
+        +toggle_nav_item key='show_modelbar' icon='cubes' label='show modelbar'
+        +toggle_nav_item key='show_deltanav' icon='window restore' label='show delta nav' color='ffffff'
+        +toggle_nav_item key='show_historynav' icon='history' label='show history nav'
         // a.icon.item.toggle_taskbar.zoomer(class=taskbar_class)
         //     i.tasks.large.icon
         // a.icon.item.toggle_orgbar.zoomer(class=orgbar_class)
@@ -81,10 +74,6 @@ template(name='nav')
                 small #{unread_chat_messages.count}
             else 
                 i.large.chat.outline.icon
-        .ui.popup
-            .ui.header chat
-            with cd
-                +comments
             // +chat
         if currentUser
             // a.item(href="/user/#{currentUser.username}/credit" class="{{is_active_template regex='user_credit'}}" title='your credits')
@@ -99,22 +88,22 @@ template(name='nav')
             .ui.popup 
                 +user_credit
             // a.item.goto_profile(class=user_nav_button_class title='profile')
-            a.item.goto_profile
+            a.item.set_template(data-template='profile')
                 if currentUser.image_id
                     img.ui.avatar.image(src="{{c.url currentUser.image_id width=200 height=200 gravity='face' crop='fill'}}")
                 else
                     i.user.icon
                 strong #{currentUser.name}
-            .ui.popup
-                +profile_small
-            // a.icon.item.toggle_rightbar.no_blink
-            //     // .ui.avatar.image
-            //     //     if currentUser.image_id
-            //     //         img.ui.mini.inline.image(src="{{c.url currentUser.image_id width=200 height=200 gravity='face' crop='fill'}}")
-            //     //     else
-            //     //         i.user.large.icon
-            //     // strong.mobile.hidden #{currentUser.name}
-            //     i.bars.large.grey.icon
+            // .ui.popup
+            //     +profile_small
+            a.icon.item.toggle_rightbar.no_blink
+                // .ui.avatar.image
+                //     if currentUser.image_id
+                //         img.ui.mini.inline.image(src="{{c.url currentUser.image_id width=200 height=200 gravity='face' crop='fill'}}")
+                //     else
+                //         i.user.large.icon
+                // strong.mobile.hidden #{currentUser.name}
+                i.bars.large.grey.icon
         unless currentUser
             a.item.set_template(data-template='register' title='register')
                 +i name='plus'
@@ -123,10 +112,16 @@ template(name='nav')
                 // i.sign.in.large.icon
                 +i name='internal'
                 span.mobile.hidden login
-        // if currentUser.viewing_coinbar
-        //     +coinbar
-    // if currentUser.show_secnav
-    //     +secnav
+    if currentUser.show_coinbar
+        +coinbar
+    if currentUser.show_deltanav
+        +delta_nav
+    if currentUser.show_historynav
+        +history_bar
+    if currentUser.show_modelbar
+        +modelbar
+    if currentUser.show_secnav
+        +secnav
 
 
 template(name='profile_small')
@@ -178,3 +173,9 @@ template(name='footer')
                         .ui.basic.label
                             |#{model}: #{name}
                             
+
+
+template(name='toggle_nav_item')
+    a.icon.item.toggle(class=toggle_item_class title="toggle #{label}")
+        i.big.icon(class=icon)
+        // +i name=icon color='ffffff' cl='ui avatar image'

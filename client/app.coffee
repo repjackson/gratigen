@@ -331,81 +331,81 @@ Template.app.helpers
         if delta
             delta._template
 
-# Template.delta_nav.helpers
-#     delta_item_class: ->
-#         if @_id is Meteor.user().delta_id
-#             'active blue large invert'
-#         else 
-#             'small'
-#     editing_delta: ->
-#         Session.equals('editing_id', @_id)
-#     delta_users: ->
-#         Meteor.users.find
-#             delta_id:@_id
-# Template.delta_nav.events 
-#     'dblclick .pick_delta': ->
-#         Session.set('editing_id', @_id)
-#     'blur .pick_delta':(e)->
-#         if Session.get('editing_id')
-#             Session.set('editing_id', null)
-#             $('body').toast({
-#                 title: "#{name} saved"
-#                 # message: 'Please see desk staff for key.'
-#                 class : 'success invert'
-#                 showIcon:'checkmark'
-#                 # showProgress:'bottom'
-#                 position:'bottom right'
-#                 })
+Template.delta_nav.helpers
+    delta_item_class: ->
+        if @_id is Meteor.user().delta_id
+            'active blue large invert'
+        else 
+            'small'
+    editing_delta: ->
+        Session.equals('editing_id', @_id)
+    delta_users: ->
+        Meteor.users.find
+            delta_id:@_id
+Template.delta_nav.events 
+    'dblclick .pick_delta': ->
+        Session.set('editing_id', @_id)
+    'blur .pick_delta':(e)->
+        if Session.get('editing_id')
+            Session.set('editing_id', null)
+            $('body').toast({
+                title: "#{name} saved"
+                # message: 'Please see desk staff for key.'
+                class : 'success invert'
+                showIcon:'checkmark'
+                # showProgress:'bottom'
+                position:'bottom right'
+                })
 
-#     'click .add_session': ->
-#         name = prompt 'name session'
-#         if name
-#             new_id = 
-#                 Docs.insert 
-#                     model:'delta'
-#                     name:name
-#             Session.set('loading',true)
-#             Meteor.users.update Meteor.userId(),
-#                 $set:
-#                     delta_id:new_id
-#             $('body').toast({
-#                 title: "#{name} session made"
-#                 # message: 'Please see desk staff for key.'
-#                 class : 'success'
-#                 showIcon:'yin yang'
-#                 # showProgress:'bottom'
-#                 position:'bottom right'
-#                 # className:
-#                 #     toast: 'ui massive message'
-#                 # displayTime: 5000
-#                 transition:
-#                   showMethod   : 'zoom',
-#                   showDuration : 250,
-#                   hideMethod   : 'fade',
-#                   hideDuration : 250
-#                 })
-#             Session.set('loading',false)
+    'click .add_session': ->
+        name = prompt 'name session'
+        if name
+            new_id = 
+                Docs.insert 
+                    model:'delta'
+                    name:name
+            Session.set('loading',true)
+            Meteor.users.update Meteor.userId(),
+                $set:
+                    delta_id:new_id
+            $('body').toast({
+                title: "#{name} session made"
+                # message: 'Please see desk staff for key.'
+                class : 'success'
+                showIcon:'yin yang'
+                # showProgress:'bottom'
+                position:'bottom right'
+                # className:
+                #     toast: 'ui massive message'
+                # displayTime: 5000
+                transition:
+                  showMethod   : 'zoom',
+                  showDuration : 250,
+                  hideMethod   : 'fade',
+                  hideDuration : 250
+                })
+            Session.set('loading',false)
 
-#     'click .pick_delta': (e)->
-#         Session.set('loading',true)
-#         if Meteor.user().delta_id and @_id is Meteor.user().delta_id
-#             Meteor.users.update({_id:Meteor.userId()},{$unset:delta_id:1})
-#             $(e.currentTarget).closest('.item').transition('shake', 500)
-#             Session.set('loading',false)
-#         else 
-#             Meteor.users.update({_id:Meteor.userId()},{$set:delta_id:@_id})
-#             $(e.currentTarget).closest('.item').transition('bounce', 500)
-#             Session.set('loading',false)
+    'click .pick_delta': (e)->
+        Session.set('loading',true)
+        if Meteor.user().delta_id and @_id is Meteor.user().delta_id
+            Meteor.users.update({_id:Meteor.userId()},{$unset:delta_id:1})
+            $(e.currentTarget).closest('.item').transition('shake', 500)
+            Session.set('loading',false)
+        else 
+            Meteor.users.update({_id:Meteor.userId()},{$set:delta_id:@_id})
+            $(e.currentTarget).closest('.item').transition('bounce', 500)
+            Session.set('loading',false)
 
-#         # console.log @_id
-#         # console.log Meteor.user().delta_id
+        # console.log @_id
+        # console.log Meteor.user().delta_id
 
 
-# Template.doc_history_button.onRendered ->
-#     $('.goto_doc')
-#       .popup({
-#         inline: true
-#       })
+Template.doc_history_button.onRendered ->
+    $('.goto_doc')
+      .popup({
+        inline: true
+      })
     
 
 # Template.doc_history_button.events 

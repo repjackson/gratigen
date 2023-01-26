@@ -226,20 +226,21 @@ if Meteor.isClient
         #             show_rightbar:!Meteor.user().show_rightbar
             # Session.set('invert_mode', !Session.get('invert_mode'))
             # console.log Session.get('invert_mode')
-    # Template.toggle_nav_item.events 
-    #     'click .toggle': ->
-    #         if Meteor.user()["#{@key}"]
-    #             Meteor.users.update Meteor.userId(),
-    #                 $set:"#{@key}":false
-    #         else 
-    #             Meteor.users.update Meteor.userId(),
-    #                 $set:"#{@key}":true
-    # Template.toggle_nav_item.helpers 
-    #     toggle_item_class: ->
-    #         if Meteor.user() and Meteor.user()["#{@key}"]
-    #             'active red'
-    #         else 
-    #             ''
+    Template.toggle_nav_item.events 
+        'click .toggle': ->
+            # d = Docs.findOne 
+            if Meteor.user()["#{@key}"]
+                Meteor.users.update Meteor.userId(),
+                    $set:"#{@key}":false
+            else 
+                Meteor.users.update Meteor.userId(),
+                    $set:"#{@key}":true
+    Template.toggle_nav_item.helpers 
+        toggle_item_class: ->
+            if Meteor.user() and Meteor.user()["#{@key}"]
+                'active red'
+            else 
+                ''
 
         
     Template.nav.helpers
