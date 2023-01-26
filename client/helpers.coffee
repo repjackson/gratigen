@@ -14,9 +14,10 @@ Template.registerHelper 'modal_doc', () ->
             if delta._modal_doc_id
                 Docs.findOne delta._modal_doc_id
 Template.registerHelper 'flyout_doc', () ->
-    if Meteor.user() and Meteor.user().flyout_doc_id
+    if Meteor.user()
         delta = Docs.findOne {_id:Meteor.user().delta_id}
-        Docs.findOne delta.flyout_doc_id
+        if delta.flyout_doc_id
+            Docs.findOne delta.flyout_doc_id
 
 Template.registerHelper 'cd', () -> 
     if Meteor.user() and Meteor.user().delta_id
@@ -350,9 +351,9 @@ Template.registerHelper 'current_model', (input) ->
             slug: d._model
         
 
-Template.registerHelper 'in_list', (key) ->
-    if Meteor.userId()
-        if Meteor.userId() and @["#{key}"] and Meteor.userId() in @["#{key}"] then true else false
+# Template.registerHelper 'in_list', (key) ->
+#     if Meteor.userId()
+#         if Meteor.userId() and @["#{key}"] and Meteor.userId() in @["#{key}"] then true else false
 
 
 

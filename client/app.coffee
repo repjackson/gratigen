@@ -4,6 +4,27 @@
 @current_markers = new ReactiveArray []
 
 
+moment.locale('en', {
+    relativeTime: {
+        future: 'in %s',
+        # past: '%s ago',
+        past: '%s',
+        s:  'seconds',
+        ss: '%ss',
+        m:  'a minute',
+        mm: '%dm',
+        h:  'an hour',
+        hh: '%dh',
+        d:  'a day',
+        dd: '%dd',
+        M:  'a month',
+        MM: '%dM',
+        y:  'a year',
+        yy: '%dY'
+    }
+});
+
+
 Template.app.events
     'click .hithere':-> console.log 'hi'
 # Template.gridstack.onRendered ->
@@ -380,6 +401,13 @@ Template.delta_nav.events
         # console.log Meteor.user().delta_id
 
 
+Template.doc_history_button.onRendered ->
+    $('.goto_doc')
+      .popup({
+        inline: true
+      })
+    
+
 Template.doc_history_button.events 
     'click .delete_history_item': ->
         console.log @
@@ -525,11 +553,12 @@ $.cloudinary.config
 Template.app.events
     'click .fly_out': -> 
         # Meteor.users.update({_id:Meteor.userId()}, {$set:flyout_doc_id:@_id})
-        d=Docs.findOne Meteor.user().delta_id 
-        Docs.update Meteor.user().delta_id, 
-            $set:
-                flyout_doc_id:@_id
-        $('.ui.flyout').flyout('toggle')
+        # d=Docs.findOne Meteor.user().delta_id 
+        if @_id
+            Docs.update Meteor.user().delta_id, 
+                $set:
+                    flyout_doc_id:@_id
+            $('.ui.flyout').flyout('toggle')
     'click .show_modal': ->
         console.log @
         Docs.update Meteor.user().delta_id, 

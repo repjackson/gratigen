@@ -399,10 +399,8 @@ template(name='author_info')
     .ui.basic.label by #{_author_username}
 
 template(name='creation_info')
-    .ui.large.basic.label 
-        i.grey.clock.icon
-        small added 
-        strong #{when}
+    // i.grey.clock.icon
+    |#{when}
 
 template(name='_timestamp_long')
     .ui.large.basic.basic.label 
@@ -425,18 +423,30 @@ template(name='user_list_toggle')
 
 
 template(name='voting')
-    .ui.icon.button.tertiary.upvote(title='upvote')
+    .ui.icon.button.tertiary.upvote
         i.thumbs.up.outline.icon(class=upvote_class)
+    .ui.popup 
+        .ui.list
+            each upvoters 
+                .item
+                    img.ui.avatar.image(src="{{c.url image_id width=200 height=200}}")
+                    |#{username}
     //- each upvoter_ids
     //-     +user_info
-    .ui.icon.button.tertiary.downvote(title='downvote')
+    .ui.icon.button.tertiary.downvote
         i.thumbs.down.outline.icon(class=downvote_class)
+    .ui.popup 
+        .ui.list
+            each downvoters 
+                .item
+                    img.ui.avatar.image(src="{{c.url image_id width=200 height=200}}")
+                    |#{username}
     //- each downvoter_ids
     //-     +user_info
-    if points
-        strong #{points} pts
-    if anon_points
-        strong #{anon_points} anon pts
+    // if points
+    //     strong #{points} pts
+    // if anon_points
+    //     strong #{anon_points} anon pts
     
 
 template(name='voting_small')

@@ -1025,10 +1025,10 @@ if Meteor.isServer
     
     
 if Meteor.isClient
-    Template.delta_result_card.onRendered ->
-        # Meteor.setTimeout ->
-        #     $('.progress').popup()
-        # , 2000
+    Template.voting.onRendered ->
+        Meteor.setTimeout ->
+            $('.button').popup()
+        , 2000
     Template.delta_result_card.onCreated ->
         @autorun => Meteor.subscribe 'doc', @data._id
         @autorun => Meteor.subscribe 'user_from_id', @data._id

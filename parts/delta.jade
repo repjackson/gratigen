@@ -305,8 +305,11 @@ template(name='delta_result_card')
                 // unless key_value_is 'model' 'model'
                 //     i.grey.database.icon(title='delta')
                 span.right.floated
+                    |#{when}
                     with parent_model
-                        +i name=icon color=stripped_icon_color 
+                        +ismall name=icon color=stripped_icon_color 
+                    // div
+                    // +creation_info
                 if key_value_is 'model' 'model'
                     a.ui.header.goto_doc
                         // i.icon(class=icon)
@@ -324,45 +327,45 @@ template(name='delta_result_card')
                             // .ui.grid
                             |#{title}
             if image_id
-                img.ui.fluid.image(src="{{c.url image_id width=500 height=500}}")
+                img.ui.fluid.image.goto_doc.zoomer.pointer(src="{{c.url image_id width=500 height=500}}")
             .content          
 
                 each fields
                     +Template.dynamic template=view_template
-            if key_value_is 'model' 'model'
-                //- +user_list_toggle key='bookmark_ids' icon='bookmark' label='bookmark' color='red'
-                //- a.ui.button.route_model(href="/m/#{slug}")
-                //-     |view model
-                //-     i.right.chevron.green.icon
-                    //- +i name='chevron-right' clases='ui avatar image'
-                if currentUser.admin_mode
-                    a.ui.circular.icon.button.edit_this(title='edit model')
-                        i.cog.icon
-                        // |edit model
-                    // span(title='views')
-                    //     i.grey.eye.icon
-                    //     | #{views}
-                    // .ui.teal.label 
-                    //     |#{app}
-            else
-                if can_edit
-                    a.ui.icon.button.edit_this
-                        i.pencil.large.icon
-                        //- |edit
+                if key_value_is 'model' 'model'
+                    //- +user_list_toggle key='bookmark_ids' icon='bookmark' label='bookmark' color='red'
+                    //- a.ui.button.route_model(href="/m/#{slug}")
+                    //-     |view model
+                    //-     i.right.chevron.green.icon
+                        //- +i name='chevron-right' clases='ui avatar image'
+                    if currentUser.admin_mode
+                        a.ui.circular.icon.button.edit_this(title='edit model')
+                            i.cog.icon
+                            // |edit model
+                        // span(title='views')
+                        //     i.grey.eye.icon
+                        //     | #{views}
+                        // .ui.teal.label 
+                        //     |#{app}
+                else
+                    if can_edit
+                        a.ui.icon.button.edit_this
+                            i.pencil.large.icon
+                            //- |edit
                 //- a.ui.icon.large.button(href="/m/#{_model.slug}/#{_id}/view" title='view')
             //-     i.right.chevron.yellow.large.icon
             // if is_admin
             .content
+                .right.floated
+                    | #{views} views
                 // if _author_id
                 //     +author_info
                 +voting
-                +creation_info
-                +voting
-                .ui.small.inline.header #{views} views
                     //- i.eye.icon
-                    each viewer_usernames
-                        .ui.small.inverted.label #{this}
-                //- +comments
+                //     each viewer_usernames
+                //         .ui.small.inverted.label #{this}
+                // //- +comments
+                +eft_viewer
                 if currentUser.admin_mode
                     +print_this
                     +remove_button

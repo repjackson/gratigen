@@ -9,7 +9,8 @@ template(name='nav')
         a.header.image.item.zoomer.set_home(class="{{isActivePath 'home'}}" title='gratihome')
             if is_loading
                 .icon.item
-                    i.big.loading.grey.refresh.icon.cancel
+                    // i.big.loading.grey.refresh.icon.cancel
+                    .batman
             else 
                 img.ui.mini.circular.image.zoomer(src="/logo.png")
             // span.mobile.hidden Gratigen
@@ -35,10 +36,10 @@ template(name='nav')
         //         if currentUser.admin_mode
         //             +text_edit key='latest_info' direct=true
         // .ui.input.item
-        .input.item
-            .ui.icon.large.input.search_bar
-                input.global_search(type='text' placeholder='add/request/search...')
-                i.search.icon
+        // .input.item
+        .ui.icon.large.transparent.input.search_bar
+            input.global_search(type='text' placeholder='add/request/search...')
+            i.search.icon
 
         // a.icon.item.zoomer.goto_add.toggle_addbar(title='add new doc')
         // a.icon.item.zoomer.toggle_addbar(title='add new doc')
@@ -52,9 +53,9 @@ template(name='nav')
                     i.large.bell.icon
                     if unread_count
                         |#{unread_count}
-            else
-                a.icon.item(href="/inbox" class="{{is_active_template 'inbox'}}")
-                    i.large.outline.bell.icon
+            // else
+            //     a.icon.item(href="/inbox" class="{{is_active_template 'inbox'}}")
+            //         i.large.outline.bell.icon
             a.icon.item.zoomer.popout_chat
                 if unread_chat_messages
                     i.large.teal.chat.icon

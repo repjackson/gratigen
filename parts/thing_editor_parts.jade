@@ -23,15 +23,15 @@ template(name='eft_view_item')
                 
                 
 template(name='eft_view_item_small')
-    // if in_list
-    //     i.icon.zoomer.invert(class=icon style="color:##{color}" title=label)
-    //     .ui.basic.big.compact.icon.circular.inverted.label.toggle_eft.invert(style="color:##{color}")
-    //         // |&nbsp;
-    //         i.large.icon(class=icon)
-    //         // |&nbsp;
-    //         |#{label}
-    // // else 
-    // ui.animated.fade.button.toggle_eft.invert.zoomer(style="color:##{color}" class=eft_picker_class)
+    if in_list
+        i.icon.zoomer.invert(class=icon style="color:##{color}" title=label)
+        .ui.basic.big.compact.icon.circular.inverted.label.toggle_eft.invert(style="color:##{color}")
+            // |&nbsp;
+            i.large.icon(class=icon)
+            // |&nbsp;
+            |#{label}
+    // else 
+    ui.animated.fade.button.toggle_eft.invert.zoomer(style="color:##{color}" class=eft_picker_class)
             .visible.content
                 i.big.icon(class=icon)
             .hidden.content
