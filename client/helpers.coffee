@@ -417,6 +417,8 @@ Template.registerHelper 'is_dev', () ->
 
 # Template.registerHelper 'is_eric', () -> if Meteor.userId() and Meteor.userId() in ['ytjpFxiwnWaJELZEd','rDqxdcTBTszjeMh9T'] then true else false
 
+Template.registerHelper 'me', () ->  
+    Meteor.user()
 Template.registerHelper 'current_user', () ->  
     d = Docs.findOne Meteor.user().delta_id
     if d 

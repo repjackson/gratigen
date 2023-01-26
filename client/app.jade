@@ -340,19 +340,15 @@ template(name='history_bar')
 
                             
                         
-// // template(name='add')
-// //     .ui.padded.grid 
-// //         .sixteen.wide.center.aligned.column
-// //             .ui.header 
-// //                 i.large.play.icon 
-// //                 |add new doc
-// //             each model_docs_helper 'model'
-// //                     +add_model_doc_button 
+template(name='add')
+    .ui.menu.smallscroll
+        each model_docs_helper 'model'
+            +add_model_doc_button 
             
-// // template(name='add_model_doc_button')
-// //     .ui.big.basic.button.add_model_doc.zoomer
-// //         +i name=icon color=stripped_icon_color
-// //         |#{title}
+template(name='add_model_doc_button')
+    .item.add_model_doc.zoomer
+        +i name=icon color=stripped_icon_color
+        |#{title}
         
         
         

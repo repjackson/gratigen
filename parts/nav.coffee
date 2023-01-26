@@ -6,9 +6,9 @@ if Meteor.isClient
         @autorun => Meteor.subscribe 'current_model', ->
         @autorun => Meteor.subscribe 'current_doc', ->
         @autorun => Meteor.subscribe 'users_min', ->
-        # # @autorun => Meteor.subscribe 'model_docs', 'model', ->
-        # @autorun => Meteor.subscribe 'history',->
-        # @autorun => Meteor.subscribe 'model_docs','delta',->
+        @autorun => Meteor.subscribe 'model_docs', 'model', ->
+        @autorun => Meteor.subscribe 'history',->
+        @autorun => Meteor.subscribe 'model_docs','delta',->
         
         # @autorun => Meteor.subscribe 'my_cart'
         # @autorun => Meteor.subscribe 'my_cart_order'
@@ -25,6 +25,9 @@ if Meteor.isClient
     Template.nav.onRendered ->
         $('.item').popup({
             inline: true
+            forcePosition:true
+            preserve:true
+            hoverable:true
           })
 
         Session.setDefault('invert_mode', true)

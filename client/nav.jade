@@ -12,16 +12,17 @@ template(name='nav')
             else 
                 img.ui.mini.circular.image.zoomer(src="/logo.png")
             // span.mobile.hidden Gratigen
-        .ui.popup
-            +home
-        a.icon.item.toggle_modelbar.zoomer(class=modelbar_class)
-            i.cubes.large.grey.icon
+        // .ui.popup
+        //     +home
+        // a.icon.item.toggle_modelbar.zoomer(class=modelbar_class)
+        //     i.cubes.large.grey.icon
             // +i name='network' color='FFFFFF'
         .ui.popup
             +modelbar
         a.icon.item.toggle_deltanav.zoomer(class=modelbar_class)
             i.window.restore.large.grey.icon
-        +delta_nav
+        .ui.popup
+            +delta_nav
         a.icon.item.toggle_historynav.zoomer(class=modelbar_class)
             i.history.large.grey.icon
         .ui.popup
@@ -59,6 +60,8 @@ template(name='nav')
         //     i.large.play.circular.icon
         a.icon.item.zoomer.goto_add
             i.large.play.icon
+        .ui.popup
+            +add
         // +toggle_nav_item key='invert_mode' icon='lightbulb' label='invert mode'
         // .right.menu
         .item 
@@ -78,6 +81,8 @@ template(name='nav')
                 small #{unread_chat_messages.count}
             else 
                 i.large.chat.outline.icon
+        .ui.popup
+            +chat
         if currentUser
             // a.item(href="/user/#{currentUser.username}/credit" class="{{is_active_template regex='user_credit'}}" title='your credits')
             if currentUser.cart_item_count.length
@@ -98,7 +103,7 @@ template(name='nav')
                     i.user.icon
                 strong #{currentUser.name}
             .ui.popup
-                +profile
+                +profile_small
             // a.icon.item.toggle_rightbar.no_blink
             //     // .ui.avatar.image
             //     //     if currentUser.image_id
@@ -120,6 +125,9 @@ template(name='nav')
     // if currentUser.show_secnav
     //     +secnav
 
+
+template(name='profile_small')
+    .ui.header #{currentUser.username}
 
 
 template(name='footer')
