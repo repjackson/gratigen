@@ -20,7 +20,7 @@ template(name='side_menu_item')
            
 template(name='dash_user_info') 
         // unless session_is 'expand_leftbar' true
-        img.ui.tiny.circular.image.centered(src="{{c.url currentUser.image_id width=600 height=600 gravity='face' crop='fill'}}")
+        img.ui.mini.circular.image.centered(src="{{c.url currentUser.image_id width=600 height=600 gravity='face' crop='fill'}}")
         .ui.header.centered
             | #{currentUser.username}
         .ui.small

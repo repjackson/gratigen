@@ -1,14 +1,14 @@
 if Meteor.isClient
     Template.nav.onCreated ->
         @autorun => Meteor.subscribe 'me', ->
-        @autorun => Meteor.subscribe 'current_user', ->
-        @autorun => Meteor.subscribe 'current_delta', ->
-        @autorun => Meteor.subscribe 'current_model', ->
-        @autorun => Meteor.subscribe 'current_doc', ->
-        @autorun => Meteor.subscribe 'users_min', ->
-        # @autorun => Meteor.subscribe 'model_docs', 'model', ->
-        @autorun => Meteor.subscribe 'history',->
-        @autorun => Meteor.subscribe 'model_docs','delta',->
+        # @autorun => Meteor.subscribe 'current_user', ->
+        # @autorun => Meteor.subscribe 'current_delta', ->
+        # @autorun => Meteor.subscribe 'current_model', ->
+        # @autorun => Meteor.subscribe 'current_doc', ->
+        # @autorun => Meteor.subscribe 'users_min', ->
+        # # @autorun => Meteor.subscribe 'model_docs', 'model', ->
+        # @autorun => Meteor.subscribe 'history',->
+        # @autorun => Meteor.subscribe 'model_docs','delta',->
         
         # @autorun => Meteor.subscribe 'my_cart'
         # @autorun => Meteor.subscribe 'my_cart_order'
@@ -39,74 +39,74 @@ if Meteor.isClient
         # Meteor.setTimeout ->
         #     $('.ui.dropdown').dropdown()
         # , 2000
-    Template.nav.onRendered ->
-        Meteor.setTimeout ->
-            $('.menu .item')
-                .popup()
-            $('.ui.leftbar')
-                .sidebar({
-                    context: $('.layout')
-                    transition:'push'
-                    mobileTransition:'push'
-                    exclusive:false
-                    duration:200
-                    closable:false
-                    dimPage:false
-                    scrollLock:true
-                })
-                .sidebar('attach events', '.toggle_leftbar')
-            $('.ui.taskbar')
-                .sidebar({
-                    context: $('.layout')
-                    transition:'push'
-                    mobileTransition:'push'
-                    exclusive:false
-                    closable:false
-                    dimPage:false
-                    duration:200
-                    scrollLock:true
-                })
-                .sidebar('attach events', '.toggle_taskbar')
-        , 2000
-        Meteor.setTimeout ->
-            $('.ui.rightbar')
-                .sidebar({
-                    context: $('.layout')
-                    transition:'push'
-                    mobileTransition:'push'
-                    exclusive:true
-                    closable:false
-                    dimPage:false
-                    duration:200
-                    scrollLock:true
-                })
-                .sidebar('attach events', '.toggle_rightbar')
-        , 2000
-        Meteor.setTimeout ->
-            $('.ui.modelbar')
-                .sidebar({
-                    context: $('.layout')
-                    transition:'push'
-                    mobileTransition:'push'
-                    exclusive:false
-                    dimPage:false
-                    duration:200
-                    scrollLock:true
-                })
-                .sidebar('attach events', '.toggle_modelbar')
-        , 2000
-        Meteor.setTimeout ->
-            $('.ui.topbar')
-                .sidebar({
-                    context: $('.layout')
-                    transition:'push'
-                    mobileTransition:'push'
-                    exclusive:true
-                    duration:200
-                    scrollLock:true
-                })
-                .sidebar('attach events', '.toggle_topbar')
-        , 2000
+    # Template.nav.onRendered ->
+    #     Meteor.setTimeout ->
+    #         $('.menu .item')
+    #             .popup()
+    #         $('.ui.leftbar')
+    #             .sidebar({
+    #                 context: $('.layout')
+    #                 transition:'push'
+    #                 mobileTransition:'push'
+    #                 exclusive:false
+    #                 duration:200
+    #                 closable:false
+    #                 dimPage:false
+    #                 scrollLock:true
+    #             })
+    #             .sidebar('attach events', '.toggle_leftbar')
+    #         $('.ui.taskbar')
+    #             .sidebar({
+    #                 context: $('.layout')
+    #                 transition:'push'
+    #                 mobileTransition:'push'
+    #                 exclusive:false
+    #                 closable:false
+    #                 dimPage:false
+    #                 duration:200
+    #                 scrollLock:true
+    #             })
+    #             .sidebar('attach events', '.toggle_taskbar')
+    #     , 2000
+    #     Meteor.setTimeout ->
+    #         $('.ui.rightbar')
+    #             .sidebar({
+    #                 context: $('.layout')
+    #                 transition:'push'
+    #                 mobileTransition:'push'
+    #                 exclusive:true
+    #                 closable:false
+    #                 dimPage:false
+    #                 duration:200
+    #                 scrollLock:true
+    #             })
+    #             .sidebar('attach events', '.toggle_rightbar')
+    #     , 2000
+    #     Meteor.setTimeout ->
+    #         $('.ui.modelbar')
+    #             .sidebar({
+    #                 context: $('.layout')
+    #                 transition:'push'
+    #                 mobileTransition:'push'
+    #                 exclusive:false
+    #                 dimPage:false
+    #                 duration:200
+    #                 scrollLock:true
+    #             })
+    #             .sidebar('attach events', '.toggle_modelbar')
+    #     , 2000
+    #     Meteor.setTimeout ->
+    #         $('.ui.topbar')
+    #             .sidebar({
+    #                 context: $('.layout')
+    #                 transition:'push'
+    #                 mobileTransition:'push'
+    #                 exclusive:true
+    #                 duration:200
+    #                 scrollLock:true
+    #             })
+    #             .sidebar('attach events', '.toggle_topbar')
+    #     , 2000
         
         
     Template.nav_item.events

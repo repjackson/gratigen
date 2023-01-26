@@ -106,8 +106,8 @@ body
     // +global_flyout
     // +chat_flyout
     // if currentUser.show_modelbar
-    .pusher
-        +app
+    // .pusher
+    +app
         // +comet
         // +gridstack
 
@@ -229,7 +229,8 @@ template(name='app')
         .layout.scrolling
             with currentUser
                 // if ct.length
-                +Template.dynamic template=ct
+                // +Template.dynamic template=ct
+                +home
             else 
                 .ui.center.aligned.basic.segment
                     // .batman
@@ -238,11 +239,11 @@ template(name='app')
 
                 // +login
                 // .ui.center.aligned.basic.segment 
-        if currentUser.admin_mode
-            +footer
-    else 
-        // .batman
-        i.tree.loading.blue.icon
+    //     if currentUser.admin_mode
+    //         +footer
+    // else 
+    //     // .batman
+    //     i.tree.loading.blue.icon
     
 template(name='history_bar')
     .ui.attached.small.menu.hscroll
@@ -272,45 +273,44 @@ template(name='doc_history_button')
             if image_id
                 img.ui.small.image(src="{{c.url image_id width=400 height=400 gravity='face' crop='fill'}}")
             +author_info
-template(name='global_flyout')
-    with flyout_doc
-        .ui.flyout
-            i.close.icon
-            .ui.header #{title}
-            if image_id
-                .image.content
-                    img.ui.image(src="{{c.url image_id }}")
-            .actions
-                .ui.button hi
+// template(name='global_flyout')
+//     with flyout_doc
+//         .ui.flyout
+//             i.close.icon
+//             .ui.header #{title}
+//             if image_id
+//                 .image.content
+//                     img.ui.image(src="{{c.url image_id }}")
+//             .actions
+//                 .ui.button hi
 
-template(name='chat_flyout')
-    with current_delta
-        .ui.chat.flyout
-            i.close.large.link.icon.zoomer(title='close panel')
-            .ui.header 
-                i.chat.outline.icon(class=color)
-                |#{name} session chat
-            .ui.segment.content.scrolling(class=color)
-                |#{name}
-                small chat
-            .ui.segment.content.invert.scrolling(class=color)
-                +comments
-                +image_edit key='image_id' direct=true
-                +text_edit key='name' direct=true
-                +text_edit key='color' direct=true
-                each delta_users 
-                    +user_card
-                
-                if image_id
-                    .image.content
-                        img.ui.image(src="{{c.url image_id }}")
-            .actions
-                .ui.blue.button.invert 
-                    i.pencil.icon
-                    |edit session 
-                .ui.red.button.invert
-                    i.trash.icon
-                    |delete session 
+// template(name='chat_flyout')
+//     with current_delta
+//         .ui.chat.flyout
+//             i.close.large.link.icon.zoomer(title='close panel')
+//             .ui.header 
+//                 i.chat.outline.icon(class=color)
+//                 |#{name} session chat
+//             .ui.segment.content.scrolling(class=color)
+//                 |#{name}
+//                 small chat
+//             .ui.segment.content.invert.scrolling(class=color)
+//                 +comments
+//                 +image_edit key='image_id' direct=true
+//                 +text_edit key='name' direct=true
+//                 +text_edit key='color' direct=true
+//                 each delta_users 
+//                     +user_card
+//                 if image_id
+//                     .image.content
+//                         img.ui.image(src="{{c.url image_id }}")
+//             .actions
+//                 .ui.blue.button.invert 
+//                     i.pencil.icon
+//                     |edit session 
+//                 .ui.red.button.invert
+//                     i.trash.icon
+//                     |delete session 
 
 
 
@@ -364,57 +364,57 @@ template(name='toggle_nav_item')
           
           
 template(name='delta_nav')
-    // .ui.top.attached.tabular.menu  
-    //     a.center.item.toggle_addmode.zoomer(data-tab='add' title='add thing')
-    //         +i name='play-button-circled--v1' color='40C057'
-        // .active.item(data-tab='viewing')
-        //     |viewing
-    .ui.attached.vertical.menu.hscroll
-        .item 
-            i.window.restore.icon
-            |sessions
-            |&nbsp;
-            i.plus.circular.link.icon.add_session(title='make session')
-        each model_docs_helper 'delta' 
-            // a.item.pick_delta.pointer.zoomer(data-tab="#{_id}" class=delta_item_class title="switch to #{name} session")
-            a.item.pick_delta.pointer.zoomer(data-tab="#{_id}" class="{{delta_item_class}} {{color}}")
-                if editing_delta
-                    +text_edit key='name' direct=true
-                else 
-                    |#{name}
-                |&nbsp;
-                each delta_users 
-                    img.ui.avatar.image.supazuma(src="{{c.url image_id width=200 height=200 gravity='face' crop='fill'}}" title=username)
+    // // .ui.top.attached.tabular.menu  
+    // //     a.center.item.toggle_addmode.zoomer(data-tab='add' title='add thing')
+    // //         +i name='play-button-circled--v1' color='40C057'
+    //     // .active.item(data-tab='viewing')
+    //     //     |viewing
+    // .ui.attached.vertical.menu.hscroll
+    //     .item 
+    //         i.window.restore.icon
+    //         |sessions
+    //         |&nbsp;
+    //         i.plus.circular.link.icon.add_session(title='make session')
+    //     each model_docs_helper 'delta' 
+    //         // a.item.pick_delta.pointer.zoomer(data-tab="#{_id}" class=delta_item_class title="switch to #{name} session")
+    //         a.item.pick_delta.pointer.zoomer(data-tab="#{_id}" class="{{delta_item_class}} {{color}}")
+    //             if editing_delta
+    //                 +text_edit key='name' direct=true
+    //             else 
+    //                 |#{name}
+    //             |&nbsp;
+    //             each delta_users 
+    //                 img.ui.avatar.image.supazuma(src="{{c.url image_id width=200 height=200 gravity='face' crop='fill'}}" title=username)
 
-    //   border: 0px solid #d4d4d5;
+    // //   border: 0px solid #d4d4d5;
 
 
 
-template(name='secnav')
-    // .input.item 
-    //     .ui.input 
-    //         input(type='text')
-    .ui.attached.small.menu.hscroll(class=invert_class)
-        // .item
-        // .ui.icon.small.transparent.input
-        //     input.filter_models(type='text' placeholder='filter')
-        //     i.search.link.icon
-        // .ui.dropdown.icon.item
-        //     i.wrench.icon
-        //     .menu 
-        //         .item
-        //             i.dropdown.icon
-        //             span.text new 
-        //             .menu 
-        //                 .item post
-        //                 .item model
-        each model_docs_helper 'model'
-           a.item.zoomer.goto_model(title=ranking)
-                // i.large.inbox.icon
-                +i name=icon color=stripped_icon_color cl='ui avatar image zoomer'
-                span.mobile.hidden 
-                    small #{total_count}
-                    |#{title}
+// template(name='secnav')
+    // // .input.item 
+    // //     .ui.input 
+    // //         input(type='text')
+    // .ui.attached.small.menu.hscroll(class=invert_class)
+    //     // .item
+    //     // .ui.icon.small.transparent.input
+    //     //     input.filter_models(type='text' placeholder='filter')
+    //     //     i.search.link.icon
+    //     // .ui.dropdown.icon.item
+    //     //     i.wrench.icon
+    //     //     .menu 
+    //     //         .item
+    //     //             i.dropdown.icon
+    //     //             span.text new 
+    //     //             .menu 
+    //     //                 .item post
+    //     //                 .item model
+    //     each model_docs_helper 'model'
+    //       a.item.zoomer.goto_model(title=ranking)
+    //             // i.large.inbox.icon
+    //             +i name=icon color=stripped_icon_color cl='ui avatar image zoomer'
+    //             span.mobile.hidden 
+    //                 small #{total_count}
+    //                 |#{title}
                  
 template(name='nav_item')
     a.item.zoomer.nav_item(class="{{ is_active_template template }}" title=label)
@@ -474,120 +474,120 @@ template(name='recent_alert')
                     
                     
                     
-template(name='rightbar')
-    .ui.vertical.menu.right.sidebar.rightbar
-        with currentUser
-            a.item.toggle_rightbar.no_blink(href="/user/#{currentUser.username}" class="{{is_active_template 'user_layout'}}")
-                img.ui.avatar.compact.image(src="{{c.url currentUser.image_id height=200 width=200 gravity='face' crop='fill'}}")
-                |#{currentUser.name}
-            a.item.toggle_rightbar(href="/user/#{username}" class="{{is_active_template regex='user_dashboard'}}")
-                +i name='dashboard'
-                // i.dashboard.icon
-                |dashboard
-            a.item.zoomer.toggle_darkmode
-                if darkmode
-                    +i name='checkmark'
-                else
-                    +i name='light'
-                |dark mode
-            each profile_nav_items
-                +nav_item
-            +nav_item template='my_organizations' icon='groups' color='83DFF4' label='organizations'
-            +nav_item template='my_projects' icon='project' color='7229AF' label='projects'
-            +nav_item template='my_events' icon='calendar' color='FAB005' label='events'
-            +nav_item template='my_roles' icon='what-i-do' color='42E8C4' label='roles'
-            +nav_item template='my_tasks' icon='task' color='B785E1' label='tasks'
-            +nav_item template='my_resources' icon='car' color='FD7E14' label='resources'
-            +nav_item template='my_skills' icon='wrench' color='ff0000' label='skills'
-            +nav_item template='my_badges' label='badges' icon='badge' color='1255B8'
+// template(name='rightbar')
+//     .ui.vertical.menu.right.sidebar.rightbar
+//         with currentUser
+//             a.item.toggle_rightbar.no_blink(href="/user/#{currentUser.username}" class="{{is_active_template 'user_layout'}}")
+//                 img.ui.avatar.compact.image(src="{{c.url currentUser.image_id height=200 width=200 gravity='face' crop='fill'}}")
+//                 |#{currentUser.name}
+//             a.item.toggle_rightbar(href="/user/#{username}" class="{{is_active_template regex='user_dashboard'}}")
+//                 +i name='dashboard'
+//                 // i.dashboard.icon
+//                 |dashboard
+//             a.item.zoomer.toggle_darkmode
+//                 if darkmode
+//                     +i name='checkmark'
+//                 else
+//                     +i name='light'
+//                 |dark mode
+//             each profile_nav_items
+//                 +nav_item
+//             +nav_item template='my_organizations' icon='groups' color='83DFF4' label='organizations'
+//             +nav_item template='my_projects' icon='project' color='7229AF' label='projects'
+//             +nav_item template='my_events' icon='calendar' color='FAB005' label='events'
+//             +nav_item template='my_roles' icon='what-i-do' color='42E8C4' label='roles'
+//             +nav_item template='my_tasks' icon='task' color='B785E1' label='tasks'
+//             +nav_item template='my_resources' icon='car' color='FD7E14' label='resources'
+//             +nav_item template='my_skills' icon='wrench' color='ff0000' label='skills'
+//             +nav_item template='my_badges' label='badges' icon='badge' color='1255B8'
                 
-            +right_nav_item template='credit' label='credit' icon='money'
-            +right_nav_item template='orders' label='orders' icon='check'
-            +right_nav_item template='subscriptions' label='subscriptions' icon='check'
-            +right_nav_item template='friends' label='friends' icon='friends'
-            // a.item.toggle_rightbar(href="/user/#{username}/pantry" class="{{is_active_template 'user_pantry'}}")
-            //     +i name='cupboard' cl='ui avatar image'
-            //     |pantry
-            +right_nav_item template='cart' label='cart' icon='shopping-cart'
-            // a.item.toggle_rightbar(href="/work" class="{{is_active_template 'work'}}")
-            //     +i name='trust' cl='ui avatar image'
-            //     |work
-            // a.item.toggle_rightbar(href="/user/#{username}/trips" class="{{is_active_template 'user_trips'}}")
-            //     +i name='bicycle' cl='ui avatar image'
-            //     |trips
-            a.item.toggle_rightbar(href="/user/#{currentUser._id}/edit" class="{{is_active_template 'user_trips'}}")
-                +i name='settings' 
-                |account
-            // .ui.divider
-            a.item.logout
-                if is_logging_out
-                    i.refresh.loading.large.icon
-                else
-                    +i name='exit-sign' cl='ui avatar image'
-                    // i.sign.out.icon
-                |logout
-        else 
-            a.item.toggle_rightbar(href="/login" class="{{is_active_template 'login'}}")
-                +i name='internal' cl='ui avatar image'
-                |login
-            a.item.toggle_rightbar(href="/register" class="{{is_active_template 'register'}}")
-                +i name='plus' cl='ui avatar image'
-                |register
+//             +right_nav_item template='credit' label='credit' icon='money'
+//             +right_nav_item template='orders' label='orders' icon='check'
+//             +right_nav_item template='subscriptions' label='subscriptions' icon='check'
+//             +right_nav_item template='friends' label='friends' icon='friends'
+//             // a.item.toggle_rightbar(href="/user/#{username}/pantry" class="{{is_active_template 'user_pantry'}}")
+//             //     +i name='cupboard' cl='ui avatar image'
+//             //     |pantry
+//             +right_nav_item template='cart' label='cart' icon='shopping-cart'
+//             // a.item.toggle_rightbar(href="/work" class="{{is_active_template 'work'}}")
+//             //     +i name='trust' cl='ui avatar image'
+//             //     |work
+//             // a.item.toggle_rightbar(href="/user/#{username}/trips" class="{{is_active_template 'user_trips'}}")
+//             //     +i name='bicycle' cl='ui avatar image'
+//             //     |trips
+//             a.item.toggle_rightbar(href="/user/#{currentUser._id}/edit" class="{{is_active_template 'user_trips'}}")
+//                 +i name='settings' 
+//                 |account
+//             // .ui.divider
+//             a.item.logout
+//                 if is_logging_out
+//                     i.refresh.loading.large.icon
+//                 else
+//                     +i name='exit-sign' cl='ui avatar image'
+//                     // i.sign.out.icon
+//                 |logout
+//         else 
+//             a.item.toggle_rightbar(href="/login" class="{{is_active_template 'login'}}")
+//                 +i name='internal' cl='ui avatar image'
+//                 |login
+//             a.item.toggle_rightbar(href="/register" class="{{is_active_template 'register'}}")
+//                 +i name='plus' cl='ui avatar image'
+//                 |register
 
 
 
-template(name='right_nav_item')
-    a.item.toggle_rightbar(href="/user/#{currentUser.username}/#{route}" class="{{is_active_template regex='user_dashboard'}}")
-        // +i name=icon cl='ui avatar image'
-        i.large.icon(class=icon)
-        |#{label}
+// template(name='right_nav_item')
+//     a.item.toggle_rightbar(href="/user/#{currentUser.username}/#{route}" class="{{is_active_template regex='user_dashboard'}}")
+//         // +i name=icon cl='ui avatar image'
+//         i.large.icon(class=icon)
+//         |#{label}
 
 
-template(name='leftbar')
-    .ui.sidebar.segment.push.leftbar
-        .item leftbar
-        // +session_toggle key='expand_leftbar' icon='heart outline'
-            // +session_toggle key='add_mode' icon='plus'
-            //.ui.icon.button.show_model
-                i.large.plus.icon
-            // .ui.fluid.small.button.toggle_leftbar
-            //     i.chevron.left.icon
-            .ui.hidden.divider
-        +dash_user_info
-        // a.ui.button.tertiary.delta(href="/m/model")
-        //     |manage models
-        div
-        img.ui.small.circular.centered.image(src="/12-color-code.png")
-        div
-        .ui.two.wide.column
-            each model_docs_helper 'eft'
-                +eft_home_picker
+// template(name='leftbar')
+//     .ui.sidebar.segment.push.leftbar
+//         .item leftbar
+//         // +session_toggle key='expand_leftbar' icon='heart outline'
+//             // +session_toggle key='add_mode' icon='plus'
+//             //.ui.icon.button.show_model
+//                 i.large.plus.icon
+//             // .ui.fluid.small.button.toggle_leftbar
+//             //     i.chevron.left.icon
+//             .ui.hidden.divider
+//         +dash_user_info
+//         // a.ui.button.tertiary.delta(href="/m/model")
+//         //     |manage models
+//         div
+//         img.ui.small.circular.centered.image(src="/12-color-code.png")
+//         div
+//         .ui.two.wide.column
+//             each model_docs_helper 'eft'
+//                 +eft_home_picker
                 
-        // if session_is 'expand_leftbar' true
-        //     .ui.vertical.fluid.menu.mobile.hidden
-        //         each model_docs_helper 'eft'
-        //             +side_menu_item
-        // else 
-        //     .ui.vertical.fluid.icon.menu.mobile.hidden
-        //         each model_docs_helper 'eft'
-        //             +side_menu_item color=icon_color icon=icon label=title
-        //             //.ui.button
-        // .ui.button create request
-    // .bordered.scrolling(class=main_column_class)
+//         // if session_is 'expand_leftbar' true
+//         //     .ui.vertical.fluid.menu.mobile.hidden
+//         //         each model_docs_helper 'eft'
+//         //             +side_menu_item
+//         // else 
+//         //     .ui.vertical.fluid.icon.menu.mobile.hidden
+//         //         each model_docs_helper 'eft'
+//         //             +side_menu_item color=icon_color icon=icon label=title
+//         //             //.ui.button
+//         // .ui.button create request
+//     // .bordered.scrolling(class=main_column_class)
         
-template(name='modelbar')
-    .ui.top.sidebar.menu.push.modelbar.hscroll
-        .item 
-            i.cubes.icon
-            |models
-        each model_docs_helper 'model'
-            +leftbar_item
+// template(name='modelbar')
+//     .ui.top.sidebar.menu.push.modelbar.hscroll
+//         .item 
+//             i.cubes.icon
+//             |models
+//         each model_docs_helper 'model'
+//             +leftbar_item
         
             
-template(name='leftbar_item')    
-    a.item.zoomer.close_leftbar.click_item.toggle_modelbar
-        +i name=icon color=stripped_icon_color cl='ui avatar image'
-        span #{title}
+// template(name='leftbar_item')    
+//     a.item.zoomer.close_leftbar.click_item.toggle_modelbar
+//         +i name=icon color=stripped_icon_color cl='ui avatar image'
+//         span #{title}
                 
 // template(name='nav_thing_picker')
     // .search.item.zoomer.mobile.hidden(title='search')

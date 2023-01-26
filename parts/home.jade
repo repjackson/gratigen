@@ -1,6 +1,6 @@
 template(name='home')
-    if currentUser.admin_mode
-        img.ui.fluid.image.home_banner(src="{{c.url 'gratigenlayout'}}" class=darkmode_class)
+    // if currentUser.admin_mode
+    //     img.ui.fluid.image.home_banner(src="{{c.url 'gratigenlayout'}}" class=darkmode_class)
     .ui.stackable.padded.divided.celled.grid.draggabl
         .bordered(class=left_column_class)
             +dash_user_info
