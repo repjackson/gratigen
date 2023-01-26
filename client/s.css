@@ -46,10 +46,10 @@ body {
 
 @keyframes slideInFromLeft {
   0% {
-    transform: translateX(-100%);
+    transform: translateY(-100%);
   }
   100% {
-    transform: translateX(0);
+    transform: translateY(0);
   }
 }
 
@@ -81,20 +81,20 @@ body {
 /*  filter: drop-shadow(10px 10px 10px rgba(250,250,250, 0.5)) !important;*/
 /*  box-shadow: 10px 5px 5px red !important;*/
 /*}*/
-/*.modelbar {*/
-/*  animation: 1s ease-out 0s 1 slideInFromLeft;*/
-/*  border-radius: 20px !important;*/
-/*  width: 100%;*/
-/*  position: absolute;*/
-/*  top: 50px !important;*/
-/*  left: 0;*/
-/*  z-index: 10;*/
-/*  transition: width 1s ease-in-out;*/
-/*	overflow-y:scroll;*/
-/*	overflow-x:hidden;*/
-/*	max-height:500px;*/
-/*  filter: drop-shadow(5px 5px 20px blue) !important;*/
-/*}*/
+.modelbar {
+  animation: 1s ease-out 0s 1 slideInFromLeft;
+  /*border-radius: 20px !important;*/
+  /*width: 100%;*/
+  /*position: absolute;*/
+  /*top: 50px !important;*/
+  /*left: 0;*/
+  /*z-index: 10;*/
+  transition: width 1s ease-in-out;
+	overflow-y:scroll;
+	overflow-x:hidden;
+	max-height:500px;
+  filter: drop-shadow(5px 5px 20px yellow) !important;
+}
 /*.rightbar {*/
 /*  width: 100%;*/
   /*height: 100%;*/

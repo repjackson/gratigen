@@ -537,11 +537,11 @@ if Meteor.isClient
     #             $set:"#{@key}":value
 
 
-    Template.goto_model.events
-        'click .goto_model': ->
-            Session.set 'loading', true
-            Meteor.call 'set_facets', @slug, ->
-                Session.set 'loading', false
+    # Template.goto_model.events
+    #     'click .goto_model': ->
+    #         Session.set 'loading', true
+    #         Meteor.call 'set_facets', @slug, ->
+    #             Session.set 'loading', false
 
 
 

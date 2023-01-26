@@ -363,15 +363,15 @@ template(name='delta_nav')
     //         +i name='play-button-circled--v1' color='40C057'
         // .active.item(data-tab='viewing')
         //     |viewing
-    .ui.attached.menu.hscroll
-        .item 
+    .ui.attached.segment
+        .ui.inline.header 
             i.window.restore.icon
             |sessions
-            |&nbsp;
-            i.plus.circular.link.icon.add_session(title='make session')
+            // |&nbsp;
+        i.plus.circular.link.icon.add_session(title='make session')
         each model_docs_helper 'delta' 
             // a.item.pick_delta.pointer.zoomer(data-tab="#{_id}" class=delta_item_class title="switch to #{name} session")
-            a.item.pick_delta.pointer.zoomer(data-tab="#{_id}" class="{{delta_item_class}} {{color}}")
+            a.ui.large.image.label.pick_delta.pointer.zoomer(data-tab="#{_id}" class="{{delta_item_class}} {{color}}")
                 if editing_delta
                     +text_edit key='name' direct=true
                 else 
@@ -570,12 +570,13 @@ template(name='leftbar')
     // .bordered.scrolling(class=main_column_class)
         
 template(name='modelbar')
-    .ui.attached.menu.modelbar.hscroll
+    // .ui.attached.menu.modelbar.hscroll
+    .ui.attached.segment.modelbar
         .item 
             i.cubes.icon
             |models
         each model_docs_helper 'model'
-            a.item.goto_model
+            a.ui.big.label.goto_model
                 +i name=icon color=stripped_icon_color cl='ui avatar image'
                 span #{title}
         
