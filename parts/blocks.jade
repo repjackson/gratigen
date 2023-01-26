@@ -134,33 +134,6 @@ template(name='bookmark_button')
         //- each list_users
         //-     +user_info
 
-template(name='comments')
-    .ui.dividing.header
-        i.chat.outline.icon
-        |#{doc_comments.count} comments
-    div
-    if currentUser
-        .ui.fluid.icon.large.input
-            i.plus.icon
-            input.add_comment(model='text' placeholder='add')
-    .ui.comments
-        each doc_comments
-            .comment
-                a.avatar   
-                    img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
-                .content
-                    a.author(href="/user/#{_author.username}") #{_author.name}
-                    .text #{body}
-                    .metadata
-                        span.date #{when}
-                        // |by 
-                        // a(href="/user/#{_author.username}") #{_author.name}
-                    .actions
-                        a.reply reply
-                        if currentUser
-                            +voting_small
-                            if can_edit
-                                +remove_button
                                 
                                 
                                 

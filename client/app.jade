@@ -237,12 +237,15 @@ template(name='app')
                 // if ct.length
                 +Template.dynamic template=ct
             else 
-                +login
+                .ui.center.aligned.basic.segment
+                    .batman
+                // +login
                 // .ui.center.aligned.basic.segment 
                 //     i.massive.yin.yang.loading.grey.icon
         +footer
     else 
-        i.massive.asterisk.loading.blue.icon
+        .batman
+        // i.massive.asterisk.loading.blue.icon
     
 template(name='doc_history_button')
     with doc_from_id

@@ -151,11 +151,14 @@ if Meteor.isClient
         # else
         #     parent = Template.parentData()
         parent = Template.currentData()
+        # console.log Template.instance().data
+        # console.log @
             
         if parent
-            @autorun => Meteor.subscribe 'children', 'comment', parent._id
+            @autorun => Meteor.subscribe 'children', 'comment', Template.instance().data._id, ->
     Template.comments.helpers
         doc_comments: ->
+            # console.log @
             # console.log Template.parentData()
             # console.log Template.parentData(1)
             # console.log Template.parentData(2)
@@ -167,10 +170,10 @@ if Meteor.isClient
             # else
             #     parent = Docs.findOne Template.parentData()._id
             parent = Template.currentData()
-            if parent
-                Docs.find
-                    parent_id:parent._id
-                    model:'comment'
+            # if parent
+            Docs.find
+                parent_id:@_id
+                model:'comment'
     Template.comments.events
         'keyup .add_comment': (e,t)->
             if e.which is 13
@@ -189,9 +192,9 @@ if Meteor.isClient
                 # parent = Docs.findOne Meteor.user()._doc_id
                 comment = t.$('.add_comment').val()
                 Docs.insert
-                    parent_id: parent._id
+                    parent_id: @_id
                     model:'comment'
-                    parent_model:parent.model
+                    parent_model:@model
                     body:comment
                 t.$('.add_comment').val('')
 

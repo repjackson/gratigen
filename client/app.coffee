@@ -6,6 +6,7 @@
 
 Template.app.events
     'click .hithere':-> console.log 'hi'
+# Template.gridstack.onRendered ->
 
 
 # Template.gridstack.onRendered ->

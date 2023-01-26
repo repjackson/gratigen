@@ -353,8 +353,9 @@ template(name='delta_result_card')
             //-     i.right.chevron.yellow.large.icon
             // if is_admin
             .content
-                if _author_id
-                    +author_info
+                // if _author_id
+                //     +author_info
+                +voting
                 +creation_info
                 +voting
                 .ui.small.inline.header #{views} views
@@ -367,8 +368,40 @@ template(name='delta_result_card')
                     +remove_button
             if template_exists
                 +Template.dynamic template=model_template
-                 
-                 
+            .content
+                +comments
+
+template(name='comments')
+    details.ui.fluid.accordion
+        summary.title.zoomer
+            .ui.dividing.header
+                i.chat.outline.icon
+                |#{doc_comments.count} comments
+        .content
+            if currentUser
+                .ui.fluid.icon.large.input
+                    input.add_comment(model='text' placeholder='add')
+            .ui.comments
+                each doc_comments
+                    .comment
+                        a.avatar   
+                            img.ui.avatar.image(src="{{c.url _author.image_id width=300 height=300 gravity='face' crop='fill'}}")
+                        .content
+                            a.author(href="/user/#{_author.username}") #{_author.name}
+                            .metadata
+                                span.date #{when}
+                                // |by 
+                                // a(href="/user/#{_author.username}") #{_author.name}
+                            .text #{body}
+                            .actions
+                                a.reply reply
+                                i.thumbs.up.icon
+                                i.smile.icon
+                                
+                                // if currentUser
+                                //     +voting_small
+                                //     if can_edit
+                                //         +remove_button
                             
 template(name='delta_list')
     each current_delta.result_ids

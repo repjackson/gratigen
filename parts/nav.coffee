@@ -20,6 +20,10 @@ if Meteor.isClient
     #         Meteor.call 'change_state', {_template:'delta',_model:@slug}, ->
 
     Template.nav.onRendered ->
+        $('.item').popup({
+            inline: true
+          })
+
         Session.setDefault('invert_mode', true)
     Template.secnav.events
         'click .goto_model': ->

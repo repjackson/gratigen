@@ -165,7 +165,7 @@ body {
 
 .ui.header, .button, .item {
      font-family: 'Bangers', sans-serif !important; 
-     /*font-weight: 300 !important;*/
+     font-weight: 300 !important;
      /*font-family: 'Ubuntu', sans-serif !important; */
      /*font-family: 'Varela Round' !important; */
     /*font-family: 'Goudy Bookletter 1911', sans-serif !important;*/
