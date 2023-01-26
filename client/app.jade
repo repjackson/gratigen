@@ -239,14 +239,14 @@ template(name='app')
             else 
                 .ui.center.aligned.basic.segment
                     .batman
+                    i.massive.yin.yang.loading.grey.icon
                 // +login
                 // .ui.center.aligned.basic.segment 
-                //     i.massive.yin.yang.loading.grey.icon
         if currentUser.admin_mode
             +footer
     else 
         .batman
-        // i.massive.asterisk.loading.blue.icon
+        i.massive.asterisk.loading.blue.icon
     
 template(name='doc_history_button')
     with doc_from_id
@@ -366,8 +366,8 @@ template(name='delta_nav')
         .item 
             i.window.restore.icon
             |sessions
-        a.item.add_session(title='new session')
-            i.plus.icon
+            |&nbsp;
+            i.plus.circular.link.icon.add_session(title='make session')
         each model_docs_helper 'delta' 
             // a.item.pick_delta.pointer.zoomer(data-tab="#{_id}" class=delta_item_class title="switch to #{name} session")
             a.item.pick_delta.pointer.zoomer(data-tab="#{_id}" class="{{delta_item_class}} {{color}}")

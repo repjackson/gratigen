@@ -2,8 +2,11 @@ if Meteor.isClient
     Template.nav.onCreated ->
         @autorun => Meteor.subscribe 'me', ->
         @autorun => Meteor.subscribe 'current_user', ->
+        @autorun => Meteor.subscribe 'current_delta', ->
+        @autorun => Meteor.subscribe 'current_model', ->
+        @autorun => Meteor.subscribe 'current_doc', ->
         @autorun => Meteor.subscribe 'users_min', ->
-        @autorun => Meteor.subscribe 'model_docs', 'model', ->
+        # @autorun => Meteor.subscribe 'model_docs', 'model', ->
         @autorun => Meteor.subscribe 'history',->
         @autorun => Meteor.subscribe 'model_docs','delta',->
         

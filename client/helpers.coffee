@@ -16,7 +16,7 @@ Template.registerHelper 'modal_doc', () ->
 Template.registerHelper 'flyout_doc', () ->
     if Meteor.user()
         delta = Docs.findOne {_id:Meteor.user().delta_id}
-        if delta.flyout_doc_id
+        if delta and delta.flyout_doc_id
             Docs.findOne delta.flyout_doc_id
 
 Template.registerHelper 'cd', () -> 
@@ -27,6 +27,10 @@ Template.registerHelper 'parent_doc', () ->
     Docs.findOne @parent_id
     # Template.parentData()
 
+Template.registerHelper 'is_template', (template) ->
+    console.log @
+    d = Docs.findOne Meteor.user().delta_id
+    if d._template is template then 'active' else ''
 Template.registerHelper 'isActivePath', () ->
 Template.registerHelper 'isActiveRoute', () ->
 Template.registerHelper 'is_active_template', () ->
