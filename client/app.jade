@@ -101,6 +101,7 @@ body
     +modelbar
     +leftbar
     +rightbar
+    // +delta_nav
     +global_modal
     +global_flyout
     +chat_flyout
@@ -216,37 +217,43 @@ template(name='app')
     if Template.subscriptionsReady
         +nav
         if currentUser
-            +delta_nav
             // #draggable
             // if currentUser.show_leftbar
             // if currentUser.show_rightbar
-            if currentUser.delta_id
+            // if currentUser.delta_id
                 // .ui.small.compact.attached.menu.hscroll
                 // .icon.item(title="#{doc_history.length} node history")
                 // .ui.hidden.divider
                 // .ui.bottom.attached.tab.segment.centered(data-tab=current_delta._id)
-                .ui.attached.small.menu.hscroll
-                    .item
-                        i.large.clock.icon(title='node history')
-                        |#{current_delta._doc_history.count}
-                    // .ui.breadcrumb.hscroll
-                    each current_delta._doc_history.reverse
-                        +doc_history_button
+                // +history_bar
         .layout.scrolling
             with currentUser
                 // if ct.length
                 +Template.dynamic template=ct
             else 
                 .ui.center.aligned.basic.segment
-                    .batman
-                    i.massive.yin.yang.loading.grey.icon
+                    // .batman
+                    i.massive.snowflake.loading.grey.icon
+                    // img.ui.centered.image.zoomer(src="/logo.png")
+
                 // +login
                 // .ui.center.aligned.basic.segment 
         if currentUser.admin_mode
             +footer
     else 
-        .batman
-        i.massive.asterisk.loading.blue.icon
+        // .batman
+        i.tree.loading.blue.icon
+    
+template(name='history_bar')
+    .ui.attached.small.menu.hscroll
+        .item
+            i.large.clock.icon(title='node history')
+            |#{current_delta._doc_history.count}
+        // .ui.breadcrumb.hscroll
+        each current_delta._doc_history.reverse
+            +doc_history_button
+    
+    
     
 template(name='doc_history_button')
     with doc_from_id
@@ -254,7 +261,7 @@ template(name='doc_history_button')
             with parent_model
                 +i name=icon color=stripped_icon_color cl='ui avatar image'
             if image_id
-                img.ui.mini.rounded.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+                img.ui.mini.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
             |{{truncated title}}
             // i.remove.link.icon.delete_history_item.zoomer(title='remove history record')
             // i.right.chevron.icon.divider
@@ -362,7 +369,7 @@ template(name='delta_nav')
     //         +i name='play-button-circled--v1' color='40C057'
         // .active.item(data-tab='viewing')
         //     |viewing
-    .ui.attached.menu.hscroll
+    .ui.attached.vertical.menu.hscroll
         .item 
             i.window.restore.icon
             |sessions
@@ -569,7 +576,7 @@ template(name='leftbar')
     // .bordered.scrolling(class=main_column_class)
         
 template(name='modelbar')
-    .ui.top.sidebar.menu.push.modelbar
+    .ui.top.sidebar.menu.push.modelbar.hscroll
         .item 
             i.cubes.icon
             |models

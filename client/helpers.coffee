@@ -30,7 +30,8 @@ Template.registerHelper 'parent_doc', () ->
 Template.registerHelper 'is_template', (template) ->
     console.log @
     d = Docs.findOne Meteor.user().delta_id
-    if d._template is template then 'active' else ''
+    if d
+        if d._template is template then 'active' else ''
 Template.registerHelper 'isActivePath', () ->
 Template.registerHelper 'isActiveRoute', () ->
 Template.registerHelper 'is_active_template', () ->

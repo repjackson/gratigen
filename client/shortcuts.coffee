@@ -49,11 +49,14 @@ globalHotkeys.add
 globalHotkeys.add
 	combo: "r a"
 	callback: ->
-        if Meteor.userId() and Meteor.userId() in ['vwCi2GTJgvBJN5F6c','YFPxjXCgjhMYEPADS']
-            if Meteor.user().roles and 'admin' in Meteor.user().roles
-                Meteor.users.update Meteor.userId(), $pull:roles:'admin'
-            else
-                Meteor.users.update Meteor.userId(), $addToSet:roles:'admin'
+	    Meteor.users.update Meteor.userId(),
+	        admin_mode:!Meteor.user().admin_mode
+	    
+        # if Meteor.userId() and Meteor.userId() in ['vwCi2GTJgvBJN5F6c','YFPxjXCgjhMYEPADS']
+        #     if Meteor.user().roles and 'admin' in Meteor.user().roles
+        #         Meteor.users.update Meteor.userId(), $pull:roles:'admin'
+        #     else
+        #         Meteor.users.update Meteor.userId(), $addToSet:roles:'admin'
 globalHotkeys.add
 	combo: "r s"
 	callback: ->

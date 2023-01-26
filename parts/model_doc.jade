@@ -51,13 +51,16 @@ template(name='model_doc_view')
                     +viewing
                 .twelve.wide.column
                     if cd.edit_mode 
-                        .ui.fluid.blue.message 
-                            .header 
-                                i.pencil.icon
-                                |editing mode
-                    if header
+                        .ui.massive.header 
+                            i.pencil.icon
+                            |editing mode
+                    if title
                         .ui.header #{title}
-                        
+                    if image_id 
+                        +image_view key='image_id'
+                    // if description
+                    |!{description}
+                    |!{body}
                     .ui.two.column.stackable.grid.scrolling
                         each _keys
                             .column
@@ -85,9 +88,14 @@ template(name='model_doc_view')
 template(name='found_field')
     // +Template.dynamic template=this data=current_doc
     if current_delta.edit_mode
-        .ui.input 
-            input(type='number')
-            label ranking
+        +print_this
+        // .ui.input 
+        //     input(type='number')
+        //     label ranking
+        .ui.icon.button.rank_up
+            i.chevron.up.icon
+        .ui.icon.button.rank_down
+            i.chevron.up.icon
     if field_temp_exists
         // +print_this
         +Template.dynamic template=this data=current_doc

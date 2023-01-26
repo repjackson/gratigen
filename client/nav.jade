@@ -6,14 +6,19 @@ template(name='nav')
             i.bars.large.icon
         a.header.image.item.zoomer.set_home(class="{{is_template 'home'}}" title='gratihome')
             if is_loading
-                .icon.item
-                    // i.big.loading.grey.refresh.icon.cancel
-                    .batman
+                // .icon.item
+                    // .batman
+                i.loading.grey.earth.large.icon
             else 
                 img.ui.mini.circular.image.zoomer(src="/logo.png")
             // span.mobile.hidden Gratigen
         a.icon.item.toggle_modelbar.zoomer(class=modelbar_class)
-            i.cubes.large.icon
+            i.cubes.large.grey.icon
+            // +i name='network' color='FFFFFF'
+        a.icon.item.toggle_deltanav.zoomer(class=modelbar_class)
+            i.window.restore.large.grey.icon
+        a.icon.item.toggle_historynav.zoomer(class=modelbar_class)
+            i.history.large.grey.icon
         // a.icon.item.toggle_taskbar.zoomer(class=taskbar_class)
         //     i.tasks.large.icon
         // a.icon.item.toggle_orgbar.zoomer(class=orgbar_class)
