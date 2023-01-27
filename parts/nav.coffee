@@ -18,9 +18,9 @@ if Meteor.isClient
     #     'click .click_item': ->
     #         console.log @
     #         Meteor.call 'change_state', {_template:'delta',_model:@slug}, ->
-    # # Template.model.events
-    # #     'click .click_item': ->
-    # #         Meteor.call 'change_state', {_template:'delta',_model:@slug}, ->
+    # Template.model.events
+    #     'click .click_item': ->
+    #         Meteor.call 'change_state', {_template:'delta',_model:@slug}, ->
 
     Template.nav.onRendered ->
         $('.item').popup({
@@ -207,18 +207,18 @@ if Meteor.isClient
         #     $('.cubes').transition('jiggle', 1000)
         #     # $(e.currentTarget).closest('.item').transition('bounce', 1000)
         #     # $(e.currentTarget).closest('.cubes').transition('jiggle', 1000)
-        #     console.log Meteor.user().show_modelbar
-        #     if Meteor.user().show_modelbar
+        #     console.log Meteor.user().modelbar
+        #     if Meteor.user().modelbar
         #         # $('.modelbar').transition('swing right', 1000)
         #         Meteor.setTimeout ->
         #             Meteor.users.update Meteor.userId(),
         #                 $set:
-        #                     show_modelbar:false
+        #                     modelbar:false
         #         , 1000
         #     else 
         #         Meteor.users.update Meteor.userId(),
         #             $set:
-        #                 show_modelbar:true
+        #                 modelbar:true
         # 'click .toggle_rightbar': ->
         #     console.log Meteor.user().show_rightbar
         #     Meteor.users.update Meteor.userId(),
@@ -229,23 +229,28 @@ if Meteor.isClient
     Template.toggle_nav_item.events 
         'click .toggle': ->
             # d = Docs.findOne 
-            if Meteor.user()["#{@key}"]
+            if Meteor.user()["show_#{@key}"]
                 Meteor.users.update Meteor.userId(),
-                    $set:"#{@key}":false
+                    $set:"show_#{@key}":false
             else 
                 Meteor.users.update Meteor.userId(),
-                    $set:"#{@key}":true
+                    $set:"show_#{@key}":true
     Template.toggle_nav_item.helpers 
         toggle_item_class: ->
-            if Meteor.user() and Meteor.user()["#{@key}"]
-                'active red'
+            if Meteor.user() and Meteor.user()["show_#{@key}"]
+                'active yellow'
             else 
-                ''
+                'grey'
+        toggle_item_icon_class: ->
+            if Meteor.user() and Meteor.user()["show_#{@key}"]
+                "#{@icon} large"
+            else 
+                "#{@icon} grey"
 
         
     Template.nav.helpers
         modelbar_class: ->
-            if Meteor.user() and Meteor.user().show_modelbar
+            if Meteor.user() and Meteor.user().modelbar
                 'large inverted'
         model_docs: ->
             Docs.find 

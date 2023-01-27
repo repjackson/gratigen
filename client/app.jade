@@ -105,7 +105,7 @@ body
     // +global_modal
     // +global_flyout
     // +chat_flyout
-    // if currentUser.show_modelbar
+    // if currentUser.modelbar
     .pusher
         +app
         +comet
@@ -232,7 +232,8 @@ template(name='app')
                 +Template.dynamic template=ct
                 // +home
             else 
-                i.massive.snowflake.grey.loading.icon
+                .ui.center.aligned.basic.segment
+                    i.massive.snowflake.grey.pulse.icon
                 // +login
                 // .ui.center.aligned.basic.segment
                 //     // .batman
@@ -266,7 +267,7 @@ template(name='doc_history_button')
                 img.ui.mini.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
             |{{truncated title}}
             // i.remove.link.icon.delete_history_item.zoomer(title='remove history record')
-            // i.right.chevron.icon.divider
+            i.right.chevron.icon.divider
         .ui.popup 
             .ui.header
                 |#{title}

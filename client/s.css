@@ -162,11 +162,16 @@ body {
 }
 
 
-.image, .segment, .card, .button, .nav, .item, .header { 
-  animation: fadeIn 2s !important; 
+/*.image, .segment, .card, .button, .nav, .item, .header { */
+/*  animation: fadeIn 2s !important; */
+/*}*/
+div{
+  /*top: -50px;*/
 }
 
 .ui.header, .button, .item {
+  /*animation: pulse-animation 1s infinite;*/
+
   font-family: 'Bangers', sans-serif !important; 
   font-weight: 200 !important;
   font-size: 130% !important;

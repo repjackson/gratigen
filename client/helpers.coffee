@@ -448,8 +448,8 @@ Template.registerHelper 'sub_product', ->
     Docs.findOne 
         model:'product'
         _id:@product_id
-# Template.body.events
-#     'click .toggle_leftbar': -> $('.ui.sidebar').sidebar('toggle')
+Template.body.events
+    'click .toggle_leftbar': -> $('.ui.sidebar').sidebar('toggle')
 
 Template.registerHelper 'is_editing', () -> Session.equals 'editing_id', @_id
 Template.registerHelper 'editing_doc', () ->

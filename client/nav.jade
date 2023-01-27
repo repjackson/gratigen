@@ -4,11 +4,11 @@ template(name='nav')
     #topnav.ui.attached.menu.topnav.hscroll.ani(class=invert_class)
         a.icon.item.toggle_leftbar.zoomer(title='toggle leftbar')
             i.bars.large.icon
-        a.header.image.item.zoomer.set_home(class="{{is_template 'home'}}" title='gratihome')
+        a.header.image.item.zoomer.set_template(data-template='home' class="{{is_template 'home'}}" title='gratihome')
             if is_loading
                 // .icon.item
                     // .batman
-                i.grey.snowflake.large.icon
+                i.grey.snowflake.large.icon.pulse
             else 
                 img.ui.mini.circular.image.zoomer(src="/logo.png")
             // span.mobile.hidden Gratigen
@@ -17,9 +17,11 @@ template(name='nav')
         // a.icon.item.toggle_modelbar.zoomer(class=modelbar_class)
         //     i.cubes.large.grey.icon
             // +i name='network' color='FFFFFF'
-        +toggle_nav_item key='show_modelbar' icon='cubes' label='show modelbar'
-        +toggle_nav_item key='show_deltanav' icon='window restore' label='show delta nav' color='ffffff'
-        +toggle_nav_item key='show_historynav' icon='history' label='show history nav'
+        +toggle_nav_item key='modelbar' icon='cubes' label='models'
+        +toggle_nav_item key='deltabar' icon='window restore' label='sessions' color='ffffff'
+        +toggle_nav_item key='historybar' icon='history' label='history'
+        +toggle_nav_item key='searchbar' icon='search' label='search'
+        +toggle_nav_item key='addbar' icon='play' label='play'
         // a.icon.item.toggle_taskbar.zoomer(class=taskbar_class)
         //     i.tasks.large.icon
         // a.icon.item.toggle_orgbar.zoomer(class=orgbar_class)
@@ -112,11 +114,13 @@ template(name='nav')
                 // i.sign.in.large.icon
                 +i name='internal'
                 span.mobile.hidden login
+    if currentUser.searchbar
+        +search
     if currentUser.show_coinbar
         +coinbar
-    if currentUser.show_deltanav
+    if currentUser.show_deltabar
         +delta_nav
-    if currentUser.show_historynav
+    if currentUser.show_historybar
         +history_bar
     if currentUser.show_modelbar
         +modelbar
@@ -146,7 +150,7 @@ template(name='footer')
                 +text_edit key='_doc_id' label='_doc_id' direct=true
                 +boolean_edit key='show_leftbar' label='leftbar' direct=true
                 +boolean_edit key='show_rightbar' label='rightbar' direct=true
-                +boolean_edit key='show_modelbar' label='sidebar modelbar' icon='cubes' direct=true
+                +boolean_edit key='modelbar' label='sidebar modelbar' icon='cubes' direct=true
                 +boolean_edit key='show_secnav' label='secnav modelbar' icon='network' direct=true
                 
             .ui.header 
@@ -176,6 +180,6 @@ template(name='footer')
 
 
 template(name='toggle_nav_item')
-    a.icon.item.toggle(class=toggle_item_class title="toggle #{label}")
-        i.big.icon(class=icon)
+    a.icon.item.toggle(class=toggle_item_class title="#{label}")
+        i.large.icon(class=toggle_item_icon_class)
         // +i name=icon color='ffffff' cl='ui avatar image'
