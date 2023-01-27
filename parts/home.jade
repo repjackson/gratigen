@@ -7,30 +7,19 @@ template(name='home')
             // unless session_is 'expand_leftbar' true
             +dash_user_info
             +user_impact_graph
-            .ui.inline.header 
-                +i name='t-shirt'
-                |essentials
-            if cd.picked_essentials
-                // #clear_essentials.ui.active.icon.large.circular.button
-                //     i.remove.icon
-                each picked_essentials
-                    .unpick_essential.ui.active.large.circular.compact.button
-                        strong #{this}
-            each result_helper 'essential'
-                +pick_result
-            
         .eight.wide.column.scrolling        
             .ui.one.column.grid     
-                .column
-                    +home_cloud
+                .centered.column
+                    +facet key='model'
+                    +facet key='tag'
+                    // +home_cloud
                 // +thing_picker_template
-                .centered
                     .ui.inline.search
                         .ui.large.icon.input.search_bar
                             input.prompt(type='text' placeholder='add/request/search...')
                             i.search.icon
-                    each homepage_models
-                        +filter_model
+                    // each homepage_models
+                    //     +filter_model
                 .centered   
                         // .results    
                     each model_docs_helper 'view_mode'

@@ -22,8 +22,8 @@ if Meteor.isClient
         # @autorun => @subscribe 'my_current_thing', Session.get('current_thing_id'),->
         # @autorun => @subscribe 'homepage_models',->
         # @autorun => @subscribe 'model_docs', 'eft',->
-        # @autorun => @subscribe 'model_docs', 'view_mode',->
-        # @autorun => @subscribe 'model_docs', 'sort_key',->
+        @autorun => @subscribe 'model_docs', 'view_mode',->
+        @autorun => @subscribe 'model_docs', 'sort_key',->
 if Meteor.isServer
     Meteor.publish 'my_current_thing', (current_thing_id)->
         # user = Meteor.user()
@@ -168,11 +168,12 @@ if Meteor.isClient
 
     Template.home_card.onRendered ->
         # console.log @data
-        if @data.lat and @data.lng
-            Markers.insert 
-                title:@data.title
-                lat:@data.lat
-                lng:@data.lng
+        if @data
+            if @data.lat and @data.lng
+                Markers.insert 
+                    title:@data.title
+                    lat:@data.lat
+                    lng:@data.lng
     Template.home_card.events 
         'click .map_me': ->
             # navigator.geolocation.getCurrentPosition (position) =>

@@ -124,22 +124,25 @@ if Meteor.isServer
             console.log d
             white_list = ['post', 'offer', 'request', 'org', 'event', 'role', 'task', 'skill', 'resource', 'product', 'service', 'trip']
             match.model = $in: white_list
-            if d.picked_models
-                if d.picked_models.length > 0 then match.model = $all: d.picked_models
-            if d.picked_essentials
-                if d.picked_essentials.length > 0 then match.efts = $all: d.picked_essentials
-            if d.picked_timestamp_tags
-                if d.picked_timestamp_tags.length > 0 then match.timestamp_tags = $all: d.picked_timestamp_tags
-            if d.picked_authors
-                if d.picked_authors.length > 0 then match._author_username = $all: d.picked_authors
+            enabled_facets = ['model','essential','tag']
+            for key in enabled_facets
+                if d["picked_#{key}s"]
+                    if d["picked_#{key}s"].length > 0 then match["#{key}"] = $all: d["picked_#{key}s"]
+            # if d.picked_models
+            #     if d.picked_models.length > 0 then match.model = $all: d.picked_models
+            # if d.picked_essentials
+            #     if d.picked_essentials.length > 0 then match.efts = $all: d.picked_essentials
+            # if d.picked_timestamp_tags
+            #     if d.picked_timestamp_tags.length > 0 then match.timestamp_tags = $all: d.picked_timestamp_tags
+            # if d.picked_authors
+            #     if d.picked_authors.length > 0 then match._author_username = $all: d.picked_authors
     
-            if d.picked_tags 
-                picked_tags = d.picked_tags
-            else 
-                picked_tags = []
+            # if d.picked_tags 
+            #     picked_tags = d.picked_tags
+            # else 
+            #     picked_tags = []
             limit = 10
             console.log 'match', match
-            enabled_facets = ['model','essential','tag']
             for key in enabled_facets   
                 console.log 'key', key
                 # console.log  "picked_#{key}s"
