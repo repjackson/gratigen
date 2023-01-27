@@ -15,8 +15,9 @@ template(name='facet')
         //- .active.content
             //- div
     each picked_filters 
-        .ui.button.unpick_filter
-            |#{this}
+        +unpick_filter
+        // .ui.active.compact.button.unpick_filter
+        //     |#{this}
     if result_helper key
         each filtering_res
             // if name
@@ -35,6 +36,11 @@ template(name='facet')
         //- .ui.hidden.divider
     .spacer
         
+
+template(name='unpick_filter')
+    .ui.active.compact.button.unpick
+        |#{this}
+
 
 
 

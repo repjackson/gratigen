@@ -1,9 +1,9 @@
 if Meteor.isClient
     Template.facet.helpers
         picked_filters: ->
-            console.log @
+            # console.log @
             delta = Docs.findOne Meteor.user().delta_id
-            console.log delta["picked_#{@key}s"]
+            # console.log delta["picked_#{@key}s"]
             delta["picked_#{@key}s"]
         viewing_results: ->
             Template.instance().viewing_facet.get()
@@ -46,20 +46,6 @@ if Meteor.isClient
     Template.app.helpers
         result_helper: (model)-> 
             Results.find model:model
-        # picked_tags: -> picked_tags.array()
-        # tag_results: -> Results.find model:'tag'
-    
-        # picked_essentials: -> picked_essentials.array()
-        # essential_results: -> Results.find model:'essential'
-        
-        # picked_models: -> picked_models.array()
-        # model_results: -> Results.find model:'model'
-        # doc_count = Docs.find({}).count()
-        # if 0 < doc_count < 3 then Tags.find { count: $lt: doc_count } else Tags.find()
-        # all_tags: ->
-        #     doc_count = Docs.find({}).count()
-        #     if 0 < doc_count < 3 then Tags.find { count: $lt: doc_count } else Tags.find()
-
         # cloud_tag_class: ->
         #     button_class = switch
         #         when @index <= 5 then 'large'
@@ -67,28 +53,19 @@ if Meteor.isClient
         #         when @index <= 20 then 'small'
         #     return button_class
 
-        # picked_tags: -> picked_tags.array()
-
-        # settings: -> {
-        #     position: 'bottom'
-        #     limit: 10
-        #     rules: [
-        #         {
-        #             collection: Tags
-        #             field: 'name'
-        #             matchAll: true
-        #             template: Template.tag_result
-        #         }
-        #         ]
-        # }
-
     Template.facet.events
         'click .pick_filter': -> 
             Docs.update Meteor.user().delta_id, 
                 $addToSet:"picked_#{@key}s":@name
-        'click .unpick_tag': -> 
+    Template.unpick_filter.events
+        'click .unpick': -> 
+            console.log Template.instance()
+            console.log Template.currentData()
+            parent = Template.parentData()
+            console.log "picked_#{@key}s", @valueOf()
+            console.log 'unpick', @valueOf()
             Docs.update Meteor.user().delta_id, 
-                $pull:"picked_#{@key}s":@valueOf()
+                $pull:"picked_#{parent.key}s":@valueOf()
             # picked_tags.remove @valueOf()
     # Template.home_cloud.events
     #     'click .pick_tag': -> 

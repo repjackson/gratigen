@@ -225,8 +225,9 @@ if Meteor.isServer
 if Meteor.isClient
     Template.eft_view_item.helpers 
         in_list: ()->
+            if @efts
+                @label in @efts
             # cd = Docs.findOne Meteor.user()._model 
-            @label in Template.parentData().efts
             # @label in cd.efts
     Template.eft_view_item_small.onRendered ->
         Meteor.setTimeout ->
