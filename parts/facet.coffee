@@ -26,7 +26,7 @@ if Meteor.isClient
             else ''
     
     
-    Template.home_cloud.onCreated ->
+    Template.facet.onCreated ->
         @autorun => Meteor.subscribe 'home_facets', ->
         # @autorun => Meteor.subscribe('docs', picked_tags.array())
     Template.pick_result.events
@@ -148,17 +148,17 @@ if Meteor.isServer
                 # console.log  "picked_#{key}s"
                 result_cloud = Docs.aggregate [
                     { $match: match }
-                    { $project: "#{key}": 1 }
+                    { $project: "#{key}s": 1 }
                     { $unwind: "$#{key}s" }
                     { $group: _id: "$#{key}s", count: $sum: 1 }
                     # { $match: _id: $nin: d["picked_#{key}s"] }
                     { $sort: count: -1, _id: 1 }
-                    { $limit: limit }
+                    { $limit: 10 }
                     { $project: _id: 0, name: '$_id', count: 1 }
                     ]
                 # console.log 'result cloud', key, result_cloud
                 result_cloud.forEach (result) ->
-                    console.log result
+                    console.log 'cloud res', result
                     self.added 'results', Random.id(),
                         name: result.name
                         count: result.count

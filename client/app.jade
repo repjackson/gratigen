@@ -240,14 +240,14 @@ template(name='app')
 
                 +login
                 // .ui.center.aligned.basic.segment 
-    //     if currentUser.admin_mode
-    //         +footer
+        if currentUser.admin_mode
+            +footer
     // else 
     //     // .batman
     //     i.tree.loading.blue.icon
     
 template(name='history_bar')
-    .ui.attached.small.horizontal.menu.hscroll
+    .ui.small.horizontal.pointing.menu.hscroll
         .item
             i.large.clock.icon(title='node history')
             |#{current_delta._doc_history.count}

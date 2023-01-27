@@ -26,7 +26,7 @@ moment.locale('en', {
 
 
 Template.app.events
-    'click .hithere':-> console.log 'hi'
+    'click .printme':-> console.log @
 # Template.gridstack.onRendered ->
 
 

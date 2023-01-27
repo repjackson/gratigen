@@ -109,24 +109,27 @@ template(name='my_things')
 //template(name='thing_maker_modal')  
 
 template(name='dash_user_info')
-    .ui.two.column.grid
-        .six.wide.column
-            img.ui.circular.image(src="{{c.url currentUser.image_id width=120 height=120 gravity='face' crop='fill'}}") 
-        .ten.wide.column
-            .ui.header
-                |#{currentUser.username}
-                div
-                |#{currentUser.tagline}
+    with currentUser
+        .ui.two.column.grid
+            .six.wide.column
+                img.ui.circular.image(src="{{c.url image_id width=120 height=120 gravity='face' crop='fill'}}") 
+            .ten.wide.column
+                .ui.header.printme
+                    |#{username}
+                    div
+                    |#{tagline}
                 
                 
 template(name='user_impact_graph')
     .ui.segment
+        .ui.header user impact graph
         img.ui.circular.image(src="/12_color_code.jpg")
         +facet key='essential'
         
         
 template(name='user_connection_graph')
     .ui.segment
+        .ui.header user connection graph
 
 
 

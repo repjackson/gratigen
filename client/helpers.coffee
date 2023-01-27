@@ -238,8 +238,9 @@ Template.registerHelper 'total_potential_revenue', () ->
 
 
 Template.registerHelper 'doc_from_id', ->
-    console.log @,@valueof()
-    Docs.findOne @valueof()
+    # console.log @,@valueof()
+    if @valueof()
+        Docs.findOne @valueof()
 
 Template.registerHelper 'key_value_is', (key, value)->
     # console.log 'key', key
