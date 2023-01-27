@@ -331,7 +331,7 @@ Template.app.helpers
         if delta
             delta._template
 
-Template.delta_nav.helpers
+Template.sessionbar.helpers
     delta_item_class: ->
         if @_id is Meteor.user().delta_id
             'active blue large invert'
@@ -342,7 +342,7 @@ Template.delta_nav.helpers
     delta_users: ->
         Meteor.users.find
             delta_id:@_id
-Template.delta_nav.events 
+Template.sessionbar.events 
     'dblclick .pick_delta': ->
         Session.set('editing_id', @_id)
     'blur .pick_delta':(e)->

@@ -99,9 +99,9 @@ head
 body
     // .invert
     // +modelbar
-    // +leftbar
+    +leftbar
     // +rightbar
-    // // +delta_nav
+    // // +sessionbar
     // +global_modal
     // +global_flyout
     // +chat_flyout
@@ -358,21 +358,23 @@ template(name='add_model_doc_button')
                 
           
           
-template(name='delta_nav')
+template(name='sessionbar')
     // .ui.top.attached.tabular.menu  
     //     a.center.item.toggle_addmode.zoomer(data-tab='add' title='add thing')
     //         +i name='play-button-circled--v1' color='40C057'
         // .active.item(data-tab='viewing')
         //     |viewing
-    .ui.attached.segment
-        .ui.inline.header 
-            i.window.restore.icon
-            |sessions
-            // |&nbsp;
+    .ui.attached.segment.grid
+        .four.wide.column
+            .ui.inline.header 
+            
+                i.window.restore.icon
+                |sessions
+                // |&nbsp;
         i.plus.circular.link.icon.add_session(title='make session')
         each model_docs_helper 'delta' 
             // a.item.pick_delta.pointer.zoomer(data-tab="#{_id}" class=delta_item_class title="switch to #{name} session")
-            a.ui.large.image.label.pick_delta.pointer.zoomer(data-tab="#{_id}" class="{{delta_item_class}} {{color}}")
+            a.pick_delta.pointer.zoomer.four.wide.column(data-tab="#{_id}" class="{{delta_item_class}} {{color}}")
                 if editing_delta
                     +text_edit key='name' direct=true
                 else 
@@ -540,7 +542,8 @@ template(name='right_nav_item')
 
 template(name='leftbar')
     .ui.sidebar.segment.push.leftbar
-        .item leftbar
+        with cd
+            +comments
         // +session_toggle key='expand_leftbar' icon='heart outline'
             // +session_toggle key='add_mode' icon='plus'
             //.ui.icon.button.show_model

@@ -18,7 +18,7 @@ template(name='nav')
         //     i.cubes.large.grey.icon
             // +i name='network' color='FFFFFF'
         +toggle_nav_item key='modelbar' icon='cubes' label='models'
-        +toggle_nav_item key='deltabar' icon='window restore' label='sessions' color='ffffff'
+        +toggle_nav_item key='sessionbar' icon='window restore' label='sessions' color='ffffff'
         +toggle_nav_item key='historybar' icon='history' label='history'
         +toggle_nav_item key='searchbar' icon='search' label='search'
         +toggle_nav_item key='addbar' icon='play' label='play'
@@ -121,8 +121,8 @@ template(name='nav')
         +search
     if currentUser.show_coinbar
         +coinbar
-    if currentUser.show_deltabar
-        +delta_nav
+    if currentUser.show_sessionbar
+        +sessionbar
     if currentUser.show_historybar
         +history_bar
     if currentUser.show_modelbar
