@@ -1,7 +1,32 @@
 if Meteor.isClient
+    Template.essential_facet.onCreated ->
+        Meteor.subscribe 'model_docs','model', ->
     Template.model_facet.helpers
         picked_model: -> Session.get('picked_model')
         model_results: -> Results.find key:'model'
+        model_doc_ref: -> 
+            console.log @
+            Docs.findOne 
+                model:'model'
+                slug:@name
+    Template.essential_facet.onCreated ->
+        Meteor.subscribe 'model_docs','eft', ->
+    Template.essential_facet.helpers
+        picked_essential: -> picked_essentials.array()
+        essential_results: -> Results.find key:'essential'
+        essential_doc_ref: -> 
+            console.log @
+            Docs.findOne 
+                model:'eft'
+                title:@name
+    Template.tag_facet.helpers
+        picked_tag: -> picked_tags.array()
+        tag_results: -> Results.find key:'tag'
+        # tag_doc_ref: -> 
+        #     console.log @
+        #     Docs.findOne 
+        #         model:'tag'
+        #         title:@name
     Template.facet.helpers
         # picked_filters: ->
         #     # console.log @
@@ -34,22 +59,22 @@ if Meteor.isClient
         #     # else ''
     
     
-    Template.facet.onCreated ->
+    Template.home.onCreated ->
         @autorun => Meteor.subscribe 'facet',
             Session.get('picked_model'),
             picked_essentials.array(),
             picked_tags.array(),
         , ->
         # @autorun => Meteor.subscribe('docs', picked_tags.array())
-    Template.pick_result.events
-        'click .pick': ->
-            console.log @
-            d = Docs.findOne Meteor.user().delta_id 
-            Docs.update d._id, 
-                $addToSet:
-                    "picked_#{@model}s":@name
-            d = Docs.findOne Meteor.user().delta_id 
-            # console.log d
+    # Template.pick_result.events
+    #     'click .pick': ->
+    #         console.log @
+    #         d = Docs.findOne Meteor.user().delta_id 
+    #         Docs.update d._id, 
+    #             $addToSet:
+    #                 "picked_#{@model}s":@name
+    #         d = Docs.findOne Meteor.user().delta_id 
+    #         # console.log d
     # Template.app.helpers
     #     result_helper: (model)-> 
     #         Results.find model:model
@@ -64,7 +89,7 @@ if Meteor.isClient
     #     'click .pick_filter': -> 
     #         Docs.update Meteor.user().delta_id, 
     #             $addToSet:"picked_#{@key}s":@name
-    Template.facet.events
+    # Template.facet.events
         # 'click .unpick': -> 
         #     console.log Template.instance()
         #     console.log Template.currentData()
@@ -75,13 +100,16 @@ if Meteor.isClient
         #         $pull:"picked_#{parent.key}s":@valueOf()
         #     # location.reload()
         #     # picked_tags.remove @valueOf()
+    Template.tag_facet.events
         'click .pick_tag': -> picked_tags.push @name
         'click .unpick_tag': -> picked_tags.remove @valueOf()
         'click #clear_tags': -> picked_tags.clear()
         
+    Template.model_facet.events
         'click .pick_model': -> Session.set('picked_model', @name)
         'click .unpick_model': -> Session.set('picked_model',null)
 
+    Template.essential_facet.events
         'click .pick_essential': -> picked_essentials.push @name
         'click .unpick_essential': -> picked_essentials.remove @valueOf()
 
@@ -99,7 +127,7 @@ if Meteor.isServer
             match = {}
             # console.log d
             coordination_models = ['post', 'offer', 'request', 'org', 'event', 'role', 'task', 'skill', 'resource', 'product', 'service', 'trip']
-            # match.model = $in: coordination_models
+            match.model = $in: coordination_models
             # enabled_facets = ['model','essential','tag']
             # for key in enabled_facets
             #     if d["picked_#{key}s"]

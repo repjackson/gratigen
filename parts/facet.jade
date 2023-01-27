@@ -1,5 +1,44 @@
 template(name='essential_facet')
+    div
+    // if filtering_res
+    .ui.header
+        i.food.icon
+        |essentials
+    // .ui.icon.tiny.input
+    //     i.search.icon
+    //     input.add_filter(type='text')
+        //- .active.content
+            //- div
+    if picked_essentials
+        .ui.active.button.unpick_essential 
+            |#{this}
+    if essential_results
+        each essential_results
+            a.selector.ui.compact.basic.circular.button.pick_essential(class=toggle_value_class title=count)
+                +i name=essential_doc_ref.icon color=essential_doc_ref.icon_color
+                strong #{essential_doc_ref.title}
+                // if is_admin
+                small  #{count}
 template(name='tag_facet')
+    // if filtering_res
+    .ui.inline.header
+        i.tags.icon
+        |tags
+    // .ui.icon.tiny.input
+    //     i.search.icon
+    //     input.add_filter(type='text')
+        //- .active.content
+            //- div
+    if picked_tags
+        .ui.active.button.unpick_tag
+            |#{this}
+    if tag_results
+        each tag_results
+            a.selector.ui.compact.basic.circular.button.pick_tag(class=toggle_value_class title=count)
+                // +i name=icon color=essential_doc_ref.icon_color
+                strong #{name}
+                // if is_admin
+                small  #{count}
 template(name='model_facet')
     div
     // if filtering_res
@@ -15,8 +54,9 @@ template(name='model_facet')
             |#{this}
     if model_results
         each model_results
-            a.selector.ui.compact.basic.circular.button.pick_filter(class=toggle_value_class title=count)
-                strong #{name}
+            a.selector.ui.compact.basic.circular.button.pick_model(class=toggle_value_class title=count)
+                +i name=model_doc_ref.icon color=model_doc_ref.stripped_icon_color
+                strong #{model_doc_ref.title}
                 // if is_admin
                 small  #{count}
         
