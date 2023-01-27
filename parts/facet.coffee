@@ -12,7 +12,7 @@ if Meteor.isClient
     Template.essential_facet.onCreated ->
         Meteor.subscribe 'model_docs','eft', ->
     Template.essential_facet.helpers
-        picked_essential: -> picked_essentials.array()
+        picked_essentials: -> picked_essentials.array()
         essential_results: -> Results.find key:'essential'
         essential_doc_ref: -> 
             console.log @

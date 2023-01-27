@@ -9,12 +9,13 @@ template(name='essential_facet')
     //     input.add_filter(type='text')
         //- .active.content
             //- div
-    if picked_essentials
-        .ui.active.button.unpick_essential 
+    each picked_essentials
+        .ui.active.large.button.unpick_essential 
             |#{this}
+            +print_this
     if essential_results
         each essential_results
-            a.selector.ui.compact.basic.circular.button.pick_essential(class=toggle_value_class title=count)
+            a.ui.compact.basic.circular.button.pick_essential(class=toggle_value_class title=count)
                 +i name=essential_doc_ref.icon color=essential_doc_ref.icon_color
                 strong #{essential_doc_ref.title}
                 // if is_admin
@@ -29,7 +30,7 @@ template(name='tag_facet')
     //     input.add_filter(type='text')
         //- .active.content
             //- div
-    if picked_tags
+    each picked_tags
         .ui.active.button.unpick_tag
             |#{this}
     if tag_results
@@ -49,7 +50,7 @@ template(name='model_facet')
     //     input.add_filter(type='text')
         //- .active.content
             //- div
-    if picked_model 
+    with picked_model 
         .ui.active.button.unpick_model 
             |#{this}
     if model_results
