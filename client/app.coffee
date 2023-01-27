@@ -6,6 +6,8 @@
 @current_markers = new ReactiveArray []
 
 
+
+
 moment.locale('en', {
     relativeTime: {
         future: 'in %s',

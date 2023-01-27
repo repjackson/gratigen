@@ -1,3 +1,6 @@
+Meteor.publish 'delta', (match)->
+    console.log match
+
 Meteor.publish 'latest_docs', ->
     Docs.find {_updated_timestamp:$exists:true},
         sort:

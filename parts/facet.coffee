@@ -17,7 +17,7 @@ if Meteor.isClient
             if Session.equals 'loading', true
                  res += 'disabled basic'
             if @slug in picked_models.array()
-                res += 'inverted'
+                res += 'large'
             res
             # else if facet.filters.length > 0 and @name in facet.filters
             #     'active'
@@ -32,13 +32,14 @@ if Meteor.isClient
                 model:'eft'
             # Results.find key:'essential'
         toggle_value_class: ->
+            console.log @
             # facet = Template.parentData()
             # delta = Docs.findOne Meteor.user().delta_id
             res = ''
             if Session.equals 'loading', true
                  res += 'disabled basic'
             if @title in picked_essentials.array()
-                res += 'inverted'
+                res += 'large'
             res
             # else if facet.filters.length > 0 and @name in facet.filters
             #     'active'
@@ -103,7 +104,7 @@ if Meteor.isServer
         if picked_essentials.length > 0 then match.efts = $all: picked_essentials
         if picked_tags.length > 0 then match.tags = $all: picked_tags
         limit = 10
-        console.log 'match', match
+        # console.log 'match', match
         # for key in enabled_facets   
         # console.log 'key', key
         # console.log  "picked_#{key}s"

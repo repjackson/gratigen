@@ -237,12 +237,13 @@ if Meteor.isClient
     Template.eft_view_item_small.helpers 
         in_list: ()->
             # cd = Docs.findOne Meteor.user()._model 
-            if Template.parentData().efts
+            if Template.parentData() and Template.parentData().efts
                 @label in Template.parentData().efts
             # @label in cd.efts
     Template.eft_picker.events 
         'click .toggle_eft': ->
-            current_doc = Docs.findOne Meteor.user()._model 
+            d = Docs.findOne Meteor.user().delta_id
+            current_doc = Docs.findOne d._doc_id 
             if current_doc.efts
                 if @label in current_doc.efts 
                     Docs.update current_doc._id,

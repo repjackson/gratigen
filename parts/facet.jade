@@ -21,7 +21,7 @@ template(name='essential_facet')
     //             // if is_admin
     //             small  #{count}
     each essential_results
-        a.ui.compact.basic.circular.button.toggle_essential(class=toggle_value_class title=count)
+        a.ui.circular.button.toggle_essential(class=toggle_value_class title=count)
             +ismall name=icon color=stripped_icon_color
             strong #{title}
             // if is_admin
