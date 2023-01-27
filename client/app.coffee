@@ -33,6 +33,13 @@ Template.app.events
     'click .printme':-> console.log @
 Template.app.onRendered ->
     Meteor.setInterval ->
+        d = Docs.findOne Meteor.user().delta_id
+        if Meteor.user().username is 'dev'
+            $(".friend_cursor").css({top: d.dev2_y, left: d.dev2_x, position:'absolute'});
+        else if Meteor.user().username is 'dev2'
+            $(".friend_cursor").css({top: d.dev_y, left: d.dev_x, position:'absolute'});
+    , 1000    
+    Meteor.setInterval ->
         handleMouseMove = (event) ->
             eventDoc = undefined
             doc = undefined
@@ -49,19 +56,31 @@ Template.app.onRendered ->
                 event.pageX = event.clientX + (doc and doc.scrollLeft or body and body.scrollLeft or 0) - (doc and doc.clientLeft or body and body.clientLeft or 0)
                 event.pageY = event.clientY + (doc and doc.scrollTop or body and body.scrollTop or 0) - (doc and doc.clientTop or body and body.clientTop or 0)
             # Use event.pageX / event.pageY here
-            console.log event.pageX
-            console.log event.pageY
+            # console.log event.pageX
+            # console.log event.pageY
+            if Meteor.user().username is 'dev'
+                Docs.update Meteor.user().delta_id, 
+                    $set:
+                        dev_x:event.pageX
+                        dev_y:event.pageY
+                # $(".friend_cursor").css({top: event.pageY, left: event.pageX, position:'absolute'});
+            else if Meteor.user().username is 'dev2'
+                Docs.update Meteor.user().delta_id, 
+                    $set:
+                        dev2_x:event.pageX
+                        dev2_y:event.pageY
+                # $(".friend_cursor").css({top: event.pageY, left: event.pageX, position:'absolute'});
+                
             Meteor.users.update({_id:Meteor.userId()},{
                 $set:
                     pageX:event.pageX
                     pageY:event.pageY
             }, ->
-                console.log 'updated', event.pageX
-                $(".friend_cursor").css({top: event.pageY, left: event.pageX, position:'absolute'});
+                # console.log 'updated', event.pageX
             )
             
           document.onmousemove = handleMouseMove
-    , 1000
+    , 100
 
 
 # Template.gridstack.onRendered ->
@@ -566,6 +585,29 @@ Template.add_model_doc_button.events
 #                 })
 
 # })
+
+Docs.find(_id:Meteor.userId()).observe({
+    changed: (new_doc, old_doc)->
+        difference = new_doc.points-old_doc.points
+        if difference > 0
+            $('body').toast({
+                title: "#{new_doc.points-old_doc.points}p earned"
+                # message: 'Please see desk staff for key.'
+                class : 'success'
+                showIcon:'hashtag'
+                # showProgress:'bottom'
+                position:'bottom right'
+                # className:
+                #     toast: 'ui massive message'
+                # displayTime: 5000
+                transition:
+                  showMethod   : 'zoom',
+                  showDuration : 250,
+                  hideMethod   : 'fade',
+                  hideDuration : 250
+                })
+
+})
 
 
 Template.app.helpers 

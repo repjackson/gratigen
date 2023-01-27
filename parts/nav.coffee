@@ -6,7 +6,8 @@ if Meteor.isClient
         @autorun => Meteor.subscribe 'current_model', ->
         @autorun => Meteor.subscribe 'current_doc', ->
         @autorun => Meteor.subscribe 'users_min', ->
-        @autorun => Meteor.subscribe 'model_docs', 'model', ->
+        # @autorun => Meteor.subscribe 'model_docs', 'model', ->
+        @autorun => Meteor.subscribe 'coordination_models', ->
         @autorun => Meteor.subscribe 'history',->
         @autorun => Meteor.subscribe 'model_docs','delta',->
         

@@ -26,3 +26,9 @@ Meteor.publish 'current_model', ->
 
 Meteor.publish 'all_markers', ->
     Markers.find()
+    
+Meteor.publish 'coordination_models', ->
+    list = ['post', 'offer', 'request', 'org', 'event', 'role', 'task', 'skill', 'resource', 'product', 'service', 'trip']
+    Docs.find 
+        model:'model'
+        slug: $in:list
