@@ -1,6 +1,7 @@
 @picked_essentials = new ReactiveArray []
-@picked_sections = new ReactiveArray []
 @picked_tags = new ReactiveArray []
+@picked_models = new ReactiveArray []
+@picked_sections = new ReactiveArray []
 @picked_ingredients = new ReactiveArray []
 @current_markers = new ReactiveArray []
 

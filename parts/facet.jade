@@ -9,17 +9,25 @@ template(name='essential_facet')
     //     input.add_filter(type='text')
         //- .active.content
             //- div
-    each picked_essentials
-        .ui.active.large.button.unpick_essential 
-            |#{this}
-            +print_this
-    if essential_results
-        each essential_results
-            a.ui.compact.basic.circular.button.pick_essential(class=toggle_value_class title=count)
-                +i name=essential_doc_ref.icon color=essential_doc_ref.icon_color
-                strong #{essential_doc_ref.title}
-                // if is_admin
-                small  #{count}
+    // each picked_essentials
+    //     .ui.active.large.button.unpick_essential 
+    //         |#{this}
+    //         // +print_this
+    // if essential_results
+    //     each essential_results
+    //         a.ui.compact.basic.circular.button.pick_essential(class=toggle_value_class title=count)
+    //             +i name=essential_doc_ref.icon color=essential_doc_ref.icon_color
+    //             strong #{essential_doc_ref.title}
+    //             // if is_admin
+    //             small  #{count}
+    each essential_results
+        a.ui.compact.basic.circular.button.toggle_essential(class=toggle_value_class title=count)
+            +ismall name=icon color=stripped_icon_color
+            strong #{title}
+            // if is_admin
+            // small  #{count}
+
+                
 template(name='tag_facet')
     // if filtering_res
     .ui.inline.header
@@ -44,104 +52,21 @@ template(name='model_facet')
     div
     // if filtering_res
     .ui.inline.header.pointer.toggle_view_facet
+        i.database.icon
         |models
     // .ui.icon.tiny.input
     //     i.search.icon
     //     input.add_filter(type='text')
         //- .active.content
             //- div
-    with picked_model 
-        .ui.active.button.unpick_model 
-            |#{this}
-    if model_results
-        each model_results
-            a.selector.ui.compact.basic.circular.button.pick_model(class=toggle_value_class title=count)
-                +i name=model_doc_ref.icon color=model_doc_ref.stripped_icon_color
-                strong #{model_doc_ref.title}
-                // if is_admin
-                small  #{count}
+    // with picked_model 
+    //     .ui.active.button.unpick_model 
+    //         |#{this}
+    // if model_results
+    each model_results
+        a.ui.compact.basic.circular.button.toggle_model(class=toggle_value_class title=count)
+            +ismall name=icon color=stripped_icon_color
+            strong #{title}
+            // if is_admin
+            // small  #{count}
         
-template(name='facet')
-    div
-    // if filtering_res
-    .ui.inline.header.pointer.toggle_view_facet
-        if icon
-            i.small.icon(class=icon)
-        if title
-            |#{title}
-        else 
-            |#{key}s
-            //- i.dropdown.icon
-    // .ui.icon.tiny.input
-    //     i.search.icon
-    //     input.add_filter(type='text')
-        //- .active.content
-            //- div
-    each picked_filters 
-        +unpick_filter
-        // .ui.active.compact.button.unpick_filter
-        //     |#{this}
-    if result_helper key
-        each filtering_res
-            // if name
-            a.selector.ui.compact.basic.circular.button.pick_filter(class=toggle_value_class title=count)
-                //- with ..
-                //- if parent_key_value_is 'field_type' 'color_icon'
-                //-     .ui.header icon
-                //- else 
-                strong #{name}
-                if is_admin
-                    small #{cal_count} #{count}
-            // else
-            //     a.selector.ui.compact.basic.circular.button.toggle_selection(class=toggle_value_class)
-            //         strong none/false
-            //         //- small #{cal_count}
-        //- .ui.hidden.divider
-    .spacer
-        
-
-template(name='unpick_filter')
-    .ui.active.compact.button.unpick
-        |#{this}
-
-
-
-
-template(name='home_cloud')
-    //- #cloud
-        //- .ui.left.icon.input
-        //-     i.search.icon
-        //-     +inputAutocomplete settings=settings id="search" class="" autocomplete="off" 
-        // .ui.hidden.fitted.divider
-    .ui.inline.header 
-        // i.cubes.icon
-        +i name='network'
-        |models
-    if cd.picked_models
-        // #clear_models.ui.active.icon.large.circular.button
-        //     i.remove.icon
-        each picked_models
-            .unpick_model.ui.active.large.compact.circular.button
-                strong #{this}
-    each result_helper 'model'
-        +pick_result
-    .ui.inline.header 
-        i.tag.icon
-    //     |tags
-    if cd.picked_tags
-        // #clear_tags.ui.active.icon.large.circular.button
-        //     i.remove.icon
-        each cd.picked_tags
-            .unpick_tag.ui.active.large.circular.compact.button
-                strong #{this}
-    each result_helper 'tag'
-        +pick_result
-    div
-    div
-
-
-template(name='pick_result')
-    .ui.circular.compact.basic.button.pick(class=cloud_tag_class) 
-        strong #{this.name}
-        small #{count}
-

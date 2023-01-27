@@ -496,41 +496,41 @@ if Meteor.isClient
 
 
 
-    Template.facet.onCreated ->
-        @viewing_facet = new ReactiveVar true
+    # Template.facet.onCreated ->
+    #     @viewing_facet = new ReactiveVar true
     
 
-    Template.facet.events
-        # 'click .ui.accordion': ->
-        #     $('.accordion').accordion()
-        'click .toggle_view_facet': (e,t)->
-            t.viewing_facet.set !t.viewing_facet.get()
+    # Template.facet.events
+    #     # 'click .ui.accordion': ->
+    #     #     $('.accordion').accordion()
+    #     'click .toggle_view_facet': (e,t)->
+    #         t.viewing_facet.set !t.viewing_facet.get()
 
-        'click .toggle_selection': ->
-            delta = Docs.findOne Meteor.user().delta_id
-            facet = Template.currentData()
+    #     'click .toggle_selection': ->
+    #         delta = Docs.findOne Meteor.user().delta_id
+    #         facet = Template.currentData()
 
-            Session.set 'loading', true
-            if facet.filters and @name in facet.filters
-                Meteor.call 'remove_facet_filter', delta._id, facet.key, @name, ->
-                    Session.set 'loading', false
-            else
-                Meteor.call 'add_facet_filter', delta._id, facet.key, @name, ->
-                    Session.set 'loading', false
+    #         Session.set 'loading', true
+    #         if facet.filters and @name in facet.filters
+    #             Meteor.call 'remove_facet_filter', delta._id, facet.key, @name, ->
+    #                 Session.set 'loading', false
+    #         else
+    #             Meteor.call 'add_facet_filter', delta._id, facet.key, @name, ->
+    #                 Session.set 'loading', false
 
-        'keyup .add_filter': (e,t)->
-            # console.log @
-            if e.which is 13
-                delta = Docs.findOne Meteor.user().delta_id
-                facet = Template.currentData()
-                if @field_type is 'number'
-                    filter = parseInt t.$('.add_filter').val()
-                else
-                    filter = t.$('.add_filter').val()
-                Session.set 'loading', true
-                Meteor.call 'add_facet_filter', delta._id, facet.key, filter, ->
-                    Session.set 'loading', false
-                t.$('.add_filter').val('')
+    #     'keyup .add_filter': (e,t)->
+    #         # console.log @
+    #         if e.which is 13
+    #             delta = Docs.findOne Meteor.user().delta_id
+    #             facet = Template.currentData()
+    #             if @field_type is 'number'
+    #                 filter = parseInt t.$('.add_filter').val()
+    #             else
+    #                 filter = t.$('.add_filter').val()
+    #             Session.set 'loading', true
+    #             Meteor.call 'add_facet_filter', delta._id, facet.key, filter, ->
+    #                 Session.set 'loading', false
+    #             t.$('.add_filter').val('')
 
 
 
