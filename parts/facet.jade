@@ -7,17 +7,20 @@ template(name='facet')
         if title
             |#{title}
         else 
-            |#{key}
+            |#{key}s
             //- i.dropdown.icon
     // .ui.icon.tiny.input
     //     i.search.icon
     //     input.add_filter(type='text')
         //- .active.content
             //- div
+    each picked_filters 
+        .ui.button.unpick_filter
+            |#{this}
     if result_helper key
         each filtering_res
             // if name
-            a.selector.ui.compact.basic.circular.button.toggle_selection.select_term(class=toggle_value_class title=count)
+            a.selector.ui.compact.basic.circular.button.pick_filter(class=toggle_value_class title=count)
                 //- with ..
                 //- if parent_key_value_is 'field_type' 'color_icon'
                 //-     .ui.header icon

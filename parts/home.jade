@@ -10,8 +10,8 @@ template(name='home')
         .eight.wide.column.scrolling        
             .ui.one.column.grid     
                 .centered.column
-                    +facet key='model'
-                    +facet key='tag'
+                    +facet key='model' icon='database'
+                    +facet key='tag' icon='tag'
                     // +home_cloud
                 // +thing_picker_template
                     .ui.inline.search
@@ -124,7 +124,7 @@ template(name='user_impact_graph')
     .ui.segment
         .ui.header user impact graph
         img.ui.circular.image(src="/12_color_code.jpg")
-        +facet key='essential'
+        +facet key='essential' icon='food'
         
         
 template(name='user_connection_graph')

@@ -163,16 +163,6 @@ if Meteor.isClient
                 parent_model:Meteor.user()._model
                 # parent_id:_model._id
     
-        editing_model: ->
-            # user = Meteor.user()
-            model = Docs.findOne 
-                slug:Meteor.user()._model
-                model:'model'
-            if model
-                if Meteor.user().editing_model_id is model._id
-                    true 
-                else 
-                    false 
         result_column_class: ->
             delta = Docs.findOne Meteor.user().delta_id
             model = Docs.findOne model:'model'
@@ -265,17 +255,6 @@ if Meteor.isClient
             # Meteor.call 'log_view', @_id, ->
             Meteor.call 'set_facets', 'model', ->
                 Session.set 'loading', false
-
-        'click .create_model': ->
-            new_model_id = Docs.insert
-                model:'model'
-                slug: Meteor.user()._model
-            new_model = Docs.findOne new_model_id
-            Meteor.users.update Meteor.userId(),
-                $set:
-                    editing_model_id: new_model_id
-            Meteor.call 'change_state', {_template:'delta',_doc_id:new_model_id}, ->
-
 
         'click .clear_query': ->
             # console.log @
@@ -399,13 +378,15 @@ if Meteor.isClient
 
 
         'click .edit_model': ->
-            model = Docs.findOne
-                model:'model'
-                slug: Meteor.user()._model
-            Meteor.users.update Meteor.userId(),
+            # model = Docs.findOne
+            #     model:'model'
+            #     slug: Meteor.user()._model
+            # Meteor.users.update Meteor.userId(),
+            #     $set:
+            #         editing_model_id:model._id
+            Docs.update Meteor.user().delta_id,
                 $set:
-                    editing_model_id:model._id
-            
+                    edit_mode:true
             # Met  eor.call 'change_state', "/model/edit/#{model._id}", ->
 
         # 'click .page_up': (e,t)->
@@ -1337,13 +1318,15 @@ if Meteor.isClient
                 # parent_id:_model._id
     Template.model_edit.events
         'click .save_model': ->
-            Meteor.users.update Meteor.userId(),
-                $set:editing_model_id:null
+            Docs.update Meteor.user().delta_id, 
+                $set:edit_mode:false
+            # Meteor.users.update Meteor.userId(),
+            #     $set:editing_model_id:null
                 
         'click #delete_model': (e,t)->
             if confirm 'delete model?'
                 Docs.remove Meteor.user()._doc_id, ->
-                    Meteor.call 'change_state', "/", ->
+                    Meteor.call 'change_state',{_template:'delta',_model:'model'}, ->
 
         'click .add_widget': ->
             Docs.insert

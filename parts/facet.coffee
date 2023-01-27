@@ -1,5 +1,10 @@
 if Meteor.isClient
     Template.facet.helpers
+        picked_filters: ->
+            console.log @
+            delta = Docs.findOne Meteor.user().delta_id
+            console.log delta["picked_#{@key}s"]
+            delta["picked_#{@key}s"]
         viewing_results: ->
             Template.instance().viewing_facet.get()
         filtering_res: ->
@@ -21,9 +26,9 @@ if Meteor.isClient
             delta = Docs.findOne Meteor.user().delta_id
             if Session.equals 'loading', true
                  'disabled basic'
-            else if facet.filters.length > 0 and @name in facet.filters
-                'active'
-            else ''
+            # else if facet.filters.length > 0 and @name in facet.filters
+            #     'active'
+            # else ''
     
     
     Template.facet.onCreated ->
@@ -78,40 +83,40 @@ if Meteor.isClient
         # }
 
     Template.facet.events
-        'click .pick_tag': -> 
+        'click .pick_filter': -> 
             Docs.update Meteor.user().delta_id, 
                 $addToSet:"picked_#{@key}s":@name
         'click .unpick_tag': -> 
             Docs.update Meteor.user().delta_id, 
                 $pull:"picked_#{@key}s":@valueOf()
             # picked_tags.remove @valueOf()
-    Template.home_cloud.events
-        'click .pick_tag': -> 
-            Docs.update Meteor.user().delta_id, 
-                $addToSet:picked_tags:@name
-        'click .unpick_tag': -> 
-            Docs.update Meteor.user().delta_id, 
-                $pull:picked_tags:@valueOf()
-            # picked_tags.remove @valueOf()
+    # Template.home_cloud.events
+    #     'click .pick_tag': -> 
+    #         Docs.update Meteor.user().delta_id, 
+    #             $addToSet:picked_tags:@name
+    #     'click .unpick_tag': -> 
+    #         Docs.update Meteor.user().delta_id, 
+    #             $pull:picked_tags:@valueOf()
+    #         # picked_tags.remove @valueOf()
         
-        'click #clear_tags': ->
-            Docs.update Meteor.user().delta_id, 
-                $set:picked_tags:[]
-            # picked_tags.remove @valueOf()
+    #     'click #clear_tags': ->
+    #         Docs.update Meteor.user().delta_id, 
+    #             $set:picked_tags:[]
+    #         # picked_tags.remove @valueOf()
         
-        'click .pick_model': -> 
-            Docs.update Meteor.user().delta_id, 
-                $addToSet:picked_models:@name
-        'click .unpick_model': ->
-            Docs.update Meteor.user().delta_id, 
-                $pull:picked_models:@valueOf()
+    #     'click .pick_model': -> 
+    #         Docs.update Meteor.user().delta_id, 
+    #             $addToSet:picked_models:@name
+    #     'click .unpick_model': ->
+    #         Docs.update Meteor.user().delta_id, 
+    #             $pull:picked_models:@valueOf()
 
-        'click .pick_essential': -> 
-            Docs.update Meteor.user().delta_id, 
-                $addToSet:picked_essentials:@name
-        'click .unpick_essential': ->
-            Docs.update Meteor.user().delta_id, 
-                $pull:picked_essentials:@valueOf()
+    #     'click .pick_essential': -> 
+    #         Docs.update Meteor.user().delta_id, 
+    #             $addToSet:picked_essentials:@name
+    #     'click .unpick_essential': ->
+    #         Docs.update Meteor.user().delta_id, 
+    #             $pull:picked_essentials:@valueOf()
 
 
         
@@ -157,8 +162,8 @@ if Meteor.isServer
                     { $project: _id: 0, name: '$_id', count: 1 }
                     ]
                 # console.log 'result cloud', key, result_cloud
-                result_cloud.forEach (result) ->
-                    console.log 'cloud res', result
+                result_cloud.forEach (result) =>
+                    # console.log 'cloud res', result
                     self.added 'results', Random.id(),
                         name: result.name
                         count: result.count

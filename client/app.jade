@@ -247,7 +247,7 @@ template(name='app')
     //     i.tree.loading.blue.icon
     
 template(name='history_bar')
-    .ui.small.horizontal.pointing.menu.hscroll
+    .ui.small.horizontal.attached.menu.hscroll
         .item
             i.large.clock.icon(title='node history')
             |#{current_delta._doc_history.count}

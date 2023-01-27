@@ -454,15 +454,16 @@ Template.app.events
                 $set:
                     _template:'model_doc_view'
                     _doc_id:@_id
+                    _model:@model
                     edit_mode:true
                 $addToSet:
                     _doc_history:@_id
     'click .goto_doc': (e,t)->
         console.log 'going to', @title
-        stateObj = {
+        state_object = {
             foo: "bar",
         }
-        history.pushState(stateObj, "page 2", "bar.html")
+        history.pushState(state_object, @title, @title)
         
         # delta = Docs.findOne Meteor.user().delta_id
         $(e.currentTarget).closest('.grid').transition('fly right', 500)
@@ -479,6 +480,7 @@ Template.app.events
                 $set:
                     _template:'model_doc_view'
                     _doc_id:@_id
+                    _model:@model
                 $addToSet:
                     _doc_history:@_id
     'click .set_template': (e,t)->

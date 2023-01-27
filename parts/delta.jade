@@ -1,21 +1,21 @@
 template(name='delta')
-    if editing_model
-        .ui.segment
+    if cd.edit_mode
+        .ui.blue.segment
             +model_edit
-    if currentUser.admin_mode
+    // if currentUser.admin_mode
         // +grid_layout
 
     // else 
     .ui.stackable.padded.grid
-        if currentUser.admin_mode
-            unless current_delta 
-                .ui.button.create_delta
-                    |+ delta
-            unless _model
-                .ui.button.create_model
-                    |+ model
+        // if currentUser.admin_mode
+        //     unless current_delta 
+        //         .ui.button.create_delta
+        //             |+ delta
+            // unless _model
+            //     .ui.button.create_model
+            //         |+ model
                 
-        with _model
+        with current_model
             // unless _model.show_facets
             // .middle.aligned.row
             //     .sixteen.wide.column
