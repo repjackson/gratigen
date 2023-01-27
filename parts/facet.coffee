@@ -32,14 +32,16 @@ if Meteor.isClient
                 model:'eft'
             # Results.find key:'essential'
         toggle_value_class: ->
-            console.log @
+            # console.log @
             # facet = Template.parentData()
             # delta = Docs.findOne Meteor.user().delta_id
             res = ''
             if Session.equals 'loading', true
                  res += 'disabled basic'
-            if @title in picked_essentials.array()
-                res += 'large'
+            else if @title in picked_essentials.array()
+                res += 'large active'
+            else
+                'compact'
             res
             # else if facet.filters.length > 0 and @name in facet.filters
             #     'active'

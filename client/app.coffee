@@ -31,7 +31,35 @@ moment.locale('en', {
 
 Template.app.events
     'click .printme':-> console.log @
-# Template.gridstack.onRendered ->
+Template.app.onRendered ->
+    Meteor.setInterval ->
+        handleMouseMove = (event) ->
+            eventDoc = undefined
+            doc = undefined
+            body = undefined
+            event = event or window.event
+            # IE-ism
+            # If pageX/Y aren't available and clientX/Y are,
+            # calculate pageX/Y - logic taken from jQuery.
+            # (This is to support old IE)
+            if event.pageX == null and event.clientX != null
+                eventDoc = event.target and event.target.ownerDocument or document
+                doc = eventDoc.documentElement
+                body = eventDoc.body
+                event.pageX = event.clientX + (doc and doc.scrollLeft or body and body.scrollLeft or 0) - (doc and doc.clientLeft or body and body.clientLeft or 0)
+                event.pageY = event.clientY + (doc and doc.scrollTop or body and body.scrollTop or 0) - (doc and doc.clientTop or body and body.clientTop or 0)
+            # Use event.pageX / event.pageY here
+            console.log event.pageX
+            console.log event.pageY
+            Meteor.users.update({_id:Meteor.userId()},{
+                $set:
+                    pageX:event.pageX
+                    pageY:event.pageY
+            }, ->
+                console.log 'updated', event.pageX
+            )
+          document.onmousemove = handleMouseMove
+    , 1000
 
 
 # Template.gridstack.onRendered ->

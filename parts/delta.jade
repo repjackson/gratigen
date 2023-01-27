@@ -397,7 +397,7 @@ template(name='comments')
                                 span.date #{when}
                                 // |by 
                                 // a(href="/user/#{_author.username}") #{_author.name}
-                            .text #{body}
+                            .text !{body}
                             .actions
                                 a.reply reply
                                 i.thumbs.up.icon

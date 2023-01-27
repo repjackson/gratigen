@@ -97,6 +97,7 @@ head
       
 
 body
+    // <data-tooltip="collision"><em data-emoji=":boom:" class="medium"></em><br>boom</div>
     // .invert
     // +modelbar
     +leftbar
@@ -214,6 +215,8 @@ template(name='gridstack')
     
 
 template(name='app')
+    .friend_cursor
+        i.user.big.icon
     if Template.subscriptionsReady
         +nav
         if currentUser
