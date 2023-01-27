@@ -43,8 +43,8 @@ template(name='nav')
         //             +text_edit key='latest_info' direct=true
         // .ui.input.item
         // .input.item
-        .icon.item.set_template(data-template='search' title='search')
-            i.search.icon
+        // .icon.item.set_template(data-template='search' title='search')
+        //     i.search.icon
         // .ui.popup
         //     .ui.icon.large.transparent.input.search_bar
         //         input.global_search(type='text' placeholder='add/request/search...')
@@ -58,65 +58,65 @@ template(name='nav')
         // .ui.popup
         //     +add
         // +toggle_nav_item key='invert_mode' icon='lightbulb' label='invert mode'
-        // .right.menu
-        .item 
-            if unread_messages
-                i.large.bell.yellow.icon.invert.pulse
-            else 
-                i.large.bell.icon
-        .ui.popup
-            .ui.header alerts
-            if unread_count
-                a.item.alerts.select_term(href="#" class=alert_toggle_class)
-                    if unread_count
-                        |#{unread_count}
-        // else
-        //     a.icon.item(href="/inbox" class="{{is_active_template 'inbox'}}")
-        //         i.large.outline.bell.icon
-        a.icon.item.zoomer.popout_chat
-            if unread_chat_messages
-                i.large.teal.chat.icon
-                small #{unread_chat_messages.count}
-            else 
-                i.large.chat.outline.icon
-            // +chat
-        if currentUser
-            // a.item(href="/user/#{currentUser.username}/credit" class="{{is_active_template regex='user_credit'}}" title='your credits')
-            if currentUser.cart_item_count.length
-                a.item.toggle_cartbar(title='current cart balance')
-                    |#{currentUser.cart_item_count}
-                    i.shopping.cart.large.icon
-            a.item.toggle_coinbar(title='current wallet balance')
-                // i.coins.large.icon
-                // |&nbsp;
-                |#{currentUser.points}p
-            .ui.popup 
-                +user_credit
-            // a.item.goto_profile(class=user_nav_button_class title='profile')
-            a.item.set_template(data-template='profile')
-                if currentUser.image_id
-                    img.ui.avatar.image(src="{{c.url currentUser.image_id width=200 height=200 gravity='face' crop='fill'}}")
-                else
-                    i.user.icon
-                strong #{currentUser.name}
-            // .ui.popup
-            //     +profile_small
-            a.icon.item.toggle_rightbar.no_blink
-                // .ui.avatar.image
-                //     if currentUser.image_id
-                //         img.ui.mini.inline.image(src="{{c.url currentUser.image_id width=200 height=200 gravity='face' crop='fill'}}")
-                //     else
-                //         i.user.large.icon
-                // strong.mobile.hidden #{currentUser.name}
-                i.bars.large.grey.icon
-        unless currentUser
-            a.item.set_template(data-template='register' title='register')
-                +i name='plus'
-                span.mobile.hidden register            
-            a.item.set_template(data-template='login' title='login') 
-                // i.sign.in.large.icon
-                +i name='internal'
-                span.mobile.hidden login
+        .right.menu
+            .item 
+                if unread_messages
+                    i.large.bell.yellow.icon.invert.pulse
+                else 
+                    i.large.bell.icon
+            .ui.popup
+                .ui.header alerts
+                if unread_count
+                    a.item.alerts.select_term(href="#" class=alert_toggle_class)
+                        if unread_count
+                            |#{unread_count}
+            // else
+            //     a.icon.item(href="/inbox" class="{{is_active_template 'inbox'}}")
+            //         i.large.outline.bell.icon
+            a.icon.item.zoomer.popout_chat
+                if unread_chat_messages
+                    i.large.teal.chat.icon
+                    small #{unread_chat_messages.count}
+                else 
+                    i.large.chat.outline.icon
+                // +chat
+            if currentUser
+                // a.item(href="/user/#{currentUser.username}/credit" class="{{is_active_template regex='user_credit'}}" title='your credits')
+                if currentUser.cart_item_count.length
+                    a.item.toggle_cartbar(title='current cart balance')
+                        |#{currentUser.cart_item_count}
+                        i.shopping.cart.large.icon
+                a.item.toggle_coinbar(title='current wallet balance')
+                    // i.coins.large.icon
+                    // |&nbsp;
+                    |#{currentUser.points}p
+                .ui.popup 
+                    +user_credit
+                // a.item.goto_profile(class=user_nav_button_class title='profile')
+                a.item.set_template(data-template='profile')
+                    if currentUser.image_id
+                        img.ui.avatar.image(src="{{c.url currentUser.image_id width=200 height=200 gravity='face' crop='fill'}}")
+                    else
+                        i.user.icon
+                    strong #{currentUser.name}
+                // .ui.popup
+                //     +profile_small
+                a.icon.item.toggle_rightbar.no_blink
+                    // .ui.avatar.image
+                    //     if currentUser.image_id
+                    //         img.ui.mini.inline.image(src="{{c.url currentUser.image_id width=200 height=200 gravity='face' crop='fill'}}")
+                    //     else
+                    //         i.user.large.icon
+                    // strong.mobile.hidden #{currentUser.name}
+                    i.bars.large.grey.icon
+            unless currentUser
+                a.item.set_template(data-template='register' title='register')
+                    +i name='plus'
+                    span.mobile.hidden register            
+                a.item.set_template(data-template='login' title='login') 
+                    // i.sign.in.large.icon
+                    +i name='internal'
+                    span.mobile.hidden login
     if currentUser.searchbar
         +search
     if currentUser.show_coinbar

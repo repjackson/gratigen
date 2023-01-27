@@ -7,6 +7,8 @@ body {
     /*font-family: 'Bangers', sans-serif !important;*/
     /*font-weight: 300 !important;*/
     /*font-size: 110% !important; */
+    height: 100vh;
+
     /*line-height: 200% !important;*/
     /*transition: all 1s ease-in-out !important;*/
     filter: invert(.9) !important;
@@ -46,7 +48,7 @@ body {
 
 @keyframes slideInFromLeft {
   0% {
-    transform: translateY(-100%);
+    transform: translateY(-50%);
   }
   100% {
     transform: translateY(0);
@@ -82,7 +84,7 @@ body {
 /*  box-shadow: 10px 5px 5px red !important;*/
 /*}*/
 .modelbar {
-  animation: .25s ease-out 0s 1 slideInFromLeft;
+  animation: .25s ease-out 0s 1 fadeIn;
   /*border-radius: 20px !important;*/
   /*width: 100%;*/
   /*position: absolute;*/
@@ -445,7 +447,7 @@ input {
 	max-height:101vh;
 	/*max-height:85vh;*/
 	/* padding-top: 1em; */
-	padding: 1em;
+	/*padding: 1em;*/
 }
 .smallscroll{
 	overflow-y:scroll;

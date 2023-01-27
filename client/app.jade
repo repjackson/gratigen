@@ -234,12 +234,11 @@ template(name='app')
             else 
                 .ui.center.aligned.basic.segment
                     i.massive.snowflake.grey.pulse.icon
-                // +login
                 // .ui.center.aligned.basic.segment
                 //     // .batman
                     // img.ui.centered.image.zoomer(src="/logo.png")
 
-                // +login
+                +login
                 // .ui.center.aligned.basic.segment 
     //     if currentUser.admin_mode
     //         +footer
@@ -342,13 +341,15 @@ template(name='doc_history_button')
                             
                         
 template(name='add')
-    .ui.center.aligned.basic.segment    
-        .ui.header add doc
+    .ui.center.aligned.segment    
+        .ui.inline.big.header(title='add doc') 
+            i.plus.icon
+            // |add doc
         each model_docs_helper 'model'
             +add_model_doc_button 
             
 template(name='add_model_doc_button')
-    .ui.tertiary.big.button.add_model_doc.zoomer
+    .ui.tertiary.secondary.big.button.add_model_doc.zoomer
         +i name=icon color=stripped_icon_color
         |#{title}
         
@@ -445,10 +446,6 @@ template(name='taskbar')
     .ui.top.sidebar.taskbar
         .ui.header tasks
         
-template(name='addbar')
-    .ui.top.sidebar.addbar
-        .ui.header add
-    
         
 template(name='topbar')
     .ui.fluid.large.attached.segment.topbar
@@ -575,12 +572,13 @@ template(name='leftbar')
         
 template(name='modelbar')
     // .ui.attached.menu.modelbar.hscroll
-    .ui.attached.segment.modelbar
-        .item 
-            i.cubes.icon
+    .ui.attached.center.aligned.segment.modelbar
+        .ui.inline.header 
+            // i.cubes.icon
+            +i name='network'
             |models
         each model_docs_helper 'model'
-            a.ui.big.label.goto_model
+            a.ui.big.tertiary.button.zoomer.goto_model
                 +i name=icon color=stripped_icon_color cl='ui avatar image'
                 span #{title}
         

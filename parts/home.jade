@@ -1,7 +1,7 @@
 template(name='home')
     // if currentUser.admin_mode
     //     img.ui.fluid.image.home_banner(src="{{c.url 'gratigenlayout'}}" class=darkmode_class)
-    .ui.sixteen.wide.stackable.padded.celled.grid
+    .ui.stackable.padded.celled.grid
        .three.wide.column
             // .bordered(class=left_column_class)
             // unless session_is 'expand_leftbar' true
@@ -111,7 +111,7 @@ template(name='my_things')
 template(name='dash_user_info')
     .ui.two.column.grid
         .six.wide.column
-            img.ui.small.circular.image(src="{{c.url currentUser.image_id width=600 height=600 gravity='face' crop='fill'}}") 
+            img.ui.circular.image(src="{{c.url currentUser.image_id width=120 height=120 gravity='face' crop='fill'}}") 
         .ten.wide.column
             .ui.header
                 |#{currentUser.username}
