@@ -117,7 +117,7 @@ if Meteor.isClient
         
 if Meteor.isServer
     Meteor.publish 'facet', (
-        picked_models=[]
+        picked_model=null
         picked_essentials=[]
         picked_tags=[]
         )->
@@ -133,8 +133,8 @@ if Meteor.isServer
             #     if d["picked_#{key}s"]
             #         if d["picked_#{key}s"].length > 0 then match["#{key}"] = $all: d["picked_#{key}s"]
             # if d.picked_models
-            if picked_models.length > 0 then match.model = $all: picked_models
-            if picked_essentials.length > 0 then match.essentials = $all: picked_essentials
+            if picked_model then match.model = picked_model
+            if picked_essentials.length > 0 then match.efts = $all: picked_essentials
             if picked_tags.length > 0 then match.tags = $all: picked_tags
             # if d.picked_essentials
             #     if d.picked_essentials.length > 0 then match.efts = $all: d.picked_essentials
@@ -172,9 +172,9 @@ if Meteor.isServer
                 
             essential_cloud = Docs.aggregate [
                 { $match: match }
-                { $project: "essentials": 1 }
-                { $unwind: "$essentials" }
-                { $group: _id: "$essentials", count: $sum: 1 }
+                { $project: "efts": 1 }
+                { $unwind: "$efts" }
+                { $group: _id: "$efts", count: $sum: 1 }
                 { $match: _id: $nin: picked_essentials }
                 { $sort: count: -1, _id: 1 }
                 { $limit: 10 }
@@ -193,9 +193,9 @@ if Meteor.isServer
                 
             tag_cloud = Docs.aggregate [
                 { $match: match }
-                { $project: "essentials": 1 }
-                { $unwind: "$essentials" }
-                { $group: _id: "$essentials", count: $sum: 1 }
+                { $project: "tags": 1 }
+                { $unwind: "$tags" }
+                { $group: _id: "$tags", count: $sum: 1 }
                 { $match: _id: $nin: picked_essentials }
                 { $sort: count: -1, _id: 1 }
                 { $limit: 10 }
