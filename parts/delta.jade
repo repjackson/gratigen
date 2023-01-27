@@ -369,6 +369,8 @@ template(name='delta_result_card')
                 if currentUser.admin_mode
                     +print_this
                     +remove_button
+                each tags 
+                    .ui.small.label #{this}
             if template_exists
                 +Template.dynamic template=model_template
             .content

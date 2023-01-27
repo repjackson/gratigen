@@ -66,6 +66,7 @@ if Meteor.isClient
             console.log 'unpick', @valueOf()
             Docs.update Meteor.user().delta_id, 
                 $pull:"picked_#{parent.key}s":@valueOf()
+            # location.reload()
             # picked_tags.remove @valueOf()
     # Template.home_cloud.events
     #     'click .pick_tag': -> 
