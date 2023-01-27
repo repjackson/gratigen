@@ -57,7 +57,9 @@ Template.app.onRendered ->
                     pageY:event.pageY
             }, ->
                 console.log 'updated', event.pageX
+                $(".friend_cursor").css({top: event.pageY, left: event.pageX, position:'absolute'});
             )
+            
           document.onmousemove = handleMouseMove
     , 1000
 
