@@ -7,7 +7,7 @@ template(name='home')
             // unless session_is 'expand_leftbar' true
             +dash_user_info
             +user_impact_graph
-        .ten.wide.column.scrolling        
+        .eight.wide.column.scrolling        
             .ui.one.column.grid     
                 .column
                     +home_cloud
@@ -54,7 +54,11 @@ template(name='home')
                             each doc_results
                                 +delta_result_card
         // .bordered(class=right_column_class)
-        .three.wide.column
+        .five.wide.column
+            .ui.container
+                |my things
+                |this needs to display list of "my_thing" (and its direct parent) corellated with search parameters, and click to pull up modal of thing
+
             // +online_users
             // // +chart
             // +my_things
@@ -63,9 +67,6 @@ template(name='home')
             // // if session_is 'show_calendar' true 
             // +calendar_view
             // +online_allies
-            .ui.container
-                |my things
-                |this needs to display list of "my_thing" (and its direct parent) corellated with search parameters, and click to pull up modal of thing
         // +thing_maker
         // if current_thing.
         //     if _is 'model'_edit
@@ -121,7 +122,8 @@ template(name='dash_user_info')
                 
 template(name='user_impact_graph')
     .ui.segment
-        // .ui.circular.image(src="{{/public/12_color_code.jpg}}"
+        img.ui.circular.image(src="/12_color_code.jpg")
+        +facet key='essentials'
 template(name='user_connection_graph')
     .ui.segment
 

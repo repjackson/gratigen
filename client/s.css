@@ -82,7 +82,7 @@ body {
 /*  box-shadow: 10px 5px 5px red !important;*/
 /*}*/
 .modelbar {
-  animation: 1s ease-out 0s 1 slideInFromLeft;
+  animation: .25s ease-out 0s 1 slideInFromLeft;
   /*border-radius: 20px !important;*/
   /*width: 100%;*/
   /*position: absolute;*/
@@ -169,8 +169,10 @@ div{
   /*top: -50px;*/
 }
 
+.ui.button:hover{
+  animation: pulse-animation 1s infinite;
+}
 .ui.header, .button, .item {
-  /*animation: pulse-animation 1s infinite;*/
 
   font-family: 'Bangers', sans-serif !important; 
   font-weight: 200 !important;

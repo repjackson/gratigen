@@ -53,14 +53,17 @@ template(name='nav')
         // a.icon.item.zoomer.goto_add.toggle_addbar(title='add new doc')
         // a.icon.item.zoomer.toggle_addbar(title='add new doc')
         //     i.large.play.circular.icon
-        a.icon.item.zoomer.set_template(data-template='add' title='add')
-            i.large.play.icon
+        // a.icon.item.zoomer.set_template(data-template='add' title='add')
+        //     i.large.play.icon
         // .ui.popup
         //     +add
         // +toggle_nav_item key='invert_mode' icon='lightbulb' label='invert mode'
         // .right.menu
         .item 
-            i.large.bell.icon
+            if unread_messages
+                i.large.bell.yellow.icon.invert.pulse
+            else 
+                i.large.bell.icon
         .ui.popup
             .ui.header alerts
             if unread_count
@@ -126,6 +129,8 @@ template(name='nav')
         +modelbar
     if currentUser.show_secnav
         +secnav
+    if currentUser.show_addbar
+        +add
 
 
 template(name='profile_small')
