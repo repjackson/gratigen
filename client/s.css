@@ -55,12 +55,6 @@ body {
   }
 }
 
-.modelbar {  
-  /* This section calls the slideInFromLeft animation we defined above */
-}
-
-
-
 
 .goto_string_doc {
   max-width: 200px !important;
@@ -84,6 +78,8 @@ body {
 /*  box-shadow: 10px 5px 5px red !important;*/
 /*}*/
 .modelbar {
+    /*animation: pulse-animation 1s infinite;*/
+
   animation: .25s ease-out 0s 1 fadeIn;
   /*border-radius: 20px !important;*/
   /*width: 100%;*/
@@ -95,7 +91,7 @@ body {
 	overflow-y:scroll;
 	overflow-x:hidden;
 	max-height:500px;
-  filter: drop-shadow(5px 5px 20px yellow) !important;
+  filter: drop-shadow(5px 5px 10px yellow) !important;
 }
 /*.rightbar {*/
 /*  width: 100%;*/
@@ -172,7 +168,7 @@ div{
 }
 
 .ui.button:hover{
-  animation: pulse-animation 1s infinite;
+  /*animation: pulse-animation 1s infinite;*/
 }
 .ui.header, .button, .item {
 

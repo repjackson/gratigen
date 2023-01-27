@@ -229,20 +229,20 @@ if Meteor.isClient
     Template.toggle_nav_item.events 
         'click .toggle': ->
             # d = Docs.findOne 
-            if Meteor.user()["show_#{@key}"]
+            if Meteor.user()["#{@key}"]
                 Meteor.users.update Meteor.userId(),
-                    $set:"show_#{@key}":false
+                    $set:"#{@key}":false
             else 
                 Meteor.users.update Meteor.userId(),
-                    $set:"show_#{@key}":true
+                    $set:"#{@key}":true
     Template.toggle_nav_item.helpers 
         toggle_item_class: ->
-            if Meteor.user() and Meteor.user()["show_#{@key}"]
+            if Meteor.user() and Meteor.user()["#{@key}"]
                 'active yellow'
             else 
                 'grey'
         toggle_item_icon_class: ->
-            if Meteor.user() and Meteor.user()["show_#{@key}"]
+            if Meteor.user() and Meteor.user()["#{@key}"]
                 "#{@icon} large"
             else 
                 "#{@icon} grey"

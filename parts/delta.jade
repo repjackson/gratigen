@@ -422,40 +422,6 @@ template(name='set_view_mode')
         //- if icon 
         //- |#{title}
 
-template(name='facet')
-    div
-    // if filtering_res
-    .ui.inline.header.pointer.toggle_view_facet
-        if icon
-            i.small.icon(class=icon)
-        if title
-            |#{title}
-        else 
-            |#{key}
-            //- i.dropdown.icon
-    // .ui.icon.tiny.input
-    //     i.search.icon
-    //     input.add_filter(type='text')
-        //- .active.content
-            //- div
-    if viewing_results
-        each filtering_res
-            // if name
-            a.selector.ui.compact.basic.circular.button.toggle_selection.select_term(class=toggle_value_class title=count)
-                //- with ..
-                //- if parent_key_value_is 'field_type' 'color_icon'
-                //-     .ui.header icon
-                //- else 
-                strong #{name}
-                if is_admin
-                    small #{cal_count} #{count}
-            // else
-            //     a.selector.ui.compact.basic.circular.button.toggle_selection(class=toggle_value_class)
-            //         strong none/false
-            //         //- small #{cal_count}
-        //- .ui.hidden.divider
-    .spacer
-        
         
 template(name='toggle_delta_config')
     if boolean_true

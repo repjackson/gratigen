@@ -554,29 +554,6 @@ if Meteor.isClient
 
 
 
-    Template.facet.helpers
-        viewing_results: ->
-            Template.instance().viewing_facet.get()
-        filtering_res: ->
-            delta = Docs.findOne Meteor.user().delta_id
-            filtering_res = []
-            if @key is '_keys'
-                @res
-            else
-                for filter in @res
-                    if filter.count < delta.total
-                        filtering_res.push filter
-                    else if filter.name in @filters
-                        filtering_res.push filter
-                filtering_res
-        toggle_value_class: ->
-            facet = Template.parentData()
-            delta = Docs.findOne Meteor.user().delta_id
-            if Session.equals 'loading', true
-                 'disabled basic'
-            else if facet.filters.length > 0 and @name in facet.filters
-                'active'
-            else ''
 
 
 

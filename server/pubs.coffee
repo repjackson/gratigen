@@ -15,10 +15,11 @@ Meteor.publish 'current_user', ->
         Meteor.users.find 
             _id:d._user_id
 Meteor.publish 'current_model', ->
-    d = Docs.findOne Meteor.user().delta_id 
-    Docs.find 
-        model:'model'
-        slug:d._model
+    if Meteor.user()
+        d = Docs.findOne Meteor.user().delta_id 
+        Docs.find 
+            model:'model'
+            slug:d._model
 
 Meteor.publish 'all_markers', ->
     Markers.find()

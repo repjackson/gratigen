@@ -7,6 +7,18 @@ template(name='home')
             // unless session_is 'expand_leftbar' true
             +dash_user_info
             +user_impact_graph
+            .ui.inline.header 
+                +i name='t-shirt'
+                |essentials
+            if cd.picked_essentials
+                // #clear_essentials.ui.active.icon.large.circular.button
+                //     i.remove.icon
+                each picked_essentials
+                    .unpick_essential.ui.active.large.circular.compact.button
+                        strong #{this}
+            each result_helper 'essential'
+                +pick_result
+            
         .eight.wide.column.scrolling        
             .ui.one.column.grid     
                 .column
@@ -53,7 +65,6 @@ template(name='home')
                         .ui.centered.cards.one.scrolling
                             each doc_results
                                 +delta_result_card
-        // .bordered(class=right_column_class)
         .five.wide.column
             +my_things
         
@@ -118,10 +129,13 @@ template(name='dash_user_info')
                 div
                 |#{currentUser.tagline}
                 
+                
 template(name='user_impact_graph')
     .ui.segment
         img.ui.circular.image(src="/12_color_code.jpg")
-        +facet key='essentials'
+        +facet key='essential'
+        
+        
 template(name='user_connection_graph')
     .ui.segment
 
@@ -166,55 +180,6 @@ template(name='home_card')
                 //like/dislike, comment, share(sms,email,dm), comments (expand)    
 
 
-
-template(name='home_cloud')
-    //- #cloud
-        //- .ui.left.icon.input
-        //-     i.search.icon
-        //-     +inputAutocomplete settings=settings id="search" class="" autocomplete="off" 
-        // .ui.hidden.fitted.divider
-    .ui.inline.header 
-        // i.cubes.icon
-        +i name='network'
-        |models
-    if cd.picked_models
-        // #clear_models.ui.active.icon.large.circular.button
-        //     i.remove.icon
-        each picked_models
-            .unpick_model.ui.active.large.compact.circular.button
-                strong #{this}
-    each result_helper 'model'
-        +pick_result
-    .ui.inline.header 
-        i.tag.icon
-    //     |tags
-    if cd.picked_tags
-        // #clear_tags.ui.active.icon.large.circular.button
-        //     i.remove.icon
-        each cd.picked_tags
-            .unpick_tag.ui.active.large.circular.compact.button
-                strong #{this}
-    each result_helper 'tag'
-        +pick_result
-    div
-    div
-    .ui.inline.header 
-        +i name='t-shirt'
-        |essentials
-    if cd.picked_essentials
-        // #clear_essentials.ui.active.icon.large.circular.button
-        //     i.remove.icon
-        each picked_essentials
-            .unpick_essential.ui.active.large.circular.compact.button
-                strong #{this}
-    each result_helper 'essential'
-        +pick_result
-
-
-template(name='pick_result')
-    .ui.circular.compact.basic.button.pick(class=cloud_tag_class) 
-        strong #{this.name}
-        small #{count}
 
 
 

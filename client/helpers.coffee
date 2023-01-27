@@ -3,6 +3,9 @@ Template.registerHelper 'cal_time', (input)-> moment(input).calendar()
 Template.registerHelper 'comma', (input) ->
     input.toLocaleString("en-US")
 
+Template.registerHelper 'result_helper', (key) ->
+    Results.find key:key
+    
 Template.registerHelper 'current_chat', () ->
     # console.log @
     if Meteor.user()
@@ -28,7 +31,7 @@ Template.registerHelper 'parent_doc', () ->
     # Template.parentData()
 
 Template.registerHelper 'is_template', (template) ->
-    console.log @
+    # console.log @
     if Meteor.user()
         d = Docs.findOne Meteor.user().delta_id
         if d

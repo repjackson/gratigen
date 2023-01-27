@@ -17,17 +17,17 @@ template(name='nav')
         // a.icon.item.toggle_modelbar.zoomer(class=modelbar_class)
         //     i.cubes.large.grey.icon
             // +i name='network' color='FFFFFF'
-        +toggle_nav_item key='modelbar' icon='cubes' label='models'
-        +toggle_nav_item key='sessionbar' icon='window restore' label='sessions' color='ffffff'
-        +toggle_nav_item key='historybar' icon='history' label='history'
-        +toggle_nav_item key='searchbar' icon='search' label='search'
-        +toggle_nav_item key='addbar' icon='play' label='play'
+        +toggle_nav_item key='show_modelbar' icon='cubes' label='models'
+        +toggle_nav_item key='show_sessionbar' icon='window restore' label='sessions' color='ffffff'
+        +toggle_nav_item key='show_historybar' icon='history' label='history'
+        +toggle_nav_item key='show_searchbar' icon='search' label='search'
+        +toggle_nav_item key='show_addbar' icon='play' label='play'
         // a.icon.item.toggle_taskbar.zoomer(class=taskbar_class)
         //     i.tasks.large.icon
         // a.icon.item.toggle_orgbar.zoomer(class=orgbar_class)
         //     i.fire.large.icon
-        // if currentUser.admin
-        //     +toggle_nav_item key='admin_mode' icon='shield' label='admin mode'
+        if currentUser.admin
+            +toggle_nav_item key='admin_mode' icon='shield' label='admin mode'
         // +nav_item template='users' icon='users' label='users' hide_label=true
         // +nav_item template='reddit' icon='reddit' label='reddit'
 

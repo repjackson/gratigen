@@ -11,9 +11,10 @@ if Meteor.isClient
             
     Template.user_credit.helpers
         read_docs: ->
-            user = Meteor.users.findOne username:Template.parentData().username 
+            # d = 
+            # user = Meteor.users.findOne username:Meteor.user().username 
             Docs.find 
-                read_by_user_ids: $in: [user._id]
+                read_by_user_ids: $in: [Meteor.userId()]
     
     Template.profile.onCreated ->
         # @autorun -> Meteor.subscribe 'user_from_username', Template.parentData().username, ->
@@ -23,9 +24,11 @@ if Meteor.isServer
         Docs.find 
             _id:$in:Meteor.user().bookmark_ids
     Meteor.publish 'user_read_docs', (username)->
-        user = Meteor.users.findOne username:username
+        # user = Meteor.users.findOne username:username
         Docs.find 
-            read_by_user_ids: $in: [user._id]
+            read_by_user_ids: $in: [Meteor.userId()]
+        # Docs.find 
+        #     read_by_user_ids: $in: [user._id]
 
 if Meteor.isClient 
     Template.profile.onRendered ->
@@ -238,17 +241,17 @@ if Meteor.isClient
         payments: ->
             Docs.find {
                 model:'payment'
-                _author_username: Template.parentData().username
+                _author_username: Meteor.user().username
             }, sort:_timestamp:-1
         deposits: ->
             Docs.find {
                 model:'deposit'
-                _author_username: Template.parentData().username
+                _author_username: Meteor.user().username
             }, sort:_timestamp:-1
         topups: ->
             Docs.find {
                 model:'topup'
-                _author_username: Template.parentData().username
+                _author_username: Meteor.user().username
             }, sort:_timestamp:-1
 
 
