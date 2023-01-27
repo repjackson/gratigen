@@ -1,3 +1,25 @@
+template(name='essential_facet')
+template(name='tag_facet')
+template(name='model_facet')
+    div
+    // if filtering_res
+    .ui.inline.header.pointer.toggle_view_facet
+        |models
+    // .ui.icon.tiny.input
+    //     i.search.icon
+    //     input.add_filter(type='text')
+        //- .active.content
+            //- div
+    if picked_model 
+        .ui.active.button.unpick_model 
+            |#{this}
+    if model_results
+        each model_results
+            a.selector.ui.compact.basic.circular.button.pick_filter(class=toggle_value_class title=count)
+                strong #{name}
+                // if is_admin
+                small  #{count}
+        
 template(name='facet')
     div
     // if filtering_res

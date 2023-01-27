@@ -8,12 +8,15 @@ template(name='home')
             +dash_user_info
             +user_impact_graph
             +facet key='essential'
+            +essential_facet
         .eight.wide.column.scrolling        
             .ui.one.column.grid     
                 .centered.column
-                    +facet key='model' icon='database'
-                    .ui.search.icon.input
-                    +facet key='tag' icon='tag'
+                    // +facet key='model' icon='database'
+                    // .ui.icon.input
+                    +model_facet
+                    +tag_facet
+                    // +facet key='tag' icon='tag'
                     // +home_cloud
                 // +thing_picker_template
                     .ui.inline.search

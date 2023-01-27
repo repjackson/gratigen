@@ -1,38 +1,45 @@
 if Meteor.isClient
+    Template.model_facet.helpers
+        picked_model: -> Session.get('picked_model')
+        model_results: -> Results.find key:'model'
     Template.facet.helpers
-        picked_filters: ->
-            # console.log @
-            delta = Docs.findOne Meteor.user().delta_id
-            # console.log delta["picked_#{@key}s"]
-            delta["picked_#{@key}s"]
-        viewing_results: ->
-            Template.instance().viewing_facet.get()
-        filtering_res: ->
-            delta = Docs.findOne Meteor.user().delta_id
-            filtering_res = []
-            # console.log @key
-            Results.find {key:@key}
-            # if @key is '_keys'
-            #     @res
-            # else
-            #     for filter in @res
-            #         if filter.count < delta.total
-            #             filtering_res.push filter
-            #         else if filter.name in @filters
-            #             filtering_res.push filter
-            #     filtering_res
-        toggle_value_class: ->
-            facet = Template.parentData()
-            delta = Docs.findOne Meteor.user().delta_id
-            if Session.equals 'loading', true
-                 'disabled basic'
-            # else if facet.filters.length > 0 and @name in facet.filters
-            #     'active'
-            # else ''
+        # picked_filters: ->
+        #     # console.log @
+        #     delta = Docs.findOne Meteor.user().delta_id
+        #     # console.log delta["picked_#{@key}s"]
+        #     delta["picked_#{@key}s"]
+        # viewing_results: ->
+        #     Template.instance().viewing_facet.get()
+        # filtering_res: ->
+        #     delta = Docs.findOne Meteor.user().delta_id
+        #     filtering_res = []
+        #     # console.log @key
+        #     Results.find {key:@key}
+        #     # if @key is '_keys'
+        #     #     @res
+        #     # else
+        #     #     for filter in @res
+        #     #         if filter.count < delta.total
+        #     #             filtering_res.push filter
+        #     #         else if filter.name in @filters
+        #     #             filtering_res.push filter
+        #     #     filtering_res
+        # toggle_value_class: ->
+        #     facet = Template.parentData()
+        #     delta = Docs.findOne Meteor.user().delta_id
+        #     if Session.equals 'loading', true
+        #          'disabled basic'
+        #     # else if facet.filters.length > 0 and @name in facet.filters
+        #     #     'active'
+        #     # else ''
     
     
     Template.facet.onCreated ->
-        @autorun => Meteor.subscribe 'home_facets', ->
+        @autorun => Meteor.subscribe 'facet',
+            Session.get('picked_model'),
+            picked_essentials.array(),
+            picked_tags.array(),
+        , ->
         # @autorun => Meteor.subscribe('docs', picked_tags.array())
     Template.pick_result.events
         'click .pick': ->
@@ -43,9 +50,9 @@ if Meteor.isClient
                     "picked_#{@model}s":@name
             d = Docs.findOne Meteor.user().delta_id 
             # console.log d
-    Template.app.helpers
-        result_helper: (model)-> 
-            Results.find model:model
+    # Template.app.helpers
+    #     result_helper: (model)-> 
+    #         Results.find model:model
         # cloud_tag_class: ->
         #     button_class = switch
         #         when @index <= 5 then 'large'
@@ -53,66 +60,54 @@ if Meteor.isClient
         #         when @index <= 20 then 'small'
         #     return button_class
 
+    # Template.facet.events
+    #     'click .pick_filter': -> 
+    #         Docs.update Meteor.user().delta_id, 
+    #             $addToSet:"picked_#{@key}s":@name
     Template.facet.events
-        'click .pick_filter': -> 
-            Docs.update Meteor.user().delta_id, 
-                $addToSet:"picked_#{@key}s":@name
-    Template.unpick_filter.events
-        'click .unpick': -> 
-            console.log Template.instance()
-            console.log Template.currentData()
-            parent = Template.parentData()
-            console.log "picked_#{@key}s", @valueOf()
-            console.log 'unpick', @valueOf()
-            Docs.update Meteor.user().delta_id, 
-                $pull:"picked_#{parent.key}s":@valueOf()
-            # location.reload()
-            # picked_tags.remove @valueOf()
-    # Template.home_cloud.events
-    #     'click .pick_tag': -> 
-    #         Docs.update Meteor.user().delta_id, 
-    #             $addToSet:picked_tags:@name
-    #     'click .unpick_tag': -> 
-    #         Docs.update Meteor.user().delta_id, 
-    #             $pull:picked_tags:@valueOf()
-    #         # picked_tags.remove @valueOf()
+        # 'click .unpick': -> 
+        #     console.log Template.instance()
+        #     console.log Template.currentData()
+        #     parent = Template.parentData()
+        #     console.log "picked_#{@key}s", @valueOf()
+        #     console.log 'unpick', @valueOf()
+        #     Docs.update Meteor.user().delta_id, 
+        #         $pull:"picked_#{parent.key}s":@valueOf()
+        #     # location.reload()
+        #     # picked_tags.remove @valueOf()
+        'click .pick_tag': -> picked_tags.push @name
+        'click .unpick_tag': -> picked_tags.remove @valueOf()
+        'click #clear_tags': -> picked_tags.clear()
         
-    #     'click #clear_tags': ->
-    #         Docs.update Meteor.user().delta_id, 
-    #             $set:picked_tags:[]
-    #         # picked_tags.remove @valueOf()
-        
-    #     'click .pick_model': -> 
-    #         Docs.update Meteor.user().delta_id, 
-    #             $addToSet:picked_models:@name
-    #     'click .unpick_model': ->
-    #         Docs.update Meteor.user().delta_id, 
-    #             $pull:picked_models:@valueOf()
+        'click .pick_model': -> Session.set('picked_model', @name)
+        'click .unpick_model': -> Session.set('picked_model',null)
 
-    #     'click .pick_essential': -> 
-    #         Docs.update Meteor.user().delta_id, 
-    #             $addToSet:picked_essentials:@name
-    #     'click .unpick_essential': ->
-    #         Docs.update Meteor.user().delta_id, 
-    #             $pull:picked_essentials:@valueOf()
+        'click .pick_essential': -> picked_essentials.push @name
+        'click .unpick_essential': -> picked_essentials.remove @valueOf()
 
 
         
 if Meteor.isServer
-    Meteor.publish 'home_facets', ()->
+    Meteor.publish 'facet', (
+        picked_models=[]
+        picked_essentials=[]
+        picked_tags=[]
+        )->
         d = Docs.findOne Meteor.user().delta_id
         if d
             self = @
             match = {}
-            console.log d
-            white_list = ['post', 'offer', 'request', 'org', 'event', 'role', 'task', 'skill', 'resource', 'product', 'service', 'trip']
-            match.model = $in: white_list
-            enabled_facets = ['model','essential','tag']
-            for key in enabled_facets
-                if d["picked_#{key}s"]
-                    if d["picked_#{key}s"].length > 0 then match["#{key}"] = $all: d["picked_#{key}s"]
+            # console.log d
+            coordination_models = ['post', 'offer', 'request', 'org', 'event', 'role', 'task', 'skill', 'resource', 'product', 'service', 'trip']
+            # match.model = $in: coordination_models
+            # enabled_facets = ['model','essential','tag']
+            # for key in enabled_facets
+            #     if d["picked_#{key}s"]
+            #         if d["picked_#{key}s"].length > 0 then match["#{key}"] = $all: d["picked_#{key}s"]
             # if d.picked_models
-            #     if d.picked_models.length > 0 then match.model = $all: d.picked_models
+            if picked_models.length > 0 then match.model = $all: picked_models
+            if picked_essentials.length > 0 then match.essentials = $all: picked_essentials
+            if picked_tags.length > 0 then match.tags = $all: picked_tags
             # if d.picked_essentials
             #     if d.picked_essentials.length > 0 then match.efts = $all: d.picked_essentials
             # if d.picked_timestamp_tags
@@ -126,27 +121,66 @@ if Meteor.isServer
             #     picked_tags = []
             limit = 10
             console.log 'match', match
-            for key in enabled_facets   
-                console.log 'key', key
-                # console.log  "picked_#{key}s"
-                result_cloud = Docs.aggregate [
-                    { $match: match }
-                    { $project: "#{key}s": 1 }
-                    { $unwind: "$#{key}s" }
-                    { $group: _id: "$#{key}s", count: $sum: 1 }
-                    # { $match: _id: $nin: d["picked_#{key}s"] }
-                    { $sort: count: -1, _id: 1 }
-                    { $limit: 10 }
-                    { $project: _id: 0, name: '$_id', count: 1 }
-                    ]
-                # console.log 'result cloud', key, result_cloud
-                result_cloud.forEach (result) =>
-                    # console.log 'cloud res', result
-                    self.added 'results', Random.id(),
-                        name: result.name
-                        count: result.count
-                        key:key
-                        # index: i
+            # for key in enabled_facets   
+            # console.log 'key', key
+            # console.log  "picked_#{key}s"
+            model_cloud = Docs.aggregate [
+                { $match: match }
+                { $project: "model": 1 }
+                { $group: _id: "$model", count: $sum: 1 }
+                # { $match: _id: $nin: d["picked_#{key}s"] }
+                { $sort: count: -1, _id: 1 }
+                { $limit: 10 }
+                { $project: _id: 0, name: '$_id', count: 1 }
+                ]
+            # console.log 'result cloud', key, model_cloud
+            model_cloud.forEach (result) =>
+                # console.log 'cloud res', result
+                self.added 'results', Random.id(),
+                    name: result.name
+                    count: result.count
+                    key:'model'
+                    # index: i
+                
+            essential_cloud = Docs.aggregate [
+                { $match: match }
+                { $project: "essentials": 1 }
+                { $unwind: "$essentials" }
+                { $group: _id: "$essentials", count: $sum: 1 }
+                { $match: _id: $nin: picked_essentials }
+                { $sort: count: -1, _id: 1 }
+                { $limit: 10 }
+                { $project: _id: 0, name: '$_id', count: 1 }
+                ]
+            # console.log 'result cloud', key, essential_cloud
+            essential_cloud.forEach (result) =>
+                # console.log 'cloud res', result
+                self.added 'results', Random.id(),
+                    name: result.name
+                    count: result.count
+                    key:'essential'
+                    # index: i
+                
+    
+                
+            tag_cloud = Docs.aggregate [
+                { $match: match }
+                { $project: "essentials": 1 }
+                { $unwind: "$essentials" }
+                { $group: _id: "$essentials", count: $sum: 1 }
+                { $match: _id: $nin: picked_essentials }
+                { $sort: count: -1, _id: 1 }
+                { $limit: 10 }
+                { $project: _id: 0, name: '$_id', count: 1 }
+                ]
+            # console.log 'result cloud', key, tag_cloud
+            tag_cloud.forEach (result) =>
+                # console.log 'cloud res', result
+                self.added 'results', Random.id(),
+                    name: result.name
+                    count: result.count
+                    key:'tag'
+                    # index: i
                 
     
             # found_docs = Docs.find(match).fetch()
