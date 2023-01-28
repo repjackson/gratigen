@@ -258,8 +258,8 @@ if Meteor.isClient
 
     Template.chat_messages_pane.onCreated ->
         # @autorun => Meteor.subscribe 'doc', @data._id
-        @autorun => Meteor.subscribe 'classroom_docs', @data._id
-        @autorun => Meteor.subscribe 'people_list', @data._id
+        # @autorun => Meteor.subscribe 'classroom_docs', @data._id
+        # @autorun => Meteor.subscribe 'people_list', @data._id
 
     Template.chat_messages_pane.helpers
         in_chat: ->

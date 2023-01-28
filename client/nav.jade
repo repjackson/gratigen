@@ -14,8 +14,8 @@ template(name='nav')
             // +i name='network'
             
             // i.large.home.icon
-            img.ui.mini.inline.image(src="/logo.png")
-            span.mobile.hidden gratigen
+            img.ui.mini.inline.compact.image(src="/logo.png")
+            span Gratigen
             // span.mobile.hidden
             // +top_nav_item route='my_accounts' label='accounts' icon='data-in-both-directions' color='40C057'
             // +top_nav_item route='my_orgs' icon='groups' color='83DFF4' label='organizations'
@@ -48,14 +48,14 @@ template(name='nav')
         .right.menu
             if unread_count
                 a.ui.item.alerts.select_term(href="#" class=alert_toggle_class)
-                    i.large.bell.icon
+                    i.large.bell.big.yellow.icon
                     if unread_count
                         |#{unread_count}
             else
                 a.ui.icon.item(href="/inbox" class="{{isActiveRoute 'inbox'}}")
-                    i.large.outline.bell.icon
+                    i.large.outline.bell.big.blue.icon
             a.ui.item.zoomer(href="/chat" class="{{isActiveRoute 'chat'}}")
-                i.large.chat.outline.icon
+                i.large.chat.outline.big.blue.icon
                 // +i name='chat' color='blue'
 
             if currentUser
@@ -81,15 +81,15 @@ template(name='nav')
             unless subs_ready
                 i.yin.yang.large.loading.icon
             unless currentUser
-                a.ui.button(href="/register" title='register')
+                a.ui.item(href="/register" title='register')
                     // +i name='plus'
-                    i.user.add.icon
-                    span.mobile.hidden register            
-                a.ui.button(href='/login' title='login') 
+                    i.user.add.green.big.icon
+                    span.mobile.hidde register            
+                a.ui.item(href='/login' title='login') 
                     // i.user.add.icon
-                    i.sign.in.large.icon
+                    i.sign.in.big.blue.icon
                     // +i name='internal'
-                    span.mobile.hidden login
+                    span.mobile.hidde login
             // if session_is 'viewing_alerts'
             //     +topbar
                 
@@ -97,7 +97,8 @@ template(name='nav')
 template(name='add_tab')
     // .ui.top.attached.tabular.menu  
     a.center.item.toggle_addmode.zoomer.pointer(data-tab='add')
-        +i name='play-button-circled--v1' color='40C057'
+        // +i name='play-button-circled--v1' color='40C057'
+        i.big.circular.play.green.icon.invert
     // .active.item(data-tab='viewing')
     //     |viewing
     // .ui.bottom.attached.tab.segment.centered.ani(data-tab='add')

@@ -13,20 +13,20 @@ template(name='view_chats')
                 // +cloud filter='chat'
                 //- +participant_filter type='chat'
                 +chat_list
-                //- .ui.header viewing: 
-                //-     if viewing_published
-                //-         #view_private_chats.ui.button 
-                //-             i.unhide.icon
-                //-             |Published
-                //-     if viewing_private
-                //-         #view_published_chats.ui.button 
-                //-             i.lock.icon
-                //-             |Private
+                .ui.header viewing: 
+                    if viewing_published
+                        #view_private_chats.ui.button 
+                            i.unhide.icon
+                            |published
+                    if viewing_private
+                        #view_published_chats.ui.button 
+                            i.lock.icon
+                            |private
             .twelve.wide.column
                 with selected_chat
                     +view_chat
-                // .ui.cards
-                //     each chats
+                .ui.cards
+                    +view_chat
 
 
 
@@ -37,9 +37,12 @@ template(name='chat_messages_pane')
             each chat_messages
                 +chat_message
     if in_chat
+        if adding_message
+            with new_doc 
+                +html_edit key='body'
         .ui.icon.fluid.attached.input
             i.chevron.right.icon
-            input.add_message(type='text' placeholder='add message...')
+            textarea.add_message(type='text' placeholder='add message...')
                 
 template(name='chat_list')
     .ui.inline.header 
@@ -75,16 +78,16 @@ template(name='chat_list_item')
                 .ui.inline.small.header #{title}
                 if private
                     i.lock.icon
-                //- each tags
-                //-     .ui.label #{this}
-            //- .description
-                // strong {{cutString last_message.body 100}}
-                //- strong {{last_message.body}}
-            //- .description
-            //-     |by #{last_message.author.username} #{last_message.when}
-            //- .extra
-            //-     .span #{unread_message_count} unread messages
-            //-     .span #{message_count} total messages                
+                each tags
+                    .ui.label #{this}
+            .description
+                strong {{cutString last_message.body 100}}
+                strong {{last_message.body}}
+            .description
+                |by #{last_message.author.username} #{last_message.when}
+            .extra
+                .span #{unread_message_count} unread messages
+                .span #{message_count} total messages                
             
             
 template(name='private_chat_item')
@@ -130,9 +133,15 @@ template(name='chat_message')
                     | #{body}
                 else 
                     strong #{body}
+                if is_editing 
+                    +html_edit key='body'
+                    .ui.big.icon.green.button.invert.save 
+                        i.save.icon
             .actions
-                i.pencil.large.link.circular.icon.zoomer
-                i.reply.large.link.circular.icon.zoomer
+                i.pencil.large.link.circular.icon.zoomer.edit_this
+                i.reply.large.link.circular.icon.zoomer.reply_this
+                i.money.large.link.circular.icon.zoomer.tip_this
+                i.shopping.cart.large.link.circular.icon.zoomer.tip_this
                 +voting
                 if is_author
                     i.remove.link.large.circular.icon.delete_message(title='delete message')
