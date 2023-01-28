@@ -10,11 +10,11 @@ template(name='nav')
             // else 
             //     a.icon.item.toggle_leftbar
             //         i.large.bars.icon
-            // img.ui.mini.inline.image(src="/logo.png")
         a.item.zoomer(href='/' class="{{isActivePath '/'}}" )
             // +i name='network'
             
             // i.large.home.icon
+            img.ui.mini.inline.image(src="/logo.png")
             span.mobile.hidden gratigen
             // span.mobile.hidden
             // +top_nav_item route='my_accounts' label='accounts' icon='data-in-both-directions' color='40C057'
@@ -55,7 +55,7 @@ template(name='nav')
                 a.ui.icon.item(href="/inbox" class="{{isActiveRoute 'inbox'}}")
                     i.large.outline.bell.icon
             a.ui.item.zoomer(href="/chat" class="{{isActiveRoute 'chat'}}")
-                i.large.inbox.icon
+                i.large.chat.outline.icon
                 // +i name='chat' color='blue'
 
             if currentUser
