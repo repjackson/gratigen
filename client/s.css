@@ -102,9 +102,11 @@ img, .button, .selector, .card, p, .header, .item, .image, .fade {
 
 .bg_overlay {
     background-attachment: fixed !important;
+    /*position: absolute !important;*/
     position: absolute !important;
     max-height: 100% !important;
     width: 100% !important;
+
     /* max-height: 1000px !important; */
     /* top:0px; */
     /*filter: invert(1);*/

@@ -1,6 +1,10 @@
 template(name='home')
+
     if currentUser.admin_mode
         img.ui.fluid.image.home_banner(src="{{c.url 'gratigenlayout'}}" class=darkmode_class)
+    // else 
+    //     img.ui.fluid.image.bg_overlay(src="{{c.url 'nightbg' width=1000 crop='fit'}}")    
+
     .ui.stackable.padded.divided.celled.grid
         .three.wide.column
             // +session_toggle key='expand_leftbar' icon='horizontal-line'
@@ -142,22 +146,27 @@ template(name='home')
 
 
 template(name='charts')
+    +i name='sad'
     .ui.blue.small.progress(data-percent='65' title="{{to_percent sadness}}% sadness")
         .bar
         .progress
             .label {{to_percent sadness}}% sadness 
+    +i name='happy'
     .ui.green.small.progress(data-percent='54' title="{{to_percent joy}}% joy")
         .bar
         .progress
             .label {{to_percent joy}}% joy 
+    +i name='fear'
     .ui.small.progress(data-percent='78' title="{{to_percent fear}}% fear")
         .bar
         .progress
             .label {{to_percent fear}}% fear 
+    +i name='disgust'
     .ui.yellow.small.progress(data-percent='34' title="{{to_percent disgust}}% disgust")
         .bar
         .progress
             .label {{to_percent disgust}}% disgust 
+    +i name='angry'
     .ui.orange.small.progress(data-percent='23' title="{{to_percent anger}}% anger")
         .bar
         .progress
