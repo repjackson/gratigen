@@ -2,8 +2,8 @@ template(name='home')
     if currentUser.admin_mode
         img.ui.fluid.image.home_banner(src="{{c.url 'gratigenlayout'}}" class=darkmode_class)
     .ui.stackable.padded.divided.celled.grid
-        .bordered(class=left_column_class)
-            +session_toggle key='expand_leftbar' icon='horizontal-line'
+        .three.wide.column
+            // +session_toggle key='expand_leftbar' icon='horizontal-line'
             // +session_toggle key='add_mode' icon='plus'
             //.ui.icon.button.show_model
                 i.large.plus.icon
@@ -49,55 +49,13 @@ template(name='home')
                     +side_menu_item color="FF0000" icon='users' label='community core'
                 
             // .ui.button create request
-        .bordered.scrolling(class=main_column_class)
+        .eight.wide.column
             .ui.one.column.grid 
                 .column.bordered
-                    .ui.top.attached.tabular.menu  
-                        a.center.item.toggle_addmode.zoomer(data-tab='add' title='add thing')
-                            +i name='play-button-circled--v1' color='40C057'
-                        // .active.item(data-tab='viewing')
-                        //     |viewing
-                    .ui.bottom.attached.tab.segment.centered.ani(data-tab='add')
-                        //select type of thing you're creating >> open thing type editor modal
-                        if session_is 'addmode' true
-                       
-                            +thing_picker model='post' icon='for-you' color='1255B8'
-                            //blue
-                            +thing_picker model='offer' icon='hand-holding-heart' color='FF73EA'
-                            //pink
-                            +thing_picker model='request' icon='commercial' color='40C057'     
-                            //green
-                            
-                            div
-                            +thing_picker model='org' icon='groups' color='83DFF4' 
-                            //light blue
-                            +thing_picker model='project' icon='project' color='7229AF' 
-                            //violet
-                            +thing_picker model='event' icon='calendar' color='FAB005'
-                            //yellow
-                            +thing_picker model='role' icon='what-i-do' color='42E8C4'
-                            //turquoise
-                            +thing_picker model='tasks' icon='task' color='B785E1'
-                            //lavender
-                            +thing_picker model='resource' icon='field-and-tractor' color='FD7E14'
-                            +thing_picker model='skills' icon='wrench' color='ff0000'
-                            //red
-                            +thing_picker model='badges' icon='badge' color='1255B8'
-                            //blue
-                            div
-                            +thing_picker model='datetime' icon='overtime--v1' color='FD7E14'
-                            +thing_picker model='location' icon='worldwide-location' color='40C057'
-                            +thing_picker model='accounts' icon='gold-bars' color='FAB005'
-                                //people
-                            .ui.divider
+                    // +add_tab
                     div
-                            +online_users
-                     //side scrolling users' avatars (pulls  up profile in modal) - new, nearby, recommended - 
-                        //.ui.fluid.big.menu.hscroll
-                        +
-                        //+new_nearby_allied_users
+                    +online_users
 
-                    div
                 .centered
                     +filter_model model='post' icon='for-you' color='1255B8'
                     //blue
@@ -142,15 +100,16 @@ template(name='home')
                                 .content
                                     .header #{title}
                 if session_is 'view_mode' 'feed'
-                    .ui.one.stackable.cards.scrolling.centered
-                        each doc_results
-                            +home_card
+                    .ui.eight.wide.column.centered
+                        .ui.centered.one.stackable.cards.scrolling.centered
+                            each doc_results
+                                +home_card
                 else
                     .ui.two.stackable.cards.scrolling
                         each doc_results
                             +home_card
         // .eight.wide.column.bordered
-        .bordered(class=right_column_class)
+        .five.wide.column
             if session_is 'show_map' true
                 +mapbox
             if session_is 'show_calendar' true 
@@ -173,6 +132,11 @@ template(name='home')
                     +Template.dynamic template=edit_template
                 else 
                     +Template.dynamic template=view_template
+
+
+
+
+
 
 //template(name='thing_maker_modal')        
 template(name='home_card')
@@ -206,9 +170,7 @@ template(name='home_card')
                     +i name='what-i-do' color='42E8C4'  
                 if _is 'model' 'resource'
                     +i name='field-and-tractor' color='42E8C4'      
-                    
-                    
-                    
+
                 // .ui.label #{model}
                 |#{title} #{body}
             i.clock.icon
@@ -233,8 +195,26 @@ template(name='home_card')
                 +voting
                 +eft_view_item_small
       
-      
-      
+            .content
+                .right.floated
+                    | #{views} views
+                // if _author_id
+                //     +author_info
+                +voting
+                    //- i.eye.icon
+                //     each viewer_usernames
+                //         .ui.small.inverted.label #{this}
+                // //- +comments
+                +eft_viewer
+                if currentUser.admin_mode
+                    +print_this
+                    +remove_button
+                each tags 
+                    .ui.small.label #{this}
+            if template_exists
+                +Template.dynamic template=model_template
+            .content
+                +comments
       
       
       

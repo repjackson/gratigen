@@ -17,12 +17,13 @@ if Meteor.isClient
         edit_template: -> "#{@model}_edit"
         current_viewing_thing: ->
             Docs.findOne Session.get('current_thing_id')
+    Template.add_tab.events 
+        'click .toggle_addmode': ->
+            Session.set('addmode', !Session.get('addmode'))
     Template.home.events 
         'click .toggle_editmode':->
             Session.set('editmode', !Session.get('editmode'))
             console.log Session.get('editmode')
-        'click .toggle_addmode': ->
-            Session.set('addmode', !Session.get('addmode'))
         'click .show_modal': (e,t)->
             Session.set('current_thing_id', @_id)
             console.log @
@@ -311,6 +312,9 @@ if Meteor.isClient
             source: categoryContent
             selectFirstResult:true	            
           })
+        $('.tabular.menu .item').tab();
+    Template.nav.onRendered ->
+        $('.popup').popup();
         $('.tabular.menu .item').tab();
 
 
