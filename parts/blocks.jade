@@ -297,9 +297,9 @@ template(name='view_full_button')
 template(name='user_status')
     if online 
         // .ui.label(class='{{labelClass}}') 
-        .ui.empty.label(title='online')
-        // img.ui.avatar.image(src="https://img.icons8.com/connection-user_status-on/color/48" title='Online' width="48" height="48")
-        // |Online
+        .ui.green.label.invert(title='online')
+            // img.ui.avatar.image(src="https://img.icons8.com/connection-user_status-on/color/48" title='Online' width="48" height="48")
+            |Online
     else if idle
         .ui.empty.yellow.label(title='idle')
         // .ui.label(class='{{labelClass}}') Idle

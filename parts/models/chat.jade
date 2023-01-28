@@ -1,5 +1,5 @@
 template(name='view_chats')
-    //- img.ui.fluid.image.bg_overlay(src="{{c.url 'nightbg' width=1000 crop='fit'}}")    
+    img.ui.fluid.image.bg_overlay(src="{{c.url 'nightbg' width=1000 crop='fit'}}")    
     .ui.stackable.padded.grid
         .row
             .four.wide.column
@@ -116,13 +116,13 @@ template(name='private_chat_item')
 template(name='chat_message')
     // .ui.segment.message_segment(class=message_segment_class)
         // .ui.comments
-    .comment
-        a.avatar(href="/user/#{author.username}")
-            img.ui.avatar.image(src="{{c.url author.profile_image_id width=400 height=400 gravity='face' crop='fill'}}")
-        .content
-            a.author(href="/user/#{author.username}") 
-                |#{author.username}
-                +user_status author
+    .comment.zoome
+        a.avatar.zoomer(href="/user/#{_author.username}")
+            img.ui.avatar.image.zoomer(src="{{c.url _author.image_id width=400 height=400 gravity='face' crop='fill'}}")
+        .content.zoomer
+            a.author.zoomer(href="/user/#{_author.username}") 
+                |#{_author.username}
+                +user_status _author
             .metadata
                 span.date #{when}
             .text
@@ -156,7 +156,7 @@ template(name='view_chat')
                 //- .ui.inline.header #{message_count} messages
                 //- .ui.inline.header #{unread_message_count} unread
                 +text_edit key='title'
-                .ui.header
+                .ui.inline.header
                     |participants
                 if currentUser
                     if in_chat

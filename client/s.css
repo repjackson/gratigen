@@ -100,7 +100,7 @@ img, .button, .selector, .card, p, .header, .item, .image, .fade {
 }
 
 
-.checkin_banner {
+.bg_overlay {
     background-attachment: fixed !important;
     position: absolute !important;
     max-height: 100% !important;
