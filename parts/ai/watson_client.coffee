@@ -53,6 +53,10 @@ if Meteor.isClient
         anger_percent: -> (@anger*100).toFixed()
         fear_percent: -> (@fear*100).toFixed()
     
+    Template.charts.onRendered ->
+        Meteor.setTimeout ->
+            $('.progress').progress()
+        , 2000
     Template.keywords.onRendered ->
         Meteor.setTimeout ->
             $('.progress').progress()

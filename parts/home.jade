@@ -10,6 +10,7 @@ template(name='home')
             // .ui.fluid.small.button.toggle_leftbar
             //     i.chevron.left.icon
             // .ui.hidden.divider
+            +charts
             +dash_user_info
             +user_impact_graph
            
@@ -139,6 +140,28 @@ template(name='home')
                     +Template.dynamic template=view_template
     +view_chats
 
+
+template(name='charts')
+    .ui.blue.small.progress(data-percent='65' title="{{to_percent sadness}}% sadness")
+        .bar
+        .progress
+            .label {{to_percent sadness}}% sadness 
+    .ui.green.small.progress(data-percent='54' title="{{to_percent joy}}% joy")
+        .bar
+        .progress
+            .label {{to_percent joy}}% joy 
+    .ui.small.progress(data-percent='78' title="{{to_percent fear}}% fear")
+        .bar
+        .progress
+            .label {{to_percent fear}}% fear 
+    .ui.yellow.small.progress(data-percent='34' title="{{to_percent disgust}}% disgust")
+        .bar
+        .progress
+            .label {{to_percent disgust}}% disgust 
+    .ui.orange.small.progress(data-percent='23' title="{{to_percent anger}}% anger")
+        .bar
+        .progress
+            .label {{to_percent anger}}% anger 
 
 
 
