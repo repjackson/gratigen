@@ -100,7 +100,7 @@ body
     // <data-tooltip="collision"><em data-emoji=":boom:" class="medium"></em><br>boom</div>
     // .invert
     // +modelbar
-    +leftbar
+    // +leftbar
     // +rightbar
     // // +sessionbar
     // +global_modal
@@ -108,8 +108,9 @@ body
     // +chat_flyout
     // if currentUser.modelbar
     .pusher
+        // +home
         +app
-        +comet
+        // +comet
     // +gridstack
 
 template(name='comet')
@@ -215,8 +216,8 @@ template(name='gridstack')
     
 
 template(name='app')
-    .friend_cursor
-        i.user.big.icon
+    // .friend_cursor
+    //     i.user.big.icon
     if Template.subscriptionsReady
         +nav
         if currentUser

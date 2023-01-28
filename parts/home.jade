@@ -1,75 +1,75 @@
 template(name='home')
+    .ui.header home
     // if currentUser.admin_mode
     //     img.ui.fluid.image.home_banner(src="{{c.url 'gratigenlayout'}}" class=darkmode_class)
-    .ui.stackable.padded.celled.grid
-       .three.wide.column.scrolling
-            // .bordered(class=left_column_class)
-            // unless session_is 'expand_leftbar' true
-            +dash_user_info
-            +user_impact_graph
-            // +facet key='essential'
-            +essential_facet
-        .eight.wide.column.scrolling        
-            .ui.one.column.grid     
-                .centered.column.scrolling
-                    // +facet key='model' icon='database'
-                    // .ui.icon.input
-                    +model_facet
-                    div
-                    .ui.inline.search
-                        .ui.large.icon.input.search_bar
-                            input.prompt(type='text' placeholder='search')
-                            i.search.icon
-                    div
-                    +tag_facet
-                    // +facet key='tag' icon='tag'
-                    // +home_cloud
-                // +thing_picker_template
-                    .ui.inline.search
-                        .ui.large.icon.input.search_bar
-                            input.prompt(type='text' placeholder='add/request/search...')
-                            i.search.icon
-                    // each homepage_models
-                    //     +filter_model
-                .centered   
-                            // .results    
-                    each model_docs_helper 'view_mode'
-                        +session_set key='view_mode' value=title title=title icon=icon color=icon_color
-                    // +session_toggle key='show_map' icon='map'
-                    // +session_toggle key='show_calendar' icon='calendar'
-                    each model_docs_helper 'sort_key'
-                        +profile_key_value_edit key='sort_key' value=title label=title icon=icon color=icon_color
-                    .ui.inline.header sort
-                    +profile_key_value_edit key='sort_direction' value=1 icon='sort-up'
-                    +profile_key_value_edit key='sort_direction' value=-1 icon='sort-down'
-                    .ui.inline.header limit
-                    +profile_key_value_edit key='limit' value=1 label=1
-                    +profile_key_value_edit key='limit' value=10 label=10
-                    +profile_key_value_edit key='limit' value=25 label=25
-                    +profile_key_value_edit key='limit' value=50 label=50
-                    
-                if session_is 'view_mode' 'list'
-                    .ui.items 
-                        each doc_results 
-                            .item
-                                .content
-                                    .header #{title}
-                                    |mini_card
+    // .ui.stackable.padded.celled.grid
+    //     .three.wide.column.scrolling
+    //         // .bordered(class=left_column_class)
+    //         // unless session_is 'expand_leftbar' true
+    //         // +dash_user_info
+    //         // +user_impact_graph
+    //         // +facet key='essential'
+    //         // +essential_facet
+    //     .eight.wide.column.scrolling        
+    //         .ui.one.column.grid     
+    //             .centered.column.scrolling
+    //                 // +facet key='model' icon='database'
+    //                 // .ui.icon.input
+    //                 // +model_facet
+    //                 div
+    //                 .ui.inline.search
+    //                     .ui.large.icon.input.search_bar
+    //                         input.prompt(type='text' placeholder='search')
+    //                         i.search.icon
+    //                 div
+    //                 // +tag_facet
+    //                 // +facet key='tag' icon='tag'
+    //                 // +home_cloud
+    //             // +thing_picker_template
+    //                 .ui.inline.search
+    //                     .ui.large.icon.input.search_bar
+    //                         input.prompt(type='text' placeholder='add/request/search...')
+    //                         i.search.icon
+    //                 // each homepage_models
+    //                 //     +filter_model
+    //             .centered   
+    //                         // .results    
+    //                 each model_docs_helper 'view_mode'
+    //                     +session_set key='view_mode' value=title title=title icon=icon color=icon_color
+    //                 // +session_toggle key='show_map' icon='map'
+    //                 // +session_toggle key='show_calendar' icon='calendar'
+    //                 each model_docs_helper 'sort_key'
+    //                     +profile_key_value_edit key='sort_key' value=title label=title icon=icon color=icon_color
+    //                 .ui.inline.header sort
+    //                 // +profile_key_value_edit key='sort_direction' value=1 icon='sort-up'
+    //                 // +profile_key_value_edit key='sort_direction' value=-1 icon='sort-down'
+    //                 // .ui.inline.header limit
+    //                 // +profile_key_value_edit key='limit' value=1 label=1
+    //                 // +profile_key_value_edit key='limit' value=10 label=10
+    //                 // +profile_key_value_edit key='limit' value=25 label=25
+    //                 // +profile_key_value_edit key='limit' value=50 label=50
+    //             if session_is 'view_mode' 'list'
+    //                 .ui.items 
+    //                     each doc_results 
+    //                         .item
+    //                             .content
+    //                                 .header #{title}
+    //                                 |mini_card
                                     
-                else if session_is 'view_mode' 'cards'
-                    .ui.stackable.cards.scrolling
-                            each doc_results
-                                +home_card
-                else
-                    .ui.eight.wide.column.centered
-                        .ui.centered.cards.one.scrolling
-                            each doc_results
-                                +delta_result_card
-        .five.wide.scrolling.column
-            +my_things
-            +mapbox
+    //             else if session_is 'view_mode' 'cards'
+    //                 .ui.stackable.cards.scrolling
+    //                         each doc_results
+    //                             +home_card
+    //             else
+    //                 .ui.eight.wide.column.centered
+    //                     .ui.centered.cards.one.scrolling
+    //                         each doc_results
+    //                             +delta_result_card
+        // .five.wide.scrolling.column
+            // +my_things
+            // +mapbox
             // +calendar
-            +user_connection_graph
+            // +user_connection_graph
         
             // +online_users
             // // +chart
@@ -183,7 +183,7 @@ template(name='home_card')
                 //     each seven_tags 
                 //         .ui.basic.label #{this}
                 +voting
-                +eft_view_item_small
+                // +eft_view_item_small
                 //like/dislike, comment, share(sms,email,dm), comments (expand)    
 
 
