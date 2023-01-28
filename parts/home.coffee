@@ -68,10 +68,12 @@ if Meteor.isClient
             Docs.findOne Session.get('current_thing_id')
     Template.thing_picker.helpers
         model_picker_class:->
-            if @model is Template.parentData().model
-                'big'
-            else 
-                'basic'
+            parent = Template.parentData()
+            if parent and parent.model
+                if @model is Template.parentData().model
+                    'big'
+                else 
+                    'basic'
     Template.thing_picker.events
         'click .pick_thing':->
             new_id = 
