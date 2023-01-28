@@ -282,7 +282,7 @@ Template.registerHelper 'current_model', (input) ->
 
 Template.registerHelper 'in_list', (key) ->
     if Meteor.userId()
-        if Meteor.userId() in @["#{key}"] then true else false
+        if @["#{key}"] and Meteor.userId() in @["#{key}"] then true else false
 
 
 

@@ -1,20 +1,21 @@
 template(name='nav')
     // https://fomantic-ui.com/elements/icon.html#/icon
-    // #topnav.topnav.ui.attached.borderless.menu.hscroll(class=invert_class)
-    #topnav.topnav.ui.fluid.padded.divided.centered.middle.aligned.grid 
-        .four.wide.column
+    // #topnav.topnav.ui.fluid.padded.divided.centered.middle.aligned.grid 
+    #topnav.topnav.ui.attached.borderless.menu.hscroll(class=invert_class)
+        // .four.wide.column
+        // .item
             // if is_loading
             //     .icon.item
             //         i.big.loading.grey.refresh.icon.cancel
             // else 
-            // a.icon.item.toggle_leftbar
-            //     i.large.bars.icon
-            img.ui.mini.inline.image(src="/logo.png")
-            a.ui.inline.header.zoomer(href='/' class="{{isActivePath '/'}}" )
-                // +i name='network'
-                
-                // i.large.home.icon
-                span.mobile.hidden gratigen
+            //     a.icon.item.toggle_leftbar
+            //         i.large.bars.icon
+            // img.ui.mini.inline.image(src="/logo.png")
+        a.item.zoomer(href='/' class="{{isActivePath '/'}}" )
+            // +i name='network'
+            
+            // i.large.home.icon
+            span.mobile.hidden gratigen
             // span.mobile.hidden
             // +top_nav_item route='my_accounts' label='accounts' icon='data-in-both-directions' color='40C057'
             // +top_nav_item route='my_orgs' icon='groups' color='83DFF4' label='organizations'
@@ -27,11 +28,12 @@ template(name='nav')
             // +top_nav_item route='my_badges' label='badges' icon='badge' color='1255B8'
                 //accounts gold-bars
     
-            if currentUser.admin
-                // +nav_item route='admin' icon='shield' color='FFFFFF' label='admin'
-                a.icon.item.toggle_admin_mode(title='toggle admin mode')
-                    i.large.shield.icon
-        .six.wide.center.aligned.column
+        if currentUser.admin
+            // +nav_item route='admin' icon='shield' color='FFFFFF' label='admin'
+            a.icon.item.toggle_admin_mode(title='toggle admin mode')
+                i.large.shield.icon
+        // .six.wide.center.aligned.column
+        .item
             +add_tab
         // a.icon.item.toggle_invert
         //     i.lightbulb.icon
@@ -42,27 +44,27 @@ template(name='nav')
         //         else
         //             i.search.large.icon
         //         input.search_site(type='text' autocomplete="off" value=current_product_search)
-        // .right.menu
-        .six.wide.column
+        // .six.wide.column
+        .right.menu
             if unread_count
-                a.ui.button.alerts.select_term(href="#" class=alert_toggle_class)
+                a.ui.item.alerts.select_term(href="#" class=alert_toggle_class)
                     i.large.bell.icon
                     if unread_count
                         |#{unread_count}
             else
-                a.ui.icon.button(href="/inbox" class="{{isActiveRoute 'inbox'}}")
+                a.ui.icon.item(href="/inbox" class="{{isActiveRoute 'inbox'}}")
                     i.large.outline.bell.icon
-            a.ui.button.zoomer(href="/chat" class="{{isActiveRoute 'chat'}}")
+            a.ui.item.zoomer(href="/chat" class="{{isActiveRoute 'chat'}}")
                 i.large.inbox.icon
                 // +i name='chat' color='blue'
 
             if currentUser
-                // a.ui.button(href='/user/#{currentUser.username}/credit' class="{{isActiveRoute 'user_credit'}}" title='current wallet balance')
-                a.ui.button(href="/user/#{currentUser.username}/credit" class="{{isActiveRoute regex='user_credit'}}" title='your credits')
+                // a.ui.item(href='/user/#{currentUser.username}/credit' class="{{isActiveRoute 'user_credit'}}" title='current wallet balance')
+                a.ui.item(href="/user/#{currentUser.username}/credit" class="{{isActiveRoute regex='user_credit'}}" title='your credits')
                     strong
                         |&nbsp;
                         |#{currentUser.points}p
-                a.ui.button(href="/user/#{currentUser.username}" class=user_nav_button_class title=user_nav_button_title)
+                a.ui.item(href="/user/#{currentUser.username}" class=user_nav_button_class title=user_nav_button_title)
                     if currentUser.image_id
                         img.ui.avatar.image(src="{{c.url currentUser.image_id width=200 height=200 gravity='face' crop='fill'}}")
                     else
