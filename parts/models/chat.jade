@@ -119,7 +119,7 @@ template(name='chat_message')
     .comment.zoome
         a.avatar.zoomer(href="/user/#{_author.username}")
             img.ui.avatar.image.zoomer(src="{{c.url _author.image_id width=400 height=400 gravity='face' crop='fill'}}")
-        .content.zoomer
+        .content.zoome
             a.author.zoomer(href="/user/#{_author.username}") 
                 |#{_author.username}
                 +user_status _author
@@ -131,14 +131,16 @@ template(name='chat_message')
                 else 
                     strong #{body}
             .actions
-                +voting_small
+                i.pencil.large.link.circular.icon.zoomer
+                i.reply.large.link.circular.icon.zoomer
+                +voting
                 if is_author
-                    i.remove.link.icon.delete_message(title='delete message')
+                    i.remove.link.large.circular.icon.delete_message(title='delete message')
                 else
                     if read
-                        i.envelope.open.outline.link.large.icon.mark_unread(title='mark unread')
+                        i.envelope.open.outline.link.large.circular.large.icon.mark_unread(title='mark unread')
                     else
-                        i.mail.link.outline.large.icon.mark_read(title='mark read')
+                        i.mail.link.outline.large.circular.large.icon.mark_read(title='mark read')
                 each readers
                     .ui.tiny.label(title="read by #{username}") #{username}
                     // img.ui.avatar.image(src="{{c.url image_id width=50 height=50 gravity='face' crop='fill'}}")
