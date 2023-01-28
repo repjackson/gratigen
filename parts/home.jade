@@ -9,8 +9,10 @@ template(name='home')
                 i.large.plus.icon
             // .ui.fluid.small.button.toggle_leftbar
             //     i.chevron.left.icon
-            .ui.hidden.divider
+            // .ui.hidden.divider
             +dash_user_info
+            +user_impact_graph
+           
 
             .ui.fluid.big.menu.hscroll.mobile.only
                 +side_menu_item color="FF73EA" icon='food' label='food'
@@ -226,7 +228,10 @@ template(name='calendar_view')
     #inline_calendar 
         
       
-      
+template(name='user_impact_graph')
+    .ui.segment
+        .ui.header user impact graph
+        img.ui.image(src="/d3_sunburst.jpeg"
     
 template(name='side_menu_item')
     a.ui.header.item.toggle_item.invert(style="color:##{color}" class=side_item_class)
@@ -238,25 +243,35 @@ template(name='side_menu_item')
 
            
 template(name='dash_user_info') 
-    unless session_is 'expand_leftbar' true
-        img.ui.small.circular.image(src="{{c.url currentUser.image_id width=600 height=600 gravity='face' crop='fill'}}")
-        .ui.header
-            | #{currentUser.username}
-        .ui.small
-            | #{currentUser.points}pts
-        .ui.header
-            | #{currentUser.tagline}
-    else     
-        a.ui.two.column.grid.zoomer(href="/user/#{currentUser.username}")
-            .column
-                img.ui.small.circular.image(src="{{c.url currentUser.image_id width=600 height=600 gravity='face' crop='fill'}}")
-            .column
-                .ui.header
-                    | #{currentUser.username}
-                .ui.small
-                    | #{currentUser.points}pts
-                .ui.header
-                    | #{currentUser.tagline}
+     .ui.two.column.grid
+            .six.wide.column
+                img.ui.circular.small.image(src="{{c.url currentUser.image_id width=120 height=120 gravity='face' crop='fill'}}") 
+            .ten.wide.column
+                .ui.header.printme
+                    |#{currentUser.username}
+                    div
+                    |#{currentUser.tagline}
+
+
+    // unless session_is 'expand_leftbar' true
+    //     img.ui.small.circular.image(src="{{c.url currentUser.image_id width=600 height=600 gravity='face' crop='fill'}}")
+    //     .ui.header
+    //         | #{currentUser.username}
+    //     .ui.small
+    //         | #{currentUser.points}pts
+    //     .ui.header
+    //         | #{currentUser.tagline}
+    // else     
+    //     a.ui.two.column.grid.zoomer(href="/user/#{currentUser.username}")
+    //         .column
+    //             img.ui.small.circular.image(src="{{c.url currentUser.image_id width=600 height=600 gravity='face' crop='fill'}}")
+    //         .column
+    //             .ui.header
+    //                 | #{currentUser.username}
+    //             .ui.small
+    //                 | #{currentUser.points}pts
+    //             .ui.header
+    //                 | #{currentUser.tagline}
 
     // i.user.icon
     // .ui.inline.header #{currentUser.name}

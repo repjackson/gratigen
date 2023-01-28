@@ -1,7 +1,7 @@
 template(name='nav')
     // https://fomantic-ui.com/elements/icon.html#/icon
     // #topnav.topnav.ui.attached.borderless.menu.hscroll(class=invert_class)
-    #topnav.topnav.ui.fluid.padded.divided.grid 
+    #topnav.topnav.ui.fluid.padded.divided.centered.middle.aligned.grid 
         .four.wide.column
             // if is_loading
             //     .icon.item
@@ -9,9 +9,9 @@ template(name='nav')
             // else 
             // a.icon.item.toggle_leftbar
             //     i.large.bars.icon
-            a.header.image.item.zoomer(href='/' class="{{isActivePath '/'}}" )
+            img.ui.mini.inline.image(src="/logo.png")
+            a.ui.inline.header.zoomer(href='/' class="{{isActivePath '/'}}" )
                 // +i name='network'
-                img.ui.mini.image(src="/logo.png")
                 
                 // i.large.home.icon
                 span.mobile.hidden gratigen
@@ -31,7 +31,7 @@ template(name='nav')
                 // +nav_item route='admin' icon='shield' color='FFFFFF' label='admin'
                 a.icon.item.toggle_admin_mode(title='toggle admin mode')
                     i.large.shield.icon
-        .eight.wide.column
+        .six.wide.center.aligned.column
             +add_tab
         // a.icon.item.toggle_invert
         //     i.lightbulb.icon
@@ -43,26 +43,26 @@ template(name='nav')
         //             i.search.large.icon
         //         input.search_site(type='text' autocomplete="off" value=current_product_search)
         // .right.menu
-        .four.wide.column
+        .six.wide.column
             if unread_count
-                a.item.alerts.select_term(href="#" class=alert_toggle_class)
+                a.ui.button.alerts.select_term(href="#" class=alert_toggle_class)
                     i.large.bell.icon
                     if unread_count
                         |#{unread_count}
             else
-                a.icon.item(href="/inbox" class="{{isActiveRoute 'inbox'}}")
+                a.ui.icon.button(href="/inbox" class="{{isActiveRoute 'inbox'}}")
                     i.large.outline.bell.icon
-            a.item.zoomer(href="/chat" class="{{isActiveRoute 'chat'}}")
-                // i.large.inbox.icon
-                +i name='chat' color='blue'
+            a.ui.button.zoomer(href="/chat" class="{{isActiveRoute 'chat'}}")
+                i.large.inbox.icon
+                // +i name='chat' color='blue'
 
             if currentUser
-                // a.item(href='/user/#{currentUser.username}/credit' class="{{isActiveRoute 'user_credit'}}" title='current wallet balance')
-                a.item(href="/user/#{currentUser.username}/credit" class="{{isActiveRoute regex='user_credit'}}" title='your credits')
+                // a.ui.button(href='/user/#{currentUser.username}/credit' class="{{isActiveRoute 'user_credit'}}" title='current wallet balance')
+                a.ui.button(href="/user/#{currentUser.username}/credit" class="{{isActiveRoute regex='user_credit'}}" title='your credits')
                     strong
                         |&nbsp;
                         |#{currentUser.points}p
-                a.item(href="/user/#{currentUser.username}" class=user_nav_button_class title=user_nav_button_title)
+                a.ui.button(href="/user/#{currentUser.username}" class=user_nav_button_class title=user_nav_button_title)
                     if currentUser.image_id
                         img.ui.avatar.image(src="{{c.url currentUser.image_id width=200 height=200 gravity='face' crop='fill'}}")
                     else
@@ -80,11 +80,13 @@ template(name='nav')
                 i.yin.yang.large.loading.icon
             unless currentUser
                 a.ui.button(href="/register" title='register')
-                    +i name='plus'
+                    // +i name='plus'
+                    i.user.add.icon
                     span.mobile.hidden register            
                 a.ui.button(href='/login' title='login') 
-                    // i.sign.in.large.icon
-                    +i name='internal'
+                    // i.user.add.icon
+                    i.sign.in.large.icon
+                    // +i name='internal'
                     span.mobile.hidden login
             // if session_is 'viewing_alerts'
             //     +topbar
@@ -92,7 +94,7 @@ template(name='nav')
     
 template(name='add_tab')
     // .ui.top.attached.tabular.menu  
-    a.center.item.toggle_addmode.zoomer(data-tab='add')
+    a.center.item.toggle_addmode.zoomer.pointer(data-tab='add')
         +i name='play-button-circled--v1' color='40C057'
     // .active.item(data-tab='viewing')
     //     |viewing
@@ -140,7 +142,7 @@ template(name='add_tab')
                 
 template(name='secnav')
     .ui.attached.small.borderless.inverted.menu.hscroll(class=invert_class)
-        a.item.zoomer(href="/resources" class="{{isActiveRoute 'resources'}}")
+        a.ui.button.zoomer(href="/resources" class="{{isActiveRoute 'resources'}}")
             // i.large.inbox.icon
             +i name='clock'
             span.mobile.hidden resources
