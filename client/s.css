@@ -2,7 +2,7 @@ body {
     /* font-family: 'Raleway', sans-serif !important; */
      /*font-family: 'Roboto', sans-serif !important; */
     /* font-family: 'Ubuntu+Mono', sans-serif !important; */
-    font-family: 'Ubuntu', sans-serif !important;
+    font-family: 'Bangers', sans-serif !important;
     /*font-family: 'Goudy Bookletter 1911', sans-serif !important;*/
     font-size: 110% !important; 
     /*line-height: 200% !important;*/
@@ -11,6 +11,11 @@ body {
     /* background: rgba(200, 200, 200, .2) !important */
     /* background: #0e0e44 !important; */
 }
+.ui.header, .button, input {
+      font-family: 'Bangers', sans-serif !important;
+      font-weight: 300 !important;
+}
+
 .no_show {
   display:hidden !important;
 }

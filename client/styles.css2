@@ -2,7 +2,8 @@ body {
     /* font-family: 'Raleway', sans-serif !important; */
      /*font-family: 'Roboto', sans-serif !important; */
     /* font-family: 'Ubuntu+Mono', sans-serif !important; */
-    font-family: 'Ubuntu', sans-serif !important;
+    /font-family: 'Ubuntu', sans-serif !important;
+    font-family: 'Bangers', sans-serif !important;
     /*font-family: 'Goudy Bookletter 1911', sans-serif !important;*/
     font-size: 110% !important; 
     /*line-height: 200% !important;*/
@@ -508,7 +509,7 @@ input.username_search{
     /* -webkit-border-radius: 5px !important; */
      -moz-border-radius: 5px !important; 
     opacity:.9 !important;
-    font-family: 'Ubuntu', sans-serif !important;
+    font-family: 'Bangers', sans-serif !important;
     /*filter: invert(.9) !important;*/
     border-radius: 10px !important; 
 }
@@ -687,7 +688,7 @@ input.username_search{
 }
 
 .ui.header{
-     font-family: 'Raleway', sans-serif !important; 
+     font-family: 'Bangers', sans-serif !important; 
      /*font-family: 'Ubuntu', sans-serif !important; */
      /*font-family: 'Varela Round' !important; */
     /*font-family: 'Goudy Bookletter 1911', sans-serif !important;*/
@@ -701,20 +702,20 @@ h1.ui.header{
     /* font-weight: lighter !important; */
 }
 .new_hc_session{
-    /* font-family: 'Ubuntu', sans-serif !important; */
+    /* font-family: 'Bangers', sans-serif !important; */
     /* font-family: 'Abril Fatface', serif !important; */
     font-size: 200% !important;
     /* color: #5a4400 !important; */
     /* font-weight: 200px !important; */
 }
 /* a { */
-  /* font-family: 'Ubuntu', sans-serif !important; */
+  /* font-family: 'Bangers', sans-serif !important; */
 /* } */
 /* .card a.header {
   color: #482d1b !important;
 } */
 /* .ui.button .ui.label {
-  font-family: 'Ubuntu', sans-serif !important;
+  font-family: 'Bangers', sans-serif !important;
 } */
 
 .label {
