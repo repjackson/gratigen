@@ -535,25 +535,28 @@ template(name='model_picker')
                     
 
 template(name='role_picker')
-    .ui.header 
-        +i name='shield'
-        | roles
-    // if is_admin
-    .ui.icon.large.input 
-        if role_search_value
-            i.large.red.remove.link.icon.zoomer.clear_search
-        else 
-            i.search.icon
-        input.role_search(type='text' placeholder='search' value=role_search_value)
-    if role_results
-        .ui.selection.link.animated.list
-            each role_results
-                .ui.item.pick_role.zoomer
-                    img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
-                    |#{title}
-    // else if role_search_value
-    .ui.button.create_role
-        |add #{role_search_value}
+    .ui.segment
+        .ui.header 
+            +i name='shield'
+            | roles
+        // if is_admin
+        .ui.icon.large.input 
+            if role_search_value
+                i.large.red.remove.link.icon.zoomer.clear_search
+            else 
+                i.search.icon
+            input.role_search(type='text' placeholder='search' value=role_search_value)
+        if role_results
+            .ui.selection.link.animated.list
+                each role_results
+                    .ui.item.pick_role.zoomer
+                        img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+                        |#{title}
+        // else if role_search_value
+        .ui.button.create_role
+            |add #{role_search_value}
+        .ui.segment
+            +small_card
     
     if product_roles
         .ui.header 
@@ -566,7 +569,85 @@ template(name='role_picker')
                     |#{title}
                     i.remove.link.icon.zoomer.remove_role
                     
-                    
+
+template(name='small_card')
+    // if _is 'model' 'role'
+    //     +role_card
+    // else if _is 'model' 'event'
+    //     +event_card
+    // else if _is 'model' 'recipe'
+    //     +recipe_card
+    // else 
+    a.ui.link.card.zoomer.show_modal
+        if youtube_id 
+            +youtube_view key='youtube_id' direct=true
+        .content 
+            a.inline.header
+                if _is 'model' 'org' 
+                    +i name='groups' color='83DFF4'
+                if _is 'model' 'project'
+                    +i name='project' color='7229AF'
+                if _is 'model' 'post'
+                    +i name='for-you' color='1255B8'
+                if _is 'model' 'event'
+                    +i name='calendar' color='FAB005'
+                if _is 'model' 'task'
+                    +i name='task' color='B785E1'
+                if _is 'model' 'offer'
+                    +i name='hand-holding-heart' color='FF73EA'
+                if _is 'model' 'request'
+                    +i name='commercial' color='40C057'
+                if _is 'model' 'role'
+                    +i name='what-i-do' color='42E8C4'  
+                if _is 'model' 'resource'
+                    +i name='field-and-tractor' color='42E8C4'      
+
+                // .ui.label #{model}
+                |#{title} #{body}
+            i.clock.icon
+            |#{when}
+        img.ui.fluid.image(src="{{c.url image_id width=400 height=400}}")
+        .content 
+            .description
+                // .ui.header lat: #{lat}
+                // .ui.header lng: #{lng}
+                //     // i.newspaper.large.icon
+                if location 
+                    .ui.label 
+                        i.marker.icon
+                        |#{location}
+                .ui.image.large.label 
+                    img.ui.image(src="{{c.url _author.image_id width=400 height=400}}")
+                    // i.user.icon
+                    |#{_author_username}
+                // if tags 
+                //     each seven_tags 
+                //         .ui.basic.label #{this}
+                +voting
+                +eft_view_item_small
+      
+            .content
+                .right.floated
+                    | #{views} views
+                // if _author_id
+                //     +author_info
+                +voting
+                    //- i.eye.icon
+                //     each viewer_usernames
+                //         .ui.small.inverted.label #{this}
+                // //- +comments
+                +eft_viewer
+                if currentUser.admin_mode
+                    +print_this
+                    +remove_button
+                each tags 
+                    .ui.small.label #{this}
+            if template_exists
+                +Template.dynamic template=model_template
+            .content
+                +comments
+
+      
 template(name='task_picker')
     .ui.header 
         +i name='tasks'
@@ -689,7 +770,47 @@ template(name='add_model_button')
             if label
                 |#{model}
 
-
+template(name='create_model_view')
+        // div
+        +thing_picker model='post' icon='for-you' color='1255B8'
+        .ui.popup.div create post
+        //blue
+        +thing_picker model='offer' icon='hand-holding-heart' color='FF73EA'
+        .ui.popup.div create offer
+        //pink
+        +thing_picker model='request' icon='commercial' color='40C057' 
+        .ui.popup.div create request
+        //green
+        div
+        +thing_picker model='org' icon='groups' color='83DFF4' 
+        .ui.popup.div create organization
+        //light blue
+        +thing_picker model='project' icon='project' color='7229AF' 
+        .ui.popup.div create project
+        //violet
+        +thing_picker model='event' icon='calendar' color='FAB005'
+        .ui.popup.div create event
+        //yellow
+        +thing_picker model='role' icon='what-i-do' color='42E8C4'
+        .ui.popup.div create role
+        //turquoise
+        +thing_picker model='tasks' icon='task' color='B785E1'
+        .ui.popup.div create task
+        //lavender
+        +thing_picker model='resource' icon='field-and-tractor' color='FD7E14'
+        .ui.popup.div create resource
+        +thing_picker model='skills' icon='wrench' color='ff0000'
+        .ui.popup.div create skill
+        //red
+        +thing_picker model='badges' icon='badge' color='1255B8'
+        .ui.popup.div create badge
+        //blue
+        div
+        +thing_picker model='datetime' icon='overtime--v1' color='FD7E14'
+        +thing_picker model='location' icon='worldwide-location' color='40C057'
+        +thing_picker model='accounts' icon='gold-bars' color='FAB005'
+            //people
+        .ui.divider
             
 template(name='email_validation_check')
     //- if email_verified

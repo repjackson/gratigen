@@ -8,7 +8,7 @@ if Meteor.isClient
         # @autorun => Meteor.subscribe 'my_cart_products'
     Template.add.onRendered ->
         Meteor.setTimeout ->
-            $('.popup').popup()
+            $('.button').popup()
         , 2000
 
     Template.nav.onRendered ->

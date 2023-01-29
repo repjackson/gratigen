@@ -79,16 +79,38 @@ if Meteor.isClient
                     'big'
                 else 
                     'basic'
+    Template.add.onCreated ->
+        @autorun => Meteor.subscribe 'user_current_doc', ->
+if Meteor.isServer 
+    Meteor.publish 'user_current_doc', ->
+        Docs.find 
+            _id: Meteor.user()._doc_id
+if Meteor.isClient
+    Template.add.helpers 
+        current_doc: ->
+            Docs.findOne Meteor.user()._doc_id, 
+                
+        
     Template.thing_picker.events
         'click .pick_thing':->
-            new_id = 
-                Docs.insert 
-                    model:@model 
+            if Meteor.user()._doc_id
+                edit_post = Docs.findOne Meteor.user()._doc_id
+                Docs.update edit_post._id, 
+                    $set:
+                        model:@model
+            else 
+                new_id = 
+                    Docs.insert 
+                        model:@model 
+                Meteor.users.update Meteor.userId(), 
+                    $set:
+                        _doc_id:new_id
+            
             Session.set('current_thing_id', new_id)      
             Session.set('editmode',true)
-            $('.ui.modal').modal({
-                inverted:true
-                }).modal('show')
+            # $('.ui.modal').modal({
+            #     inverted:true
+            #     }).modal('show')
 
             # Docs.update Template.parentData()._id,
             #     $set:
