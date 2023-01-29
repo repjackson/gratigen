@@ -5,7 +5,7 @@ template(name='home')
     // else 
     //     img.ui.fluid.image.bg_overlay(src="{{c.url 'nightbg' width=1000 crop='fit'}}")    
 
-    .ui.padded.divided.celled.grid
+    .ui.padded.divided.celled.stackable.grid
         .three.wide.scrolling.column
             // +session_toggle key='expand_leftbar' icon='horizontal-line'
             // +session_toggle key='add_mode' icon='plus'
@@ -57,13 +57,14 @@ template(name='home')
                 
             // .ui.button create request
             img.ui.image(src="/12_color_code.jpeg")
-        .eight.wide.scrolling.column
+        .eight.wide.scrollin.column
             .ui.one.column.grid 
-                .column.bordered
-                    // +add_tab
-                    .ui.fluid.input 
-                        textarea
-                    // div
+                .centered.column.bordered
+                
+                    
+                    // .ui.fluid.input 
+                    //     textarea
+                    // // div
                     +online_users
 
                 .centered

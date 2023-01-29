@@ -43,8 +43,13 @@ img, .button, .selector, .card, p, .header, .item, .image, .fade {
 }
 
 .maincontent {
-  padding-top:4em !important;
+  padding-top:6em !important;
   /*height:100% !important;*/
+}
+
+.sidebar {
+  padding-top:6em !important;
+  
 }
 #mapbox {
   height:400px !important;

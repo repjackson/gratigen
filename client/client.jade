@@ -73,15 +73,14 @@ head
     
 template(name='layout')
     img.ui.fluid.image.bg_overlay(src="{{c.url 'nightbg' width=1000 crop='fit'}}")    
-
     +nav
     // img.ui.fluid.image.home_banner(src="{{c.url 'frontrange'}}" class=darkmode_class)
-    // #main.ui.bottom.attached.pushable.segment
+    #main.ui.bottom.attached.pushable.segment.maincontent
+        +addbar
+        +yield
     //     // +topbar
     //     +leftbar
     //     +rightbar
-    .maincontent
-        +yield
     // +footer
 
 

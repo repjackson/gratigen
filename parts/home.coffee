@@ -18,8 +18,8 @@ if Meteor.isClient
         current_viewing_thing: ->
             Docs.findOne Session.get('current_thing_id')
     Template.add_tab.events 
-        'click .toggle_addmode': ->
-            Session.set('addmode', !Session.get('addmode'))
+        # 'click .toggle_addmode': ->
+        #     Session.set('addmode', !Session.get('addmode'))
     Template.home.events 
         'click .toggle_editmode':->
             Session.set('editmode', !Session.get('editmode'))

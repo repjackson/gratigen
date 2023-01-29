@@ -36,18 +36,19 @@ if Meteor.isClient
         #         })
         #         .sidebar('attach events', '.toggle_rightbar')
         # , 3000
-        # Meteor.setTimeout ->
-        #     $('.ui.topbar')
-        #         .sidebar({
-        #             context: $('.bottom.segment')
-        #             transition:'push'
-        #             mobileTransition:'push'
-        #             exclusive:true
-        #             duration:200
-        #             scrollLock:true
-        #         })
-        #         .sidebar('attach events', '.toggle_topbar')
-        # , 2000
+        Meteor.setTimeout ->
+            $('.ui.sidebar')
+                .sidebar({
+                    context: $('.bottom.segment')
+                    transition:'push'
+                    mobileTransition:'push'
+                    exclusive:true
+                    duration:100
+                    dimPage:false
+                    scrollLock:true
+                })
+                .sidebar('attach events', '.toggle_addmode')
+        , 2000
         
         
     Template.nav.events

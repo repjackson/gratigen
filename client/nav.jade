@@ -34,8 +34,13 @@ template(name='nav')
             a.icon.item.toggle_admin_mode(title='toggle admin mode')
                 i.large.shield.icon
         // .six.wide.center.aligned.column
-        // .item
-        //     +add_tab
+        .item
+            // +add_tab
+        a.center.toggle_addmode.item.zoomer.pointer(data-tab='add')
+            +i name='play-button-circled--v1' color='40C057'
+            // i.small.circular.play.green.icon.invert
+            .ui.popup Engage
+
         // a.icon.item.toggle_invert
         //     i.lightbulb.icon
         // .search.item.zoomer.mobile.hidden(title='search')
@@ -93,19 +98,11 @@ template(name='nav')
                     span.mobile.hidde login
             // if session_is 'viewing_alerts'
             //     +topbar
-                
-    
-template(name='add_tab')
-    // .ui.top.attached.tabular.menu  
-    a.center.item.toggle_addmode.zoomer.pointer(data-tab='add')
-        // +i name='play-button-circled--v1' color='40C057'
-        i.big.circular.play.green.icon.invert
-        .ui.popup Engage
-    // .active.item(data-tab='viewing')
-    //     |viewing
-    // .ui.bottom.attached.tab.segment.centered.ani(data-tab='add')
-    //select type of thing you're creating >> open thing type editor modal
-    if session_is 'addmode' true
+    // if session_is 'addmode' true
+
+
+template(name='addbar')
+    .ui.top.centered.sidebar
         +thing_picker model='post' icon='for-you' color='1255B8'
         //blue
         +thing_picker model='offer' icon='hand-holding-heart' color='FF73EA'
@@ -135,6 +132,51 @@ template(name='add_tab')
         +thing_picker model='accounts' icon='gold-bars' color='FAB005'
             //people
         .ui.divider
+
+    
+    
+template(name='add_tab')
+    // .ui.top.attached.tabular.menu  
+    a.center.toggle_addmode.zoomer.pointer(data-tab='add')
+        +i name='play-button-circled--v1' color='40C057'
+        // i.small.circular.play.green.icon.invert
+        .ui.popup Engage
+    // .active.item(data-tab='viewing')
+    //     |viewing
+    // .ui.bottom.attached.tab.segment.centered.ani(data-tab='add')
+    //select type of thing you're creating >> open thing type editor modal
+    // if session_is 'addmode' true
+    //     div
+    //     .ui.segment
+    //         +thing_picker model='post' icon='for-you' color='1255B8'
+    //         //blue
+    //         +thing_picker model='offer' icon='hand-holding-heart' color='FF73EA'
+    //         //pink
+    //         +thing_picker model='request' icon='commercial' color='40C057'     
+    //         //green
+            
+    //         div
+    //         +thing_picker model='org' icon='groups' color='83DFF4' 
+    //         //light blue
+    //         +thing_picker model='project' icon='project' color='7229AF' 
+    //         //violet
+    //         +thing_picker model='event' icon='calendar' color='FAB005'
+    //         //yellow
+    //         +thing_picker model='role' icon='what-i-do' color='42E8C4'
+    //         //turquoise
+    //         +thing_picker model='tasks' icon='task' color='B785E1'
+    //         //lavender
+    //         +thing_picker model='resource' icon='field-and-tractor' color='FD7E14'
+    //         +thing_picker model='skills' icon='wrench' color='ff0000'
+    //         //red
+    //         +thing_picker model='badges' icon='badge' color='1255B8'
+    //         //blue
+    //         div
+    //         +thing_picker model='datetime' icon='overtime--v1' color='FD7E14'
+    //         +thing_picker model='location' icon='worldwide-location' color='40C057'
+    //         +thing_picker model='accounts' icon='gold-bars' color='FAB005'
+    //             //people
+    //         .ui.divider
      //side scrolling users' avatars (pulls  up profile in modal) - new, nearby, recommended - 
         //.ui.fluid.big.menu.hscroll
         +
