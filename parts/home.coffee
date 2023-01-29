@@ -73,12 +73,15 @@ if Meteor.isClient
             Docs.findOne Session.get('current_thing_id')
     Template.thing_picker.helpers
         model_picker_class:->
-            parent = Template.parentData()
-            if parent and parent.model
-                if @model is Template.parentData().model
-                    'big'
-                else 
-                    'basic'
+            
+            current_doc = Docs.findOne Meteor.user()._doc_id
+            if current_doc and @model is current_doc.model
+                'big'
+            else 
+                'basic'
+            # if @model is Template.parentData().model
+            # parent = Template.parentData()
+            # if parent and parent.model
     Template.add.onCreated ->
         @autorun => Meteor.subscribe 'user_current_doc', ->
 if Meteor.isServer 

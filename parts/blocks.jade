@@ -601,10 +601,10 @@ template(name='small_card')
                     +i name='field-and-tractor' color='42E8C4'      
 
                 // .ui.label #{model}
-                |#{title} #{body}
-            i.clock.icon
+                |#{title} 
+                // #{body}
             |#{when}
-        img.ui.fluid.image(src="{{c.url image_id width=400 height=400}}")
+        img.ui.fluid.image(src="{{c.url image_id width=50 height=50}}")
         .content 
             .description
                 // .ui.header lat: #{lat}
@@ -612,10 +612,10 @@ template(name='small_card')
                 //     // i.newspaper.large.icon
                 if location 
                     .ui.label 
-                        i.marker.icon
+                        // i.marker.icon
                         |#{location}
                 .ui.image.large.label 
-                    img.ui.image(src="{{c.url _author.image_id width=400 height=400}}")
+                    img.ui.image(src="{{c.url _author.image_id width=50 height=50}}")
                     // i.user.icon
                     |#{_author_username}
                 // if tags 

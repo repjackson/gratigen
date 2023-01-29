@@ -10,7 +10,13 @@ if Meteor.isClient
         Meteor.setTimeout ->
             $('.button').popup()
         , 2000
-
+    Template.add.events 
+        'click .save_doc': ->
+            # current_doc = 
+            #     Docs.findOne Meteor.user()._doc_id
+            # if current_doc
+            Meteor.users.update Meteor.userId(), 
+                $set:_doc_id:null
     Template.nav.onRendered ->
         Session.setDefault('invert_mode', false)
     Template.nav.onRendered ->

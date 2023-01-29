@@ -150,12 +150,16 @@ template(name='add')
             +thing_picker model='location' icon='worldwide-location' color='40C057'
             +thing_picker model='accounts' icon='gold-bars' color='FAB005'
             //people
-
-    with current_doc 
-        // .ui.header #{model} #{_id}
-        +author_info
-        +creation_info
-        +Template.dynamic template=model_edit_template
+        with current_doc 
+            .four.wide.column
+                // .ui.header #{model} #{_id}
+                .ui.fluid.button.save_doc 
+                    i.big.save.icon
+                .ui.header user _doc_id: #{currentUser._doc_id}
+                +author_info
+                +creation_info
+            .twelve.wide.column
+                +Template.dynamic template=model_edit_template
     
     
 template(name='add_tab')
