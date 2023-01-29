@@ -152,7 +152,10 @@ template(name='add')
             //people
 
     with current_doc 
-        .ui.header #{model}
+        // .ui.header #{model} #{_id}
+        +author_info
+        +creation_info
+        +Template.dynamic template=model_edit_template
     
     
 template(name='add_tab')

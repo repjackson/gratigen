@@ -556,7 +556,7 @@ template(name='role_picker')
         .ui.button.create_role
             |add #{role_search_value}
         .ui.segment
-            +small_card
+            +role_card
     
     if product_roles
         .ui.header 
@@ -579,8 +579,6 @@ template(name='small_card')
     //     +recipe_card
     // else 
     a.ui.link.card.zoomer.show_modal
-        if youtube_id 
-            +youtube_view key='youtube_id' direct=true
         .content 
             a.inline.header
                 if _is 'model' 'org' 

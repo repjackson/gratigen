@@ -89,7 +89,8 @@ if Meteor.isClient
     Template.add.helpers 
         current_doc: ->
             Docs.findOne Meteor.user()._doc_id, 
-                
+        model_edit_template: ->
+            "#{@model}_edit"
         
     Template.thing_picker.events
         'click .pick_thing':->
