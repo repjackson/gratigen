@@ -109,10 +109,16 @@ template(name='org_view')
     .ui.stackable.padded.grid
         .row
             .six.wide.column
-                .ui.header 
-                    if icon
-                        +i name=icon
-                    |#{title}
+                .ui.inline.header
+                with leader
+                    +user_info
+                .ui.inline.header
+                    |support
+                    |safety
+                // .ui.header 
+                //     if icon
+                //         +i name=icon
+                //     |#{title}
                 a.ui.circular.basic.button(href="/orgs")
                     i.left.chevron.icon
                     +i name='campfire' cl='ui mini inline image'
@@ -182,9 +188,19 @@ template(name='org_view')
                 i.refresh.link.icon.refresh_org_stats
                 .ui.large.list
                     .item #{member_count} members
+                    .item roles
+                    .item resources
+                    .item groups
+                    .item projects
+                    .item tasks
+                    .item badges
+                    .item services
+                    .item products
+                    
                     .item #{meal_count} meals
                     .item #{dish_count} dishes
                     .item #{total_credit_exchanged} credits exchanged
+                    .item 
                 +comments
     
 template(name='user_orgs')

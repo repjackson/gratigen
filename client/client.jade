@@ -80,8 +80,8 @@ template(name='layout')
     //     // +topbar
     //     +leftbar
     //     +rightbar
-    //     .maincontent
-    +yield
+    .maincontent
+        +yield
     // +footer
 
 
@@ -111,7 +111,7 @@ template(name='not_found')
 
 
 template(name='shortcut_modal')
-    .ui.shortcut.modal
+    .ui.shortcut.fullscreen.modal
         .ui.header keyboard shortcuts
         .content
             .ui.large.list

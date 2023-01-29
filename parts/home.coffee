@@ -107,7 +107,7 @@ if Meteor.isClient
         is_toggled: ->
             @label in Meteor.user().active_side_menu_items
         side_item_class: ->
-            if @label in Meteor.user().active_side_menu_items
+            if Meteor.user().active_side_menu_items and @label in Meteor.user().active_side_menu_items
                 'inverted active zoomed'
             else 
                 'small'

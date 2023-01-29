@@ -6,7 +6,7 @@ template(name='home')
     //     img.ui.fluid.image.bg_overlay(src="{{c.url 'nightbg' width=1000 crop='fit'}}")    
 
     .ui.padded.divided.celled.grid
-        .three.wide.column
+        .three.wide.scrolling.column
             // +session_toggle key='expand_leftbar' icon='horizontal-line'
             // +session_toggle key='add_mode' icon='plus'
             //.ui.icon.button.show_model
@@ -57,7 +57,7 @@ template(name='home')
                 
             // .ui.button create request
             img.ui.image(src="/12_color_code.jpeg")
-        .eight.wide.column
+        .eight.wide.scrolling.column
             .ui.one.column.grid 
                 .column.bordered
                     // +add_tab
@@ -119,7 +119,7 @@ template(name='home')
                         each doc_results
                             +home_card
         // .eight.wide.column.bordered
-        .five.wide.column
+        .five.wide.scrolling.column
             +my_things
             if session_is 'show_map' true
                 +mapbox
@@ -134,18 +134,25 @@ template(name='home')
         // [current_thing_type]_edit
         //     +thing_picker
         //      +eft_picker
-    .ui.modal 
+    .ui.fullscreen.modal
         with current_viewing_thing
-            .header #{title}
-                .ui.button.toggle_editmode
-                    i.large.pencil.icon
-            i.close.large.icon
+            .ui.grid
+                .sixteen.wide.column
+                    if _is 'model' 'org'
+                        .ui.big.image
+                            +i name='groups' color='83DFF4'
+                        .ui.icon.right.floated.button.toggle_editmode
+                            i.small.pencil.icon        
+                .thirteen.wide.centered.column
+                            //on click go to full page
+                    .ui.inline.centered.header.huge #{title}
+                    
             .scrolling.content
                 if session_is 'editmode' true
                     +Template.dynamic template=edit_template
                 else 
                     +Template.dynamic template=view_template
-    +view_chats
+    // +view_chats
 
 
 template(name='charts')
