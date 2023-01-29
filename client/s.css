@@ -13,7 +13,7 @@ body {
     animation: .25s ease-out 0s 1 fadein;
   
 }
-.ui.header, .button, input {
+.ui.header, .buttn, input {
       font-family: 'Bangers', sans-serif !important;
       font-weight: 300 !important;
 }
@@ -102,11 +102,9 @@ img, .button, .selector, .card, p, .header, .item, .image, .fade {
 
 .bg_overlay {
     background-attachment: fixed !important;
-    /*position: absolute !important;*/
     position: absolute !important;
     max-height: 100% !important;
     width: 100% !important;
-
     /* max-height: 1000px !important; */
     /* top:0px; */
     /*filter: invert(1);*/

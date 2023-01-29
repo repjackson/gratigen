@@ -25,8 +25,8 @@ template(name='view_chats')
             .twelve.wide.column
                 with selected_chat
                     +view_chat
-                .ui.cards
-                    +view_chat
+                // .ui.cards
+                //     +view_chat
 
 
 
@@ -193,11 +193,10 @@ template(name='view_chat')
                                 .description
                                     // | @#{username}
                                     +user_status
-                if can_edit
+                if is_editing
                     .ui.icon.basic.button.close_chat(title='close chat')
                         i.ban.icon
                         |close chat
-                if can_edit
                     +image_edit key='image_id' 
                     +array_edit key='tags' label='tags'
                 else     

@@ -5,7 +5,7 @@ template(name='home')
     // else 
     //     img.ui.fluid.image.bg_overlay(src="{{c.url 'nightbg' width=1000 crop='fit'}}")    
 
-    .ui.stackable.padded.divided.celled.grid
+    .ui.padded.divided.celled.grid
         .three.wide.column
             // +session_toggle key='expand_leftbar' icon='horizontal-line'
             // +session_toggle key='add_mode' icon='plus'
@@ -14,7 +14,7 @@ template(name='home')
             // .ui.fluid.small.button.toggle_leftbar
             //     i.chevron.left.icon
             // .ui.hidden.divider
-            +charts
+            
             +dash_user_info
             +user_impact_graph
            
@@ -61,7 +61,9 @@ template(name='home')
             .ui.one.column.grid 
                 .column.bordered
                     // +add_tab
-                    div
+                    .ui.fluid.input 
+                        textarea
+                    // div
                     +online_users
 
                 .centered
@@ -123,6 +125,7 @@ template(name='home')
                 +mapbox
             if session_is 'show_calendar' true 
                 +calendar_view
+            +charts
             +user_connection_graph
             +online_allies
         // +thing_maker
@@ -146,28 +149,28 @@ template(name='home')
 
 
 template(name='charts')
-    +i name='sad'
-    .ui.blue.small.progress(data-percent='65' title="{{to_percent sadness}}% sadness")
+    // +i name='sad'
+    .ui.blue.small.progress.invert(data-percent='65' title="{{to_percent sadness}}% sadness")
         .bar
-        .progress
+        .progress.invert
             .label {{to_percent sadness}}% sadness 
-    +i name='happy'
-    .ui.green.small.progress(data-percent='54' title="{{to_percent joy}}% joy")
+    // +i name='happy'
+    .ui.green.small.progress.invert(data-percent='54' title="{{to_percent joy}}% joy")
         .bar
-        .progress
+        .progress.invert
             .label {{to_percent joy}}% joy 
-    +i name='fear'
-    .ui.small.progress(data-percent='78' title="{{to_percent fear}}% fear")
+    // +i name='fear'
+    .ui.small.progress.invert(data-percent='78' title="{{to_percent fear}}% fear")
         .bar
-        .progress
+        .progress.invert
             .label {{to_percent fear}}% fear 
-    +i name='disgust'
-    .ui.yellow.small.progress(data-percent='34' title="{{to_percent disgust}}% disgust")
-        .bar
-        .progress
-            .label {{to_percent disgust}}% disgust 
-    +i name='angry'
-    .ui.orange.small.progress(data-percent='23' title="{{to_percent anger}}% anger")
+    // +i name='disgust'
+    // .ui.yellow.small.progress.invert(data-percent='34' title="{{to_percent disgust}}% disgust")
+    //     .bar
+    //     .progress.invert
+    //         .label {{to_percent disgust}}% disgust 
+    // +i name='angry'
+    .ui.orange.small.progress.invert(data-percent='23' title="{{to_percent anger}}% anger")
         .bar
         .progress
             .label {{to_percent anger}}% anger 
