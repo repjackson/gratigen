@@ -14,7 +14,9 @@ template(name='home')
             // .ui.fluid.small.button.toggle_leftbar
             //     i.chevron.left.icon
             // .ui.hidden.divider
-            
+            .ui.segment
+                
+                img.ui.image(src="/batflash.png")
             +dash_user_info
             +user_impact_graph
            
@@ -57,7 +59,7 @@ template(name='home')
                 
             // .ui.button create request
             img.ui.image(src="/12_color_code.jpeg")
-        .eight.wide.scrollin.column
+        .eight.wide.scrolling.column
             .ui.one.column.grid 
                 .centered.column.bordered
                 
@@ -112,11 +114,11 @@ template(name='home')
                                     .header #{title}
                 if session_is 'view_mode' 'feed'
                     .ui.eight.wide.column.centered
-                        .ui.centered.one.stackable.cards.scrolling.centered
+                        .ui.centered.one.stackable.cards.scrollin.centered
                             each doc_results
                                 +home_card
                 else
-                    .ui.two.stackable.cards.scrolling
+                    .ui.two.stackable.cards.scrollin
                         each doc_results
                             +home_card
         // .eight.wide.column.bordered
@@ -140,15 +142,16 @@ template(name='home')
             .ui.grid
                 .sixteen.wide.column
                     if _is 'model' 'org'
-                        .ui.big.image
+                        .ui.circular.basic.button(href="/orgs")
                             +i name='groups' color='83DFF4'
+                            
                         .ui.icon.right.floated.button.toggle_editmode
-                            i.small.pencil.icon        
+                            i.small.pencil.icon
                 .thirteen.wide.centered.column
                             //on click go to full page
                     .ui.inline.centered.header.huge #{title}
-                    
-            .scrolling.content
+
+            .scrollin.content
                 if session_is 'editmode' true
                     +Template.dynamic template=edit_template
                 else 

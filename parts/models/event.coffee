@@ -242,8 +242,9 @@ if Meteor.isClient
 
     Template.eft_view_item.helpers 
         in_list: ()->
-            # cd = Docs.findOne Router.current().params.doc_id 
-            @label in Template.parentData().efts
+            if Template.parentData() and Template.parentData().efts
+                # cd = Docs.findOne Router.current().params.doc_id 
+                @label in Template.parentData().efts
             # @label in cd.efts
     Template.eft_view_item_small.onRendered ->
         Meteor.setTimeout ->

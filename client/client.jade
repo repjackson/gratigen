@@ -74,10 +74,17 @@ head
 template(name='layout')
     img.ui.fluid.image.bg_overlay(src="{{c.url 'nightbg' width=1000 crop='fit'}}")    
     +nav
+    .ui.hidden.divider
+    .ui.hidden.divider
+    .ui.hidden.divider
+    .ui.hidden.divider
+    .ui.hidden.divider
+    .ui.hidden.divider
     // img.ui.fluid.image.home_banner(src="{{c.url 'frontrange'}}" class=darkmode_class)
-    #main.ui.bottom.attached.pushable.segment.maincontent
-        +addbar
-        +yield
+    // #main.ui.bottom.attached.pushable.segment.maincontent
+    // +addbar
+    // .pushable.maincontent.scrollin
+    +yield
     //     // +topbar
     //     +leftbar
     //     +rightbar

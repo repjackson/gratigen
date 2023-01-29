@@ -3,6 +3,11 @@ if Meteor.isClient
         @layout 'layout'
         @render 'home'
         ), name:'home'
+    Router.route '/add', (->
+        @layout 'layout'
+        @render 'add'
+        ), name:'add'
+    
     
     Template.home.onCreated ->
         # @autorun => @subscribe 'my_current_thing', ->

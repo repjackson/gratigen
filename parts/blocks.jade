@@ -735,15 +735,15 @@ template(name='online_users')
     .ui.fluid.menu.hscroll.secondary
         each online_user_docs 
             a.item.fly_right(href="/user/#{username}")
-                img.ui.circular.mini.image(src="{{c.url image_id width=400 height=400 gravity='face' crop='fill'}}")
+                img.ui.circular.tiny.image(src="{{c.url image_id width=400 height=400 gravity='face' crop='fill'}}")
+                
                 //click needs to pop up modal of user page
                 
                 // make sure comments aren't indented under code, it'll break
-                div
-                |#{username}
-                if tags 
-                    each tags 
-                        .ui.basic.label #{this}
+                ui.popup.div #{username}
+                // if tags 
+                //     each tags 
+                //         .ui.basic.label #{this}
 
 template(name='open_requests')
     .ui.header open requests

@@ -43,13 +43,20 @@ img, .button, .selector, .card, p, .header, .item, .image, .fade {
 }
 
 .maincontent {
-  padding-top:6em !important;
+  /*margin-top:10em !important;*/
+  padding-top:0em !important;
   /*height:100% !important;*/
 }
 
+.topnav {
+  margin-bottom:10em !important;
+  /*s-bottom:10em !important;*/
+}
 .sidebar {
-  padding-top:6em !important;
-  
+  top: 10em !important;
+  margin-top:20em !important;
+  padding-top:10em !important;
+  display: block !important;
 }
 #mapbox {
   height:400px !important;
@@ -278,7 +285,7 @@ input {
 	max-height:90vh;
 	/*max-height:85vh;*/
 	/* padding-top: 1em; */
-	padding: 1em;
+	/*padding: 1em;*/
 }
 .smallscroll{
 	overflow-y:scroll;

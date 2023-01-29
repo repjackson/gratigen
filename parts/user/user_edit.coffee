@@ -10,6 +10,7 @@ if Meteor.isClient
         , 2000
 
 
+
     Template.user_single_doc_ref_editor.onCreated ->
         @autorun => Meteor.subscribe 'type', @data.model
 

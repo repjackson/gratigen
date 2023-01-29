@@ -2,7 +2,7 @@ template(name='nav')
     // https://fomantic-ui.com/elements/icon.html#/icon
     // #topnav.topnav.ui.fluid.padded.divided.centered.middle.aligned.grid 
     // #topnav.topnav.ui.attached.borderless.fixed.menu.hscroll(class=invert_class)
-    #topnav.topnav.ui.borderless.fixed.menu(class=invert_class)
+    .topnav.ui.borderless.attache.fixed.sticky.menu.hscroll(class=invert_class)
         // .four.wide.column
         // .item
             // if is_loading
@@ -34,12 +34,16 @@ template(name='nav')
             a.icon.item.toggle_admin_mode(title='toggle admin mode')
                 i.large.shield.icon
         // .six.wide.center.aligned.column
-        .item
+        a.item(href="/add" title='Engage')
+            // i.large.play.icon
             // +add_tab
-        a.center.toggle_addmode.item.zoomer.pointer(data-tab='add')
             +i name='play-button-circled--v1' color='40C057'
-            // i.small.circular.play.green.icon.invert
-            .ui.popup Engage
+            
+            
+        // a.center.toggle_addmode.item.zoomer.pointer(title='Engage')
+        //     +i name='play-button-circled--v1' color='40C057'
+        //     // i.small.circular.play.green.icon.invert
+        //     .ui.popup Engage
 
         // a.icon.item.toggle_invert
         //     i.lightbulb.icon
@@ -101,37 +105,58 @@ template(name='nav')
     // if session_is 'addmode' true
 
 
-template(name='addbar')
-    .ui.top.centered.sidebar
-        +thing_picker model='post' icon='for-you' color='1255B8'
-        //blue
-        +thing_picker model='offer' icon='hand-holding-heart' color='FF73EA'
-        //pink
-        +thing_picker model='request' icon='commercial' color='40C057'     
-        //green
-        
-        div
-        +thing_picker model='org' icon='groups' color='83DFF4' 
-        //light blue
-        +thing_picker model='project' icon='project' color='7229AF' 
-        //violet
-        +thing_picker model='event' icon='calendar' color='FAB005'
-        //yellow
-        +thing_picker model='role' icon='what-i-do' color='42E8C4'
-        //turquoise
-        +thing_picker model='tasks' icon='task' color='B785E1'
-        //lavender
-        +thing_picker model='resource' icon='field-and-tractor' color='FD7E14'
-        +thing_picker model='skills' icon='wrench' color='ff0000'
-        //red
-        +thing_picker model='badges' icon='badge' color='1255B8'
-        //blue
-        div
-        +thing_picker model='datetime' icon='overtime--v1' color='FD7E14'
-        +thing_picker model='location' icon='worldwide-location' color='40C057'
-        +thing_picker model='accounts' icon='gold-bars' color='FAB005'
-            //people
-        .ui.divider
+template(name='add')
+    // .ui.divider
+    // .ui.divider
+    // .ui.divider
+    // .ui.divider
+    // .ui.divider
+    // .ui.divider
+    // .ui.divider
+    // .ui.header.huge div
+    // .ui.header.huge 
+    
+    // div
+    +thing_picker model='post' icon='for-you' color='1255B8'
+    .ui.popup.div create post
+    //blue
+    +thing_picker model='offer' icon='hand-holding-heart' color='FF73EA'
+    .ui.popup.div create offer
+    //pink
+    +thing_picker model='request' icon='commercial' color='40C057' 
+    .ui.popup.div create request
+    //green
+    div
+    
+    +thing_picker model='org' icon='groups' color='83DFF4' 
+    .ui.popup.div create organization
+    //light blue
+    +thing_picker model='project' icon='project' color='7229AF' 
+    .ui.popup.div create project
+    //violet
+    +thing_picker model='event' icon='calendar' color='FAB005'
+    .ui.popup.div create event
+    //yellow
+    +thing_picker model='role' icon='what-i-do' color='42E8C4'
+    .ui.popup.div create role
+    //turquoise
+    +thing_picker model='tasks' icon='task' color='B785E1'
+    .ui.popup.div create task
+    //lavender
+    +thing_picker model='resource' icon='field-and-tractor' color='FD7E14'
+    .ui.popup.div create resource
+    +thing_picker model='skills' icon='wrench' color='ff0000'
+    .ui.popup.div create skill
+    //red
+    +thing_picker model='badges' icon='badge' color='1255B8'
+    .ui.popup.div create badge
+    //blue
+    div
+    +thing_picker model='datetime' icon='overtime--v1' color='FD7E14'
+    +thing_picker model='location' icon='worldwide-location' color='40C057'
+    +thing_picker model='accounts' icon='gold-bars' color='FAB005'
+        //people
+    .ui.divider
 
     
     

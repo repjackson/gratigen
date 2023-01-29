@@ -1,11 +1,15 @@
 if Meteor.isClient
     Template.nav.onCreated ->
-        @autorun => Meteor.subscribe 'me'
-        @autorun => Meteor.subscribe 'all_users'
+        @autorun => Meteor.subscribe 'me', ->
+        # @autorun => Meteor.subscribe 'all_users', ->
         
         # @autorun => Meteor.subscribe 'my_cart'
         # @autorun => Meteor.subscribe 'my_cart_order'
         # @autorun => Meteor.subscribe 'my_cart_products'
+    Template.add.onRendered ->
+        Meteor.setTimeout ->
+            $('.popup').popup()
+        , 2000
 
     Template.nav.onRendered ->
         Session.setDefault('invert_mode', false)
@@ -36,19 +40,19 @@ if Meteor.isClient
         #         })
         #         .sidebar('attach events', '.toggle_rightbar')
         # , 3000
-        Meteor.setTimeout ->
-            $('.ui.sidebar')
-                .sidebar({
-                    context: $('.bottom.segment')
-                    transition:'push'
-                    mobileTransition:'push'
-                    exclusive:true
-                    duration:100
-                    dimPage:false
-                    scrollLock:true
-                })
-                .sidebar('attach events', '.toggle_addmode')
-        , 2000
+        # Meteor.setTimeout ->
+        #     $('.ui.sidebar')
+        #         .sidebar({
+        #             context: $('.maincontent')
+        #             transition:'push'
+        #             mobileTransition:'push'
+        #             exclusive:true
+        #             duration:100
+        #             dimPage:false
+        #             scrollLock:true
+        #         })
+        #         .sidebar('attach events', '.toggle_addmode')
+        # , 2000
         
         
     Template.nav.events
