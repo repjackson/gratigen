@@ -107,7 +107,7 @@ template(name='session_toggle')
         
 template(name='bookmark_button')
     if currentUser
-        .ui.icon.compact.button.toggle_bookmark(class=bookmark_button_class title=label)
+        .ui.icon.compact.tertiary.button.toggle_bookmark(class=bookmark_button_class title=label)
             if is_bookmarked
                 // |bookmarked
                 i.red.bookmark.large.icon
@@ -558,11 +558,11 @@ template(name='role_crud')
         // else if role_search_value
         .ui.button.create_role
             |add #{role_search_value}
-        if picked_roles
-            .ui.header 
-                |#{picked_roles.count}
-                |picked roles
-            
+        // if picked_roles
+        .ui.header 
+            |#{picked_roles.count}
+            |picked roles
+        .smallscroll
             each picked_roles
                  .ui.horizontal.card.zoomer.show_modal
                     .content
@@ -823,7 +823,7 @@ template(name='email_validation_check')
         
 
 template(name='print_this')
-    .ui.icon.basic.button.print
+    .ui.icon.tertiary.button.print
         i.orange.code.icon
 
 template(name='online_allies')

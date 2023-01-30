@@ -31,7 +31,7 @@ template(name='org_card')
                 |#{title}
             |#{member_ids.length} members
             .smallscroll
-                |!{description}
+                |!{body}
             //+ismall name='tags' cl='ui inline image'
             each ten_tags
                 .ui.basic.label #{this}
@@ -85,14 +85,15 @@ template(name='org_edit')
                 .ui.stackable.padded.grid
                     .two.column.row 
                         .column
+                            .ui.header editing #{title} org
                             .ui.inline.header 
                                 +icolor name='group' cl='ui image inline pointer'
                                 
-                            a.ui.icon.green.big.button(href="/role/#{_id}" title='save')
+                            a.ui.icon.green.big.button(href="/org/#{_id}" title='save')
                                 i.checkmark.big.icon
                             +text_edit key='title' label='title' direct=true
                             
-                            +html_edit key='content' label='content' direct=true
+                            +html_edit key='body' label='body' direct=true
                             +youtube_edit key='youtube_id' label='youtube id' direct=true
                         .column
                             .ui.header required badges
@@ -169,11 +170,11 @@ template(name='org_view')
                             |orgs
                     .right_floated
                         if can_edit
-                            a.ui.circular.basic.icon.button.floated.right.fly_down(href="/org/#{_id}/edit" title="edit #{title}")
+                            a.ui.circular.tertiary.icon.button.floated.right.fly_down(href="/org/#{_id}/edit" title="edit #{title}")
                                 i.setting.large.icon
 
                 .ui.centered.huge.header
-                        |#{title}
+                    |#{title}
                 .six.wide.column
                     +image_view key='image_id' icon='image' label='image'
                     +array_view key='tags' icon='tags'
@@ -198,18 +199,18 @@ template(name='org_view')
                     +org_subscription
     
                 .five.wide.column
+                    .ui.header leaders
                     a.ui.basic.button(href="/user/#{lead}") lead
                         with lead
                             +user_info
                     .ui.basic.button support
                     .ui.basic.button safety
-                    .ui.basic.button creator                    
-                    +html_view key='description' icon='content' label='description'
+                    .ui.basic.button creator  
                     .ui.header 
                         |#{member_ids.count} members
-                    .ui.large.selection.animated.list
-                        each member_ids
-                            +user_info
+                    each member_ids
+                        +user_info
+                    |!{body}
                     +role_crud
                     +eft_viewer
                             // a.item(href="/org/#{_id}/#{username}")
@@ -219,11 +220,11 @@ template(name='org_view')
                             //             |#{username}
                 .five.wide.column
                     if is_member
-                        .ui.button.leave(title='click to leave')
+                        .ui.big.button.leave(title='click to leave')
                             i.checkmark.icon
                             |member
                     else 
-                        .ui.button.join(title='')
+                        .ui.big.button.join(title='')
                             i.user.plus.icon
                             |join
                     // +doc_array_togggle key='member_ids' value=currentUser._id add_label='join' remove_label='joined'
