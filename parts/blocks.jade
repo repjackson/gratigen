@@ -556,7 +556,7 @@ template(name='role_picker')
         .ui.button.create_role
             |add #{role_search_value}
         .ui.segment
-            +role_card
+            +small_card
     
     if product_roles
         .ui.header 
@@ -578,7 +578,7 @@ template(name='small_card')
     // else if _is 'model' 'recipe'
     //     +recipe_card
     // else 
-    a.ui.link.card.zoomer.show_modal
+    a.ui.link.horizontal.card.zoomer.show_modal
         .content 
             a.inline.header
                 if _is 'model' 'org' 
@@ -611,10 +611,10 @@ template(name='small_card')
                 // .ui.header lng: #{lng}
                 //     // i.newspaper.large.icon
                 if location 
-                    .ui.label 
+                    // .ui.label 
                         // i.marker.icon
-                        |#{location}
-                .ui.image.large.label 
+                    |#{location}
+                .ui.image 
                     img.ui.image(src="{{c.url _author.image_id width=50 height=50}}")
                     // i.user.icon
                     |#{_author_username}
@@ -623,6 +623,7 @@ template(name='small_card')
                 //         .ui.basic.label #{this}
                 +voting
                 +eft_view_item_small
+                |remove | assign
       
             .content
                 .right.floated

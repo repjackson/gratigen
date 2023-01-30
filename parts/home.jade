@@ -15,7 +15,6 @@ template(name='home')
             //     i.chevron.left.icon
             // .ui.hidden.divider
             .ui.segment
-                
                 img.ui.image(src="/batflash.png")
             +dash_user_info
             +user_impact_graph
@@ -137,6 +136,8 @@ template(name='home')
         // [current_thing_type]_edit
         //     +thing_picker
         //      +eft_picker
+    .ui.add.modal    
+        +add
     .ui.fullscreen.modal
         with current_viewing_thing
             .ui.grid
@@ -144,6 +145,30 @@ template(name='home')
                     if _is 'model' 'org'
                         .ui.circular.basic.button(href="/orgs")
                             +i name='groups' color='83DFF4'
+                    if _is 'model' 'project'
+                        .ui.circular.basic.button(href="/projects")
+                            +i name='project' color='7229AF'
+                    if _is 'model' 'post'
+                        .ui.circular.basic.button(href="/posts")
+                            +i name='for-you' color='1255B8'
+                    if _is 'model' 'event'
+                        .ui.circular.basic.button(href="/events")
+                            +i name='calendar' color='FAB005'
+                    if _is 'model' 'task'
+                        .ui.circular.basic.button(href="/tasks")
+                            +i name='task' color='B785E1'
+                    if _is 'model' 'offer'
+                        .ui.circular.basic.button(href="/offers")
+                            +i name='hand-holding-heart' color='FF73EA'
+                    if _is 'model' 'request'
+                        .ui.circular.basic.button(href="/requests")
+                            +i name='commercial' color='40C057'
+                    if _is 'model' 'role'
+                        .ui.circular.basic.button(href="/roles")
+                            +i name='what-i-do' color='42E8C4'  
+                    if _is 'model' 'resource'
+                        .ui.circular.basic.button(href="/resources")
+                            +i name='field-and-tractor' color='42E8C4'        
                             
                         .ui.icon.right.floated.button.toggle_editmode
                             i.small.pencil.icon
@@ -180,7 +205,7 @@ template(name='charts')
     //     .bar
     //     .progress.invert
     //         .label {{to_percent disgust}}% disgust 
-    // +i name='angry'
+    +i name='angry'
     .ui.orange.small.progress.invert(data-percent='23' title="{{to_percent anger}}% anger")
         .bar
         .progress
