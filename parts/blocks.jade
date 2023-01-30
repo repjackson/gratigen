@@ -567,12 +567,14 @@ template(name='role_crud')
                      a.ui.link.horizontal.card.zoomer.show_modal
                         .content 
                             a.inline.header
-                                if _is 'model' 'role'
-                                    +i name='what-i-do' color='42E8C4' cl='ui inline mini image'
+                                
                             |#{title} 
                             img.ui.fluid.image(src="{{c.url image_id width=50 height=50}}")
                         .content
                             .right.floated
+                                if _is 'model' 'role'
+                                    +i name='what-i-do' color='42E8C4' cl='ui inline mini image'
+                                div
                                 |#{when}
                                 div
                                 if can_edit
@@ -583,11 +585,14 @@ template(name='role_crud')
                                     if is_assigning 
                                         each role_holders 
                                             .ui.label #{username}
+                                    else 
+                                        with assigned_users
+                                            .ui.green.label #{username}
                                     a.ui.tertiary.button.fly_right(href="/role/#{_id}/edit")
-                                        |view
+                                        |edit
                                 else
                                     // else if can_take
-                                    .ui.tertiary.button.remove_role 
+                                    .ui.tertiary.button.take_role 
                                         | take
                                 a.ui.tertiary.button(href="/role/#{_id}")
                                     |view

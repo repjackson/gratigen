@@ -33,7 +33,7 @@ if Meteor.isClient
         @autorun -> Meteor.subscribe 'user_from_username', Router.current().params.username, ->
         # @autorun -> Meteor.subscribe 'user_referenced_docs', Router.current().params.username, ->
 if Meteor.isServer 
-    Meteor.publish 'user_bookmark_docs', ->
+    Meteor.publish 'bookmarked_docs', ->
         Docs.find 
             _id:$in:Meteor.user().bookmark_ids
     Meteor.publish 'user_read_docs', (username)->

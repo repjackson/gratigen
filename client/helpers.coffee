@@ -14,9 +14,12 @@ Template.registerHelper 'can_take', () ->
     console.log @, 'role'
     Meteor.user() and Meteor.userId() in @permissioned_user_ids
     
+    
+    
+    
 Template.registerHelper 'is_admin', (model) ->
     Meteor.user() and Meteor.user().admin
-Template.registerHelper 'user_bookmark_docs', (model) ->
+Template.registerHelper 'bookmarked_docs', (model) ->
     Docs.find 
         _id:$in:Meteor.user().bookmark_ids
 

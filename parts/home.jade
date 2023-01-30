@@ -123,10 +123,11 @@ template(name='home')
                             +home_card
         // .eight.wide.column.bordered
         .five.wide.scrolling.column
-            // +model_block model='post' icon='blog' color='42E8C4' title='latest posts'
-            // +model_block model='role' icon='shield' color='42E8C4' title='latest roles'
-            // +model_block model='resource' icon='car' color='42E8C4' title='nearest resources'
-            // +model_block model='org' icon='groups' color='42E8C4' title='groups'
+            +bookmark_block
+            +model_block model='post' icon='blog' color='42E8C4' title='latest posts'
+            +model_block model='role' icon='shield' color='42E8C4' title='latest roles'
+            +model_block model='resource' icon='car' color='42E8C4' title='nearest resources'
+            +model_block model='org' icon='groups' color='42E8C4' title='groups'
             +my_things
             if session_is 'show_map' true
                 +mapbox
@@ -187,6 +188,14 @@ template(name='home')
                 else 
                     +Template.dynamic template=view_template
     // +view_chats
+
+template(name='bookmark_block')
+    .ui.header 
+        i.bookmark.icon
+        |bookmarks
+    each bookmarked_docs 
+        .ui.label #{title}
+
 
 template(name='quickchat')
     .ui.inline.header 

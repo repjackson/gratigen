@@ -10,11 +10,12 @@ if Meteor.isClient
     
     
     Template.model_block.onCreated ->
-        @autorun => @subscribe 'model_docs', @data.model, 10,->
+        @autorun => @subscribe 'model_docs', @data.model, 5,->
     Template.model_block.helpers
         model_block_docs: ->
-            Docs.find
+            Docs.find {
                 model:@model
+            }, limit:5
     Template.home.onCreated ->
         # @autorun => @subscribe 'my_current_thing', ->
         @autorun => @subscribe 'my_current_thing', Session.get('current_thing_id'),->

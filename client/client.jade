@@ -92,7 +92,7 @@ template(name='layout')
     //     // +topbar
     //     +leftbar
     //     +rightbar
-    if currentUser
+    if currentUser.admin_mode
         +footer
 
 
@@ -145,4 +145,7 @@ template(name='footer')
         .ui.header 
             |#{doc_docs.count} docs 
         each doc_docs
-            .ui.big.label #{title} #{model}
+            .ui.big.label 
+                |#{title}
+                i.database.icon
+                |#{model}
