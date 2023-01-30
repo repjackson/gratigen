@@ -56,6 +56,9 @@ template(name='nav')
                 .ui.label 
                     i.remove.icon
                     |#{this}
+            each search_results 
+                .ui.button(href="/#{model}/#{_id}")
+                    |#{title}
         // .six.wide.column
         .right.menu
             // if unread_count
@@ -107,6 +110,13 @@ template(name='nav')
             // if session_is 'viewing_alerts'
             //     +topbar
     // if session_is 'addmode' true
+
+
+template(name='search')
+    with search_results 
+        .ui.label
+            i.remove.icon
+            |#{title}
 
 
 template(name='add')

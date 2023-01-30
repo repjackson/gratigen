@@ -4,8 +4,16 @@ if Meteor.isClient
         # @autorun => Meteor.subscribe 'all_users', ->
         
         @autorun => Meteor.subscribe 'model_docs', 'model', ->
-        # @autorun => Meteor.subscribe 'my_cart_order'
+        @autorun => Meteor.subscribe 'search_results', Session.get('current_query'), ->
         # @autorun => Meteor.subscribe 'my_cart_products'
+    
+if Meteor.isServer
+    Meteor.publish 'search_results', (query)->
+        match = {}
+        match.title =  {$regex:"#{query}", $options: 'i'}
+        Docs.find match, 
+            limit:10
+if Meteor.isClient
     Template.add.onRendered ->
         Meteor.setTimeout ->
             $('.button').popup()
@@ -88,6 +96,7 @@ if Meteor.isClient
                 if search.length > 0
                     picked_tags.push search
                     console.log 'search', search
+                    
                     # Meteor.call 'log_term', search, ->
                     $('.search_site').val('')
                     Session.set('current_query', null)
@@ -134,6 +143,13 @@ if Meteor.isClient
             console.log Session.get('invert_mode')
         
     Template.nav.helpers
+        search_results: ->
+            if Session.get('current_query').length > 1
+                match = {}
+                match.title =  {$regex:"#{Session.get('current_query')}", $options: 'i'}
+                Docs.find match, 
+                    limit:5
+
         picked_tags:-> picked_tags.array()
         model_docs: ->
             Docs.find 
