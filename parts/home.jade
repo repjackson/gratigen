@@ -57,6 +57,7 @@ template(name='home')
             // .ui.button create request
             img.ui.image(src="/12_color_code.jpeg")
         .eight.wide.scrolling.column
+            #cometchat
             .ui.one.column.grid 
                 .centered.column.bordered
                 
@@ -121,10 +122,10 @@ template(name='home')
         .five.wide.scrolling.column
             +quickchat
             +comet_chat_block
-            +model_block model='post' icon='blog' color='42E8C4' title='latest posts'
-            +model_block model='role' icon='shield' color='42E8C4' title='latest roles'
-            +model_block model='resource' icon='car' color='42E8C4' title='nearest resources'
-            +model_block model='org' icon='groups' color='42E8C4' title='groups'
+            // +model_block model='post' icon='blog' color='42E8C4' title='latest posts'
+            // +model_block model='role' icon='shield' color='42E8C4' title='latest roles'
+            // +model_block model='resource' icon='car' color='42E8C4' title='nearest resources'
+            // +model_block model='org' icon='groups' color='42E8C4' title='groups'
             +my_things
             if session_is 'show_map' true
                 +mapbox
@@ -187,7 +188,6 @@ template(name='home')
     // +view_chats
 
 template(name='quickchat')
-    #cometchat
     .ui.inline.header 
         i.chat.icon
         |quickchat
