@@ -102,7 +102,6 @@ template(name='home')
                     +session_set key='view_mode' value='feed' icon='stream'
                     +session_toggle key='show_map' icon='map'
                     +session_toggle key='show_calendar' icon='calendar'
-                
                 if session_is 'view_mode' 'list'
                     .ui.items 
                         each doc_results 
@@ -188,6 +187,7 @@ template(name='home')
     // +view_chats
 
 template(name='quickchat')
+    #cometchat
     .ui.inline.header 
         i.chat.icon
         |quickchat
@@ -206,18 +206,19 @@ template(name='your_bookmarks')
                 a.ui.button(href="/#{model}/#{_id}")
                     |#{title}
 template(name='comet_chat_block')
-    .ui.header 
-        i.chat.icon
-        |popup chat 
+    i.large.chat.icon(title='popup comet chat')
+    // .ui.inline.header 
+    //     i.chat.icon
+    //     |popup chat 
     +launch_comet name='wolverine' id='superhero2' avatar='https://data-us.cometchat.io/assets/images/avatars/wolverine.png'
     +launch_comet name='captain_america' id='superhero2' avatar='https://data-us.cometchat.io/assets/images/avatars/captainamerica.png'
     +launch_comet name='spiderman' id='superhero3' avatar='https://data-us.cometchat.io/assets/images/avatars/spiderman.png'
     +launch_comet name='iron man' id='superhero1' avatar='https://data-us.cometchat.io/assets/images/avatars/ironman.png'
 
 template(name='launch_comet')
-    .ui.button.launch
-        img.ui.avatar.image(src=avatar)
-        |#{name}
+    .ui.circular.basic.large.button.launch(title=name)
+        img.ui.mini.image(src=avatar)
+        // |#{name}
 
 template(name='model_block')
     details.ui.fluid.styled.accordion
