@@ -120,8 +120,11 @@ template(name='home')
                             +home_card
         // .eight.wide.column.bordered
         .five.wide.scrolling.column
-            +model_block model='post' icon='what-i-do' color='42E8C4' title='latest posts'
-            +model_block model='role' icon='admin' color='42E8C4' title='latest roles'
+            +quickchat
+            +commet_chat_block
+            +model_block model='post' icon='blog' color='42E8C4' title='latest posts'
+            +model_block model='role' icon='shield' color='42E8C4' title='latest roles'
+            +model_block model='resource' icon='car' color='42E8C4' title='nearest resources'
             +my_things
             if session_is 'show_map' true
                 +mapbox
@@ -183,13 +186,42 @@ template(name='home')
                     +Template.dynamic template=view_template
     // +view_chats
 
+template(name='quickchat')
+    .ui.inline.header 
+        i.chat.icon
+        |quickchat
+    each model_docs_helper 'quickchat_message' 
+        .item #{body}
+    .ui.fluid.icon.input 
+        input.add_quickchat(type='text' placeholder='add...')
+template(name='your_bookmarks')
+    details.ui.fluid.styled.accordion
+        summary.title
+            i.large.bookmark.icon
+            | bookmarks
+        .content 
+            each bookmark_docs 
+                a.ui.button(href="/#{model}/#{_id}")
+                    |#{title}
+template(name='commet_chat_block')
+    .ui.header popup chat 
+    +launch_comet name='wolverine'
+    +launch_comet name='captain_america'
+    +launch_comet name='the flash'
+    +launch_comet name='the flast'
+
+template(name='launch_comet')
+    .ui.button 
+        |#{name}
+
 template(name='model_block')
-    summary.ui.accordion
-        article.title
-            .ui.header 
-                +i name=icon
-                |#{title}
-                i.dropdown.icon
+    details.ui.fluid.styled.accordion
+        summary.title
+            // .ui.header 
+            i.large.icon(class=icon)
+            // +i name=icon cl='ui avatar image'
+            |#{title}
+            // i.dropdown.icon
         .content
             each model_block_docs
                 a.ui.large.tertiary.button.fly_right(href="/#{model}/#{_id}")

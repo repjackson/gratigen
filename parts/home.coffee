@@ -23,6 +23,24 @@ if Meteor.isServer
         # user = Meteor.user()
         Docs.find current_thing_id
 if Meteor.isClient
+    Template.quickchat.onCreated ->
+        @autorun => @subscribe 'model_docs', 'quickchat_message', 10,->
+    Template.quickchat.events
+        'keyup .add_quickchat': (e,t)->
+            if e.which is 13
+                body = t.$('.add_quickchat').val().trim()
+                if body.length>0
+                    parent = Template.parentData()
+                    new_id = 
+                        Docs.insert 
+                            model:'quickchat'
+                            body:body 
+                $('.add_quickchat').val('')
+                    
+                    # if true
+
+    
+    
     Template.home.helpers
         view_template: -> "#{@model}_view"
         edit_template: -> "#{@model}_edit"
