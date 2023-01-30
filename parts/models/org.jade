@@ -85,8 +85,8 @@ template(name='org_edit')
                 .three.column.row 
                     .column
                         .ui.inline.header 
-                            +icolor name='news' cl='ui image inline pointer'
-                            |edit role
+                            +icolor name='group' cl='ui image inline pointer'
+                            
                         a.ui.icon.green.big.button(href="/role/#{_id}" title='save')
                             i.checkmark.big.icon
                         +text_edit key='title' label='title' direct=true
@@ -97,8 +97,9 @@ template(name='org_edit')
                     .column
                         .ui.header required badges
                         +badge_picker
-                        +task_picker
                         +role_picker
+                        +task_picker
+                        
                     .column
                         +model_picker model='event' icon='calendar'
                         

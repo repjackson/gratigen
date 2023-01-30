@@ -135,10 +135,10 @@ template(name='chat_message')
                     strong #{body}
                 if is_editing 
                     +html_edit key='body'
-                    .ui.big.icon.green.button.invert.save 
+                    .ui.big.icon.green.button.invert.save_this
                         i.save.icon
             .actions
-                i.pencil.large.link.circular.icon.zoomer.edit_this
+                i.pencil.large.link.circular.icon.zoomer.edit_this(class=edit_this_class)
                 i.reply.large.link.circular.icon.zoomer.reply_this
                 i.money.large.link.circular.icon.zoomer.tip_this
                 i.shopping.cart.large.link.circular.icon.zoomer.tip_this

@@ -555,8 +555,7 @@ template(name='role_picker')
         // else if role_search_value
         .ui.button.create_role
             |add #{role_search_value}
-        .ui.segment
-            +small_card
+         +small_card
     
     if product_roles
         .ui.header 
@@ -621,16 +620,16 @@ template(name='small_card')
                 // if tags 
                 //     each seven_tags 
                 //         .ui.basic.label #{this}
-                +voting
-                +eft_view_item_small
-                |remove | assign
+                +eft_viewer_small
+                
       
             .content
                 .right.floated
-                    | #{views} views
+                    |remove | assign
+                    // | #{views} views
                 // if _author_id
                 //     +author_info
-                +voting
+                // +voting
                     //- i.eye.icon
                 //     each viewer_usernames
                 //         .ui.small.inverted.label #{this}
@@ -644,7 +643,7 @@ template(name='small_card')
             if template_exists
                 +Template.dynamic template=model_template
             .content
-                +comments
+                // +comments
 
       
 template(name='task_picker')

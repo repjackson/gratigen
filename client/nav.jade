@@ -108,16 +108,13 @@ template(name='nav')
 template(name='add')
     // div
     .ui.padded.grid 
-        // .sixteen.wide.center.aligned.column
-        .four.wide.column
+        .sixteen.wide.center.aligned.column
             with current_doc 
                 // .ui.header #{model} #{_id}
-                .ui.fluid.button.save_doc 
-                    i.big.save.icon
-                .ui.header user _doc_id: #{currentUser._doc_id}
-                +author_info
-                +creation_info
-        .twelve.wide.column 
+                
+                // .ui.header user _doc_id: #{currentUser._doc_id}
+                // +author_info
+                // +creation_info
             .ui.basic.center.aligned.segment
                 +thing_picker model='post' icon='for-you' color='1255B8'
                 .ui.huge.popup 
@@ -160,6 +157,8 @@ template(name='add')
                 +thing_picker model='location' icon='worldwide-location' color='40C057'
                 +thing_picker model='accounts' icon='gold-bars' color='FAB005'
                 //people
+            .ui.fluid.button.save_doc 
+                    i.big.save.icon
             with current_doc 
                 +Template.dynamic template=model_edit_template
     

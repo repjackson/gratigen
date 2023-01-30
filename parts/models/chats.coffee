@@ -400,7 +400,8 @@ if Meteor.isClient
     Template.chat_message.helpers
         message_segment_class: -> if Meteor.userId() in @read_ids then 'basic' else ''
         read: -> Meteor.userId() in @read_ids
-
+        is_editing: ->
+            Session.equals('editing_id',@_id)
         readers: ->
             readers = []
             if @read_ids
@@ -411,6 +412,13 @@ if Meteor.isClient
 
 
     Template.chat_message.events
+        'click .edit_this': ->
+            if Session.get('editing_id
+            Session.set('editing_id',@_id)
+        'click .save_this': ->
+            if Session.get('editing_id
+            Session.set('editing_id',null)
+            
         'click .delete_message': (e,t)->
             if confirm 'Delete message?'
                 $(e.currentTarget).closest('.comment').transition('fly right')
