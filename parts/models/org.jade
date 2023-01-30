@@ -158,104 +158,106 @@ template(name='org_edit')
 
                     
 template(name='org_view')
-    .ui.stackable.padded.grid
-        .row
-            .six.wide.column
-                .ui.inline.header
-                with leader
-                    +user_info
-                .ui.inline.header
-                    |support
-                    |safety
-                // .ui.header 
-                //     if icon
-                //         +i name=icon
-                //     |#{title}
-                a.ui.circular.basic.button(href="/orgs")
-                    i.left.chevron.icon
-                    +i name='campfire' cl='ui mini inline image'
-                    |orgs
-                if can_edit
-                    a.ui.circular.basic.icon.button.fly_down(href="/org/#{_id}/edit")
-                        i.setting.large.icon
-                +image_view key='image_id' icon='image' label='image'
-                +array_view key='tags' icon='tags'
-                .spacer
-                if link
-                    a.ui.basic.circular.button(href=link target='_window')
-                        i.external.icon
-                        |view site
-                    .spacer
-                div
-                .spacer
-                if address
-                    a.ui.compact.basic.circular.button(href=address_link target='_window')
-                        i.marker.icon
-                        |#{address}
-                +viewing
-                if in_dev 
-                    +print_this
-                +multi_user_view key='member_ids' label='members' 
-                +org_history
-                +org_subscription
-
-            .five.wide.column
-                +html_view key='description' icon='content' label='description'
-                .ui.inline.header 
-                    +i name='crown' cl='ui avatar image'
-                    |leader: 
-                with leader 
-                    +user_info
-                // a.ui.basic.button(href="/user/#{leader}")
-                //     |#{leader}
-                .ui.header 
-                    +i name='orgs'
-                    |#{member_ids.count} members
-                .ui.large.selection.animated.list
-                    each member_ids
+    with current_doc
+        .ui.stackable.padded.grid
+            .row
+                .six.wide.column
+                    .ui.inline.header
+                        |#{title}
+                    with leader
                         +user_info
-                +role_picker
-                +eft_viewer
-                        // a.item(href="/org/#{_id}/#{username}")
-                        //     img.ui.mini.image(src="{{c.url image_id width=200 height=200}}")
-                        //     .content
-                        //         .header
-                        //             |#{username}
-            .five.wide.column
-                if is_member
-                    .ui.button.leave(title='click to leave')
-                        i.checkmark.icon
-                        |member
-                else 
-                    .ui.button.join(title='')
-                        i.user.plus.icon
-                        |join
-                // +doc_array_togggle key='member_ids' value=currentUser._id add_label='join' remove_label='joined'
-                .ui.header 
-                    +i name='rss'
-                    |activity
-                each log_items
-                    +log_item
-                .ui.header 
-                    +i name='line-chart'
-                    |stats
-                i.refresh.link.icon.refresh_org_stats
-                .ui.large.list
-                    .item #{member_count} members
-                    .item roles
-                    .item resources
-                    .item groups
-                    .item projects
-                    .item tasks
-                    .item badges
-                    .item services
-                    .item products
-                    
-                    .item #{meal_count} meals
-                    .item #{dish_count} dishes
-                    .item #{total_credit_exchanged} credits exchanged
-                    .item 
-                +comments
+                    .ui.inline.header
+                        |support
+                        |safety
+                    // .ui.header 
+                    //     if icon
+                    //         +i name=icon
+                    //     |#{title}
+                    a.ui.circular.basic.button(href="/orgs")
+                        i.left.chevron.icon
+                        +i name='campfire' cl='ui mini inline image'
+                        |orgs
+                    if can_edit
+                        a.ui.circular.basic.icon.button.fly_down(href="/org/#{_id}/edit")
+                            i.setting.large.icon
+                    +image_view key='image_id' icon='image' label='image'
+                    +array_view key='tags' icon='tags'
+                    .spacer
+                    if link
+                        a.ui.basic.circular.button(href=link target='_window')
+                            i.external.icon
+                            |view site
+                        .spacer
+                    div
+                    .spacer
+                    if address
+                        a.ui.compact.basic.circular.button(href=address_link target='_window')
+                            i.marker.icon
+                            |#{address}
+                    +viewing
+                    if in_dev 
+                        +print_this
+                    +multi_user_view key='member_ids' label='members' 
+                    +org_history
+                    +org_subscription
+    
+                .five.wide.column
+                    +html_view key='description' icon='content' label='description'
+                    .ui.inline.header 
+                        +i name='crown' cl='ui avatar image'
+                        |leader: 
+                    with leader 
+                        +user_info
+                    // a.ui.basic.button(href="/user/#{leader}")
+                    //     |#{leader}
+                    .ui.header 
+                        +i name='orgs'
+                        |#{member_ids.count} members
+                    .ui.large.selection.animated.list
+                        each member_ids
+                            +user_info
+                    +role_picker
+                    +eft_viewer
+                            // a.item(href="/org/#{_id}/#{username}")
+                            //     img.ui.mini.image(src="{{c.url image_id width=200 height=200}}")
+                            //     .content
+                            //         .header
+                            //             |#{username}
+                .five.wide.column
+                    if is_member
+                        .ui.button.leave(title='click to leave')
+                            i.checkmark.icon
+                            |member
+                    else 
+                        .ui.button.join(title='')
+                            i.user.plus.icon
+                            |join
+                    // +doc_array_togggle key='member_ids' value=currentUser._id add_label='join' remove_label='joined'
+                    .ui.header 
+                        +i name='rss'
+                        |activity
+                    each log_items
+                        +log_item
+                    .ui.header 
+                        +i name='line-chart'
+                        |stats
+                    i.refresh.link.icon.refresh_org_stats
+                    .ui.large.list
+                        .item #{member_count} members
+                        .item roles
+                        .item resources
+                        .item groups
+                        .item projects
+                        .item tasks
+                        .item badges
+                        .item services
+                        .item products
+                        
+                        .item #{meal_count} meals
+                        .item #{dish_count} dishes
+                        .item #{total_credit_exchanged} credits exchanged
+                        .item 
+                    +comments
     
 template(name='user_orgs')
     .scrolling

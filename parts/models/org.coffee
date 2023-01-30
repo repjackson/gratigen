@@ -218,9 +218,9 @@ if Meteor.isClient
     #     self.ready()
 
 
-# Router.route '/org/:doc_id/', (->
-#     @render 'org_view'
-#     ), name:'org_view'
+Router.route '/org/:doc_id/', (->
+    @render 'org_view'
+    ), name:'org_view'
 # Router.route '/org/:doc_id/edit', (->
 #     @render 'org_edit'
 #     ), name:'org_edit'

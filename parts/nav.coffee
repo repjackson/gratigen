@@ -10,9 +10,10 @@ if Meteor.isClient
 if Meteor.isServer
     Meteor.publish 'search_results', (query)->
         match = {}
-        match.title =  {$regex:"#{query}", $options: 'i'}
-        Docs.find match, 
-            limit:10
+        if query.length > 1
+            match.title =  {$regex:"#{query}", $options: 'i'}
+            Docs.find match, 
+                limit:10
 if Meteor.isClient
     Template.add.onRendered ->
         Meteor.setTimeout ->
@@ -76,6 +77,10 @@ if Meteor.isClient
             Meteor.call 'set_facets', @slug, true, ->
                 Session.set 'loading', false
     
+        'click .goto_doc': ->
+            Router.go "/#{@model}/#{@_id}"
+            $('.search_site').val('')
+            Session.set('current_query', null)
         'click .clear_search': -> Session.set('current_query',null)
         'keyup .search_site': _.throttle((e,t)->
             # console.log Router.current().route.getName()

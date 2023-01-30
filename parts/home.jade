@@ -288,8 +288,8 @@ template(name='home_card')
                     .ui.label 
                         i.marker.icon
                         |#{location}
-                .ui.image.large.label 
-                    img.ui.image(src="{{c.url _author.image_id width=400 height=400}}")
+                // .ui.image.large.label 
+                //     img.ui.image(src="{{c.url _author.image_id width=400 height=400}}")
                     // i.user.icon
                     |#{_author_username}
                 // if tags 
@@ -299,24 +299,28 @@ template(name='home_card')
                 +eft_view_item_small
       
             .content
+                .left.floated
+                    +voting
                 .right.floated
                     | #{views} views
                 // if _author_id
                 //     +author_info
-                +voting
+                
                     //- i.eye.icon
                 //     each viewer_usernames
                 //         .ui.small.inverted.label #{this}
                 // //- +comments
+                div
                 +eft_viewer
-                if currentUser.admin_mode
-                    +print_this
-                    +remove_button
-                each tags 
-                    .ui.small.label #{this}
-            if template_exists
-                +Template.dynamic template=model_template
-            .content
+                // if currentUser.admin_mode
+                //     +print_this
+                //     +remove_button
+                // each tags 
+                //     .ui.small.label #{this}
+            // if template_exists
+            //     +Template.dynamic template=model_template
+            div
+            .extra.content
                 +comments
       
       

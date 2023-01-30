@@ -4,6 +4,7 @@ Template.registerHelper 'comma', (input) ->
     input.toLocaleString("en-US")
 
 Template.registerHelper 'cutString', (input) -> input[..10] 
+Template.registerHelper 'cut', (input) -> input[..10] 
 Template.registerHelper 'parent', () -> Template.parentData()
 Template.registerHelper 'parent_doc', () ->
     Docs.findOne @parent_id
