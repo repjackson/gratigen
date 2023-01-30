@@ -157,17 +157,20 @@ template(name='org_edit')
 template(name='org_view')
     with current_doc
         img.ui.fluid.image.bg_overlay(src="{{c.url image_id width=1000 crop='fit'}}")
-        if can_edit
-            a.ui.circular.basic.icon.button.fly_down(href="/org/#{_id}/edit")
-            i.setting.large.icon
-        .ui.stackable.padded.grid.scrolling
         
+        .ui.stackable.padded.grid.scrolling
             .row
-                a.ui.circular.tertiary.button(href="/orgs")
-                    i.left.chevron.icon
-                    +i name='campfire' cl='ui mini inline image'
-                    |orgs
-            .row
+                .sixteen.wide.column
+                    .left_floated
+                        a.ui.circular.tertiary.button(href="/orgs" title='back to orgs')
+                            i.left.chevron.icon
+                            +i name='campfire' cl='ui mini inline image'
+                            |orgs
+                    .right_floated
+                        if can_edit
+                            a.ui.circular.basic.icon.button.floated.right.fly_down(href="/org/#{_id}/edit" title="edit #{title}")
+                                i.setting.large.icon
+
                 .ui.centered.huge.header
                         |#{title}
                 .six.wide.column

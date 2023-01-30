@@ -575,7 +575,7 @@ template(name='role_crud')
                             .right.floated
                                 |#{when}
                                 div
-                                if is_admin
+                                if can_edit
                                     .ui.tertiary.button.remove_role 
                                         |remove 
                                     .ui.tertiary.button.assign_role 
@@ -583,11 +583,14 @@ template(name='role_crud')
                                     if is_assigning 
                                         each role_holders 
                                             .ui.label #{username}
+                                    a.ui.tertiary.button.fly_right(href="/role/#{_id}/edit")
+                                        |view
                                 else
                                     // else if can_take
                                     .ui.tertiary.button.remove_role 
                                         | take
-                                .ui.tertiary.button 
+                                a.ui.tertiary.button(href="/role/#{_id}")
+                                    |view
                                 
                     
 
