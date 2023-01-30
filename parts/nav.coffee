@@ -149,7 +149,7 @@ if Meteor.isClient
         
     Template.nav.helpers
         search_results: ->
-            if Session.get('current_query').length > 1
+            if Session.get('current_query') and Session.get('current_query').length > 1
                 match = {}
                 match.title =  {$regex:"#{Session.get('current_query')}", $options: 'i'}
                 Docs.find match, 

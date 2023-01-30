@@ -125,6 +125,7 @@ template(name='home')
             +model_block model='post' icon='blog' color='42E8C4' title='latest posts'
             +model_block model='role' icon='shield' color='42E8C4' title='latest roles'
             +model_block model='resource' icon='car' color='42E8C4' title='nearest resources'
+            +model_block model='org' icon='groups' color='42E8C4' title='groups'
             +my_things
             if session_is 'show_map' true
                 +mapbox
@@ -190,8 +191,9 @@ template(name='quickchat')
     .ui.inline.header 
         i.chat.icon
         |quickchat
-    each model_docs_helper 'quickchat_message' 
-        .item #{body}
+    .ui.list
+        each model_docs_helper 'quickchat_message' 
+            .item #{body}
     .ui.fluid.icon.input 
         input.add_quickchat(type='text' placeholder='add...')
 template(name='your_bookmarks')
@@ -322,7 +324,9 @@ template(name='home_card')
                 //     +i name='field-and-tractor' color='42E8C4'      
 
                 // .ui.label #{model}
-                |#{title} #{body}
+                // |#{title} 
+                |!{body}
+                |!{content}
             // i.clock.icon
             // |#{when}
         img.ui.fluid.image(src="{{c.url image_id width=400 height=400}}")

@@ -238,11 +238,12 @@ if Meteor.isClient
 
     Template.home_card.onRendered ->
         # console.log @data
-        if @data.lat and @data.lng
-            Markers.insert 
-                title:@data.title
-                lat:@data.lat
-                lng:@data.lng
+        if @data
+            if @data.lat and @data.lng
+                Markers.insert 
+                    title:@data.title
+                    lat:@data.lat
+                    lng:@data.lng
     Template.home_card.events 
         'click .map_me': ->
             # navigator.geolocation.getCurrentPosition (position) =>
