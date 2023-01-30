@@ -40,3 +40,82 @@ if Meteor.isClient
         				"defaultType": 'group'
         			});
         		))
+        		
+        		
+#         const fetch = require('node-fetch');
+
+# const url = 'https://apimgmt.cometchat.io/apps/appId/extensions/widget/v2/settings';
+# const options = {
+#   method: 'POST',
+#   headers: {accept: 'application/json', 'content-type': 'application/json'},
+#   body: JSON.stringify({
+#     settings: {
+#       name: 'Test Chat Widget',
+#       version: 'v2',
+#       style: {
+#         custom_js: 'v2',
+#         docked_layout_icon_background: '#03a9f4',
+#         docked_layout_icon_close: 'https://widget-js.cometchat.io/v2/resources/chat_close.svg',
+#         docked_layout_icon_open: 'https://widget-js.cometchat.io/v2/resources/chat_bubble.svg',
+#         primary_color: '#03A9F4',
+#         foreground_color: ' #000000',
+#         background_color: '#FFFFFF',
+#         override_system_background_colors: 'true'
+#       },
+#       sidebar: {
+#         chats: true,
+#         users: true,
+#         groups: true,
+#         recent_chat_listing: 'all_chats',
+#         user_listing: 'all_users',
+#         sidebar_navigation_sequence: ['chats', 'users', 'groups', 'calls', 'settings'],
+#         start_a_new_conversation: 'all_chats',
+#         group_listing: 'public_and_password_protected_groups'
+#       },
+#       main: {
+#         allow_add_members: true,
+#         allow_delete_groups: true,
+#         allow_kick_ban_members: true,
+#         block_user: true,
+#         create_groups: true,
+#         enable_deleting_messages: true,
+#         enable_editing_messages: true,
+#         enable_sending_messages: true,
+#         enable_sound_for_calls: true,
+#         enable_sound_for_messages: true,
+#         enable_threaded_replies: true,
+#         enable_video_calling: true,
+#         enable_voice_calling: true,
+#         hide_deleted_messages: true,
+#         hide_join_leave_notifications: true,
+#         join_or_leave_groups: true,
+#         send_emojis: true,
+#         send_files: true,
+#         send_photos_videos: true,
+#         share_live_reactions: true,
+#         show_call_notifications: true,
+#         show_delivery_read_indicators: true,
+#         show_emojis_in_larger_size: true,
+#         show_stickers: true,
+#         show_user_presence: true,
+#         view_group_members: true,
+#         allow_mention_members: false,
+#         enable_replying_to_messages: false,
+#         enable_share_copy_forward_messages: false,
+#         highlight_messages_from_moderators: false,
+#         show_call_recording_option: false,
+#         send_voice_notes: false,
+#         send_gifs: false,
+#         share_location: false,
+#         view_shared_media: true,
+#         set_groups_in_qna_mode_by_moderators: false,
+#         send_reply_in_private_to_group_member: false
+#       }
+#     }
+#   })
+# };
+
+# fetch(url, options)
+#   .then(res => res.json())
+#   .then(json => console.log(json))
+#   .catch(err => console.error('error:' + err));

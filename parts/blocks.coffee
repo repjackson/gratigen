@@ -242,11 +242,11 @@ if Meteor.isClient
                 model:'role'
                 title: {$regex:"#{Session.get('role_search')}",$options:'i'}
                 
-        product_roles: ->
-            product = Docs.findOne Router.current().params.doc_id
+        picked_roles: ->
+            ref_doc = Docs.findOne Router.current().params.doc_id
             Docs.find 
                 # model:'role'
-                _id:$in:product.role_ids
+                _id:$in:ref_doc.role_ids
         role_search_value: ->
             Session.get('role_search')
         

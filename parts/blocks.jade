@@ -555,96 +555,61 @@ template(name='role_picker')
         // else if role_search_value
         .ui.button.create_role
             |add #{role_search_value}
-         +small_card
     
-    if product_roles
+    if picked_roles
         .ui.header 
-            |#{product_roles.length}
+            |#{picked_roles.length}
             |picked roles
         .ui.list
-            each product_roles
-                .ui.item
-                    img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
-                    |#{title}
-                    i.remove.link.icon.zoomer.remove_role
+            each picked_roles
+                 a.ui.link.horizontal.card.zoomer.show_modal
+                    .content 
+                        a.inline.header
+                            if _is 'model' 'role'
+                                +i name='what-i-do' color='42E8C4' cl='ui inline mini image'
+                        |#{title} 
+                        img.ui.fluid.image(src="{{c.url image_id width=50 height=50}}")
+                    .content
+                        .right.floated
+                            |#{when}
+                            div
+                            |remove | assign
+                // .ui.item
+                //     img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+                //     |#{title}
+                //     i.remove.link.icon.zoomer.remove_role
                     
 
 template(name='small_card')
-    // if _is 'model' 'role'
-    //     +role_card
-    // else if _is 'model' 'event'
-    //     +event_card
-    // else if _is 'model' 'recipe'
-    //     +recipe_card
-    // else 
     a.ui.link.horizontal.card.zoomer.show_modal
         .content 
             a.inline.header
                 if _is 'model' 'org' 
-                    +i name='groups' color='83DFF4'
+                    +i name='groups' color='83DFF4' cl='ui inline mini image'
                 if _is 'model' 'project'
-                    +i name='project' color='7229AF'
+                    +i name='project' color='7229AF' cl='ui inline mini image'
                 if _is 'model' 'post'
-                    +i name='for-you' color='1255B8'
+                    +i name='for-you' color='1255B8' cl='ui inline mini image'
                 if _is 'model' 'event'
-                    +i name='calendar' color='FAB005'
+                    +i name='calendar' color='FAB005' cl='ui inline mini image'
                 if _is 'model' 'task'
-                    +i name='task' color='B785E1'
+                    +i name='task' color='B785E1' cl='ui inline mini image'
                 if _is 'model' 'offer'
-                    +i name='hand-holding-heart' color='FF73EA'
+                    +i name='hand-holding-heart' color='FF73EA' cl='ui inline mini image'
                 if _is 'model' 'request'
-                    +i name='commercial' color='40C057'
+                    +i name='commercial' color='40C057' cl='ui inline mini image'
                 if _is 'model' 'role'
-                    +i name='what-i-do' color='42E8C4'  
+                    +i name='what-i-do' color='42E8C4' cl='ui inline mini image'
                 if _is 'model' 'resource'
-                    +i name='field-and-tractor' color='42E8C4'      
+                    +i name='field-and-tractor' color='42E8C4' cl='ui inline mini image'    
+            |#{title} 
+            img.ui.fluid.image(src="{{c.url image_id width=50 height=50}}")
+        .content
+            .right.floated
+                |#{when}
+                div
+                |remove | assign
 
-                
-                // .ui.label #{model}
-                |#{title} 
-                // #{body}
-            |#{when}
-        img.ui.fluid.image(src="{{c.url image_id width=50 height=50}}")
-        .content 
-            .description
-                // .ui.header lat: #{lat}
-                // .ui.header lng: #{lng}
-                //     // i.newspaper.large.icon
-                if location 
-                    // .ui.label 
-                        // i.marker.icon
-                    |#{location}
-                .ui.image 
-                    img.ui.image(src="{{c.url _author.image_id width=50 height=50}}")
-                    // i.user.icon
-                    |#{_author_username}
-                // if tags 
-                //     each seven_tags 
-                //         .ui.basic.label #{this}
-                +eft_viewer_small
-                
-      
-            .content
-                .right.floated
-                    |remove | assign
-                    // | #{views} views
-                // if _author_id
-                //     +author_info
-                // +voting
-                    //- i.eye.icon
-                //     each viewer_usernames
-                //         .ui.small.inverted.label #{this}
-                // //- +comments
-                +eft_viewer
-                if currentUser.admin_mode
-                    +print_this
-                    +remove_button
-                each tags 
-                    .ui.small.label #{this}
-            if template_exists
-                +Template.dynamic template=model_template
-            .content
-                // +comments
 
       
 template(name='task_picker')
