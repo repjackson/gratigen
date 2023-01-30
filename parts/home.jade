@@ -120,6 +120,8 @@ template(name='home')
                             +home_card
         // .eight.wide.column.bordered
         .five.wide.scrolling.column
+            +model_block model='post' icon='what-i-do' color='42E8C4' title='latest posts'
+            +model_block model='role' icon='admin' color='42E8C4' title='latest roles'
             +my_things
             if session_is 'show_map' true
                 +mapbox
@@ -171,7 +173,7 @@ template(name='home')
                         .ui.icon.right.floated.button.toggle_editmode
                             i.small.pencil.icon
                 .thirteen.wide.centered.column
-                            //on click go to full page
+                    //on click go to full page
                     .ui.inline.centered.header.huge #{title}
 
             .scrollin.content
@@ -181,6 +183,19 @@ template(name='home')
                     +Template.dynamic template=view_template
     // +view_chats
 
+template(name='model_block')
+    summary.ui.accordion
+        article.title
+            .ui.header 
+                +i name=icon
+                |#{title}
+                i.dropdown.icon
+        .content
+            each model_block_docs
+                a.ui.large.tertiary.button.fly_right(href="/#{model}/#{_id}")
+                    if image_id
+                        img.ui.avatar.image(src="{{c.url image_id}}" title=_author.username)
+                    |#{title}
 
 template(name='charts')
     // +i name='sad'

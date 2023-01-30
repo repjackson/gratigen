@@ -9,6 +9,12 @@ if Meteor.isClient
         ), name:'add'
     
     
+    Template.model_block.onCreated ->
+        @autorun => @subscribe 'model_docs', @data.model, 10,->
+    Template.model_block.helpers
+        model_block_docs: ->
+            Docs.find
+                model:@model
     Template.home.onCreated ->
         # @autorun => @subscribe 'my_current_thing', ->
         @autorun => @subscribe 'my_current_thing', Session.get('current_thing_id'),->

@@ -282,7 +282,7 @@ if Meteor.isClient
                 false
         eft_picker_class: ->
             current_doc = Docs.findOne Router.current().params.doc_id 
-            if current_doc.efts
+            if current_doc and current_doc.efts
                 if @label in current_doc.efts
                     'basic'
                 else
