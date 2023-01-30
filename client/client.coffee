@@ -9,6 +9,26 @@ Tracker.autorun ->
     Tracker.afterFlush ->
         $(window).scrollTop 0
 
+moment.locale('en', {
+    relativeTime: {
+        future: 'in %s',
+        # past: '%s ago',
+        past: '%s',
+        s:  'seconds',
+        ss: '%ss',
+        m:  'a minute',
+        mm: '%dm',
+        h:  'an hour',
+        hh: '%dh',
+        d:  'a day',
+        dd: '%dd',
+        M:  'a month',
+        MM: '%dM',
+        y:  'a year',
+        yy: '%dY'
+    }
+});
+
 
 Meteor.users.find(_id:Meteor.userId()).observe({
     changed: (new_doc, old_doc)->

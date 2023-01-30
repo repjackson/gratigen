@@ -2,7 +2,7 @@ body {
     /* font-family: 'Raleway', sans-serif !important; */
      /*font-family: 'Roboto', sans-serif !important; */
     /* font-family: 'Ubuntu+Mono', sans-serif !important; */
-    /*font-family: 'Bangers', sans-serif !important;*/
+    font-family: 'Bangers', sans-serif !important;
     /*font-family: 'Goudy Bookletter 1911', sans-serif !important;*/
     font-size: 110% !important; 
     /*line-height: 200% !important;*/
@@ -13,7 +13,7 @@ body {
     animation: .25s ease-out 0s 1 fadein;
   
 }
-.ui.header, .buttn, input {
+.ui.header, .button, input, .item {
       font-family: 'Bangers', sans-serif !important;
       font-weight: 300 !important;
 }
@@ -155,7 +155,7 @@ img, .button, .selector, .card, p, .header, .item, .image, .fade {
 }
 
 .centered {
-  padding: 10px !important;
+  /*padding: 10px !important;*/
   margin: auto !important;
   width: 95% !important;
   text-align: center !important;

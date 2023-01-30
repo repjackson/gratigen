@@ -54,16 +54,18 @@ template(name='nav')
         //         input.search_site(type='text' autocomplete="off" value=current_product_search)
         // .six.wide.column
         .right.menu
-            if unread_count
-                a.ui.item.alerts.select_term(href="#" class=alert_toggle_class)
-                    i.large.bell.small.yellow.icon
-                    if unread_count
-                        |#{unread_count}
-            else
-                a.ui.icon.item(href="/inbox" class="{{isActiveRoute 'inbox'}}")
-                    i.large.outline.bell.big.blue.icon
+            // if unread_count
+            //     a.ui.item.alerts.select_term(href="#" class=alert_toggle_class)
+            //         i.large.bell.small.yellow.icon
+            // else
+            //     a.ui.icon.item(href="/inbox" class="{{isActiveRoute 'inbox'}}")
+            //         i.large.outline.bell.big.blue.icon
             a.ui.item.zoomer.toggle_rightbar(href="/chat" class="{{isActiveRoute 'chat'}}")
-                i.small.chat.outline.big.blue.icon
+                if unread_count
+                    i.small.chat.big.blue.icon.pulse
+                    |#{unread_count}
+                else
+                    i.small.chat.outline.big.blue.icon
                 // +i name='chat' color='blue'
 
             if currentUser
@@ -90,13 +92,13 @@ template(name='nav')
                 i.yin.yang.large.loading.icon
             unless currentUser
                 a.ui.item(href="/register" title='register')
-                    // +i name='plus'
-                    i.user.add.green.big.icon
+                    +i name='plus'
+                    // i.user.add.green.big.icon
                     span.mobile.hidde register            
                 a.ui.item(href='/login' title='login') 
                     // i.user.add.icon
-                    i.sign.in.big.blue.icon
-                    // +i name='internal'
+                    // i.sign.in.big.blue.icon
+                    +i name='internal'
                     span.mobile.hidde login
             // if session_is 'viewing_alerts'
             //     +topbar

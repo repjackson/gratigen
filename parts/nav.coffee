@@ -140,7 +140,7 @@ if Meteor.isClient
         unread_count: ->
             unread_count = Docs.find({
                 model:'message'
-                to_username:Meteor.user().username
+                # to_username:Meteor.user().username
                 read_by_ids:$nin:[Meteor.userId()]
             }).count()
 
