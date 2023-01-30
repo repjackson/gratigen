@@ -99,7 +99,7 @@ img, .button, .selector, .card, p, .header, .item, .image, .fade {
   filter: invert(1) !important;
 }
 
-.invert, .ui.image {
+.invert, .ui.image, .toast, .progress{
   filter: invert(1) !important;
 }
 

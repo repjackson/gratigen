@@ -128,7 +128,6 @@ template(name='org_edit')
                             +single_user_edit key='_author_id' label='author' direct=true
                         +image_edit key='image_id' label='image' direct=true
                         div 
-                        +array_edit key='tags' label='tags' direct=true icon='tags'
                          +boolean_edit key='published' icon='visible' direct=true
                         if is_dev 
                             +text_edit key='model' label='model' direct=true
@@ -164,6 +163,10 @@ template(name='org_view')
         .ui.stackable.padded.grid
             .row
                 .six.wide.column
+                    a.ui.circular.tertiary.button(href="/orgs")
+                        i.left.chevron.icon
+                        +i name='campfire' cl='ui mini inline image'
+                        |orgs
                     .ui.inline.header
                         |#{title}
                     with leader
@@ -175,10 +178,7 @@ template(name='org_view')
                     //     if icon
                     //         +i name=icon
                     //     |#{title}
-                    a.ui.circular.basic.button(href="/orgs")
-                        i.left.chevron.icon
-                        +i name='campfire' cl='ui mini inline image'
-                        |orgs
+                    
                     if can_edit
                         a.ui.circular.basic.icon.button.fly_down(href="/org/#{_id}/edit")
                             i.setting.large.icon

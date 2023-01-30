@@ -555,29 +555,32 @@ template(name='role_crud')
         // else if role_search_value
         .ui.button.create_role
             |add #{role_search_value}
-    
-    if picked_roles
-        .ui.header 
-            |#{picked_roles.length}
-            |picked roles
-        .ui.list
-            each picked_roles
-                 a.ui.link.horizontal.card.zoomer.show_modal
-                    .content 
-                        a.inline.header
-                            if _is 'model' 'role'
-                                +i name='what-i-do' color='42E8C4' cl='ui inline mini image'
-                        |#{title} 
-                        img.ui.fluid.image(src="{{c.url image_id width=50 height=50}}")
-                    .content
-                        .right.floated
-                            |#{when}
-                            div
-                            |remove | assign
-                // .ui.item
-                //     img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
-                //     |#{title}
-                //     i.remove.link.icon.zoomer.remove_role
+        if picked_roles
+            .ui.header 
+                |#{picked_roles.length}
+                |picked roles
+            .ui.list.smallscroll
+                each picked_roles
+                     a.ui.link.horizontal.card.zoomer.show_modal
+                        .content 
+                            a.inline.header
+                                if _is 'model' 'role'
+                                    +i name='what-i-do' color='42E8C4' cl='ui inline mini image'
+                            |#{title} 
+                            img.ui.fluid.image(src="{{c.url image_id width=50 height=50}}")
+                        .content
+                            .right.floated
+                                |#{when}
+                                div
+                                if is_admin
+                                    .ui.tertiary.button.remove_role 
+                                        |remove 
+                                    .ui.tertiary.button.assign_role 
+                                        | assign
+                                else
+                                    // else if can_take
+                                    .ui.tertiary.button.remove_role 
+                                        | take
                     
 
 template(name='small_card')

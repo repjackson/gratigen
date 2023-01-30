@@ -10,6 +10,10 @@ Template.registerHelper 'parent_doc', () ->
     Docs.findOne @parent_id
     # Template.parentData()
 
+Template.registerHelper 'can_take', () ->
+    console.log @, 'role'
+    Meteor.user() and Meteor.userId() in @permissioned_user_ids
+    
 Template.registerHelper 'is_admin', (model) ->
     Meteor.user() and Meteor.user().admin
 Template.registerHelper 'user_bookmark_docs', (model) ->

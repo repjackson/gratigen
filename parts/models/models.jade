@@ -615,7 +615,7 @@ template(name='role_edit')
                 +task_picker
             .column
                 +model_picker model='event' icon='calendar'
-                
+                +multi_user_edit key='permissioned_user_ids' label='permissioned users'
                 i.large.link.red.remove.icon.delete_role
             .column
                 .ui.header 
