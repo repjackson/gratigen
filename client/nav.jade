@@ -64,7 +64,7 @@ template(name='nav')
             else
                 a.ui.icon.item(href="/inbox" class="{{isActiveRoute 'inbox'}}")
                     i.large.outline.bell.big.blue.icon
-            a.ui.item.zoomer(href="/chat" class="{{isActiveRoute 'chat'}}")
+            a.ui.item.zoomer.toggle_rightbar(href="/chat" class="{{isActiveRoute 'chat'}}")
                 i.large.chat.outline.big.blue.icon
                 // +i name='chat' color='blue'
 
@@ -289,6 +289,7 @@ template(name='recent_alert')
                     
 template(name='rightbar')
     .ui.right.sidebar.vertical.small.borderless.menu.rightbar
+    +view_chats
         with currentUser
             a.item.toggle_rightbar.no_blink(href="/user/#{currentUser.username}" class="{{isActiveRoute 'user_layout'}}")
                 img.ui.avatar.compact.image(src="{{c.url currentUser.image_id height=200 width=200 gravity='face' crop='fill'}}")

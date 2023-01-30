@@ -1,10 +1,8 @@
 template(name='home')
-
     if currentUser.admin_mode
         img.ui.fluid.image.home_banner(src="{{c.url 'gratigenlayout'}}" class=darkmode_class)
     // else 
     //     img.ui.fluid.image.bg_overlay(src="{{c.url 'nightbg' width=1000 crop='fit'}}")    
-
     .ui.padded.divided.celled.stackable.grid
         .three.wide.scrolling.column
             // +session_toggle key='expand_leftbar' icon='horizontal-line'
@@ -205,11 +203,11 @@ template(name='charts')
     //     .bar
     //     .progress.invert
     //         .label {{to_percent disgust}}% disgust 
-    +i name='angry'
+    // +i name='angry'
     .ui.orange.small.progress.invert(data-percent='23' title="{{to_percent anger}}% anger")
         .bar
-        .progress
-            .label {{to_percent anger}}% anger 
+        .progress.invert
+            .label {{to_percent anger}}% anger
 
 
 

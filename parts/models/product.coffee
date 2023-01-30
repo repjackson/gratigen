@@ -35,15 +35,15 @@ if Meteor.isClient
         Meteor.call 'log_view', Router.current().params.doc_id
         # @autorun => Meteor.subscribe 'ingredients_from_product_id', Router.current().params.doc_id
     Template.product_view.events
-        'click .generate_qrcode': (e,t)->
-            qrcode = new QRCode(document.getElementById("qrcode"), {
-                text: @title,
-                width: 250,
-                height: 250,
-                colorDark : "#000000",
-                colorLight : "#ffffff",
-                correctLevel : QRCode.CorrectLevel.H
-            })
+        # 'click .generate_qrcode': (e,t)->
+        #     qrcode = new QRCode(document.getElementById("qrcode"), {
+        #         text: @title,
+        #         width: 250,
+        #         height: 250,
+        #         colorDark : "#000000",
+        #         colorLight : "#ffffff",
+        #         correctLevel : QRCode.CorrectLevel.H
+        #     })
 
         'click .calc_stats': (e,t)->
             Meteor.call 'calc_product_data', Router.current().params.doc_id, ->

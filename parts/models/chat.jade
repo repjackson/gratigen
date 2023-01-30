@@ -1,4 +1,9 @@
 template(name='view_chats')
+    .ui.hidden.divider
+    .ui.hidden.divider
+    .ui.hidden.divider
+    .ui.hidden.divider
+    .ui.hidden.divider
     img.ui.fluid.image.bg_overlay(src="{{c.url 'nightbg' width=1000 crop='fit'}}")    
     .ui.stackable.padded.grid
         .row
@@ -23,6 +28,8 @@ template(name='view_chats')
                             i.lock.icon
                             |private
             .twelve.wide.column
+                each model_docs_helper 'org'
+                    .ui.button #{title}
                 with selected_chat
                     +view_chat
                 // .ui.cards
@@ -130,10 +137,10 @@ template(name='chat_message')
                 span.date #{when}
             .text
                 if read
-                    .f10
+                    .f12
                         | !{body}
                 else 
-                    .f11
+                    .f14
                         strong !{body}
                 if is_editing 
                     +html_edit key='body'
@@ -155,7 +162,16 @@ template(name='chat_message')
                 each readers
                     .ui.tiny.label(title="read by #{username}") #{username}
                     // img.ui.avatar.image(src="{{c.url image_id width=50 height=50 gravity='face' crop='fill'}}")
-                                                
+        .content 
+            +comments
+        
+        if replies
+            .ui.header replies 
+            each replies 
+                if is_editing 
+                    +text_edit key='body'
+                else 
+                    .ui.header #{body}
 
                                                         
                                                         
@@ -195,6 +211,7 @@ template(name='view_chat')
                                 .description
                                     // | @#{username}
                                     +user_status
+                +toggle_edit_button
                 if is_editing
                     .ui.icon.basic.button.close_chat(title='close chat')
                         i.ban.icon
@@ -219,7 +236,10 @@ template(name='view_chat')
                     img.ui.avatar.image(src="{{c.url author.profile_image_id width=400 height=400 gravity='face' crop='fill'}}")
                     |#{_author.name} #{when}
                     
-                    
+                  
+template(name='toggle_edit_button')
+    .ui.icon.button.edit_this
+        i.big.pencil.icon
                     
 template(name='subscribe_button')
 template(name='resonate_button')

@@ -409,9 +409,18 @@ if Meteor.isClient
                     unless reader_id is @author_id
                         readers.push Meteor.users.findOne reader_id
             readers
-
+        replies: ->
+            Docs.find 
+                model:'message'
+                parent_id:@_id
 
     Template.chat_message.events
+        'click .reply_this':->
+            new_id = 
+                Docs.insert 
+                    model:'message'
+                    parent_id:@_id
+            Session.set('editing_id',new_id)
         'click .edit_this': ->
             if Session.get('editing_id')
                 Session.set('editing_id',null)
