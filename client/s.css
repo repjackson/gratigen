@@ -25,6 +25,18 @@ img, .button, .selector, .card, p, .header, .item, .image, .fade {
     }
 }
 
+.f10 {font-size: 110% !important;}
+.f11 {font-size: 110% !important;}
+.f12 {font-size: 120% !important;}
+.f13 {font-size: 130% !important;}
+.f14 {font-size: 140% !important;}
+.f15 {font-size: 150% !important;}
+.f16 {font-size: 160% !important;}
+.f17 {font-size: 170% !important;}
+.f18 {font-size: 180% !important;}
+.f19 {font-size: 190% !important;}
+
+
 @keyframes fadein {
   from { opacity: 0}
   to   { opacity: 1}

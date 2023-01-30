@@ -413,11 +413,13 @@ if Meteor.isClient
 
     Template.chat_message.events
         'click .edit_this': ->
-            if Session.get('editing_id
-            Session.set('editing_id',@_id)
+            if Session.get('editing_id')
+                Session.set('editing_id',null)
+            else
+                Session.set('editing_id',@_id)
         'click .save_this': ->
-            if Session.get('editing_id
-            Session.set('editing_id',null)
+            if Session.get('editing_id')
+                Session.set('editing_id',null)
             
         'click .delete_message': (e,t)->
             if confirm 'Delete message?'

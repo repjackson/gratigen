@@ -130,9 +130,11 @@ template(name='chat_message')
                 span.date #{when}
             .text
                 if read
-                    | #{body}
+                    .f10
+                        | !{body}
                 else 
-                    strong #{body}
+                    .f11
+                        strong !{body}
                 if is_editing 
                     +html_edit key='body'
                     .ui.big.icon.green.button.invert.save_this
