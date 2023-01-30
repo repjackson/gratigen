@@ -138,7 +138,7 @@ template(name='comments')
                         a(href="/user/#{_author.username}") #{_author.name}
                         if currentUser
                             +voting_small
-                            if can_edit
+                            if currentUser.admin_mode
                                 +remove_button
                                 
                                 
@@ -160,7 +160,7 @@ template(name='reviews')
                         // a(href="/user/#{author.username}") #{author.first_name} #{author.last_name}
                             // if currentUser
                         +voting_small
-                        // if can_edit
+                        // if currentUser.admin_mode
                         //     +remove_button
 
 
@@ -562,41 +562,48 @@ template(name='role_crud')
             .ui.header 
                 |#{picked_roles.count}
                 |picked roles
-            .ui.list.smallscroll
-                each picked_roles
-                     a.ui.link.horizontal.card.zoomer.show_modal
-                        .content 
-                            a.inline.header
-                                
-                            |#{title} 
-                            img.ui.fluid.image(src="{{c.url image_id width=50 height=50}}")
-                        .content
-                            .right.floated
-                                if _is 'model' 'role'
-                                    +i name='what-i-do' color='42E8C4' cl='ui inline mini image'
-                                div
-                                |#{when}
-                                div
-                                if can_edit
-                                    .ui.tertiary.button.remove_role 
-                                        |remove 
-                                    .ui.tertiary.button.assign_role 
-                                        | assign
-                                    if is_assigning 
-                                        each role_holders 
-                                            .ui.label #{username}
-                                    else 
-                                        with assigned_users
-                                            .ui.green.label #{username}
-                                    a.ui.tertiary.button.fly_right(href="/role/#{_id}/edit")
-                                        |edit
-                                else
-                                    // else if can_take
-                                    .ui.tertiary.button.take_role 
-                                        | take
-                                a.ui.tertiary.button(href="/role/#{_id}")
-                                    |view
-                                
+            
+            each picked_roles
+                 .ui.horizontal.card.zoomer.show_modal
+                    .content
+                        .ui.grid
+                            .row
+                                // .column
+                                .fourteen.wide.column
+                                    .left.floated
+                                        a.ui.inline.header
+                                            |!{title} 
+                                        img(src="{{c.url image_id width=50 height=50}}")
+                                        div
+                                        |!{content}
+                                .two.wide.column
+                                    .right.floated
+                                        if _is 'model' 'role'
+                                            +ismall name='what-i-do' color='42E8C4' cl='ui inline image'
+                                        div
+                                        |#{when}
+                            .row
+                                .sixteen.wide.column
+                                    if currentUser.admin_mode
+                                        .ui.tertiary.button.zoomer.remove_role 
+                                            |remove 
+                                        .ui.tertiary.button.zoomer.assign_role 
+                                            | assign
+                                        if is_assigning 
+                                            each role_holders 
+                                                .ui.label #{username}
+                                        else 
+                                            with assigned_users
+                                                .ui.green.label #{username}
+                                        a.ui.tertiary.right.floated.icon.button.zoomer.fly_right(href="/role/#{_id}/edit" title='edit role')
+                                            i.setting.icon
+                                    else
+                                        // else if can_take
+                                        .ui.tertiary.button.zoomer.take_role 
+                                            | take
+                                    a.ui.tertiary.button.zoomer(href="/role/#{_id}")
+                                        |view
+                                    
                     
 
 template(name='small_card')

@@ -58,9 +58,6 @@ template(name='home')
             img.ui.image(src="/12_color_code.jpeg")
         .eight.wide.scrolling.column
             // +quickchat
-            +comet_chat_block
-            .ui.divider
-            #cometchat.invert
             .ui.one.column.grid 
                 .centered.column.bordered
                 
@@ -123,6 +120,9 @@ template(name='home')
                             +home_card
         // .eight.wide.column.bordered
         .five.wide.scrolling.column
+            +comet_chat_block
+            .ui.divider
+            #cometchat.invert
             +bookmark_block
             +model_block model='post' icon='blog' color='42E8C4' title='latest posts'
             +model_block model='role' icon='shield' color='42E8C4' title='latest roles'

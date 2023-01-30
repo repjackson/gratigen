@@ -90,7 +90,8 @@ if Meteor.isClient
             # unless current_name is 'shop'
             #     Router.go '/shop'
             query = $('.search_site').val()
-            Session.set('current_query', query)
+            if query.length > 2
+                Session.set('current_query', query)
             # console.log Session.get('current_query')
             if e.key == "Escape"
                 Session.set('current_query', null)
