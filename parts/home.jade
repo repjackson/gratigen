@@ -221,8 +221,8 @@ template(name='home_card')
     // else if _is 'model' 'recipe'
     //     +recipe_card
     // else 
-    a.ui.link.card.zoomer.show_modal
-        .content
+    a.ui.link.card.zoomer
+        .content.show_modal
             span.left.floated
                 if icon 
                     +i name=icon color=icon_color
@@ -319,9 +319,8 @@ template(name='home_card')
                 //     .ui.small.label #{this}
             // if template_exists
             //     +Template.dynamic template=model_template
-            div
-            .extra.content
-                +comments
+        .extra.content
+            +comments
       
       
       

@@ -159,6 +159,8 @@ template(name='org_edit')
                     
 template(name='org_view')
     with current_doc
+        img.ui.fluid.image.bg_overlay(src="{{c.url image_id width=1000 crop='fit'}}")    
+
         .ui.stackable.padded.grid
             .row
                 .six.wide.column

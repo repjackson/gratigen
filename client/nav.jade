@@ -57,7 +57,7 @@ template(name='nav')
                     i.remove.icon
                     |#{this}
         each search_results 
-            .ui.button.goto_doc
+            button.ui.button.goto_doc
                 img.ui.avatar.image(src="{{c.url image_id width=200 height=200 gravity='face' crop='fill'}}")
                 |{{cut title}}
         // .six.wide.column
