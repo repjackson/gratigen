@@ -121,7 +121,7 @@ template(name='home')
         // .eight.wide.column.bordered
         .five.wide.scrolling.column
             +quickchat
-            +commet_chat_block
+            +comet_chat_block
             +model_block model='post' icon='blog' color='42E8C4' title='latest posts'
             +model_block model='role' icon='shield' color='42E8C4' title='latest roles'
             +model_block model='resource' icon='car' color='42E8C4' title='nearest resources'
@@ -205,15 +205,18 @@ template(name='your_bookmarks')
             each bookmark_docs 
                 a.ui.button(href="/#{model}/#{_id}")
                     |#{title}
-template(name='commet_chat_block')
-    .ui.header popup chat 
-    +launch_comet name='wolverine'
-    +launch_comet name='captain_america'
-    +launch_comet name='the flash'
-    +launch_comet name='the flast'
+template(name='comet_chat_block')
+    .ui.header 
+        i.chat.icon
+        |popup chat 
+    +launch_comet name='wolverine' id='superhero2' avatar='https://data-us.cometchat.io/assets/images/avatars/wolverine.png'
+    +launch_comet name='captain_america' id='superhero2' avatar='https://data-us.cometchat.io/assets/images/avatars/captainamerica.png'
+    +launch_comet name='spiderman' id='superhero3' avatar='https://data-us.cometchat.io/assets/images/avatars/spiderman.png'
+    +launch_comet name='iron man' id='superhero1' avatar='https://data-us.cometchat.io/assets/images/avatars/ironman.png'
 
 template(name='launch_comet')
-    .ui.button 
+    .ui.button.launch
+        img.ui.avatar.image(src=avatar)
         |#{name}
 
 template(name='model_block')
