@@ -97,7 +97,7 @@ template(name='org_edit')
                     .column
                         .ui.header required badges
                         +badge_picker
-                        +role_picker
+                        +role_crud
                         +task_picker
                         
                     .column
@@ -218,7 +218,7 @@ template(name='org_view')
                     .ui.large.selection.animated.list
                         each member_ids
                             +user_info
-                    +role_picker
+                    +role_crud
                     +eft_viewer
                             // a.item(href="/org/#{_id}/#{username}")
                             //     img.ui.mini.image(src="{{c.url image_id width=200 height=200}}")

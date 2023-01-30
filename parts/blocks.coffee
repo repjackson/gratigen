@@ -233,10 +233,10 @@ if Meteor.isServer
         
         
 if Meteor.isClient
-    Template.role_picker.onCreated ->
+    Template.role_crud.onCreated ->
         @autorun => @subscribe 'role_search_results', Session.get('role_search'), ->
         @autorun => @subscribe 'model_docs', 'role', ->
-    Template.role_picker.helpers
+    Template.role_crud.helpers
         role_results: ->
             Docs.find 
                 model:'role'
@@ -250,7 +250,7 @@ if Meteor.isClient
         role_search_value: ->
             Session.get('role_search')
         
-    Template.role_picker.events
+    Template.role_crud.events
         'click .clear_search': (e,t)->
             Session.set('role_search', null)
             t.$('.role_search').val('')
@@ -281,7 +281,23 @@ if Meteor.isClient
                 Docs.insert 
                     model:'role'
                     title:Session.get('role_search')
-            Router.go "/role/#{new_id}/edit"
+            Docs.update Router.current().params.doc_id,
+                $addToSet:
+                    role_ids:new_id
+                    role_titles:Session.get('role_search')
+            $('body').toast({
+                title: "added #{Session.get('role_search')}"
+                message: 'yeay'
+                class : 'success'
+                showIcon:'shield'
+                showProgress:'bottom'
+                position:'bottom right'
+            })
+                    
+            Session.set('role_search',null)
+        
+            # Docs.update
+            # Router.go "/role/#{new_id}/edit"
 
 
 if Meteor.isServer 
