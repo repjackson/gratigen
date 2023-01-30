@@ -68,34 +68,35 @@ if Meteor.isClient
             Meteor.call 'set_facets', @slug, true, ->
                 Session.set 'loading', false
     
-        'click .clear_search': -> Session.set('product_query',null)
-        # 'keyup .search_site': _.throttle((e,t)->
-        #     # console.log Router.current().route.getName()
-        #     current_name = Router.current().route.getName()
-        #     # $(e.currentTarget).closest('.input').transition('pulse', 100)
+        'click .clear_search': -> Session.set('current_query',null)
+        'keyup .search_site': _.throttle((e,t)->
+            # console.log Router.current().route.getName()
+            # current_name = Router.current().route.getName()
+            # $(e.currentTarget).closest('.input').transition('pulse', 100)
 
-        #     unless current_name is 'shop'
-        #         Router.go '/shop'
-        #     query = $('.search_site').val()
-        #     Session.set('product_query', query)
-        #     # console.log Session.get('product_query')
-        #     if e.key == "Escape"
-        #         Session.set('product_query', null)
+            # unless current_name is 'shop'
+            #     Router.go '/shop'
+            query = $('.search_site').val()
+            Session.set('current_query', query)
+            # console.log Session.get('current_query')
+            if e.key == "Escape"
+                Session.set('current_query', null)
+                $('.search_site').val('')
                 
-        #     if e.which is 13
-        #         search = $('.search_site').val().trim().toLowerCase()
-        #         if search.length > 0
-        #             picked_tags.push search
-        #             console.log 'search', search
-        #             # Meteor.call 'log_term', search, ->
-        #             $('.search_site').val('')
-        #             Session.set('product_query', null)
-        #             # # $('#search').val('').blur()
-        #             # # $( "p" ).blur();
-        #             # Meteor.setTimeout ->
-        #             #     Session.set('dummy', !Session.get('dummy'))
-        #             # , 10000
-        # , 500)
+            if e.which is 13
+                search = $('.search_site').val().trim().toLowerCase()
+                if search.length > 0
+                    picked_tags.push search
+                    console.log 'search', search
+                    # Meteor.call 'log_term', search, ->
+                    $('.search_site').val('')
+                    Session.set('current_query', null)
+                    # # $('#search').val('').blur()
+                    # # $( "p" ).blur();
+                    # Meteor.setTimeout ->
+                    #     Session.set('dummy', !Session.get('dummy'))
+                    # , 10000
+        , 500)
     
         'click .alerts': ->
             Session.set('viewing_alerts', !Session.get('viewing_alerts'))
@@ -133,10 +134,11 @@ if Meteor.isClient
             console.log Session.get('invert_mode')
         
     Template.nav.helpers
+        picked_tags:-> picked_tags.array()
         model_docs: ->
             Docs.find 
                 model:'model'
-        current_site_search: -> Session.get('product_query')
+        current_site_search: -> Session.get('current_query')
         unread_count: ->
             unread_count = Docs.find({
                 model:'message'
