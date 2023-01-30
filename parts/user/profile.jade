@@ -4,7 +4,7 @@ template(name='profile_layout')
     div
     .ui.attached.small.borderless.inverted.menu.hscroll
     with current_user
-        img.ui.image.checkin_banner(src="{{c.url image_id2 width=1000 }}")
+        img.ui.image.bg_overlay(src="{{c.url image_id2 width=1000 }}")
         .ui.stackable.padded.grid
             // .row
             .four.wide.column.scrolling
@@ -87,50 +87,52 @@ template(name='profile_layout')
                 if is_dev
                     +print_this
             .twelve.wide.column.scrolling
-                +profile_link route='dashboard' icon='dashboard'
-                +profile_link route='about' icon='info'
-                +profile_link route='credits' icon='donate'
-                +profile_link route='debits' icon='gift'
-                +profile_link route='credit' icon='money'
-                +profile_link route='events' icon='calendar'
-                +profile_link route='requests' icon='service-bell'
-                +profile_link route='offers' icon='hand-holding-heart'
-                +profile_link route='food' icon='food'
-                +profile_link route='chat' icon='chat'
-                +profile_link route='badges' icon='prize'
-                +profile_link route='delivery' icon='car'
-                +profile_link route='skills' icon='wrench' color='ff0000'
-                div
                 .ui.stackable.padded.grid
-                    .four.wide.column.scrolling    
-                        .ui.segment Roles
-                        .ui.segment Organizations
-                        .ui.segment Products
+                    +profile_section key='roles' icon='Roles'
+                    +profile_section key='Organizations' icon='info'
+                    +profile_section key='Products' icon='donate'
+                    +profile_section key='Resources' icon='gift'
+                    +profile_section key='Groups' icon='money'
+                    +profile_section key='Services' icon='calendar'
+                    +profile_section key='Tasks' icon='service-bell'
+                    +profile_section key='Projects' icon='hand-holding-heart'
+                    +profile_section key='Badges' icon='food'
+                    +profile_section key='Skills' icon='chat'
+                    +profile_section key='Events' icon='prize'
+                    +profile_section key='Accounts' icon='car'
+                    // +profile_section key='skills' icon='wrench' color='ff0000'
+                    div
+                    // .four.wide.column.scrolling    
+                    //     .ui.segment Roles
+                    //     .ui.segment Organizations
+                    //     .ui.segment Products
     
-                        //organizations, skills, 
-                        .spacer
-                        .spacer
-                        .ui.button.sponsor
-                            |sponsor
-                        +yield    
-                    .four.wide.column.scrolling
-                        .ui.segment Resources
-                        .ui.segment Groups
-                        .ui.segment Services
-                    .four.wide.column.scrolling
-                        .ui.segment Tasks
-                        .ui.segment Projects
-                        .ui.segment Badges
-                    .four.wide.column.scrolling
-                        .ui.segment Skills
-                        .ui.segment Events
-                        .ui.segment Accounts
+                    //     //organizations, skills, 
+                    //     .spacer
+                    //     .spacer
+                    //     .ui.button.sponsor
+                    //         |sponsor
+                    //     +yield    
+                    // .four.wide.column.scrolling
+                    //     .ui.segment Resources
+                    //     .ui.segment Groups
+                    //     .ui.segment Services
+                    // .four.wide.column.scrolling
+                    //     .ui.segment Tasks
+                    //     .ui.segment Projects
+                    //     .ui.segment Badges
+                    // .four.wide.column.scrolling
+                    //     .ui.segment Skills
+                    //     .ui.segment Events
+                    //     .ui.segment Accounts
 
-template(name='profile_link')
-    a.ui.compact.circular.button(href="/user/#{current_user.username}/#{route}" class="{{isActiveRoute 'user_dashboard'}}" title="#{current_user.username} dashboard")
-        // i.dashboard.icon
-        +i name=icon color=color
-        span.mobile.hidden #{route}
+template(name='profile_section')
+    .four.wide.column
+        .ui.segment
+            // i.dashboard.icon
+            .ui.header
+                +i name=icon color=color
+                |#{key}
 
 
 

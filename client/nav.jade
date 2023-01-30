@@ -2,7 +2,7 @@ template(name='nav')
     // https://fomantic-ui.com/elements/icon.html#/icon
     // #topnav.topnav.ui.fluid.padded.divided.centered.middle.aligned.grid 
     // #topnav.topnav.ui.attached.borderless.fixed.menu.hscroll(class=invert_class)
-    .topnav.ui.borderless.attache.fixed.sticky.menu.hscroll(class=invert_class)
+    .topnav.ui.borderless.fixed.sticky.menu.hscroll(class=invert_class)
         // .four.wide.column
         // .item
             // if is_loading
@@ -37,9 +37,7 @@ template(name='nav')
         a.item(href="/add" title='Engage')
             // i.large.play.icon
             // +add_tab
-            +i name='play-button-circled--v1' color='40C057'
-            
-            
+            +i name='play-button-circled--v1' color='40C057' cl='ui mini image'
         // a.center.toggle_addmode.item.zoomer.pointer(title='Engage')
         //     +i name='play-button-circled--v1' color='40C057'
         //     // i.small.circular.play.green.icon.invert
@@ -58,14 +56,14 @@ template(name='nav')
         .right.menu
             if unread_count
                 a.ui.item.alerts.select_term(href="#" class=alert_toggle_class)
-                    i.large.bell.big.yellow.icon
+                    i.large.bell.small.yellow.icon
                     if unread_count
                         |#{unread_count}
             else
                 a.ui.icon.item(href="/inbox" class="{{isActiveRoute 'inbox'}}")
                     i.large.outline.bell.big.blue.icon
             a.ui.item.zoomer.toggle_rightbar(href="/chat" class="{{isActiveRoute 'chat'}}")
-                i.large.chat.outline.big.blue.icon
+                i.small.chat.outline.big.blue.icon
                 // +i name='chat' color='blue'
 
             if currentUser
