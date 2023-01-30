@@ -262,6 +262,8 @@ if Meteor.isClient
                     $pull:
                         role_ids:@_id
                         role_titles:@title
+                $(e.currentTarget).closest('.card').transition('fly right', 500)
+
         'click .pick_role': (e,t)->
             Docs.update Router.current().params.doc_id,
                 $addToSet:

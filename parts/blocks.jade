@@ -538,6 +538,7 @@ template(name='role_crud')
     .ui.segment
         .ui.header 
             +i name='shield'
+            |#{picked_roles.count}
             | roles
         // if is_admin
         .ui.icon.large.input 
@@ -547,17 +548,19 @@ template(name='role_crud')
                 i.search.icon
             input.role_search(type='text' placeholder='search' value=role_search_value)
         if role_results
-            .ui.selection.link.animated.list
-                each role_results
-                    .ui.item.pick_role.zoomer
+            // .ui.selection.link.animated.list
+            each role_results
+                .ui.basic.circular.large.button.pick_role.zoomer
+                    i.grey.plus.icon
+                    if image_id
                         img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
-                        |#{title}
+                    |#{title}
         // else if role_search_value
         .ui.button.create_role
             |add #{role_search_value}
         if picked_roles
             .ui.header 
-                |#{picked_roles.length}
+                |#{picked_roles.count}
                 |picked roles
             .ui.list.smallscroll
                 each picked_roles
@@ -577,10 +580,15 @@ template(name='role_crud')
                                         |remove 
                                     .ui.tertiary.button.assign_role 
                                         | assign
+                                    if is_assigning 
+                                        each role_holders 
+                                            .ui.label #{username}
                                 else
                                     // else if can_take
                                     .ui.tertiary.button.remove_role 
                                         | take
+                                .ui.tertiary.button 
+                                
                     
 
 template(name='small_card')

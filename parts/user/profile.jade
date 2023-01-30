@@ -510,8 +510,8 @@ template(name='user_tribes')
     if is_current_user
         a.ui.circular.basic.icon.button(href="/user/#{current_user.username}/edit/tribes")
             i.pencil.icon
-    .ui.header leader of
-    each user_leader_tribes
+    .ui.header lead of
+    each user_lead_tribes
         .ui.segment
             a.ui.header(href="/m/tribe/#{_id}/view") #{title}
             if is_current_user

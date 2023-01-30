@@ -82,7 +82,7 @@ template(name='org_edit')
     .ui.stackable.padded.grid
         .row
             .ui.stackable.padded.grid
-                .three.column.row 
+                .two.column.row 
                     .column
                         .ui.inline.header 
                             +icolor name='group' cl='ui image inline pointer'
@@ -91,7 +91,6 @@ template(name='org_edit')
                             i.checkmark.big.icon
                         +text_edit key='title' label='title' direct=true
                         
-                    .column
                         +html_edit key='content' label='content' direct=true
                         +youtube_edit key='youtube_id' label='youtube id' direct=true
                     .column
@@ -155,33 +154,30 @@ template(name='org_edit')
                     .column
                         +model_picker model='skill' icon='wrench'
 
-                    
 template(name='org_view')
     with current_doc
-        img.ui.fluid.image.bg_overlay(src="{{c.url image_id width=1000 crop='fit'}}")    
-
-        .ui.stackable.padded.grid
+        img.ui.fluid.image.bg_overlay(src="{{c.url image_id width=1000 crop='fit'}}")
+        if can_edit
+            a.ui.circular.basic.icon.button.fly_down(href="/org/#{_id}/edit")
+            i.setting.large.icon
+        .ui.stackable.padded.grid.scrolling
+        
             .row
-                .six.wide.column
-                    a.ui.circular.tertiary.button(href="/orgs")
-                        i.left.chevron.icon
-                        +i name='campfire' cl='ui mini inline image'
-                        |orgs
-                    .ui.inline.header
+                a.ui.circular.tertiary.button(href="/orgs")
+                    i.left.chevron.icon
+                    +i name='campfire' cl='ui mini inline image'
+                    |orgs
+            .row
+                .ui.centered.huge.header
                         |#{title}
-                    with leader
-                        +user_info
+                .six.wide.column
+                    a.ui.basic.button(href="/user/#{lead}") lead
+                        with lead
+                            +user_info
+                    .ui.basic.button support
+                    .ui.basic.button safety
                     .ui.inline.header
-                        |support
-                        |safety
-                    // .ui.header 
-                    //     if icon
-                    //         +i name=icon
-                    //     |#{title}
                     
-                    if can_edit
-                        a.ui.circular.basic.icon.button.fly_down(href="/org/#{_id}/edit")
-                            i.setting.large.icon
                     +image_view key='image_id' icon='image' label='image'
                     +array_view key='tags' icon='tags'
                     .spacer
@@ -207,11 +203,6 @@ template(name='org_view')
                     +html_view key='description' icon='content' label='description'
                     .ui.inline.header 
                         +i name='crown' cl='ui avatar image'
-                        |leader: 
-                    with leader 
-                        +user_info
-                    // a.ui.basic.button(href="/user/#{leader}")
-                    //     |#{leader}
                     .ui.header 
                         +i name='orgs'
                         |#{member_ids.count} members
