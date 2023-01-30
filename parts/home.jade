@@ -57,7 +57,10 @@ template(name='home')
             // .ui.button create request
             img.ui.image(src="/12_color_code.jpeg")
         .eight.wide.scrolling.column
-            #cometchat
+            // +quickchat
+            +comet_chat_block
+            .ui.divider
+            #cometchat.invert
             .ui.one.column.grid 
                 .centered.column.bordered
                 
@@ -120,8 +123,6 @@ template(name='home')
                             +home_card
         // .eight.wide.column.bordered
         .five.wide.scrolling.column
-            +quickchat
-            +comet_chat_block
             // +model_block model='post' icon='blog' color='42E8C4' title='latest posts'
             // +model_block model='role' icon='shield' color='42E8C4' title='latest roles'
             // +model_block model='resource' icon='car' color='42E8C4' title='nearest resources'
