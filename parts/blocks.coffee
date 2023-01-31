@@ -276,23 +276,27 @@ if Meteor.isClient
             Session.equals 'assigning_docid',@_id
             
         has_taken: ->
-            ref_doc = Docs.findOne Router.current().params.doc_id
-            if ref_doc and ref_doc.taken_by_user_id
-                if Meteor.userId() and Meteor.userId() is ref_doc.taken_by_user_id
-                    true
-                else 
-                    false
-            else 
-                false
+            @taken_by_user_id and Meteor.userId() is @taken_by_user_id
+            # ref_doc = Docs.findOne Router.current().params.doc_id
+            # if ref_doc and ref_doc.taken_by_user_id
+            #     if Meteor.userId() and Meteor.userId() is ref_doc.taken_by_user_id
+            #         true
+            #     else 
+            #         false
+            # else 
+            #     false
         is_taken: ->
-            ref_doc = Docs.findOne Router.current().params.doc_id
-            if ref_doc and ref_doc.taken_by_user_id
-                true
+            @taken_by_user_id
+            # ref_doc = Docs.findOne Router.current().params.doc_id
+            # if ref_doc and ref_doc.taken_by_user_id
+            #     true
         can_take: ->
-            ref_doc = Docs.findOne Router.current().params.doc_id
-            if ref_doc and ref_doc.taken_by_user_id
-                false
-            else true
+            if @taken_by_user_id then false else true
+            
+            # ref_doc = Docs.findOne Router.current().params.doc_id
+            # if ref_doc and @taken_by_user_id
+            #     false
+            # else true
             #     if Meteor.userId() and Meteor.userId() is ref_doc.taken_by_user_id
             #         true
             #     else 
@@ -300,7 +304,7 @@ if Meteor.isClient
             # eles 
             #     false
         taken_user: ->
-            ref_doc = Docs.findOne Router.current().params.doc_id
+            ref_doc = Docs.findOne @_id
             Meteor.users.findOne _id:ref_doc.taken_by_user_id
             
             
@@ -312,10 +316,12 @@ if Meteor.isClient
             t.$('.role_search').val('')
 
         'click .take_role': ->
+            console.log @
             Docs.update @_id,
                 $set:taken_by_user_id:Meteor.userId()
     
         'click .release_role': ->
+            console.log @
             Docs.update @_id,
                 $unset:taken_by_user_id:1
     
