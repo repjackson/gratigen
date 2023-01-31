@@ -89,6 +89,8 @@ if Meteor.isClient
 
             # unless current_name is 'shop'
             #     Router.go '/shop'
+            
+            
             query = $('.search_site').val()
             if query.length > 2
                 Session.set('current_query', query)
@@ -100,12 +102,21 @@ if Meteor.isClient
             if e.which is 13
                 search = $('.search_site').val().trim().toLowerCase()
                 if search.length > 0
-                    picked_tags.push search
-                    console.log 'search', search
-                    
+
+                    match = {}
+                    match.title =  {$regex:"#{Session.get('current_query')}", $options: 'i'}
+                    found_results = Docs.find(match).count()
+                    if found_results is 1
+                        found_result = Docs.findOne match 
+                        console.log found_result
+                        Router.go "/#{found_result.model}/#{found_result._id}"
+                    else 
+                        picked_tags.push search
+                        console.log 'search', search
                     # Meteor.call 'log_term', search, ->
                     $('.search_site').val('')
                     Session.set('current_query', null)
+                    
                     # # $('#search').val('').blur()
                     # # $( "p" ).blur();
                     # Meteor.setTimeout ->

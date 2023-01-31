@@ -338,9 +338,9 @@ if Meteor.isClient
                 
         doc_results: ->
             # Docs.find {model:$ne:'comment'},
-            Docs.find {model:$nin:['model','comment']},
+            Docs.find {model:$nin:['model','comment','message']},
                 sort:_timestamp:-1
-                limit:20
+                limit:10
                 
     Template.home.onRendered ->
         categoryContent = [
