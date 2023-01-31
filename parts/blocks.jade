@@ -107,7 +107,7 @@ template(name='session_toggle')
         
 template(name='bookmark_button')
     if currentUser
-        .ui.icon.compact.button.toggle_bookmark(class=bookmark_button_class title=label)
+        .ui.icon.compact.tertiary.button.toggle_bookmark(class=bookmark_button_class title=label)
             if is_bookmarked
                 // |bookmarked
                 i.red.bookmark.large.icon
@@ -138,7 +138,7 @@ template(name='comments')
                         a(href="/user/#{_author.username}") #{_author.name}
                         if currentUser
                             +voting_small
-                            if can_edit
+                            if currentUser.admin_mode
                                 +remove_button
                                 
                                 
@@ -160,7 +160,7 @@ template(name='reviews')
                         // a(href="/user/#{author.username}") #{author.first_name} #{author.last_name}
                             // if currentUser
                         +voting_small
-                        // if can_edit
+                        // if currentUser.admin_mode
                         //     +remove_button
 
 
@@ -534,10 +534,11 @@ template(name='model_picker')
                         i.remove.link.circular.red.icon.zoomer.remove_model
                     
 
-template(name='role_picker')
+template(name='role_crud')
     .ui.segment
         .ui.header 
             +i name='shield'
+            |#{picked_roles.count}
             | roles
         // if is_admin
         .ui.icon.large.input 
@@ -547,104 +548,94 @@ template(name='role_picker')
                 i.search.icon
             input.role_search(type='text' placeholder='search' value=role_search_value)
         if role_results
-            .ui.selection.link.animated.list
-                each role_results
-                    .ui.item.pick_role.zoomer
+            // .ui.selection.link.animated.list
+            each role_results
+                .ui.basic.circular.large.button.pick_role.zoomer
+                    i.grey.plus.icon
+                    if image_id
                         img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
-                        |#{title}
+                    |#{title}
         // else if role_search_value
         .ui.button.create_role
             |add #{role_search_value}
-         +small_card
-    
-    if product_roles
+        // if picked_roles
         .ui.header 
-            |#{product_roles.length}
+            |#{picked_roles.count}
             |picked roles
-        .ui.list
-            each product_roles
-                .ui.item
-                    img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
-                    |#{title}
-                    i.remove.link.icon.zoomer.remove_role
+        .smallscroll
+            each picked_roles
+                 .ui.horizontal.card.zoomer.show_modal
+                    .content
+                        .ui.grid
+                            .row
+                                // .column
+                                .fourteen.wide.column
+                                    .left.floated
+                                        a.ui.inline.header
+                                            |!{title} 
+                                        img(src="{{c.url image_id width=50 height=50}}")
+                                        div
+                                        |!{content}
+                                .two.wide.column
+                                    .right.floated
+                                        if _is 'model' 'role'
+                                            +ismall name='what-i-do' color='42E8C4' cl='ui inline image'
+                                        div
+                                        |#{when}
+                            .row
+                                .sixteen.wide.column
+                                    if currentUser.admin_mode
+                                        .ui.tertiary.button.zoomer.remove_role 
+                                            |remove 
+                                        .ui.tertiary.button.zoomer.assign_role 
+                                            | assign
+                                        if is_assigning 
+                                            each role_holders 
+                                                .ui.label #{username}
+                                        else 
+                                            with assigned_users
+                                                .ui.green.label #{username}
+                                        a.ui.tertiary.right.floated.icon.button.zoomer.fly_right(href="/role/#{_id}/edit" title='edit role')
+                                            i.setting.icon
+                                    else
+                                        // else if can_take
+                                        .ui.tertiary.button.zoomer.take_role 
+                                            | take
+                                    a.ui.tertiary.button.zoomer(href="/role/#{_id}")
+                                        |view
+                                    
                     
 
 template(name='small_card')
-    // if _is 'model' 'role'
-    //     +role_card
-    // else if _is 'model' 'event'
-    //     +event_card
-    // else if _is 'model' 'recipe'
-    //     +recipe_card
-    // else 
     a.ui.link.horizontal.card.zoomer.show_modal
         .content 
             a.inline.header
                 if _is 'model' 'org' 
-                    +i name='groups' color='83DFF4'
+                    +i name='groups' color='83DFF4' cl='ui inline mini image'
                 if _is 'model' 'project'
-                    +i name='project' color='7229AF'
+                    +i name='project' color='7229AF' cl='ui inline mini image'
                 if _is 'model' 'post'
-                    +i name='for-you' color='1255B8'
+                    +i name='for-you' color='1255B8' cl='ui inline mini image'
                 if _is 'model' 'event'
-                    +i name='calendar' color='FAB005'
+                    +i name='calendar' color='FAB005' cl='ui inline mini image'
                 if _is 'model' 'task'
-                    +i name='task' color='B785E1'
+                    +i name='task' color='B785E1' cl='ui inline mini image'
                 if _is 'model' 'offer'
-                    +i name='hand-holding-heart' color='FF73EA'
+                    +i name='hand-holding-heart' color='FF73EA' cl='ui inline mini image'
                 if _is 'model' 'request'
-                    +i name='commercial' color='40C057'
+                    +i name='commercial' color='40C057' cl='ui inline mini image'
                 if _is 'model' 'role'
-                    +i name='what-i-do' color='42E8C4'  
+                    +i name='what-i-do' color='42E8C4' cl='ui inline mini image'
                 if _is 'model' 'resource'
-                    +i name='field-and-tractor' color='42E8C4'      
+                    +i name='field-and-tractor' color='42E8C4' cl='ui inline mini image'    
+            |#{title} 
+            img.ui.fluid.image(src="{{c.url image_id width=50 height=50}}")
+        .content
+            .right.floated
+                |#{when}
+                div
+                |remove | assign
 
-                
-                // .ui.label #{model}
-                |#{title} 
-                // #{body}
-            |#{when}
-        img.ui.fluid.image(src="{{c.url image_id width=50 height=50}}")
-        .content 
-            .description
-                // .ui.header lat: #{lat}
-                // .ui.header lng: #{lng}
-                //     // i.newspaper.large.icon
-                if location 
-                    // .ui.label 
-                        // i.marker.icon
-                    |#{location}
-                .ui.image 
-                    img.ui.image(src="{{c.url _author.image_id width=50 height=50}}")
-                    // i.user.icon
-                    |#{_author_username}
-                // if tags 
-                //     each seven_tags 
-                //         .ui.basic.label #{this}
-                +eft_viewer_small
-                
-      
-            .content
-                .right.floated
-                    |remove | assign
-                    // | #{views} views
-                // if _author_id
-                //     +author_info
-                // +voting
-                    //- i.eye.icon
-                //     each viewer_usernames
-                //         .ui.small.inverted.label #{this}
-                // //- +comments
-                +eft_viewer
-                if currentUser.admin_mode
-                    +print_this
-                    +remove_button
-                each tags 
-                    .ui.small.label #{this}
-            if template_exists
-                +Template.dynamic template=model_template
-            .content
-                // +comments
 
       
 template(name='task_picker')
@@ -832,7 +823,7 @@ template(name='email_validation_check')
         
 
 template(name='print_this')
-    .ui.icon.basic.button.print
+    .ui.icon.tertiary.button.print
         i.orange.code.icon
 
 template(name='online_allies')

@@ -31,7 +31,7 @@ template(name='org_card')
                 |#{title}
             |#{member_ids.length} members
             .smallscroll
-                |!{description}
+                |!{body}
             //+ismall name='tags' cl='ui inline image'
             each ten_tags
                 .ui.basic.label #{this}
@@ -79,109 +79,103 @@ template(name='org_reservations')
 
 
 template(name='org_edit')
-    .ui.stackable.padded.grid
-        .row
-            .ui.stackable.padded.grid
-                .three.column.row 
-                    .column
-                        .ui.inline.header 
-                            +icolor name='group' cl='ui image inline pointer'
-                            
-                        a.ui.icon.green.big.button(href="/role/#{_id}" title='save')
-                            i.checkmark.big.icon
-                        +text_edit key='title' label='title' direct=true
-                        
-                    .column
-                        +html_edit key='content' label='content' direct=true
-                        +youtube_edit key='youtube_id' label='youtube id' direct=true
-                    .column
-                        .ui.header required badges
-                        +badge_picker
-                        +role_picker
-                        +task_picker
-                        
-                    .column
-                        +model_picker model='event' icon='calendar'
-                        
-                        i.large.link.red.remove.icon.delete_role
-                    .column
-                        .ui.header 
-                            small owner - each id should be stored in user account or as nft in crypto wallet.
-                            
-                        .ui.header 
-                            small author
-                            |#{_author.username}
-                        .ui.basic.center.aligned.segment
-                            +eft_picker color="FF73EA" icon='food' label='food'
-                            +eft_picker color="B785E1" icon='home' label='housing'
-                            +eft_picker color="7229AF" icon='tshirt' label='clothing'
-                            +eft_picker color="1255B8" icon='car' label='transportation'
-                            +eft_picker color="83DFF4" icon='lightning' label='energy'
-                            +eft_picker color="42E8C4" icon='leaf' label='zero waste'
-                            +eft_picker color="40C057" icon='smile' label='wellness'
-                            +eft_picker color="FAB005" icon='university' label='education'
-                            +eft_picker color="FD7E14" icon='paint brush' label='art'
-                            +eft_picker color="FF0000" icon='users' label="community core"
-                            
-                    .column
-                        if is_dev
-                            +single_user_edit key='_author_id' label='author' direct=true
-                        +image_edit key='image_id' label='image' direct=true
-                        div 
-                        +array_edit key='tags' label='tags' direct=true icon='tags'
-                         +boolean_edit key='published' icon='visible' direct=true
-                        if is_dev 
-                            +text_edit key='model' label='model' direct=true
-                    .column
-                        div
-                        +html_edit key='responsibilities' label='responsibilities'
-                        div
-                        +array_edit key='location_tags' label='location_tags' direct=true
-                        // unless published
-                        //     a.ui.fluid.green.button.submit(href="/save")
-                        //         i.checkmark.icon
-                        //         |publish
-                        // else
-                        //     .ui.basic.button.unpublish 
-                        //         |unpublish
-                    .column
-                        .ui.header
-                            |audience
-                        +boolean_edit key='private' label='private' 
-                        if private 
-                            +multi_user_edit key='access_user_ids' label='user picker' direct=true
-                    .column
-                        +group_picker
-                        +array_edit key='skills' label='skills' icon='wrench' direct=true
-                    .column
-                        +model_picker model='skill' icon='wrench'
-
-                    
-template(name='org_view')
     with current_doc
-        img.ui.fluid.image.bg_overlay(src="{{c.url image_id width=1000 crop='fit'}}")    
-
         .ui.stackable.padded.grid
             .row
+                .ui.stackable.padded.grid
+                    .two.column.row 
+                        .column
+                            .ui.header editing #{title} org
+                            .ui.inline.header 
+                                +icolor name='group' cl='ui image inline pointer'
+                                
+                            a.ui.icon.green.big.button(href="/org/#{_id}" title='save')
+                                i.checkmark.big.icon
+                            +text_edit key='title' label='title' direct=true
+                            
+                            +html_edit key='body' label='body' direct=true
+                            +youtube_edit key='youtube_id' label='youtube id' direct=true
+                        .column
+                            .ui.header required badges
+                            +badge_picker
+                            +role_crud
+                            +task_picker
+                            
+                        .column
+                            +model_picker model='event' icon='calendar'
+                            
+                            i.large.link.red.remove.icon.delete_role
+                        .column
+                            .ui.header 
+                                small owner - each id should be stored in user account or as nft in crypto wallet.
+                                
+                            .ui.header 
+                                small author
+                                |#{_author.username}
+                            .ui.basic.center.aligned.segment
+                                +eft_picker color="FF73EA" icon='food' label='food'
+                                +eft_picker color="B785E1" icon='home' label='housing'
+                                +eft_picker color="7229AF" icon='tshirt' label='clothing'
+                                +eft_picker color="1255B8" icon='car' label='transportation'
+                                +eft_picker color="83DFF4" icon='lightning' label='energy'
+                                +eft_picker color="42E8C4" icon='leaf' label='zero waste'
+                                +eft_picker color="40C057" icon='smile' label='wellness'
+                                +eft_picker color="FAB005" icon='university' label='education'
+                                +eft_picker color="FD7E14" icon='paint brush' label='art'
+                                +eft_picker color="FF0000" icon='users' label="community core"
+                                
+                        .column
+                            if is_dev
+                                +single_user_edit key='_author_id' label='author' direct=true
+                            +image_edit key='image_id' label='image' direct=true
+                            div 
+                             +boolean_edit key='published' icon='visible' direct=true
+                            if is_dev 
+                                +text_edit key='model' label='model' direct=true
+                        .column
+                            div
+                            +html_edit key='responsibilities' label='responsibilities'
+                            div
+                            +array_edit key='location_tags' label='location_tags' direct=true
+                            // unless published
+                            //     a.ui.fluid.green.button.submit(href="/save")
+                            //         i.checkmark.icon
+                            //         |publish
+                            // else
+                            //     .ui.basic.button.unpublish 
+                            //         |unpublish
+                        .column
+                            .ui.header
+                                |audience
+                            +boolean_edit key='private' label='private' 
+                            if private 
+                                +multi_user_edit key='access_user_ids' label='user picker' direct=true
+                        .column
+                            +group_picker
+                            +array_edit key='skills' label='skills' icon='wrench' direct=true
+                        .column
+                            +model_picker model='skill' icon='wrench'
+
+template(name='org_view')
+    with current_doc
+        img.ui.fluid.image.bg_overlay(src="{{c.url image_id width=1000 crop='fit'}}")
+        
+        .ui.stackable.padded.grid.scrolling
+            .row
+                .sixteen.wide.column
+                    .left_floated
+                        a.ui.circular.tertiary.button(href="/orgs")
+                            i.left.chevron.icon
+                            +ismall name='groups' color='83DFF4' 
+                            |orgs
+                    .right_floated
+                        if can_edit
+                            a.ui.circular.tertiary.icon.button.floated.right.fly_down(href="/org/#{_id}/edit" title="edit #{title}")
+                                i.setting.large.icon
+
+                .ui.centered.huge.header
+                    |#{title}
                 .six.wide.column
-                    .ui.inline.header
-                        |#{title}
-                    with leader
-                        +user_info
-                    .ui.inline.header
-                        |support
-                        |safety
-                    // .ui.header 
-                    //     if icon
-                    //         +i name=icon
-                    //     |#{title}
-                    a.ui.circular.basic.button(href="/orgs")
-                        i.left.chevron.icon
-                        +i name='campfire' cl='ui mini inline image'
-                        |orgs
-                    if can_edit
-                        a.ui.circular.basic.icon.button.fly_down(href="/org/#{_id}/edit")
-                            i.setting.large.icon
                     +image_view key='image_id' icon='image' label='image'
                     +array_view key='tags' icon='tags'
                     .spacer
@@ -197,6 +191,7 @@ template(name='org_view')
                             i.marker.icon
                             |#{address}
                     +viewing
+                    +bookmark_button
                     if in_dev 
                         +print_this
                     +multi_user_view key='member_ids' label='members' 
@@ -204,21 +199,19 @@ template(name='org_view')
                     +org_subscription
     
                 .five.wide.column
-                    +html_view key='description' icon='content' label='description'
-                    .ui.inline.header 
-                        +i name='crown' cl='ui avatar image'
-                        |leader: 
-                    with leader 
-                        +user_info
-                    // a.ui.basic.button(href="/user/#{leader}")
-                    //     |#{leader}
-                    .ui.header 
-                        +i name='orgs'
-                        |#{member_ids.count} members
-                    .ui.large.selection.animated.list
-                        each member_ids
+                    .ui.header leaders
+                    a.ui.basic.button(href="/user/#{lead}") lead
+                        with lead
                             +user_info
-                    +role_picker
+                    .ui.basic.button support
+                    .ui.basic.button safety
+                    .ui.basic.button creator  
+                    .ui.header 
+                        |#{member_ids.count} members
+                    each member_ids
+                        +user_info
+                    |!{body}
+                    +role_crud
                     +eft_viewer
                             // a.item(href="/org/#{_id}/#{username}")
                             //     img.ui.mini.image(src="{{c.url image_id width=200 height=200}}")
@@ -227,11 +220,11 @@ template(name='org_view')
                             //             |#{username}
                 .five.wide.column
                     if is_member
-                        .ui.button.leave(title='click to leave')
+                        .ui.big.button.leave(title='click to leave')
                             i.checkmark.icon
                             |member
                     else 
-                        .ui.button.join(title='')
+                        .ui.big.button.join(title='')
                             i.user.plus.icon
                             |join
                     // +doc_array_togggle key='member_ids' value=currentUser._id add_label='join' remove_label='joined'
