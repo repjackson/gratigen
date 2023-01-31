@@ -319,12 +319,28 @@ if Meteor.isClient
             console.log @
             Docs.update @_id,
                 $set:taken_by_user_id:Meteor.userId()
-    
+            $('body').toast({
+                title: "#{@title} taken"
+                message: 'yeay'
+                class : 'success'
+                showIcon:'shield'
+                showProgress:'bottom'
+                position:'bottom right'
+            })
+
         'click .release_role': ->
             console.log @
             Docs.update @_id,
                 $unset:taken_by_user_id:1
-    
+            $('body').toast({
+                title: "role released: #{@title}"
+                message: 'yeay'
+                class : 'info'
+                showIcon:'shield'
+                showProgress:'bottom'
+                position:'bottom right'
+            })
+
             
         'click .remove_role': (e,t)->
             if confirm "remove #{@title} role?"

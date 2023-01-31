@@ -614,6 +614,7 @@ template(name='role_crud')
                                     if has_taken 
                                         |taken by #{taken_user.name}
                                         .ui.button.release_role
+                                            i.undo.icon
                                             |release 
                                     else if can_take
                                         .ui.tertiary.button.zoomer.take_role 
@@ -772,36 +773,79 @@ template(name='badge_picker')
 
 template(name='event_picker')
     .ui.header 
-        +i name='shield'
-        | events
-    // if is_admin
-    .ui.icon.large.input 
-        if event_search_value
-            i.large.red.remove.link.icon.zoomer.clear_search
-        else 
-            i.search.icon
-        input.event_search(type='text' placeholder='search' value=event_search_value)
-    if event_results
-        .ui.selection.link.animated.list
+            +i name='shield'
+            |#{picked_tasks.count}
+    eventtasks
+        // if is_admin
+        .ui.icon.large.input 
+            if event_search_value
+                i.large.red.remove.link.icon.zoomer.clear_search
+            else 
+                i.search.icon
+            input.event_search(type='text' placeholder='search' value=event_search_value)
+        if event_results
+            // .ui.selection.link.animated.list
             each event_results
-                .ui.item.pick_event.zoomer
-                    img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+                .ui.basic.circular.large.button.pick_event.zoomer
+                    i.grey.plus.icon
+                    if image_id
+                        img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
                     |#{title}
-    // else if event_search_value
-    .ui.button.create_event
-        |add #{event_search_value}
-    
-    if product_events
+        // else if event_search_value
+        .ui.button.create_event
+            |add #{event_search_value}
+        // if picked_events
         .ui.header 
-            |#{product_events.length}
+            |#{picked_events.count}
             |picked events
-        .ui.list
-            each product_events
-                .ui.item
-                    img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
-                    |#{title}
-                    i.remove.link.icon.zoomer.remove_event
-
+        .smallscroll
+            each picked_events
+                 .ui.horizontal.fluid.card.show_modal
+                    .content
+                        .ui.grid
+                            .row
+                                // .column
+                                .fourteen.wide.column
+                                    .left.floated
+                                        a.ui.inline.header
+                                            |!{title} 
+                                        img(src="{{c.url image_id width=50 height=50}}")
+                                        div
+                                        |!{content}
+                                .two.wide.column
+                                    .right.floated
+                                        if _is 'model' 'event'
+                                            +ismall name='what-i-do' color='42E8C4' cl='ui inline image'
+                                        div
+                                        |#{when}
+                            .row
+                                .sixteen.wide.column
+                                    +eft_view_item_small
+                                    if currentUser.admin_mode
+                                        .ui.tertiary.button.zoomer.remove_event 
+                                            i.remove.icon
+                                            |remove 
+                                        .ui.tertiary.button.zoomer.assign_event 
+                                            i.user.plus.icon
+                                            | assign
+                                        if is_assigning 
+                                            each event_holders 
+                                                .ui.label #{username}
+                                        else 
+                                            with assigned_users
+                                                .ui.green.label #{username}
+                                        a.ui.tertiary.right.floated.icon.button.zoomer.fly_right(href="/role/#{_id}/edit" title='edit role')
+                                            i.setting.icon
+                                    else
+                                        // else if can_take
+                                        .ui.tertiary.button.zoomer.take_role 
+                                            i.checkmark.icon
+                                            | take
+                                    a.ui.tertiary.button.zoomer(href="/role/#{_id}")
+                                        |view
+                                        i.chevron.right.icon
+                .ui.modal 
+                    .ui.header hi
 
 template(name='save_button')
     a.ui.button.large.icon.save(title='Save' href="/m/#{model}/#{_id}/view")
