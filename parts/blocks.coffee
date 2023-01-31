@@ -17,6 +17,7 @@ if Meteor.isClient
    
     Template.print_this.events
         'click .print': ->
+            alert JSON.stringify(@);
             console.log @
    
     Template.bookmark_button.helpers
@@ -268,7 +269,11 @@ if Meteor.isClient
                 _id:$in:ref_doc.role_ids
         role_search_value: ->
             Session.get('role_search')
-        
+        assigned_to: ->
+            Meteor.users.find 
+                _id: $in: @assigned_to_user_ids
+        is_assigning: ->
+            Session.equals 'assigning_docid',@_id
     Template.role_crud.events
         'click .clear_search': (e,t)->
             Session.set('role_search', null)

@@ -15,6 +15,7 @@ Template.registerHelper 'can_take', () ->
     Meteor.user() and Meteor.userId() in @permissioned_user_ids
     
     
+
     
     
 Template.registerHelper 'is_admin', (model) ->
@@ -410,14 +411,14 @@ Template.registerHelper 'field_value', () ->
     parent6 = Template.parentData(6)
 
 
-    if @direct
-        parent = Template.parentData()
-    else if parent5
-        if parent5._id
-            parent = Template.parentData(5)
-    else if parent6
-        if parent6._id
-            parent = Template.parentData(6)
+    # if @direct
+    parent = Template.parentData()
+    # else if parent5
+    #     if parent5._id
+    #         parent = Template.parentData(5)
+    # else if parent6
+    #     if parent6._id
+    #         parent = Template.parentData(6)
     if parent
         parent["#{@key}"]
 

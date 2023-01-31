@@ -205,7 +205,9 @@ if Meteor.isClient
     Template.online_users.helpers 
         online_user_docs: ->
             Meteor.users.find {online:true}
-                
+        latest_users: ->
+            Meteor.users.find {},   
+            
 if Meteor.isServer
     Meteor.publish 'online_users', ->
         Meteor.users.find {online:true}

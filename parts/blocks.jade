@@ -513,7 +513,7 @@ template(name='model_picker')
                     i.search.icon
                 input.model_search(type='text' placeholder='search' value=model_search_value)
             if model_results
-                .ui.selection.link.animated.list
+                .ui.selection.link.animated.list.smallscroll
                     each model_results
                         .ui.item.pick_model
                             img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
@@ -573,41 +573,49 @@ template(name='role_crud')
                                     .left.floated
                                         a.ui.inline.header
                                             |!{title} 
-                                        img(src="{{c.url image_id width=50 height=50}}")
-                                        div
-                                        |!{content}
+                                        // img(src="{{c.url image_id width=50 height=50}}")
+                                        // div    
+                                        // |!{content}
                                 .two.wide.column
                                     .right.floated
                                         if _is 'model' 'role'
                                             +ismall name='what-i-do' color='42E8C4' cl='ui inline image'
                                         div
                                         |#{when}
-                                +eft_viewer_small
                             .row
-                                .sixteen.wide.column
-                                    if currentUser.admin_mode
-                                        .ui.tertiary.button.zoomer.remove_role 
-                                            i.remove.icon
-                                            |remove 
-                                        .ui.tertiary.button.zoomer.assign_role 
-                                            i.user.plus.icon
-                                            | assign
-                                        if is_assigning 
-                                            each role_holders 
-                                                .ui.label #{username}
-                                        else 
-                                            with assigned_users
-                                                .ui.green.label #{username}
-                                        a.ui.tertiary.right.floated.icon.button.zoomer.fly_right(href="/role/#{_id}/edit" title='edit role')
-                                            i.setting.icon
-                                    else
-                                        // else if can_take
-                                        .ui.tertiary.button.zoomer.take_role 
-                                            i.checkmark.icon
-                                            | take
-                                    a.ui.tertiary.button.zoomer(href="/role/#{_id}")
-                                        |view
-                                        i.chevron.right.icon
+                                .six.wide.column
+                                    img(src="{{c.url image_id width=10 height=10}}")
+                                .ten.wide.column
+                                    |!{content}
+                                    +eft_viewer_small
+                            .sixteen.wide.column
+                                if currentUser.admin_mode
+                                    .ui.tertiary.button.zoomer.remove_role 
+                                        i.remove.icon
+                                        |remove 
+                                    .ui.tertiary.button.zoomer.toggle_assign 
+                                        i.user.plus.icon
+                                        | assign
+                                    if assigned_to 
+                                        |assigned to #{asigned_to.username}
+                                    else 
+                                        |unnassigned
+                                    if is_assigning 
+                                        each role_holders 
+                                            .ui.label #{username}
+                                    else 
+                                        with assigned_users
+                                            .ui.green.label #{username}
+                                    a.ui.tertiary.right.floated.icon.button.zoomer.fly_right(href="/role/#{_id}/edit" title='edit role')
+                                        i.setting.icon
+                                else
+                                    // else if can_take
+                                    .ui.tertiary.button.zoomer.take_role 
+                                        i.checkmark.icon
+                                        | take
+                                a.ui.tertiary.button.zoomer(href="/role/#{_id}")
+                                    |view
+                                    i.chevron.right.icon
                 .ui.modal 
                     .ui.header hi
                     

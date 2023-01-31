@@ -661,20 +661,18 @@ Template.multi_user_edit.events
 
 
         val = t.$('.multi_user_select_input').val()
-        if field.direct
-            parent = Template.parentData()
-        else
-            parent = Template.parentData(5)
+        # if field.direct
+        parent = Template.parentData()
         doc = Docs.findOne parent._id
         if doc
             Docs.update parent._id,
                 $addToSet:
-                    "#{field.key}":@_id
+                    "#{field.key}_ids":@_id
                     "#{field.key}_usernames":@username
         else
             Meteor.users.update parent._id,
                 $addToSet:
-                    "#{field.key}":@_id
+                    "#{field.key}_ids":@_id
                     "#{field.key}_usernames":@username
             
         t.user_results.set null
