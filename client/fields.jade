@@ -380,38 +380,43 @@ template(name='raw_view')
 
         
 template(name='textarea_edit')
-    .ui.large.form
-        .field
-            label 
-                if icon
-                    // i.icon(class=field_value)
-                    +i name=icon
-                if title
-                    |#{title}
-                else if label
-                    |#{label}
-                //- else if key
-                //-     |#{key}
-                //- else
-                //-     |#{this}
-            textarea.edit_textarea(rows='7') #{field_value}
-
+    .ui.segment
+        if currentUser.edit_mode
+            .ui.large.form
+                .field
+                    .ui.inline.small.header
+                        if icon
+                            // i.icon(class=field_value)
+                            +i name=icon
+                        if title
+                            |#{title}
+                        else if label
+                            |#{label}
+                        //- else if key
+                        //-     |#{key}
+                        //- else
+                        //-     |#{this}
+                    textarea.edit_textarea(rows='7') #{field_value}
+    else 
+        |!{field_value}
+        
         
 template(name='text_edit')
-    div
-    if icon
-        //- i.grey.icon(class=icon)
-        +i name=icon
-    .ui.inline.small.header
-        if title
-            |#{title}
-        else if label
-            |#{label}
-        else if key
-            |#{key}
-            //- +clear_value
-    .ui.icon.large.fluid.input
-        input.edit_text(type='text' value=field_value placeholder=placeholder autocomplete="off")
+    .ui.segment
+        div
+        if icon
+            //- i.grey.icon(class=icon)
+            +i name=icon
+        .ui.inline.small.header
+            if title
+                |#{title}
+            else if label
+                |#{label}
+            else if key
+                |#{key}
+                //- +clear_value
+        .ui.icon.large.fluid.input
+            input.edit_text(type='text' value=field_value placeholder=placeholder autocomplete="off")
         
 
 

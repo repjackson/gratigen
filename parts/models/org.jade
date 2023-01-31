@@ -239,41 +239,55 @@ template(name='org_view')
                         +user_info
                     if currentUser.edit_mode 
                         +multi_user_edit key='member_ids' label='members'
-                    if currentUser.edit_mode 
-                        .ui.segment
-                            |what is the basic purpose of your organization? what principals does it serve?
-                            +text_edit key='purpose'
-                        // +text_edit key='purpose'
-                    else 
-                        .ui.header purpose: 
-                        .ui.segment
-                            |#{purpose}
+                    // if currentUser.edit_mode 
+                    //     .ui.segment
+                    +text_edit key='purpose'
+                    // else 
+                    //     .ui.header purpose: 
+                    //     .ui.segment
+                    //         |#{purpose}
+                            
+                    .ui.header test 
+                    +org_section key='purpose' label='purpose' tagline='purpose tagline'
+                    +org_section key='vision' label='vision' tagline="what is the basic purpose of your organization? what principals does it serve?"
+                            
                     .ui.header
                         |vision
                     if currentUser.edit_mode 
-                        |how your organization will impact society? what will it look like?
+                        |what is the basic purpose of your organization? what principals does it serve?
                         .ui.segment
-                            +text_edit key='vision'
+                            +textarea_edit key='vision'
                     else 
                         .ui.segment
                             |#{vision}
+                            
                     .ui.header
                         |mission
                     if currentUser.edit_mode 
-                        |how your organization will impact society? what will it look like?
+                        |your business goals and the values you will embrace to achieve them
                         .ui.segment
-                            +text_edit key='mission'
+                            +textarea_edit key='mission'
                     else 
                         .ui.segment
                             |#{mission}
+                    if currentUser.edit_mode 
+                        .ui.segment
+                            +textarea_edit key='description'
+                            
                     .ui.segment
-                        |your business goals and the values you will embrace to achieve them
+                        
                     .ui.header
                         |breif
+                        
                     .ui.segment    
                         |breif description or your organization
+                        
                     .ui.header
                         |description 
+                    if currentUser.edit_mode 
+
+                        .ui.segment
+                            +textarea_edit key='description'
                     .ui.segment
                         |complete description of your organization
                     |by-laws
@@ -322,6 +336,18 @@ template(name='org_view')
                         .item #{total_credit_exchanged} credits exchanged
                         .item 
                     +comments
+    
+template(name='org_section')
+    .ui.segment
+        .ui.header #{title}
+        |#{tagline}
+        if currentUser.edit_mode 
+            |editing #{key}
+            +textarea_edit key=key
+        else         
+            +textarea_view key=key
+    
+    
     
 template(name='user_orgs')
     .scrolling
