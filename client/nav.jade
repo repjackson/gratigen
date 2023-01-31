@@ -47,11 +47,11 @@ template(name='nav')
         // a.icon.item.toggle_invert
         //     i.lightbulb.icon
         .search.item.zoomer.mobile.hidden(title='search')
-            .ui.icon.transparent.input
+            .ui.icon.transparen.large.input
                 if current_query
                     i.remove.large.red.link.icon.clear_search
                 else
-                    i.search.large.icon
+                    i.search.large.grey.icon
                 input.search_site(type='text' autocomplete="off" value=current_query)
             each picked_tags 
                 .ui.label 

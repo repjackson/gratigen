@@ -102,7 +102,6 @@ if Meteor.isClient
             if e.which is 13
                 search = $('.search_site').val().trim().toLowerCase()
                 if search.length > 0
-
                     match = {}
                     match.title =  {$regex:"#{Session.get('current_query')}", $options: 'i'}
                     found_results = Docs.find(match).count()
