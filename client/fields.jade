@@ -1,3 +1,11 @@
+template(name='text_field')
+    if currentUser.admin_mode   
+        +text_edit key=key 
+    else 
+        +text_view key=key
+        // |!{key}
+
+
 template(name='youtube_edit')
     with ..
         +boolean_edit key='has_youtube' label='attach youtube' icon='youtube'
@@ -417,21 +425,21 @@ template(name='clear_value')
         i.remove.link.large.icon.clear_value
 
 template(name='text_view')
-    if field_value
-        //- unless header
-        //-     div
-        //-     if icon
-        //-         +i name=icon                
-        .ui.grey.small.inline.header
-            if title
-                |#{title}
-            else if label
-                |#{label}
-            else if key
-                |#{key}
-            else
-                |#{this}
-        .ui.inline.header #{field_value}
+    // if field_value
+    //- unless header
+    //-     div
+    //-     if icon
+    //-         +i name=icon                
+    .ui.grey.small.inline.header
+        if title
+            |#{title}
+        else if label
+            |#{label}
+        else if key
+            |#{key}
+        else
+            |#{this}
+    .ui.inline.header #{field_value}
 
 
 

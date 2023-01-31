@@ -21,6 +21,12 @@ if Meteor.isClient
         #         slug: Router.current().params.doc_id
 
     Template.org_view.events
+        'click .edit_mode': ->
+            console.lo
+            Meteor.users.update Meteor.userId(),
+                $set:
+                    edit_mode:!Meteor.user().edit_mode
+                    # edit_mode:true
         'click .refresh_org_stats': ->
             Meteor.call 'calc_org_stats', Router.current().params.doc_id, ->
         'click .join': ->

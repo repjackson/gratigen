@@ -10,7 +10,7 @@ if Meteor.isClient
 if Meteor.isServer
     Meteor.publish 'search_results', (query)->
         match = {}
-        if query.length > 1
+        if query and query.length > 2
             match.title =  {$regex:"#{query}", $options: 'i'}
             Docs.find match, 
                 limit:10

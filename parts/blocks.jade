@@ -297,11 +297,12 @@ template(name='view_full_button')
 template(name='user_status')
     if online 
         // .ui.label(class='{{labelClass}}') 
-        .ui.green.label.invert(title='online')
+        .ui.green.label(title='online')
             // img.ui.avatar.image(src="https://img.icons8.com/connection-user_status-on/color/48" title='Online' width="48" height="48")
             |Online
     else if idle
         .ui.empty.yellow.label(title='idle')
+            |idle
         // .ui.label(class='{{labelClass}}') Idle
     // else 
     //     |Offline
@@ -591,10 +592,10 @@ template(name='role_crud')
                                     |!{content}
                             .sixteen.wide.column
                                 if currentUser.admin_mode
-                                    .ui.tertiary.button.zoomer.remove_role 
+                                    .ui.tertiary.large.button.zoomer.remove_role 
                                         i.remove.icon
                                         |remove 
-                                    .ui.tertiary.button.zoomer.toggle_assign 
+                                    .ui.tertiary.large.button.zoomer.toggle_assign 
                                         i.user.plus.icon
                                         | assign
                                     if assigned_to 
@@ -607,22 +608,22 @@ template(name='role_crud')
                                     else 
                                         with assigned_users
                                             .ui.green.label #{username}
-                                    a.ui.tertiary.right.floated.icon.button.zoomer.fly_right(href="/role/#{_id}/edit" title='edit role')
+                                    a.ui.tertiary.right.floated.icon.large.button.zoomer.fly_right(href="/role/#{_id}/edit" title='edit role')
                                         i.setting.icon
                                 else
                                     // else if can_take
                                     if has_taken 
                                         |taken by #{taken_user.name}
-                                        .ui.button.release_role
+                                        .ui.large.button.release_role
                                             i.undo.icon
                                             |release 
                                     else if can_take
-                                        .ui.tertiary.button.zoomer.take_role 
+                                        .ui.tertiary.large.button.zoomer.take_role 
                                             i.checkmark.icon
                                             | take
                                     else if is_taken 
                                         |taken by #{taken_user.name}
-                                a.ui.tertiary.button.zoomer(href="/role/#{_id}")
+                                a.ui.tertiary.large.button.zoomer(href="/role/#{_id}")
                                     |view
                                     i.chevron.right.icon
                 .ui.modal 
