@@ -88,7 +88,7 @@ template(name='org_edit')
                             .ui.header editing #{title} org
                             .ui.inline.header 
                                 +icolor name='group' cl='ui image inline pointer'
-                                
+                            +title_link_buttons
                             a.ui.icon.green.big.button(href="/org/#{_id}" title='save')
                                 i.checkmark.big.icon
                             +text_edit key='title' label='title' direct=true
@@ -156,6 +156,17 @@ template(name='org_edit')
                         .column
                             +model_picker model='skill' icon='wrench'
 
+
+template(name='title_link_buttons')
+    a.zoomer(href="https://www.google.com/search?q=#{title}" target='_window' title="google #{title}")
+        i.search.large.circular.link.icon.zoomer
+    a.zoomer(href="https://www.google.com/search?tbm=isch&q=#{title}" target='_window' title="image search #{title}")
+        i.image.large.circular.link.icon.zoomer
+    a.zoomer(href="https://www.amazon.com/s?k=#{title}&ref=nb_sb_noss_2" target='_window' title="amazon search #{title}")
+        i.amazon.large.circular.link.icon.zoomer
+
+
+
 template(name='org_view')
     with current_doc
         // img.ui.fluid.image.bg_overlay(src="{{c.url image_id crop='fit'}}")
@@ -176,10 +187,11 @@ template(name='org_view')
                         if can_edit
                             a.ui.circular.tertiary.icon.button.zoomer.floated.right.fly_down(href="/org/#{_id}/edit" title="edit #{title}")
                                 i.setting.big.icon
-            .middle.aligned.row
-                .six.wide.column
+            .row
+                .five.wide.column
                     +image_view key='image_id' icon='image' label='image'
                     +array_view key='tags' icon='tags'
+                    +title_link_buttons
                     .spacer
                     if link
                         a.ui.basic.circular.button(href=link target='_window')
@@ -200,7 +212,7 @@ template(name='org_view')
                     +org_history
                     +org_subscription
     
-                .five.wide.column
+                .six.wide.column
                     .ui.header leaders
                     a.ui.basic.button(href="/user/#{lead}") lead
                         with lead

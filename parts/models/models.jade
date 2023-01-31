@@ -612,6 +612,7 @@ template(name='role_edit')
                     a.ui.icon.green.big.button(href="/role/#{_id}" title='save')
                         i.checkmark.big.icon
                     +text_edit key='title' label='title' direct=true
+                    +title_link_buttons
                 .column
                     +html_edit key='content' label='content' direct=true
                     +youtube_edit key='youtube_id' label='youtube id' direct=true

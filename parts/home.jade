@@ -317,32 +317,8 @@ template(name='home_card')
         if youtube_id 
             +youtube_view key='youtube_id' direct=true
         .content 
-            // a.inline.header
-                // if _is 'model' 'org' 
-                //     +i name='groups' color='83DFF4'
-                // if _is 'model' 'project'
-                //     +i name='project' color='7229AF'
-                // if _is 'model' 'post'
-                //     +i name='for-you' color='1255B8'
-                // if _is 'model' 'event'
-                //     +i name='calendar' color='FAB005'
-                // if _is 'model' 'task'
-                //     +i name='task' color='B785E1'
-                // if _is 'model' 'offer'
-                //     +i name='hand-holding-heart' color='FF73EA'
-                // if _is 'model' 'request'
-                //     +i name='commercial' color='40C057'
-                // if _is 'model' 'role'
-                //     +i name='what-i-do' color='42E8C4'  
-                // if _is 'model' 'resource'
-                //     +i name='field-and-tractor' color='42E8C4'      
-
-                // .ui.label #{model}
-                // |#{title} 
                 |!{body}
                 |!{content}
-            // i.clock.icon
-            // |#{when}
         img.ui.fluid.image(src="{{c.url image_id width=400 height=400}}")
         .content 
             .description
@@ -360,7 +336,7 @@ template(name='home_card')
                 // if tags 
                 //     each seven_tags 
                 //         .ui.basic.label #{this}
-                
+
                 +eft_view_item_small
       
             .content
@@ -376,7 +352,7 @@ template(name='home_card')
                 //         .ui.small.inverted.label #{this}
                 // //- +comments
                 div
-                +eft_viewer
+                +eft_viewer_small
                 // if currentUser.admin_mode
                 //     +print_this
                 //     +remove_button
