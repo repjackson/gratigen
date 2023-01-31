@@ -168,8 +168,8 @@ template(name='title_link_buttons')
 
 
 template(name='org_view')
-    if currentUser.admin_mode 
-        +org_edit
+    // if currentUser.admin_mode 
+    //     +org_edit
     with current_doc
         // img.ui.fluid.image.bg_overlay(src="{{c.url image_id crop='fit'}}")
         
@@ -225,31 +225,47 @@ template(name='org_view')
                         with lead
                             +user_info
                     .ui.basic.button support
+                    if currentUser.edit_mode 
+                        +single_user_edit key='support' label='support'
                     .ui.basic.button safety
+                    if currentUser.edit_mode 
+                        +single_user_edit key='safety' label='safety'
                     .ui.basic.button creator  
+                    if currentUser.edit_mode 
+                        +single_user_edit key='creator' label='creator'
                     .ui.header 
                         |#{member_ids.count} members
                     each member_ids
                         +user_info
                     if currentUser.edit_mode 
-                        +text_edit key='purpose'
+                        +multi_user_edit key='member_ids' label='members'
+                    if currentUser.edit_mode 
+                        .ui.segment
+                            |what is the basic purpose of your organization? what principals does it serve?
+                            +text_edit key='purpose'
                         // +text_edit key='purpose'
                     else 
-                        .ui.header purpose: #{purpose}
-                    .ui.header
-                        |purpose
-                    .ui.segment
-                        |what is the basic purpose of your organization? what principals does it serve?
+                        .ui.header purpose: 
+                        .ui.segment
+                            |#{purpose}
                     .ui.header
                         |vision
                     if currentUser.edit_mode 
-                        +text_edit key='vision'
+                        |how your organization will impact society? what will it look like?
+                        .ui.segment
+                            +text_edit key='vision'
                     else 
                         .ui.segment
-                            |how your organization will impact society? what will it look like?
                             |#{vision}
                     .ui.header
                         |mission
+                    if currentUser.edit_mode 
+                        |how your organization will impact society? what will it look like?
+                        .ui.segment
+                            +text_edit key='mission'
+                    else 
+                        .ui.segment
+                            |#{mission}
                     .ui.segment
                         |your business goals and the values you will embrace to achieve them
                     .ui.header

@@ -258,9 +258,10 @@ if Meteor.isClient
         @autorun => @subscribe 'model_docs', 'role', ->
     Template.role_crud.helpers
         role_results: ->
-            Docs.find 
-                model:'role'
-                title: {$regex:"#{Session.get('role_search')}",$options:'i'}
+            if Session.get('role_search').length > 1
+                Docs.find 
+                    model:'role'
+                    title: {$regex:"#{Session.get('role_search')}",$options:'i'}
                 
         picked_roles: ->
             ref_doc = Docs.findOne Router.current().params.doc_id
@@ -363,6 +364,23 @@ if Meteor.isClient
             val = t.$('.role_search').val()
             console.log val
             Session.set('role_search', val)
+            if e.which is '13'
+                new_id = 
+                    Docs.insert 
+                        model:'role'
+                        title:Session.get('role_search')
+                Docs.update Router.current().params.doc_id,
+                    $addToSet:
+                        role_ids:new_id
+                        role_titles:Session.get('role_search')
+                $('body').toast({
+                    title: "added #{Session.get('role_search')}"
+                    message: 'yeay'
+                    class : 'success'
+                    showIcon:'shield'
+                    showProgress:'bottom'
+                    position:'bottom right'
+                })
 
         'click .create_role': ->
             new_id = 
