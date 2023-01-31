@@ -182,11 +182,11 @@ if Meteor.isClient
                 model:'group'
                 title: {$regex:"#{Session.get('group_search')}",$options:'i'}
                 
-        product_groups: ->
-            product = Docs.findOne Router.current().params.doc_id
+        picked_groups: ->
+            ref_doc = Docs.findOne Router.current().params.doc_id
             Docs.find 
                 # model:'group'
-                _id:$in:product.group_ids
+                _id:$in:ref_doc.group_ids
         group_search_value: ->
             Session.get('group_search')
         
@@ -217,6 +217,25 @@ if Meteor.isClient
             Session.set('group_search', val)
 
         'click .create_group': ->
+                # new_id = 
+                #     Docs.insert 
+                #         model:'group'
+                #         title:Session.get('group_search')
+                # Docs.update Router.current().params.doc_id,
+                #     $addToSet:
+                #         group_ids:new_id
+                #         group_titles:Session.get('group_search')
+                # $('body').toast({
+                #     title: "added #{Session.get('group_search')}"
+                #     message: 'yeay'
+                #     class : 'success'
+                #     showIcon:'shield'
+                #     showProgress:'bottom'
+                #     position:'bottom right'
+                # })
+                        
+                # Session.set('group_search',null)
+            
             new_id = 
                 Docs.insert 
                     model:'group'

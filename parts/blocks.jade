@@ -610,6 +610,7 @@ template(name='role_crud')
                 .ui.modal 
                     .ui.header hi
                     
+                    
 
 template(name='small_card')
     a.ui.link.horizontal.card.zoomer.show_modal
@@ -644,36 +645,80 @@ template(name='small_card')
 
       
 template(name='task_picker')
-    .ui.header 
-        +i name='tasks'
-        | tasks
-    // if is_admin
-    .ui.icon.large.input 
-        if task_search_value
-            i.large.red.remove.link.icon.zoomer.clear_search
-        else 
-            i.search.icon
-        input.task_search(type='text' placeholder='search' value=task_search_value)
-    if task_results
-        .ui.selection.link.animated.list
-            each task_results
-                .ui.item.pick_task.zoomer
-                    img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
-                    |#{title}
-    // else if task_search_value
-    .ui.button.create_task
-        |add #{task_search_value}
-    
-    if product_tasks
         .ui.header 
-            |#{product_tasks.length}
-            |picked tasks
-        .ui.list
-            each product_tasks
-                .ui.item
-                    img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+            +i name='shield'
+            |#{picked_roles.count}
+            | roles
+        // if is_admin
+        .ui.icon.large.input 
+            if role_search_value
+                i.large.red.remove.link.icon.zoomer.clear_search
+            else 
+                i.search.icon
+            input.role_search(type='text' placeholder='search' value=role_search_value)
+        if role_results
+            // .ui.selection.link.animated.list
+            each role_results
+                .ui.basic.circular.large.button.pick_role.zoomer
+                    i.grey.plus.icon
+                    if image_id
+                        img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
                     |#{title}
-                    i.remove.link.icon.zoomer.remove_task
+        // else if role_search_value
+        .ui.button.create_role
+            |add #{role_search_value}
+        // if picked_roles
+        .ui.header 
+            |#{picked_roles.count}
+            |picked roles
+        .smallscroll
+            each picked_roles
+                 .ui.horizontal.fluid.card.show_modal
+                    .content
+                        .ui.grid
+                            .row
+                                // .column
+                                .fourteen.wide.column
+                                    .left.floated
+                                        a.ui.inline.header
+                                            |!{title} 
+                                        img(src="{{c.url image_id width=50 height=50}}")
+                                        div
+                                        |!{content}
+                                .two.wide.column
+                                    .right.floated
+                                        if _is 'model' 'role'
+                                            +ismall name='what-i-do' color='42E8C4' cl='ui inline image'
+                                        div
+                                        |#{when}
+                            .row
+                                .sixteen.wide.column
+                                    +eft_view_item_small
+                                    if currentUser.admin_mode
+                                        .ui.tertiary.button.zoomer.remove_role 
+                                            i.remove.icon
+                                            |remove 
+                                        .ui.tertiary.button.zoomer.assign_role 
+                                            i.user.plus.icon
+                                            | assign
+                                        if is_assigning 
+                                            each role_holders 
+                                                .ui.label #{username}
+                                        else 
+                                            with assigned_users
+                                                .ui.green.label #{username}
+                                        a.ui.tertiary.right.floated.icon.button.zoomer.fly_right(href="/role/#{_id}/edit" title='edit role')
+                                            i.setting.icon
+                                    else
+                                        // else if can_take
+                                        .ui.tertiary.button.zoomer.take_role 
+                                            i.checkmark.icon
+                                            | take
+                                    a.ui.tertiary.button.zoomer(href="/role/#{_id}")
+                                        |view
+                                        i.chevron.right.icon
+                .ui.modal 
+                    .ui.header hi
                     
                     
 template(name='badge_picker')

@@ -368,12 +368,11 @@ template(name='product_edit')
                                 
                                 
 template(name='group_picker')
-    +boolean_edit key='has_group' label='attach group'
-    if has_group
+    .ui.segment
         .ui.header 
-            +i name='campfire'
-            |groups
-        
+            +i name='shield'
+            |#{picked_groups.count}
+            | groups
         // if is_admin
         .ui.icon.large.input 
             if group_search_value
@@ -382,24 +381,100 @@ template(name='group_picker')
                 i.search.icon
             input.group_search(type='text' placeholder='search' value=group_search_value)
         if group_results
-            .ui.selection.link.animated.list
-                each group_results
-                    .ui.item.pick_group.zoomer
+            // .ui.selection.link.animated.list
+            each group_results
+                .ui.basic.circular.large.button.pick_group.zoomer
+                    i.grey.plus.icon
+                    if image_id
                         img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
-                        |#{title}
+                    |#{title}
         // else if group_search_value
         .ui.button.create_group
             |add #{group_search_value}
+        // if picked_groups
+        .ui.header 
+            |#{picked_groups.count}
+            |picked groups
+        .smallscroll
+            each picked_groups
+                 .ui.horizontal.fluid.card.show_modal
+                    .content
+                        .ui.grid
+                            .row
+                                // .column
+                                .fourteen.wide.column
+                                    .left.floated
+                                        a.ui.inline.header
+                                            |!{title} 
+                                        img(src="{{c.url image_id width=50 height=50}}")
+                                        div
+                                        |!{content}
+                                .two.wide.column
+                                    .right.floated
+                                        if _is 'model' 'group'
+                                            +ismall name='what-i-do' color='42E8C4' cl='ui inline image'
+                                        div
+                                        |#{when}
+                            .row
+                                .sixteen.wide.column
+                                    if currentUser.admin_mode
+                                        .ui.tertiary.button.zoomer.remove_group 
+                                            i.remove.icon
+                                            |remove 
+                                        .ui.tertiary.button.zoomer.assign_group 
+                                            i.user.plus.icon
+                                            | assign
+                                        if is_assigning 
+                                            each group_holders 
+                                                .ui.label #{username}
+                                        else 
+                                            with assigned_users
+                                                .ui.green.label #{username}
+                                        a.ui.tertiary.right.floated.icon.button.zoomer.fly_right(href="/group/#{_id}/edit" title='edit group')
+                                            i.setting.icon
+                                    else
+                                        // else if can_take
+                                        .ui.tertiary.button.zoomer.take_group 
+                                            i.checkmark.icon
+                                            | take
+                                    a.ui.tertiary.button.zoomer(href="/group/#{_id}")
+                                        |view
+                                        i.chevron.right.icon
+                .ui.modal 
+                    .ui.header hi
+
+    // +boolean_edit key='has_group' label='attach group'
+    // if has_group
+    //     .ui.header 
+    //         +i name='campfire'
+    //         |groups
         
-        if product_groups
-            .ui.header 
-                |#{product_groups.length}
-                |picked groups
-            .ui.list
-                each product_groups
-                    .ui.item
-                        |#{title}
-                        i.remove.link.icon.zoomer.remove_group
+    //     // if is_admin
+    //     .ui.icon.large.input 
+    //         if group_search_value
+    //             i.large.red.remove.link.icon.zoomer.clear_search
+    //         else 
+    //             i.search.icon
+    //         input.group_search(type='text' placeholder='search' value=group_search_value)
+    //     if group_results
+    //         .ui.selection.link.animated.list
+    //             each group_results
+    //                 .ui.item.pick_group.zoomer
+    //                     img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+    //                     |#{title}
+    //     // else if group_search_value
+    //     .ui.button.create_group
+    //         |add #{group_search_value}
+        
+    //     if product_groups
+    //         .ui.header 
+    //             |#{product_groups.length}
+    //             |picked groups
+    //         .ui.list
+    //             each product_groups
+    //                 .ui.item
+    //                     |#{title}
+    //                     i.remove.link.icon.zoomer.remove_group
                         
                     
 
