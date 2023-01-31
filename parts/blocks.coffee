@@ -270,15 +270,55 @@ if Meteor.isClient
         role_search_value: ->
             Session.get('role_search')
         assigned_to: ->
-            Meteor.users.find 
+            Meteor.users.findOne
                 _id: $in: @assigned_to_user_ids
         is_assigning: ->
             Session.equals 'assigning_docid',@_id
+            
+        has_taken: ->
+            ref_doc = Docs.findOne Router.current().params.doc_id
+            if ref_doc and ref_doc.taken_by_user_id
+                if Meteor.userId() and Meteor.userId() is ref_doc.taken_by_user_id
+                    true
+                else 
+                    false
+            else 
+                false
+        is_taken: ->
+            ref_doc = Docs.findOne Router.current().params.doc_id
+            if ref_doc and ref_doc.taken_by_user_id
+                true
+        can_take: ->
+            ref_doc = Docs.findOne Router.current().params.doc_id
+            if ref_doc and ref_doc.taken_by_user_id
+                false
+            else true
+            #     if Meteor.userId() and Meteor.userId() is ref_doc.taken_by_user_id
+            #         true
+            #     else 
+            #         false
+            # eles 
+            #     false
+        taken_user: ->
+            ref_doc = Docs.findOne Router.current().params.doc_id
+            Meteor.users.findOne _id:ref_doc.taken_by_user_id
+            
+            
     Template.role_crud.events
+        'click .toggle_assign': ->
+            Session.set('assigning_docid',@_id)
         'click .clear_search': (e,t)->
             Session.set('role_search', null)
             t.$('.role_search').val('')
 
+        'click .take_role': ->
+            Docs.update @_id,
+                $set:taken_by_user_id:Meteor.userId()
+    
+        'click .release_role': ->
+            Docs.update @_id,
+                $unset:taken_by_user_id:1
+    
             
         'click .remove_role': (e,t)->
             if confirm "remove #{@title} role?"

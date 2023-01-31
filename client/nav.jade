@@ -32,7 +32,7 @@ template(name='nav')
     
         if currentUser.admin
             // +nav_item route='admin' icon='shield' color='FFFFFF' label='admin'
-            a.icon.item.toggle_admin_mode(title='toggle admin mode')
+            a.icon.item.toggle_admin_mode(title='toggle admin mode' class=admin_mode_class)
                 i.large.shield.icon
         // .six.wide.center.aligned.column
         a.item(href="/add" title='Engage')
@@ -53,11 +53,11 @@ template(name='nav')
                 else
                     i.search.large.grey.icon
                 input.search_site(type='text' autocomplete="off" value=current_query)
-            each picked_tags 
-                .ui.label 
+            each picked_tags
+                .ui.label
                     i.remove.icon
                     |#{this}
-        each search_results 
+        each search_results
             button.ui.button.goto_doc
                 img.ui.avatar.image(src="{{c.url image_id width=200 height=200 gravity='face' crop='fill'}}")
                 |{{cut title}}

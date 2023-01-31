@@ -28,7 +28,6 @@ if Meteor.isClient
                 $set:_doc_id:null
     Template.nav.onRendered ->
         Session.setDefault('invert_mode', false)
-    Template.nav.onRendered ->
         Meteor.setTimeout ->
             $('.menu .item')
                 .popup()
@@ -197,6 +196,8 @@ if Meteor.isClient
                 # order_id:co._id
                 # status:'cart'
                 
+        admin_mode_class: ->
+            if Meteor.user().admin_mode then 'blue active' else 'grey'
         alert_toggle_class: ->
             if Session.get('viewing_alerts') then 'active' else ''
         unread_count: ->

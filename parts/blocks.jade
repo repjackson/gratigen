@@ -572,7 +572,9 @@ template(name='role_crud')
                                 .fourteen.wide.column
                                     .left.floated
                                         a.ui.inline.header
-                                            |!{title} 
+                                            |!{title}
+                                        div
+                                        +eft_viewer_small
                                         // img(src="{{c.url image_id width=50 height=50}}")
                                         // div    
                                         // |!{content}
@@ -584,10 +586,9 @@ template(name='role_crud')
                                         |#{when}
                             .row
                                 .six.wide.column
-                                    img(src="{{c.url image_id width=10 height=10}}")
+                                    img.invert(src="{{c.url image_id width=10 height=10}}")
                                 .ten.wide.column
                                     |!{content}
-                                    +eft_viewer_small
                             .sixteen.wide.column
                                 if currentUser.admin_mode
                                     .ui.tertiary.button.zoomer.remove_role 
@@ -610,9 +611,16 @@ template(name='role_crud')
                                         i.setting.icon
                                 else
                                     // else if can_take
-                                    .ui.tertiary.button.zoomer.take_role 
-                                        i.checkmark.icon
-                                        | take
+                                    if has_taken 
+                                        |taken by #{taken_user.name}
+                                        .ui.button.release_role
+                                            |release 
+                                    else if can_take
+                                        .ui.tertiary.button.zoomer.take_role 
+                                            i.checkmark.icon
+                                            | take
+                                    else if is_taken 
+                                        |taken by #{taken_user.name}
                                 a.ui.tertiary.button.zoomer(href="/role/#{_id}")
                                     |view
                                     i.chevron.right.icon
@@ -656,32 +664,32 @@ template(name='small_card')
 template(name='task_picker')
         .ui.header 
             +i name='shield'
-            |#{picked_roles.count}
-            | roles
+            |#{picked_tasks.count}
+            | tasks
         // if is_admin
         .ui.icon.large.input 
-            if role_search_value
+            if task_search_value
                 i.large.red.remove.link.icon.zoomer.clear_search
             else 
                 i.search.icon
-            input.role_search(type='text' placeholder='search' value=role_search_value)
-        if role_results
+            input.task_search(type='text' placeholder='search' value=task_search_value)
+        if task_results
             // .ui.selection.link.animated.list
-            each role_results
-                .ui.basic.circular.large.button.pick_role.zoomer
+            each task_results
+                .ui.basic.circular.large.button.pick_task.zoomer
                     i.grey.plus.icon
                     if image_id
                         img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
                     |#{title}
-        // else if role_search_value
-        .ui.button.create_role
-            |add #{role_search_value}
-        // if picked_roles
+        // else if task_search_value
+        .ui.button.create_task
+            |add #{task_search_value}
+        // if picked_tasks
         .ui.header 
-            |#{picked_roles.count}
-            |picked roles
+            |#{picked_tasks.count}
+            |picked tasks
         .smallscroll
-            each picked_roles
+            each picked_tasks
                  .ui.horizontal.fluid.card.show_modal
                     .content
                         .ui.grid
@@ -696,7 +704,7 @@ template(name='task_picker')
                                         |!{content}
                                 .two.wide.column
                                     .right.floated
-                                        if _is 'model' 'role'
+                                        if _is 'model' 'task'
                                             +ismall name='what-i-do' color='42E8C4' cl='ui inline image'
                                         div
                                         |#{when}
@@ -704,14 +712,14 @@ template(name='task_picker')
                                 .sixteen.wide.column
                                     +eft_view_item_small
                                     if currentUser.admin_mode
-                                        .ui.tertiary.button.zoomer.remove_role 
+                                        .ui.tertiary.button.zoomer.remove_task 
                                             i.remove.icon
                                             |remove 
-                                        .ui.tertiary.button.zoomer.assign_role 
+                                        .ui.tertiary.button.zoomer.assign_task 
                                             i.user.plus.icon
                                             | assign
                                         if is_assigning 
-                                            each role_holders 
+                                            each task_holders 
                                                 .ui.label #{username}
                                         else 
                                             with assigned_users

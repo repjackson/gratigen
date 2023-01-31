@@ -92,6 +92,7 @@ $.cloudinary.config
     # action: 'not_found'
 
 Template.layout.events
+    'hover .tada': (e,t)-> $(e.currentTarget).closest('.tada').transition('tada', 500)
     'click .fly_right': (e,t)-> $(e.currentTarget).closest('.grid').transition('fade right', 500)
     'click .zoom': (e,t)-> $(e.currentTarget).closest('.grid').transition('drop', 500)
     'click .fade_left': (e,t)-> 

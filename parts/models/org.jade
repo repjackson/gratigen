@@ -224,8 +224,30 @@ template(name='org_view')
                         |#{member_ids.count} members
                     each member_ids
                         +user_info
+                    .ui.header
+                        |purpose
+                    .ui.segment
+                        |what is the basic purpose of your organization? what principals does it serve?
+                    .ui.header
+                        |vision
+                    .ui.segment
+                        |how your organization will impact society? what will it look like?
+                    .ui.header
+                        |mission
+                    .ui.segment
+                        |your business goals and the values you will embrace to achieve them
+                    .ui.header
+                        |breif
+                    .ui.segment    
+                        |breif description or your organization
+                    .ui.header
+                        |description 
+                    .ui.segment
+                        |complete description of your organization
+                    |by-laws
                     |!{body}
                     +role_crud
+                    +event_picker
                     +eft_viewer
                             // a.item(href="/org/#{_id}/#{username}")
                             //     img.ui.mini.image(src="{{c.url image_id width=200 height=200}}")
