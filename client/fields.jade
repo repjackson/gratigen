@@ -392,8 +392,8 @@ template(name='textarea_edit')
                             |#{title}
                         else if label
                             |#{label}
-                        //- else if key
-                        //-     |#{key}
+                        else if key
+                            |#{key}
                         //- else
                         //-     |#{this}
                     textarea.edit_textarea(rows='7') #{field_value}
