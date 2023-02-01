@@ -146,13 +146,7 @@ Meteor.publish 'model_docs', (model,limit)->
             model: model
         }, sort:_timestamp:-1
 Meteor.publish 'me', ->
-    Meteor.users.find({_id:@userId},{
-        # fields:
-        #     username:1
-        #     image_id:1
-        #     tags:1
-        #     points:1
-    })
+    Meteor.users.find({_id:@userId})
 
 Meteor.publish 'document_by_slug', (slug)->
     Docs.find

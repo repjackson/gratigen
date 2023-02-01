@@ -188,9 +188,7 @@ template(name='org_view')
                     +bookmark_button
                     // .floated
                     if can_edit
-                        // a.ui.circular.tertiary.icon.button.zoomer.floated.right.fly_down(href="/org/#{_id}/edit" title="edit #{title}")
-                        a.ui.circular.tertiary.icon.button.zoomer.edit_mode(title="edit #{title}")
-                            i.setting.big.icon
+                        +edit_button
             .row
                 .five.wide.column
                     +image_view key='image_id' icon='image' label='image'
@@ -300,6 +298,16 @@ template(name='org_section')
             +textarea_edit key=key
         else         
             +textarea_view key=key
+    
+template(name='edit_button')
+    if currentUser.edit_mode
+        i.setting.huge.blue.link.zoomer.icon.invert.edit_mode(title="edit #{title}")
+    else
+        i.setting.big.link.zoomer.icon.edit_mode(title="edit #{title}")
+    // a.ui.circular.tertiary.icon.button.zoomer.floated.right.fly_down(href="/org/#{_id}/edit" title="edit #{title}")
+    // a.ui.circular.tertiary.icon.button.zoomer.edit_mode(title="edit #{title}")
+
+    
     
     
     

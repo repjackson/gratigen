@@ -107,13 +107,13 @@ template(name='session_toggle')
         
 template(name='bookmark_button')
     if currentUser
-        .ui.tertiary.icon.button.toggle_bookmark(class=bookmark_button_class title='add/remove bookmark')
-            if is_bookmarked
-                i.red.bookmark.large.icon.invert
-                // - i.large.icon(class=remove_icon)
-            else
-                i.large.bookmark.outline.icon
-                // - i.large.icon(class=add_icon)
+        // .ui.tertiary.icon.button.toggle_bookmark(class=bookmark_button_class title='add/remove bookmark')
+        if is_bookmarked
+            i.red.bookmark.big.link.icon.invert.zoomer.toggle_bookmark
+            // - i.large.icon(class=remove_icon)
+        else
+            i.big.bookmark.outline.link.icon.zoomer.toggle_bookmark
+            // - i.large.icon(class=add_icon)
         each list_users
             +user_info
 
@@ -121,15 +121,12 @@ template(name='comments')
     .ui.segment
         .ui.styled.accordion
             .title.active
-                .dropdown.icon
-                .ui.inline.header comments
-                if currentUser
-                     // i.chat.outline.icon
-                    // |#{doc_comments.count}
-                    .ui.fluid.icon.large.disabled.input
-                        //     i.plus.icon
-                        input.add_comment(model='text' placeholder='write your comment')
+                i.dropdown.icon
+                .ui.inline.header Comments
             .content.active
+                if currentUser
+                    .ui.fluid.icon.large.disabled.input
+                        input.add_comment(type='text' placeholder='write a comment')
                 .ui.comments
                     each doc_comments
                         .comment
@@ -496,10 +493,10 @@ template(name='add_button')
 
 
 
-template(name='edit_button')
-    a.ui.button.icon.edit(title='Edit' href="/m/#{model}/#{_id}/edit")
-        i.blue.pencil.icon
-        |edit
+// template(name='edit_button')
+//     a.ui.button.icon.edit(title='Edit' href="/m/#{model}/#{_id}/edit")
+//         i.blue.pencil.icon
+//         |edit
 
 
 template(name='model_picker')

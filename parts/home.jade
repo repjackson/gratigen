@@ -97,7 +97,24 @@ template(name='home')
                         .ui.large.icon.input.search_bar
                             input.prompt(type='text' placeholder='add/request/search...')
                             i.search.icon
-                        .results    
+                        .results
+                        
+                        .search.item.zoomer.mobile.hidden(title='search')
+                            .ui.icon.transparen.large.input
+                                if current_query
+                                    i.remove.large.red.link.icon.clear_search
+                                else
+                                    i.search.large.grey.icon
+                                input.search_site(type='text' autocomplete="off" value=current_query)
+                            each picked_tags
+                                .ui.label
+                                    i.remove.icon
+                                    |#{this}
+                        // each search_results
+                        //     button.ui.button.goto_doc
+                        //         img.ui.avatar.image(src="{{c.url image_id width=200 height=200 gravity='face' crop='fill'}}")
+                        //         |{{cut title}}
+                
                     +session_set key='view_mode' value='grid' icon='th' 
                     +session_set key='view_mode' value='list' icon='list'
                     +session_set key='view_mode' value='feed' icon='stream'
@@ -109,15 +126,16 @@ template(name='home')
                             .item
                                 .content
                                     .header #{title}
-                if session_is 'view_mode' 'feed'
-                    .ui.eight.wide.column.centered
-                        .ui.centered.one.stackable.cards.scrollin.centered
-                            each doc_results
-                                +home_card
-                else
+                if session_is 'view_mode' 'grid'
                     .ui.two.stackable.cards.scrollin
                         each doc_results
                             +home_card
+                else    
+                    .ui.eight.wide.column.centered
+                        .ui.centered.one.stackable.cards.scrolling.centered
+                            each doc_results
+                                +home_card
+                                
         // .eight.wide.column.bordered
         .five.wide.scrolling.column
             +user_avatars
@@ -125,11 +143,12 @@ template(name='home')
             +comet_chat_block
             .ui.divider
             #cometchat.invert
+            +home_block key='bookmark_block'
             +bookmark_block
             +model_block model='post' icon='blog' color='42E8C4' title='latest posts'
             +model_block model='role' icon='shield' color='42E8C4' title='latest roles'
             +model_block model='resource' icon='car' color='42E8C4' title='nearest resources'
-            +model_block model='org' icon='groups' color='42E8C4' title='groups'
+            +model_block model='org' icon='groups' color='42E8C4' title='organizations'
             +my_things
             if session_is 'show_map' true
                 +mapbox
@@ -191,6 +210,14 @@ template(name='home')
                     +Template.dynamic template=view_template
     // +view_chats
 
+template(name='home_block')
+    details.ui.fluid.styled.accordion
+        summary.title
+            |#{key}
+        .content
+            +Template.dynamic template=key
+
+
 
 template(name='user_avatars')
     details.ui.fluid.styled.accordion
@@ -247,8 +274,8 @@ template(name='comet_chat_block')
     +launch_comet name='iron man' id='superhero1' avatar='https://data-us.cometchat.io/assets/images/avatars/ironman.png'
 
 template(name='launch_comet')
-    .ui.circular.basic.large.button.launch(title=name)
-        img.ui.mini.image(src=avatar)
+    .ui.circular.basic.icon.button.launch(title=name)
+        img.ui.avatar.image(src=avatar)
         // |#{name}
 
 template(name='model_block')

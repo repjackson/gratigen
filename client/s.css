@@ -13,6 +13,11 @@ body {
     /*animation: .25s ease-out 0s 1 fadein;*/
   
 }
+
+.button:hover {
+  border:00px !important;
+}
+
 .right_floated {
   float:right !important;
 }
@@ -133,6 +138,7 @@ img, .button, .selector, .card, p, .header, .item, .image, .fade {
     height: auto;
     font-size: .78571429rem;
 }
+
 
 
 .bg_overlay {

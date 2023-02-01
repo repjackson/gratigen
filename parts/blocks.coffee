@@ -26,11 +26,11 @@ if Meteor.isClient
             
     Template.bookmark_button.onRendered ->
         Meteor.setTimeout ->
-            $(div).popup()
+            $('.button').popup()
         , 1000
 
     Template.bookmark_button.events
-        'click .toggle_bookmark': ->
+        'click .toggle_bookmark': (e,t)->
             if Meteor.user().bookmark_ids and @_id in Meteor.user().bookmark_ids
                 Meteor.users.update Meteor.userId(), 
                     $pull: 
@@ -44,8 +44,6 @@ if Meteor.isClient
                     position: "bottom right"
                 )
                 $(e.currentTarget).closest('.button').transition('tada',1000)
-
-                        
             else 
                 Meteor.users.update Meteor.userId(), 
                     $addToSet: 
