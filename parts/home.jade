@@ -120,6 +120,8 @@ template(name='home')
                             +home_card
         // .eight.wide.column.bordered
         .five.wide.scrolling.column
+            +user_avatars
+            div
             +comet_chat_block
             .ui.divider
             #cometchat.invert
@@ -188,6 +190,16 @@ template(name='home')
                 else 
                     +Template.dynamic template=view_template
     // +view_chats
+
+
+template(name='user_avatars')
+    .ui.inline.header
+        i.users.icon
+        |users 
+    each all_users
+        a.fly_right(href="/user/#{username}")
+            img.ui.avatar.image.zoomer(src="{{c.url image_id}}" class=darkmode_class title=username)
+
 
 template(name='bookmark_block')
     .ui.header 

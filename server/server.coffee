@@ -125,6 +125,12 @@ Meteor.publish 'model_fields_from_child_id', (child_id)->
 Meteor.publish 'all_users', ()->
     Meteor.users.find {},
         limit:20
+        fields: 
+            username:1
+            image_id:1
+            first_name:1
+            last_name:1
+            tags:1
     
     
 Meteor.publish 'model_docs', (model,limit)->
