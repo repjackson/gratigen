@@ -24,6 +24,11 @@ if Meteor.isClient
         is_bookmarked: ->
             Meteor.user().bookmark_ids and @_id in Meteor.user().bookmark_ids
             
+    Template.bookmark_button.onRendered ->
+        Meteor.setTimeout ->
+            $(div).popup()
+        , 1000
+
     Template.bookmark_button.events
         'click .toggle_bookmark': ->
             if Meteor.user().bookmark_ids and @_id in Meteor.user().bookmark_ids
@@ -38,6 +43,8 @@ if Meteor.isClient
                     displayTime: 'auto',
                     position: "bottom right"
                 )
+                $(e.currentTarget).closest('.button').transition('tada',1000)
+
                         
             else 
                 Meteor.users.update Meteor.userId(), 
@@ -51,6 +58,7 @@ if Meteor.isClient
                     displayTime: 'auto',
                     position: "bottom right"
                 )
+                $(e.currentTarget).closest('.button').transition('tada',1000)
                 
    
     Template.comments.onRendered ->

@@ -381,24 +381,31 @@ template(name='raw_view')
         
 template(name='textarea_edit')
     .ui.segment
-        if currentUser.edit_mode
-            .ui.large.form
-                .field
-                    .ui.inline.small.header
-                        if icon
-                            // i.icon(class=field_value)
-                            +i name=icon
-                        if title
-                            |#{title}
-                        else if label
-                            |#{label}
-                        else if key
-                            |#{key}
-                        //- else
-                        //-     |#{this}
-                    textarea.edit_textarea(rows='7') #{field_value}
-        else 
-            |!{field_value}
+        .ui.styled.accordion
+            .title.active
+                .dropdown.icon
+                .ui.inline.header
+                    if icon
+                        // i.icon(class=field_value)
+                        +i name=icon
+                    if title
+                        |#{title}
+                    else if label
+                        |#{label}
+                    else if key
+                        |#{key}
+            .content.active
+                if currentUser.edit_mode
+                    .ui.large.form
+                        .field
+                            //- else
+                            //-     |#{this}
+                            // if tagline 
+                            
+                            |#{tagline}
+                            textarea.edit_textarea(rows='7') #{field_value}
+                else 
+                    |!{field_value}
         
         
 template(name='text_edit')

@@ -3,7 +3,7 @@ if Meteor.isClient
         @autorun => Meteor.subscribe 'me', ->
         # @autorun => Meteor.subscribe 'all_users', ->
         
-        @autorun => Meteor.subscribe 'model_docs', 'model', ->
+        # @autorun => Meteor.subscribe 'model_docs', 'model', ->
         @autorun => Meteor.subscribe 'search_results', Session.get('current_query'), ->
         # @autorun => Meteor.subscribe 'my_cart_products'
     

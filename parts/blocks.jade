@@ -107,15 +107,13 @@ template(name='session_toggle')
         
 template(name='bookmark_button')
     if currentUser
-        .ui.tertiary.button.toggle_bookmark(class=bookmark_button_class title=label)
+        .ui.tertiary.icon.button.toggle_bookmark(class=bookmark_button_class title='add/remove bookmark')
             if is_bookmarked
-                |bookmarked
-                i.red.bookmark.large.icon
+                i.red.bookmark.large.icon.invert
                 // - i.large.icon(class=remove_icon)
             else
-                |bookmark
-                i.large.bookmark.icon
-                //- i.large.icon(class=add_icon)
+                i.large.bookmark.outline.icon
+                // - i.large.icon(class=add_icon)
         each list_users
             +user_info
 
@@ -537,97 +535,100 @@ template(name='model_picker')
 
 template(name='role_crud')
     .ui.segment
-        .ui.header 
-            +i name='shield'
-            |#{picked_roles.count}
-            | roles
-        // if is_admin
-        .ui.icon.large.input 
-            if role_search_value
-                i.large.red.remove.link.icon.zoomer.clear_search
-            else 
-                i.search.icon
-            input.role_search(type='text' placeholder='search' value=role_search_value)
-        if role_results
-            // .ui.selection.link.animated.list
-            each role_results
-                .ui.basic.circular.large.button.pick_role.zoomer
-                    i.grey.plus.icon
-                    if image_id
-                        img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
-                    |#{title}
-        // else if role_search_value
-        .ui.button.create_role
-            |add #{role_search_value}
-        // if picked_roles
-        .ui.header 
-            |#{picked_roles.count}
-            |picked roles
-        .smallscroll
-            each picked_roles
-                 .ui.horizontal.fluid.card.show_modal
-                    .content
-                        .ui.grid
-                            .row
-                                // .column
-                                .fourteen.wide.column
-                                    .left.floated
-                                        a.ui.inline.header
-                                            |!{title}
-                                        div
-                                        +eft_viewer_small
-                                        // img(src="{{c.url image_id width=50 height=50}}")
-                                        // div    
-                                        // |!{content}
-                                .two.wide.column
-                                    .right.floated
-                                        if _is 'model' 'role'
-                                            +ismall name='what-i-do' color='42E8C4' cl='ui inline image'
-                                        div
-                                        |#{when}
-                            .row
-                                .six.wide.column
-                                    img.invert(src="{{c.url image_id width=10 height=10}}")
-                                .ten.wide.column
-                                    |!{content}
-                            .sixteen.wide.column
-                                if currentUser.admin_mode
-                                    .ui.tertiary.large.button.zoomer.remove_role 
-                                        i.remove.icon
-                                        |remove 
-                                    .ui.tertiary.large.button.zoomer.toggle_assign 
-                                        i.user.plus.icon
-                                        | assign
-                                    if assigned_to 
-                                        |assigned to #{asigned_to.username}
-                                    else 
-                                        |unnassigned
-                                    if is_assigning 
-                                        each role_holders 
-                                            .ui.label #{username}
-                                    else 
-                                        with assigned_users
-                                            .ui.green.label #{username}
-                                    a.ui.tertiary.right.floated.icon.large.button.zoomer.fly_right(href="/role/#{_id}/edit" title='edit role')
-                                        i.setting.icon
-                                else
-                                    // else if can_take
-                                    if has_taken 
-                                        |taken by #{taken_user.name}
-                                        .ui.large.button.release_role
-                                            i.undo.icon
-                                            |release 
-                                    else if can_take
-                                        .ui.tertiary.large.button.zoomer.take_role 
-                                            i.checkmark.icon
-                                            | take
-                                    else if is_taken 
-                                        |taken by #{taken_user.name}
-                                a.ui.tertiary.large.button.zoomer(href="/role/#{_id}")
-                                    |view
-                                    i.chevron.right.icon
-                .ui.modal 
-                    .ui.header hi
+        .ui.styled.accordion
+            .title.active
+                .dropdown.icon
+                .ui.inline.header
+                    +i name='shield'
+                    |#{picked_roles.count}
+                    | roles
+            .content.active
+                .ui.icon.large.input 
+                    if role_search_value
+                        i.large.red.remove.link.icon.zoomer.clear_search
+                    else 
+                        i.search.icon
+                    input.role_search(type='text' placeholder='search' value=role_search_value)
+                if role_results
+                    // .ui.selection.link.animated.list
+                    each role_results
+                        .ui.basic.circular.large.button.pick_role.zoomer
+                            i.grey.plus.icon
+                            if image_id
+                                img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+                            |#{title}
+                // else if role_search_value
+                .ui.button.create_role
+                    |add #{role_search_value}
+                // if picked_roles
+                .ui.header 
+                    |#{picked_roles.count}
+                    |picked roles
+                .smallscroll
+                    each picked_roles
+                         .ui.horizontal.fluid.card.show_modal
+                            .content
+                                .ui.grid
+                                    .row
+                                        // .column
+                                        .fourteen.wide.column
+                                            .left.floated
+                                                a.ui.inline.header
+                                                    |!{title}
+                                                div
+                                                +eft_viewer_small
+                                                // img(src="{{c.url image_id width=50 height=50}}")
+                                                // div    
+                                                // |!{content}
+                                        .two.wide.column
+                                            .right.floated
+                                                if _is 'model' 'role'
+                                                    +ismall name='what-i-do' color='42E8C4' cl='ui inline image'
+                                                div
+                                                |#{when}
+                                    .row
+                                        .six.wide.column
+                                            img.invert(src="{{c.url image_id width=10 height=10}}")
+                                        .ten.wide.column
+                                            |!{content}
+                                    .sixteen.wide.column
+                                        if currentUser.admin_mode
+                                            .ui.tertiary.large.button.zoomer.remove_role 
+                                                i.remove.icon
+                                                |remove 
+                                            .ui.tertiary.large.button.zoomer.toggle_assign 
+                                                i.user.plus.icon
+                                                | assign
+                                            if assigned_to 
+                                                |assigned to #{asigned_to.username}
+                                            else 
+                                                |unnassigned
+                                            if is_assigning 
+                                                each role_holders 
+                                                    .ui.label #{username}
+                                            else 
+                                                with assigned_users
+                                                    .ui.green.label #{username}
+                                            a.ui.tertiary.right.floated.icon.large.button.zoomer.fly_right(href="/role/#{_id}/edit" title='edit role')
+                                                i.setting.icon
+                                        else
+                                            // else if can_take
+                                            if has_taken 
+                                                |taken by #{taken_user.name}
+                                                .ui.large.button.release_role
+                                                    i.undo.icon
+                                                    |release 
+                                            else if can_take
+                                                .ui.tertiary.large.button.zoomer.take_role 
+                                                    i.checkmark.icon
+                                                    | take
+                                            else if is_taken 
+                                                |taken by #{taken_user.name}
+                                        a.ui.tertiary.large.button.zoomer(href="/role/#{_id}")
+                                            |view
+                                            i.chevron.right.icon
+                        .ui.modal 
+                            .ui.header hi
                     
                     
 
