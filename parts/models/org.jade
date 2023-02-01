@@ -249,17 +249,18 @@ template(name='org_view')
                             
                     .ui.header test 
                     +org_section key='purpose' label='purpose' tagline='purpose tagline'
-                    +org_section key='vision' label='vision' tagline="what is the basic purpose of your organization? what principals does it serve?"
-                            
+
                     .ui.header
                         |vision
-                    if currentUser.edit_mode 
-                        |what is the basic purpose of your organization? what principals does it serve?
-                        .ui.segment
-                            +textarea_edit key='vision'
-                    else 
-                        .ui.segment
-                            |#{vision}
+                    +org_section key='vision' label='vision' tagline="what is the basic purpose of your organization? what principals does it serve?"
+
+                    // if currentUser.edit_mode 
+                    //     |what is the basic purpose of your organization? what principals does it serve?
+                    //     .ui.segment
+                    //         +textarea_edit key='vision'
+                    // else 
+                    //     .ui.segment
+                    //         |#{vision}
                             
                     .ui.header
                         |mission

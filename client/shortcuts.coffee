@@ -3,9 +3,13 @@ globalHotkeys = new Hotkeys();
 
 
 globalHotkeys.add
-	combo: "c"
+	combo: "e"
 	callback: ->
-        Session.set('view_chat', !Session.get('view_chat'))
+        Meteor.users.update Meteor.userId(),
+            $set:
+                edit_mode:!Meteor.user().edit_mode
+        
+        # Session.set('view_chat', !Session.get('view_chat'))
 
 globalHotkeys.add
 	combo: "d r"
