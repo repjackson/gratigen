@@ -42,19 +42,19 @@ if Meteor.isClient
             #     })
             #     .sidebar('attach events', '.toggle_leftbar')
         , 3000
-        Meteor.setTimeout ->
-            $('.ui.chatbar')
-                .sidebar({
-                    context: $('.pushable')
-                    transition:'push'
-                    mobileTransition:'push'
-                    exclusive:true
-                    duration:200
-                    dimPage:false
-                    scrollLock:true
-                })
-                .sidebar('attach events', '.toggle_chatbar')
-        , 3000
+        # Meteor.setTimeout ->
+        #     $('.ui.chatbar')
+        #         .sidebar({
+        #             context: $('.pushable')
+        #             transition:'push'
+        #             mobileTransition:'push'
+        #             exclusive:true
+        #             duration:200
+        #             dimPage:false
+        #             scrollLock:true
+        #         })
+        #         .sidebar('attach events', '.toggle_chatbar')
+        # , 3000
         # Meteor.setTimeout ->
         #     $('.ui.sidebar')
         #         .sidebar({

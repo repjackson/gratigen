@@ -67,18 +67,18 @@ template(name='register')
                 //-         | password again
                 //-     input.password2(type='password')
                 .ui.hidden.divider
-                if can_register
+                // if can_register
                     //- if registering
-                    .ui.fluid.big.button.register(class=enter_class)
-                        i.user.plus.icon
-                        |register
-                else
-                    .ui.fluid.big.disabled.button(class=enter_class)
-                        i.user.plus.icon
-                        |register
+                .ui.fluid.big.button.register(class=enter_class)
+                    i.user.plus.icon
+                    |register
+                // else
+                //     .ui.fluid.big.disabled.button(class=enter_class)
+                //         i.user.plus.icon
+                //         |register
                     // // .ui.small.header username "#{username}" found
-                    
-                    a.ui.button(href='/login') 
-                        // i.right.chevron.icon
-                        +i name='internal' cl='ui avatar image'
-                        |login
+                .ui.divider
+                a.ui.button(href='/login') 
+                    // i.right.chevron.icon
+                    +i name='internal' cl='ui avatar image'
+                    |login

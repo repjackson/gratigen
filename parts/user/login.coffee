@@ -148,7 +148,22 @@ if Meteor.isClient
             console.log options
             Meteor.call 'create_user', options, (err,res)=>
                 if err
-                    alert err
+                    $('body').toast({
+                        title: "error: #{err}"
+                        # message: 'Please see desk staff for key.'
+                        class : 'success'
+                        showIcon:'hashtag'
+                        # showProgress:'bottom'
+                        position:'bottom right'
+                        # className:
+                        #     toast: 'ui massive message'
+                        # displayTime: 5000
+                        transition:
+                          showMethod   : 'zoom',
+                          showDuration : 250,
+                          hideMethod   : 'fade',
+                          hideDuration : 250
+                        })
                 else
                     console.log res
                     # unless username
@@ -163,16 +178,16 @@ if Meteor.isClient
                     #         # last_name: Session.get('last_name')
                     #         # app:'nf'
                     #         username:username
-                    Router.go "/user/#{username}"
-                    # Meteor.loginWithPassword username, password, (err,res)=>
-                    #     if err
-                    #         alert err.reason
-                    #         # if err.error is 403
-                    #         #     Session.set 'message', "#{username} not found"
-                    #         #     Session.set 'enter_mode', 'register'
-                    #         #     Session.set 'username', "#{username}"
-                    #     else
-                    #         Router.go '/'
+                    Meteor.loginWithPassword username, password, (err,res)=>
+                        if err
+                            alert err.reason
+                            # if err.error is 403
+                            #     Session.set 'message', "#{username} not found"
+                            #     Session.set 'enter_mode', 'register'
+                            #     Session.set 'username', "#{username}"
+                        else
+                            # Router.go '/'
+                            Router.go "/user/#{username}"
                 # else
                 #     Meteor.loginWithPassword username, password, (err,res)=>
                 #         if err
