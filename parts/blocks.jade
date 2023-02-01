@@ -118,26 +118,30 @@ template(name='bookmark_button')
             +user_info
 
 template(name='comments')
-    .ui.header
-        i.chat.outline.icon
-        |#{doc_comments.count} comments
-    div
-    if currentUser
-        .ui.fluid.icon.large.disabled.input
-            i.plus.icon
-            input.add_comment(model='text' placeholder='add')
-    .ui.comments
-        each doc_comments
-            .comment
-                .content
-                    .ui.header #{body}
-                    .meta #{when}
-                        |by 
-                        a(href="/user/#{_author.username}") #{_author.name}
-                        if currentUser
-                            +voting_small
-                            if currentUser.admin_mode
-                                +remove_button
+    .ui.segment
+        .ui.styled.accordion
+            .title.active
+                .dropdown.icon
+                .ui.inline.header comments
+                if currentUser
+                     // i.chat.outline.icon
+                    // |#{doc_comments.count}
+                    .ui.fluid.icon.large.disabled.input
+                        //     i.plus.icon
+                        input.add_comment(model='text' placeholder='write your comment')
+            .content.active
+                .ui.comments
+                    each doc_comments
+                        .comment
+                            .content
+                                .ui.header #{body}
+                                .meta #{when}
+                                    |by 
+                                    a(href="/user/#{_author.username}") #{_author.name}
+                                    if currentUser
+                                        +voting_small
+                                        if currentUser.admin_mode
+                                            +remove_button
                                 
                                 
 template(name='reviews')

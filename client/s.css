@@ -71,7 +71,7 @@ img, .button, .selector, .card, p, .header, .item, .image, .fade {
 }
 
 .topnav {
-  margin-bottom:10em !important;
+  /*margin-bottom:10em !important;*/
   /*s-bottom:10em !important;*/
 }
 .sidebar {

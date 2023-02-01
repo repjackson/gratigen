@@ -3,7 +3,7 @@ template(name='nav')
     // #topnav.topnav.ui.fluid.padded.divided.centered.middle.aligned.grid 
     // #topnav.topnav.ui.attached.borderless.fixed.menu.hscroll(class=invert_class)
     // .topnav.ui.borderless.fixed.sticky.menu.hscroll(class=invert_class)
-    .topnav.ui.borderless.fixed.menu.hscroll(class=invert_class)
+    .topnav.ui.borderless.fixd.menu.hscroll(class=invert_class)
         // .four.wide.column
         // .item
             // if is_loading
@@ -69,7 +69,8 @@ template(name='nav')
             // else
             //     a.ui.icon.item(href="/inbox" class="{{isActiveRoute 'inbox'}}")
             //         i.large.outline.bell.big.blue.icon
-            a.ui.item.zoomer.toggle_rightbar(href="/chat" class="{{isActiveRoute 'chat'}}")
+            // a.ui.item.zoomer.toggle_rightbar(href="/chat" class="{{isActiveRoute 'chat'}}")
+            a.ui.item.zoomer.toggle_chatbar
                 if unread_count
                     i.small.chat.big.blue.icon.pulse
                     |#{unread_count}
@@ -302,10 +303,16 @@ template(name='recent_alert')
             .description #{author.name} #{made_when}
                     
                     
+template(name='chatbar')
+    .ui.right.push.sidebar.chatbar
+            // .ui.top.push.sidebar.chatbar
+            // .ui.left.push.sidebar.chatbar
+            // .ui.bottom.push.sidebar.chatbar
+        // +view_chats
+        +cometchat
                     
 template(name='rightbar')
     .ui.right.sidebar.vertical.small.borderless.menu.rightbar
-    +view_chats
         with currentUser
             a.item.toggle_rightbar.no_blink(href="/user/#{currentUser.username}" class="{{isActiveRoute 'user_layout'}}")
                 img.ui.avatar.compact.image(src="{{c.url currentUser.image_id height=200 width=200 gravity='face' crop='fill'}}")

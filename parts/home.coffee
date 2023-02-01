@@ -9,6 +9,14 @@ if Meteor.isClient
         ), name:'add'
     
     
+    Template.bookmark_block.onCreated ->
+        @autorun => @subscribe 'my_bookmarks',->
+if Meteor.isServer
+    Meteor.publish 'my_bookmarks', (current_thing_id)->
+        Docs.find 
+            _id: $in: Meteor.user().bookmark_ids
+        
+if Meteor.isClient
     Template.model_block.onCreated ->
         @autorun => @subscribe 'model_docs', @data.model, 5,->
     Template.model_block.helpers

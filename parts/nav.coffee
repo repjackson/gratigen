@@ -43,16 +43,17 @@ if Meteor.isClient
             #     .sidebar('attach events', '.toggle_leftbar')
         , 3000
         Meteor.setTimeout ->
-            $('.ui.rightbar')
+            $('.ui.chatbar')
                 .sidebar({
-                    context: $('.bottom.segment')
+                    context: $('.pushable')
                     transition:'push'
                     mobileTransition:'push'
                     exclusive:true
                     duration:200
+                    dimPage:false
                     scrollLock:true
                 })
-                .sidebar('attach events', '.toggle_rightbar')
+                .sidebar('attach events', '.toggle_chatbar')
         , 3000
         # Meteor.setTimeout ->
         #     $('.ui.sidebar')
