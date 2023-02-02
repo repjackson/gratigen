@@ -287,7 +287,7 @@ if Meteor.isClient
             new_id =
                 Docs.insert
                     model:'org'
-            Router.go "/org/#{new_id}/edit"
+            Router.go "/d/org/#{new_id}/edit"
 
     Template.user_orgs.helpers
         user_authored_orgs: ->

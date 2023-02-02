@@ -12,8 +12,8 @@ template(name='home')
             // .ui.fluid.small.button.toggle_leftbar
             //     i.chevron.left.icon
             // .ui.hidden.divider
-            .ui.segment
-                img.ui.image(src="/batflash.png")
+            // .ui.segment
+            img.ui.image(src="{{c.url 'batflash'}}" class=darkmode_class)
             +dash_user_info
             +user_impact_graph
            
@@ -224,7 +224,6 @@ template(name='latest_updated_block')
         summary.title
             i.clock.icon
             |latest updated docs 
-            i.dropdown.icon
         .content
             .ui.animated.selection.list 
                 each latest_updated_docs
@@ -232,7 +231,7 @@ template(name='latest_updated_block')
                         if image_id
                             img.ui.avatar.image.zoomer(src="{{c.url image_id height='300' width='300'}}")
                         .content
-                            .header #{title}
+                            .header {{cut title}}
                             |updated {{from_now _updated_timestamp}}
                         
 
@@ -241,9 +240,8 @@ template(name='latest_updated_block')
 template(name='user_avatars')
     details.ui.fluid.styled.accordion
         summary.title
-            .ui.inline.header
-                i.users.icon
-                |users 
+            i.users.icon
+            |users 
         .content
             each all_users
                 a.fly_right(href="/user/#{username}" title=username)
@@ -439,13 +437,16 @@ template(name='user_impact_graph')
     .ui.segment
         .ui.header user impact graph
         a(href="https://observablehq.com/@d3/zoomable-sunburst" target="_window")
-            img.ui.image(src="/d3_sunburst.jpeg")
+            // img.ui.image(src="/d3_sunburst.jpeg")
+            img.ui.image(src="{{c.url 'd3_sunburst' width=300 crop='fit'}}")
+
         
 template(name='user_connection_graph')
     .ui.segment
         .ui.header user connection graph
         a(href="https://observablehq.com/@garciaguillermoa/force-directed-graph" target="_window")
-            img.ui.image(src="/network_graph.png")
+            img.ui.image(src="{{c.url 'network_graph' width=300 crop='fit'}}")
+            // img.ui.image(src="/network_graph.png")
     
 template(name='my_things')
     .ui.segment
