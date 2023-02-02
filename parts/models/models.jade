@@ -113,11 +113,11 @@ template(name='task_edit')
                     small task
                 a.ui.fluid.large.icon.green.button.fly_left(href="/task/#{_id}/" title='save product')
                     i.checkmark.big.icon
-                +text_edit key='title' label='title' direct=true
-                +image_edit key='image_id' label='image' direct=true
-                +role_crud key='image_id' label='image' direct=true
+                +text_edit key='title' label='title'
+                +image_edit key='image_id' label='image'
+                +role_crud key='image_id' label='image'
                 div
-                +boolean_edit key='complete' label='complete' direct=true
+                +boolean_edit key='complete' label='complete'
                 unless complete
                     .ui.button.mark_complete
                         i.checkmark.icon
@@ -128,32 +128,32 @@ template(name='task_edit')
                         |complete
                         |{{from_now complete_timestamp}}
                         |{{long_date complete_timestamp}}
-                // +boolean_edit key='has_user_assignment' label='has user assignment' direct=true
+                // +boolean_edit key='has_user_assignment' label='has user assignment'
                 // if has_user_assignment
                 each group_members
                     .ui.button.assign_member #{username}
                 div
-                // +boolean_edit key='has_minute_expectation' label='has minute expectation' direct=true
+                // +boolean_edit key='has_minute_expectation' label='has minute expectation'
                 // div
                 // if has_minute_expectation
-                +number_edit key='minute_expectation' label='time expectation (minutes)' direct=true
+                +number_edit key='minute_expectation' label='time expectation (minutes)'
                 div
-                // +boolean_edit key='has_duedatetime' label='has due date/time' icon='calendar' direct=true
+                // +boolean_edit key='has_duedatetime' label='has due date/time' icon='calendar'
                 div
                 +model_picker model='project' icon='project'
             .column
                 // if has_duedatetime
-                +datetime_edit key='due_datetime' label='due date/time' icon='calendar' direct=true
-                // +number_edit key='amount' label='amount (leave 0 for infinite)' direct=true
+                +datetime_edit key='due_datetime' label='due date/time' icon='calendar'
+                // +number_edit key='amount' label='amount (leave 0 for infinite)'
                 // div
-                // +boolean_edit key='has_point_bounty' label='has point bounty' icon='hashtag' direct=true
+                // +boolean_edit key='has_point_bounty' label='has point bounty' icon='hashtag'
                 // div
                 // if has_point_bounty
-                +number_edit key='point_bounty' label='point bounty' direct=true icon='coins'
+                +number_edit key='point_bounty' label='point bounty' icon='coins'
                 div
                 div
-                +single_user_edit key='user_assignment' label='user assignment' icon='user' direct=true
-                // +boolean_edit key='has_subgroup_specification' label='has specific subgroup' icon='users' direct=true
+                +single_user_edit key='user_assignment' label='user assignment' icon='user'
+                // +boolean_edit key='has_subgroup_specification' label='has specific subgroup' icon='users'
                 div
                 .ui.header
                     i.red.marker.icon
@@ -168,9 +168,9 @@ template(name='task_edit')
                 //     .ui.button.select_subgroup(class=subgroup_class)
                 //         img.ui.tiny.inline.image(src="{{c.url image_id width=400 height=300 crop='pad'}}")
                 //         |#{title}
-                // +number_edit key='amount' label='amount (leave 0 for infinite)' direct=true
+                // +number_edit key='amount' label='amount (leave 0 for infinite)'
             .column
-                +html_edit key='description' label='description' direct=true
+                +html_edit key='description' label='description'
                 // .ui.header     
                 //     i.large.building.icon
                 //     |associated unit
@@ -180,7 +180,7 @@ template(name='task_edit')
                 //     .ui.button.select_location(class=location_class)
                 //         img.ui.tiny.inline.image(src="{{c.url image_id width=400 height=300 crop='pad'}}")
                 //         |#{title}
-                +array_edit key='tags' label='tags' icon='tags' direct=true
+                +array_edit key='tags' label='tags' icon='tags'
                 .ui.red.button.delete_task
                     i.remove.icon   
                     | delete
@@ -194,32 +194,32 @@ template(name='task_view')
                 .ui.inline.header
                     | #{title}
                     small task view
-                +image_view key='image_id' label='image' direct=true
+                +image_view key='image_id' label='image'
                 div
                 a.ui.big.button.fly_right(href="/task/#{_id}/edit")
                     i.pencil.icon
                     |edit
             .column
-                +boolean_view key='has_user_assignment' label='has user assignment' direct=true
+                +boolean_view key='has_user_assignment' label='has user assignment'
                 if has_user_assignment
                     each group_members
                         .ui.button.assign_member #{username}
-                +boolean_view key='has_minute_expectation' label='has minute expectation' direct=true
+                +boolean_view key='has_minute_expectation' label='has minute expectation'
                 if has_minute_expectation
-                    +number_view key='minute_expectation' label='time expectation (minutes)' direct=true
-                +boolean_view key='has_duedatetime' label='has due date/time' icon='calendar' direct=true
+                    +number_view key='minute_expectation' label='time expectation (minutes)'
+                +boolean_view key='has_duedatetime' label='has due date/time' icon='calendar'
                 if has_duedatetime
-                    +datetime_view key='due_datetime' label='due date/time' icon='calendar' direct=true
-                +number_view key='amount' label='amount (leave 0 for infinite)' direct=true
-                +boolean_view key='has_point_bounty' label='has point bounty' icon='hashtag' direct=true
+                    +datetime_view key='due_datetime' label='due date/time' icon='calendar'
+                +number_view key='amount' label='amount (leave 0 for infinite)'
+                +boolean_view key='has_point_bounty' label='has point bounty' icon='hashtag'
                 if has_point_bounty
-                    +number_view key='point_bounty' label='point_bounty' direct=true
+                    +number_view key='point_bounty' label='point_bounty'
                 // if unit_id 
                 //     +parent_unit_button
                     
             .column
-                +html_view key='description' label='description' direct=true
-                +array_view key='tags' label='tags' icon='tags' direct=true
+                +html_view key='description' label='description'
+                +array_view key='tags' label='tags' icon='tags'
                 if currentUser
                     .ui.button.record_work
                         |record work
@@ -396,9 +396,9 @@ template(name='work_edit')
                 .ui.grey.header 
                     i.clock.icon
                     |#{when}
-                // +text_edit key='title' label='title' direct=true
+                // +text_edit key='title' label='title'
                 div
-                +textarea_edit key='notes' label='notes' direct=true
+                +textarea_edit key='notes' label='notes'
                 // if location_id
                 //     if image_id
                 .ui.hidden.divider
@@ -409,8 +409,8 @@ template(name='work_edit')
                     .ui.header
                         i.image.icon
                         |image
-                    +image_edit key='before_image_id' label='before image' direct=true capture="camera"
-                    +image_edit key='after_image_id' label='after image' direct=true capture="camera"
+                    +image_edit key='before_image_id' label='before image' capture="camera"
+                    +image_edit key='after_image_id' label='after image' capture="camera"
                 .ui.inline.header 
                     i.red.marker.icon
                     |location
@@ -434,7 +434,7 @@ template(name='work_view')
                 .ui.inline.header
                     | #{title}
                     small work view
-                +image_view key='image_id' label='image' direct=true
+                +image_view key='image_id' label='image'
                 div
                 a.ui.icon.button(href="/work/#{_id}/edit")
                     i.pencil.icon
@@ -453,8 +453,8 @@ template(name='work_view')
                     .ui.inline.header @#{location_title}
                 .ui.header #{when}
                 div.scrolling
-                    +html_view key='notes' label='directions' direct=true
-                // +array_view key='tags' label='tags' icon='tags' direct=true
+                    +html_view key='notes' label='directions'
+                // +array_view key='tags' label='tags' icon='tags'
                 +comments
             .four.wide.column
                 +voting_full
@@ -481,9 +481,9 @@ template(name='work_view')
 template(name='role_card')
     .ui.card
         if youtube_id 
-            +youtube_view key='youtube_id' direct=true
+            +youtube_view key='youtube_id'
         if image_id 
-            +image_view key='image_id' direct=true
+            +image_view key='image_id'
         .content
             .ui.inline.header #{title}
             if private 

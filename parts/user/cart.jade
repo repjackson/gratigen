@@ -24,8 +24,8 @@ template(name='cart')
             +location_section
         .column
             +payment_section
-            // +boolean_edit key='receive_notifications' label='check this box to receive your vital reminder texts and emails (optional)' direct=true
-            // +boolean_edit key='has_read_tos' label=' I have read and agree to the website terms and conditions' direct=true
+            // +boolean_edit key='receive_notifications' label='check this box to receive your vital reminder texts and emails (optional)'
+            // +boolean_edit key='has_read_tos' label=' I have read and agree to the website terms and conditions'
             // if has_read_tos
             //     .ui.big.fluid.green.button.submit_order
             //         i.large.send.icon
@@ -67,8 +67,8 @@ template(name='location_section')
             div
             .ui.large.button.pick_address(class=user_address_pick_class)
                 | #{street_address}, #{city}, #{zip_code}
-        // +boolean_edit key='use_profile_address' label='use profile address' direct=true
-        +boolean_edit key='use_new_address' label='use new address' direct=true
+        // +boolean_edit key='use_profile_address' label='use profile address'
+        +boolean_edit key='use_new_address' label='use new address'
         if use_new_address
             .ui.input
                 input(type='text' placeholder='street')
@@ -84,7 +84,7 @@ template(name='location_section')
         .ui.inline.header 
             +i name='truck'
             |shipping address
-        +boolean_edit key='use_different_shipping_address' label='use different shipping address' direct=true
+        +boolean_edit key='use_different_shipping_address' label='use different shipping address'
         if use_different_shipping_address
             .ui.input
                 input(type='text' placeholder='street')
@@ -95,23 +95,23 @@ template(name='delivery_section')
         .ui.inline.header
             +i name='truck'
             |delivery
-        +kvs key='delivery_time_type' value='now' icon='present' direct=true
-        +kvs key='delivery_time_type' value='later' icon='clock' direct=true
+        +kvs key='delivery_time_type' value='now' icon='present'
+        +kvs key='delivery_time_type' value='later' icon='clock'
         // else  
         //     .ui.red.disabled.button(title='existing reservations')
         //         i.remove.icon   
         //         | can't cancel  
         div
         .ui.inline.header method
-        // +kvs key='delivery_type' value='pickup' icon='pick-up' direct=true
-        // +kvs key='delivery_type' value='delivery' icon='bicycle' direct=true
-        +kvs key='delivery_method' value='delivery' icon='bicycle' direct=true
-        +kvs key='delivery_method' value='pickup' icon='doormat' direct=true
+        // +kvs key='delivery_type' value='pickup' icon='pick-up'
+        // +kvs key='delivery_type' value='delivery' icon='bicycle'
+        +kvs key='delivery_method' value='delivery' icon='bicycle'
+        +kvs key='delivery_method' value='pickup' icon='doormat'
         if is delivery_time_type 'later' 
             if key_value_is 'delivery_method' 'delivery'
-                +datetime_edit key='delivery_timedate' label='delivery datetime' direct=true
+                +datetime_edit key='delivery_timedate' label='delivery datetime'
             if key_value_is 'delivery_method' 'pickup'
-                +datetime_edit key='pickup_timedate' label='pickup timedate' direct=true
+                +datetime_edit key='pickup_timedate' label='pickup timedate'
         
 template(name='payment_section')                
     .ui.segment
@@ -121,7 +121,7 @@ template(name='payment_section')
         div
         +i name='wallet--v1' cl='ui inline image'
         .ui.inline.header ${{fixed currentUser.credit}} credit
-        +boolean_edit key='use_credit' label='use credit' direct=true
+        +boolean_edit key='use_credit' label='use credit'
         // +topup_button amount=10
         // +topup_button amount=20
         // +topup_button amount=50

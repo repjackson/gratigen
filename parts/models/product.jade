@@ -50,27 +50,27 @@ template(name='product_view')
                     if image_id2
                         img.ui.rounded.image.zoomer(src="{{c.url image_id2}}")
                 .column
-                    +html_view key='description' direct=true
-                    // +text_view key='size_description' label='size description'  direct=true
+                    +html_view key='description'
+                    // +text_view key='size_description' label='size description' 
                     a.ui.circular.button(href=product_link)
                         // i.wordpress.large.icon
                         i.external.icon
                         |#{product_link}
                     
-                    +boolean_view key='gluten_free' label='gluten free' direct=true icon='no-gluten'
-                    +boolean_view key='vegetarian' label='vegetarian' direct=true icon='vegetarian-mark'
-                    +boolean_view key='no_sugar_added' label='no sugar added' direct=true icon='no-sugar2'
-                    +boolean_view key='vegan' label='vegan' direct=true icon='vegan-symbol'
-                    +boolean_view key='paleo' label='paleo' direct=true icon='caveman'
-                    +boolean_view key='local' label='local' direct=true icon='marker'
-                    +boolean_view key='nut_free' label='nut free' direct=true icon='no-peanut'
-                    +boolean_view key='rescued' label='rescued' direct=true icon='nothing-found'
-                    +boolean_view key='organic' label='organic' direct=true icon='organic-food'
-                    +boolean_view key='no_gmo' label='no gmo' direct=true icon='no-gmo'
-                    +boolean_view key='jar' label='jar container (requires deposit & return)' direct=true icon='mason-jar'
+                    +boolean_view key='gluten_free' label='gluten free' icon='no-gluten'
+                    +boolean_view key='vegetarian' label='vegetarian' icon='vegetarian-mark'
+                    +boolean_view key='no_sugar_added' label='no sugar added' icon='no-sugar2'
+                    +boolean_view key='vegan' label='vegan' icon='vegan-symbol'
+                    +boolean_view key='paleo' label='paleo' icon='caveman'
+                    +boolean_view key='local' label='local' icon='marker'
+                    +boolean_view key='nut_free' label='nut free' icon='no-peanut'
+                    +boolean_view key='rescued' label='rescued' icon='nothing-found'
+                    +boolean_view key='organic' label='organic' icon='organic-food'
+                    +boolean_view key='no_gmo' label='no gmo' icon='no-gmo'
+                    +boolean_view key='jar' label='jar container (requires deposit & return)' icon='mason-jar'
                     // .ui.header #{menu_section}
-                            +link_edit key='amazon_referral_link' label='amazon referral link' icon='amazon' direct=true
-                    // +boolean_view key='has_2cup' label='2 cup' direct=true icon='cup'
+                            +link_edit key='amazon_referral_link' label='amazon referral link' icon='amazon'
+                    // +boolean_view key='has_2cup' label='2 cup' icon='cup'
                     div
                     .ui.inline.header 
                         +i name='ingredients'
@@ -79,8 +79,8 @@ template(name='product_view')
                         .ui.large.basic.label.goto_ingredient #{this}
                     div
                     +voting_full
-                    +link_view key='amazon_referral_link' label='amazon link' icon='amazon' direct=true
-                    +link_view key='external_link' label='external link' icon='globe' direct=true
+                    +link_view key='amazon_referral_link' label='amazon link' icon='amazon'
+                    +link_view key='external_link' label='external link' icon='globe'
                     +comments
                     
                     // +product_orders
@@ -155,21 +155,21 @@ template(name='product_inventory')
                         |#{staff}
                     i.edit.link.icon.edit_inventory_item
                     if editing_this
-                        +number_edit key='amount' label='amount' direct=true
-                        +key_value_edit key='location' value='boh' label='boh' direct=true
-                        +key_value_edit key='location' value='foh' label='foh' direct=true
-                        // +text_edit key='location' label='location' icon='marker' direct=true
-                        +text_edit key='notes' label='notes' icon='pencil' direct=true
-                        // +text_edit key='staff' label='staff' icon='user' direct=true
+                        +number_edit key='amount' label='amount'
+                        +key_value_edit key='location' value='boh' label='boh'
+                        +key_value_edit key='location' value='foh' label='foh'
+                        // +text_edit key='location' label='location' icon='marker'
+                        +text_edit key='notes' label='notes' icon='pencil'
+                        // +text_edit key='staff' label='staff' icon='user'
                         +image_edit key='image_id'
-                        +key_value_edit key='staff' value='matt' direct=true
-                        +key_value_edit key='staff' value='nena' direct=true
-                        +key_value_edit key='staff' value='rachel' direct=true
-                        +key_value_edit key='staff' value='jimmy' direct=true
-                        +key_value_edit key='staff' value='elena' direct=true
-                        +key_value_edit key='staff' value='eric' direct=true
-                        +key_value_edit key='staff' value='luke' direct=true
-                        +key_value_edit key='staff' value='mateo' direct=true
+                        +key_value_edit key='staff' value='matt'
+                        +key_value_edit key='staff' value='nena'
+                        +key_value_edit key='staff' value='rachel'
+                        +key_value_edit key='staff' value='jimmy'
+                        +key_value_edit key='staff' value='elena'
+                        +key_value_edit key='staff' value='eric'
+                        +key_value_edit key='staff' value='luke'
+                        +key_value_edit key='staff' value='mateo'
                         i.checkmark.green.link.circular.large.icon.save_inventory_item
 
 template(name='product_reviews')
@@ -235,7 +235,7 @@ template(name='order_status_icons')
             +icolor name='checkmark' cl='ui inline image'
         
         if delivery_photo
-            +image_view key='delivery_photo' direct=true cl='ui tiny inline image'
+            +image_view key='delivery_photo' cl='ui tiny inline image'
 
          
 template(name='product_order_card')
@@ -288,24 +288,24 @@ template(name='product_edit')
                         small product
                     .ui.large.icon.fluid.green.button.save_product.fly_right(title='save product')
                         i.checkmark.large.icon   
-                    +text_edit key='title' label='title' icon='header' direct=true
-                    +text_edit key='slug' label='slug' icon='slug' direct=true
+                    +text_edit key='title' label='title' icon='header'
+                    +text_edit key='slug' label='slug' icon='slug'
                     +print_this
                 .column
-                    +image_edit key='image_id' label='image' direct=true
-                    +image_edit key='image_id2' label='alt image' direct=true
-                    +link_edit key='product_link' label='old site link' direct=true
+                    +image_edit key='image_id' label='image'
+                    +image_edit key='image_id2' label='alt image'
+                    +link_edit key='product_link' label='old site link'
                     // div
-                    +float_edit key='price_usd' label='$ price' direct=true
-                    +number_edit key='price_points' label='point price' icon='coins' direct=true
+                    +float_edit key='price_usd' label='$ price'
+                    +number_edit key='price_points' label='point price' icon='coins'
                 // .four.wide.column
                 //     .ui.inline.header 
                 //         +i name='category'
                 //         |section
                 //     div
-                //     +number_edit key='a_number' label="'A' number" direct=true
+                //     +number_edit key='a_number' label="'A' number"
                 //     div
-                //     +number_edit key='b_number' label="'B' number" direct=true
+                //     +number_edit key='b_number' label="'B' number"
                 //     +key_value_edit key='shop_section' value='beans' label='beans' icon='white-beans'
                 //     +key_value_edit key='shop_section' value='coffee' label='coffee' icon='coffee'
                 //     +key_value_edit key='shop_section' value='snacks' label='snacks' icon='potato-chips'
@@ -315,28 +315,28 @@ template(name='product_edit')
                 //     +key_value_edit key='shop_section' value='rice_grains' label='rice & grains' icon='wheat'
                 //     // +key_value_edit key='shop_section' value='seeds' label='seeds' icon='seeds'
                 .column
-                    +text_edit key='size_description' label='size description' icon='content' direct=true
+                    +text_edit key='size_description' label='size description' icon='content'
                     .ui.inline.header food
-                    +boolean_edit key='is_food' label='is food' direct=true icon='food'
+                    +boolean_edit key='is_food' label='is food' icon='food'
                     if is_food
                         +ingredient_picker
-                        +boolean_edit key='gluten_free' label='gluten free' direct=true icon='no-gluten'
-                        +boolean_edit key='paleo' label='paleo' direct=true icon='caveman'
-                        +boolean_edit key='vegetarian' label='vegetarian' direct=true icon='vegetarian-mark'
-                        +boolean_edit key='no_sugar_added' label='no sugar added' direct=true icon='no-sugar2'
-                        +boolean_edit key='vegan' label='vegan' direct=true icon='vegan-symbol'
-                        +boolean_edit key='no_gmo' label='no gmo' direct=true icon='no-gmo'
-                        +boolean_edit key='local' label='local' direct=true icon='marker'
-                        +boolean_edit key='nut_free' label='nut free' direct=true icon='no-peanut'
-                        +boolean_edit key='rescued' label='rescued' direct=true icon='nothing-found'
-                        +boolean_edit key='kosher' label='kosher' direct=true icon='judaism'
-                        +boolean_edit key='organic' label='organic' direct=true icon='organic-food'
-                        // +boolean_edit key='jar' label='jar container (requires deposit & return)' direct=true icon='mason-jar'
+                        +boolean_edit key='gluten_free' label='gluten free' icon='no-gluten'
+                        +boolean_edit key='paleo' label='paleo' icon='caveman'
+                        +boolean_edit key='vegetarian' label='vegetarian' icon='vegetarian-mark'
+                        +boolean_edit key='no_sugar_added' label='no sugar added' icon='no-sugar2'
+                        +boolean_edit key='vegan' label='vegan' icon='vegan-symbol'
+                        +boolean_edit key='no_gmo' label='no gmo' icon='no-gmo'
+                        +boolean_edit key='local' label='local' icon='marker'
+                        +boolean_edit key='nut_free' label='nut free' icon='no-peanut'
+                        +boolean_edit key='rescued' label='rescued' icon='nothing-found'
+                        +boolean_edit key='kosher' label='kosher' icon='judaism'
+                        +boolean_edit key='organic' label='organic' icon='organic-food'
+                        // +boolean_edit key='jar' label='jar container (requires deposit & return)' icon='mason-jar'
                         div
-                        +number_edit key='calories' label='calories' icon='food' direct=true
+                        +number_edit key='calories' label='calories' icon='food'
                 .column
                     div
-                    +html_edit key='description' label='description' direct=true
+                    +html_edit key='description' label='description'
                     if can_delete
                         .ui.red.button.delete_product
                             i.remove.icon   

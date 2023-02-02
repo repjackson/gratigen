@@ -82,7 +82,7 @@ template(name='request_card')
     .card.pointer.request_card.zoomer
         .image
             if youtube_id
-                +youtube_view key='youtube_id' direct=true
+                +youtube_view key='youtube_id'
             else if image_id
                 img.ui.zoom.image(src="{{c.url image_id width=400 height=300 crop='fill'}}" class=currentUser.invert_class)    
         .content
@@ -123,7 +123,7 @@ template(name='request_view')
                     img.ui.avatar.image(src="{{c.url _author.image_id height=200 width=200 gravity='face' crop='fill'}}")
                     |#{_author.name}
                 .ui.header #{when}
-                +array_view key='location_tags' label='location_tags' direct=true
+                +array_view key='location_tags' label='location_tags'
                 div
                 +voting_full
             .column
@@ -133,7 +133,7 @@ template(name='request_view')
                 //     img.ui.avatar.image(src="{{c.url target.image_id height=200 width=200 gravity='face' crop='fill'}}")
                 //     |#{target.username}
                 if youtube_id
-                    +youtube_view key='youtube_id' direct=true
+                    +youtube_view key='youtube_id'
                 .spacer
                 i.large.tags.icon
                 each tags 
@@ -181,21 +181,21 @@ template(name='request_edit')
                 .ui.header 
                     small author
                     |#{_author.username}
-                +text_edit key='title' icon='header' direct=true
-                +boolean_edit key='has_date' label='has date' direct=true
+                +text_edit key='title' icon='header'
+                +boolean_edit key='has_date' label='has date'
                 if has_date
-                    +date_edit key='date' label='date' icon='calendar' direct=true
-                +boolean_edit key='has_youtube' label='has youtube' direct=true
+                    +date_edit key='date' label='date' icon='calendar'
+                +boolean_edit key='has_youtube' label='has youtube'
                 if has_youtube
-                    +youtube_edit key='youtube_id' label='youtube id' direct=true
-                +html_edit key='description' label='description' direct=true
-                +image_edit key='image_id' label='image' direct=true
+                    +youtube_edit key='youtube_id' label='youtube id'
+                +html_edit key='description' label='description'
+                +image_edit key='image_id' label='image'
             .column
                 div 
-                +array_edit key='tags' label='tags' icon='tags' direct=true
-                +array_edit key='location_tags' label='location tags' icon='marker' direct=true
+                +array_edit key='tags' label='tags' icon='tags'
+                +array_edit key='location_tags' label='location tags' icon='marker'
                 .ui.header your points: #{currentUser.points}
-                +number_edit key='point_offer' label='point offer' icon='hashtag' min='0' direct=true
+                +number_edit key='point_offer' label='point offer' icon='hashtag' min='0'
                 div
                 // .ui.small.header.thin publishing request holds points from your balance and dispenses them when request is marked complete
                 // .ui.inline.header status:

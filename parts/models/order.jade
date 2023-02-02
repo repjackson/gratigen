@@ -4,7 +4,7 @@ template(name='order_item')
             // .four.wide.column.zoomer
             //     with order_product
             //         //- img.ui.mini.image(src=image)
-            //         +image_view key='image_id' direct=true cl='zoomer ui fluid image'
+            //         +image_view key='image_id' cl='zoomer ui fluid image'
             .sixteen.wide.column
                 .ui.list
                     each order_things
@@ -135,22 +135,22 @@ template(name='order')
                 //     i.shield.icon
                 //     |admin
                 // if is_admin
-                //     +kvs key='status' value='started' label='mark started' direct=true
+                //     +kvs key='status' value='started' label='mark started'
                 //     if kve status 'started'
-                //         +kvs key='status' value='ready' label='mark ready' direct=true
-                //         +kvs key='status' value='picked_up' label='picked up' direct=true
+                //         +kvs key='status' value='ready' label='mark ready'
+                //         +kvs key='status' value='picked_up' label='picked up'
                 // div
                 .ui.inline.header 
                     i.user.outline.icon
                     |customer
                 if delivered
                     if is_author
-                        +kvs key='status' value='picked_up' label='picked up' direct=true
+                        +kvs key='status' value='picked_up' label='picked up'
                         .ui.basic.large.button.mark_arrived
                             +i name='pick-up' cl='ui inline image'
                             |mark picked up
                         
-                +kvs key='status' value='picked_up' label='mark picked up' direct=true
+                +kvs key='status' value='picked_up' label='mark picked up'
                     
             .six.wide.column
                 +product_delivery
@@ -251,7 +251,7 @@ template(name='product_delivery')
             +i name='checked-truck' cl='ui inline image'
             .ui.inline.header arrived {{from_now arrived_timestamp}} 
             .ui.small.grey.inline.header {{cal_time arrived_timestamp}}
-            +image_edit key='delivery_photo' direct=true
+            +image_edit key='delivery_photo'
             if delivery_photo                        
                 div
                 .ui.basic.large.button.mark_delivery_complete

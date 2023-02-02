@@ -36,15 +36,15 @@ template(name='badge_view')
                     img.ui.avatar.image(src="{{c.url _author.image_id height=200 width=200 gravity='face' crop='fill'}}")
                     |#{_author.username}
                         
-                +number_view key='bounty' label='bounty' direct=true
-                +textarea_view key='description' label='description' direct=true
-                +image_view key='image_id' label='image' direct=true
+                +number_view key='bounty' label='bounty'
+                +textarea_view key='description' label='description'
+                +image_view key='image_id' label='image'
                 div 
-                +array_view key='tags' label='tags' direct=true
+                +array_view key='tags' label='tags'
                 .spacer
                 .spacer
                 +comments
-                //- +array_view key='location_tags' label='location_tags' direct=true
+                //- +array_view key='location_tags' label='location_tags'
             .eight.wide.column
                 .ui.header 
                     +i name='badger'
@@ -77,16 +77,16 @@ template(name='badge_edit')
                 i.remove.circular.link.icon.delete_item
         .row 
             .eight.wide.column
-                +text_edit key='title' icon='header' direct=true
-                +slug_edit key='slug' icon='slug' direct=true
-                +icon_edit key='icon' label='icon' direct=true
-                +textarea_edit key='description' label='description' direct=true
-                +image_edit key='image_id' label='image' direct=true
+                +text_edit key='title' icon='header'
+                +slug_edit key='slug' icon='slug'
+                +icon_edit key='icon' label='icon'
+                +textarea_edit key='description' label='description'
+                +image_edit key='image_id' label='image'
                 div 
-                +array_edit key='tags' label='tags' direct=true
-                +text_edit key='location' label='location' icon='marker' direct=true
-                +array_edit key='location_tags' label='location_tags' direct=true
-                +boolean_edit key='published' direct=true
+                +array_edit key='tags' label='tags'
+                +text_edit key='location' label='location' icon='marker'
+                +array_edit key='location_tags' label='location_tags'
+                +boolean_edit key='published'
                 +group_picker
             .eight.wide.column
                 .ui.header

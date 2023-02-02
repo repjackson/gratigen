@@ -38,13 +38,13 @@ template(name='transfers')
 //                     a.ui.large.icon.green.button(href="/transfer/#{_id}" title='save draft')
 //                         i.checkmark.big.icon
 //                         |save draft
-//                     +image_edit key='image_id' label='image' direct=true icon='image'
+//                     +image_edit key='image_id' label='image' icon='image'
 //                     div
-//                     +array_edit key='location_tags' label='location tags' direct=true icon='marker'
+//                     +array_edit key='location_tags' label='location tags' icon='marker'
 //                 .ten.wide.column
 //                     div
-//                     +array_edit key='tags' label='tags' direct=true icon='tags'
-//                     +textarea_edit key='notes' label='notes' direct=true icon='content'
+//                     +array_edit key='tags' label='tags' icon='tags'
+//                     +textarea_edit key='notes' label='notes' icon='content'
 //                     +user_picker
                     
 //                     if can_edit
@@ -86,8 +86,8 @@ template(name='transfer_view')
                     .f14
                         |!{description}
                     .spacer
-                    +image_view key='image_id' label='image' direct=true
-                    +link_view key='link' label='link' icon='link' direct=true
+                    +image_view key='image_id' label='image'
+                    +link_view key='link' label='link' icon='link'
                     div 
                     if tags
                         i.tags.icon
@@ -100,7 +100,7 @@ template(name='transfer_view')
                     .spacer
                     .spacer
                     +comments
-                    //- +array_view key='location_tags' label='location_tags' direct=true
+                    //- +array_view key='location_tags' label='location_tags'
                 .five.wide.column
                     a.fly_right(href="/user/#{recipient.username}")
                         img.ui.circular.centered.fluid.pointer.zoom.image(src="{{c.url recipient.image_id height=500 width=500 gravity='face' crop='fill'}}" class=currentUser.invert_class)
@@ -119,7 +119,7 @@ template(name='transfer_edit')
                         |cancel
                     .ui.segment
                         .ui.inline.grey.header sender
-                        +single_user_edit key='_author_id' direct=true
+                        +single_user_edit key='_author_id'
                         .ui.inline.header
                             img.ui.small.image(src="{{c.url _author.image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                             |#{_author.name}
@@ -134,7 +134,7 @@ template(name='transfer_edit')
                         unless recipient
                             .ui.divider
                             // i.large.user.plus.icon
-                            +single_user_edit key='recipient_id' label='search member' icon='user plus' direct=true
+                            +single_user_edit key='recipient_id' label='search member' icon='user plus'
                             // .ui.icon.input
                             //     i.search.icon
                             //     input.search_username(type='text' placeholder='username')
@@ -144,13 +144,13 @@ template(name='transfer_edit')
                             //         img.ui.avatar.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
                             //         |#{name}
                             //         small #{points}p
-                    +date_edit key='date' label='date' direct=true   
-                    +time_edit key='time' label='time' direct=true   
-                    +array_edit key='location_tags' label='location tags' icon='marker' direct=true
+                    +date_edit key='date' label='date'   
+                    +time_edit key='time' label='time'   
+                    +array_edit key='location_tags' label='location tags' icon='marker'
                 .six.wide.column
-                    +html_edit key='description' label='description' direct=true
-                    +image_edit key='image_id' label='image' direct=true
-                    +link_edit key='link' label='link' icon='link' direct=true
+                    +html_edit key='description' label='description'
+                    +image_edit key='image_id' label='image'
+                    +link_edit key='link' label='link' icon='link'
                     div 
                     div
                     .ui.inline.header

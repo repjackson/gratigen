@@ -41,12 +41,12 @@ template(name='role_view')
                         .item #{views} views
                     each viewers
                         .ui.label #{username}
-                    +array_view key='tags' label='tags' direct=true
-                    +array_view key='badge_titles' label='badges' direct=true
+                    +array_view key='tags' label='tags'
+                    +array_view key='badge_titles' label='badges'
                     +voting_full
                     .ui.header #{when}
                     +eft_viewer
-                    //- +array_view key='location_tags' label='location_tags' direct=true
+                    //- +array_view key='location_tags' label='location_tags'
                     +comments
     
                 .column
@@ -54,7 +54,7 @@ template(name='role_view')
                     // a.ui.header(href="/user/#{target.username}")
                     //     |#{target.username}
                     if youtube_id 
-                        +youtube_view key='youtube_id' direct=true
+                        +youtube_view key='youtube_id'
                     |!{content}
                     div 
                     .spacer
@@ -78,11 +78,11 @@ template(name='role_edit')
                         |edit role
                     a.ui.icon.green.big.fluid.button.invert(href="/role/#{_id}" title='save')
                         i.checkmark.big.icon
-                    +text_edit key='title' label='title' direct=true
+                    +text_edit key='title' label='title'
                     +title_link_buttons
                 .column
-                    +html_edit key='content' label='content' direct=true
-                    +youtube_edit key='youtube_id' label='youtube id' direct=true
+                    +html_edit key='content' label='content'
+                    +youtube_edit key='youtube_id' label='youtube id'
                 .column
                     .ui.header required badges
                     +badge_picker
@@ -112,18 +112,18 @@ template(name='role_edit')
                         
                 .column
                     if is_dev
-                        +single_user_edit key='_author_id' label='author' direct=true
-                    +image_edit key='image_id' label='image' direct=true
+                        +single_user_edit key='_author_id' label='author'
+                    +image_edit key='image_id' label='image'
                     div 
-                    +array_edit key='tags' label='tags' direct=true icon='tags'
-                    +boolean_edit key='published' icon='visible' direct=true
+                    +array_edit key='tags' label='tags' icon='tags'
+                    +boolean_edit key='published' icon='visible'
                     if is_dev 
-                        +text_edit key='model' label='model' direct=true
+                        +text_edit key='model' label='model'
                 .column
                     div
                     +html_edit key='responsibilities' label='responsibilities'
                     div
-                    +array_edit key='location_tags' label='location_tags' direct=true
+                    +array_edit key='location_tags' label='location_tags'
                     // unless published
                     //     a.ui.fluid.green.button.submit(href="/save")
                     //         i.checkmark.icon
@@ -136,9 +136,9 @@ template(name='role_edit')
                         |audience
                     +boolean_edit key='private' label='private' 
                     if private 
-                        +multi_user_edit key='access_user_ids' label='user picker' direct=true
+                        +multi_user_edit key='access_user_ids' label='user picker'
                 .column
                     +group_picker
-                    +array_edit key='skills' label='skills' icon='wrench' direct=true
+                    +array_edit key='skills' label='skills' icon='wrench'
                 .column
                     +model_picker model='skill' icon='wrench'

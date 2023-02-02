@@ -91,10 +91,10 @@ template(name='org_reservations')
 //                             +title_link_buttons
 //                             a.ui.icon.green.big.button(href="/org/#{_id}" title='save')
 //                                 i.checkmark.big.icon
-//                             +text_edit key='title' label='title' direct=true
+//                             +text_edit key='title' label='title'
                             
-//                             +html_edit key='body' label='body' direct=true
-//                             +youtube_edit key='youtube_id' label='youtube id' direct=true
+//                             +html_edit key='body' label='body'
+//                             +youtube_edit key='youtube_id' label='youtube id'
 //                         .column
 //                             .ui.header required badges
 //                             +badge_picker
@@ -126,17 +126,17 @@ template(name='org_reservations')
                                 
 //                         .column
 //                             if is_dev
-//                                 +single_user_edit key='_author_id' label='author' direct=true
-//                             +image_edit key='image_id' label='image' direct=true
+//                                 +single_user_edit key='_author_id' label='author'
+//                             +image_edit key='image_id' label='image'
 //                             div 
-//                              +boolean_edit key='published' icon='visible' direct=true
+//                              +boolean_edit key='published' icon='visible'
 //                             if is_dev 
-//                                 +text_edit key='model' label='model' direct=true
+//                                 +text_edit key='model' label='model'
 //                         .column
 //                             div
 //                             +html_edit key='responsibilities' label='responsibilities'
 //                             div
-//                             +array_edit key='location_tags' label='location_tags' direct=true
+//                             +array_edit key='location_tags' label='location_tags'
 //                             // unless published
 //                             //     a.ui.fluid.green.button.submit(href="/save")
 //                             //         i.checkmark.icon
@@ -149,10 +149,10 @@ template(name='org_reservations')
 //                                 |audience
 //                             +boolean_edit key='private' label='private' 
 //                             if private 
-//                                 +multi_user_edit key='access_user_ids' label='user picker' direct=true
+//                                 +multi_user_edit key='access_user_ids' label='user picker'
 //                         .column
 //                             +group_picker
-//                             +array_edit key='skills' label='skills' icon='wrench' direct=true
+//                             +array_edit key='skills' label='skills' icon='wrench'
 //                         .column
 //                             +model_picker model='skill' icon='wrench'
 
@@ -170,167 +170,148 @@ template(name='title_link_buttons')
 template(name='org_view')
     // if currentUser.admin_mode 
     //     +org_edit
-    with current_doc
-        // img.ui.fluid.image.bg_overlay(src="{{c.url image_id crop='fit'}}")
-        .ui.stackable.padded.grid.scrolling
-            .middle.aligned.row
-                .three.wide.column
-                    .left_floated
-                        a.ui.circular.tertiary.large.button.zoomer.fly_left(href="/")
-                            i.left.chevron.icon
-                            +ismall name='groups' color='83DFF4' 
-                            |orgs
-                .ten.wide.center.aligned.column
-                    .ui.centered.inline.huge.center.aligned.header
-                        |#{title}
-                .three.wide.right.aligned.column
-                    +subscribe_button
-                    +bookmark_button
-                    // .floated
-                    if can_edit
-                        +edit_button
-                    if currentUser.edit_mode 
-                        +remove_button
-            .row
-                .five.wide.column
-                    +image_edit key='image_id' icon='image' label='image'
-                    if currentUser.edit_mode 
-                        +array_edit key='tags' icon='tags'
-                    else    
-                        +array_view key='tags' icon='tags'
-                    
-                    +title_link_buttons
+    .ui.stackable.grid.scrolling
+        .middle.aligned.row
+            img.ui.fluid.image.bg_overlay(src="{{c.url image_id crop='fit'}}")
+            .three.wide.column
+                .left_floated
+                    a.ui.circular.tertiary.large.button.zoomer.fly_left(href="/")
+                        i.left.chevron.icon
+                        +ismall name='groups' color='83DFF4' 
+                        |orgs
+            .nine.wide.center.aligned.column
+                .ui.centered.inline.huge.center.aligned.header
+                    |#{title}
+            .four.wide.right.aligned.column
+                +subscribe_button
+                +bookmark_button
+                // .floated
+                if can_edit
+                    +edit_button
+                if currentUser.edit_mode 
+                    +remove_button
+        .row
+            .five.wide.column
+                +image_edit key='image_id' icon='image' label='image'
+                if currentUser.edit_mode 
+                    +array_edit key='tags' icon='tags'
+                else    
+                    +array_view key='tags' icon='tags'
+                
+                +title_link_buttons
+                .spacer
+                if link
+                    a.ui.basic.circular.button(href=link target='_window')
+                        i.external.icon
+                        |view site
                     .spacer
-                    if link
-                        a.ui.basic.circular.button(href=link target='_window')
-                            i.external.icon
-                            |view site
-                        .spacer
-                    div
-                    .spacer
-                    if address
-                        a.ui.compact.basic.circular.button(href=address_link target='_window')
-                            i.marker.icon
-                            |#{address}
-                    +textarea_edit key='purpose' tagline="what is the basic purpose of your organization? what principals does it serve?"
-                    +textarea_edit key='vision' label='vision' tagline="how will your organization impact society? how will it look for people?"
-                    +textarea_edit key='mission' tagline='your business goals and the values you will embrace to achieve them'
-                    +textarea_edit key='bylaws' tagline='bylaws of your organization. Articles of incorporation are the primary law of an association used to establish the general organization and governing of the association to achieve corporate existence. Bylaws are the secondary law of an association best used to detail how the society is formed and run.'
-                    +textarea_edit key='signature' tagline='creators signature'
-                    +viewing
-                    if in_dev 
-                        +print_this
-                    // +multi_user_view key='member_ids' label='members' 
-                    +org_history
-                    +org_subscription
-    
-                .six.wide.column
-                    .centered.row
-                        +eft_viewer
-                    .ui.header leaders
-                        .ui.four.column.centered.grid
-                            .column 
-                                .ui.centered.small.header lead
-                                +single_user_edit key='lead' label='lead' icon='king'
-                            .column 
-                                .ui.centered.small.header support
-                                +single_user_edit key='support' label='support' icon='users'
-                            .column 
-                                .ui.centered.small.header safety
-                                +single_user_edit key='safety' label='safety'
-                            .column 
-                                .ui.centered.small.header creator
-                                +single_user_edit key='creator' label='creator' icon='edit'
-                    // // .ui.basic.button(href="/user/#{lead}") lead
-                    // // if currentUser.edit_mode 
-                    // +single_user_edit key='lead' label='lead' icon='king'
-                    // // a.ui.basic.button(href="/user/#{lead}") lead
-                    // //     with lead
-                    // //         +user_pill
-                    // // .ui.basic.button(href="/user/#{support}") support
-                    // // if currentUser.edit_mode 
-                    // +single_user_edit key='support' label='support' icon='users'
-                    // // .ui.basic.button(href="/user/#{safety}") safety
-                    // // if currentUser.edit_mode 
-                    // +single_user_edit key='safety' label='safety'
-                    // // .ui.basic.button(href="/user/#{creator}") creator  
-                    // // if currentUser.edit_mode 
-                    // +single_user_edit key='creator' label='creator' icon='edit'
-                    // .ui.header 
-                        |#{member_ids.count} members
+                div
+                .spacer
+                if address
+                    a.ui.compact.basic.circular.button(href=address_link target='_window')
+                        i.marker.icon
+                        |#{address}
+                +textarea_edit key='purpose' tagline="what is the basic purpose of your organization? what principals does it serve?"
+                +textarea_edit key='vision' label='vision' tagline="how will your organization impact society? how will it look for people?"
+                +textarea_edit key='mission' tagline='your business goals and the values you will embrace to achieve them'
+                +textarea_edit key='bylaws' tagline='bylaws of your organization. Articles of incorporation are the primary law of an association used to establish the general organization and governing of the association to achieve corporate existence. Bylaws are the secondary law of an association best used to detail how the society is formed and run.'
+                +textarea_edit key='signature' tagline='creators signature'
+                +viewing
+                if in_dev 
+                    +print_this
+                // +multi_user_view key='member_ids' label='members' 
+                +org_history
+                +org_subscription
 
-                    +textarea_edit key='brief' tagline='breif description or your organization'
-                    +textarea_edit key='description' tagline='complete description of your organization'
-                    +textarea_edit key='body' tagline='body'
+            .six.wide.column
+                .centered.row
+                    +eft_viewer
+                .ui.header leaders
+                    .ui.four.column.centered.grid
+                        .column 
+                            .ui.centered.small.header lead
+                            +single_user_edit key='lead' label='lead' icon='king'
+                        .column 
+                            .ui.centered.small.header support
+                            +single_user_edit key='support' label='support' icon='users'
+                        .column 
+                            .ui.centered.small.header safety
+                            +single_user_edit key='safety' label='safety'
+                        .column 
+                            .ui.centered.small.header creator
+                            +single_user_edit key='creator' label='creator' icon='edit'
+                +textarea_edit key='brief' tagline='breif description or your organization'
+                +textarea_edit key='description' tagline='complete description of your organization'
+                +textarea_edit key='body' tagline='body'
+                
+                // |!{body}
+                +role_crud
+                
+                +event_picker
+                        // a.item(href="/org/#{_id}/#{username}")
+                        //     img.ui.mini.image(src="{{c.url image_id width=200 height=200}}")
+                        //     .content
+                        //         .header
+                        //             |#{username}
+            .five.wide.column
+                if is_member
+                    .ui.big.button.leave(title='click to leave')
+                        i.checkmark.icon
+                        |member
+                else 
+                    .ui.big.button.join(title='click to join')
+                        i.user.plus.icon
+                        |join 
+                div
+                .ui.inline.header members
+                each member_ids
+                    +user_pill
+                if currentUser.edit_mode 
+                    +multi_user_edit key='member_ids' label='members'
+                
+                if currentUser.edit_mode
+                    .ui.basic.center.aligned.segment
+                        +eft_picker color="FF73EA" icon='food' label='food'
+                        +eft_picker color="B785E1" icon='home' label='housing'
+                        +eft_picker color="7229AF" icon='tshirt' label='clothing'
+                        +eft_picker color="1255B8" icon='car' label='transportation'
+                        +eft_picker color="83DFF4" icon='lightning' label='energy'
+                        +eft_picker color="42E8C4" icon='leaf' label='zero waste'
+                        +eft_picker color="40C057" icon='smile' label='wellness'
+                        +eft_picker color="FAB005" icon='university' label='education'
+                        +eft_picker color="FD7E14" icon='paint brush' label='art'
+                        +eft_picker color="FF0000" icon='users' label="community core"
+                // +doc_array_togggle key='member_ids' value=currentUser._id add_label='join' remove_label='joined'
+                .ui.header 
+                    +i name='rss'
+                    |activity
+                +group_picker
+                each log_items
+                    +log_item
+                .ui.header.refresh_org_stats
+                    +i name='line-chart'
+                    |stats
+                i.refresh.link.icon.refresh_org_stats
+                .ui.large.list
+                    // .item #{member_count} members
+                    // .item roles
+                    .item resources
+                    .item groups
+                    .item projects
+                    .item tasks
+                    .item badges
+                    .item services
+                    .item products
                     
-                    // |!{body}
-                    +role_crud
-                    
-                    +event_picker
-                            // a.item(href="/org/#{_id}/#{username}")
-                            //     img.ui.mini.image(src="{{c.url image_id width=200 height=200}}")
-                            //     .content
-                            //         .header
-                            //             |#{username}
-                .five.wide.column
-                    if is_member
-                        .ui.big.button.leave(title='click to leave')
-                            i.checkmark.icon
-                            |member
-                    else 
-                        .ui.big.button.join(title='click to join')
-                            i.user.plus.icon
-                            |join 
-                    div
-                    .ui.inline.header members
-                    each member_ids
-                        +user_pill
-                    if currentUser.edit_mode 
-                        +multi_user_edit key='member_ids' label='members'
-                    
-                    if currentUser.edit_mode
-                        .ui.basic.center.aligned.segment
-                            +eft_picker color="FF73EA" icon='food' label='food'
-                            +eft_picker color="B785E1" icon='home' label='housing'
-                            +eft_picker color="7229AF" icon='tshirt' label='clothing'
-                            +eft_picker color="1255B8" icon='car' label='transportation'
-                            +eft_picker color="83DFF4" icon='lightning' label='energy'
-                            +eft_picker color="42E8C4" icon='leaf' label='zero waste'
-                            +eft_picker color="40C057" icon='smile' label='wellness'
-                            +eft_picker color="FAB005" icon='university' label='education'
-                            +eft_picker color="FD7E14" icon='paint brush' label='art'
-                            +eft_picker color="FF0000" icon='users' label="community core"
-                    // +doc_array_togggle key='member_ids' value=currentUser._id add_label='join' remove_label='joined'
-                    .ui.header 
-                        +i name='rss'
-                        |activity
-                    +group_picker
-                    each log_items
-                        +log_item
-                    .ui.header.refresh_org_stats
-                        +i name='line-chart'
-                        |stats
-                    i.refresh.link.icon.refresh_org_stats
-                    .ui.large.list
-                        // .item #{member_count} members
-                        // .item roles
-                        .item resources
-                        .item groups
-                        .item projects
-                        .item tasks
-                        .item badges
-                        .item services
-                        .item products
-                        
-                        // .item #{meal_count} meals
-                        // .item #{dish_count} dishes
-                        .item #{total_credit_exchanged} credits exchanged
-                        .item 
-                .eight.wide.column
-                    +related_docs 
-                .eight.wide.column
-                    +comments
-                    // +view_chats
+                    // .item #{meal_count} meals
+                    // .item #{dish_count} dishes
+                    .item #{total_credit_exchanged} credits exchanged
+                    .item 
+            .eight.wide.column
+                +related_docs 
+            .eight.wide.column
+                +comments
+                // +view_chats
     
     
 template(name='related_docs')
@@ -359,7 +340,10 @@ template(name='org_section')
     
 template(name='edit_button')
     if currentUser.edit_mode
-        i.setting.huge.blue.link.zoomer.loading.icon.invert.edit_mode(title="edit #{title}")
+        .ui.basic.big.green.compact.circular.button.edit_mode.invert
+            i.setting.big.blue.link.zoomer.loading.icon(title="edit #{title}")
+            i.checkmark.icon
+            |save
     else
         i.setting.big.link.zoomer.icon.edit_mode(title="edit #{title}")
     // a.ui.circular.tertiary.icon.button.zoomer.floated.right.fly_down(href="/org/#{_id}/edit" title="edit #{title}")

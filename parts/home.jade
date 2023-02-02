@@ -12,10 +12,8 @@ template(name='home')
             // .ui.fluid.small.button.toggle_leftbar
             //     i.chevron.left.icon
             // .ui.hidden.divider
-            // .ui.segment
-            img.ui.rounded.image(src="{{c.url 'batflash' height='300' width='300'}}" class=darkmode_class)
-            // img.ui.image(src="/batflash.png")
-            .spacer
+            .ui.segment
+                img.ui.image(src="/batflash.png")
             +dash_user_info
             +user_impact_graph
            
@@ -330,7 +328,7 @@ template(name='home_card')
     //     +recipe_card
     // else 
     .ui.card
-        a.content.show_moda.zoomer(href="/#{model}/#{_id}")
+        a.content.show_moda.zoomer(href="/d/#{model}/#{_id}")
             span.left.floated
                 if icon 
                     +i name=icon color=icon_color
@@ -360,7 +358,7 @@ template(name='home_card')
                     if _is 'model' 'resource'
                         +i name='field-and-tractor' color='42E8C4' cl='ui inline mini image'
         if youtube_id 
-            +youtube_view key='youtube_id' direct=true
+            +youtube_view key='youtube_id'
         .content 
                 |!{body}
                 |!{content}

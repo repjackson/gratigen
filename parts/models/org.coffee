@@ -214,10 +214,6 @@ if Meteor.isClient
     #     self.ready()
 
 
-Router.route '/org/:doc_id/', (->
-    @render 'org_view'
-    ), name:'org_view'
-
 
 if Meteor.isClient
     Template.org_view.onCreated ->

@@ -35,7 +35,7 @@ template(name='message_view')
                         | #{when}
                     .f12
                         |#{description}
-                    +image_view key='image_id' label='image' direct=true
+                    +image_view key='image_id' label='image'
                     div 
                     if tags
                         i.tags.icon
@@ -45,7 +45,7 @@ template(name='message_view')
                     .spacer
                     +comments
                     +voting_full
-                    //- +array_view key='location_tags' label='location_tags' direct=true
+                    //- +array_view key='location_tags' label='location_tags'
                     
                     
 template(name='message_edit')
@@ -71,7 +71,7 @@ template(name='message_edit')
                                 .ui.small.grey.inline.header #{points}
                         unless recipient
                             .ui.divider
-                            +single_user_edit key='recipient_id' label='search member' icon='user plus' direct=true
+                            +single_user_edit key='recipient_id' label='search member' icon='user plus'
 
                             // i.large.user.plus.icon
                             // // .ui.icon.input
@@ -85,8 +85,8 @@ template(name='message_edit')
                             //         small #{points}p
                                     
                 .six.wide.column
-                    +textarea_edit key='description' label='description' direct=true
-                    // +image_edit key='image_id' label='image' direct=true
+                    +textarea_edit key='description' label='description'
+                    // +image_edit key='image_id' label='image'
                     div 
                     div
                     // .ui.inline.header
@@ -100,7 +100,7 @@ template(name='message_edit')
                     //         i.delete.icon.remove_element
                     //         |#{this}
                     
-                    //- +array_edit key='location_tags' label='location_tags' direct=true
+                    //- +array_edit key='location_tags' label='location_tags'
                 .five.wide.column
                     .ui.center.aligned.basic.segment
                         if can_submit

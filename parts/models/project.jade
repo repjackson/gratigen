@@ -1,9 +1,9 @@
 template(name='project_card')
     a.ui.card.fly_right(href="/project/#{_id}")
         if youtube_id 
-            +youtube_view key='youtube_id' direct=true
+            +youtube_view key='youtube_id'
         if image_id 
-            +image_view key='image_id' direct=true
+            +image_view key='image_id'
         .content
             .ui.inline.header #{title}
             if private 
@@ -21,7 +21,7 @@ template(name='project_card')
                 |#{when}
             // +comments_view_small
             +author_info
-            +array_view key='role_titles' label='roles' icon='shield' direct=true
+            +array_view key='role_titles' label='roles' icon='shield'
 
 
 template(name='set_project_sort_key')
@@ -236,9 +236,9 @@ template(name='project_view')
     //                     .item #{views} views
     //                 each viewers
     //                     .ui.label #{username}
-    //                 +array_view key='tags' label='tags' direct=true
-    //                 +array_view key='role_titles' label='roles' icon='shield' direct=true
-    //                 +array_view key='task_titles' label='tasks' icon='tasks' direct=true
+    //                 +array_view key='tags' label='tags'
+    //                 +array_view key='role_titles' label='roles' icon='shield'
+    //                 +array_view key='task_titles' label='tasks' icon='tasks'
     //                 .ui.header 
     //                     +i name='tasks'
     //                     |task ids (children)
@@ -251,14 +251,14 @@ template(name='project_view')
     //                     // a.ui.large.label(href="/task/#{this}") #{this}
     //                 +voting_full
     //                 .ui.header #{when}
-    //                 //- +array_view key='location_tags' label='location_tags' direct=true
+    //                 //- +array_view key='location_tags' label='location_tags'
     //                 +comments
     //         .twelve.wide.column.scrolling
     //             img.ui.image(src="{{c.url image_id }}" class=currentUser.invert_class)
     //             // a.ui.header(href="/user/#{target.username}")
     //             //     |#{target.username}
     //             if youtube_id 
-    //                 +youtube_view key='youtube_id' direct=true
+    //                 +youtube_view key='youtube_id'
     //             |!{content}
     //             div 
     //             .spacer
@@ -485,10 +485,10 @@ template(name='project_edit')
                     |edit project
                 a.ui.icon.green.big.button(href="/project/#{_id}" title='save')
                     i.checkmark.big.icon
-                +text_edit key='title' label='title' direct=true
-                +html_edit key='content' label='content' direct=true
-                +youtube_edit key='youtube_id' label='youtube id' direct=true
-                // +array_edit key='roles' label='roles' icon='shield' direct=true
+                +text_edit key='title' label='title'
+                +html_edit key='content' label='content'
+                +youtube_edit key='youtube_id' label='youtube id'
+                // +array_edit key='roles' label='roles' icon='shield'
             .six.wide.column.scrolling
                 // +array_edit key='tasks' label='tasks'
                 i.large.link.red.remove.icon.delete_project
@@ -496,17 +496,17 @@ template(name='project_edit')
                     small author
                     |#{_author.username}
                 if is_dev
-                    +single_user_edit key='_author_id' label='author' direct=true
-                +image_edit key='image_id' label='image' direct=true
+                    +single_user_edit key='_author_id' label='author'
+                +image_edit key='image_id' label='image'
                 div 
                 +text_edit key='location' 
                 +geolocate_button
                 
-                +array_edit key='tags' label='tags' direct=true icon='tags'
-                +boolean_edit key='published' icon='visible' direct=true
+                +array_edit key='tags' label='tags' icon='tags'
+                +boolean_edit key='published' icon='visible'
                 if is_dev 
-                    +text_edit key='model' label='model' direct=true
-                +array_edit key='location_tags' label='location_tags' direct=true
+                    +text_edit key='model' label='model'
+                +array_edit key='location_tags' label='location_tags'
                 // unless published
                 //     a.ui.fluid.green.button.submit(href="/save")
                 //         i.checkmark.icon
@@ -518,7 +518,7 @@ template(name='project_edit')
                     |audience
                 +boolean_edit key='private' label='private' 
                 if private 
-                    +multi_user_edit key='access_user_ids' label='user picker' direct=true
+                    +multi_user_edit key='access_user_ids' label='user picker'
                 +group_picker
                 +role_crud
                 +task_picker
