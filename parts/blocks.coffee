@@ -268,7 +268,13 @@ if Meteor.isClient
                 Docs.insert 
                     model:'group'
                     title:Session.get('group_search')
-            Router.go "/group/#{new_id}/edit"
+            Docs.update Router.current().params.doc_id,
+                $addToSet:
+                    group_ids:new_id
+                    group_titles:Session.get('group_search')
+            Session.set('group_search',null)
+            t.$('.group_search').val('')
+            # Router.go "/group/#{new_id}/edit"
 
 
 if Meteor.isServer 

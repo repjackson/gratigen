@@ -673,18 +673,22 @@ template(name='user_friends')
     .ui.stackable.grid
         .two.column.row
             .column
-                .ui.small.header connected to
-                .ui.middle.aligned.selection.animated.large.list
+                .ui.small.header 
+                    i.fork.icon
+                    |connected to
+                .ui.items
                     each friends
-                        +user_segment
+                        +user_item_small
             .column
-                .ui.small.header connected by
-                .ui.middle.aligned.selection.animated.large.list
+                .ui.small.header
+                    i.fork.icon
+                    |connected by
+                .ui.items
                     each friends_with
-                        +user_segment
+                        +user_item_small
 
 
-template(name='user_segment')
+template(name='user_item_small')
     a.item(href="/user/#{username}")
         img.ui.avatar.image(src="{{c.url image_id gravity='face' crop='fit'}}")
         .content
