@@ -11,11 +11,24 @@ if Meteor.isClient
     
     Template.bookmark_block.onCreated ->
         @autorun => @subscribe 'my_bookmarks',->
+    Template.latest_updated_block.onCreated ->
+        @autorun => @subscribe 'latest_updated',->
+    Template.latest_updated_block.helpers
+        latest_updated_docs: ->
+            Docs.find {_updated_timestamp:$exists:true}, {
+                sort:_updated_timestamp:-1
+                limit:5
+            }
 if Meteor.isServer
-    Meteor.publish 'my_bookmarks', (current_thing_id)->
+    Meteor.publish 'my_bookmarks', ()->
         Docs.find 
             _id: $in: Meteor.user().bookmark_ids
-        
+if Meteor.isServer
+    Meteor.publish 'latest_updated', ()->
+        Docs.find {_updated_timestamp:$exists:true},{
+            sort:_updated_timestamp:-1
+            limit:5
+        }
 if Meteor.isClient
     Template.model_block.onCreated ->
         @autorun => @subscribe 'model_docs', @data.model, 5,->

@@ -138,6 +138,7 @@ template(name='home')
                                 
         // .eight.wide.column.bordered
         .five.wide.scrolling.column
+            +latest_updated_block
             +user_avatars
             div
             +comet_chat_block
@@ -216,6 +217,24 @@ template(name='home_block')
             |#{template}
         .content
             +Template.dynamic template=template
+
+
+template(name='latest_updated_block')
+    details.ui.fluid.styled.accordion
+        summary.title
+            i.clock.icon
+            |latest updated docs 
+            i.dropdown.icon
+        .content
+            .ui.animated.selection.list 
+                each latest_updated_docs
+                    a.item(href="/d/#{model}/#{_id}")
+                        if image_id
+                            img.ui.avatar.image.zoomer(src="{{c.url image_id height='300' width='300'}}")
+                        .content
+                            .header #{title}
+                            |updated {{from_now _updated_timestamp}}
+                        
 
 
 
