@@ -4,6 +4,24 @@
 
 @current_markers = new ReactiveArray []
 
+Router.route '/d/:model/:doc_id', (->
+    @layout 'layout'
+    @render 'doc_view'
+    ), name:'doc_view'
+
+Template.doc_view.onCreated ->
+    @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
+    # @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
+    # @autorun => Meteor.subscribe 'model_docs', 'menu_section'
+
+Template.doc_view.onRendered ->
+    Meteor.call 'log_view', Router.current().params.doc_id, ->
+
+Template.doc_view.helpers
+    doc_view_template: ->
+        console.log @
+        "#{@model}_view"
+
 Tracker.autorun ->
     current = Router.current()
     Tracker.afterFlush ->

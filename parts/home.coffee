@@ -3,10 +3,6 @@ if Meteor.isClient
         @layout 'layout'
         @render 'home'
         ), name:'home'
-    Router.route '/d/:doc_id', (->
-        @layout 'layout'
-        @render 'doc_view'
-        ), name:'doc_view'
     Router.route '/add', (->
         @layout 'layout'
         @render 'add'

@@ -137,10 +137,6 @@ if Meteor.isClient
 
 
 
-    Template.task_edit.onCreated ->
-        @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id
-        # @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
-        # @autorun => Meteor.subscribe 'model_docs', 'menu_section'
 
 
     Template.task_edit.events

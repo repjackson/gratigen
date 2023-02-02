@@ -73,6 +73,11 @@ head
 
     
     
+template(name='doc_view')
+    with current_doc 
+        +Template.dynamic template=doc_view_template
+    
+    
 template(name='layout')
     img.ui.fluid.image.bg_overlay(src="{{c.url 'nightbg' width=1000 crop='fit'}}")    
     +nav

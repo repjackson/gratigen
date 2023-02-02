@@ -105,6 +105,20 @@ if Meteor.isClient
         # , 2000
         
         
+    Template.layout.events
+        'click .goto_doc': ->
+            doc = Docs.findOne @_id 
+            console.log @
+            if doc 
+                # console.log @
+                Router.go "/#{@model}/#{@_id}"
+            else 
+                Router.go "/user/#{@username}"
+            Meteor.users.update Meteor.userId(),
+                $addToSet:
+                    history_ids:@_id
+            $('.search_site').val('')
+            Session.set('current_query', null)
     Template.historybar.events
         'click .goto_doc': ->
             doc = Docs.findOne @_id 

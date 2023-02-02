@@ -337,9 +337,9 @@ template(name='related_docs')
     .ui.header 
         i.fork.icon
         |related
-    .ui.stackable.doubling.cards
+    .ui.selection.animated.list
         each related_doc_results 
-            a.ui.link.card.goto_doc
+            a.link.item.goto_doc(href='/d/#{model}/#{_id}')
                 img.ui.image(src="{{c.url image_id width=200 height=200}}")
                 .content
                     |#{title}
