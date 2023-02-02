@@ -1,16 +1,8 @@
 if Meteor.isClient
     Router.route '/user/:username', (->
-        @layout 'profile_layout'
-        @render 'user_dashboard'
+        @layout 'layout'
+        @render 'profile'
         ), name:'profile'
-    Router.route '/user/:username/dashboard', (->
-        @layout 'profile_layout'
-        @render 'user_dashboard'
-        ), name:'user_dashboard'
-    Router.route '/user/:username/credit', (->
-        @layout 'profile_layout'
-        @render 'user_credit'
-        ), name:'user_credit'
 
 
     Template.profile_section.helpers 
@@ -19,6 +11,14 @@ if Meteor.isClient
 
     Template.user_roles.onCreated ->
         @autorun -> Meteor.subscribe 'authored_docs', Router.current().params.username,'role', ->
+        @autorun -> Meteor.subscribe 'user_taken_roles', Router.current().params.username, ->
+if Meteor.isServer 
+    Meteor.publish 'user_taken_roles',(username)->
+        user = Meteor.users.findOne username:username
+        Docs.find 
+            model:'role'
+            taken_by_user_id:user._id
+if Meteor.isClient
     Template.user_credit.onCreated ->
         @autorun -> Meteor.subscribe 'user_from_username', Router.current().params.username, ->
         @autorun -> Meteor.subscribe 'user_read_docs', Router.current().params.username, ->
@@ -35,7 +35,7 @@ if Meteor.isClient
             Docs.find 
                 read_by_user_ids: $in: [user._id]
     
-    Template.profile_layout.onCreated ->
+    Template.profile.onCreated ->
         @autorun -> Meteor.subscribe 'user_from_username', Router.current().params.username, ->
         # @autorun -> Meteor.subscribe 'user_referenced_docs', Router.current().params.username, ->
 if Meteor.isServer 
@@ -48,7 +48,7 @@ if Meteor.isServer
             read_by_user_ids: $in: [user._id]
 
 if Meteor.isClient 
-    Template.profile_layout.onRendered ->
+    Template.profile.onRendered ->
         Meteor.setTimeout ->
             $('.button').popup()
         , 2000
@@ -71,7 +71,7 @@ if Meteor.isClient
     #     user_section_template: ->
     #         "user_#{Router.current().params.group}"
 
-    Template.profile_layout.helpers
+    Template.profile.helpers
         current_user: ->
             Meteor.users.findOne username:Router.current().params.username
         user: ->
@@ -86,7 +86,7 @@ if Meteor.isClient
                 sponsoring_ids:$in:[Meteor.userId()]
 
 
-    Template.profile_layout.events
+    Template.profile.events
         'click .sponsor': ->
             current_user = Meteor.users.findOne username:Router.current().params.username
             Meteor.users Meteor.userId(), 

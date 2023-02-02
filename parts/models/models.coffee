@@ -334,28 +334,6 @@ if Meteor.isServer
             
             
 if Meteor.isClient
-    Router.route '/role/:doc_id/edit', (->
-        @layout 'layout'
-        @render 'role_edit'
-        ), name:'role_edit'
-    Router.route '/role/:doc_id', (->
-        @layout 'layout'
-        @render 'role_view'
-        ), name:'role_view'
-    Router.route '/role/:doc_id/view', (->
-        @layout 'layout'
-        @render 'role_view'
-        ), name:'role_view_long'
-    
-    
-    Template.role_view.onCreated ->
-        @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
-    Template.role_edit.onCreated ->
-        @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
-    Template.role_card.onCreated ->
-        @autorun => Meteor.subscribe 'doc_comments', @data._id, ->
-
-
     Template.role_card.events
         'click .view_role': ->
             Router.go "/role/#{@_id}"

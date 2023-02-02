@@ -10,24 +10,7 @@ template(name='role_item')
 
 template(name='role_view')
     .ui.stackable.padded.grid
-        .three.column.row 
-            .column
-                .ui.massive.header #{title}
-                // div
-                // .ui.inline.grey.header {{from_now start_datetime}}
-                
-                if can_edit
-                    +edit_button
-                    a.ui.circular.fluid.large.button.edit_role(href="/role/#{_id}/edit" title='edit')
-                        i.link.pencil.icon
-                        |edit
-                    +print_this
-                .ui.segment
-                    .ui.header 
-                        small author
-                    a.ui.header(href="/user/#{_author.username}") 
-                        img.ui.avatar.image(src="{{c.url _author.image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
-                        |#{_author.username}
+        .two.column.row 
             .column
                 .ui.header 
                     |assigned to 
@@ -138,7 +121,7 @@ template(name='role_edit')
                     if private 
                         +multi_user_edit key='access_user_ids' label='user picker' direct=true
                 .column
-                    +group_picker
+                    +group_crud
                     +array_edit key='skills' label='skills' icon='wrench' direct=true
                 .column
                     +model_picker model='skill' icon='wrench'
@@ -150,7 +133,7 @@ template(name='role_crud')
             .dropdown.icon
             .ui.inline.header
                 // +i name='shield'
-                // |#{picked_roles.count}
+                |#{picked_roles.count}
                 | roles
         .content
             .ui.icon.large.input 
@@ -172,9 +155,6 @@ template(name='role_crud')
                     i.plus.icon
                     |#{role_search_value}
             // if picked_roles
-            .ui.header 
-                |#{picked_roles.count}
-                |roles
             .smallscroll
                 each picked_roles
                      .ui.horizontal.fluid.card.show_modal
@@ -235,7 +215,7 @@ template(name='role_crud')
                                                 | take
                                         else if is_taken 
                                             |taken by #{taken_user.name}
-                                    a.ui.tertiary.large.button.zoomer(href="/role/#{_id}")
+                                    a.ui.tertiary.large.button.zoomer(href="/d/role/#{_id}")
                                         |view
                                         i.chevron.right.icon
                     .ui.modal 

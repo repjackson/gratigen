@@ -123,7 +123,7 @@ template(name='service_view')
                         // .ui.inline.grey.header {{from_now start_datetime}}
                         
                         if can_edit
-                            a.ui.circular.icon.button.edit_service(href="/service/#{_id}/edit" title='edit')
+                            a.ui.circular.icon.button.edit_service(href="/d/service/#{_id}/edit" title='edit')
                                 i.big.link.pencil.icon
                         .ui.segment
                             .ui.header 
@@ -203,4 +203,103 @@ template(name='service_edit')
                     +boolean_edit key='private' label='private' 
                     if private 
                         +multi_user_edit key='access_user_ids' label='user picker' 
-                    +group_picker
+                    +group_crud
+                    
+
+template(name='service_crud')
+    // .ui.segment
+    .ui.styled.accordion
+        .title
+            .dropdown.icon
+            .ui.inline.header
+                // +i name='shield'
+                // |#{picked_services.count}
+                | services
+        .content
+            .ui.icon.large.input 
+                if service_search_value
+                    i.large.red.remove.link.icon.zoomer.clear_search
+                else 
+                    i.search.icon
+                input.service_search(type='text' placeholder='search' value=service_search_value)
+            if service_results
+                // .ui.selection.link.animated.list
+                each service_results
+                    .ui.basic.circular.large.button.pick_service.zoomer
+                        i.grey.plus.icon
+                        if image_id
+                            img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+                        |#{title}
+            if service_search_value
+                .ui.large.button.create_service(title='add')
+                    i.plus.icon
+                    |#{service_search_value}
+            // if picked_services
+            .ui.header 
+                |#{picked_services.count}
+                |services
+            .smallscroll
+                each picked_services
+                     .ui.horizontal.fluid.card.show_modal
+                        .content
+                            .ui.grid
+                                .row
+                                    // .column
+                                    .fourteen.wide.column
+                                        .left.floated
+                                            a.ui.inline.header
+                                                |!{title}
+                                            div
+                                            +eft_viewer_small
+                                            // img(src="{{c.url image_id width=50 height=50}}")
+                                            // div    
+                                            // |!{content}
+                                    .two.wide.column
+                                        .right.floated
+                                            if _is 'model' 'service'
+                                                +ismall name='what-i-do' color='42E8C4' cl='ui inline image'
+                                            div
+                                            |#{when}
+                                .row
+                                    .six.wide.column
+                                        img.invert(src="{{c.url image_id width=10 height=10}}")
+                                    .ten.wide.column
+                                        |!{content}
+                                .sixteen.wide.column
+                                    if currentUser.admin_mode
+                                        .ui.tertiary.large.button.zoomer.remove_service 
+                                            i.remove.icon
+                                            |remove 
+                                        .ui.tertiary.large.button.zoomer.toggle_assign 
+                                            i.user.plus.icon
+                                            | assign
+                                        if assigned_to 
+                                            |assigned to #{asigned_to.username}
+                                        else 
+                                            |unnassigned
+                                        if is_assigning 
+                                            each service_holders 
+                                                .ui.label #{username}
+                                        else 
+                                            with assigned_users
+                                                .ui.green.label #{username}
+                                        a.ui.tertiary.right.floated.icon.large.button.zoomer.fly_right(href="/d/service/#{_id}/edit" title='edit service')
+                                            i.setting.icon
+                                    else
+                                        // else if can_take
+                                        if has_taken 
+                                            |taken by #{taken_user.name}
+                                            .ui.large.button.release_service
+                                                i.undo.icon
+                                                |release 
+                                        else if can_take
+                                            .ui.tertiary.large.button.zoomer.take_service 
+                                                i.checkmark.icon
+                                                | take
+                                        else if is_taken 
+                                            |taken by #{taken_user.name}
+                                    a.ui.tertiary.large.button.zoomer(href="/d/service/#{_id}")
+                                        |view
+                                        i.chevron.right.icon
+                    .ui.modal 
+                        .ui.header hi

@@ -226,6 +226,8 @@ template(name='event_view')
                 //     a.edit_event(href="/event/#{_id}/edit" title='edit')
                 //         i.large.blue.link.pencil.circular.icon
                 +eft_viewer
+                +role_crud
+                +task_crud
         .row 
             .four.wide.column.scrollin
                 if location 
@@ -482,3 +484,101 @@ template(name='ticket_view')
                     //- .ui.fluid.green.button.submit
                     //-     i.checkmark.icon
                     //-     |submit
+
+template(name='event_crud')
+    // .ui.segment
+    .ui.styled.accordion
+        .title
+            .dropdown.icon
+            .ui.inline.header
+                // +i name='shield'
+                // |#{picked_events.count}
+                | events
+        .content
+            .ui.icon.large.input 
+                if event_search_value
+                    i.large.red.remove.link.icon.zoomer.clear_search
+                else 
+                    i.search.icon
+                input.event_search(type='text' placeholder='search' value=event_search_value)
+            if event_results
+                // .ui.selection.link.animated.list
+                each event_results
+                    .ui.basic.circular.large.button.pick_event.zoomer
+                        i.grey.plus.icon
+                        if image_id
+                            img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+                        |#{title}
+            if event_search_value
+                .ui.large.button.create_event(title='add')
+                    i.plus.icon
+                    |#{event_search_value}
+            // if picked_events
+            .ui.header 
+                |#{picked_events.count}
+                |events
+            .smallscroll
+                each picked_events
+                     .ui.horizontal.fluid.card.show_modal
+                        .content
+                            .ui.grid
+                                .row
+                                    // .column
+                                    .fourteen.wide.column
+                                        .left.floated
+                                            a.ui.inline.header
+                                                |!{title}
+                                            div
+                                            +eft_viewer_small
+                                            // img(src="{{c.url image_id width=50 height=50}}")
+                                            // div    
+                                            // |!{content}
+                                    .two.wide.column
+                                        .right.floated
+                                            if _is 'model' 'event'
+                                                +ismall name='what-i-do' color='42E8C4' cl='ui inline image'
+                                            div
+                                            |#{when}
+                                .row
+                                    .six.wide.column
+                                        img.invert(src="{{c.url image_id width=10 height=10}}")
+                                    .ten.wide.column
+                                        |!{content}
+                                .sixteen.wide.column
+                                    if currentUser.admin_mode
+                                        .ui.tertiary.large.button.zoomer.remove_event 
+                                            i.remove.icon
+                                            |remove 
+                                        .ui.tertiary.large.button.zoomer.toggle_assign 
+                                            i.user.plus.icon
+                                            | assign
+                                        if assigned_to 
+                                            |assigned to #{asigned_to.username}
+                                        else 
+                                            |unnassigned
+                                        if is_assigning 
+                                            each event_holders 
+                                                .ui.label #{username}
+                                        else 
+                                            with assigned_users
+                                                .ui.green.label #{username}
+                                        a.ui.tertiary.right.floated.icon.large.button.zoomer.fly_right(href="/event/#{_id}/edit" title='edit event')
+                                            i.setting.icon
+                                    else
+                                        // else if can_take
+                                        if has_taken 
+                                            |taken by #{taken_user.name}
+                                            .ui.large.button.release_event
+                                                i.undo.icon
+                                                |release 
+                                        else if can_take
+                                            .ui.tertiary.large.button.zoomer.take_event 
+                                                i.checkmark.icon
+                                                | take
+                                        else if is_taken 
+                                            |taken by #{taken_user.name}
+                                    a.ui.tertiary.large.button.zoomer(href="/event/#{_id}")
+                                        |view
+                                        i.chevron.right.icon
+                    .ui.modal 
+                        .ui.header hi

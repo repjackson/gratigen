@@ -151,7 +151,7 @@ template(name='org_reservations')
 //                             if private 
 //                                 +multi_user_edit key='access_user_ids' label='user picker'
 //                         .column
-//                             +group_picker
+//                             +group_crud
 //                             +array_edit key='skills' label='skills' icon='wrench'
 //                         .column
 //                             +model_picker model='skill' icon='wrench'
@@ -246,6 +246,10 @@ template(name='org_view')
                 
                 // |!{body}
                 +role_crud
+                +project_crud
+                +event_crud
+                +task_crud
+                +service_crud
                 
                 +event_picker
                         // a.item(href="/org/#{_id}/#{username}")

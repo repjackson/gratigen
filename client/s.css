@@ -203,9 +203,13 @@ img, .button, .selector, .card, p, .header, .item, .image, .fade {
 }
 .zoomer{
     transition: transform 1s;
-     box-shadow: 0 2px 2px 2px rgba(50, 50, 100, 0.1) !important; 
+     /*box-shadow: 0 2px 2px 2px rgba(50, 50, 100, 0.1) !important; */
     /*transition: scale 1s !important;*/
     
+}
+
+.shadow {
+  box-shadow: 0 2px 2px 2px rgba(50, 50, 100, 0.1) !important; 
 }
 .flip, .button {
     transition: transform .7s ease-in-out !important;
@@ -345,8 +349,10 @@ input {
 	overflow-x:auto;
 	max-height:300px;
 	/*max-height:85vh;*/
+	width: 100% !important;
 	padding-top: 1em;
-	/*padding-left: 1em;*/
+	padding-left: 1em;
+	padding: 1em;
 }
 
 ::-webkit-scrollbar {

@@ -20,7 +20,8 @@ Template.doc_view.onRendered ->
 Template.doc_view.helpers
     doc_view_template: ->
         console.log @
-        "#{@model}_view"
+        if @model
+            "#{@model}_view"
 
 Tracker.autorun ->
     current = Router.current()

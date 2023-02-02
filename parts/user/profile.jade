@@ -1,8 +1,4 @@
-template(name='profile_layout')
-    +nav
-    // .ui.attached.small.borderless.inverted.menu.hscroll
-    // div
-    // .ui.attached.small.borderless.inverted.menu.hscroll
+template(name='profile')
     with current_user
         img.ui.image.bg_overlay(src="{{c.url image_id2 width=1000 }}")
         .ui.stackable.padded.grid
@@ -125,9 +121,19 @@ template(name='profile_section')
 
 
 template(name='user_roles')
-    .ui.header roles
-    each _authored_docs current_user 'role'
-        .item #{title} #{_org.name}
+    .ui.small.header 
+        i.pencil.icon
+        |authored roles
+    .ui.selection.animated.list
+        each _authored_docs current_user 'role'
+            a.item(href="/d/role/#{_id}") #{title} #{_org.name}
+    .ui.small.header
+        i.checkmark.icon
+        |taken roles
+    .ui.selection.animated.list
+        each user_taken_roles current_user
+            a.item(href="/d/role/#{_id}") #{title} #{_org.name}
+        
 template(name='user_info')
     .ui.header info
     // if editing_account

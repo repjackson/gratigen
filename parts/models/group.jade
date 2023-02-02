@@ -1,5 +1,5 @@
 template(name='group_crud')
-    .ui.segment
+    // .ui.segment
     .ui.styled.accordion
         .title
             .dropdown.icon
@@ -90,7 +90,7 @@ template(name='group_crud')
                                                 | take
                                         else if is_taken 
                                             |taken by #{taken_user.name}
-                                    a.ui.tertiary.large.button.zoomer(href="/group/#{_id}")
+                                    a.ui.tertiary.large.button.zoomer(href="/d/group/#{_id}")
                                         |view
                                         i.chevron.right.icon
                     .ui.modal 

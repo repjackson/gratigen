@@ -274,7 +274,7 @@ template(name='image_view')
     //- +call_visual
     
 template(name='image_edit')
-    if currentUser.edit_mode
+    if me.edit_mode
         .ui.form
             if icon
                 i.icon(class=icon)
@@ -375,48 +375,34 @@ template(name='raw_view')
 
         
 template(name='textarea_edit')
-    if currentUser.edit_mode
-        details.ui.styled.accordion
-            summary.title
-                // .ui.dropdown.icon
-                .ui.inline.header.zoomer
-                    if icon
-                        // i.icon(class=field_value)
-                        +i name=icon
-                    if title
-                        |#{title}
-                    else if label
-                        |#{label}
-                    else if key
-                        |#{key}
-                
-            .content
-                if tagline 
-                    .ui.attached.small.black.message
-                        i.info.icon
-                        |#{tagline}
-                .ui.fluid.form
+    .ui.styled.accordion
+        .title
+            .ui.dropdown.icon
+            .ui.inline.header.zoomer
+                if icon
+                    // i.icon(class=field_value)
+                    +i name=icon
+                if title
+                    |#{title}
+                else if label
+                    |#{label}
+                else if key
+                    |#{key}
+            
+        .content
+            if currentUser.edit_mode
+                .ui.large.form
                     .field
+                        //- else
+                        //-     |#{this}
+                        if tagline 
+                            .ui.attached.small.teal.message
+                                |#{tagline}
                         textarea.edit_textarea(rows='7') #{field_value}
-    else 
-        if field_value
-            details.ui.styled.accordion
-                summary.title
-                    // .ui.dropdown.icon
-                    .ui.inline.header.zoomer
-                        if icon
-                            // i.icon(class=field_value)
-                            +i name=icon
-                        if title
-                            |#{title}
-                        else if label
-                            |#{label}
-                        else if key
-                            |#{key}
-                    |{{cut20 field_value}}...
-                .content
+            else 
+                if field_value
                     |{{nl2br field_value}}
-
+        
         
 template(name='text_edit')
     .ui.segment
@@ -432,9 +418,8 @@ template(name='text_edit')
             else if key
                 |#{key}
                 //- +clear_value
-        if currentUser.edit_mode
+        if me.edit_mode
             .ui.icon.large.fluid.input
-                i.pencil.icon
                 input.edit_text(type='text' value=field_value placeholder=placeholder autocomplete="off")
         else 
             .ui.header #{field_value}
