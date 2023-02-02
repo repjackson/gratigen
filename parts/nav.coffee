@@ -2,7 +2,15 @@ if Meteor.isClient
     Template.historybar.onCreated ->
         @autorun => Meteor.subscribe 'my_history_docs', ->
         @autorun => Meteor.subscribe 'my_history_users', ->
-            
+    Template.historybar.events 
+        'click .clear_history_doc': (e)->
+            # console.log @
+            Meteor.setTimeout =>
+                Meteor.users.update Meteor.userId(),
+                    $pull: history_ids:@valueOf()
+            , 500
+            $(e.currentTarget).closest('.item').transition('zoom', 500)
+
 if Meteor.isServer 
     Meteor.publish 'my_history_docs', ->
         if Meteor.user().history_ids
@@ -24,7 +32,7 @@ if Meteor.isClient
     
 if Meteor.isServer
     Meteor.publish 'doc_search_results', (query)->
-        match = {}
+        match = {model:$nin:['reddit','recipe']}
         if query and query.length > 2
             match.title =  {$regex:"#{query}", $options: 'i'}
             Docs.find match,{ 
@@ -93,9 +101,24 @@ if Meteor.isClient
         # , 2000
         
         
-    Template.layout.events
+    Template.historybar.events
         'click .goto_doc': ->
             doc = Docs.findOne @_id 
+            console.log @
+            if doc 
+                # console.log @
+                Router.go "/#{@model}/#{@_id}"
+            else 
+                Router.go "/user/#{@username}"
+            Meteor.users.update Meteor.userId(),
+                $addToSet:
+                    history_ids:@_id
+            $('.search_site').val('')
+            Session.set('current_query', null)
+    Template.nav.events
+        'click .goto_doc': ->
+            doc = Docs.findOne @_id 
+            console.log @
             if doc 
                 # console.log @
                 Router.go "/#{@model}/#{@_id}"
@@ -125,7 +148,7 @@ if Meteor.isClient
         'keyup .search_site': _.throttle((e,t)->
             # console.log Router.current().route.getName()
             # current_name = Router.current().route.getName()
-            # $(e.currentTarget).closest('.input').transition('pulse', 100)
+            $(e.currentTarget).closest('.input').transition('pulse', 100)
 
             # unless current_name is 'shop'
             #     Router.go '/shop'

@@ -3,7 +3,7 @@ template(name='nav')
     // #topnav.topnav.ui.fluid.padded.divided.centered.middle.aligned.grid 
     // #topnav.topnav.ui.attached.borderless.fixed.menu.hscroll(class=invert_class)
     // .topnav.ui.borderless.fixed.sticky.menu.hscroll(class=invert_class)
-    .topnav.ui.borderless.fixd.menu.hscroll(class=invert_class)
+    .topnav.ui.borderless.attached.menu.hscroll(class=invert_class)
         // .four.wide.column
         // .item
             // if is_loading
@@ -57,14 +57,16 @@ template(name='nav')
                 .ui.label
                     i.remove.icon
                     |#{this}
-        each doc_search_results
-            button.ui.button.goto_doc
-                img.ui.avatar.image(src="{{c.url image_id width=200 height=200 gravity='face' crop='fill'}}")
-                |{{cut title}}
         each user_search_results
             button.ui.button.goto_doc
-                img.ui.avatar.image(src="{{c.url image_id width=200 height=200 gravity='face' crop='fill'}}")
+                if image_id
+                    img.ui.avatar.image(src="{{c.url image_id width=200 height=200 gravity='face' crop='fill'}}")
                 |#{username}
+        each doc_search_results
+            button.ui.button.goto_doc(title=model)
+                if image_id
+                    img.ui.avatar.image(src="{{c.url image_id width=200 height=200 gravity='face' crop='fill'}}")
+                |{{cut title}}
         // .six.wide.column
         .right.menu
             // if unread_count

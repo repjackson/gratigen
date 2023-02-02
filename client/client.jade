@@ -78,7 +78,8 @@ template(name='layout')
     +nav
     // +rightbar
     +chatbar
-    +historybar
+    if currentUser.history_ids.length
+        +historybar
     // .ui.hidden.divider
     // // .ui.hidden.divider
     // // .ui.hidden.divider
@@ -100,15 +101,30 @@ template(name='layout')
 template(name='historybar')
     .ui.small.attached.menu 
         .item 
-            i.clock.icon
+            i.clock.icon    
+            |#{currentUser.history_ids.length}
             |history
         each currentUser.history_ids
-            .item(title=this)
-                i.remove.icon
+            .item
+                i.remove.link.icon.clear_history_doc.zoomer(title='clear entry')
                 with doc_by_id
-                    span.goto_doc.zoomer 
-                        img.ui.avatar.image(src="{{c.url image_id width=200 height=200 crop='crop'}}")    
-                        |#{title} #{name}
+                    span.goto_doc.zoomer.pointer
+                        if image_id
+                            img.ui.avatar.image.zoomer(src="{{c.url image_id width=200 height=200 crop='crop'}}")    
+                        span.zoomer #{title} #{name}
+            .ui.popup 
+                with doc_by_id
+                    if image_id
+                        img.ui.small.image(src="{{c.url image_id width=400 height=400 crop='fit'}}")    
+                    .ui.inline.header #{title} #{name}
+                    .ui.basic.label
+                        i.grey.database.icon
+                        |#{model}
+                    if tags 
+                        i.red.tags.icon.invert(title='tags')
+                        each tags 
+                            .ui.small.basic.label #{this}
+                
 
 template(name='mlayout')
     .global_container(class=invert_class)
