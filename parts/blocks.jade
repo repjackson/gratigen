@@ -131,14 +131,13 @@ template(name='comments')
                     each doc_comments
                         .comment
                             .content
-                                .ui.header #{body}
+                                .header #{body}
                                 .meta 
                                     |#{when}
                                     |by 
                                     a(href="/user/#{_author.username}") 
-                                        img.ui.avatar.inline.image(src="{{c.url _author.image_id width=200 height=200 gravity='face' crop='fill'}}")
+                                        img.ui.avatar.image(src="{{c.url _author.image_id width=200 height=200 gravity='face' crop='fill'}}")
                                         |#{_author.name}
-
                                     if currentUser
                                         +voting_small
                                         if currentUser.admin_mode

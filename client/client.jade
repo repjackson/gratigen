@@ -103,10 +103,10 @@ template(name='historybar')
             i.clock.icon
             |history
         each currentUser.history_ids
-            .item 
-                |#{this}
+            .item(title=this)
+                i.remove.icon
                 with doc_by_id
-                    |#{title}
+                    span.goto_doc.zoomer #{title}
 
 template(name='mlayout')
     .global_container(class=invert_class)

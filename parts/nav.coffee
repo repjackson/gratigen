@@ -1,4 +1,13 @@
 if Meteor.isClient
+    Template.historybar.onCreated ->
+        @autorun => Meteor.subscribe 'my_history', ->
+            
+if Meteor.isServer 
+    Meteor.publish 'my_history', ->
+        if Meteor.user().history_ids
+            Docs.find 
+                _id:$in:Meteor.user().history_ids
+if Meteor.isClient 
     Template.nav.onCreated ->
         @autorun => Meteor.subscribe 'me', ->
         # @autorun => Meteor.subscribe 'all_users', ->
@@ -70,6 +79,12 @@ if Meteor.isClient
         # , 2000
         
         
+    Template.layout.events
+        'click .goto_doc': ->
+            console.log @
+            Router.go "/#{@model}/#{@_id}"
+            $('.search_site').val('')
+            Session.set('current_query', null)
     Template.nav.events
         'click .reset': ->
             # model_slug =  Router.current().params.model_slug
@@ -77,10 +92,6 @@ if Meteor.isClient
             Meteor.call 'set_facets', @slug, true, ->
                 Session.set 'loading', false
     
-        'click .goto_doc': ->
-            Router.go "/#{@model}/#{@_id}"
-            $('.search_site').val('')
-            Session.set('current_query', null)
         'click .clear_search': -> Session.set('current_query',null)
         'keyup .search_site': _.throttle((e,t)->
             # console.log Router.current().route.getName()
