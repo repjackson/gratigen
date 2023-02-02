@@ -219,6 +219,10 @@ if Meteor.isClient
             
         'click .clear_tags': -> picked_tags.clear()
     
+        'click .toggle_chatbar': ->
+            Meteor.users.update Meteor.userId(),
+                $set:
+                    view_chatbar:!Meteor.user().view_chatbar
         'click .toggle_invert': ->
             Meteor.users.update Meteor.userId(),
                 $set:

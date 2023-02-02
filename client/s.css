@@ -97,9 +97,9 @@ img, .button, .selector, .card, p, .header, .item, .image, .fade {
   /*border: 30px solid transparent;*/
   /*background-color: blue;*/
 }
-.ani {
+.horani {
   /*border:1px solid grey !important;*/
-  transition: height 1s ease-in-out;
+  transition: width 1s ease-in-out;
   
   /*height: 100px;*/
   /*padding: 30px;*/

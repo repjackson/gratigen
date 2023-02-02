@@ -1,9 +1,4 @@
 template(name='view_chats')
-    .ui.hidden.divider
-    .ui.hidden.divider
-    .ui.hidden.divider
-    .ui.hidden.divider
-    .ui.hidden.divider
     img.ui.fluid.image.bg_overlay(src="{{c.url 'nightbg' width=1000 crop='fit'}}")    
     .ui.stackable.padded.grid
         .row
@@ -87,11 +82,11 @@ template(name='chat_list_item')
                     i.lock.icon
                 each tags
                     .ui.label #{this}
-            .description
-                strong {{cutString last_message.body 100}}
-                strong {{last_message.body}}
-            .description
-                |by #{last_message.author.username} #{last_message.when}
+            // .description
+            //     strong {{cutString last_message.body 100}}
+            //     strong {{last_message.body}}
+            // .description
+            //     |by #{last_message.author.username} #{last_message.when}
             .extra
                 .span #{unread_message_count} unread messages
                 .span #{message_count} total messages                

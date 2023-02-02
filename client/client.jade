@@ -77,7 +77,7 @@ template(name='layout')
     img.ui.fluid.image.bg_overlay(src="{{c.url 'nightbg' width=1000 crop='fit'}}")    
     +nav
     // +rightbar
-    +chatbar
+    // +chatbar
     // if currentUser.history_ids.length
     +historybar
     // .ui.hidden.divider
@@ -89,8 +89,14 @@ template(name='layout')
     // img.ui.fluid.image.home_banner(src="{{c.url 'frontrange'}}" class=darkmode_class)
     // #main.ui.bottom.attached.pushable.segment.maincontent
     // +addbar
-    .pushable.maincontet.scrolling
-        +yield
+    // .pushable.maincontet.scrolling
+    .ui.equal.width.grid
+        .column.horani
+            +yield
+        if currentUser.view_chatbar
+            .column.horani
+                // .ui.header chat
+                +view_chats
     //     // +topbar
     //     +leftbar
     //     +rightbar
