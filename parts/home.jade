@@ -14,7 +14,7 @@ template(name='home')
             // .ui.hidden.divider
             .ui.segment
                 img.ui.image(src="/batflash.png")
-            +dash_user_info
+            +dash_user_pill
             +user_impact_graph
            
 
@@ -59,7 +59,7 @@ template(name='home')
         .eight.wide.scrolling.column
             // +quickchat
             .ui.one.column.grid 
-                .centered.column.bordered
+                .centered.column
                 
                     
                     // .ui.fluid.input 
@@ -327,7 +327,7 @@ template(name='home_card')
     // else if _is 'model' 'recipe'
     //     +recipe_card
     // else 
-    a.ui.link.card.zoomer
+    a.ui.link.card
         .content.show_modal
             span.left.floated
                 if icon 
@@ -449,7 +449,7 @@ template(name='side_menu_item')
         //     i.large.checkmark.icon
 
            
-template(name='dash_user_info') 
+template(name='dash_user_pill') 
      .ui.two.column.grid
             .six.wide.column
                 img.ui.circular.small.image(src="{{c.url currentUser.image_id width=120 height=120 gravity='face' crop='fill'}}") 

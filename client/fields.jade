@@ -381,7 +381,8 @@ template(name='raw_view')
         
 template(name='textarea_edit')
     .ui.styled.accordion
-        .title.active.zoomer
+        .title.zoome
+            .ui.dropdown.icon
             .ui.inline.header
                 if icon
                     // i.icon(class=field_value)
@@ -392,8 +393,8 @@ template(name='textarea_edit')
                     |#{label}
                 else if key
                     |#{key}
-            .ui.dropdown.icon
-        .content.active
+            
+        .content
             if currentUser.edit_mode
                 .ui.large.form
                     .field
@@ -421,9 +422,11 @@ template(name='text_edit')
             else if key
                 |#{key}
                 //- +clear_value
-        .ui.icon.large.fluid.input
-            input.edit_text(type='text' value=field_value placeholder=placeholder autocomplete="off")
-        
+        if me.edit_mode
+            .ui.icon.large.fluid.input
+                input.edit_text(type='text' value=field_value placeholder=placeholder autocomplete="off")
+        else 
+            .ui.header #{field_value}
 
 
 
@@ -1046,7 +1049,7 @@ template(name='single_user_edit')
         .ui.large.tertiary.button 
             // .ui.big.label #{key}
             with user_from_id field_value
-                +user_info
+                +user_pill
                 // img.ui.avatar.image(src="{{c.url image_id width=100 height=100 gravity='face' crop='fill'}}" class=cl)
                 // |#{name}
             // +user_card field_value

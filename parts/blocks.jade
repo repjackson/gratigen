@@ -21,7 +21,7 @@ template(name='viewing_info')
         |viewers
     .ui.list 
         each read_user_ids
-            +user_info
+            +user_pill
             // img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
     .ui.small.header 
         |#{views} views
@@ -91,7 +91,7 @@ template(name='doc_array_togggle')
             |#{add_label}
         |#{label}
     //- each list_users
-        //-     +user_info
+        //-     +user_pill
         
 template(name='session_toggle') 
     .ui.icon.large.circular.button.toggle_session_var.zoomer(class=session_toggle_class title=key)
@@ -115,7 +115,7 @@ template(name='bookmark_button')
             i.big.bookmark.outline.link.icon.zoomer.toggle_bookmark
             // - i.large.icon(class=add_icon)
         each list_users
-            +user_info
+            +user_pill
 
 template(name='comments')
     .ui.segment
@@ -184,9 +184,9 @@ template(name='viewing')
                     i.cancel.icon
     .ui.inline.header viewed by
     each read_ids
-        +user_info
+        +user_pill
 
-template(name='user_info')
+template(name='user_pill')
     with user_from_id this
         a.ui.large.link.basic.label.goto_user(href="/user/#{username}")
             img.ui.avatar.inline.image(src="{{c.url image_id width=200 height=200 gravity='face' crop='fill'}}")
@@ -413,18 +413,18 @@ template(name='user_list_toggle')
             //- +ismall name=icon
             //- |#{label}
         //- each list_users
-        //-     +user_info
+        //-     +user_pill
 
 
 template(name='voting')
     .ui.icon.circular.basic.button.upvote(title='upvote')
         i.thumbs.up.icon(class=upvote_class)
     //- each upvoter_ids
-    //-     +user_info
+    //-     +user_pill
     .ui.icon.circular.basic.button.downvote(title='downvote')
         i.thumbs.down.icon(class=downvote_class)
     //- each downvoter_ids
-    //-     +user_info
+    //-     +user_pill
     if points
         strong #{points} pts
     if anon_points
@@ -436,10 +436,10 @@ template(name='voting_small')
         strong #{points}
     i.thumbs.up.link.icon.upvote(class=upvote_class)
     //- each upvoter_ids
-    //-     +user_info
+    //-     +user_pill
     i.thumbs.down.link.icon.downvote(class=downvote_class)
     //- each downvoter_ids
-    //-     +user_info
+    //-     +user_pill
 
 
 
@@ -462,13 +462,13 @@ template(name='voting_full')
             i.thumbs.up.outline.icon
             |upvoters
         each upvoter_ids
-            +user_info
+            +user_pill
     if downvoter_ids
         .ui.small.inline.grey.header 
             i.thumbs.down.outline.icon
             |downvoters
         each downvoter_ids
-            +user_info
+            +user_pill
 
 
 
@@ -545,13 +545,13 @@ template(name='model_picker')
 template(name='role_crud')
     // .ui.segment
     .ui.styled.accordion
-        .title.active
+        .title
             .dropdown.icon
             .ui.inline.header
                 // +i name='shield'
-                |#{picked_roles.count}
+                // |#{picked_roles.count}
                 | roles
-        .content.active
+        .content
             .ui.icon.large.input 
                 if role_search_value
                     i.large.red.remove.link.icon.zoomer.clear_search
@@ -573,7 +573,7 @@ template(name='role_crud')
             // if picked_roles
             .ui.header 
                 |#{picked_roles.count}
-                |picked roles
+                |roles
             .smallscroll
                 each picked_roles
                      .ui.horizontal.fluid.card.show_modal
@@ -785,7 +785,7 @@ template(name='badge_picker')
 
 template(name='event_picker')
     .ui.header 
-            +i name='shield'
+            // +i name='shield'
             |#{picked_tasks.count}
     eventtasks
         // if is_admin

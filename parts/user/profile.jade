@@ -8,6 +8,7 @@ template(name='profile_layout')
         .ui.stackable.padded.grid
             // .row
             .four.wide.column.scrolling
+                // if me.edit_mode
                 // a.ui.fluid.compact.circular.button.fly_left(href='/users')
                 //     i.chevron.left.icon
                     +i name='groups'
@@ -15,38 +16,46 @@ template(name='profile_layout')
                 .spacer
                 a.item.mobile.hidden(href="/user/#{username}")
                     img.ui.circular.centered.image(src="{{c.url image_id height=400 width=400 gravity='face' crop='fill'}}")
-                .ui.center.aligned.header.mobile.hidden
-                    strong #{name}
-                    // strong #{first_name} #{last_name}
-                    | @#{username}        
-                a.mobile.only(href="/user/#{username}")
-                    img.ui.circular.tiny.inline.image(src="{{c.url image_id height=400 width=400 gravity='face' crop='fill'}}")
-                .ui.inline.header.mobile.only
-                    strong #{name}
-                    // strong #{first_name} #{last_name}
-                    | @#{username}        
+                if me.edit_mode
+                    +username_edit
+                else
+                    .ui.center.aligned.header.mobile.hidden
+                        strong #{name}
+                        // strong #{first_name} #{last_name}
+                        | @#{username}        
+                    a.mobile.only(href="/user/#{username}")
+                        img.ui.circular.tiny.inline.image(src="{{c.url image_id height=400 width=400 gravity='face' crop='fill'}}")
+                    .ui.inline.header.mobile.only
+                        strong #{name}
+                        // strong #{first_name} #{last_name}
+                        | @#{username}        
                 // .spacer
                 // a(href="/user/#{username}")
                 a.ui.inline.header(href="/user/#{username}/credit" title='credit')
                     +i name='coins'
                     |#{user.points}p
                 if is_current_user
-                    a.ui.circular.big.icon.tertiary.button(href="/user/#{username}/edit" title='profile settings')
-                        i.cog.large.icon
+                    +edit_button
+                    // a.ui.circular.big.icon.tertiary.button(href="/user/#{username}/edit" title='profile settings')
+                    //     i.cog.large.icon
                     // a.ui.button.logout_other_clients(href="#" title='logout other clients')
                     //     i.globe.icon
                     //     |log out other clients
                 else if is_admin
-                    a.ui.circular.large.tertiary.button(href="/user/#{username}/edit" title='profile settings')
-                        +i name='settings' cl='ui avatar image'
-                        |edit profile
+                    +edit_button
+                    // a.ui.circular.large.tertiary.button(href="/user/#{username}/edit" title='profile settings')
+                    //     +i name='settings' cl='ui avatar image'
+                    //     |edit profile
                 // unless is_current_user
                 //     +friend_button
                 if is_current_user
                     .ui.large.tertiary.button.logout
                         i.sign.out.alternate.icon
                         |log out
-                +array_view key='tags' label='tags' direct=true icon='tags'
+                if editing_account
+                    +array_edit key='tags' label='tags' direct=true icon='tags'
+                else
+                    +array_view key='tags' label='tags' direct=true icon='tags'
                 if link 
                     a.ui.button(href=link target='_window')
                         |app link
@@ -87,53 +96,38 @@ template(name='profile_layout')
                 if is_dev
                     +print_this
             .twelve.wide.column.scrolling
-                .ui.stackable.padded.grid
-                    +profile_section key='roles' icon='Roles'
-                    +profile_section key='Organizations' icon='info'
-                    +profile_section key='Products' icon='donate'
-                    +profile_section key='Resources' icon='gift'
-                    +profile_section key='Groups' icon='money'
-                    +profile_section key='Services' icon='calendar'
-                    +profile_section key='Tasks' icon='service-bell'
-                    +profile_section key='Projects' icon='hand-holding-heart'
-                    +profile_section key='Badges' icon='food'
-                    +profile_section key='Skills' icon='chat'
-                    +profile_section key='Events' icon='prize'
-                    +profile_section key='Accounts' icon='car'
-                    // +profile_section key='skills' icon='wrench' color='ff0000'
-                    div
-                    // .four.wide.column.scrolling    
-                    //     .ui.segment Roles
-                    //     .ui.segment Organizations
-                    //     .ui.segment Products
-    
-                    //     //organizations, skills, 
-                    //     .spacer
-                    //     .spacer
-                    //     .ui.button.sponsor
-                    //         |sponsor
-                    //     +yield    
-                    // .four.wide.column.scrolling
-                    //     .ui.segment Resources
-                    //     .ui.segment Groups
-                    //     .ui.segment Services
-                    // .four.wide.column.scrolling
-                    //     .ui.segment Tasks
-                    //     .ui.segment Projects
-                    //     .ui.segment Badges
-                    // .four.wide.column.scrolling
-                    //     .ui.segment Skills
-                    //     .ui.segment Events
-                    //     .ui.segment Accounts
+                .ui.stackable.padded.three.column.grid
+                    +profile_section key='info' label='info' icon='info'
+                    +profile_section key='roles' label='roles' icon='Roles'
+                    +profile_section key='orgs' label='Organizations' icon='info'
+                    +profile_section key='products' label='Products' icon='donate'
+                    +profile_section key='resources' label='Resources' icon='gift'
+                    +profile_section key='groups' label='Groups' icon='money'
+                    +profile_section key='services' label='Services' icon='calendar'
+                    +profile_section key='tasks' label='Tasks' icon='service-bell'
+                    +profile_section key='projects' label='Projects' icon='hand-holding-heart'
+                    +profile_section key='badges' label='Badges' icon='food'
+                    +profile_section key='skills' label='Skills' icon='chat'
+                    +profile_section key='events' label='Events' icon='prize'
+                    +profile_section key='accounts' label='Accounts' icon='car'
 
 template(name='profile_section')
-    .four.wide.column
+    .column
         .ui.segment
             // i.dashboard.icon
             .ui.header
                 +i name=icon color=color
                 |#{key}
+            +Template.dynamic template=user_template data=current_user
 
+
+
+template(name='user_info')
+    .ui.header info
+    // if editing_account
+    +text_edit key='first_name' label='first_name'
+    +text_edit key='last_name' label='last_name'
+    +text_edit key='display_name' label='display_name'
 
 
            
@@ -729,7 +723,7 @@ template(name='user_about')
             each tags
                 .ui.basic.large.label
                     |#{this}
-                // +user_info_tag
+                // +user_pill_tag
         div
         // .ui.header 
         //     i.line.chart.icon
@@ -753,7 +747,7 @@ template(name='user_about')
                 .ui.label #{this}
             
 
-template(name='user_info_tag')
+template(name='user_pill_tag')
     .ui.basic.tertiary.button 
         // if term 
         //     if term.image 
@@ -779,7 +773,7 @@ template(name='user_genekeys')
                 +image_view key='gene3' label='gene keys 3' icon='dna' direct=true
         |!{genekeys_report}
 
-// template(name='user_info_tag')
+// template(name='user_pill_tag')
 //     .ui.basic.tertiary.button 
 //         if term 
 //             if term.image 

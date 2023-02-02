@@ -14,6 +14,9 @@ Template.registerHelper 'parent_doc', () ->
     Docs.findOne @parent_id
     # Template.parentData()
 
+Template.registerHelper 'editing_account', () ->
+    Meteor.user() and Router.current().params.username is Meteor.user().username and Meteor.user().edit_mode
+
 Template.registerHelper 'can_take', () ->
     console.log @, 'role'
     Meteor.user() and Meteor.userId() in @permissioned_user_ids
@@ -350,15 +353,17 @@ Template.registerHelper 'is_dev', () ->
 # Template.registerHelper 'is_eric', () -> if Meteor.userId() and Meteor.userId() in ['ytjpFxiwnWaJELZEd','rDqxdcTBTszjeMh9T'] then true else false
 
 Template.registerHelper 'current_user', () ->  Meteor.users.findOne username:Router.current().params.username
+Template.registerHelper 'me', () ->  Meteor.users.findOne username:Router.current().params.username
 Template.registerHelper 'is_current_user', () ->
     if Meteor.user()
         if Meteor.user().username is Router.current().params.username
             true
         else
-            if Meteor.user().roles and 'dev' in Meteor.user().roles
-                true
-            else
-                false
+            Meteor.user().admin_mode
+            # if Meteor.user().roles and 'dev' in Meteor.user().roles
+            #     true
+            # else
+            #     false
     else 
         false
 # Template.registerHelper 'view_template', -> "#{@field_type_slug}_view"
@@ -409,20 +414,12 @@ Template.registerHelper 'current_doc', ->
 #     else 
 #         Meteor.user()
 Template.registerHelper 'field_value', () ->
-    # console.log @
+    console.log @
+    console.log Template.currentData()
     parent = Template.parentData()
-    parent5 = Template.parentData(5)
-    parent6 = Template.parentData(6)
-
 
     # if @direct
     parent = Template.parentData()
-    # else if parent5
-    #     if parent5._id
-    #         parent = Template.parentData(5)
-    # else if parent6
-    #     if parent6._id
-    #         parent = Template.parentData(6)
     if parent
         parent["#{@key}"]
 

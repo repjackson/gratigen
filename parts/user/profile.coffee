@@ -13,6 +13,11 @@ if Meteor.isClient
         ), name:'user_credit'
 
 
+    Template.profile_section.helpers 
+        user_template:->
+            console.log @
+            "user_#{@key}"
+
     Template.user_credit.onCreated ->
         @autorun -> Meteor.subscribe 'user_from_username', Router.current().params.username, ->
         @autorun -> Meteor.subscribe 'user_read_docs', Router.current().params.username, ->

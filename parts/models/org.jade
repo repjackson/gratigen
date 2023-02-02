@@ -243,7 +243,7 @@ template(name='org_view')
                     // +single_user_edit key='lead' label='lead' icon='king'
                     // // a.ui.basic.button(href="/user/#{lead}") lead
                     // //     with lead
-                    // //         +user_info
+                    // //         +user_pill
                     // // .ui.basic.button(href="/user/#{support}") support
                     // // if currentUser.edit_mode 
                     // +single_user_edit key='support' label='support' icon='users'
@@ -255,17 +255,19 @@ template(name='org_view')
                     // +single_user_edit key='creator' label='creator' icon='edit'
                     // .ui.header 
                         |#{member_ids.count} members
+                    .ui.header members
                     each member_ids
-                        +user_info
+                        +user_pill
                     if currentUser.edit_mode 
                         +multi_user_edit key='member_ids' label='members'
 
                     +textarea_edit key='brief' tagline='breif description or your organization'
                     +textarea_edit key='description' tagline='complete description of your organization'
+                    +textarea_edit key='body' tagline='body'
+                    
                     // |!{body}
                     +role_crud
                     +event_picker
-                    
                             // a.item(href="/org/#{_id}/#{username}")
                             //     img.ui.mini.image(src="{{c.url image_id width=200 height=200}}")
                             //     .content
