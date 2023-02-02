@@ -55,7 +55,7 @@ template(name='home')
             //         +side_menu_item color="FF0000" icon='users' label='community core'
                 
             // .ui.button create request
-            img.ui.image(src="/12_color_code.jpeg")
+            img.ui.image(src="{{c.url '12_color_code'}}" class=darkmode_class)
         .eight.wide.scrolling.column
             // +quickchat
             .ui.one.column.grid 
@@ -438,14 +438,14 @@ template(name='user_impact_graph')
         .ui.header user impact graph
         a(href="https://observablehq.com/@d3/zoomable-sunburst" target="_window")
             // img.ui.image(src="/d3_sunburst.jpeg")
-            img.ui.image(src="{{c.url 'd3_sunburst' width=300 crop='fit'}}")
+            img.ui.image(src="{{c.url 'd3_sunburst' }}")
 
         
 template(name='user_connection_graph')
     .ui.segment
         .ui.header user connection graph
         a(href="https://observablehq.com/@garciaguillermoa/force-directed-graph" target="_window")
-            img.ui.image(src="{{c.url 'network_graph' width=300 crop='fit'}}")
+            img.ui.image(src="{{c.url 'network_graph' }}")
             // img.ui.image(src="/network_graph.png")
     
 template(name='my_things')

@@ -111,9 +111,10 @@ $.cloudinary.config
 
 Template.layout.events
     'click .log_history': ->
-        Meteor.users.update Meteor.userId(),
-            $addToSet:
-                history_ids: @_id
+        if Meteor.user()
+            Meteor.users.update Meteor.userId(),
+                $addToSet:
+                    history_ids: @_id
     'hover .tada': (e,t)-> $(e.currentTarget).closest('.tada').transition('tada', 500)
     'click .fly_right': (e,t)-> $(e.currentTarget).closest('.grid').transition('fade right', 500)
     'click .zoom': (e,t)-> $(e.currentTarget).closest('.grid').transition('drop', 500)
