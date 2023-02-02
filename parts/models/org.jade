@@ -213,6 +213,7 @@ template(name='org_view')
                     +textarea_edit key='vision' label='vision' tagline="how will your organization impact society? how will it look for people?"
                     +textarea_edit key='mission' tagline='your business goals and the values you will embrace to achieve them'
                     +textarea_edit key='bylaws' tagline='bylaws of your organization. Articles of incorporation are the primary law of an association used to establish the general organization and governing of the association to achieve corporate existence. Bylaws are the secondary law of an association best used to detail how the society is formed and run.'
+                    +textarea_edit key='signature' tagline='creators signature'
                     +viewing
                     if in_dev 
                         +print_this
@@ -222,21 +223,21 @@ template(name='org_view')
     
                 .six.wide.column
                     .ui.header leaders
-                    .ui.basic.button(href="/user/#{lead}") lead
+                    // .ui.basic.button(href="/user/#{lead}") lead
                     // if currentUser.edit_mode 
                     +single_user_edit key='lead' label='lead'
                     // a.ui.basic.button(href="/user/#{lead}") lead
                     //     with lead
                     //         +user_info
-                    .ui.basic.button(href="/user/#{support}") support
-                    if currentUser.edit_mode 
-                        +single_user_edit key='support' label='support'
-                    .ui.basic.button(href="/user/#{safety}") safety
-                    if currentUser.edit_mode 
-                        +single_user_edit key='safety' label='safety'
-                    .ui.basic.button(href="/user/#{creator}") creator  
-                    if currentUser.edit_mode 
-                        +single_user_edit key='creator' label='creator'
+                    // .ui.basic.button(href="/user/#{support}") support
+                    // if currentUser.edit_mode 
+                    +single_user_edit key='support' label='support'
+                    // .ui.basic.button(href="/user/#{safety}") safety
+                    // if currentUser.edit_mode 
+                    +single_user_edit key='safety' label='safety'
+                    // .ui.basic.button(href="/user/#{creator}") creator  
+                    // if currentUser.edit_mode 
+                    +single_user_edit key='creator' label='creator'
                     .ui.header 
                         |#{member_ids.count} members
                     each member_ids

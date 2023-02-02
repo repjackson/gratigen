@@ -1042,18 +1042,23 @@ template(name='single_user_edit')
                                     |#{first_name} #{last_name}
                                 .ui.mini.grey.inline.header 
                                     |#{username}
-        if field_value
+    if field_value
+        .ui.large.tertiary.button 
+            .ui.big.label #{key}
+            with user_from_id field_value
+                +user_info
+                // img.ui.avatar.image(src="{{c.url image_id width=100 height=100 gravity='face' crop='fill'}}" class=cl)
+                // |#{name}
             // +user_card field_value
             // if is_dev
-            |#{field_value}
+            // |#{field_value}
             //- |#{this}
-            with user_from_id field_value
                 .ui.inline.header
-                    img.ui.avatar.image(src="{{c.url image_id width=100 height=100 gravity='face' crop='fill'}}" class=cl)
-                    |#{name}
                 i.pull_user.remove.link.icon
-    else 
-        |#{field_value}
+    // else 
+    //     with user_from_id field_value
+            // +user_card
+        // |#{field_value}
 
 
 template(name='single_user_view')
