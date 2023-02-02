@@ -105,7 +105,7 @@ template(name='historybar')
             |#{currentUser.history_ids.length}
             |history
         each currentUser.history_ids
-            .item
+            .item(class=history_item_class)
                 i.remove.link.icon.clear_history_doc.zoomer(title='clear entry')
                 with doc_by_id
                     span.goto_doc.zoomer.pointer

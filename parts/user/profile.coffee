@@ -778,15 +778,6 @@ if Meteor.isServer
 #                 sort:_timestamp:-1
 
 
-
-if Meteor.isServer
-    Meteor.publish 'user_requests', (username)->
-        Docs.find
-            model:'request'
-                                    
-                                    
-                                    
-                             
                                     
                                     
 if Meteor.isClient
@@ -796,7 +787,7 @@ if Meteor.isClient
         ), name:'user_genekeys'
     
     Template.user_genekeys.onCreated ->
-        @autorun => Meteor.subscribe 'docs', picked_tags.array(), 'thought'
+        # @autorun => Meteor.subscribe 'docs', picked_tags.array(), 'thought', ->
 
 
     Template.user_genekeys.onCreated ->

@@ -701,6 +701,13 @@ Template.multi_user_edit.events
 
 
 Template.single_user_edit.onCreated ->
+    console.log @
+    page_doc = Docs.findOne Router.current().params.doc_id
+    if page_doc
+        field_value = page_doc["#{@key}"]
+        console.log field_value
+        @autorun => Meteor.subscribe 'user_by_id',field_value,->
+
     @user_results = new ReactiveVar
 Template.single_user_edit.helpers
     user_results: -> Template.instance().user_results.get()

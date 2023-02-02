@@ -2,6 +2,9 @@ if Meteor.isClient
     Template.historybar.onCreated ->
         @autorun => Meteor.subscribe 'my_history_docs', ->
         @autorun => Meteor.subscribe 'my_history_users', ->
+    Template.historybar.helpers 
+        history_item_class: ->
+            if @valueOf() is Router.current().params.doc_id then 'active' else ''
     Template.historybar.events 
         'click .clear_history_doc': (e)->
             # console.log @
@@ -16,7 +19,7 @@ if Meteor.isServer
         if Meteor.user().history_ids
             Docs.find 
                 _id:$in:Meteor.user().history_ids
-    Meteor.publish 'my_history_docs', ->
+    Meteor.publish 'my_history_users', ->
         if Meteor.user().history_ids
             Meteor.users.find 
                 _id:$in:Meteor.user().history_ids
@@ -43,7 +46,7 @@ if Meteor.isServer
         match = {}
         if query and query.length > 2
             match.username =  {$regex:"#{query}", $options: 'i'}
-            Meteorusers.find match, 
+            Meteor.users.find match, 
                 limit:10
 if Meteor.isClient
     Template.add.onRendered ->
