@@ -3,7 +3,7 @@ template(name='nav')
     // #topnav.topnav.ui.fluid.padded.divided.centered.middle.aligned.grid 
     // #topnav.topnav.ui.attached.borderless.fixed.menu.hscroll(class=invert_class)
     // .topnav.ui.borderless.fixed.sticky.menu.hscroll(class=invert_class)
-    .topnv.ui.borderless.attached.menu.hscroll
+    .topnav.ui.borderless.fixd.menu.hscroll(class=invert_class)
         // .four.wide.column
         // .item
             // if is_loading
@@ -58,7 +58,7 @@ template(name='nav')
                     i.remove.icon
                     |#{this}
         each search_results
-            button.ui.button.goto_doc.log_history
+            button.ui.button.goto_doc
                 img.ui.avatar.image(src="{{c.url image_id width=200 height=200 gravity='face' crop='fill'}}")
                 |{{cut title}}
         // .six.wide.column
@@ -230,6 +230,8 @@ template(name='add_tab')
     div
     
     
+                
+                
 template(name='secnav')
     .ui.attached.small.borderless.inverted.menu.hscroll(class=invert_class)
         a.ui.button.zoomer(href="/resources" class="{{isActiveRoute 'resources'}}")

@@ -106,7 +106,9 @@ template(name='historybar')
             .item(title=this)
                 i.remove.icon
                 with doc_by_id
-                    span.goto_doc.zoomer #{title}
+                    span.goto_doc.zoomer 
+                        img.ui.avatar.image(src="{{c.url image_id width=200 height=200 crop='crop'}}")    
+                        |#{title} #{name}
 
 template(name='mlayout')
     .global_container(class=invert_class)

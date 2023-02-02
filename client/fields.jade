@@ -1016,9 +1016,9 @@ template(name='multi_doc_view')
 template(name='single_user_edit')
     if currentUser.edit_mode
         div
-        if icon
+        // if icon
             i.icon(class=icon)
-        .ui.inline.header 
+        // .ui.inline.header 
             |#{label} #{title}
         // if field_value
         //     .pull_user.ui.icon.compact.button(title='remove user')
@@ -1044,7 +1044,7 @@ template(name='single_user_edit')
                                     |#{username}
     if field_value
         .ui.large.tertiary.button 
-            .ui.big.label #{key}
+            // .ui.big.label #{key}
             with user_from_id field_value
                 +user_info
                 // img.ui.avatar.image(src="{{c.url image_id width=100 height=100 gravity='face' crop='fill'}}" class=cl)
@@ -1082,6 +1082,7 @@ template(name='multi_user_edit')
         if icon
             i.icon(class=icon)
             //- +i name=icon
+        |#{user_results.length}
         if title
             |#{title}
         else if label

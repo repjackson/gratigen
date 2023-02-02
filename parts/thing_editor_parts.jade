@@ -2,20 +2,20 @@ template(name='eft_picker')
     if toggled
         .ui.animated.fade.tertiary.inverted.circular.large.button.toggle_eft.zoomer.invert(style="color:##{color}")
             .visible.content
-                i.small.icon(class=icon)
+                i.big.icon(class=icon)
             .hidden.content
-                small #{label}
+                big #{label}
             // |&nbsp;
     else 
         a.ui.animated.fade.button.toggle_eft.invert.zoomer(style="color:##{color}" class=eft_picker_class)
             .visible.content
-                i.big.icon(class=icon)
+                i.large.icon(class=icon)
             .hidden.content
                 |#{label}
 
 template(name='eft_view_item')
     if in_list
-        .ui.animated.fade.basic.inverted.circular.large.button.zoomer.invert(style="color:##{color}")
+        .ui.animated.fade.inverted.tertiary.circular.large.button.zoomer.invert(style="color:##{color}")
             .visible.content
                 i.big.icon(class=icon)
             .hidden.content

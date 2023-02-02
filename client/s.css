@@ -29,14 +29,15 @@ body {
   margin-bottom:1px !important;
 }
 .ui.header, .button, input, .item {
-  font-family: 'Bangers', sans-serif !important;
-  font-weight: 300 !important;
+      font-family: 'Bangers', sans-serif !important;
+      font-weight: 300 !important;
 }
 
 img, .button, .selector, .card, p, .header, .item, .image, .fade {
     animation: fadein .5s;
      /*-webkit-transition: opacity 2s ease-out; */
         transform:rotate(360deg);
+    }
 }
 
 .f10 {font-size: 110% !important;}
@@ -79,10 +80,10 @@ img, .button, .selector, .card, p, .header, .item, .image, .fade {
   /*s-bottom:10em !important;*/
 }
 .sidebar {
-  /*top: 10em !important;*/
-  /*margin-top:20em !important;*/
-  /*padding-top:10em !important;*/
-  /*display: block !important;*/
+  top: 10em !important;
+  margin-top:20em !important;
+  padding-top:10em !important;
+  display: block !important;
 }
 #mapbox {
   height:400px !important;

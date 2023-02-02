@@ -222,23 +222,38 @@ template(name='org_view')
                     +org_subscription
     
                 .six.wide.column
+                    .centered.row
+                        +eft_viewer
                     .ui.header leaders
-                    // .ui.basic.button(href="/user/#{lead}") lead
-                    // if currentUser.edit_mode 
-                    +single_user_edit key='lead' label='lead'
-                    // a.ui.basic.button(href="/user/#{lead}") lead
-                    //     with lead
-                    //         +user_info
-                    // .ui.basic.button(href="/user/#{support}") support
-                    // if currentUser.edit_mode 
-                    +single_user_edit key='support' label='support'
-                    // .ui.basic.button(href="/user/#{safety}") safety
-                    // if currentUser.edit_mode 
-                    +single_user_edit key='safety' label='safety'
-                    // .ui.basic.button(href="/user/#{creator}") creator  
-                    // if currentUser.edit_mode 
-                    +single_user_edit key='creator' label='creator'
-                    .ui.header 
+                        .ui.four.column.centered.grid
+                            .column 
+                                .ui.centered.small.header lead
+                                +single_user_edit key='lead' label='lead' icon='king'
+                            .column 
+                                .ui.centered.small.header support
+                                +single_user_edit key='support' label='support' icon='users'
+                            .column 
+                                .ui.centered.small.header safety
+                                +single_user_edit key='safety' label='safety'
+                            .column 
+                                .ui.centered.small.header creator
+                                +single_user_edit key='creator' label='creator' icon='edit'
+                    // // .ui.basic.button(href="/user/#{lead}") lead
+                    // // if currentUser.edit_mode 
+                    // +single_user_edit key='lead' label='lead' icon='king'
+                    // // a.ui.basic.button(href="/user/#{lead}") lead
+                    // //     with lead
+                    // //         +user_info
+                    // // .ui.basic.button(href="/user/#{support}") support
+                    // // if currentUser.edit_mode 
+                    // +single_user_edit key='support' label='support' icon='users'
+                    // // .ui.basic.button(href="/user/#{safety}") safety
+                    // // if currentUser.edit_mode 
+                    // +single_user_edit key='safety' label='safety'
+                    // // .ui.basic.button(href="/user/#{creator}") creator  
+                    // // if currentUser.edit_mode 
+                    // +single_user_edit key='creator' label='creator' icon='edit'
+                    // .ui.header 
                         |#{member_ids.count} members
                     each member_ids
                         +user_info
@@ -265,19 +280,19 @@ template(name='org_view')
                         .ui.big.button.join(title='')
                             i.user.plus.icon
                             |join
-                    +eft_viewer
+                    
                     if currentUser.edit_mode
                         .ui.basic.center.aligned.segment
-                                +eft_picker color="FF73EA" icon='food' label='food'
-                                +eft_picker color="B785E1" icon='home' label='housing'
-                                +eft_picker color="7229AF" icon='tshirt' label='clothing'
-                                +eft_picker color="1255B8" icon='car' label='transportation'
-                                +eft_picker color="83DFF4" icon='lightning' label='energy'
-                                +eft_picker color="42E8C4" icon='leaf' label='zero waste'
-                                +eft_picker color="40C057" icon='smile' label='wellness'
-                                +eft_picker color="FAB005" icon='university' label='education'
-                                +eft_picker color="FD7E14" icon='paint brush' label='art'
-                                +eft_picker color="FF0000" icon='users' label="community core"
+                            +eft_picker color="FF73EA" icon='food' label='food'
+                            +eft_picker color="B785E1" icon='home' label='housing'
+                            +eft_picker color="7229AF" icon='tshirt' label='clothing'
+                            +eft_picker color="1255B8" icon='car' label='transportation'
+                            +eft_picker color="83DFF4" icon='lightning' label='energy'
+                            +eft_picker color="42E8C4" icon='leaf' label='zero waste'
+                            +eft_picker color="40C057" icon='smile' label='wellness'
+                            +eft_picker color="FAB005" icon='university' label='education'
+                            +eft_picker color="FD7E14" icon='paint brush' label='art'
+                            +eft_picker color="FF0000" icon='users' label="community core"
                     // +doc_array_togggle key='member_ids' value=currentUser._id add_label='join' remove_label='joined'
                     .ui.header 
                         +i name='rss'
@@ -285,13 +300,13 @@ template(name='org_view')
                     +group_picker
                     each log_items
                         +log_item
-                    .ui.header 
+                    .ui.header.refresh_org_stats
                         +i name='line-chart'
                         |stats
                     i.refresh.link.icon.refresh_org_stats
                     .ui.large.list
-                        .item #{member_count} members
-                        .item roles
+                        // .item #{member_count} members
+                        // .item roles
                         .item resources
                         .item groups
                         .item projects
@@ -300,8 +315,8 @@ template(name='org_view')
                         .item services
                         .item products
                         
-                        .item #{meal_count} meals
-                        .item #{dish_count} dishes
+                        // .item #{meal_count} meals
+                        // .item #{dish_count} dishes
                         .item #{total_credit_exchanged} credits exchanged
                         .item 
                     +comments

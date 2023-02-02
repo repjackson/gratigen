@@ -1,11 +1,16 @@
 if Meteor.isClient
     Template.historybar.onCreated ->
-        @autorun => Meteor.subscribe 'my_history', ->
+        @autorun => Meteor.subscribe 'my_history_docs', ->
+        @autorun => Meteor.subscribe 'my_history_users', ->
             
 if Meteor.isServer 
-    Meteor.publish 'my_history', ->
+    Meteor.publish 'my_history_docs', ->
         if Meteor.user().history_ids
             Docs.find 
+                _id:$in:Meteor.user().history_ids
+    Meteor.publish 'my_history_docs', ->
+        if Meteor.user().history_ids
+            Meteor.users.find 
                 _id:$in:Meteor.user().history_ids
 if Meteor.isClient 
     Template.nav.onCreated ->
@@ -81,10 +86,25 @@ if Meteor.isClient
         
     Template.layout.events
         'click .goto_doc': ->
-            console.log @
-            Router.go "/#{@model}/#{@_id}"
+            doc = Docs.findOne @_id 
+            if doc 
+                # console.log @
+                Router.go "/#{@model}/#{@_id}"
+            else 
+                Router.go "/user/#{@username}"
+            Meteor.users.update Meteor.userId(),
+                $addToSet:
+                    history_ids:@_id
             $('.search_site').val('')
             Session.set('current_query', null)
+        'click .goto_user': ->
+            console.log @
+            Router.go "/user/#{@username}"
+            $('.search_site').val('')
+            Session.set('current_query', null)
+            Meteor.users.update Meteor.userId(),
+                $addToSet:
+                    history_ids:@_id
     Template.nav.events
         'click .reset': ->
             # model_slug =  Router.current().params.model_slug

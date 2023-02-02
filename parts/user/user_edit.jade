@@ -11,8 +11,8 @@ template(name='user_edit')
                     a.ui.green.icon.large.fluid.button.fly_left(href="/user/#{current_user.username}/") 
                         i.checkmark.big.icon
                     .ui.hidden.divider
-                    +image_edit key='image_id' icon='picture' title='profile image' direct=true
-                    +image_edit key='image_id2' icon='background picture' title='background image' direct=true
+                    +image_edit key='image_id' icon='picture' title='profile image'
+                    +image_edit key='image_id2' icon='background picture' title='background image'
                     if is_current_user
                         +password_edit
                         //- +phone_editor
@@ -25,33 +25,34 @@ template(name='user_edit')
                         +print_this
                 .six.wide.column.scrolling
                     .ui.form
-                        +text_edit key='display_name' label='display name' direct=true
-                        +text_edit key='first_name' label='first name' direct=true
-                        +text_edit key='last_name' label='last name' direct=true
-                        +text_edit key='tagline' label='tagline' direct=true
+                        +text_edit key='name' label='name'
+                        +text_edit key='display_name' label='display name'
+                        +text_edit key='first_name' label='first name'
+                        +text_edit key='last_name' label='last name'
+                        +text_edit key='tagline' label='tagline'
                         div
                         // .ui.header 
                         //     i.envelope.outline.icon
                         //     |emails
                         // +emails_edit
-                        +text_edit key='email' label='email' direct=true
+                        +text_edit key='email' label='email'
                         .ui.hidden.divider
-                        +phone_edit key='phone' label='phone' icon='phone' direct=true
-                        +html_edit key='description' label='description' direct=true
+                        +phone_edit key='phone' label='phone' icon='phone'
+                        +html_edit key='description' label='description'
                 .six.wide.column
-                    +date_edit key='birthday' label='birthday' icon='birthday' direct=true
-                    +array_edit key='allergens' label='allergens' icon='no-milk' direct=true
-                    +array_edit key='food_dislikes' label='food dislikes' icon='disgusting' direct=true
-                    +link_edit key='profile_link' label='profile link' icon='link' direct=true
+                    +date_edit key='birthday' label='birthday' icon='birthday'
+                    +array_edit key='allergens' label='allergens' icon='no-milk'
+                    +array_edit key='food_dislikes' label='food dislikes' icon='disgusting'
+                    +link_edit key='profile_link' label='profile link' icon='link'
                 .six.wide.column
                     if in_dev
                         .ui.header
                             i.shield.icon
                             |admin
-                        +boolean_edit key='admin' icon='shield' direct=true
-                        +array_edit key='roles' icon='shield' direct=true
-                    +array_edit key='tags' label='tags' icon='tags' direct=true
-                    +array_edit key='skills' label='skills' icon='wrench' direct=true
+                        +boolean_edit key='admin' icon='shield'
+                        +array_edit key='roles' icon='shield'
+                    +array_edit key='tags' label='tags' icon='tags'
+                    +array_edit key='skills' label='skills' icon='wrench'
                 .eight.wide.column
                     +user_edit_genekeys
                 .eight.wide.column
@@ -84,7 +85,7 @@ template(name='user_settings')
             +i name='settings'
             |settings
         with current_user
-            +boolean_edit key='show_bookmarked_model_bar' label='show bookmarked model bar' direct=true
+            +boolean_edit key='show_bookmarked_model_bar' label='show bookmarked model bar'
 
 
 template(name='user_single_doc_ref_editor')
@@ -284,12 +285,12 @@ template(name='user_edit_account')
         |account
     .ui.two.column.stackable.grid
         .column
-            +image_edit key='profile_image_id' icon='picture' title='profile image' direct=true
-            +image_edit key='avatar_image_id' icon='picture' title='avatar image' direct=true
+            +image_edit key='profile_image_id' icon='picture' title='profile image'
+            +image_edit key='avatar_image_id' icon='picture' title='avatar image'
             +password_edit
         .column
-            +text_edit key='first_name' label='first name' direct=true
-            +text_edit key='last_name' label='last name' direct=true
+            +text_edit key='first_name' label='first name'
+            +text_edit key='last_name' label='last name'
             .ui.header 
                 i.envelope.outline.icon
                 |emails
@@ -298,15 +299,15 @@ template(name='user_edit_account')
                 .ui.segment
                     i.code.icon
                     +username_edit
-                    +boolean_edit key='disabled' label='disabled' direct=true
-                    +multi_user_edit key='user_representatives' label='user representatives' direct=true
+                    +boolean_edit key='disabled' label='disabled'
+                    +multi_user_edit key='user_representatives' label='user representatives'
                     div
                     with current_user
                         .ui.button.remove_user 
                             i.remove.icon
                             |delete user
             .spacer
-            +phone_edit key='phone' label='phone' icon='phone' direct=true
+            +phone_edit key='phone' label='phone' icon='phone'
 
             //- +phone_editor
     
@@ -320,7 +321,7 @@ template(name='user_edit_genekeys')
     .ui.grid 
         .row 
             .sixteen.wide.column
-                +link_edit key='genekeys_link' label='report url' direct=true
+                +link_edit key='genekeys_link' label='report url'
                 .ui.segment
                     a.ui.button(href="https://genekeys.com/" target='_window') 
                         |1) get gene keys pdf report here (toggle everything)
@@ -330,12 +331,12 @@ template(name='user_edit_genekeys')
                         |3) upload
                     .ui.stackable.three.column.grid
                         .column
-                            +image_edit key='gene1' label='gene keys 1' icon='dna' direct=true
+                            +image_edit key='gene1' label='gene keys 1' icon='dna'
                         .column
-                            +image_edit key='gene2' label='gene keys 2' icon='dna' direct=true
+                            +image_edit key='gene2' label='gene keys 2' icon='dna'
                         .column
-                            +image_edit key='gene3' label='gene keys 3' icon='dna' direct=true
-                // +html_edit key='genekeys_report' label='report' direct=true
+                            +image_edit key='gene3' label='gene keys 3' icon='dna'
+                // +html_edit key='genekeys_report' label='report'
                 
                 
 template(name='user_edit_badges')
@@ -346,7 +347,7 @@ template(name='user_edit_badges')
         .row 
             .sixteen.wide.column
                 if is_admin
-                    +array_edit key='badges' label='badges' icon='certificate' direct=true
+                    +array_edit key='badges' label='badges' icon='certificate'
                 
                 .ui.divider
                 each badges
@@ -510,4 +511,4 @@ template(name='user_edit_finance')
                         .ui.header
                             i.shield.icon
                             |admin 
-                        +number_edit key='credit' label='edit credit' direct=true
+                        +number_edit key='credit' label='edit credit'
