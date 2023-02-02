@@ -78,7 +78,7 @@ template(name='layout')
     +nav
     // +rightbar
     +chatbar
-    
+    +historybar
     // .ui.hidden.divider
     // // .ui.hidden.divider
     // // .ui.hidden.divider
@@ -96,6 +96,17 @@ template(name='layout')
     if currentUser.admin_mode
         +footer
 
+
+template(name='historybar')
+    .ui.small.attached.menu 
+        .item 
+            i.clock.icon
+            |history
+        each currentUser.history_ids
+            .item 
+                |#{this}
+                with doc_by_id
+                    |#{title}
 
 template(name='mlayout')
     .global_container(class=invert_class)

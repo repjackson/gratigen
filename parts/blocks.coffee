@@ -79,22 +79,25 @@ if Meteor.isClient
             else if Template.parentData()
                 parent = Docs.findOne Template.parentData()._id
             if parent
-                Docs.find
+                Docs.find {
                     parent_id:parent._id
                     model:'comment'
+                }, sort:_timestamp:-1
     Template.comments.events
         'keyup .add_comment': (e,t)->
             if e.which is 13
-                if Router.current().params.doc_id
-                    parent = Docs.findOne Router.current().params.doc_id
-                else
-                    parent = Docs.findOne Template.parentData()._id
+                # if Router.current().params.doc_id
+                #     parent = Docs.findOne Router.current().params.doc_id
+                # else
+                #     console.log Template.parentData()
+                #     parent = Docs.findOne Template.parentData()._id
+                    
                 # parent = Docs.findOne Router.current().params.doc_id
                 comment = t.$('.add_comment').val()
                 Docs.insert
-                    parent_id: parent._id
+                    parent_id: @_id
                     model:'comment'
-                    parent_model:parent.model
+                    parent_model:@model
                     body:comment
                 t.$('.add_comment').val('')
 

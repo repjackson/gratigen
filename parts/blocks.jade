@@ -132,9 +132,13 @@ template(name='comments')
                         .comment
                             .content
                                 .ui.header #{body}
-                                .meta #{when}
+                                .meta 
+                                    |#{when}
                                     |by 
-                                    a(href="/user/#{_author.username}") #{_author.name}
+                                    a(href="/user/#{_author.username}") 
+                                        img.ui.avatar.inline.image(src="{{c.url _author.image_id width=200 height=200 gravity='face' crop='fill'}}")
+                                        |#{_author.name}
+
                                     if currentUser
                                         +voting_small
                                         if currentUser.admin_mode
@@ -540,7 +544,7 @@ template(name='role_crud')
             .title.active
                 .dropdown.icon
                 .ui.inline.header
-                    +i name='shield'
+                    // +i name='shield'
                     |#{picked_roles.count}
                     | roles
             .content.active

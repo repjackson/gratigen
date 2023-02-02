@@ -3,6 +3,8 @@ Template.registerHelper 'cal_time', (input)-> moment(input).calendar()
 Template.registerHelper 'comma', (input) ->
     input.toLocaleString("en-US")
 
+Template.registerHelper 'doc_by_id', (input) -> 
+    Docs.findOne @valueOf()
 Template.registerHelper 'all_users', (input) -> 
     Meteor.users.find() 
 Template.registerHelper 'cutString', (input) -> input[..10] 

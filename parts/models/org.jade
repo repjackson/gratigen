@@ -210,25 +210,32 @@ template(name='org_view')
                         a.ui.compact.basic.circular.button(href=address_link target='_window')
                             i.marker.icon
                             |#{address}
+                    +textarea_edit key='purpose' tagline="what is the basic purpose of your organization? what principals does it serve?"
+                    +textarea_edit key='vision' label='vision' tagline="how will your organization impact society? how will it look for people?"
+                    +textarea_edit key='mission' tagline='your business goals and the values you will embrace to achieve them'
+                    +textarea_edit key='bylaws' tagline='bylaws of your organization'
                     +viewing
                     if in_dev 
                         +print_this
-                    +multi_user_view key='member_ids' label='members' 
+                    // +multi_user_view key='member_ids' label='members' 
                     +org_history
                     +org_subscription
     
                 .six.wide.column
                     .ui.header leaders
-                    a.ui.basic.button(href="/user/#{lead}") lead
-                        with lead
-                            +user_info
-                    .ui.basic.button support
+                    .ui.basic.button(href="/user/#{lead}") lead
+                    if currentUser.edit_mode 
+                        +single_user_edit key='lead' label='lead'
+                    // a.ui.basic.button(href="/user/#{lead}") lead
+                    //     with lead
+                    //         +user_info
+                    .ui.basic.button(href="/user/#{support}") support
                     if currentUser.edit_mode 
                         +single_user_edit key='support' label='support'
-                    .ui.basic.button safety
+                    .ui.basic.button(href="/user/#{safety}") safety
                     if currentUser.edit_mode 
                         +single_user_edit key='safety' label='safety'
-                    .ui.basic.button creator  
+                    .ui.basic.button(href="/user/#{creator}") creator  
                     if currentUser.edit_mode 
                         +single_user_edit key='creator' label='creator'
                     .ui.header 
@@ -237,16 +244,13 @@ template(name='org_view')
                         +user_info
                     if currentUser.edit_mode 
                         +multi_user_edit key='member_ids' label='members'
-                    +textarea_edit key='purpose' tagline="what is the basic purpose of your organization? what principals does it serve?"
-                    +textarea_edit key='vision' label='vision' tagline="how will your organization impact society? how will it look for people?"
-                    +textarea_edit key='mission' tagline='your business goals and the values you will embrace to achieve them'
+
                     +textarea_edit key='brief' tagline='breif description or your organization'
                     +textarea_edit key='description' tagline='complete description of your organization'
-                    +textarea_edit key='bylaws' tagline='bylaws of your organization'
                     // |!{body}
                     +role_crud
                     +event_picker
-                    +eft_viewer
+                    
                             // a.item(href="/org/#{_id}/#{username}")
                             //     img.ui.mini.image(src="{{c.url image_id width=200 height=200}}")
                             //     .content
@@ -261,6 +265,7 @@ template(name='org_view')
                         .ui.big.button.join(title='')
                             i.user.plus.icon
                             |join
+                    +eft_viewer
                     if currentUser.edit_mode
                         .ui.basic.center.aligned.segment
                                 +eft_picker color="FF73EA" icon='food' label='food'

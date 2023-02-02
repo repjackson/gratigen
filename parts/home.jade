@@ -143,8 +143,8 @@ template(name='home')
             +comet_chat_block
             .ui.divider
             #cometchat.invert
-            +home_block key='bookmark_block'
-            +bookmark_block
+            +home_block template='bookmark_block' label='bookmarks' icon='bookmark'
+            // +bookmark_block
             // +model_block model='post' icon='blog' color='42E8C4' title='latest posts'
             // +model_block model='role' icon='shield' color='42E8C4' title='latest roles'
             // +model_block model='resource' icon='car' color='42E8C4' title='nearest resources'
@@ -213,9 +213,9 @@ template(name='home')
 template(name='home_block')
     details.ui.fluid.styled.accordion
         summary.title
-            |#{key}
+            |#{template}
         .content
-            +Template.dynamic template=key
+            +Template.dynamic template=template
 
 
 
@@ -231,18 +231,13 @@ template(name='user_avatars')
                     if image_id
                         img.ui.avatar.image.zoomer(src="{{c.url image_id height='300' width='300'}}")
                     else 
-                        i.large.circular.user.icon
+                        i.large.user.link.icon.zoomer
 
 template(name='bookmark_block')
-    details.ui.fluid.styled.accordion
-        summary.title
-            i.bookmark.icon
-            |bookmarks
-        .content
-            each bookmarked_docs 
-                a.ui.tertiary.button.zoomer(href="/#{model}/#{_id}")
-                    img.ui.avatar.image.zoomer(src="{{c.url image_id height='300' width='300'}}")
-                    |#{title}
+    each bookmarked_docs 
+        a.ui.tertiary.button.zoomer(href="/#{model}/#{_id}")
+            img.ui.avatar.image.zoomer(src="{{c.url image_id height='300' width='300'}}")
+            |#{title}
 
 
 template(name='quickchat')
