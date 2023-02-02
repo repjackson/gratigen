@@ -112,12 +112,15 @@ template(name='profile')
 
 template(name='profile_section')
     .column
-        .ui.segment
-            // i.dashboard.icon
-            .ui.header
-                +i name=icon color=color
-                |#{key}
-            +Template.dynamic template=user_template data=current_user
+        details.ui.styled.fluid.accordion
+            summary.title
+                // .dropdown.icon
+                .ui.inline.header
+                    +i name=icon color=color
+                    |#{key}
+            .content
+                .ui.header hi
+                +Template.dynamic template=user_template data=current_user
 
 
 template(name='user_roles')
