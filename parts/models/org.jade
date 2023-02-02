@@ -24,10 +24,10 @@
 template(name='org_card')
     .ui.card.zoomer
         if image_id
-            a.fly_right(href="/d/org/#{_id}")
+            a.fly_right(href="/org/#{_id}")
                 img.ui.image(src="{{c.url image_id width=400 height=400}}")
         .content
-            a.ui.header.fly_right(href="/d/org/#{_id}")
+            a.ui.header.fly_right(href="/org/#{_id}")
                 |#{title}
             |#{member_ids.length} members
             .smallscroll
@@ -35,12 +35,12 @@ template(name='org_card')
             //+ismall name='tags' cl='ui inline image'
             each ten_tags
                 .ui.basic.label #{this}
-            a.zoomer(href="/d/org/#{_id}")
+            a.zoomer(href="/org/#{_id}")
                 i.chevron.right.large.circular.icon
             // if is_admin
             //     .ui.small.header slug: #{slug}
             if can_edit
-                a.ui.circular.basic.icon.button(href="/d/org/#{_id}/edit")
+                a.ui.circular.basic.icon.button(href="/org/#{_id}/edit")
                     i.pencil.blue.icon
             +print_this
                     
@@ -89,7 +89,7 @@ template(name='org_reservations')
 //                             .ui.inline.header 
 //                                 +icolor name='group' cl='ui image inline pointer'
 //                             +title_link_buttons
-//                             a.ui.icon.green.big.button(href="/d/org/#{_id}" title='save')
+//                             a.ui.icon.green.big.button(href="/org/#{_id}" title='save')
 //                                 i.checkmark.big.icon
 //                             +text_edit key='title' label='title'
                             
@@ -248,7 +248,7 @@ template(name='org_view')
                 +role_crud
                 
                 +event_picker
-                        // a.item(href="/d/org/#{_id}/#{username}")
+                        // a.item(href="/org/#{_id}/#{username}")
                         //     img.ui.mini.image(src="{{c.url image_id width=200 height=200}}")
                         //     .content
                         //         .header
@@ -285,7 +285,7 @@ template(name='org_view')
                 .ui.header 
                     +i name='rss'
                     |activity
-                +group_picker
+                +group_crud
                 each log_items
                     +log_item
                 .ui.header.refresh_org_stats
@@ -315,20 +315,22 @@ template(name='org_view')
     
     
 template(name='related_docs')
-    .ui.header 
-        i.fork.icon
-        |related
-    .ui.items
-        each related_doc_results 
-            a.link.item(href="/d/#{model}/#{_id}")
-                img.ui.small.image(src="{{c.url image_id width=200 height=200}}")
-                .content
-                    .header #{title}
-                    .meta
-                        each five_tags 
-                            .ui.basic.label #{this}
-                        +author_info
-                        +creation_info
+    details.ui.styled.fluid.accordion
+        summary.title
+            i.fork.icon
+            |related
+    .content
+        .ui.items
+            each related_doc_results 
+                a.link.item(href="/d/#{model}/#{_id}")
+                    img.ui.small.image(src="{{c.url image_id width=200 height=200}}")
+                    .content
+                        .header #{title}
+                        .meta
+                            each five_tags 
+                                .ui.basic.label #{this}
+                            +author_info
+                            +creation_info
     
     
 template(name='org_section')
@@ -349,7 +351,7 @@ template(name='edit_button')
             |save
     else
         i.setting.big.link.zoomer.icon.edit_mode(title="edit #{title}")
-    // a.ui.circular.tertiary.icon.button.zoomer.floated.right.fly_down(href="/d/org/#{_id}/edit" title="edit #{title}")
+    // a.ui.circular.tertiary.icon.button.zoomer.floated.right.fly_down(href="/org/#{_id}/edit" title="edit #{title}")
     // a.ui.circular.tertiary.icon.button.zoomer.edit_mode(title="edit #{title}")
 
     
@@ -367,11 +369,11 @@ template(name='user_orgs')
                 +profile_org_item
 
 template(name='profile_org_item')
-    a.ui.item(href="/d/org/#{_id}")
+    a.ui.item(href="/org/#{_id}")
         +image_view key='image_id'  cl='zoom ui tiny image'
         .content
             .ui.header #{title}
-            // a.ui.small.header.inline.lowercase(href="/d/org/#{_id}/")
+            // a.ui.small.header.inline.lowercase(href="/org/#{_id}/")
             //     |#{price_per_serving}c / #{serving_unit}
             // .ui.small.inline.header #{when}
             +creation_info
@@ -384,6 +386,6 @@ template(name='orgs_small')
         |orgs
     .ui.selection.animated.list.smallscroll
         each org_docs
-            a.item(href="/d/org/#{_id}")
+            a.item(href="/org/#{_id}")
                 img.ui.avatar.image(src="{{c.url image_id width=200 height=200}}")
                 |#{title}

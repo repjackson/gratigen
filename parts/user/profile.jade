@@ -126,7 +126,7 @@ template(name='profile_section')
 
 template(name='user_roles')
     .ui.header roles
-    each authored_docs current_user 'role'
+    each _authored_docs current_user 'role'
         .item #{title} #{_org.name}
 template(name='user_info')
     .ui.header info

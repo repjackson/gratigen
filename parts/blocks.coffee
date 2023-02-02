@@ -253,17 +253,9 @@ if Meteor.isClient
                 #     $addToSet:
                 #         group_ids:new_id
                 #         group_titles:Session.get('group_search')
-                # $('body').toast({
-                #     title: "added #{Session.get('group_search')}"
-                #     message: 'yeay'
-                #     class : 'success'
-                #     showIcon:'shield'
-                #     showProgress:'bottom'
-                #     position:'bottom right'
-                # })
                         
                 # Session.set('group_search',null)
-            
+            cd = Docs.findOne Router.current().params.doc_id
             new_id = 
                 Docs.insert 
                     model:'group'
@@ -273,6 +265,14 @@ if Meteor.isClient
                     group_ids:new_id
                     group_titles:Session.get('group_search')
             Session.set('group_search',null)
+            $('body').toast({
+                title: "added #{Session.get('group_search')}"
+                message: "to #{cd.model}: #{cd.title}"
+                class : 'success'
+                showIcon:'shield'
+                showProgress:'bottom'
+                position:'bottom right'
+            })
             t.$('.group_search').val('')
             # Router.go "/group/#{new_id}/edit"
 

@@ -9,6 +9,7 @@ Template.registerHelper 'all_users', (input) ->
     Meteor.users.find() 
 Template.registerHelper 'cutString', (input) -> input[..10] 
 Template.registerHelper 'cut', (input) -> input[..10] 
+Template.registerHelper 'cut20', (input) -> input[..20] 
 Template.registerHelper 'parent', () -> Template.parentData()
 Template.registerHelper 'parent_doc', () ->
     Docs.findOne @parent_id
@@ -22,7 +23,7 @@ Template.registerHelper 'can_take', () ->
     
     
     
-Template.registerHelper 'authored_docs', (user,model) ->
+Template.registerHelper '_authored_docs', (user,model) ->
     console.log user, model
     if user and model
         Docs.find 
@@ -265,10 +266,6 @@ Template.registerHelper 'sortable_fields', () ->
             sortable:true
         }, sort:rank:1
 
-# Template.registerHelper 'current_user', (input) ->
-#     Meteor.user() and Meteor.user().username is Router.current().params.username
-
-
 
 Template.registerHelper 'nl2br', (text)->
     nl2br = (text + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + '<br>' + '$2')
@@ -338,7 +335,9 @@ Template.registerHelper 'is_dev', () ->
 
 # Template.registerHelper 'is_eric', () -> if Meteor.userId() and Meteor.userId() in ['ytjpFxiwnWaJELZEd','rDqxdcTBTszjeMh9T'] then true else false
 
-Template.registerHelper 'current_user', () ->  Meteor.users.findOne username:Router.current().params.username
+Template.registerHelper 'current_user', () ->  
+    found = Meteor.users.findOne username:Router.current().params.username
+    if found then found else Meteor.user()
 Template.registerHelper 'me', () ->  Meteor.users.findOne username:Router.current().params.username
 Template.registerHelper 'is_current_user', () ->
     if Meteor.user()
@@ -390,12 +389,6 @@ Template.registerHelper 'current_doc', ->
     if doc then doc
 
 
-# Template.registerHelper 'current_user', () ->
-#     found = Meteor.users.findOne username:Router.current().params.username
-#     if found
-#         found
-#     else 
-#         Meteor.user()
 Template.registerHelper 'field_value', () ->
     parent = Template.parentData()
 
