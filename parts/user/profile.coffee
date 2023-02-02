@@ -17,6 +17,8 @@ if Meteor.isClient
         user_template:->
             "user_#{@key}"
 
+    Template.user_roles.onCreated ->
+        @autorun -> Meteor.subscribe 'authored_docs', Router.current().params.username,'role', ->
     Template.user_credit.onCreated ->
         @autorun -> Meteor.subscribe 'user_from_username', Router.current().params.username, ->
         @autorun -> Meteor.subscribe 'user_read_docs', Router.current().params.username, ->
@@ -1138,12 +1140,15 @@ if Meteor.isClient
 
     Template.user_friends.helpers
         friends: ->
-            current_user = Meteor.users.findOne Router.current().params.user_id
-            Meteor.users.find
-                _id:$in: current_user.friend_ids
+            current_user = Meteor.users.findOne username:Router.current().params.username
+            if current_user.friend_ids
+                Meteor.users.find
+                    _id:$in: current_user.friend_ids
         nonfriends: ->
-            Meteor.users.find
-                _id:$nin:Meteor.user().friend_ids
+            current_user = Meteor.users.findOne username:Router.current().params.username
+            if current_user.friend_ids
+                Meteor.users.find
+                    _id:$nin:Meteor.user().friend_ids
 
 
     Template.friend_button.helpers

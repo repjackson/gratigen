@@ -21,6 +21,13 @@ Template.registerHelper 'can_take', () ->
     Meteor.user() and Meteor.userId() in @permissioned_user_ids
     
     
+    
+Template.registerHelper 'authored_docs', (user,model) ->
+    console.log user, model
+    if user and model
+        Docs.find 
+            model:model
+            _author_id:user._id
 
     
     

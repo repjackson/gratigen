@@ -76,6 +76,9 @@ head
 template(name='doc_view')
     with current_doc 
         +Template.dynamic template=doc_view_template
+        if currentUser.admin_mode 
+            .ui.header admin
+            +text_edit key='model' label='change model'
     
     
 template(name='layout')

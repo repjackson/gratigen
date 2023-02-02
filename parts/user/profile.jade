@@ -47,8 +47,6 @@ template(name='profile_layout')
                 else    
                     if phone_number
                         .ui.header #{phone_number}
-                unless is_current_user
-                    +friend_button
                 if is_current_user
                     .ui.large.tertiary.button.logout
                         i.sign.out.alternate.icon
@@ -99,6 +97,7 @@ template(name='profile_layout')
                 .ui.stackable.padded.three.column.grid
                     +profile_section key='info' label='info' icon='info'
                     +profile_section key='roles' label='roles' icon='shield'
+                    +profile_section key='friends' label='friends' icon='friends'
                     +profile_section key='orgs' label='Organizations' icon='groups'
                     +profile_section key='products' label='Products' icon='donate'
                     +profile_section key='resources' label='Resources' icon='gift'
@@ -110,6 +109,10 @@ template(name='profile_layout')
                     +profile_section key='skills' label='Skills' icon='chat'
                     +profile_section key='events' label='Events' icon='prize'
                     +profile_section key='accounts' label='Accounts' icon='car'
+
+
+
+
 
 template(name='profile_section')
     .column
@@ -123,7 +126,7 @@ template(name='profile_section')
 
 template(name='user_roles')
     .ui.header roles
-    each user_role_docs
+    each authored_docs current_user 'role'
         .item #{title} #{_org.name}
 template(name='user_info')
     .ui.header info

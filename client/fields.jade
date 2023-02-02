@@ -432,8 +432,9 @@ template(name='text_edit')
             else if key
                 |#{key}
                 //- +clear_value
-        if me.edit_mode
+        if currentUser.edit_mode
             .ui.icon.large.fluid.input
+                i.pencil.icon
                 input.edit_text(type='text' value=field_value placeholder=placeholder autocomplete="off")
         else 
             .ui.header #{field_value}

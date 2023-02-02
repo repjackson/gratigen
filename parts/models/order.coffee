@@ -13,7 +13,7 @@ if Meteor.isClient
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id, ->
         @autorun => Meteor.subscribe 'product_by_order_id', Router.current().params.doc_id, ->
         @autorun => Meteor.subscribe 'order_things', Router.current().params.doc_id, ->
-        @autorun => Meteor.subscribe 'model_docs', 'order', ->
+        # @autorun => Meteor.subscribe 'model_docs', 'order', ->
 
 
                 
