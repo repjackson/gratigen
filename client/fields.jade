@@ -1014,43 +1014,46 @@ template(name='multi_doc_view')
 
 
 template(name='single_user_edit')
-    div
-    if icon
-        i.icon(class=icon)
-    .ui.inline.header 
-        |#{label} #{title}
-    // if field_value
-    //     .pull_user.ui.icon.compact.button(title='remove user')
-    //         i.remove.icon
-            //- |clear #{field_value}
-    unless field_value
-        .ui.input
-            input.single_user_select_input(type='text' placeholder='lookup user..' autocomplete='off')
-            each selections
-                .ui.large.label
-                    |#{name} 
-                .ui.mini.grey.inline.header 
-                    |#{username}
-        if user_results
-            .ui.attached.smoothed.segment
-                .ui.middle.aligned.selection.animated.list
-                    each user_results
-                        a.select_user.item(href='#')
-                            .ui.small.inline.header
-                                img.ui.avatar.image(src="{{c.url image_id width=100 height=100 gravity='face' crop='fill'}}" class=cl)
-                                |#{first_name} #{last_name}
-                            .ui.mini.grey.inline.header 
-                                |#{username}
-    if field_value
-        // +user_card field_value
-        // if is_dev
+    if currentUser.edit_mode
+        div
+        if icon
+            i.icon(class=icon)
+        .ui.inline.header 
+            |#{label} #{title}
+        // if field_value
+        //     .pull_user.ui.icon.compact.button(title='remove user')
+        //         i.remove.icon
+                //- |clear #{field_value}
+        unless field_value
+            .ui.input
+                input.single_user_select_input(type='text' placeholder='lookup user..' autocomplete='off')
+                each selections
+                    .ui.large.label
+                        |#{name} 
+                    .ui.mini.grey.inline.header 
+                        |#{username}
+            if user_results
+                .ui.attached.smoothed.segment
+                    .ui.middle.aligned.selection.animated.list
+                        each user_results
+                            a.select_user.item(href='#')
+                                .ui.small.inline.header
+                                    img.ui.avatar.image(src="{{c.url image_id width=100 height=100 gravity='face' crop='fill'}}" class=cl)
+                                    |#{first_name} #{last_name}
+                                .ui.mini.grey.inline.header 
+                                    |#{username}
+        if field_value
+            // +user_card field_value
+            // if is_dev
+            |#{field_value}
+            //- |#{this}
+            with user_from_id field_value
+                .ui.inline.header
+                    img.ui.avatar.image(src="{{c.url image_id width=100 height=100 gravity='face' crop='fill'}}" class=cl)
+                    |#{name}
+                i.pull_user.remove.link.icon
+    else 
         |#{field_value}
-        //- |#{this}
-        with user_from_id field_value
-            .ui.inline.header
-                img.ui.avatar.image(src="{{c.url image_id width=100 height=100 gravity='face' crop='fill'}}" class=cl)
-                |#{name}
-            i.pull_user.remove.link.icon
 
 
 template(name='single_user_view')

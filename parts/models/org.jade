@@ -172,7 +172,6 @@ template(name='org_view')
     //     +org_edit
     with current_doc
         // img.ui.fluid.image.bg_overlay(src="{{c.url image_id crop='fit'}}")
-        
         .ui.stackable.padded.grid.scrolling
             .middle.aligned.row
                 .three.wide.column
@@ -213,7 +212,7 @@ template(name='org_view')
                     +textarea_edit key='purpose' tagline="what is the basic purpose of your organization? what principals does it serve?"
                     +textarea_edit key='vision' label='vision' tagline="how will your organization impact society? how will it look for people?"
                     +textarea_edit key='mission' tagline='your business goals and the values you will embrace to achieve them'
-                    +textarea_edit key='bylaws' tagline='bylaws of your organization'
+                    +textarea_edit key='bylaws' tagline='bylaws of your organization. Articles of incorporation are the primary law of an association used to establish the general organization and governing of the association to achieve corporate existence. Bylaws are the secondary law of an association best used to detail how the society is formed and run.'
                     +viewing
                     if in_dev 
                         +print_this
@@ -224,8 +223,8 @@ template(name='org_view')
                 .six.wide.column
                     .ui.header leaders
                     .ui.basic.button(href="/user/#{lead}") lead
-                    if currentUser.edit_mode 
-                        +single_user_edit key='lead' label='lead'
+                    // if currentUser.edit_mode 
+                    +single_user_edit key='lead' label='lead'
                     // a.ui.basic.button(href="/user/#{lead}") lead
                     //     with lead
                     //         +user_info
