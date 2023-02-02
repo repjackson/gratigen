@@ -12,6 +12,7 @@ if Meteor.isClient
         # @autorun => Meteor.subscribe 'children', 'org_update', Router.current().params.doc_id
         @autorun => Meteor.subscribe 'members', Router.current().params.doc_id, ->
         # @autorun => Meteor.subscribe 'org_dishes', Router.current().params.doc_id, ->
+        Meteor.call 'log_view', Router.current().params.doc_id, ->
     Template.org_view.helpers
         is_member: ->
             Meteor.userId() and Meteor.userId() in @member_ids

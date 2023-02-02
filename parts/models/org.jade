@@ -193,7 +193,7 @@ template(name='org_view')
                         +remove_button
             .row
                 .five.wide.column
-                    +image_view key='image_id' icon='image' label='image'
+                    +image_edit key='image_id' icon='image' label='image'
                     if currentUser.edit_mode 
                         +array_edit key='tags' icon='tags'
                     else    
@@ -265,6 +265,7 @@ template(name='org_view')
                     
                     // |!{body}
                     +role_crud
+                    
                     +event_picker
                             // a.item(href="/org/#{_id}/#{username}")
                             //     img.ui.mini.image(src="{{c.url image_id width=200 height=200}}")

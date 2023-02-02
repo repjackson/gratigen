@@ -274,7 +274,7 @@ template(name='image_view')
     //- +call_visual
     
 template(name='image_edit')
-    if me.edit_mode
+    if currentUser.edit_mode
         .ui.form
             if icon
                 i.icon(class=icon)
