@@ -59,7 +59,7 @@ template(name='org_subscription')
     //- +ismall name='renew-subscription'
     //- .ui.inline.header
     //-     |subscription settings
-    .ui.button.subscribe subscribe to updates
+    .ui.basic.button.subscribe subscribe to updates
     .ui.list
         each subscribers
             .item #{text} #{when}
@@ -170,26 +170,26 @@ template(name='title_link_buttons')
 template(name='org_view')
     // if currentUser.admin_mode 
     //     +org_edit
-    .ui.stackable.grid.scrolling
-        .middle.aligned.row
-            img.ui.fluid.image.bg_overlay(src="{{c.url image_id crop='fit'}}")
-            .three.wide.column
-                .left_floated
-                    a.ui.circular.tertiary.large.button.zoomer.fly_left(href="/")
-                        i.left.chevron.icon
-                        +ismall name='groups' color='83DFF4' 
-                        |orgs
-            .nine.wide.center.aligned.column
-                .ui.centered.inline.huge.center.aligned.header
-                    |#{title}
-            .four.wide.right.aligned.column
-                +subscribe_button
-                +bookmark_button
-                // .floated
-                if can_edit
-                    +edit_button
-                if currentUser.edit_mode 
-                    +remove_button
+    .ui.stackable.padded.grid.scrolling
+        // .middle.aligned.row
+        //     img.ui.fluid.image.bg_overlay(src="{{c.url image_id crop='fit'}}")
+        //     .three.wide.column
+        //         .left_floated
+        //             a.ui.circular.tertiary.large.button.zoomer.fly_left(href="/")
+        //                 i.left.chevron.icon
+        //                 +ismall name='groups' color='83DFF4' 
+        //                 |orgs
+        //     .nine.wide.center.aligned.column
+        //         .ui.centered.inline.huge.center.aligned.header
+        //             |#{title}
+        //     .four.wide.right.aligned.column
+        //         +subscribe_button
+        //         +bookmark_button
+        //         // .floated
+        //         if can_edit
+        //             +edit_button
+        //         if currentUser.edit_mode 
+        //             +remove_button
         .row
             .five.wide.column
                 +image_edit key='image_id' icon='image' label='image'
@@ -315,22 +315,25 @@ template(name='org_view')
     
     
 template(name='related_docs')
-    details.ui.styled.fluid.accordion
-        summary.title
-            i.fork.icon
-            |related
-    .content
-        .ui.items
-            each related_doc_results 
-                a.link.item(href="/d/#{model}/#{_id}")
-                    img.ui.small.image(src="{{c.url image_id width=200 height=200}}")
-                    .content
-                        .header #{title}
-                        .meta
-                            each five_tags 
-                                .ui.basic.label #{this}
-                            +author_info
-                            +creation_info
+    // details.ui.styled.fluid.accordion
+    .ui.styled.accordion
+        .title
+            .dropdown.icon
+            .ui.inline.header
+                | related
+                
+        .content
+            .ui.items
+                each related_doc_results 
+                    a.link.item(href="/d/#{model}/#{_id}")
+                        img.ui.small.image(src="{{c.url image_id width=200 height=200}}")
+                        .content
+                            .header #{title}
+                            .meta
+                                each five_tags 
+                                    .ui.basic.label #{this}
+                                +author_info
+                                +creation_info
     
     
 template(name='org_section')

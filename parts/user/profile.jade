@@ -390,13 +390,15 @@ template(name='user_badges')
     .ui.center.aligned.header 
         +i name='prize'
         |user badges
-    .ui.small.centered.five.stackable.cards
+    .ui.list
         each user_badges
-            a.ui.card(href="/badge/#{_id}")
-                +ibig name=icon cl='ui fluid image'
+            a.ui.item(href="/d/badge/#{_id}")
+                +icolor name=icon cl='ui image'
                 .content
-                    .ui.header #{location}: #{title}
-                        
+                    .header #{title}
+                    .description    
+                        each tags 
+                            .ui.label #{this}
                         
 template(name='user_events')  
     .ui.header 

@@ -75,14 +75,38 @@ head
     
 template(name='doc_view')
     with current_doc 
-        +Template.dynamic template=doc_view_template
+        .ui.stackable.padded.grid.scrolling
+            .middle.aligned.row
+                // img.ui.fluid.image.bg_overlay(src="{{c.url image_id crop='fit'}}")
+                .three.wide.column
+                    .left_floated
+                        a.ui.circular.tertiary.large.button.zoomer.fly_left(href="/")
+                            i.left.chevron.icon
+                            +ismall name='groups' color='83DFF4' 
+                            |orgs
+                .nine.wide.center.aligned.column
+                    .ui.centered.inline.huge.center.aligned.header
+                        |#{title}
+                .four.wide.right.aligned.column
+                    +subscribe_button
+                    +bookmark_button
+                    // .floated
+                    if can_edit
+                        +edit_button
+                    if currentUser.edit_mode 
+                        +remove_button
+            .row
+                +Template.dynamic template=doc_view_template
         if currentUser.admin_mode 
-            .ui.header admin
-            +text_edit key='model' label='change model'
-    
+            .ui.inverted.red.segment
+                .ui.header 
+                    i.shield.icon
+                    |admin
+                +text_edit key='model' label='change model'
+        
     
 template(name='layout')
-    img.ui.fluid.image.bg_overlay(src="{{c.url 'nightbg' width=1000 crop='fit'}}")    
+    img.ui.fluid.image.bg_overlay(src="{{c.url current_image_id width=1000 crop='fit'}}")    
     +nav
     // +rightbar
     // +chatbar
