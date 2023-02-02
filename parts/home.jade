@@ -14,7 +14,7 @@ template(name='home')
             // .ui.hidden.divider
             .ui.segment
                 img.ui.image(src="/batflash.png")
-            +dash_user_pill
+            +dash_user_info
             +user_impact_graph
            
 
@@ -449,7 +449,7 @@ template(name='side_menu_item')
         //     i.large.checkmark.icon
 
            
-template(name='dash_user_pill') 
+template(name='dash_user_info') 
      .ui.two.column.grid
             .six.wide.column
                 img.ui.circular.small.image(src="{{c.url currentUser.image_id width=120 height=120 gravity='face' crop='fill'}}") 

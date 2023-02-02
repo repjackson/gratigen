@@ -34,6 +34,11 @@ template(name='profile_layout')
                 a.ui.inline.header(href="/user/#{username}/credit" title='credit')
                     +i name='coins'
                     |#{user.points}p
+                if editing_account
+                    +phone_editor 
+                    +password_edit
+                else    
+                    .ui.header #{phone_number}
                 if is_current_user
                     +edit_button
                     // a.ui.circular.big.icon.tertiary.button(href="/user/#{username}/edit" title='profile settings')
@@ -98,7 +103,7 @@ template(name='profile_layout')
             .twelve.wide.column.scrolling
                 .ui.stackable.padded.three.column.grid
                     +profile_section key='info' label='info' icon='info'
-                    +profile_section key='roles' label='roles' icon='Roles'
+                    +profile_section key='roles' label='roles' icon='shield'
                     +profile_section key='orgs' label='Organizations' icon='info'
                     +profile_section key='products' label='Products' icon='donate'
                     +profile_section key='resources' label='Resources' icon='gift'
@@ -121,7 +126,10 @@ template(name='profile_section')
             +Template.dynamic template=user_template data=current_user
 
 
-
+template(name='user_roles')
+    .ui.header roles
+    each user_role_docs
+        .item #{title} #{_org.name}
 template(name='user_info')
     .ui.header info
     // if editing_account

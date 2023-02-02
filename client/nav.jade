@@ -48,19 +48,23 @@ template(name='nav')
         //     i.lightbulb.icon
         .search.item.zoomer.mobile.hidden(title='search')
             .ui.icon.transparen.large.input
-                if current_query
+                if current_site_search
                     i.remove.large.red.link.icon.clear_search
                 else
                     i.search.large.grey.icon
-                input.search_site(type='text' autocomplete="off" value=current_query)
+                input.search_site(type='text' autocomplete="off" value=current_site_search)
             each picked_tags
                 .ui.label
                     i.remove.icon
                     |#{this}
-        each search_results
+        each doc_search_results
             button.ui.button.goto_doc
                 img.ui.avatar.image(src="{{c.url image_id width=200 height=200 gravity='face' crop='fill'}}")
                 |{{cut title}}
+        each user_search_results
+            button.ui.button.goto_doc
+                img.ui.avatar.image(src="{{c.url image_id width=200 height=200 gravity='face' crop='fill'}}")
+                |#{username}
         // .six.wide.column
         .right.menu
             // if unread_count

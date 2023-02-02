@@ -8,7 +8,15 @@ globalHotkeys.add
         Meteor.users.update Meteor.userId(),
             $set:
                 edit_mode:!Meteor.user().edit_mode
-        
+        $('body').toast(
+            # showIcon: 'edit'
+            message: "edit mode toggled"
+            # showProgress: 'bottom'
+            class: 'info'
+            # displayTime: 'auto',
+            position: "bottom right"
+        )
+
         # Session.set('view_chat', !Session.get('view_chat'))
 
 globalHotkeys.add

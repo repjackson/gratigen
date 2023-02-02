@@ -18,15 +18,24 @@ if Meteor.isClient
         # @autorun => Meteor.subscribe 'all_users', ->
         
         # @autorun => Meteor.subscribe 'model_docs', 'model', ->
-        @autorun => Meteor.subscribe 'search_results', Session.get('current_query'), ->
+        @autorun => Meteor.subscribe 'doc_search_results', Session.get('current_query'), ->
+        @autorun => Meteor.subscribe 'user_search_results', Session.get('current_query'), ->
         # @autorun => Meteor.subscribe 'my_cart_products'
     
 if Meteor.isServer
-    Meteor.publish 'search_results', (query)->
+    Meteor.publish 'doc_search_results', (query)->
         match = {}
         if query and query.length > 2
             match.title =  {$regex:"#{query}", $options: 'i'}
-            Docs.find match, 
+            Docs.find match,{ 
+                limit:5
+                sort:points:-1
+            }
+    Meteor.publish 'user_search_results', (query)->
+        match = {}
+        if query and query.length > 2
+            match.username =  {$regex:"#{query}", $options: 'i'}
+            Meteorusers.find match, 
                 limit:10
 if Meteor.isClient
     Template.add.onRendered ->
@@ -190,11 +199,17 @@ if Meteor.isClient
             console.log Session.get('invert_mode')
         
     Template.nav.helpers
-        search_results: ->
-            if Session.get('current_query') and Session.get('current_query').length > 1
+        doc_search_results: ->
+            if Session.get('current_query') and Session.get('current_query').length > 2
                 match = {}
                 match.title =  {$regex:"#{Session.get('current_query')}", $options: 'i'}
                 Docs.find match, 
+                    limit:5
+        user_search_results: ->
+            if Session.get('current_query') and Session.get('current_query').length > 2
+                match = {}
+                match.username =  {$regex:"#{Session.get('current_query')}", $options: 'i'}
+                Meteor.users.find match, 
                     limit:5
 
         picked_tags:-> picked_tags.array()

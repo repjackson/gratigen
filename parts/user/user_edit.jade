@@ -112,8 +112,8 @@ template(name='phone_editor')
     .ui.icon.fluid.input(title='Add Phone')
         i.plus.icon
         input#phone.form-control(type='phone', name='phone', value='{{newNumber}}')
-    if current_user.profile.phone
-        if current_user.profile.phone_verified
+    if current_user.phone_number
+        if current_user.phone_verified
             .ui.label verified
         else
             p

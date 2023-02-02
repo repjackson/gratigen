@@ -15,7 +15,6 @@ if Meteor.isClient
 
     Template.profile_section.helpers 
         user_template:->
-            console.log @
             "user_#{@key}"
 
     Template.user_credit.onCreated ->
