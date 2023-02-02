@@ -731,11 +731,12 @@ Template.single_user_edit.events
 
 
         val = t.$('.edit_text').val()
-        if field.direct
-            parent = Template.parentData()
-        else
-            parent = Template.parentData(5)
+        # if field.direct
+        #     parent = Template.parentData()
+        # else
+        #     parent = Template.parentData(5)
 
+        parent = Template.parentData()
         doc = Docs.findOne parent._id
         if doc
             Docs.update parent._id,

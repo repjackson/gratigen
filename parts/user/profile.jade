@@ -1,8 +1,8 @@
 template(name='profile_layout')
     +nav
-    .ui.attached.small.borderless.inverted.menu.hscroll
-    div
-    .ui.attached.small.borderless.inverted.menu.hscroll
+    // .ui.attached.small.borderless.inverted.menu.hscroll
+    // div
+    // .ui.attached.small.borderless.inverted.menu.hscroll
     with current_user
         img.ui.image.bg_overlay(src="{{c.url image_id2 width=1000 }}")
         .ui.stackable.padded.grid
@@ -31,19 +31,19 @@ template(name='profile_layout')
                     +i name='coins'
                     |#{user.points}p
                 if is_current_user
-                    a.ui.circular.big.icon.button(href="/user/#{username}/edit" title='profile settings')
+                    a.ui.circular.big.icon.tertiary.button(href="/user/#{username}/edit" title='profile settings')
                         i.cog.large.icon
                     // a.ui.button.logout_other_clients(href="#" title='logout other clients')
                     //     i.globe.icon
                     //     |log out other clients
                 else if is_admin
-                    a.ui.circular.button(href="/user/#{username}/edit" title='profile settings')
+                    a.ui.circular.large.tertiary.button(href="/user/#{username}/edit" title='profile settings')
                         +i name='settings' cl='ui avatar image'
                         |edit profile
                 // unless is_current_user
                 //     +friend_button
                 if is_current_user
-                    .ui.button.logout
+                    .ui.large.tertiary.button.logout
                         i.sign.out.alternate.icon
                         |log out
                 +array_view key='tags' label='tags' direct=true icon='tags'
@@ -67,23 +67,23 @@ template(name='profile_layout')
                             |!{current_status}
                 if in_dev
                     .ui.small.inline.header #{_id}
-                    if i_have_points
-                        .ui.basic.circular.button.send(title='send points')
-                            i.red.gift.large.icon
-                            span send pts
-                        // .ui.basic.circular.button.request(title='request points')
-                        //     i.concierge.bell.large.teal.icon
-                        //     span request
-                    else
-                        .ui.disabled.basic.circular.button(title='send points')
-                            i.red.gift.large.icon
-                            span send pts
-                        // .ui.disabled.basic.circular.button(title='request points')
-                        //     i.concierge.bell.teal.icon
-                        //     span request
-                    a.ui.large.compact.basic.circular.icon.button(href="/user/#{username}/messages" class="{{isActiveRoute 'user_messages'}}" title="#{user.username} messages")
-                        i.chat.large.blue.icon
-                        // | message
+                if i_have_points
+                    .ui.basic.circular.button.send(title='send points')
+                        i.red.gift.large.icon
+                        span send pts
+                    .ui.basic.circular.button.request(title='request points')
+                        i.concierge.bell.large.teal.icon
+                        span request
+                else
+                    .ui.disabled.basic.circular.button(title='send points')
+                        i.red.gift.large.icon
+                        span send pts
+                    .ui.disabled.basic.circular.button(title='request points')
+                        i.concierge.bell.teal.icon
+                        span request
+                a.ui.large.tertiary.basic.circular.button(href="/user/#{username}/messages" class="{{isActiveRoute 'user_messages'}}" title="#{user.username} messages")
+                    i.chat.large.blue.icon
+                    | message
                 if is_dev
                     +print_this
             .twelve.wide.column.scrolling
