@@ -191,7 +191,11 @@ template(name='user_pill')
         a.ui.large.link.basic.label.goto_user(href="/user/#{username}")
             img.ui.avatar.inline.image(src="{{c.url image_id width=200 height=200 gravity='face' crop='fill'}}")
             |#{username}
-    // .ui.header #{this}
+        .ui.user.popup        
+            .ui.header #{username} #{name}
+            each roles
+                .ui.basic.label #{this}
+            img.ui.small.image(src="{{c.url image_id width=400 height=400 gravity='face' crop='fill'}}")
 
 
 template(name='session_boolean_toggle')
@@ -400,8 +404,10 @@ template(name='author_info')
     |added #{when} by #{_author_username}
 
 template(name='creation_info')
-    .ui.small.inline.header #{when}
-
+    .ui.small.inline.header(title="by #{_author.name}") #{when}
+    .ui.popup
+        .ui.header #{_author.name}
+        .ui.header #{points}
 
 template(name='user_list_toggle')
     if currentUser
@@ -480,7 +486,7 @@ template(name='view_button')
 
 template(name='remove_button')
     .ui.icon.basic.button.remove_doc(title='delete')
-        i.remove.red.icon
+        i.remove.red.big.icon.invert
         //- |Delete
 
 template(name='remove_icon')

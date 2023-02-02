@@ -267,7 +267,7 @@ if Meteor.isClient
         @autorun => @subscribe 'model_docs', 'role', ->
     Template.role_crud.helpers
         role_results: ->
-            if Session.get('role_search').length > 1
+            if Session.get('role_search') and Session.get('role_search').length > 1
                 Docs.find 
                     model:'role'
                     title: {$regex:"#{Session.get('role_search')}",$options:'i'}
@@ -647,8 +647,12 @@ if Meteor.isClient
         search_input_class: ->
             if Session.get('search_value') then 'large active circular' else 'small'
 
-    # Template.user_pill.onCreated ->
-    #     @autorun => Meteor.subscribe 'user_from_id', @data
+    Template.user_pill.onRendered ->
+        Meteor.setTimeout =>
+            $('.label').popup({inline:true})
+        , 1000
+    Template.user_pill.onCreated ->
+        @autorun => Meteor.subscribe 'user_from_id', @data, ->
     # Template.user_pill.helpers
     #     user: -> Meteor.users.findOne @valueOf()
 

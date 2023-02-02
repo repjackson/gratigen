@@ -243,24 +243,14 @@ template(name='link_edit')
         // i.icon(class=icon)
     .ui.inline.header
         |#{title} #{label}
-    .ui.fluid.input
-        input.edit_url(type='url' value=field_value placeholder='url' autocomplete="off")
+    if me.edit_mode 
+        .ui.fluid.input
+            input.edit_url(type='url' value=field_value placeholder=key autocomplete="off")
     .spacer
+    if field_value 
+        a.ui.tertiary.button(href=field_value target='_window')
+            |#{field_value}
 
-template(name='link_view')
-    if field_value
-        div
-        if icon
-            +i name=icon
-        //- .ui.inline.header 
-        //-     |#{title} #{label}
-        a.ui.small.header(href=field_value target='_window' title=field_value)
-            |#{label}
-        // div
-        // a(href="#{field_value}" target='_window')
-        //     |#{field_value}
-        //- img.ui.fluid.image(src=field_value)
-        
         
 template(name='image_view')
     if field_value
@@ -284,31 +274,34 @@ template(name='image_view')
     //- +call_visual
     
 template(name='image_edit')
-    .ui.form
-        if icon
-            i.icon(class=icon)
-        .ui.inline.header
-            if title
-                |#{title}
-            else if label
-                |#{label}
-            else if key
-                |#{key}
-            else
-                |#{this}            
-        .field
-            if field_value
-                //- label Image
-                a(href="{{c.url field_value }}" target='_window')
-                    img.ui.centered.fluid.rounded.image(src="{{c.url field_value height=500 gravity='face' crop='fill'}}" class=cl)
-                a#remove_photo.ui.right.corner.link.label
-                    i.remove.link.icon
-                // .ui.button.call_cloud_visual
-                //     i.dna.icon
-                //     |autotag
-            else
-                input(type='file' name='upload_image' accept='image/*' )
-            
+    if me.edit_mode
+        .ui.form
+            if icon
+                i.icon(class=icon)
+            .ui.inline.header
+                if title
+                    |#{title}
+                else if label
+                    |#{label}
+                else if key
+                    |#{key}
+                else
+                    |#{this}            
+            .field
+                if field_value
+                    //- label Image
+                    a(href="{{c.url field_value }}" target='_window')
+                        img.ui.centered.fluid.rounded.image(src="{{c.url field_value height=500 gravity='face' crop='fill'}}" class=cl)
+                    a#remove_photo.ui.right.corner.link.label
+                        i.remove.link.icon
+                    // .ui.button.call_cloud_visual
+                    //     i.dna.icon
+                    //     |autotag
+                else
+                    input(type='file' name='upload_image' accept='image/*' )
+    else if field_value
+        img.ui.centered.rounded.image(src="{{c.url field_value gravity='face' crop='fit'}}" class=cl)
+    
 
 template(name='image_link_edit')
     .ui.fluid.input
@@ -318,6 +311,8 @@ template(name='image_link_edit')
     if field_value
         img.ui.fluid.image(src=field_value)
     // +call_visual
+    
+    
 template(name='image_link_view')
     img.ui.rounded.zoomer.image(src=field_value)
 
@@ -381,9 +376,9 @@ template(name='raw_view')
         
 template(name='textarea_edit')
     .ui.styled.accordion
-        .title.zoome
+        .title
             .ui.dropdown.icon
-            .ui.inline.header
+            .ui.inline.header.zoomer
                 if icon
                     // i.icon(class=field_value)
                     +i name=icon
@@ -400,12 +395,13 @@ template(name='textarea_edit')
                     .field
                         //- else
                         //-     |#{this}
-                        // if tagline 
-                        
-                        |#{tagline}
+                        if tagline 
+                            .ui.attached.small.teal.message
+                                |#{tagline}
                         textarea.edit_textarea(rows='7') #{field_value}
             else 
-                |!{field_value}
+                if field_value
+                    |{{nl2br field_value}}
         
         
 template(name='text_edit')
@@ -626,7 +622,7 @@ template(name='array_view')
             .ui.inline.small.grey.header.say_body(title=title)
                 |#{label}
         each field_value
-            .ui.label.say_body #{this}
+            .ui.basic.label.say_body #{this}
 
 
 // template(name='children_edit')
@@ -1046,18 +1042,17 @@ template(name='single_user_edit')
                                 .ui.mini.grey.inline.header 
                                     |#{username}
     if field_value
-        .ui.large.tertiary.button 
-            // .ui.big.label #{key}
-            with user_from_id field_value
-                +user_pill
-                // img.ui.avatar.image(src="{{c.url image_id width=100 height=100 gravity='face' crop='fill'}}" class=cl)
-                // |#{name}
-            // +user_card field_value
-            // if is_dev
-            // |#{field_value}
-            //- |#{this}
-                .ui.inline.header
-                i.pull_user.remove.link.icon
+        // .ui.big.label #{key}
+        with user_from_id field_value
+            +user_pill
+            // img.ui.avatar.image(src="{{c.url image_id width=100 height=100 gravity='face' crop='fill'}}" class=cl)
+            // |#{name}
+        // +user_card field_value
+        // if is_dev
+        // |#{field_value}
+        //- |#{this}
+            .ui.inline.header
+            i.pull_user.remove.link.icon
     // else 
     //     with user_from_id field_value
             // +user_card

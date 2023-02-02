@@ -16,6 +16,13 @@ template(name='profile_layout')
                 .spacer
                 a.item.mobile.hidden(href="/user/#{username}")
                     img.ui.circular.centered.image(src="{{c.url image_id height=400 width=400 gravity='face' crop='fill'}}")
+                if is_current_user
+                    +edit_button
+                    a.ui.button.logout_other_clients(href="#" title='logout other clients')
+                        i.globe.icon
+                        |log out other clients
+                else if is_admin
+                    +edit_button
                 if me.edit_mode
                     +username_edit
                 else
@@ -38,21 +45,10 @@ template(name='profile_layout')
                     +phone_editor 
                     +password_edit
                 else    
-                    .ui.header #{phone_number}
-                if is_current_user
-                    +edit_button
-                    // a.ui.circular.big.icon.tertiary.button(href="/user/#{username}/edit" title='profile settings')
-                    //     i.cog.large.icon
-                    // a.ui.button.logout_other_clients(href="#" title='logout other clients')
-                    //     i.globe.icon
-                    //     |log out other clients
-                else if is_admin
-                    +edit_button
-                    // a.ui.circular.large.tertiary.button(href="/user/#{username}/edit" title='profile settings')
-                    //     +i name='settings' cl='ui avatar image'
-                    //     |edit profile
-                // unless is_current_user
-                //     +friend_button
+                    if phone_number
+                        .ui.header #{phone_number}
+                unless is_current_user
+                    +friend_button
                 if is_current_user
                     .ui.large.tertiary.button.logout
                         i.sign.out.alternate.icon
@@ -61,15 +57,14 @@ template(name='profile_layout')
                     +array_edit key='tags' label='tags' direct=true icon='tags'
                 else
                     +array_view key='tags' label='tags' direct=true icon='tags'
-                if link 
-                    a.ui.button(href=link target='_window')
-                        |app link
-                if is_current_user
+                div
+                +link_edit key='profile_link'
+                if editing_account
                     +boolean_edit key='online' label='online' direct=true
                     +text_edit key='current_status' label='status' icon='clock' direct=true
                 else 
                     if online 
-                        .ui.green.large.label 
+                        .ui.green.large.label.invert
                             i.large.checkmark.icon
                             |online
                     else
@@ -104,7 +99,7 @@ template(name='profile_layout')
                 .ui.stackable.padded.three.column.grid
                     +profile_section key='info' label='info' icon='info'
                     +profile_section key='roles' label='roles' icon='shield'
-                    +profile_section key='orgs' label='Organizations' icon='info'
+                    +profile_section key='orgs' label='Organizations' icon='groups'
                     +profile_section key='products' label='Products' icon='donate'
                     +profile_section key='resources' label='Resources' icon='gift'
                     +profile_section key='groups' label='Groups' icon='money'
@@ -377,7 +372,7 @@ template(name='user_debit_segment')
         each tags
             .ui.mini.basic.label #{this}
                         
-template(name='user_friend_button')
+template(name='friend_button')
     if is_friend
         .ui.blue.large.icon.button.unfriend(title='unfriend')
             i.checkmark.large.icon
@@ -671,7 +666,7 @@ template(name='user_requests')
                 
                 
 template(name='user_friends')
-    +user_friend_button
+    +friend_button
     .ui.stackable.grid
         .two.column.row
             .column

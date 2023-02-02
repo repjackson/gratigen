@@ -28,6 +28,7 @@ if Meteor.isClient
         @autorun => Meteor.subscribe 'me', ->
         # @autorun => Meteor.subscribe 'all_users', ->
         
+    Template.nav_search.onCreated ->
         # @autorun => Meteor.subscribe 'model_docs', 'model', ->
         @autorun => Meteor.subscribe 'doc_search_results', Session.get('current_query'), ->
         @autorun => Meteor.subscribe 'user_search_results', Session.get('current_query'), ->
@@ -39,7 +40,7 @@ if Meteor.isServer
         if query and query.length > 2
             match.title =  {$regex:"#{query}", $options: 'i'}
             Docs.find match,{ 
-                limit:5
+                limit:3
                 sort:points:-1
             }
     Meteor.publish 'user_search_results', (query)->
@@ -47,7 +48,7 @@ if Meteor.isServer
         if query and query.length > 2
             match.username =  {$regex:"#{query}", $options: 'i'}
             Meteor.users.find match, 
-                limit:10
+                limit:3
 if Meteor.isClient
     Template.add.onRendered ->
         Meteor.setTimeout ->
@@ -140,25 +141,19 @@ if Meteor.isClient
             Meteor.users.update Meteor.userId(),
                 $addToSet:
                     history_ids:@_id
-    Template.nav.events
-        'click .reset': ->
-            # model_slug =  Router.current().params.model_slug
-            Session.set 'loading', true
-            Meteor.call 'set_facets', @slug, true, ->
-                Session.set 'loading', false
-    
+    Template.nav_search.events
         'click .clear_search': -> Session.set('current_query',null)
         'keyup .search_site': _.throttle((e,t)->
             # console.log Router.current().route.getName()
             # current_name = Router.current().route.getName()
-            $(e.currentTarget).closest('.input').transition('pulse', 100)
+            $(e.currentTarget).closest('.input').transition('pulse', 200)
 
             # unless current_name is 'shop'
             #     Router.go '/shop'
             
             
             query = $('.search_site').val()
-            if query.length > 2
+            if query.length > 1
                 Session.set('current_query', query)
             # console.log Session.get('current_query')
             if e.key == "Escape"
@@ -187,7 +182,14 @@ if Meteor.isClient
                     # Meteor.setTimeout ->
                     #     Session.set('dummy', !Session.get('dummy'))
                     # , 10000
-        , 500)
+        , 250)
+    
+    Template.nav.events
+        'click .reset': ->
+            # model_slug =  Router.current().params.model_slug
+            Session.set 'loading', true
+            Meteor.call 'set_facets', @slug, true, ->
+                Session.set 'loading', false
     
         'click .alerts': ->
             Session.set('viewing_alerts', !Session.get('viewing_alerts'))
@@ -224,7 +226,7 @@ if Meteor.isClient
             Session.set('invert_mode', !Session.get('invert_mode'))
             console.log Session.get('invert_mode')
         
-    Template.nav.helpers
+    Template.nav_search.helpers
         doc_search_results: ->
             if Session.get('current_query') and Session.get('current_query').length > 2
                 match = {}
@@ -237,12 +239,13 @@ if Meteor.isClient
                 match.username =  {$regex:"#{Session.get('current_query')}", $options: 'i'}
                 Meteor.users.find match, 
                     limit:5
+        current_site_search: -> Session.get('current_query')
 
+    Template.nav.helpers
         picked_tags:-> picked_tags.array()
         model_docs: ->
             Docs.find 
                 model:'model'
-        current_site_search: -> Session.get('current_query')
         unread_count: ->
             unread_count = Docs.find({
                 model:'message'

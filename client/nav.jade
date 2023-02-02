@@ -46,27 +46,8 @@ template(name='nav')
 
         // a.icon.item.toggle_invert
         //     i.lightbulb.icon
-        .search.item.zoomer.mobile.hidden(title='search')
-            .ui.icon.transparen.large.input
-                if current_site_search
-                    i.remove.large.red.link.icon.clear_search
-                else
-                    i.search.large.grey.icon
-                input.search_site(type='text' autocomplete="off" value=current_site_search)
-            each picked_tags
-                .ui.label
-                    i.remove.icon
-                    |#{this}
-        each user_search_results
-            button.ui.button.goto_doc
-                if image_id
-                    img.ui.avatar.image(src="{{c.url image_id width=200 height=200 gravity='face' crop='fill'}}")
-                |#{username}
-        each doc_search_results
-            button.ui.button.goto_doc(title=model)
-                if image_id
-                    img.ui.avatar.image(src="{{c.url image_id width=200 height=200 gravity='face' crop='fill'}}")
-                |{{cut title}}
+        // .search.item.zoomer(title='search')
+        // +nav_search
         // .six.wide.column
         .right.menu
             // if unread_count
@@ -119,6 +100,30 @@ template(name='nav')
             // if session_is 'viewing_alerts'
             //     +topbar
     // if session_is 'addmode' true
+
+
+template(name='nav_search')
+    .ui.left.icon.large.input
+        if current_site_search
+            i.remove.large.red.link.icon.clear_search
+        else
+            i.search.large.grey.icon
+        input.search_site(type='text' autocomplete="off" value=current_site_search placeholder='search docs/users...')
+    each picked_tags
+        .ui.label
+            i.remove.icon
+            |#{this}
+    each user_search_results
+        button.ui.button.goto_doc
+            if image_id
+                img.ui.avatar.image(src="{{c.url image_id width=200 height=200 gravity='face' crop='fill'}}")
+            |#{username}
+    each doc_search_results
+        button.ui.button.goto_doc(title=model)
+            if image_id
+                img.ui.avatar.image(src="{{c.url image_id width=200 height=200 gravity='face' crop='fill'}}")
+            |{{cut title}}
+
 
 
 template(name='search')

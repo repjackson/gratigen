@@ -1146,12 +1146,12 @@ if Meteor.isClient
                 _id:$nin:Meteor.user().friend_ids
 
 
-    Template.user_friend_button.helpers
+    Template.friend_button.helpers
         is_friend: ->
             Meteor.user() and Meteor.user().friend_ids and @_id in Meteor.user().friend_ids
 
 
-    Template.user_friend_button.events
+    Template.friend_button.events
         'click .friend':->
             Meteor.users.update Meteor.userId(),
                 $addToSet: friend_ids:@_id

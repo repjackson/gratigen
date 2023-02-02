@@ -310,7 +310,7 @@ if Meteor.isClient
             Router.go "/org/#{new_id}/edit"
 
     Template.user_orgs.helpers
-        orgs: ->
+        user_authored_orgs: ->
             current_user = Meteor.users.findOne username:Router.current().params.username
             Docs.find {
                 model:'org'

@@ -327,8 +327,8 @@ template(name='home_card')
     // else if _is 'model' 'recipe'
     //     +recipe_card
     // else 
-    a.ui.link.card
-        .content.show_modal
+    .ui.card
+        a.content.show_moda.zoomer(href="/#{model}/#{_id}")
             span.left.floated
                 if icon 
                     +i name=icon color=icon_color

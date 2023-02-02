@@ -34,10 +34,9 @@ body {
 }
 
 img, .button, .selector, .card, p, .header, .item, .image, .fade {
-    animation: fadein .5s;
-     /*-webkit-transition: opacity 2s ease-out; */
-        transform:rotate(360deg);
-    }
+  animation: fadein .5s;
+  /*-webkit-transition: opacity 2s ease-out; */
+  /*transform:rotate(360deg);*/
 }
 
 .f10 {font-size: 110% !important;}
@@ -114,7 +113,7 @@ img, .button, .selector, .card, p, .header, .item, .image, .fade {
   filter: invert(1) !important;
 }
 
-.invert, .ui.image, .toast, .progress{
+.invert, .ui.image, .toast, .progress, .message{
   filter: invert(1) !important;
 }
 

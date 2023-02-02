@@ -238,14 +238,14 @@ if Meteor.isClient
     
     Template.home_card.onDestroyed ->
         # console.log 'destroy', @data
-        found = Markers.findOne
-            lat:@data.lat
-        if found
-            Markers.remove found._id
+        if @data
+            found = Markers.findOne
+                lat:@data.lat
+            if found
+                Markers.remove found._id
     Template.calendar_view.onRendered ->
         $('#inline_calendar')
           .calendar()
-        ;
 
     Template.home_card.onRendered ->
         # console.log @data

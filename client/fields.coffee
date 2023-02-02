@@ -466,12 +466,10 @@ Template.skvs.events
         Session.set(@key,@value)
 
 
-
-
 Template.boolean_edit.helpers
     boolean_toggle_class: ->
         parent = Template.parentData()
-        if parent["#{@key}"] then 'active' else 'basic'
+        if parent["#{@key}"] then 'active invert' else 'basic'
 
 
 Template.boolean_edit.events
@@ -701,11 +699,11 @@ Template.multi_user_edit.events
 
 
 Template.single_user_edit.onCreated ->
-    console.log @
+    # console.log @
     page_doc = Docs.findOne Router.current().params.doc_id
     if page_doc
-        field_value = page_doc["#{@key}"]
-        console.log field_value
+        field_value = page_doc["#{@data.key}"]
+        # console.log field_value
         @autorun => Meteor.subscribe 'user_by_id',field_value,->
 
     @user_results = new ReactiveVar

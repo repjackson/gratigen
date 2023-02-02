@@ -78,8 +78,8 @@ template(name='layout')
     +nav
     // +rightbar
     +chatbar
-    if currentUser.history_ids.length
-        +historybar
+    // if currentUser.history_ids.length
+    +historybar
     // .ui.hidden.divider
     // // .ui.hidden.divider
     // // .ui.hidden.divider
@@ -89,7 +89,7 @@ template(name='layout')
     // img.ui.fluid.image.home_banner(src="{{c.url 'frontrange'}}" class=darkmode_class)
     // #main.ui.bottom.attached.pushable.segment.maincontent
     // +addbar
-    .pushable.maincontet.scrollin
+    .pushable.maincontet.scrolling
         +yield
     //     // +topbar
     //     +leftbar
@@ -100,6 +100,7 @@ template(name='layout')
 
 template(name='historybar')
     .ui.small.attached.menu 
+        +nav_search
         .item 
             i.clock.icon    
             |#{currentUser.history_ids.length}
