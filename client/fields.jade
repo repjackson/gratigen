@@ -375,34 +375,48 @@ template(name='raw_view')
 
         
 template(name='textarea_edit')
-    .ui.styled.accordion
-        .title
-            .ui.dropdown.icon
-            .ui.inline.header.zoomer
-                if icon
-                    // i.icon(class=field_value)
-                    +i name=icon
-                if title
-                    |#{title}
-                else if label
-                    |#{label}
-                else if key
-                    |#{key}
-            
-        .content
-            if currentUser.edit_mode
-                .ui.large.form
+    if currentUser.edit_mode
+        details.ui.styled.accordion
+            summary.title
+                // .ui.dropdown.icon
+                .ui.inline.header.zoomer
+                    if icon
+                        // i.icon(class=field_value)
+                        +i name=icon
+                    if title
+                        |#{title}
+                    else if label
+                        |#{label}
+                    else if key
+                        |#{key}
+                
+            .content
+                if tagline 
+                    .ui.attached.small.black.message
+                        i.info.icon
+                        |#{tagline}
+                .ui.fluid.form
                     .field
-                        //- else
-                        //-     |#{this}
-                        if tagline 
-                            .ui.attached.small.teal.message
-                                |#{tagline}
                         textarea.edit_textarea(rows='7') #{field_value}
-            else 
-                if field_value
+    else 
+        if field_value
+            details.ui.styled.accordion
+                summary.title
+                    // .ui.dropdown.icon
+                    .ui.inline.header.zoomer
+                        if icon
+                            // i.icon(class=field_value)
+                            +i name=icon
+                        if title
+                            |#{title}
+                        else if label
+                            |#{label}
+                        else if key
+                            |#{key}
+                    |{{cut field_value}}...
+                .content
                     |{{nl2br field_value}}
-        
+
         
 template(name='text_edit')
     .ui.segment

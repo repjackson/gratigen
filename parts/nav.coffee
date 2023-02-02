@@ -111,7 +111,7 @@ if Meteor.isClient
             console.log @
             if doc 
                 # console.log @
-                Router.go "/#{@model}/#{@_id}"
+                Router.go "/d/#{@model}/#{@_id}"
             else 
                 Router.go "/user/#{@username}"
             Meteor.users.update Meteor.userId(),
@@ -125,7 +125,7 @@ if Meteor.isClient
             console.log @
             if doc 
                 # console.log @
-                Router.go "/#{@model}/#{@_id}"
+                Router.go "/d/#{@model}/#{@_id}"
             else 
                 Router.go "/user/#{@username}"
             Meteor.users.update Meteor.userId(),
@@ -139,7 +139,7 @@ if Meteor.isClient
             console.log @
             if doc 
                 # console.log @
-                Router.go "/#{@model}/#{@_id}"
+                Router.go "/d/#{@model}/#{@_id}"
             else 
                 Router.go "/user/#{@username}"
             Meteor.users.update Meteor.userId(),
@@ -186,7 +186,7 @@ if Meteor.isClient
                         Meteor.users.update Meteor.userId(),
                             $addToSet:
                                 history_ids:found_result._id
-                        Router.go "/#{found_result.model}/#{found_result._id}"
+                        Router.go "/d/#{found_result.model}/#{found_result._id}"
                     else 
                         picked_tags.push search
                         console.log 'search', search

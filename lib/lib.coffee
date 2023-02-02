@@ -89,8 +89,9 @@ Meteor.users.helpers
 # , {fetchPrevious: false})
 
 Docs.before.update( (userId, doc, fieldNames, modifier, options)->
-  modifier.$set = modifier.$set || {};
-  modifier.$set._updated_timestamp = Date.now();
+    modifier.$set = modifier.$set || {};
+    modifier.$set._updated_timestamp = Date.now();
+    # console.log 'updating', doc
 )
 
 

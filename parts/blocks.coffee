@@ -735,7 +735,7 @@ if Meteor.isClient
                 # $(e.currentTarget).closest('.comment').transition('pulse')
                 $('.unread_icon').transition('pulse')
     Template.viewing.helpers
-        viewed_by: -> Meteor.userId() in @read_ids
+        viewed_by: -> @read_ids and Meteor.userId() in @read_ids
         readers: ->
             readers = []
             if @read_ids
