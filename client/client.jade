@@ -80,12 +80,6 @@ template(name='layout')
     // +chatbar
     // if currentUser.history_ids.length
     +historybar
-    // .ui.hidden.divider
-    // // .ui.hidden.divider
-    // // .ui.hidden.divider
-    // .ui.hidden.divider
-    // .ui.hidden.divider
-    // .ui.hidden.divider
     // img.ui.fluid.image.home_banner(src="{{c.url 'frontrange'}}" class=darkmode_class)
     // #main.ui.bottom.attached.pushable.segment.maincontent
     // +addbar
@@ -96,7 +90,8 @@ template(name='layout')
         if currentUser.view_chatbar
             .column.horani
                 // .ui.header chat
-                +view_chats
+                +quickchat
+                // +view_chats
     //     // +topbar
     //     +leftbar
     //     +rightbar
@@ -127,6 +122,7 @@ template(name='historybar')
                     .ui.basic.label
                         i.grey.database.icon
                         |#{model}
+                    +author_info
                     if tags 
                         i.red.tags.icon.invert(title='tags')
                         each tags 

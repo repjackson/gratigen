@@ -214,7 +214,7 @@ Template.registerHelper 'parent_key_value_is', (key, value)->
 #         _id:$in:session_document.guest_ids
 
 
-Template.registerHelper '_author', () -> Meteor.users.findOne @_author_id
+# Template.registerHelper '_author', () -> Meteor.users.findOne @_author_id
 Template.registerHelper 'recipient', () -> Meteor.users.findOne @recipient_id
 Template.registerHelper 'is_text', () ->
     @field_type is 'text'

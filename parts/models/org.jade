@@ -78,92 +78,92 @@ template(name='org_reservations')
             +edit_button
 
 
-template(name='org_edit')
-    with current_doc
-        .ui.stackable.padded.grid
-            .row
-                .ui.stackable.padded.grid
-                    .two.column.row 
-                        .column
-                            .ui.header editing #{title} org
-                            .ui.inline.header 
-                                +icolor name='group' cl='ui image inline pointer'
-                            +title_link_buttons
-                            a.ui.icon.green.big.button(href="/org/#{_id}" title='save')
-                                i.checkmark.big.icon
-                            +text_edit key='title' label='title' direct=true
+// template(name='org_edit')
+//     with current_doc
+//         .ui.stackable.padded.grid
+//             .row
+//                 .ui.stackable.padded.grid
+//                     .two.column.row 
+//                         .column
+//                             .ui.header editing #{title} org
+//                             .ui.inline.header 
+//                                 +icolor name='group' cl='ui image inline pointer'
+//                             +title_link_buttons
+//                             a.ui.icon.green.big.button(href="/org/#{_id}" title='save')
+//                                 i.checkmark.big.icon
+//                             +text_edit key='title' label='title' direct=true
                             
-                            +html_edit key='body' label='body' direct=true
-                            +youtube_edit key='youtube_id' label='youtube id' direct=true
-                        .column
-                            .ui.header required badges
-                            +badge_picker
-                            +role_crud
-                            +task_picker
+//                             +html_edit key='body' label='body' direct=true
+//                             +youtube_edit key='youtube_id' label='youtube id' direct=true
+//                         .column
+//                             .ui.header required badges
+//                             +badge_picker
+//                             +role_crud
+//                             +task_picker
                             
-                        .column
-                            +model_picker model='event' icon='calendar'
+//                         .column
+//                             +model_picker model='event' icon='calendar'
                             
-                            i.large.link.red.remove.icon.delete_role
-                        .column
-                            .ui.header 
-                                small owner - each id should be stored in user account or as nft in crypto wallet.
+//                             i.large.link.red.remove.icon.delete_role
+//                         .column
+//                             .ui.header 
+//                                 small owner - each id should be stored in user account or as nft in crypto wallet.
                                 
-                            .ui.header 
-                                small author
-                                |#{_author.username}
-                            .ui.basic.center.aligned.segment
-                                +eft_picker color="FF73EA" icon='food' label='food'
-                                +eft_picker color="B785E1" icon='home' label='housing'
-                                +eft_picker color="7229AF" icon='tshirt' label='clothing'
-                                +eft_picker color="1255B8" icon='car' label='transportation'
-                                +eft_picker color="83DFF4" icon='lightning' label='energy'
-                                +eft_picker color="42E8C4" icon='leaf' label='zero waste'
-                                +eft_picker color="40C057" icon='smile' label='wellness'
-                                +eft_picker color="FAB005" icon='university' label='education'
-                                +eft_picker color="FD7E14" icon='paint brush' label='art'
-                                +eft_picker color="FF0000" icon='users' label="community core"
+//                             .ui.header 
+//                                 small author
+//                                 |#{_author.username}
+//                             .ui.basic.center.aligned.segment
+//                                 +eft_picker color="FF73EA" icon='food' label='food'
+//                                 +eft_picker color="B785E1" icon='home' label='housing'
+//                                 +eft_picker color="7229AF" icon='tshirt' label='clothing'
+//                                 +eft_picker color="1255B8" icon='car' label='transportation'
+//                                 +eft_picker color="83DFF4" icon='lightning' label='energy'
+//                                 +eft_picker color="42E8C4" icon='leaf' label='zero waste'
+//                                 +eft_picker color="40C057" icon='smile' label='wellness'
+//                                 +eft_picker color="FAB005" icon='university' label='education'
+//                                 +eft_picker color="FD7E14" icon='paint brush' label='art'
+//                                 +eft_picker color="FF0000" icon='users' label="community core"
                                 
-                        .column
-                            if is_dev
-                                +single_user_edit key='_author_id' label='author' direct=true
-                            +image_edit key='image_id' label='image' direct=true
-                            div 
-                             +boolean_edit key='published' icon='visible' direct=true
-                            if is_dev 
-                                +text_edit key='model' label='model' direct=true
-                        .column
-                            div
-                            +html_edit key='responsibilities' label='responsibilities'
-                            div
-                            +array_edit key='location_tags' label='location_tags' direct=true
-                            // unless published
-                            //     a.ui.fluid.green.button.submit(href="/save")
-                            //         i.checkmark.icon
-                            //         |publish
-                            // else
-                            //     .ui.basic.button.unpublish 
-                            //         |unpublish
-                        .column
-                            .ui.header
-                                |audience
-                            +boolean_edit key='private' label='private' 
-                            if private 
-                                +multi_user_edit key='access_user_ids' label='user picker' direct=true
-                        .column
-                            +group_picker
-                            +array_edit key='skills' label='skills' icon='wrench' direct=true
-                        .column
-                            +model_picker model='skill' icon='wrench'
+//                         .column
+//                             if is_dev
+//                                 +single_user_edit key='_author_id' label='author' direct=true
+//                             +image_edit key='image_id' label='image' direct=true
+//                             div 
+//                              +boolean_edit key='published' icon='visible' direct=true
+//                             if is_dev 
+//                                 +text_edit key='model' label='model' direct=true
+//                         .column
+//                             div
+//                             +html_edit key='responsibilities' label='responsibilities'
+//                             div
+//                             +array_edit key='location_tags' label='location_tags' direct=true
+//                             // unless published
+//                             //     a.ui.fluid.green.button.submit(href="/save")
+//                             //         i.checkmark.icon
+//                             //         |publish
+//                             // else
+//                             //     .ui.basic.button.unpublish 
+//                             //         |unpublish
+//                         .column
+//                             .ui.header
+//                                 |audience
+//                             +boolean_edit key='private' label='private' 
+//                             if private 
+//                                 +multi_user_edit key='access_user_ids' label='user picker' direct=true
+//                         .column
+//                             +group_picker
+//                             +array_edit key='skills' label='skills' icon='wrench' direct=true
+//                         .column
+//                             +model_picker model='skill' icon='wrench'
 
 
 template(name='title_link_buttons')
     a.zoomer(href="https://www.google.com/search?q=#{title}" target='_window' title="google #{title}")
-        i.search.large.circular.link.icon.zoomer
+        i.search.circular.link.icon.zoomer
     a.zoomer(href="https://www.google.com/search?tbm=isch&q=#{title}" target='_window' title="image search #{title}")
-        i.image.large.circular.link.icon.zoomer
+        i.image.circular.link.icon.zoomer
     a.zoomer(href="https://www.amazon.com/s?k=#{title}&ref=nb_sb_noss_2" target='_window' title="amazon search #{title}")
-        i.amazon.large.circular.link.icon.zoomer
+        i.amazon.circular.link.icon.zoomer
 
 
 
@@ -258,11 +258,6 @@ template(name='org_view')
                     // +single_user_edit key='creator' label='creator' icon='edit'
                     // .ui.header 
                         |#{member_ids.count} members
-                    .ui.header members
-                    each member_ids
-                        +user_pill
-                    if currentUser.edit_mode 
-                        +multi_user_edit key='member_ids' label='members'
 
                     +textarea_edit key='brief' tagline='breif description or your organization'
                     +textarea_edit key='description' tagline='complete description of your organization'
@@ -282,9 +277,15 @@ template(name='org_view')
                             i.checkmark.icon
                             |member
                     else 
-                        .ui.big.button.join(title='')
+                        .ui.big.button.join(title='click to join')
                             i.user.plus.icon
-                            |join
+                            |join 
+                    div
+                    .ui.inline.header members
+                    each member_ids
+                        +user_pill
+                    if currentUser.edit_mode 
+                        +multi_user_edit key='member_ids' label='members'
                     
                     if currentUser.edit_mode
                         .ui.basic.center.aligned.segment

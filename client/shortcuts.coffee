@@ -18,6 +18,23 @@ globalHotkeys.add
         )
 
         # Session.set('view_chat', !Session.get('view_chat'))
+globalHotkeys.add
+	combo: "v c"
+	callback: ->
+	    if Meteor.user()
+            Meteor.users.update Meteor.userId(),
+                $set:
+                    view_chatbar:!Meteor.user().view_chatbar
+            $('body').toast(
+                # showIcon: 'edit'
+                message: "chatbar toggled"
+                # showProgress: 'bottom'
+                class: 'info'
+                # displayTime: 'auto',
+                position: "bottom right"
+            )
+
+        # Session.set('view_chat', !Session.get('view_chat'))
 
 globalHotkeys.add
 	combo: "d r"

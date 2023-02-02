@@ -169,6 +169,9 @@ if Meteor.isClient
                     if found_results is 1
                         found_result = Docs.findOne match 
                         console.log found_result
+                        Meteor.users.update Meteor.userId(),
+                            $addToSet:
+                                history_ids:found_result._id
                         Router.go "/#{found_result.model}/#{found_result._id}"
                     else 
                         picked_tags.push search

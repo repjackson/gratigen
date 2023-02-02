@@ -396,12 +396,12 @@ template(name='role_editor')
         .ui.button #{this}
 
 template(name='author_info')
-    with author
+    with _author
         a.ui.compact.button(href="/user/#{username}")
             if image_id
                 img.ui.avatar.image(src="{{c.url image_id width=150 height=150 gravity='face' crop='fill'}}")
             |by #{first_name} #{last_name}
-    |added #{when} by #{_author_username}
+    // |added #{when} by #{_author_username}
 
 template(name='creation_info')
     .ui.small.inline.header(title="by #{_author.name}") #{when}

@@ -35,36 +35,24 @@ if Meteor.isClient
                 Docs.update @_id, 
                     $addToSet:
                         member_ids: Meteor.userId()
+                        member_usernames: Meteor.user().username
                 Meteor.users.update Meteor.userId(),
                     $addToSet:
                         org_ids:@_id
+                        org_titles:@title
             else 
                 Router.go '/login'
                 
-        'click .org_leave': ->
+        'click .leave': ->
             Docs.update @_id, 
                 $pull:
                     member_ids: Meteor.userId()
+                    member_usernames: Meteor.user().username
             Meteor.users.update Meteor.userId(),
                 $pull:
                     org_ids:@_id
+                    org_titles:@title
 
-
-Router.route '/org/:doc_id/edit', -> @render 'org_edit'
-
-if Meteor.isClient
-    Template.org_edit.onCreated ->
-        @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
-        # @autorun => Meteor.subscribe 'org_options', Router.current().params.doc_id
-    Template.org_edit.events
-        'click .add_option': ->
-            Docs.insert
-                model:'org_option'
-                ballot_id: Router.current().params.doc_id
-    Template.org_edit.helpers
-        options: ->
-            Docs.find
-                model:'org_option'
 
 # if Meteor.isServer
     # Meteor.publish 'org_results', (
@@ -228,15 +216,10 @@ if Meteor.isClient
 Router.route '/org/:doc_id/', (->
     @render 'org_view'
     ), name:'org_view'
-# Router.route '/org/:doc_id/edit', (->
-#     @render 'org_edit'
-#     ), name:'org_edit'
 
 
 if Meteor.isClient
     Template.org_view.onCreated ->
-        @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
-    Template.org_edit.onCreated ->
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
 
     Template.org_history.onCreated ->

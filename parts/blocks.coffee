@@ -86,13 +86,6 @@ if Meteor.isClient
     Template.comments.events
         'keyup .add_comment': (e,t)->
             if e.which is 13
-                # if Router.current().params.doc_id
-                #     parent = Docs.findOne Router.current().params.doc_id
-                # else
-                #     console.log Template.parentData()
-                #     parent = Docs.findOne Template.parentData()._id
-                    
-                # parent = Docs.findOne Router.current().params.doc_id
                 comment = t.$('.add_comment').val()
                 Docs.insert
                     parent_id: @_id
@@ -100,6 +93,8 @@ if Meteor.isClient
                     parent_model:@model
                     body:comment
                 t.$('.add_comment').val('')
+                t.$('.add_comment').transition('bounce', 1000)
+
 
         'click .remove_comment': ->
             if confirm 'Confirm remove comment'
