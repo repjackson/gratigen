@@ -59,6 +59,29 @@ if Meteor.isClient
                 $(e.currentTarget).closest('.button').transition('tada',1000)
                 
    
+    Template.related_docs.onRendered ->
+        Meteor.setTimeout ->
+            $('.accordion').accordion()
+        , 1000
+    Template.related_docs.onCreated ->
+        @autorun => Meteor.subscribe 'related_docs', Router.current().params.doc_id, ->
+    Template.related_docs.helpers
+        related_doc_results: ->
+            Docs.find {
+                model:@model
+            }, limit:3
+if Meteor.isServer 
+    Meteor.publish 'related_docs', (doc_id)->
+        doc = Docs.findOne doc_id
+        
+        Docs.find {
+            model:doc.model
+        }, 
+            limit:3
+            sort:
+                points:-1
+                
+if Meteor.isClient
     Template.comments.onRendered ->
         Meteor.setTimeout ->
             $('.accordion').accordion()

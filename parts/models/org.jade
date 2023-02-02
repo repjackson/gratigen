@@ -327,8 +327,25 @@ template(name='org_view')
                         .item #{total_credit_exchanged} credits exchanged
                         .item 
                 .eight.wide.column
+                    +related_docs 
+                .eight.wide.column
                     +comments
                     // +view_chats
+    
+    
+template(name='related_docs')
+    .ui.header 
+        i.fork.icon
+        |related
+    .ui.stackable.doubling.cards
+        each related_doc_results 
+            a.ui.link.card.goto_doc
+                img.ui.image(src="{{c.url image_id width=200 height=200}}")
+                .content
+                    |#{title}
+                    each tags 
+                        .ui.basic.label #{this}
+    
     
 template(name='org_section')
     .ui.segment
@@ -354,7 +371,6 @@ template(name='edit_button')
     
 template(name='user_orgs')
     .smallscroll
-
         .ui.inline.header #{user_authored_orgs.count} authored orgs
         if is_current_user
             .ui.circular.tertiary.basic.icon.button.add_org

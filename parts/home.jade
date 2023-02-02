@@ -12,8 +12,10 @@ template(name='home')
             // .ui.fluid.small.button.toggle_leftbar
             //     i.chevron.left.icon
             // .ui.hidden.divider
-            .ui.segment
-                img.ui.image(src="/batflash.png")
+            // .ui.segment
+            img.ui.rounded.image(src="{{c.url 'batflash' height='300' width='300'}}" class=darkmode_class)
+            // img.ui.image(src="/batflash.png")
+            .spacer
             +dash_user_info
             +user_impact_graph
            
