@@ -90,7 +90,7 @@ template(name='profile')
                 if is_dev
                     +print_this
             .twelve.wide.column.scrolling
-                .ui.stackable.padded.three.column.grid
+                .ui.stackable.three.column.grid
                     +profile_section key='info' label='info' icon='info'
                     +profile_section key='roles' label='roles' icon='shield'
                     +profile_section key='friends' label='friends' icon='friends'
@@ -113,12 +113,12 @@ template(name='profile')
 template(name='profile_section')
     .column
         details.ui.styled.fluid.accordion
-            summary.title.active
+            summary.active.title.zoomer
                 // .dropdown.icon
                 .ui.inline.small.header
                     +i name=icon color=color cl='ui mini inline image'
                     |#{key}
-            .content.active
+            .active.content
                 +Template.dynamic template=user_template data=current_user
 
 

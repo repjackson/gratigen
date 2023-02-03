@@ -781,3 +781,163 @@ if Meteor.isClient
                 model:'food'
             }, sort:title:1
         
+        
+if Meteor.isClient
+    Template.product_crud.onCreated ->
+        @autorun => @subscribe 'product_search_results', Session.get('product_search'), ->
+        @autorun => @subscribe 'model_docs', 'product', ->
+    Template.product_crud.helpers
+        product_results: ->
+            if Session.get('product_search') and Session.get('product_search').length > 1
+                Docs.find 
+                    model:'product'
+                    title: {$regex:"#{Session.get('product_search')}",$options:'i'}
+                
+        picked_products: ->
+            ref_doc = Docs.findOne Router.current().params.doc_id
+            Docs.find 
+                # model:'product'
+                _id:$in:ref_doc.product_ids
+        product_search_value: ->
+            Session.get('product_search')
+        assigned_to: ->
+            Meteor.users.findOne
+                _id: $in: @assigned_to_user_ids
+        is_assigning: ->
+            Session.equals 'assigning_docid',@_id
+            
+        has_taken: ->
+            @taken_by_user_id and Meteor.userId() is @taken_by_user_id
+            # ref_doc = Docs.findOne Router.current().params.doc_id
+            # if ref_doc and ref_doc.taken_by_user_id
+            #     if Meteor.userId() and Meteor.userId() is ref_doc.taken_by_user_id
+            #         true
+            #     else 
+            #         false
+            # else 
+            #     false
+        is_taken: ->
+            @taken_by_user_id
+            # ref_doc = Docs.findOne Router.current().params.doc_id
+            # if ref_doc and ref_doc.taken_by_user_id
+            #     true
+        can_take: ->
+            if @taken_by_user_id then false else true
+            
+            # ref_doc = Docs.findOne Router.current().params.doc_id
+            # if ref_doc and @taken_by_user_id
+            #     false
+            # else true
+            #     if Meteor.userId() and Meteor.userId() is ref_doc.taken_by_user_id
+            #         true
+            #     else 
+            #         false
+            # eles 
+            #     false
+        taken_user: ->
+            ref_doc = Docs.findOne @_id
+            Meteor.users.findOne _id:ref_doc.taken_by_user_id
+            
+            
+    Template.product_crud.events
+        'click .toggle_assign': ->
+            Session.set('assigning_docid',@_id)
+        'click .clear_search': (e,t)->
+            Session.set('product_search', null)
+            t.$('.product_search').val('')
+
+        'click .take_product': ->
+            console.log @
+            Docs.update @_id,
+                $set:taken_by_user_id:Meteor.userId()
+            $('body').toast({
+                title: "#{@title} taken"
+                message: 'yeay'
+                class : 'success'
+                showIcon:'shield'
+                showProgress:'bottom'
+                position:'bottom right'
+            })
+
+        'click .release_product': ->
+            console.log @
+            Docs.update @_id,
+                $unset:taken_by_user_id:1
+            $('body').toast({
+                title: "product released: #{@title}"
+                message: 'yeay'
+                class : 'info'
+                showIcon:'shield'
+                showProgress:'bottom'
+                position:'bottom right'
+            })
+
+            
+        'click .remove_product': (e,t)->
+            if confirm "remove #{@title} product?"
+                Docs.update Router.current().params.doc_id,
+                    $pull:
+                        product_ids:@_id
+                        product_titles:@title
+                $(e.currentTarget).closest('.card').transition('fly right', 500)
+
+        'click .pick_product': (e,t)->
+            Docs.update Router.current().params.doc_id,
+                $addToSet:
+                    product_ids:@_id
+                    product_titles:@title
+            Session.set('product_search',null)
+            t.$('.product_search').val('')
+                    
+        'keyup .product_search': (e,t)->
+            # if e.which is '13'
+            val = t.$('.product_search').val()
+            console.log val
+            Session.set('product_search', val)
+            if e.which is '13'
+                new_id = 
+                    Docs.insert 
+                        model:'product'
+                        title:Session.get('product_search')
+                Docs.update Router.current().params.doc_id,
+                    $addToSet:
+                        product_ids:new_id
+                        product_titles:Session.get('product_search')
+                $('body').toast({
+                    title: "added #{Session.get('product_search')}"
+                    message: 'yeay'
+                    class : 'success'
+                    showIcon:'shield'
+                    showProgress:'bottom'
+                    position:'bottom right'
+                })
+
+        'click .create_product': ->
+            new_id = 
+                Docs.insert 
+                    model:'product'
+                    title:Session.get('product_search')
+            Docs.update Router.current().params.doc_id,
+                $addToSet:
+                    product_ids:new_id
+                    product_titles:Session.get('product_search')
+            $('body').toast({
+                title: "added #{Session.get('product_search')}"
+                message: 'yeay'
+                class : 'success'
+                showIcon:'shield'
+                showProgress:'bottom'
+                position:'bottom right'
+            })
+                    
+            Session.set('product_search',null)
+        
+            # Docs.update
+            # Router.go "/product/#{new_id}/edit"
+
+
+if Meteor.isServer 
+    Meteor.publish 'product_search_results', (title_query)->
+        Docs.find 
+            model:'product'
+            title: {$regex:"#{title_query}",$options:'i'}

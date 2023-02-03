@@ -368,7 +368,12 @@ if Meteor.isClient
                 
         doc_results: ->
             # Docs.find {model:$ne:'comment'},
-            Docs.find {model:$nin:['model','comment','message']},
+            match = {}
+            if model_filters.array().length
+                match.model = $in:model_filters.array()
+            else 
+                match.model = $nin:['model','comment','message'] 
+            Docs.find match,
                 sort:_timestamp:-1
                 limit:10
                 

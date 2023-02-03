@@ -214,7 +214,12 @@ template(name='home')
 template(name='home_block')
     details.ui.fluid.styled.accordion
         summary.title
-            |#{template}
+            if icon 
+                i.icon(class=icon)
+            if label    
+                |#{label}
+            else
+                |#{template}
         .content
             +Template.dynamic template=template
 
@@ -244,15 +249,15 @@ template(name='user_avatars')
             |users 
         .content
             each all_users
-                a.fly_right(href="/user/#{username}" title=username)
-                    if image_id
+                if image_id
+                    a.fly_right(href="/user/#{username}" title=username)
                         img.ui.avatar.image.zoomer(src="{{c.url image_id height='300' width='300'}}")
-                    else 
-                        i.large.user.link.icon.zoomer
+                    // else 
+                    //     i.large.user.link.icon.zoomer
 
 template(name='bookmark_block')
     each bookmarked_docs 
-        a.ui.tertiary.button.zoomer(href="/#{model}/#{_id}")
+        a.ui.tertiary.button.zoomer(href="/d/#{model}/#{_id}")
             img.ui.avatar.image.zoomer(src="{{c.url image_id height='300' width='300'}}")
             |#{title}
 

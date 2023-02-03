@@ -95,8 +95,7 @@ template(name='doc_view')
                         +edit_button
                     if currentUser.edit_mode 
                         +remove_button
-            .row
-                +Template.dynamic template=doc_view_template
+        +Template.dynamic template=doc_view_template
         if currentUser.admin_mode 
             .ui.inverted.red.segment
                 .ui.header 
