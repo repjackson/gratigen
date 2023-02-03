@@ -2,11 +2,12 @@ template(name='checklist')
     .ui.segment
         details.ui.styled.fluid.accordian
             summary.title.zoomer
-                if currentUser.admin_mode 
-                    |#{complete_count}/
-                    |#{org_task_docs.count}
-                |checklist
-                // .dripdown.icon
+                a.ui.inline.header
+                    if currentUser.admin_mode 
+                        |#{complete_count}/
+                        |#{org_task_docs.count}
+                    |checklist
+                    // .dripdown.icon
             .content
                 .ui.large.input
                     input.quickadd_task(type='text' placeholder='add task')

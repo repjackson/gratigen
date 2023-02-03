@@ -78,9 +78,6 @@ template(name='org_reservations')
             +edit_button
 
 
-// template(name='org_edit')
-
-
 template(name='title_link_buttons')
     a.zoomer(href="https://www.google.com/search?q=#{title}" target='_window' title="google #{title}")
         i.search.circular.link.icon.zoomer
@@ -189,6 +186,7 @@ template(name='org_view')
                 //         .header
                 //             |#{username}
             .six.wide.column
+                +checklist
                 .ui.inline.header 
                     i.users.icon
                     |members
@@ -210,7 +208,6 @@ template(name='org_view')
                         +eft_picker color="FD7E14" icon='paint brush' label='art'
                         +eft_picker color="FF0000" icon='users' label="community core"
                 // +doc_array_togggle key='member_ids' value=currentUser._id add_label='join' remove_label='joined'
-                +checklist
                 // +group_crud
                 // +product_crud
                 // +service_crud
@@ -238,7 +235,7 @@ template(name='org_view')
                     .item #{post_count} posts
             .five.wide.column
                 +related_docs 
-            .eight.wide.column
+            .six.wide.column
                 +comments
         // .ui.stackable.padded.grid
         //     .row

@@ -177,26 +177,26 @@ if Meteor.isClient
             #     $set:
             #         model:@model
     
-    Template.side_menu_item.events
+    Template.eft_filter.events
         'click .toggle_item': ->
             console.log @label 
-            console.log Meteor.user().active_side_menu_items
-            if Meteor.user().active_side_menu_items
-                if @label in Meteor.user().active_side_menu_items
+            console.log Meteor.user().eft_filter_array
+            if Meteor.user().eft_filter_array
+                if @label in Meteor.user().eft_filter_array
                     Meteor.users.update Meteor.userId(),
-                        $pull:active_side_menu_items:@label
+                        $pull:eft_filter_array:@label
                 else 
                     Meteor.users.update Meteor.userId(),
-                        $addToSet:active_side_menu_items:@label
+                        $addToSet:eft_filter_array:@label
             else 
                 Meteor.users.update Meteor.userId(),
-                    $addToSet:active_side_menu_items:@label
-    Template.side_menu_item.helpers
+                    $addToSet:eft_filter_array:@label
+    Template.eft_filter.helpers
         is_toggled: ->
-            @label in Meteor.user().active_side_menu_items
+            @label in Meteor.user().eft_filter_array
         side_item_class: ->
-            if Meteor.user().active_side_menu_items and @label in Meteor.user().active_side_menu_items
-                'inverted active zoomed'
+            if Meteor.user().eft_filter_array and @label in Meteor.user().eft_filter_array
+                'inverted active'
             else 
                 'small'
                 

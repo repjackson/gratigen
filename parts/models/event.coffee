@@ -240,6 +240,11 @@ if Meteor.isClient
         @render 'event_edit'
         ), name:'event_edit'
 
+    Template.eft_view_item.events 
+        'click .pick_eft':->
+            Meteor.users.update Meteor.userId(),
+                $set:'eft_filter':[@title]
+            Router.go '/'
     Template.eft_view_item.helpers 
         in_list: ()->
             if Template.parentData() and Template.parentData().efts
