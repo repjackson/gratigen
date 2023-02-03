@@ -46,7 +46,7 @@ if Meteor.isClient
             $(e.currentTarget).closest('.checkbox').transition('tada',1000)
         'click .remove': (e,t)->
             if confirm "remove #{@title}"
-                # $(e.currentTarget).closest('.item').transition('zoom',1000)
+                $(e.currentTarget).closest('.item').transition('zoom',1000)
                 Meteor.setTimeout =>
                     Docs.remove @_id
                 , 1000

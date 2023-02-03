@@ -7,22 +7,23 @@ template(name='checklist')
             .content
                 .ui.large.input
                     input.quickadd_task(type='text' placeholder='add task')
-                .ui.list
+                .ui.large.list
                     each org_task_docs
                         +task_item_small
                 
                 
 template(name='task_item_small')
     .item
-        if completed
-            i.checkmark.green.link.icon.zoomer.uncomplete(title='mark incomplete')
-        else 
-            i.circle.outline.link.icon.zoomer.complete(title='mark complete')
-        |#{title}
-        .ui.checkbox
-            label.details check me
-            input(type='checkbox' checked="")
-        i.remove.link.icon(title='remove task')
+        .content
+            if completed
+                i.checkmark.green.link.icon.zoomer.uncomplete(title='mark incomplete')
+            else 
+                i.circle.outline.link.icon.zoomer.complete(title='mark complete')
+            |#{title}
+            // .ui.checkbox
+            //     label.details check me
+            //     input(type='checkbox' checked="")
+            i.remove.link.icon(title='remove task')
     
                 
                 
