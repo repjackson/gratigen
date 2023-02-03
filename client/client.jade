@@ -121,13 +121,14 @@ template(name='layout')
     // #main.ui.bottom.attached.pushable.segment.maincontent
     // +addbar
     // .pushable.maincontet.scrolling
-    .ui.equal.width.grid
+    .ui.equal.width.grid(class=invert_class)
         .column.horani
             +yield
         if currentUser.view_chatbar
             .column.horani
                 // .ui.header chat
                 +quickchat
+                +comet_chat_block
                 // +view_chats
     //     // +topbar
     //     +leftbar
