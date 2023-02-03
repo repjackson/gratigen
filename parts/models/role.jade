@@ -133,7 +133,7 @@ template(name='role_crud')
             .dropdown.icon
             .ui.inline.header
                 // +i name='shield'
-                |#{picked_roles.count}
+                // |#{picked_roles.count}
                 | roles
         .content
             .ui.icon.large.input 
@@ -154,6 +154,10 @@ template(name='role_crud')
                 .ui.large.button.create_role(title='add')
                     i.plus.icon
                     |#{role_search_value}
+            .ui.header
+                // +i name='shield'
+                |#{picked_roles.count}
+                | roles
             // if picked_roles
             .smallscroll
                 each picked_roles

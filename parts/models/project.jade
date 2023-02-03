@@ -51,34 +51,15 @@ template(name='set_view_mode_project')
         
 
 template(name='project_view')
-    .ui.header project view
        // if currentUser.admin_mode 
     //     +org_edit
     // img.ui.fluid.image.bg_overlay(src="{{c.url image_id crop='fit'}}")
-    .ui.stackable.padded.grid.scrolling
-        .middle.aligned.row
-            .three.wide.column
-                .left_floated
-                    a.ui.circular.tertiary.large.button.zoomer.fly_left(href="/")
-                        i.left.chevron.icon
-                        +ismall name='groups' color='83DFF4' 
-                        |orgs
-            .ten.wide.center.aligned.column
-                .ui.centered.inline.huge.center.aligned.header
-                    |#{title}
-            .three.wide.right.aligned.column
-                +bookmark_button
-                // .floated
-                if can_edit
-                    +edit_button
+    .ui.stackable.padded.grid.scrollin
         .row
             .five.wide.column
+                .ui.header project view
                 +image_view key='image_id' icon='image' label='image'
-                if currentUser.edit_mode 
-                    +array_edit key='tags' icon='tags'
-                else    
-                    +array_view key='tags' icon='tags'
-                
+                +array_edit key='tags' icon='tags'
                 +title_link_buttons
                 .spacer
                 if link
@@ -181,8 +162,8 @@ template(name='project_view')
                 .ui.header 
                     +i name='rss'
                     |activity
-                +objectives_crud
-                +keyresults_crud
+                // +objectives_crud
+                // +keyresults_crud
                 +group_crud
                 each log_items
                     +log_item

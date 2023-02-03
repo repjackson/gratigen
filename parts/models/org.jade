@@ -249,15 +249,16 @@ template(name='org_view')
                 +project_crud
                 +event_crud
                 +task_crud
-                +service_crud
                 +product_crud
-                
-                +event_picker
-                        // a.item(href="/org/#{_id}/#{username}")
-                        //     img.ui.mini.image(src="{{c.url image_id width=200 height=200}}")
-                        //     .content
-                        //         .header
-                        //             |#{username}
+                +service_crud
+                +badge_crud
+                +resource_crud
+
+                // a.item(href="/org/#{_id}/#{username}")
+                //     img.ui.mini.image(src="{{c.url image_id width=200 height=200}}")
+                //     .content
+                //         .header
+                //             |#{username}
             .five.wide.column
                 if is_member
                     .ui.big.button.leave(title='click to leave')
@@ -320,13 +321,11 @@ template(name='org_view')
     
     
 template(name='related_docs')
-    // details.ui.styled.fluid.accordion
-    .ui.styled.accordion
-        .title
-            .dropdown.icon
+    details.ui.styled.fluid.accordion
+        summary.title.zoomer
             .ui.inline.header
                 | related
-                
+
         .content
             .ui.items
                 each related_doc_results 
@@ -339,7 +338,7 @@ template(name='related_docs')
                                     .ui.basic.label #{this}
                                 +author_info
                                 +creation_info
-    
+
     
 template(name='org_section')
     .ui.segment

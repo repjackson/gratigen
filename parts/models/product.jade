@@ -514,6 +514,9 @@ template(name='product_crud')
                     i.plus.icon
                     |#{product_search_value}
             // if picked_products
+            .ui.header
+                |#{picked_products.count}
+                | products
             .smallscroll
                 each picked_products
                      .ui.horizontal.fluid.card.show_modal

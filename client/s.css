@@ -36,8 +36,8 @@ body {
     font-weight: 300 !important;
 }
 
-img, .button, .selector, .card, p, .header, .item, .image, .fade {
-  animation: fadein .5s;
+img, .button, .selector, .card, p, .header, .item, .image, .fade, .accordion{
+  animation: fadein 1s;
   /*-webkit-transition: opacity 2s ease-out; */
   /*transform:rotate(360deg);*/
 }

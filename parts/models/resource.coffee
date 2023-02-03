@@ -330,3 +330,164 @@ if Meteor.isServer
                     total_resource_hours: total_resource_hours.toFixed(0)
                     average_resource_cost: average_resource_cost.toFixed(0)
                     average_resource_duration: average_resource_duration.toFixed(0)
+                    
+                    
+if Meteor.isClient
+    Template.resource_crud.onCreated ->
+        @autorun => @subscribe 'resource_search_results', Session.get('resource_search'), ->
+        @autorun => @subscribe 'model_docs', 'resource', ->
+    Template.resource_crud.helpers
+        resource_results: ->
+            if Session.get('resource_search') and Session.get('resource_search').length > 1
+                Docs.find 
+                    model:'resource'
+                    title: {$regex:"#{Session.get('resource_search')}",$options:'i'}
+                
+        picked_resources: ->
+            ref_doc = Docs.findOne Router.current().params.doc_id
+            Docs.find 
+                # model:'resource'
+                _id:$in:ref_doc.resource_ids
+        resource_search_value: ->
+            Session.get('resource_search')
+        assigned_to: ->
+            Meteor.users.findOne
+                _id: $in: @assigned_to_user_ids
+        is_assigning: ->
+            Session.equals 'assigning_docid',@_id
+            
+        has_taken: ->
+            @taken_by_user_id and Meteor.userId() is @taken_by_user_id
+            # ref_doc = Docs.findOne Router.current().params.doc_id
+            # if ref_doc and ref_doc.taken_by_user_id
+            #     if Meteor.userId() and Meteor.userId() is ref_doc.taken_by_user_id
+            #         true
+            #     else 
+            #         false
+            # else 
+            #     false
+        is_taken: ->
+            @taken_by_user_id
+            # ref_doc = Docs.findOne Router.current().params.doc_id
+            # if ref_doc and ref_doc.taken_by_user_id
+            #     true
+        can_take: ->
+            if @taken_by_user_id then false else true
+            
+            # ref_doc = Docs.findOne Router.current().params.doc_id
+            # if ref_doc and @taken_by_user_id
+            #     false
+            # else true
+            #     if Meteor.userId() and Meteor.userId() is ref_doc.taken_by_user_id
+            #         true
+            #     else 
+            #         false
+            # eles 
+            #     false
+        taken_user: ->
+            ref_doc = Docs.findOne @_id
+            Meteor.users.findOne _id:ref_doc.taken_by_user_id
+            
+            
+    Template.resource_crud.events
+        'click .toggle_assign': ->
+            Session.set('assigning_docid',@_id)
+        'click .clear_search': (e,t)->
+            Session.set('resource_search', null)
+            t.$('.resource_search').val('')
+
+        'click .take_resource': ->
+            console.log @
+            Docs.update @_id,
+                $set:taken_by_user_id:Meteor.userId()
+            $('body').toast({
+                title: "#{@title} taken"
+                message: 'yeay'
+                class : 'success'
+                showIcon:'shield'
+                showProgress:'bottom'
+                position:'bottom right'
+            })
+
+        'click .release_resource': ->
+            console.log @
+            Docs.update @_id,
+                $unset:taken_by_user_id:1
+            $('body').toast({
+                title: "resource released: #{@title}"
+                message: 'yeay'
+                class : 'info'
+                showIcon:'shield'
+                showProgress:'bottom'
+                position:'bottom right'
+            })
+
+            
+        'click .remove_resource': (e,t)->
+            if confirm "remove #{@title} resource?"
+                Docs.update Router.current().params.doc_id,
+                    $pull:
+                        resource_ids:@_id
+                        resource_titles:@title
+                $(e.currentTarget).closest('.card').transition('fly right', 500)
+
+        'click .pick_resource': (e,t)->
+            Docs.update Router.current().params.doc_id,
+                $addToSet:
+                    resource_ids:@_id
+                    resource_titles:@title
+            Session.set('resource_search',null)
+            t.$('.resource_search').val('')
+                    
+        'keyup .resource_search': (e,t)->
+            # if e.which is '13'
+            val = t.$('.resource_search').val()
+            console.log val
+            Session.set('resource_search', val)
+            if e.which is '13'
+                new_id = 
+                    Docs.insert 
+                        model:'resource'
+                        title:Session.get('resource_search')
+                Docs.update Router.current().params.doc_id,
+                    $addToSet:
+                        resource_ids:new_id
+                        resource_titles:Session.get('resource_search')
+                $('body').toast({
+                    title: "added #{Session.get('resource_search')}"
+                    message: 'yeay'
+                    class : 'success'
+                    showIcon:'shield'
+                    showProgress:'bottom'
+                    position:'bottom right'
+                })
+
+        'click .create_resource': ->
+            new_id = 
+                Docs.insert 
+                    model:'resource'
+                    title:Session.get('resource_search')
+            Docs.update Router.current().params.doc_id,
+                $addToSet:
+                    resource_ids:new_id
+                    resource_titles:Session.get('resource_search')
+            $('body').toast({
+                title: "added #{Session.get('resource_search')}"
+                message: 'yeay'
+                class : 'success'
+                showIcon:'shield'
+                showProgress:'bottom'
+                position:'bottom right'
+            })
+                    
+            Session.set('resource_search',null)
+        
+            # Docs.update
+            # Router.go "/resource/#{new_id}/edit"
+
+
+if Meteor.isServer 
+    Meteor.publish 'resource_search_results', (title_query)->
+        Docs.find 
+            model:'resource'
+            title: {$regex:"#{title_query}",$options:'i'}

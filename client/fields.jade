@@ -554,36 +554,38 @@ template(name='datetime_view')
     strong &nbsp; #{field_value}
 
 template(name='array_edit')
-    .spacer
-    .spacer
-    // if icon
-    //     i.grey.icon(class=i)
-    //     // +i name=icon
-    .ui.inline.header
-        |#{field_value.length}
-        if title
-            |#{title}
-        else if label
-            |#{label}
-        else if key
-            |#{key}
-    div
-    .ui.icon.large.input
-        i.icon
-            +i name=icon
-        input.new_element(type='text' placeholder="#{field_value.length} #{label}" autocomplete="off")
-        //- +clear_value 
-    if field_value
-        each field_value
-            // if in_dev
-            .ui.basic.large.label
-                i.delete.icon.remove_element
-                |#{this}
-            // .ui.compact.button.pick_tag
-            //     |#{this}
-            // else
-            //     a.ui.basic.label.pick_tag
-            //         |#{this}
+    if currentUser.edit_mode
+        .ui.inline.header
+            if icon
+                i.grey.icon(class=i)
+                // +i name=icon
+            |#{field_value.length}
+            if title
+                |#{title}
+            else if label
+                |#{label}
+            else if key
+                |#{key}
+        div
+        .ui.icon.large.input
+            i.icon
+                +i name=icon
+            input.new_element(type='text' placeholder="#{field_value.length} #{label}" autocomplete="off")
+            //- +clear_value 
+        if field_value
+            each field_value
+                // if in_dev
+                .ui.basic.large.label
+                    i.delete.icon.remove_element
+                    |#{this}
+                // .ui.compact.button.pick_tag
+                //     |#{this}
+                // else
+                //     a.ui.basic.label.pick_tag
+                //         |#{this}
+    else 
+        each field_value 
+            .ui.basic.label #{this}
 
 // // template(name='array_edit')
 // //     .spacer
