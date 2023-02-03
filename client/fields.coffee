@@ -462,13 +462,13 @@ Template.skvs.events
         Session.set(@key,@value)
 
 
-Template.boolean_edit.helpers
+Template.boolean_field.helpers
     boolean_toggle_class: ->
         parent = Template.parentData()
         if parent["#{@key}"] then 'active invert' else 'basic'
 
 
-Template.boolean_edit.events
+Template.boolean_field.events
     'click .toggle_boolean': (e,t)->
         parent = Template.parentData()
         # $(e.currentTarget).closest('.button').transition('pulse', 100)

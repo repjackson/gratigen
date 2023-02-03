@@ -12,27 +12,6 @@ template(name='session_key_value_edit')
         |#{label}
 
 
-template(name='checklist')
-    .ui.segment
-        details.ui.styled.accordian
-            summary.title checklist
-                .dripdown.icon
-                    .ui.large.input
-                    input.text
-            .content
-                .ui.checkbox
-                    label.details check me
-                    input(type='checkbox' checked="") 
-                div
-                .ui.checkbox
-                    label.details check me
-                    input(type='checkbox' checked="")
-                div
-                .ui.checkbox
-                    label.details check me
-                    input(type='checkbox' checked="") 
-                
-                
 template(name='viewing_info')
     .ui.header 
         +i name='eye'

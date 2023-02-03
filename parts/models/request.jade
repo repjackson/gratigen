@@ -182,10 +182,10 @@ template(name='request_edit')
                     small author
                     |#{_author.username}
                 +text_edit key='title' icon='header'
-                +boolean_edit key='has_date' label='has date'
+                +boolean_field key='has_date' label='has date'
                 if has_date
                     +date_edit key='date' label='date' icon='calendar'
-                +boolean_edit key='has_youtube' label='has youtube'
+                +boolean_field key='has_youtube' label='has youtube'
                 if has_youtube
                     +youtube_edit key='youtube_id' label='youtube id'
                 +html_edit key='description' label='description'

@@ -169,7 +169,7 @@ template(name='post_edit')
                 +geolocate_button
 
                 +array_edit key='tags' label='tags' icon='tags'
-                +boolean_edit key='published' icon='visible'
+                +boolean_field key='published' icon='visible'
                 if is_dev 
                     +text_edit key='model' label='model' icon='database'
                 +array_edit key='location_tags' label='location_tags' icon='marker'
@@ -184,7 +184,7 @@ template(name='post_edit')
                 .ui.header
                     +i name='audience'
                     |audience
-                +boolean_edit key='private' label='private' 
+                +boolean_field key='private' label='private' 
                 if private 
                     +multi_user_edit key='access_user_ids' label='user picker'
                 +group_crud

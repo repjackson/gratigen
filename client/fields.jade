@@ -8,7 +8,7 @@ template(name='text_field')
 
 template(name='youtube_edit')
     with ..
-        +boolean_edit key='has_youtube' label='attach youtube' icon='youtube'
+        +boolean_field key='has_youtube' label='attach youtube' icon='youtube'
         if has_youtube
             .ui.labeled.fluid.icon.input
                 .ui.label 
@@ -733,7 +733,7 @@ template(name='skvs')
                 |#{key}
 
 
-template(name='boolean_edit')
+template(name='boolean_field')
     //- div
     .ui.compact.button.toggle_boolean(class="#{boolean_toggle_class} #{cl}" title=tooltip)
         if field_value

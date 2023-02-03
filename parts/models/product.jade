@@ -317,21 +317,21 @@ template(name='product_edit')
                 .column
                     +text_edit key='size_description' label='size description' icon='content'
                     .ui.inline.header food
-                    +boolean_edit key='is_food' label='is food' icon='food'
+                    +boolean_field key='is_food' label='is food' icon='food'
                     if is_food
                         +ingredient_picker
-                        +boolean_edit key='gluten_free' label='gluten free' icon='no-gluten'
-                        +boolean_edit key='paleo' label='paleo' icon='caveman'
-                        +boolean_edit key='vegetarian' label='vegetarian' icon='vegetarian-mark'
-                        +boolean_edit key='no_sugar_added' label='no sugar added' icon='no-sugar2'
-                        +boolean_edit key='vegan' label='vegan' icon='vegan-symbol'
-                        +boolean_edit key='no_gmo' label='no gmo' icon='no-gmo'
-                        +boolean_edit key='local' label='local' icon='marker'
-                        +boolean_edit key='nut_free' label='nut free' icon='no-peanut'
-                        +boolean_edit key='rescued' label='rescued' icon='nothing-found'
-                        +boolean_edit key='kosher' label='kosher' icon='judaism'
-                        +boolean_edit key='organic' label='organic' icon='organic-food'
-                        // +boolean_edit key='jar' label='jar container (requires deposit & return)' icon='mason-jar'
+                        +boolean_field key='gluten_free' label='gluten free' icon='no-gluten'
+                        +boolean_field key='paleo' label='paleo' icon='caveman'
+                        +boolean_field key='vegetarian' label='vegetarian' icon='vegetarian-mark'
+                        +boolean_field key='no_sugar_added' label='no sugar added' icon='no-sugar2'
+                        +boolean_field key='vegan' label='vegan' icon='vegan-symbol'
+                        +boolean_field key='no_gmo' label='no gmo' icon='no-gmo'
+                        +boolean_field key='local' label='local' icon='marker'
+                        +boolean_field key='nut_free' label='nut free' icon='no-peanut'
+                        +boolean_field key='rescued' label='rescued' icon='nothing-found'
+                        +boolean_field key='kosher' label='kosher' icon='judaism'
+                        +boolean_field key='organic' label='organic' icon='organic-food'
+                        // +boolean_field key='jar' label='jar container (requires deposit & return)' icon='mason-jar'
                         div
                         +number_edit key='calories' label='calories' icon='food'
                 .column
@@ -368,7 +368,7 @@ template(name='product_edit')
                                 
                                 
 // template(name='group_crud')
-    // +boolean_edit key='has_group' label='attach group'
+    // +boolean_field key='has_group' label='attach group'
     // if has_group
     //     .ui.header 
     //         +i name='campfire'

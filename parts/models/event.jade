@@ -70,7 +70,7 @@ template(name='event_edit')
                 .ui.inline.header 
                     +icolor name='tear-off-calendar'
                     |edit event
-                +boolean_edit key='published' label='published'
+                +boolean_field key='published' label='published'
                 div
                 .ui.icon.basic.circular.button.delete_item(title='delete')
                     i.remove.red.icon
@@ -114,7 +114,7 @@ template(name='event_edit')
                 +number_edit key='max_attendees' label='max attendees' min='0' max='100'
                 div
                 // div
-                +boolean_edit key='free' label='free'
+                +boolean_field key='free' label='free'
                 div
                 unless free
                     +number_edit key='price_points' label='point price' min='0' max='100'

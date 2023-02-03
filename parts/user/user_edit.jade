@@ -49,7 +49,7 @@ template(name='user_edit')
                         .ui.header
                             i.shield.icon
                             |admin
-                        +boolean_edit key='admin' icon='shield'
+                        +boolean_field key='admin' icon='shield'
                         +array_edit key='roles' icon='shield'
                     +array_edit key='tags' label='tags' icon='tags'
                     +array_edit key='skills' label='skills' icon='wrench'
@@ -85,7 +85,7 @@ template(name='user_settings')
             +i name='settings'
             |settings
         with current_user
-            +boolean_edit key='show_bookmarked_model_bar' label='show bookmarked model bar'
+            +boolean_field key='show_bookmarked_model_bar' label='show bookmarked model bar'
 
 
 template(name='user_single_doc_ref_editor')
@@ -299,7 +299,7 @@ template(name='user_edit_account')
                 .ui.segment
                     i.code.icon
                     +username_edit
-                    +boolean_edit key='disabled' label='disabled'
+                    +boolean_field key='disabled' label='disabled'
                     +multi_user_edit key='user_representatives' label='user representatives'
                     div
                     with current_user

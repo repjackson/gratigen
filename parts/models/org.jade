@@ -281,7 +281,7 @@ template(name='org_view')
                                 +single_user_edit key='_author_id' label='author'
                             +image_edit key='image_id' label='image'
                             div 
-                             +boolean_edit key='published' icon='visible'
+                             +boolean_field key='published' icon='visible'
                             if is_dev 
                                 +text_edit key='model' label='model'
                         .column
@@ -299,11 +299,9 @@ template(name='org_view')
                         .column
                             .ui.header
                                 |audience
-                            +boolean_edit key='private' label='private' 
+                            +boolean_field key='private' label='private' 
                             if private 
                                 +multi_user_edit key='access_user_ids' label='user picker'
-                        .column
-                            +group_crud
                             +array_edit key='skills' label='skills' icon='wrench'
                         .column
                             +model_picker model='skill' icon='wrench'

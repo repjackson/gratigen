@@ -28,16 +28,6 @@ if Meteor.isClient
         Meteor.setTimeout ->
             $('.button').popup()
         , 1000
-    Template.checklist.onRendered ->
-        Meteor.setTimeout ->
-            $('.ui.checkbox').checkbox()
-        , 2000
-    Template.checklist.events
-        'click .checkbox': (e)->
-            $(e.currentTarget).closest('.checkbox').transition('tada',1000)
-        'mouseover .checkbox': (e,t)->
-            console.log 'hover'
-            $(e.currentTarget).closest(".checkbox").html("oh god no!");
 
     Template.bookmark_button.events
         'click .toggle_bookmark': (e,t)->
@@ -380,7 +370,7 @@ if Meteor.isServer
 if Meteor.isClient
     Template.badge_picker.onCreated ->
         @autorun => @subscribe 'badge_search_results', Session.get('badge_search'), ->
-        @autorun => @subscribe 'model_docs', 'badge', ->
+        # @autorun => @subscribe 'model_docs', 'badge', ->
     Template.badge_picker.helpers
         badge_results: ->
             Docs.find 

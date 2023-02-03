@@ -54,7 +54,7 @@ template(name='profile')
                 div
                 +link_edit key='profile_link'
                 if editing_account
-                    +boolean_edit key='online' label='online'
+                    +boolean_field key='online' label='online'
                     +text_edit key='current_status' label='status' icon='clock'
                 else 
                     if online 
@@ -507,7 +507,7 @@ template(name='user_messages')
                             +remove_icon
                         //- div
                         if is_admin
-                            +boolean_edit key='is_private' label='private'
+                            +boolean_field key='is_private' label='private'
                         +author_info
                         +creation_info
                         +voting_small
@@ -521,7 +521,7 @@ template(name='user_messages')
                     .ui.segment.raw
                         .ui.small.inline.header #{body}
                         if is_admin
-                            +boolean_edit key='is_private' label='private'
+                            +boolean_field key='is_private' label='private'
                         if can_edit
                             +remove_icon
                         //- div
@@ -630,7 +630,7 @@ template(name='user_sent')
 //                 +text_view key='notes' label='notes'
 //                 .ui.large.label
 //                     |tiffen type: #{tiffen_type}
-//                 +boolean_edit key='delivery' label='add delivery'                    
+//                 +boolean_field key='delivery' label='add delivery'                    
 //         if is_dev
 //             +remove_button
 //             +print_this   
@@ -929,7 +929,7 @@ template(name='food_order_view')
                 +text_view key='notes' label='notes'
                 .ui.large.label
                     |tiffen type: #{tiffen_type}
-                +boolean_edit key='delivery' label='add delivery'                    
+                +boolean_field key='delivery' label='add delivery'                    
         if is_dev
             +remove_button
             +print_this                
@@ -977,7 +977,7 @@ template(name='appearance_settings')
         +key_value_edit key='icon_class' value='avantgarde' label='avantgarde' icon='avantgarde' show_icon=true cl='large'
         +key_value_edit key='icon_class' value='simple' label='simple' icon='header' show_icon=true cl='large'
         .ui.inline.header hide menu labels
-        +boolean_edit key='hide_labels' label='hide labels' icon='invisible'
+        +boolean_field key='hide_labels' label='hide labels' icon='invisible'
         div
         .ui.inline.header invert 
-        +boolean_edit key='darkmode' label='darkmode' icon='light'
+        +boolean_field key='darkmode' label='darkmode' icon='light'

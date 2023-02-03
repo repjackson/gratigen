@@ -12,6 +12,39 @@ if Meteor.isClient
         @render 'tasks'
         ), name:'my_tasks'
     
+    
+    Template.checklist.onRendered ->
+        Meteor.setTimeout ->
+            $('.ui.checkbox').checkbox()
+        , 2000
+    Template.task_item_small.events
+        'click .uncomplete': ->
+            Docs.update @_id, 
+                $completed:false 
+        'click .complete': ->
+            Docs.update @_id, 
+                $completed:true 
+            
+    Template.checklist.events
+        'click .checkbox': (e)->
+            console.log e
+            $(e.currentTarget).closest('.checkbox').transition('tada',1000)
+        'mouseover .checkbox': (e,t)->
+            # console.log 'hover'
+            # $(e.currentTarget).closest(".checkbox").html("oh god no!");
+    
+    
+    
+    Template.checklist.onCreated ->
+        @autorun => @subscribe 'my_tasks',->
+            
+if Meteor.isServer 
+    Meteor.publish 'my_tasks', ->
+        Docs.find {
+            model:'task'
+        }, limit:10
+
+if Meteor.isClient 
     Template.tasks.onCreated ->
         @autorun => @subscribe 'task_docs',
             picked_tags.array()

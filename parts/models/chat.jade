@@ -226,7 +226,7 @@ template(name='view_chat')
                     +thanks_button
                 //- +resonates_list
                 if can_edit
-                    +boolean_edit key='private' label='private'
+                    +boolean_field key='private' label='private'
                 .ui.header started by 
                     img.ui.avatar.image(src="{{c.url author.profile_image_id width=400 height=400 gravity='face' crop='fill'}}")
                     |#{_author.name} #{when}

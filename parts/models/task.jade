@@ -1,3 +1,32 @@
+template(name='checklist')
+    .ui.segment
+        details.ui.styled.accordian
+            summary.title 
+                |checklist
+                // .dripdown.icon
+            .content
+                .ui.large.input
+                    input.quickadd_task(type='text' placeholder='add task')
+                .ui.animated.list
+                    each tasks
+                        +task_item_small
+                
+                
+template(name='task_item_small')
+    .item
+        if completed
+            i.checkmark.green.icon.uncomplete 
+        else 
+            i.circular.outline.icon.complete
+        |#{title}
+        .ui.checkbox
+            label.details check me
+            input(type='checkbox' checked="")
+    
+                
+                
+
+
 template(name='tasks')
     .ui.stackable.padded.grid
         .four.wide.column
