@@ -8,6 +8,12 @@ Template.registerHelper 'user_taken_roles', (user) ->
         Docs.find 
             model:'role'
             taken_by_user_id:user._id
+Template.registerHelper 'accordion_class', (input) -> 
+    if Meteor.user().edit_mode 
+        ''
+    else 
+        'accordion'
+
 Template.registerHelper 'doc_by_id', (input) -> 
     Docs.findOne @valueOf()
 Template.registerHelper 'all_users', (input) -> 

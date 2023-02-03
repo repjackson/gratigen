@@ -13,8 +13,11 @@ if Meteor.isClient
         current_image_id:->
             if Router.current().params.doc_id
                 doc = Docs.findOne Router.current().params.doc_id
-                if doc and doc.image_id
-                    doc.image_id
+                if doc 
+                    if doc.banner_image_id
+                        doc.banner_image_id
+                    else if doc.image_id
+                        doc.image_id
             else 
                 'nightbg'
     Template.bookmark_block.onCreated ->

@@ -274,7 +274,7 @@ template(name='image_view')
     //- +call_visual
     
 template(name='image_edit')
-    if me.edit_mode
+    if currentUser.edit_mode
         .ui.form
             if icon
                 i.icon(class=icon)
@@ -375,8 +375,8 @@ template(name='raw_view')
 
         
 template(name='textarea_edit')
-    .ui.styled.accordion
-        .title
+    details.ui.styled(class=accordion_class)
+        summary.title
             .ui.dropdown.icon
             .ui.inline.header.zoomer
                 if icon

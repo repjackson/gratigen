@@ -6,7 +6,6 @@ if Meteor.isClient
             Docs.find   
                 model:'org'
                 
-                
     Template.org_view.onCreated ->
         @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
         # @autorun => Meteor.subscribe 'children', 'org_update', Router.current().params.doc_id
