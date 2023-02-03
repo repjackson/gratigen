@@ -11,8 +11,8 @@ template(name='user_edit')
                     a.ui.green.icon.large.fluid.button.fly_left(href="/user/#{current_user.username}/") 
                         i.checkmark.big.icon
                     .ui.hidden.divider
-                    +image_edit key='image_id' icon='picture' title='profile image'
-                    +image_edit key='image_id2' icon='background picture' title='background image'
+                    +image_field key='image_id' icon='picture' title='profile image'
+                    +image_field key='image_id2' icon='background picture' title='background image'
                     if is_current_user
                         +password_edit
                         //- +phone_editor
@@ -43,7 +43,7 @@ template(name='user_edit')
                     +date_edit key='birthday' label='birthday' icon='birthday'
                     +array_field key='allergens' label='allergens' icon='no-milk'
                     +array_field key='food_dislikes' label='food dislikes' icon='disgusting'
-                    +link_edit key='profile_link' label='profile link' icon='link'
+                    +link_field key='profile_link' label='profile link' icon='link'
                 .six.wide.column
                     if in_dev
                         .ui.header
@@ -285,8 +285,8 @@ template(name='user_edit_account')
         |account
     .ui.two.column.stackable.grid
         .column
-            +image_edit key='profile_image_id' icon='picture' title='profile image'
-            +image_edit key='avatar_image_id' icon='picture' title='avatar image'
+            +image_field key='profile_image_id' icon='picture' title='profile image'
+            +image_field key='avatar_image_id' icon='picture' title='avatar image'
             +password_edit
         .column
             +text_field key='first_name' label='first name'
@@ -321,7 +321,7 @@ template(name='user_edit_genekeys')
     .ui.grid 
         .row 
             .sixteen.wide.column
-                +link_edit key='genekeys_link' label='report url'
+                +link_field key='genekeys_link' label='report url'
                 .ui.segment
                     a.ui.button(href="https://genekeys.com/" target='_window') 
                         |1) get gene keys pdf report here (toggle everything)
@@ -331,11 +331,11 @@ template(name='user_edit_genekeys')
                         |3) upload
                     .ui.stackable.three.column.grid
                         .column
-                            +image_edit key='gene1' label='gene keys 1' icon='dna'
+                            +image_field key='gene1' label='gene keys 1' icon='dna'
                         .column
-                            +image_edit key='gene2' label='gene keys 2' icon='dna'
+                            +image_field key='gene2' label='gene keys 2' icon='dna'
                         .column
-                            +image_edit key='gene3' label='gene keys 3' icon='dna'
+                            +image_field key='gene3' label='gene keys 3' icon='dna'
                 // +html_edit key='genekeys_report' label='report'
                 
                 

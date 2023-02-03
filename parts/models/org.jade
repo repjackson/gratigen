@@ -109,7 +109,7 @@ template(name='org_view')
         //         // .floated
         //         if can_edit
         //             +edit_button
-        //         if currentUser.edit_mode 
+        //         if currentUser.editing 
         //             +remove_button
         .row
             .five.wide.column
@@ -122,9 +122,9 @@ template(name='org_view')
                         i.user.plus.icon
                         |join 
                 div
-                +image_edit key='image_id' icon='image' label='image'
-                +image_edit key='banner_image_id' icon='image' label='banner image'
-                if currentUser.edit_mode 
+                +image_field key='image_id' icon='image' label='image'
+                +image_field key='banner_image_id' icon='image' label='banner image'
+                if currentUser.editing 
                     +array_field key='tags' icon='tags'
                 else    
                     +array_view key='tags' icon='tags'
@@ -190,12 +190,12 @@ template(name='org_view')
                 .ui.inline.header 
                     i.users.icon
                     |members
-                if currentUser.edit_mode 
+                if currentUser.editing 
                     +multi_user_edit key='member_ids' label='members'
                 else 
                     each member_ids
                         +user_pill
-                if currentUser.edit_mode
+                if currentUser.editing
                     .ui.basic.center.aligned.segment
                         +eft_picker color="FF73EA" icon='food' label='food'
                         +eft_picker color="B785E1" icon='home' label='housing'
@@ -283,7 +283,7 @@ template(name='org_view')
         //                 .column
         //                     if is_dev
         //                         +single_user_field key='_author_id' label='author'
-        //                     +image_edit key='image_id' label='image'
+        //                     +image_field key='image_id' label='image'
         //                     div 
         //                      +boolean_field key='published' icon='visible'
         //                     if is_dev 
@@ -336,22 +336,22 @@ template(name='org_section')
     .ui.segment
         .ui.header #{title}
         |#{tagline}
-        if currentUser.edit_mode 
+        if currentUser.editing 
             |editing #{key}
             +textarea_field key=key
         else         
             +textarea_view key=key
     
 template(name='edit_button')
-    if currentUser.edit_mode
-        .ui.basic.big.green.circular.icon.button.edit_mode.invert.zoomer(title="save #{title}")
+    if currentUser.editing
+        .ui.basic.big.green.circular.icon.button.editing.invert.zoomer(title="save #{title}")
             i.setting.big.blue.zoomer.loading.icon(title="edit #{title}")
             i.checkmark.big.icon.zoomer
             // |save
     else
-        i.setting.big.link.zoomer.icon.edit_mode(title="edit #{title}")
+        i.setting.big.link.zoomer.icon.editing(title="edit #{title}")
     // a.ui.circular.tertiary.icon.button.zoomer.floated.right.fly_down(href="/d/org/#{_id}/edit" title="edit #{title}")
-    // a.ui.circular.tertiary.icon.button.zoomer.edit_mode(title="edit #{title}")
+    // a.ui.circular.tertiary.icon.button.zoomer.editing(title="edit #{title}")
 
     
     

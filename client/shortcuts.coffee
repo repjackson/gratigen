@@ -7,7 +7,7 @@ globalHotkeys.add
 	callback: ->
         Meteor.users.update Meteor.userId(),
             $set:
-                edit_mode:!Meteor.user().edit_mode
+                editing:!Meteor.user().editing
         $('body').toast(
             # showIcon: 'edit'
             message: "edit mode toggled"

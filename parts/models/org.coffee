@@ -21,13 +21,13 @@ if Meteor.isClient
         #         slug: Router.current().params.doc_id
 
     Template.edit_button.events
-        'click .edit_mode': (e)->
+        'click .editing': (e)->
             # console.log 'hi'
             $('.subtemplate').transition('bounce', 500)
             Meteor.users.update Meteor.userId(),
                 $set:
-                    edit_mode:!Meteor.user().edit_mode
-                    # edit_mode:true
+                    editing:!Meteor.user().editing
+                    # editing:true
     Template.org_view.events
         'click .refresh_org_stats': ->
             Meteor.call 'calc_org_stats', Router.current().params.doc_id, ->

@@ -1,25 +1,30 @@
 template(name='profile')
     with current_user
-        img.ui.image.bg_overlay(src="{{c.url image_id2 width=1000 }}")
+        if banner_image_id
+            img.ui.image.bg_overlay(src="{{c.url banner_image_id width=1000 }}")
         .ui.stackable.padded.grid
             // .row
             .four.wide.column.scrollin
-                // if me.edit_mode
+                // if me.editing
                 // a.ui.fluid.compact.circular.button.fly_left(href='/users')
                 //     i.chevron.left.icon
                     +i name='groups'
                     |users
-                .spacer
+                // .spacer
+                if currentUser.editing
+                    +image_field key='image_id' label='profile image'
+                    +image_field key='banner_image_id' label='banner image'
                 a.item.mobile.hidden(href="/user/#{username}")
                     img.ui.circular.centered.image(src="{{c.url image_id height=400 width=400 gravity='face' crop='fill'}}")
                 if is_current_user
                     +edit_button
-                    a.ui.button.logout_other_clients(href="#" title='logout other clients')
-                        i.globe.icon
-                        |log out other clients
+                    if currentUser.editing
+                        a.ui.button.logout_other_clients(href="#" title='logout other clients')
+                            i.globe.icon
+                            |log out other clients
                 else if is_admin
                     +edit_button
-                if me.edit_mode
+                if me.editing
                     +username_edit
                 else
                     .ui.center.aligned.header.mobile.hidden
@@ -35,7 +40,7 @@ template(name='profile')
                 // .spacer
                 // a(href="/user/#{username}")
                 a.ui.inline.header(href="/user/#{username}/credit" title='credit')
-                    +i name='coins'
+                    +ismall name='coins'
                     |#{user.points}p
                 if editing_account
                     +phone_editor 
@@ -43,16 +48,14 @@ template(name='profile')
                 else    
                     if phone_number
                         .ui.header #{phone_number}
+                div
                 if is_current_user
                     .ui.large.tertiary.button.logout
                         i.sign.out.alternate.icon
                         |log out
-                if editing_account
-                    +array_field key='tags' label='tags' icon='tags'
-                else
-                    +array_view key='tags' label='tags' icon='tags'
+                +array_field key='tags' label='tags' icon='tags'
                 div
-                +link_edit key='profile_link'
+                +link_field key='profile_link'
                 if editing_account
                     +boolean_field key='online' label='online'
                     +text_field key='current_status' label='status' icon='clock'
@@ -90,6 +93,11 @@ template(name='profile')
                 if is_dev
                     +print_this
             .twelve.wide.column.scrollin.subtemplate
+                if currentUser.editing
+                    .ui.fluid.blue.message 
+                        .ui.header 
+                            i.pencil.icon 
+                            |edit mode
                 .ui.stackable.three.column.grid
                     +profile_section key='info' label='info' icon='info'
                     +profile_section key='roles' label='roles' icon='shield'
@@ -114,7 +122,7 @@ template(name='profile_section')
     .column
         if currentUser.admin_mode
             .ui.inline.header
-                +i name=icon color=color cl='ui mini inline image'
+                +i name=icon color='000000' cl='ui mini inline image'
                 |#{key}
             +Template.dynamic template=user_template data=current_user
         else
@@ -122,7 +130,8 @@ template(name='profile_section')
                 summary.active.title.zoomer
                     // .dropdown.icon
                     .ui.inline.small.header
-                        +i name=icon color=color cl='ui mini inline image'
+                        // i.large.icon(class=icon)
+                        +i name=icon color='000000' cl='ui mini inline image'
                         |#{key}
                 .active.content
                     +Template.dynamic template=user_template data=current_user
@@ -159,6 +168,8 @@ template(name='user_info')
     +text_field key='first_name' label='first_name'
     +text_field key='last_name' label='last_name'
     +text_field key='display_name' label='display_name'
+    +text_field key='name' label='name'
+    +array_field key='tags' label='tags'
 
 
            
@@ -235,9 +246,10 @@ template(name='locate_me')
 template(name='user_dashboard')
     // +user_about
     // .ui.hidden.divider
-    +latest_user_activity    
     .ui.stackable.grid
         .three.column.row
+            .column
+                +latest_user_activity    
             .column
                 .ui.header 
                     +i name='campfire'    

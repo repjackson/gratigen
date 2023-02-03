@@ -36,7 +36,7 @@ template(name='task_edit')
                 a.ui.fluid.large.icon.green.button.fly_left(href="/task/#{_id}/" title='save product')
                     i.checkmark.big.icon
                 +text_field key='title' label='title'
-                +image_edit key='image_id' label='image'
+                +image_field key='image_id' label='image'
                 +role_crud key='image_id' label='image'
                 div
                 +boolean_field key='complete' label='complete'
@@ -331,8 +331,8 @@ template(name='work_edit')
                     .ui.header
                         i.image.icon
                         |image
-                    +image_edit key='before_image_id' label='before image' capture="camera"
-                    +image_edit key='after_image_id' label='after image' capture="camera"
+                    +image_field key='before_image_id' label='before image' capture="camera"
+                    +image_field key='after_image_id' label='after image' capture="camera"
                 .ui.inline.header 
                     i.red.marker.icon
                     |location

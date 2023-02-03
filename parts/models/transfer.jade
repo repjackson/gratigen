@@ -38,7 +38,7 @@ template(name='transfers')
 //                     a.ui.large.icon.green.button(href="/transfer/#{_id}" title='save draft')
 //                         i.checkmark.big.icon
 //                         |save draft
-//                     +image_edit key='image_id' label='image' icon='image'
+//                     +image_field key='image_id' label='image' icon='image'
 //                     div
 //                     +array_field key='location_tags' label='location tags' icon='marker'
 //                 .ten.wide.column
@@ -149,8 +149,8 @@ template(name='transfer_edit')
                     +array_field key='location_tags' label='location tags' icon='marker'
                 .six.wide.column
                     +html_edit key='description' label='description'
-                    +image_edit key='image_id' label='image'
-                    +link_edit key='link' label='link' icon='link'
+                    +image_field key='image_id' label='image'
+                    +link_field key='link' label='link' icon='link'
                     div 
                     div
                     .ui.inline.header

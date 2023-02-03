@@ -12,7 +12,7 @@ template(name='text_field')
             else if key
                 |#{key}
                 //- +clear_value
-        if currentUser.edit_mode
+        if currentUser.editing
             .ui.icon.large.fluid.input
                 input.edit_text(type='text' value=field_value placeholder=placeholder autocomplete="off")
         else 
@@ -249,14 +249,14 @@ template(name='ibig')
 
 // //- template(name='ioffice')
 // //-     img.ui.image(src="https://img.icons8.com/office/30/000000/#{name}.png" class=cl)
-template(name='link_edit')
+template(name='link_field')
     div
     if icon
         +i name=icon
         // i.icon(class=icon)
     .ui.inline.header
         |#{title} #{label}
-    if me.edit_mode 
+    if me.editing 
         .ui.fluid.input
             input.edit_url(type='url' value=field_value placeholder=key autocomplete="off")
     .spacer
@@ -286,8 +286,8 @@ template(name='image_view')
         //-     |download
     //- +call_visual
     
-template(name='image_edit')
-    if currentUser.edit_mode
+template(name='image_field')
+    if currentUser.editing
         .ui.form
             if icon
                 i.icon(class=icon)
@@ -316,7 +316,7 @@ template(name='image_edit')
         img.ui.centered.rounded.image(src="{{c.url field_value gravity='face' crop='fit'}}" class=cl)
     
 
-template(name='image_link_edit')
+template(name='image_link_field')
     .ui.fluid.input
         .ui.label image link
         i.image.icon
@@ -403,7 +403,7 @@ template(name='textarea_field')
                     |#{key}
             
         .content
-            if currentUser.edit_mode
+            if currentUser.editing
                 .ui.large.form
                     .field
                         //- else
@@ -548,7 +548,7 @@ template(name='datetime_view')
     strong &nbsp; #{field_value}
 
 template(name='array_field')
-    if currentUser.edit_mode
+    if currentUser.editing
         .ui.inline.header
             if icon
                 i.grey.icon(class=i)
@@ -1009,7 +1009,7 @@ template(name='multi_doc_view')
 
 
 template(name='single_user_field')
-    if currentUser.edit_mode
+    if currentUser.editing
         div
         // if icon
             i.icon(class=icon)

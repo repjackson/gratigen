@@ -69,7 +69,7 @@ template(name='product_view')
                     +boolean_view key='no_gmo' label='no gmo' icon='no-gmo'
                     +boolean_view key='jar' label='jar container (requires deposit & return)' icon='mason-jar'
                     // .ui.header #{menu_section}
-                            +link_edit key='amazon_referral_link' label='amazon referral link' icon='amazon'
+                            +link_field key='amazon_referral_link' label='amazon referral link' icon='amazon'
                     // +boolean_view key='has_2cup' label='2 cup' icon='cup'
                     div
                     .ui.inline.header 
@@ -161,7 +161,7 @@ template(name='product_inventory')
                         // +text_field key='location' label='location' icon='marker'
                         +text_field key='notes' label='notes' icon='pencil'
                         // +text_field key='staff' label='staff' icon='user'
-                        +image_edit key='image_id'
+                        +image_field key='image_id'
                         +key_value_edit key='staff' value='matt'
                         +key_value_edit key='staff' value='nena'
                         +key_value_edit key='staff' value='rachel'
@@ -292,9 +292,9 @@ template(name='product_edit')
                     +text_field key='slug' label='slug' icon='slug'
                     +print_this
                 .column
-                    +image_edit key='image_id' label='image'
-                    +image_edit key='image_id2' label='alt image'
-                    +link_edit key='product_link' label='old site link'
+                    +image_field key='image_id' label='image'
+                    +image_field key='image_id2' label='alt image'
+                    +link_field key='product_link' label='old site link'
                     // div
                     +float_edit key='price_usd' label='$ price'
                     +number_edit key='price_points' label='point price' icon='coins'

@@ -9,7 +9,7 @@ Template.registerHelper 'user_taken_roles', (user) ->
             model:'role'
             taken_by_user_id:user._id
 Template.registerHelper 'accordion_class', (input) -> 
-    if Meteor.user().edit_mode 
+    if Meteor.user().editing 
         ''
     else 
         'accordion'
@@ -27,7 +27,7 @@ Template.registerHelper 'parent_doc', () ->
     # Template.parentData()
 
 Template.registerHelper 'editing_account', () ->
-    Meteor.user() and Router.current().params.username is Meteor.user().username and Meteor.user().edit_mode
+    Meteor.user() and Router.current().params.username is Meteor.user().username and Meteor.user().editing
 
 Template.registerHelper 'can_take', () ->
     Meteor.user() and Meteor.userId() in @permissioned_user_ids

@@ -125,7 +125,7 @@ Template.clear_value.events
                 Meteor.users.update parent._id,
                     $unset:"#{@key}":1
 
-Template.link_edit.events
+Template.link_field.events
     'blur .edit_url': (e,t)->
         val = t.$('.edit_url').val()
         parent = Template.parentData()
@@ -201,7 +201,7 @@ Template.icon_edit.events
                 position: "bottom right"
             )
 
-Template.image_link_edit.events
+Template.image_link_field.events
     'blur .image_link_val': (e,t)->
         val = t.$('.image_link_val').val()
         parent = Template.parentData()
@@ -219,7 +219,7 @@ Template.image_link_edit.events
             )
 
 
-Template.image_edit.events
+Template.image_field.events
     "change input[name='upload_image']": (e) ->
         files = e.currentTarget.files
         parent = Template.parentData()

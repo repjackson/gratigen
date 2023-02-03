@@ -95,7 +95,7 @@ template(name='doc_view')
                     // .floated
                     if can_edit
                         +edit_button
-                    if currentUser.edit_mode 
+                    if currentUser.editing 
                         +remove_button
         .subtemplate
             +Template.dynamic template=doc_view_template

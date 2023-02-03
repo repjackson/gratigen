@@ -162,7 +162,7 @@ template(name='post_edit')
                     |#{_author.username}
                 if is_dev
                     +single_user_field key='_author_id' label='author'
-                +image_edit key='image_id' label='image'
+                +image_field key='image_id' label='image'
                 div 
             .ten.wide.column
                 +text_field key='location' 

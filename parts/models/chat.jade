@@ -211,7 +211,7 @@ template(name='view_chat')
                     .ui.icon.basic.button.close_chat(title='close chat')
                         i.ban.icon
                         |close chat
-                    +image_edit key='image_id' 
+                    +image_field key='image_id' 
                     +array_field key='tags' label='tags'
                 else     
                     +array_view key='tags' label='tags'

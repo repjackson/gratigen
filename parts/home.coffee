@@ -79,6 +79,37 @@ if Meteor.isClient
         edit_template: -> "#{@model}_edit"
         current_viewing_thing: ->
             Docs.findOne Session.get('current_thing_id')
+        left_column_class: ->
+            if Session.get('expand_leftbar')
+                'four wide center aligned column'
+            else 
+                'two wide center aligned column'
+                
+                
+        main_column_class: ->
+            if Session.get('show_map') or Session.get('show_calendar')
+                'eight wide column'
+            else 
+                'twelve wide column'
+        right_column_class: ->
+            if Session.get('show_map') or Session.get('show_calendar')
+                'four wide column'
+            else 
+                'no_show'
+                
+        doc_results: ->
+            # Docs.find {model:$ne:'comment'},
+            match = {}
+            if Meteor.user() and Meteor.user().eft_filter_array and Meteor.user().eft_filter_array.length > 0
+                match.efts = $in:Meteor.user().eft_filter_array
+            if model_filters.array().length
+                match.model = $in:model_filters.array()
+            else 
+                match.model = $nin:['model','comment','message'] 
+            Docs.find match,
+                sort:_timestamp:-1
+                limit:10
+            
     Template.add_tab.events 
         # 'click .toggle_addmode': ->
         #     Session.set('addmode', !Session.get('addmode'))
@@ -352,35 +383,6 @@ if Meteor.isClient
                 notification = new Notification("Hi there!")
 
 
-    Template.home.helpers 
-        left_column_class: ->
-            if Session.get('expand_leftbar')
-                'four wide center aligned column'
-            else 
-                'two wide center aligned column'
-                
-                
-        main_column_class: ->
-            if Session.get('show_map') or Session.get('show_calendar')
-                'eight wide column'
-            else 
-                'twelve wide column'
-        right_column_class: ->
-            if Session.get('show_map') or Session.get('show_calendar')
-                'four wide column'
-            else 
-                'no_show'
-                
-        doc_results: ->
-            # Docs.find {model:$ne:'comment'},
-            match = {}
-            if model_filters.array().length
-                match.model = $in:model_filters.array()
-            else 
-                match.model = $nin:['model','comment','message'] 
-            Docs.find match,
-                sort:_timestamp:-1
-                limit:10
                 
     Template.home.onRendered ->
         categoryContent = [

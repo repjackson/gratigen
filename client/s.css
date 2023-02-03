@@ -113,7 +113,7 @@ img, .button, .selector, .card, p, .header, .item, .image, .fade, .accordion{
   
 /**/
 .darkmode {
-  filter: invert(1) !important;
+  /*filter: invert(1) !important;*/
 }
 
 .invert, .ui.image, .toast, .progress, .message{

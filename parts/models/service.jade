@@ -67,16 +67,16 @@ template(name='user_services')
     if is_current_user
         .ui.basic.icon.button.add_service
             i.large.plus.icon
-    .ui.items.smallscroll
+    .smallscroll
         each service_docs 
-            .ui.item
+            a.ui.fluid.card(href="/d/service/#{_id}")
+                .image
+                    img.ui.image(src="{{c.url image_id width=400 height=400 crop='pad'}}")
                 .content
-                    a(href="/d/service/#{_id}") 
-                        img.ui.image(src="{{c.url image_id width=400 height=300 crop='pad'}}")
-                    .smallscroll 
-                        |!{content}
-                    // |created #{when}
-                    small {{when}}
+                    .ui.inline.header #{title}
+                    // .smallscroll 
+                        // |!{content}
+                    +creation_info
                     a.ui.icon.button(href='/d/service/#{_id}')
                         i.large.chevron.right.icon
            
@@ -181,7 +181,7 @@ template(name='service_edit')
                         |#{_author.username}
                     if is_dev
                         +single_user_field key='_author_id' label='author' 
-                    +image_edit key='image_id' label='image' 
+                    +image_field key='image_id' label='image' 
                     div 
                     +array_field key='tags' label='tags'  icon='tags'
                     +boolean_field key='published' icon='visible' 

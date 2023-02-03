@@ -251,7 +251,7 @@ template(name='product_delivery')
             +i name='checked-truck' cl='ui inline image'
             .ui.inline.header arrived {{from_now arrived_timestamp}} 
             .ui.small.grey.inline.header {{cal_time arrived_timestamp}}
-            +image_edit key='delivery_photo'
+            +image_field key='delivery_photo'
             if delivery_photo                        
                 div
                 .ui.basic.large.button.mark_delivery_complete
