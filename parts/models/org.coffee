@@ -24,7 +24,7 @@ if Meteor.isClient
     Template.edit_button.events
         'click .edit_mode': (e)->
             # console.log 'hi'
-            $('.subtemplate').transition('tada', 1000)
+            $('.subtemplate').transition('bounce', 500)
             Meteor.users.update Meteor.userId(),
                 $set:
                     edit_mode:!Meteor.user().edit_mode
