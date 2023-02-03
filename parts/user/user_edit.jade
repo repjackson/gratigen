@@ -41,8 +41,8 @@ template(name='user_edit')
                         +html_edit key='description' label='description'
                 .six.wide.column
                     +date_edit key='birthday' label='birthday' icon='birthday'
-                    +array_edit key='allergens' label='allergens' icon='no-milk'
-                    +array_edit key='food_dislikes' label='food dislikes' icon='disgusting'
+                    +array_field key='allergens' label='allergens' icon='no-milk'
+                    +array_field key='food_dislikes' label='food dislikes' icon='disgusting'
                     +link_edit key='profile_link' label='profile link' icon='link'
                 .six.wide.column
                     if in_dev
@@ -50,9 +50,9 @@ template(name='user_edit')
                             i.shield.icon
                             |admin
                         +boolean_field key='admin' icon='shield'
-                        +array_edit key='roles' icon='shield'
-                    +array_edit key='tags' label='tags' icon='tags'
-                    +array_edit key='skills' label='skills' icon='wrench'
+                        +array_field key='roles' icon='shield'
+                    +array_field key='tags' label='tags' icon='tags'
+                    +array_field key='skills' label='skills' icon='wrench'
                 .eight.wide.column
                     +user_edit_genekeys
                 .eight.wide.column
@@ -347,7 +347,7 @@ template(name='user_edit_badges')
         .row 
             .sixteen.wide.column
                 if is_admin
-                    +array_edit key='badges' label='badges' icon='certificate'
+                    +array_field key='badges' label='badges' icon='certificate'
                 
                 .ui.divider
                 each badges

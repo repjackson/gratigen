@@ -133,7 +133,7 @@ Meteor.publish 'all_users', ()->
             tags:1
     
     
-Meteor.publish 'model_docs', (model,limit=3)->
+Meteor.publish 'model_docs', (model,limit=1)->
     if limit
         Docs.find {
             model: model

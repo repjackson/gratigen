@@ -119,7 +119,7 @@ template(name='org_view')
                 +image_edit key='image_id' icon='image' label='image'
                 +image_edit key='banner_image_id' icon='image' label='banner image'
                 if currentUser.edit_mode 
-                    +array_edit key='tags' icon='tags'
+                    +array_field key='tags' icon='tags'
                 else    
                     +array_view key='tags' icon='tags'
                 
@@ -136,11 +136,11 @@ template(name='org_view')
                     a.ui.compact.basic.circular.button(href=address_link target='_window')
                         i.marker.icon
                         |#{address}
-                +textarea_edit key='purpose' tagline="what is the basic purpose of your organization? what principals does it serve?"
-                +textarea_edit key='vision' label='vision' tagline="how will your organization impact society? how will it look for people?"
-                +textarea_edit key='mission' tagline='your business goals and the values you will embrace to achieve them'
-                +textarea_edit key='bylaws' tagline='bylaws of your organization. Articles of incorporation are the primary law of an association used to establish the general organization and governing of the association to achieve corporate existence. Bylaws are the secondary law of an association best used to detail how the society is formed and run.'
-                +textarea_edit key='signature' tagline='creators signature'
+                +textarea_field key='purpose' tagline="what is the basic purpose of your organization? what principals does it serve?"
+                +textarea_field key='vision' label='vision' tagline="how will your organization impact society? how will it look for people?"
+                +textarea_field key='mission' tagline='your business goals and the values you will embrace to achieve them'
+                +textarea_field key='bylaws' tagline='bylaws of your organization. Articles of incorporation are the primary law of an association used to establish the general organization and governing of the association to achieve corporate existence. Bylaws are the secondary law of an association best used to detail how the society is formed and run.'
+                +textarea_field key='signature' tagline='creators signature'
                 +viewing
                 if in_dev 
                     +print_this
@@ -165,9 +165,9 @@ template(name='org_view')
                         .column 
                             .ui.centered.small.header creator
                             +single_user_edit key='creator' label='creator' icon='edit'
-                +textarea_edit key='brief' tagline='breif description or your organization'
-                +textarea_edit key='description' tagline='complete description of your organization'
-                +textarea_edit key='body' tagline='body'
+                +textarea_field key='brief' tagline='breif description or your organization'
+                +textarea_field key='description' tagline='complete description of your organization'
+                +textarea_field key='body' tagline='body'
                 +role_crud
                 +project_crud
                 +event_crud
@@ -212,14 +212,14 @@ template(name='org_view')
                 .ui.header 
                     +i name='rss'
                     |activity
-                +group_crud
-                +product_crud
-                +service_crud
-                +badge_crud
-                +resource_crud
-                +keyresult_crud
-                +objective_crud
-                +shift_crud
+                // +group_crud
+                // +product_crud
+                // +service_crud
+                // +badge_crud
+                // +resource_crud
+                // +keyresult_crud
+                // +objective_crud
+                // +shift_crud
                 each log_items
                     +log_item
                 .ui.header.refresh_org_stats
@@ -233,78 +233,78 @@ template(name='org_view')
                 +related_docs 
             .eight.wide.column
                 +comments
-        .ui.stackable.padded.grid
-            .row
-                .ui.stackable.padded.grid
-                    .four.column.row 
-                        .column
-                            .ui.header editing #{title} org
-                            .ui.inline.header 
-                                +icolor name='group' cl='ui image inline pointer'
-                            +title_link_buttons
-                            a.ui.icon.green.big.button(href="/d/org/#{_id}" title='save')
-                                i.checkmark.big.icon
-                            +text_edit key='title' label='title'
+        // .ui.stackable.padded.grid
+        //     .row
+        //         .ui.stackable.padded.grid
+        //             .four.column.row 
+        //                 .column
+        //                     .ui.header editing #{title} org
+        //                     .ui.inline.header 
+        //                         +icolor name='group' cl='ui image inline pointer'
+        //                     +title_link_buttons
+        //                     a.ui.icon.green.big.button(href="/d/org/#{_id}" title='save')
+        //                         i.checkmark.big.icon
+        //                     +text_edit key='title' label='title'
                             
-                            +html_edit key='body' label='body'
-                            +youtube_edit key='youtube_id' label='youtube id'
-                        .column
-                            .ui.header required badges
-                            +badge_picker
-                            +role_crud
-                            +task_picker
+        //                     +html_edit key='body' label='body'
+        //                     +youtube_edit key='youtube_id' label='youtube id'
+        //                 .column
+        //                     .ui.header required badges
+        //                     +badge_picker
+        //                     +role_crud
+        //                     +task_picker
                             
-                        .column
-                            +model_picker model='event' icon='calendar'
+        //                 .column
+        //                     +model_picker model='event' icon='calendar'
                             
-                            i.large.link.red.remove.icon.delete_role
-                        .column
-                            .ui.header 
-                                small owner - each id should be stored in user account or as nft in crypto wallet.
+        //                     i.large.link.red.remove.icon.delete_role
+        //                 .column
+        //                     .ui.header 
+        //                         small owner - each id should be stored in user account or as nft in crypto wallet.
                                 
-                            .ui.header 
-                                small author
-                                |#{_author.username}
-                            .ui.basic.center.aligned.segment
-                                +eft_picker color="FF73EA" icon='food' label='food'
-                                +eft_picker color="B785E1" icon='home' label='housing'
-                                +eft_picker color="7229AF" icon='tshirt' label='clothing'
-                                +eft_picker color="1255B8" icon='car' label='transportation'
-                                +eft_picker color="83DFF4" icon='lightning' label='energy'
-                                +eft_picker color="42E8C4" icon='leaf' label='zero waste'
-                                +eft_picker color="40C057" icon='smile' label='wellness'
-                                +eft_picker color="FAB005" icon='university' label='education'
-                                +eft_picker color="FD7E14" icon='paint brush' label='art'
-                                +eft_picker color="FF0000" icon='users' label="community core"
-                        .column
-                            if is_dev
-                                +single_user_edit key='_author_id' label='author'
-                            +image_edit key='image_id' label='image'
-                            div 
-                             +boolean_field key='published' icon='visible'
-                            if is_dev 
-                                +text_edit key='model' label='model'
-                        .column
-                            div
-                            +html_edit key='responsibilities' label='responsibilities'
-                            div
-                            +array_edit key='location_tags' label='location_tags'
-                            // unless published
-                            //     a.ui.fluid.green.button.submit(href="/save")
-                            //         i.checkmark.icon
-                            //         |publish
-                            // else
-                            //     .ui.basic.button.unpublish 
-                            //         |unpublish
-                        .column
-                            .ui.header
-                                |audience
-                            +boolean_field key='private' label='private' 
-                            if private 
-                                +multi_user_edit key='access_user_ids' label='user picker'
-                            +array_edit key='skills' label='skills' icon='wrench'
-                        .column
-                            +model_picker model='skill' icon='wrench'
+        //                     .ui.header 
+        //                         small author
+        //                         |#{_author.username}
+        //                     .ui.basic.center.aligned.segment
+        //                         +eft_picker color="FF73EA" icon='food' label='food'
+        //                         +eft_picker color="B785E1" icon='home' label='housing'
+        //                         +eft_picker color="7229AF" icon='tshirt' label='clothing'
+        //                         +eft_picker color="1255B8" icon='car' label='transportation'
+        //                         +eft_picker color="83DFF4" icon='lightning' label='energy'
+        //                         +eft_picker color="42E8C4" icon='leaf' label='zero waste'
+        //                         +eft_picker color="40C057" icon='smile' label='wellness'
+        //                         +eft_picker color="FAB005" icon='university' label='education'
+        //                         +eft_picker color="FD7E14" icon='paint brush' label='art'
+        //                         +eft_picker color="FF0000" icon='users' label="community core"
+        //                 .column
+        //                     if is_dev
+        //                         +single_user_edit key='_author_id' label='author'
+        //                     +image_edit key='image_id' label='image'
+        //                     div 
+        //                      +boolean_field key='published' icon='visible'
+        //                     if is_dev 
+        //                         +text_edit key='model' label='model'
+        //                 .column
+        //                     div
+        //                     +html_edit key='responsibilities' label='responsibilities'
+        //                     div
+        //                     +array_field key='location_tags' label='location_tags'
+        //                     // unless published
+        //                     //     a.ui.fluid.green.button.submit(href="/save")
+        //                     //         i.checkmark.icon
+        //                     //         |publish
+        //                     // else
+        //                     //     .ui.basic.button.unpublish 
+        //                     //         |unpublish
+        //                 .column
+        //                     .ui.header
+        //                         |audience
+        //                     +boolean_field key='private' label='private' 
+        //                     if private 
+        //                         +multi_user_edit key='access_user_ids' label='user picker'
+        //                     +array_field key='skills' label='skills' icon='wrench'
+        //                 .column
+        //                     +model_picker model='skill' icon='wrench'
         
     
     
@@ -334,7 +334,7 @@ template(name='org_section')
         |#{tagline}
         if currentUser.edit_mode 
             |editing #{key}
-            +textarea_edit key=key
+            +textarea_field key=key
         else         
             +textarea_view key=key
     

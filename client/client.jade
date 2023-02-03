@@ -121,7 +121,7 @@ template(name='layout')
     // #main.ui.bottom.attached.pushable.segment.maincontent
     // +addbar
     // .pushable.maincontet.scrolling
-    .ui.equal.width.grid(class=invert_class)
+    .ui.equal.width.grid(class=darkmode_class)
         .column.horani
             +yield
         if currentUser.view_chatbar
@@ -138,7 +138,7 @@ template(name='layout')
 
 
 template(name='historybar')
-    .ui.small.attached.menu.hscroll(class=invert_class)
+    .ui.small.attached.menu.hscroll(class=darkmode_class)
         +nav_search
         .item 
             i.clock.icon    
@@ -169,7 +169,7 @@ template(name='historybar')
     
 
 template(name='mlayout')
-    .global_container(class=invert_class)
+    .global_container(class=darkmode_class)
         unless is_frontdesk
             +nav
         //- img.ui.fluid.image.checkin_banner(src="{{c.url 'frontrange' width=1000 height=1000 crop='crop'}}")    
@@ -213,11 +213,14 @@ template(name='footer')
             i.users.icon
             |#{user_docs.count} users
         each user_docs 
-            .ui.big.label #{username}
+            .ui.big.label 
+                img.ui.avatar.image(src="{{c.url image_id crop='fit'}}")
+                |#{username}
         .ui.header 
             |#{doc_docs.count} docs 
         each doc_docs
-            .ui.big.label 
+            .ui.large.basic.label 
+                if image_id
+                    img.ui.avatar.image(src="{{c.url image_id crop='fit'}}")
                 |#{title}
-                i.database.icon
-                |#{model}
+                span(title='model') (#{model})

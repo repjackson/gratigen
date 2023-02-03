@@ -80,12 +80,12 @@ template(name='badge_edit')
                 +text_edit key='title' icon='header'
                 +slug_edit key='slug' icon='slug'
                 +icon_edit key='icon' label='icon'
-                +textarea_edit key='description' label='description'
+                +textarea_field key='description' label='description'
                 +image_edit key='image_id' label='image'
                 div 
-                +array_edit key='tags' label='tags'
+                +array_field key='tags' label='tags'
                 +text_edit key='location' label='location' icon='marker'
-                +array_edit key='location_tags' label='location_tags'
+                +array_field key='location_tags' label='location_tags'
                 +boolean_field key='published'
                 +group_crud
             .eight.wide.column

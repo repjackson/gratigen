@@ -85,7 +85,7 @@ template(name='message_edit')
                             //         small #{points}p
                                     
                 .six.wide.column
-                    +textarea_edit key='description' label='description'
+                    +textarea_field key='description' label='description'
                     // +image_edit key='image_id' label='image'
                     div 
                     div
@@ -100,7 +100,7 @@ template(name='message_edit')
                     //         i.delete.icon.remove_element
                     //         |#{this}
                     
-                    //- +array_edit key='location_tags' label='location_tags'
+                    //- +array_field key='location_tags' label='location_tags'
                 .five.wide.column
                     .ui.center.aligned.basic.segment
                         if can_submit

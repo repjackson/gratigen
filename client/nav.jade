@@ -1,9 +1,9 @@
 template(name='nav')
     // https://fomantic-ui.com/elements/icon.html#/icon
     // #topnav.topnav.ui.fluid.padded.divided.centered.middle.aligned.grid 
-    // #topnav.topnav.ui.attached.borderless.fixed.menu.hscroll(class=invert_class)
-    // .topnav.ui.borderless.fixed.sticky.menu.hscroll(class=invert_class)
-    .topnav.ui.borderless.attached.menu.hscroll(class=invert_class)
+    // #topnav.topnav.ui.attached.borderless.fixed.menu.hscroll(class=darkmode_class)
+    // .topnav.ui.borderless.fixed.sticky.menu.hscroll(class=darkmode_class)
+    .topnav.ui.borderless.attached.menu.hscroll(class=darkmode_class)
         // .four.wide.column
         // .item
             // if is_loading
@@ -246,7 +246,7 @@ template(name='add_tab')
                 
                 
 template(name='secnav')
-    .ui.attached.small.borderless.inverted.menu.hscroll(class=invert_class)
+    .ui.attached.small.borderless.inverted.menu.hscroll(class=darkmode_class)
         a.ui.button.zoomer(href="/resources" class="{{isActiveRoute 'resources'}}")
             // i.large.inbox.icon
             +i name='clock'

@@ -20,15 +20,36 @@ if Meteor.isClient
     Template.task_item_small.events
         'click .uncomplete': ->
             Docs.update @_id, 
-                $completed:false 
+                $set:completed:false 
         'click .complete': ->
             Docs.update @_id, 
-                $completed:true 
+                $set:completed:true 
             
+    Template.checklist.helpers
+        org_task_docs: ->
+            Docs.find 
+                model:'task'
+                org_id:@_id
+
     Template.checklist.events
+        'keyup .quickadd_task':(e)->
+            if e.which is 13
+                title = $('.quickadd_task').val().trim()
+                if title
+                    console.log title
+                    Docs.insert 
+                        model:'task'
+                        org_id:@_id
+                        title:title
         'click .checkbox': (e)->
             console.log e
             $(e.currentTarget).closest('.checkbox').transition('tada',1000)
+        'click .remove': (e,t)->
+            if confirm "remove #{@title}"
+                # $(e.currentTarget).closest('.item').transition('zoom',1000)
+                Meteor.setTimeout =>
+                    Docs.remove @_id
+                , 1000
         'mouseover .checkbox': (e,t)->
             # console.log 'hover'
             # $(e.currentTarget).closest(".checkbox").html("oh god no!");
@@ -36,12 +57,18 @@ if Meteor.isClient
     
     
     Template.checklist.onCreated ->
+        @autorun => @subscribe 'org_tasks',Router.current().params.doc_id,->
         @autorun => @subscribe 'my_tasks',->
             
 if Meteor.isServer 
     Meteor.publish 'my_tasks', ->
         Docs.find {
             model:'task'
+        }, limit:10
+    Meteor.publish 'org_tasks',(org_id)->
+        Docs.find {
+            model:'task'
+            org_id:org_id
         }, limit:10
 
 if Meteor.isClient 

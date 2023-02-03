@@ -7,21 +7,22 @@ template(name='checklist')
             .content
                 .ui.large.input
                     input.quickadd_task(type='text' placeholder='add task')
-                .ui.animated.list
-                    each tasks
+                .ui.list
+                    each org_task_docs
                         +task_item_small
                 
                 
 template(name='task_item_small')
     .item
         if completed
-            i.checkmark.green.icon.uncomplete 
+            i.checkmark.green.link.icon.zoomer.uncomplete(title='mark incomplete')
         else 
-            i.circular.outline.icon.complete
+            i.circle.outline.link.icon.zoomer.complete(title='mark complete')
         |#{title}
         .ui.checkbox
             label.details check me
             input(type='checkbox' checked="")
+        i.remove.link.icon(title='remove task')
     
                 
                 

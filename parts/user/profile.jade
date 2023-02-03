@@ -48,7 +48,7 @@ template(name='profile')
                         i.sign.out.alternate.icon
                         |log out
                 if editing_account
-                    +array_edit key='tags' label='tags' icon='tags'
+                    +array_field key='tags' label='tags' icon='tags'
                 else
                     +array_view key='tags' label='tags' icon='tags'
                 div
@@ -146,7 +146,7 @@ template(name='user_roles')
 template(name='role_item_small')
     a.item(href="/d/role/#{_id}") 
         if image_id
-            img.ui.avatar.image(src="{{c.url image_id height=200 width=200}}" class=currentUser.invert_class)
+            img.ui.avatar.image(src="{{c.url image_id height=200 width=200}}" class=currentUser.darkmode_class)
         |#{title} #{_org.name}
         +related_org_icon
         
@@ -326,7 +326,7 @@ template(name='user_dashboard')
                     each user_requests
                         .ui.card
                             if image_id
-                                img.ui.image(src="{{c.url image_id height=100 width=200}}" class=currentUser.invert_class)
+                                img.ui.image(src="{{c.url image_id height=100 width=200}}" class=currentUser.darkmode_class)
                             .content.zoom.pointer
                                 a.header(href="/request/#{_id}/view")
                                     |#{point_bounty}pts: #{title}
@@ -343,7 +343,7 @@ template(name='user_dashboard')
                         .ui.card
                             if ticket_event.image_id
                                 a(href="/event/#{event_id}/view")
-                                    img.ui.fluid.zoom.image(src="{{c.url ticket_event.image_id height=200 width=200 crop='fit'}}" class=currentUser.invert_class)
+                                    img.ui.fluid.zoom.image(src="{{c.url ticket_event.image_id height=200 width=200 crop='fit'}}" class=currentUser.darkmode_class)
                             .content.zoom.pointer
                                 a.header(href="/event/#{event_id}/view")
                                     |#{ticket_event.title}
@@ -375,7 +375,7 @@ template(name='user_credit_segment')
             strong #{amount}pt 
             // |from 
             if author.image_id
-                img.ui.avatar.image(src="{{c.url author.image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                img.ui.avatar.image(src="{{c.url author.image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.darkmode_class)
             |#{_author.shortname}
         small #{when}
         div
@@ -391,7 +391,7 @@ template(name='user_debit_segment')
             strong #{amount}pt
             | to 
             if recipient.image_id
-                img.ui.avatar.image(src="{{c.url recipient.image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                img.ui.avatar.image(src="{{c.url recipient.image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.darkmode_class)
             |#{recipient.shortname}
         small #{when}
         div

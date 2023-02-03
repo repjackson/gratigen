@@ -285,7 +285,7 @@ Template.image_edit.events
 
 
 
-Template.array_edit.events
+Template.array_field.events
     'click .touch_element': (e,t)->
         $(e.currentTarget).closest('.touch_element').transition('slide left')
         
@@ -344,7 +344,7 @@ Template.array_edit.events
 #     is_editing: -> Template.instance().editing.get()
 
 
-Template.textarea_edit.events
+Template.textarea_field.events
     # 'click .toggle_edit': (e,t)->
     #     t.editing.set !t.editing.get()
 

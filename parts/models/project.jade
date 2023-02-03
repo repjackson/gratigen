@@ -59,7 +59,7 @@ template(name='project_view')
             .five.wide.column
                 .ui.header project view
                 +image_view key='image_id' icon='image' label='image'
-                +array_edit key='tags' icon='tags'
+                +array_field key='tags' icon='tags'
                 +title_link_buttons
                 .spacer
                 if link
@@ -73,11 +73,11 @@ template(name='project_view')
                     a.ui.compact.basic.circular.button(href=address_link target='_window')
                         i.marker.icon
                         |#{address}
-                +textarea_edit key='purpose' tagline="what is the basic purpose of your organization? what principals does it serve?"
-                +textarea_edit key='vision' label='vision' tagline="how will your organization impact society? how will it look for people?"
-                +textarea_edit key='mission' tagline='your business goals and the values you will embrace to achieve them'
-                +textarea_edit key='bylaws' tagline='bylaws of your organization. Articles of incorporation are the primary law of an association used to establish the general organization and governing of the association to achieve corporate existence. Bylaws are the secondary law of an association best used to detail how the society is formed and run.'
-                +textarea_edit key='signature' tagline='creators signature'
+                +textarea_field key='purpose' tagline="what is the basic purpose of your organization? what principals does it serve?"
+                +textarea_field key='vision' label='vision' tagline="how will your organization impact society? how will it look for people?"
+                +textarea_field key='mission' tagline='your business goals and the values you will embrace to achieve them'
+                +textarea_field key='bylaws' tagline='bylaws of your organization. Articles of incorporation are the primary law of an association used to establish the general organization and governing of the association to achieve corporate existence. Bylaws are the secondary law of an association best used to detail how the society is formed and run.'
+                +textarea_field key='signature' tagline='creators signature'
                 +viewing
                 if in_dev 
                     +print_this
@@ -124,9 +124,9 @@ template(name='project_view')
                 if currentUser.edit_mode 
                     +multi_user_edit key='member_ids' label='members'
 
-                +textarea_edit key='brief' tagline='breif description or your organization'
-                +textarea_edit key='description' tagline='complete description of your organization'
-                +textarea_edit key='body' tagline='body'
+                +textarea_field key='brief' tagline='breif description or your organization'
+                +textarea_field key='description' tagline='complete description of your organization'
+                +textarea_field key='body' tagline='body'
                 
                 // |!{body}
                 +role_crud
@@ -208,7 +208,7 @@ template(name='project_view')
     //                     .ui.header 
     //                         small author
     //                     a.ui.header(href="/user/#{_author.username}") 
-    //                         img.ui.avatar.image(src="{{c.url _author.image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+    //                         img.ui.avatar.image(src="{{c.url _author.image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.darkmode_class)
     //                         |#{_author.username}
     //                 .ui.small.grey.header 
     //                     i.line.chart.icon
@@ -235,7 +235,7 @@ template(name='project_view')
     //                 //- +array_view key='location_tags' label='location_tags'
     //                 +comments
     //         .twelve.wide.column.scrolling
-    //             img.ui.image(src="{{c.url image_id }}" class=currentUser.invert_class)
+    //             img.ui.image(src="{{c.url image_id }}" class=currentUser.darkmode_class)
     //             // a.ui.header(href="/user/#{target.username}")
     //             //     |#{target.username}
     //             if youtube_id 
@@ -469,9 +469,9 @@ template(name='project_edit')
                 +text_edit key='title' label='title'
                 +html_edit key='content' label='content'
                 +youtube_edit key='youtube_id' label='youtube id'
-                // +array_edit key='roles' label='roles' icon='shield'
+                // +array_field key='roles' label='roles' icon='shield'
             .six.wide.column.scrolling
-                // +array_edit key='tasks' label='tasks'
+                // +array_field key='tasks' label='tasks'
                 i.large.link.red.remove.icon.delete_project
                 .ui.header 
                     small author
@@ -483,11 +483,11 @@ template(name='project_edit')
                 +text_edit key='location' 
                 +geolocate_button
                 
-                +array_edit key='tags' label='tags' icon='tags'
+                +array_field key='tags' label='tags' icon='tags'
                 +boolean_field key='published' icon='visible'
                 if is_dev 
                     +text_edit key='model' label='model'
-                +array_edit key='location_tags' label='location_tags'
+                +array_field key='location_tags' label='location_tags'
                 // unless published
                 //     a.ui.fluid.green.button.submit(href="/save")
                 //         i.checkmark.icon

@@ -15,7 +15,7 @@ template(name='inbox')
                 .ui.list.medscroll
                     each my_sent_messages
                         .item
-                            img.ui.avatar.image(src="{{c.url recipient.profile_image_id height=100 width=200}}" class=currentUser.invert_class)
+                            img.ui.avatar.image(src="{{c.url recipient.profile_image_id height=100 width=200}}" class=currentUser.darkmode_class)
                             .content
                                 .header
                                     |#{when} to #{recipient.name} #{target.name} #{to.name}
@@ -34,7 +34,7 @@ template(name='inbox')
                 .ui.list.medscroll
                     each my_received_messages
                         .item
-                            img.ui.avatar.image(src="{{c.url author.profile_image_id height=100 width=200}}" class=currentUser.invert_class)
+                            img.ui.avatar.image(src="{{c.url author.profile_image_id height=100 width=200}}" class=currentUser.darkmode_class)
                             .content
                                 .header
                                     |#{when} from #{author.name}

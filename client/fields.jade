@@ -374,7 +374,7 @@ template(name='raw_view')
             textarea.edit_textarea(rows='7') !{field_value}
 
         
-template(name='textarea_edit')
+template(name='textarea_field')
     details.ui.styled(class=accordion_class)
         summary.title
             .ui.dropdown.icon
@@ -553,7 +553,7 @@ template(name='datetime_view')
         |#{this}
     strong &nbsp; #{field_value}
 
-template(name='array_edit')
+template(name='array_field')
     if currentUser.edit_mode
         .ui.inline.header
             if icon
@@ -587,7 +587,7 @@ template(name='array_edit')
         each field_value 
             .ui.basic.label #{this}
 
-// // template(name='array_edit')
+// // template(name='array_field')
 // //     .spacer
 // //     if i
 // //         i.grey.icon(class=i)

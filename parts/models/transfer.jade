@@ -40,11 +40,11 @@ template(name='transfers')
 //                         |save draft
 //                     +image_edit key='image_id' label='image' icon='image'
 //                     div
-//                     +array_edit key='location_tags' label='location tags' icon='marker'
+//                     +array_field key='location_tags' label='location tags' icon='marker'
 //                 .ten.wide.column
 //                     div
-//                     +array_edit key='tags' label='tags' icon='tags'
-//                     +textarea_edit key='notes' label='notes' icon='content'
+//                     +array_field key='tags' label='tags' icon='tags'
+//                     +textarea_field key='notes' label='notes' icon='content'
 //                     +user_picker
                     
 //                     if can_edit
@@ -75,7 +75,7 @@ template(name='transfer_view')
             .centered.row 
                 .five.wide.column
                     a.fly_right(href="/user/#{_author.username}") 
-                        img.ui.circular.centered.pointer.zoom.image(src="{{c.url _author.image_id height=500 width=500 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                        img.ui.circular.centered.pointer.zoom.image(src="{{c.url _author.image_id height=500 width=500 gravity='face' crop='fill'}}" class=currentUser.darkmode_class)
                         .ui.large.center.aligned.header.pointer.zoom
                             |#{_author.name}
                 .five.wide.column
@@ -103,7 +103,7 @@ template(name='transfer_view')
                     //- +array_view key='location_tags' label='location_tags'
                 .five.wide.column
                     a.fly_right(href="/user/#{recipient.username}")
-                        img.ui.circular.centered.fluid.pointer.zoom.image(src="{{c.url recipient.image_id height=500 width=500 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                        img.ui.circular.centered.fluid.pointer.zoom.image(src="{{c.url recipient.image_id height=500 width=500 gravity='face' crop='fill'}}" class=currentUser.darkmode_class)
                         .ui.large.center.aligned.header.pointer.zoom
                             |#{recipient.name}
                             
@@ -121,14 +121,14 @@ template(name='transfer_edit')
                         .ui.inline.grey.header sender
                         +single_user_edit key='_author_id'
                         .ui.inline.header
-                            img.ui.small.image(src="{{c.url _author.image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                            img.ui.small.image(src="{{c.url _author.image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.darkmode_class)
                             |#{_author.name}
                     .ui.segment
                         .ui.header recipient
                         with recipient
                             i.large.remove.link.icon.remove_recipient
                             a.pointer(href="/user/#{name}")
-                                img.ui.tiny.inline.image(src="{{c.url image_id height=400 width=400 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                                img.ui.tiny.inline.image(src="{{c.url image_id height=400 width=400 gravity='face' crop='fill'}}" class=currentUser.darkmode_class)
                                 .ui.inline.header #{name}
                                 .ui.small.grey.inline.header #{points}
                         unless recipient
@@ -141,12 +141,12 @@ template(name='transfer_edit')
                             // each members
                             //     .ui.compact.basic.circular.button.add_recipient
                             //         // i.plus.icon
-                            //         img.ui.avatar.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                            //         img.ui.avatar.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.darkmode_class)
                             //         |#{name}
                             //         small #{points}p
                     +date_edit key='date' label='date'   
                     +time_edit key='time' label='time'   
-                    +array_edit key='location_tags' label='location tags' icon='marker'
+                    +array_field key='location_tags' label='location tags' icon='marker'
                 .six.wide.column
                     +html_edit key='description' label='description'
                     +image_edit key='image_id' label='image'
@@ -162,7 +162,7 @@ template(name='transfer_edit')
                     each terms 
                         a.ui.large.circular.basic.button.select_term(href='#')
                             if image
-                                img.ui.mini.rounded.inline.image(src="{{c.url image height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                                img.ui.mini.rounded.inline.image(src="{{c.url image height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.darkmode_class)
                             |#{title}
                     each tags
                         .ui.big.basic.circular.label
@@ -173,7 +173,7 @@ template(name='transfer_edit')
                     each suggestions
                         a.ui.large.circular.basic.button.select_term(href='#')
                             // if image
-                            //     img.ui.mini.rounded.inline.image(src="{{c.url image height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                            //     img.ui.mini.rounded.inline.image(src="{{c.url image height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.darkmode_class)
                             |#{title}
                 .four.wide.center.aligned.column
                     .ui.big.header #{amount}pts

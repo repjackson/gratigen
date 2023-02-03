@@ -3,7 +3,7 @@
 template(name='event_card')
     .ui.card
         if image_id
-            img.ui.image(src="{{c.url image_id height=500 width=500 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+            img.ui.image(src="{{c.url image_id height=500 width=500 gravity='face' crop='fill'}}" class=currentUser.darkmode_class)
         .content
             .ui.header #{title} 
             div
@@ -19,7 +19,7 @@ template(name='event_card')
                 |#{location}
             div 
             // small led by
-            img.ui.avatar.image(src="{{c.url fac.image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+            img.ui.avatar.image(src="{{c.url fac.image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.darkmode_class)
             strong #{fac.name}
         .content
             |#{event_tickets.count}
@@ -27,17 +27,17 @@ template(name='event_card')
                 i.checkmark.green.link.icon
             | #{going.count}
             each going
-                img.ui.avatar.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                img.ui.avatar.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.darkmode_class)
             i.question.orange.link.icon.mark_maybe(title='mark yourself maybe')
             div
             | #{maybe_user_ids.length}
             each maybe_going
-                img.ui.avatar.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                img.ui.avatar.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.darkmode_class)
             | #{not_user_ids.length}
             div
             i.ban.red.link.icon.mark_not(title='mark yourself not')
             each not_going
-                img.ui.avatar.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                img.ui.avatar.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.darkmode_class)
             if doc_comments.count
                 .meta
                     each doc_comments 
@@ -105,7 +105,7 @@ template(name='event_edit')
                 +single_user_edit key='host_id' label='host' icon='shield'
                 div
                 div 
-                +array_edit key='tags' label='tags' icon='red tags'
+                +array_field key='tags' label='tags' icon='red tags'
                 div
             .ten.wide.column.scrollin
                 .ui.header
@@ -235,7 +235,7 @@ template(name='event_view')
                     |#{location}
                 .spacer
                 // a(href="/m/room/#{event_room._id}")
-                //     img.ui.small.circular.inline.image.pointer.zoom(src="{{c.url event_room.image_id }}" class=currentUser.invert_class)
+                //     img.ui.small.circular.inline.image.pointer.zoom(src="{{c.url event_room.image_id }}" class=currentUser.darkmode_class)
                 //     .ui.inline.header.pointer.zoom
                 //         |#{event_room.title}
                 if is_admin
@@ -244,21 +244,21 @@ template(name='event_view')
                             i.shield.icon
                             | author
                         a.ui.header(href="/user/#{_author.username}") 
-                            img.ui.avatar.image(src="{{c.url _author.image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                            img.ui.avatar.image(src="{{c.url _author.image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.darkmode_class)
                             |#{_author.name}
                 if facilitator
                     .ui.dividing.header 
                         i.chess.king.grey.icon
                         |facilitator
                     a.ui.header(href="/user/#{fac.username}") 
-                        img.ui.avatar.image(src="{{c.url fac.image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                        img.ui.avatar.image(src="{{c.url fac.image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.darkmode_class)
                         |#{fac.name}
                 if support
                     .ui.dividing.header 
                         i.chess.queen.grey.icon
                         |support
                     a.ui.header(href="/user/#{support.username}") 
-                        img.ui.avatar.image(src="{{c.url support.image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                        img.ui.avatar.image(src="{{c.url support.image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.darkmode_class)
                         |#{support.name}
                 if is_admin
                     .ui.header
@@ -281,7 +281,7 @@ template(name='event_view')
                 div
             .eight.wide.column.scrollin
                 a(href="{{c.url image_id }}")
-                    img.ui.fluid.rounded.image(src="{{c.url image_id }}" class=currentUser.invert_class)
+                    img.ui.fluid.rounded.image(src="{{c.url image_id }}" class=currentUser.darkmode_class)
                 // a.ui.header(href="/user/#{target.username}")
                 //     |#{target.username}
                 // .scrolling
@@ -331,7 +331,7 @@ template(name='event_view')
                     each event_ticket_docs
                         .comment
                             a.avatar(href="/user/#{_author.username}") 
-                                img(src="{{c.url _author.image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+                                img(src="{{c.url _author.image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.darkmode_class)
                             a.content(href="/order/#{_id}")
                                 a.author(href="/user/#{_author.username}") 
                                     |#{_author.name}
@@ -401,7 +401,7 @@ template(name='attendance')
     //     i.green.checkmark.big.icon
     // each going 
     //     a.ui.circular.basic.circular.button(href="/user/#{username}")    
-    //         img.ui.avatar.compact.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+    //         img.ui.avatar.compact.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.darkmode_class)
     //         |#{username}
     .ui.basic.circular.button.mark_maybe
         .ui.orange.header
@@ -414,7 +414,7 @@ template(name='attendance')
     //     i.yellow.minus.big.icon
     each maybe_going
         a.ui.circular.basic.circular.button(href="/user/#{username}")    
-            img.ui.avatar.compact.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+            img.ui.avatar.compact.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.darkmode_class)
             |#{username}
     .ui.basic.circular.button.mark_not
         .ui.red.header
@@ -424,7 +424,7 @@ template(name='attendance')
             // i.big.ban.icon
     each not_going
         a.ui.circular.basic.circular.button(href="/user/#{username}")    
-            img.ui.avatar.compact.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.invert_class)
+            img.ui.avatar.compact.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.darkmode_class)
             |#{username}
 
 

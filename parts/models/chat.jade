@@ -212,7 +212,7 @@ template(name='view_chat')
                         i.ban.icon
                         |close chat
                     +image_edit key='image_id' 
-                    +array_edit key='tags' label='tags'
+                    +array_field key='tags' label='tags'
                 else     
                     +array_view key='tags' label='tags'
                 //- if can_edit

@@ -102,7 +102,7 @@ template(name='task_edit')
                 //     .ui.button.select_location(class=location_class)
                 //         img.ui.tiny.inline.image(src="{{c.url image_id width=400 height=300 crop='pad'}}")
                 //         |#{title}
-                +array_edit key='tags' label='tags' icon='tags'
+                +array_field key='tags' label='tags' icon='tags'
                 .ui.red.button.delete_task
                     i.remove.icon   
                     | delete
@@ -320,7 +320,7 @@ template(name='work_edit')
                     |#{when}
                 // +text_edit key='title' label='title'
                 div
-                +textarea_edit key='notes' label='notes'
+                +textarea_field key='notes' label='notes'
                 // if location_id
                 //     if image_id
                 .ui.hidden.divider

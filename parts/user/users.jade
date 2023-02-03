@@ -57,13 +57,13 @@ template(name='users')
 template(name='user_card')
     a.ui.card.zoomer.fly_left(href="/user/#{username}")
         unless avatar_image_id
-            img.ui.centered.image(class=currentUser.invert_class src="{{c.url image_id width=400 height=300 crop='fill'}}")    
+            img.ui.centered.image(class=currentUser.darkmode_class src="{{c.url image_id width=400 height=300 crop='fill'}}")    
         // if avatar_image_id
         //     .ui.fade.reveal.image
         //         .visible.content
-        //             img(class=currentUser.invert_class src="{{c.url image_id height=500 width=500 gravity='face' crop='fill'}}") 
+        //             img(class=currentUser.darkmode_class src="{{c.url image_id height=500 width=500 gravity='face' crop='fill'}}") 
         //         .hidden.content
-        //             img(class=currentUser.invert_class src="{{c.url avatar_image_id height=500 width=500 gravity='face' crop='fill'}}") 
+        //             img(class=currentUser.darkmode_class src="{{c.url avatar_image_id height=500 width=500 gravity='face' crop='fill'}}") 
 
         .content
             a.ui.inline.header.pointer.blink(href="/user/#{username}" style="color:#{theme_color};")
@@ -108,13 +108,13 @@ template(name='user_card')
 template(name='user_item')
     a.item.zoom.fly_left(href="/user/#{username}")
         unless avatar_image_id
-            img.ui.avatar.image(class=currentUser.invert_class src="{{c.url image_id width=400 height=300 crop='fill'}}")    
+            img.ui.avatar.image(class=currentUser.darkmode_class src="{{c.url image_id width=400 height=300 crop='fill'}}")    
         // if avatar_image_id
         //     .ui.fade.reveal.image
         //         .visible.content
-        //             img(class=currentUser.invert_class src="{{c.url image_id height=500 width=500 gravity='face' crop='fill'}}") 
+        //             img(class=currentUser.darkmode_class src="{{c.url image_id height=500 width=500 gravity='face' crop='fill'}}") 
         //         .hidden.content
-        //             img(class=currentUser.invert_class src="{{c.url avatar_image_id height=500 width=500 gravity='face' crop='fill'}}") 
+        //             img(class=currentUser.darkmode_class src="{{c.url avatar_image_id height=500 width=500 gravity='face' crop='fill'}}") 
 
         .content
             a.ui.inline.header.pointer.blink(href="/user/#{username}" style="color:#{theme_color};")
