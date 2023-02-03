@@ -134,6 +134,13 @@ if Meteor.isClient
             $('.search_site').val('')
             Session.set('current_query', null)
     Template.nav.events
+        'click .setonline': ->
+            Meteor.users.update Meteor.userId(),
+                $set:online:true
+        'click .setoffline': ->
+            Meteor.users.update Meteor.userId(),
+                $set:online:false
+        
         'click .goto_doc': ->
             doc = Docs.findOne @_id 
             console.log @

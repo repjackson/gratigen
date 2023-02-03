@@ -43,7 +43,11 @@ template(name='nav')
         //     +i name='play-button-circled--v1' color='40C057'
         //     // i.small.circular.play.green.icon.invert
         //     .ui.huge.popup Engage
-
+        .icon.item
+            if me.online 
+                i.green.checkmark.icon.set_offline
+            else 
+                i.slash.eye.outline.icon.set_online
         a.item(href='/tasks' title='tasks')
             i.tasks.icon
         a.icon.item.toggle_invert

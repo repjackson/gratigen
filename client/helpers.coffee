@@ -349,6 +349,9 @@ Template.registerHelper 'is_dev', () ->
 
 # Template.registerHelper 'is_eric', () -> if Meteor.userId() and Meteor.userId() in ['ytjpFxiwnWaJELZEd','rDqxdcTBTszjeMh9T'] then true else false
 
+Template.registerHelper 'iam', () ->  
+    found = Meteor.users.findOne username:Router.current().params.username
+    if found then found else Meteor.user()
 Template.registerHelper 'current_user', () ->  
     found = Meteor.users.findOne username:Router.current().params.username
     if found then found else Meteor.user()
