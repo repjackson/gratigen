@@ -67,22 +67,19 @@ template(name='user_services')
     if is_current_user
         .ui.basic.icon.button.add_service
             i.large.plus.icon
-    .ui.padded.stackable.one.column.grid
-        .column
-            .ui.stackable.cards.scrolling
-                each service_docs 
-                    .ui.card
-                        .content
-                            a(href="/service/#{_id}") 
-                                img.ui.image(src="{{c.url image_id width=400 height=300 crop='pad'}}")
-    
-                            .smallscroll 
-                                |!{content}
-                            // |created #{when}
-                            small {{when}}
-                            a.ui.icon.button(href='/service/#{_id}')
-                                i.large.chevron.right.icon
-                            
+    .ui.items.smallscroll
+        each service_docs 
+            .ui.item
+                .content
+                    a(href="/d/service/#{_id}") 
+                        img.ui.image(src="{{c.url image_id width=400 height=300 crop='pad'}}")
+                    .smallscroll 
+                        |!{content}
+                    // |created #{when}
+                    small {{when}}
+                    a.ui.icon.button(href='/d/service/#{_id}')
+                        i.large.chevron.right.icon
+           
         
         
 

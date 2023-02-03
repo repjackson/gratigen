@@ -89,7 +89,7 @@ template(name='profile')
                     | message
                 if is_dev
                     +print_this
-            .twelve.wide.column.scrolling
+            .twelve.wide.column.scrolling.subtemplate
                 .ui.stackable.three.column.grid
                     +profile_section key='info' label='info' icon='info'
                     +profile_section key='roles' label='roles' icon='shield'
@@ -112,14 +112,14 @@ template(name='profile')
 
 template(name='profile_section')
     .column
-        details.ui.styled.fluid.accordion
-            summary.active.title.zoomer
-                // .dropdown.icon
-                .ui.inline.small.header
-                    +i name=icon color=color cl='ui mini inline image'
-                    |#{key}
-            .active.content
-                +Template.dynamic template=user_template data=current_user
+        // details.ui.styled.fluid.accordion
+        summary.active.title.zoomer
+            // .dropdown.icon
+            .ui.inline.small.header
+                +i name=icon color=color cl='ui mini inline image'
+                |#{key}
+        .active.content
+            +Template.dynamic template=user_template data=current_user
 
 
 template(name='user_roles')

@@ -22,8 +22,9 @@ if Meteor.isClient
         #         slug: Router.current().params.doc_id
 
     Template.edit_button.events
-        'click .edit_mode': ->
-            console.log 'hi'
+        'click .edit_mode': (e)->
+            # console.log 'hi'
+            $('.subtemplate').transition('tada', 1000)
             Meteor.users.update Meteor.userId(),
                 $set:
                     edit_mode:!Meteor.user().edit_mode
