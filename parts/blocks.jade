@@ -10,9 +10,27 @@ template(name='session_key_value_edit')
             +i name=icon cl='ui avatar image'
             // i.icon(class=icon)
         |#{label}
-        
-        
-        
+
+
+template(name='checklist')
+    .ui.styled.accordian
+        .title
+            .dripdown.icon
+                .ui.large.input
+        .content
+            .ui.checkbox
+                label check me
+                input(type='checkbox' checked="") 
+            div
+            .ui.checkbox
+                label check me
+                input(type='checkbox' checked="")
+            div
+            .ui.checkbox
+                label check me
+                input(type='checkbox' checked="") 
+            
+            
 template(name='viewing_info')
     .ui.header 
         +i name='eye'

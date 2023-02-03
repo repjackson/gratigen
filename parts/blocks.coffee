@@ -28,6 +28,13 @@ if Meteor.isClient
         Meteor.setTimeout ->
             $('.button').popup()
         , 1000
+    Template.checklist.onRendered ->
+        Meteor.setTimeout ->
+            $('.ui.checkbox').checkbox()
+        , 2000
+    Template.checklist.events
+        'click .checkbox': (e)->
+            $(e.currentTarget).closest('.checkbox').transition('tada',1000)
 
     Template.bookmark_button.events
         'click .toggle_bookmark': (e,t)->
@@ -419,13 +426,6 @@ if Meteor.isClient
             Router.go "/badge/#{new_id}/edit"
 
 
-if Meteor.isServer 
-    Meteor.publish 'badge_search_results', (badge_title_query)->
-        Docs.find 
-            model:'badge'
-            title: {$regex:"#{badge_title_query}",$options:'i'}
-        
-        
 if Meteor.isClient
     Template.task_picker.onCreated ->
         @autorun => @subscribe 'task_search_results', Session.get('task_search'), ->
@@ -478,21 +478,15 @@ if Meteor.isClient
             Router.go "/task/#{new_id}/edit"
 
 
-if Meteor.isServer 
-    Meteor.publish 'task_search_results', (title_query)->
-        Docs.find 
-            model:'task'
-            title: {$regex:"#{title_query}",$options:'i'}
-        
         
 if Meteor.isClient
     Template.voting.events
         'click .upvote': (e,t)->
-            $(e.currentTarget).closest('.button').transition('pulse',200)
-            Meteor.call 'upvote', @
+            $(e.currentTarget).closest('.button').transition('pulse',500)
+            Meteor.call 'upvote', @, ->
         'click .downvote': (e,t)->
-            $(e.currentTarget).closest('.button').transition('pulse',200)
-            Meteor.call 'downvote', @
+            $(e.currentTarget).closest('.button').transition('pulse',500)
+            Meteor.call 'downvote', @, ->
 
 
     Template.voting_small.events

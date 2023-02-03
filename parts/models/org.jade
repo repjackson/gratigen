@@ -288,6 +288,7 @@ template(name='org_view')
                         +eft_picker color="FD7E14" icon='paint brush' label='art'
                         +eft_picker color="FF0000" icon='users' label="community core"
                 // +doc_array_togggle key='member_ids' value=currentUser._id add_label='join' remove_label='joined'
+                +checklist
                 .ui.header 
                     +i name='rss'
                     |activity
@@ -352,10 +353,10 @@ template(name='org_section')
     
 template(name='edit_button')
     if currentUser.edit_mode
-        .ui.basic.big.green.compact.circular.button.edit_mode.invert
-            i.setting.big.blue.link.zoomer.loading.icon(title="edit #{title}")
-            i.checkmark.icon
-            |save
+        .ui.basic.big.green.circular.icon.button.edit_mode.invert.zoomer(title="save #{title}")
+            i.setting.big.blue.zoomer.loading.icon(title="edit #{title}")
+            i.checkmark.big.icon.zoomer
+            // |save
     else
         i.setting.big.link.zoomer.icon.edit_mode(title="edit #{title}")
     // a.ui.circular.tertiary.icon.button.zoomer.floated.right.fly_down(href="/org/#{_id}/edit" title="edit #{title}")

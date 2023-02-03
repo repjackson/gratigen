@@ -71,8 +71,8 @@ head
         
         gtag('config', 'G-GLYPPRGJFQ');
 
-    link(type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsmind@0.5/style/jsmind.css")
-    script(type="text/javascript" src="https://cdn.jsdelivr.net/npm/jsmind@0.5/es6/jsmind.js")
+    // link(type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsmind@0.5/style/jsmind.css")
+    // script(type="text/javascript" src="https://cdn.jsdelivr.net/npm/jsmind@0.5/es6/jsmind.js")
 
     
 template(name='doc_view')
@@ -107,11 +107,11 @@ template(name='doc_view')
         
     
 template(name='layout')
-    .ui.button.make_mind 
-        |make mind
+    // .ui.button.make_mind 
+    //     |make mind
     img.ui.fluid.image.bg_overlay(src="{{c.url current_image_id width=1000 crop='fit'}}")    
     +nav
-    #jsmind_container
+    // #jsmind_container
     // +rightbar
     // +chatbar
     // if currentUser.history_ids.length

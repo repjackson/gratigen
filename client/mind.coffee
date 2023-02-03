@@ -1,0 +1,74 @@
+# Template.layout.events 
+#     'click .make_mind': ->
+#         mind = {
+#             meta: {
+#                 name: 'jsMind remote',
+#                 author: 'hizzgdev@163.com',
+#                 version: '0.2',
+#             },
+#             format: 'node_tree',
+#             data: {
+#                 id: 'root',
+#                 topic: 'jsMind',
+#                 children: [
+#                     {
+#                         id: 'easy',
+#                         topic: 'Easy',
+#                         direction: 'left',
+#                         children: [
+#                             { id: 'easy1', topic: 'Easy to show' },
+#                             { id: 'easy2', topic: 'Easy to edit' },
+#                             { id: 'easy3', topic: 'Easy to store' },
+#                             { id: 'easy4', topic: 'Easy to embed' },
+#                             {
+#                                 'id': 'other3',
+#                                 'background-image': 'ant.png',
+#                                 'width': '100',
+#                                 'height': '100',
+#                             },
+#                         ],
+#                     },
+#                     {
+#                         id: 'open',
+#                         topic: 'Open Source',
+#                         direction: 'right',
+#                         children: [
+#                             {
+#                                 'id': 'open1',
+#                                 'topic': 'on GitHub',
+#                                 'background-color': '#eee',
+#                                 'foreground-color': 'blue',
+#                             },
+#                             { id: 'open2', topic: 'BSD License' },
+#                         ],
+#                     },
+#                     {
+#                         id: 'powerful',
+#                         topic: 'Powerful',
+#                         direction: 'right',
+#                         children: [
+#                             { id: 'powerful1', topic: 'Base on Javascript' },
+#                             { id: 'powerful2', topic: 'Base on HTML5' },
+#                             { id: 'powerful3', topic: 'Depends on you' },
+#                         ],
+#                     },
+#                     {
+#                         id: 'other',
+#                         topic: 'test node',
+#                         direction: 'left',
+#                         children: [
+#                             { id: 'other1', topic: "I'm from local variable" },
+#                             { id: 'other2', topic: 'I can do everything' },
+#                         ],
+#                     },
+#                 ],
+#             },
+#         };
+#         options = {
+#             container: 'jsmind_container',
+#             theme: 'orange',
+#             editable: true
+#         };
+#         jm = new jsMind(options);
+#         console.log jm
+#         jm.show(mind);

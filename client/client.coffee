@@ -19,7 +19,7 @@ Template.doc_view.onRendered ->
 
 Template.doc_view.helpers
     doc_view_template: ->
-        console.log @
+        # console.log @
         if @model
             "#{@model}_view"
 
