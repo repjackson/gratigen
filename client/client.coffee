@@ -49,28 +49,28 @@ moment.locale('en', {
 });
 
 
-Meteor.users.find(_id:Meteor.userId()).observe({
-    changed: (new_doc, old_doc)->
-        difference = new_doc.points-old_doc.points
-        if difference > 0
-            $('body').toast({
-                title: "#{new_doc.points-old_doc.points}p earned"
-                # message: 'Please see desk staff for key.'
-                class : 'success'
-                showIcon:'hashtag'
-                # showProgress:'bottom'
-                position:'bottom right'
-                # className:
-                #     toast: 'ui massive message'
-                # displayTime: 5000
-                transition:
-                  showMethod   : 'zoom',
-                  showDuration : 250,
-                  hideMethod   : 'fade',
-                  hideDuration : 250
-                })
+# Meteor.users.find(_id:Meteor.userId()).observe({
+#     changed: (new_doc, old_doc)->
+#         difference = new_doc.points-old_doc.points
+#         if difference > 0
+#             $('body').toast({
+#                 title: "#{new_doc.points-old_doc.points}p earned"
+#                 # message: 'Please see desk staff for key.'
+#                 class : 'success'
+#                 showIcon:'hashtag'
+#                 # showProgress:'bottom'
+#                 position:'bottom right'
+#                 # className:
+#                 #     toast: 'ui massive message'
+#                 # displayTime: 5000
+#                 transition:
+#                   showMethod   : 'zoom',
+#                   showDuration : 250,
+#                   hideMethod   : 'fade',
+#                   hideDuration : 250
+#                 })
 
-})
+# })
 
 
 Template.footer.helpers
@@ -99,9 +99,12 @@ Template.footer.helpers
 #     @autorun => @subscribe 'user_count'
         
         
+Template.not_found.onRendered ->
+    Meteor.call 'log_error', ->
 Template.not_found.events
     'click .browser_back': ->
           window.history.back();
+    
 
 
 

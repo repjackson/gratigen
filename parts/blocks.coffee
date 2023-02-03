@@ -35,6 +35,9 @@ if Meteor.isClient
     Template.checklist.events
         'click .checkbox': (e)->
             $(e.currentTarget).closest('.checkbox').transition('tada',1000)
+        'mouseover .checkbox': (e,t)->
+            console.log 'hover'
+            $(e.currentTarget).closest(".checkbox").html("oh god no!");
 
     Template.bookmark_button.events
         'click .toggle_bookmark': (e,t)->

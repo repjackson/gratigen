@@ -13,24 +13,25 @@ template(name='session_key_value_edit')
 
 
 template(name='checklist')
-    .ui.styled.accordian
-        .title
-            .dripdown.icon
-                .ui.large.input
-        .content
-            .ui.checkbox
-                label check me
-                input(type='checkbox' checked="") 
-            div
-            .ui.checkbox
-                label check me
-                input(type='checkbox' checked="")
-            div
-            .ui.checkbox
-                label check me
-                input(type='checkbox' checked="") 
-            
-            
+    .ui.segment
+        details.ui.styled.accordian
+            summary.title checklist
+                .dripdown.icon
+                    .ui.large.input
+            .content
+                .ui.checkbox
+                    label.details check me
+                    input(type='checkbox' checked="") 
+                div
+                .ui.checkbox
+                    label.details check me
+                    input(type='checkbox' checked="")
+                div
+                .ui.checkbox
+                    label.details check me
+                    input(type='checkbox' checked="") 
+                
+                
 template(name='viewing_info')
     .ui.header 
         +i name='eye'
