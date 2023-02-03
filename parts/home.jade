@@ -365,6 +365,7 @@ template(name='home_card')
             +youtube_view key='youtube_id'
         .content 
                 |!{body}
+                |!{brief}
                 |!{content}
         img.ui.fluid.image(src="{{c.url image_id width=400 height=400}}")
         .content 

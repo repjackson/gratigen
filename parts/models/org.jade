@@ -249,13 +249,7 @@ template(name='org_view')
                 +project_crud
                 +event_crud
                 +task_crud
-                +product_crud
-                +service_crud
-                +badge_crud
-                +resource_crud
-                +keyresult_crud
-                +objective_crud
-                +shift_crud
+
 
                 // a.item(href="/d/org/#{_id}/#{username}")
                 //     img.ui.mini.image(src="{{c.url image_id width=200 height=200}}")
@@ -296,6 +290,13 @@ template(name='org_view')
                     +i name='rss'
                     |activity
                 +group_crud
+                +product_crud
+                +service_crud
+                +badge_crud
+                +resource_crud
+                +keyresult_crud
+                +objective_crud
+                +shift_crud
                 each log_items
                     +log_item
                 .ui.header.refresh_org_stats

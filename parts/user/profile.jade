@@ -112,15 +112,22 @@ template(name='profile')
 
 template(name='profile_section')
     .column
-        // details.ui.styled.fluid.accordion
-        summary.active.title.zoomer
-            // .dropdown.icon
-            .ui.inline.small.header
+        if currentUser.admin_mode
+            .ui.inline.header
                 +i name=icon color=color cl='ui mini inline image'
                 |#{key}
-        .active.content
             +Template.dynamic template=user_template data=current_user
-
+        else
+            details.ui.styled.fluid.accordion
+                summary.active.title.zoomer
+                    // .dropdown.icon
+                    .ui.inline.small.header
+                        +i name=icon color=color cl='ui mini inline image'
+                        |#{key}
+                .active.content
+                    +Template.dynamic template=user_template data=current_user
+                
+                
 
 template(name='user_roles')
     .ui.small.header 
