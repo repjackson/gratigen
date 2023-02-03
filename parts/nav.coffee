@@ -62,7 +62,7 @@ if Meteor.isClient
             Meteor.users.update Meteor.userId(), 
                 $set:_doc_id:null
     Template.nav.onRendered ->
-        Session.setDefault('invert_mode', false)
+        Session.setDefault('darkmode', false)
         Meteor.setTimeout ->
             $('.menu .item')
                 .popup()
@@ -243,9 +243,9 @@ if Meteor.isClient
         'click .toggle_invert': ->
             Meteor.users.update Meteor.userId(),
                 $set:
-                    invert_mode:!Meteor.user().invert_mode
-            Session.set('invert_mode', !Session.get('invert_mode'))
-            console.log Session.get('invert_mode')
+                    darkmode:!Meteor.user().darkmode
+            Session.set('darkmode', !Session.get('darkmode'))
+            console.log Session.get('darkmode')
         
     Template.nav_search.helpers
         doc_search_results: ->

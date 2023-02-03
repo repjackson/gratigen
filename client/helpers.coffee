@@ -55,7 +55,7 @@ Template.registerHelper 'order_things',->
         order_id:@_id
 
 Template.registerHelper 'invert_class',-> 
-    if Meteor.user().invert_mode is true
+    if Meteor.user().darkmode is true
         'invert'
     else 
         ''

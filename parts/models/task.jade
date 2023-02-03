@@ -1,3 +1,81 @@
+template(name='tasks')
+    .ui.stackable.padded.grid
+        .four.wide.column
+            .ui.inline.header 
+                // i.tasks.icon
+                +i name='tasks'
+                |tasks
+            div
+            +add_model_button model='task'
+            .ui.inline.small.header 
+                i.user.friends.icon
+                |authors
+            each picked_authors
+                a.ui.blue.label.unpick_author
+                    |#{this}
+            each author_results
+                if title
+                    a.ui.basic.circular.small.link.label.pick_author
+                        |#{title} 
+                        small.ui.grey.text #{count}
+            div
+            .ui.small.inline.header
+                i.tags.icon
+                |tags
+            each picked_tags
+                a.ui.blue.label.unpick_task
+                    |#{this}
+            each task_tag_results
+                if title
+                    a.ui.basic.circular.small.link.label.pick_task
+                        |#{title} 
+                        small.ui.grey.text #{count}
+            div
+            .ui.small.inline.header
+                i.fire.icon
+                |groups
+            each picked_task_groups
+                a.ui.blue.label.unpick_group
+                    |#{this}
+            each task_group_results
+                if title
+                    a.ui.basic.circular.small.link.label.pick_group
+                        |#{title} 
+                        small.ui.grey.text #{count}
+        .twelve.wide.column
+            span.sorting_row
+                +search_input model='task' field='title'
+                +session_set key='view_users' value='grid' icon='th' 
+                +session_set key='view_users' value='list' icon='list'
+                +session_set key='sort_users_direction' value='-1' icon='chevron down'
+                +session_set key='sort_users_direction' value='1' icon='chevron up'
+                +session_set key='sort_users_key' value='points' icon='coins'
+                +session_set key='sort_users_key' value='created_date' icon='clock'
+                +session_set key='view_limit' value=1
+                +session_set key='view_limit' value=10
+                +session_set key='view_limit' value=20
+                +session_set key='view_limit' value=50
+                i.large.sort.icon
+                +set_sort_key key='comment_count' label='comment count' icon='chat'
+                +set_sort_key key='views' label='views' icon='eye'
+                +set_sort_key key='points' label='points' icon='line chart'
+                +toggle_sort_direction_button
+                |&nbsp;
+                |&nbsp;
+                .spacer 
+        
+            span.ui.doubling.cards.scrolling
+                each task_docs
+                    +task_card
+                    
+                    
+template(name='my_tasks')
+    .ui.header my tasks
+                    
+                    
+
+
+
 template(name='task_crud')
     // .ui.segment
     .ui.styled.accordion
