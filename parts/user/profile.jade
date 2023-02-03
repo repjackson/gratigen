@@ -105,7 +105,7 @@ template(name='profile')
                     +profile_section key='skills' label='Skills' icon='chat'
                     +profile_section key='events' label='Events' icon='prize'
                     +profile_section key='accounts' label='Accounts' icon='car'
-
+                +user_dashboard
 
 
 
@@ -113,13 +113,12 @@ template(name='profile')
 template(name='profile_section')
     .column
         details.ui.styled.fluid.accordion
-            summary.title
+            summary.title.active
                 // .dropdown.icon
-                .ui.inline.header
-                    +i name=icon color=color
+                .ui.inline.small.header
+                    +i name=icon color=color cl='ui mini inline image'
                     |#{key}
-            .content
-                .ui.header hi
+            .content.active
                 +Template.dynamic template=user_template data=current_user
 
 
@@ -129,14 +128,24 @@ template(name='user_roles')
         |authored roles
     .ui.selection.animated.list
         each _authored_docs current_user 'role'
-            a.item(href="/d/role/#{_id}") #{title} #{_org.name}
+            +role_item_small
     .ui.small.header
         i.checkmark.icon
         |taken roles
     .ui.selection.animated.list
         each user_taken_roles current_user
-            a.item(href="/d/role/#{_id}") #{title} #{_org.name}
+            +role_item_small
+
+template(name='role_item_small')
+    a.item(href="/d/role/#{_id}") 
+        if image_id
+            img.ui.avatar.image(src="{{c.url image_id height=200 width=200}}" class=currentUser.invert_class)
+        |#{title} #{_org.name}
+        +related_org_icon
         
+template(name='related_org_icon')
+    +print_this
+
 template(name='user_info')
     .ui.header info
     // if editing_account
@@ -341,7 +350,7 @@ template(name='latest_user_activity')
     .ui.header 
         +i name='clock'
         |latest activity
-    .ui.selection.animated.list
+    .ui.selection.animated.list.smallscroll
         each latest_user_docs 
             a.item(href="/#{model}/#{_id}") 
                 img.ui.avatar.image(src="{{c.url image_id width=200 height=200 gravity='face' crop='fill'}}")

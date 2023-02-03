@@ -4,6 +4,11 @@ if Meteor.isClient
         @render 'profile'
         ), name:'profile'
 
+    # Template.profile_section.onRendered ->
+    #     Meteor.setTimeout ->
+    #         $('.accordion').accordion()
+    #     , 1000
+
 
     Template.profile_section.helpers 
         user_template:->

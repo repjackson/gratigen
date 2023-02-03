@@ -387,10 +387,6 @@ Template.text_edit.events
                 $set:"#{@key}":val
 
 
-# Template.textarea_view.onRendered ->
-#     Meteor.setTimeout ->
-#         $('.accordion').accordion()
-#     , 1000
 
 
 

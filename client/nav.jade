@@ -12,7 +12,7 @@ template(name='nav')
             // else 
             //     a.icon.item.toggle_leftbar
             //         i.large.bars.icon
-        a.header.item.zoomer(href='/' class="{{isActivePath '/'}}" )
+        a.item.zoomer(href='/' class="{{isActivePath '/'}}" )
             // +i name='network'
             
             // i.large.home.icon
@@ -312,7 +312,6 @@ template(name='recent_alert')
             .header
                 |#{description} 
             .description #{author.name} #{made_when}
-                    
                     
 template(name='chatbar')
     .ui.right.push.sidebar.chatbar
