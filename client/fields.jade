@@ -1,9 +1,22 @@
 template(name='text_field')
-    if currentUser.admin_mode   
-        +text_edit key=key 
-    else 
-        +text_view key=key
-        // |!{key}
+    .ui.segment
+        div
+        if icon
+            i.grey.icon(class=icon)
+            // +i name=icon
+        .ui.inline.small.header
+            if title
+                |#{title}
+            else if label
+                |#{label}
+            else if key
+                |#{key}
+                //- +clear_value
+        if currentUser.edit_mode
+            .ui.icon.large.fluid.input
+                input.edit_text(type='text' value=field_value placeholder=placeholder autocomplete="off")
+        else 
+            .ui.header #{field_value}
 
 
 template(name='youtube_edit')
@@ -404,25 +417,6 @@ template(name='textarea_field')
                     |{{nl2br field_value}}
         
         
-template(name='text_edit')
-    .ui.segment
-        div
-        if icon
-            i.grey.icon(class=icon)
-            // +i name=icon
-        .ui.inline.small.header
-            if title
-                |#{title}
-            else if label
-                |#{label}
-            else if key
-                |#{key}
-                //- +clear_value
-        if me.edit_mode
-            .ui.icon.large.fluid.input
-                input.edit_text(type='text' value=field_value placeholder=placeholder autocomplete="off")
-        else 
-            .ui.header #{field_value}
 
 
 
@@ -645,11 +639,11 @@ template(name='array_view')
 //         each child_fields
 //             +Template.dynamic template=edit_template 
 //         +remove_button
-//         //-     +text_edit key='key'
-//         //-     +text_edit key='field'
+//         //-     +text_field key='key'
+//         //-     +text_field key='field'
 //         //-     +single_doc_edit key='field' ref_model='field_type' ref_key='slug' label='Field Type'
-//         //-     +text_edit key='label'
-//         //-     +text_edit key='icon'
+//         //-     +text_field key='label'
+//         //-     +text_field key='icon'
 //         //-     if icon
 //         //-         i.big.icon(class=icon)
 //         //- div
@@ -689,11 +683,11 @@ template(name='array_view')
 //         //     .ui.header field template #{field_template}
 //         // else 
 //         // .ui.segment
-//         //     +text_edit key='key'
-//         //     // +text_edit key='field'
+//         //     +text_field key='key'
+//         //     // +text_field key='field'
 //         //     +single_doc_edit key='field' ref_model='field' ref_key='slug' label='Field Type'
-//         //     +text_edit key='label'
-//         //     +text_edit key='icon'
+//         //     +text_field key='label'
+//         //     +text_field key='icon'
 //         //     if icon
 //         //         i.big.icon(class=icon)
 //         //     // if is_reference
@@ -1014,7 +1008,7 @@ template(name='multi_doc_view')
 
 
 
-template(name='single_user_edit')
+template(name='single_user_field')
     if currentUser.edit_mode
         div
         // if icon

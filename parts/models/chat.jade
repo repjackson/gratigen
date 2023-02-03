@@ -164,7 +164,7 @@ template(name='chat_message')
             .ui.header replies 
             each replies 
                 if is_editing 
-                    +text_edit key='body'
+                    +text_field key='body'
                 else 
                     .ui.header #{body}
 
@@ -179,7 +179,7 @@ template(name='view_chat')
             .five.wide.column
                 //- .ui.inline.header #{message_count} messages
                 //- .ui.inline.header #{unread_message_count} unread
-                +text_edit key='title'
+                +text_field key='title'
                 .ui.inline.header
                     |participants
                 if currentUser

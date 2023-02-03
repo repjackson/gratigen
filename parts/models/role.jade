@@ -61,7 +61,7 @@ template(name='role_edit')
                         |edit role
                     a.ui.icon.green.big.fluid.button.invert(href="/role/#{_id}" title='save')
                         i.checkmark.big.icon
-                    +text_edit key='title' label='title' direct=true
+                    +text_field key='title' label='title' direct=true
                     +title_link_buttons
                 .column
                     +html_edit key='content' label='content' direct=true
@@ -95,13 +95,13 @@ template(name='role_edit')
                         
                 .column
                     if is_dev
-                        +single_user_edit key='_author_id' label='author' direct=true
+                        +single_user_field key='_author_id' label='author' direct=true
                     +image_edit key='image_id' label='image' direct=true
                     div 
                     +array_field key='tags' label='tags' direct=true icon='tags'
                     +boolean_field key='published' icon='visible' direct=true
                     if is_dev 
-                        +text_edit key='model' label='model' direct=true
+                        +text_field key='model' label='model' direct=true
                 .column
                     div
                     +html_edit key='responsibilities' label='responsibilities'

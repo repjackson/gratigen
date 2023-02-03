@@ -186,7 +186,7 @@ template(name='resource_edit')
                     small resource
                 a.ui.big.icon.green.fluid.button(href="/resource/#{_id}/")
                     i.checkmark.big.icon
-                +text_edit key='title' icon='header' 
+                +text_field key='title' icon='header' 
                 +number_edit key='daily_rate' label='daily rate' icon='exchange' 
                 .ui.icon.small.red.button.delete_resource_item 
                     i.trash.icon
@@ -202,7 +202,7 @@ template(name='resource_edit')
                 //     |gps coords
                 // .ui.label #{lat}
                 // .ui.label #{long}
-                +text_edit key='location' label='location text' icon='marker' 
+                +text_field key='location' label='location text' icon='marker' 
                 +geolocate_button
                 +html_edit key='description' label='description' icon='content' 
             .column

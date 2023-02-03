@@ -158,9 +158,9 @@ template(name='product_inventory')
                         +number_edit key='amount' label='amount'
                         +key_value_edit key='location' value='boh' label='boh'
                         +key_value_edit key='location' value='foh' label='foh'
-                        // +text_edit key='location' label='location' icon='marker'
-                        +text_edit key='notes' label='notes' icon='pencil'
-                        // +text_edit key='staff' label='staff' icon='user'
+                        // +text_field key='location' label='location' icon='marker'
+                        +text_field key='notes' label='notes' icon='pencil'
+                        // +text_field key='staff' label='staff' icon='user'
                         +image_edit key='image_id'
                         +key_value_edit key='staff' value='matt'
                         +key_value_edit key='staff' value='nena'
@@ -288,8 +288,8 @@ template(name='product_edit')
                         small product
                     .ui.large.icon.fluid.green.button.save_product.fly_right(title='save product')
                         i.checkmark.large.icon   
-                    +text_edit key='title' label='title' icon='header'
-                    +text_edit key='slug' label='slug' icon='slug'
+                    +text_field key='title' label='title' icon='header'
+                    +text_field key='slug' label='slug' icon='slug'
                     +print_this
                 .column
                     +image_edit key='image_id' label='image'
@@ -315,7 +315,7 @@ template(name='product_edit')
                 //     +key_value_edit key='shop_section' value='rice_grains' label='rice & grains' icon='wheat'
                 //     // +key_value_edit key='shop_section' value='seeds' label='seeds' icon='seeds'
                 .column
-                    +text_edit key='size_description' label='size description' icon='content'
+                    +text_field key='size_description' label='size description' icon='content'
                     .ui.inline.header food
                     +boolean_field key='is_food' label='is food' icon='food'
                     if is_food

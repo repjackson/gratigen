@@ -373,7 +373,7 @@ Template.textarea_field.events
 
 
 
-Template.text_edit.events
+Template.text_field.events
     'blur .edit_text': (e,t)->
         val = t.$('.edit_text').val()
         parent = Template.parentData()
@@ -694,7 +694,7 @@ Template.multi_user_edit.events
             # Meteor.call 'unassign_user', page_doc._id, @
 
 
-Template.single_user_edit.onCreated ->
+Template.single_user_field.onCreated ->
     # console.log @
     page_doc = Docs.findOne Router.current().params.doc_id
     if page_doc
@@ -703,9 +703,9 @@ Template.single_user_edit.onCreated ->
         @autorun => Meteor.subscribe 'user_by_id',field_value,->
 
     @user_results = new ReactiveVar
-Template.single_user_edit.helpers
+Template.single_user_field.helpers
     user_results: -> Template.instance().user_results.get()
-Template.single_user_edit.events
+Template.single_user_field.events
     'click .clear_results': (e,t)->
         t.user_results.set null
 

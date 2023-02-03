@@ -35,7 +35,7 @@ template(name='task_edit')
                     small task
                 a.ui.fluid.large.icon.green.button.fly_left(href="/task/#{_id}/" title='save product')
                     i.checkmark.big.icon
-                +text_edit key='title' label='title'
+                +text_field key='title' label='title'
                 +image_edit key='image_id' label='image'
                 +role_crud key='image_id' label='image'
                 div
@@ -74,13 +74,13 @@ template(name='task_edit')
                 +number_edit key='point_bounty' label='point bounty' icon='coins'
                 div
                 div
-                +single_user_edit key='user_assignment' label='user assignment' icon='user'
+                +single_user_field key='user_assignment' label='user assignment' icon='user'
                 // +boolean_field key='has_subgroup_specification' label='has specific subgroup' icon='users'
                 div
                 .ui.header
                     i.red.marker.icon
                     |location
-                +text_edit key='location' 
+                +text_field key='location' 
                 +geolocate_button
 
                 // .ui.header     
@@ -318,7 +318,7 @@ template(name='work_edit')
                 .ui.grey.header 
                     i.clock.icon
                     |#{when}
-                // +text_edit key='title' label='title'
+                // +text_field key='title' label='title'
                 div
                 +textarea_field key='notes' label='notes'
                 // if location_id

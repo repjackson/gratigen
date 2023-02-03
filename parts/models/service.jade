@@ -169,7 +169,7 @@ template(name='service_edit')
                         |edit service
                     a.ui.icon.green.big.button(href="/service/#{_id}" title='save')
                         i.checkmark.big.icon
-                    +text_edit key='title' label='title' 
+                    +text_field key='title' label='title' 
                     +html_edit key='content' label='content' 
                     +youtube_edit key='youtube_id' label='youtube id' 
                 .six.wide.column
@@ -180,13 +180,13 @@ template(name='service_edit')
                         small author
                         |#{_author.username}
                     if is_dev
-                        +single_user_edit key='_author_id' label='author' 
+                        +single_user_field key='_author_id' label='author' 
                     +image_edit key='image_id' label='image' 
                     div 
                     +array_field key='tags' label='tags'  icon='tags'
                     +boolean_field key='published' icon='visible' 
                     if is_dev 
-                        +text_edit key='model' label='model' 
+                        +text_field key='model' label='model' 
                     +array_field key='location_tags' label='location tags' icon='marker'
                     // unless published
                     //     a.ui.fluid.green.button.submit(href="/save")

@@ -74,7 +74,7 @@ template(name='event_edit')
                 div
                 .ui.icon.basic.circular.button.delete_item(title='delete')
                     i.remove.red.icon
-                +text_edit key='title' label='title'
+                +text_field key='title' label='title'
                 div
                 .ui.header 
                     small author
@@ -93,16 +93,16 @@ template(name='event_edit')
                 div
                 +number_edit key='hour_duration' label='hours'
                 div 
-                +text_edit key='location' label='location'
+                +text_field key='location' label='location'
                 +geolocate_button
                 div
                 // +range_edit label='time range'
                 div
-                // +single_user_edit key='facilitator_id' label='facilitator' icon='chess king'
+                // +single_user_field key='facilitator_id' label='facilitator' icon='chess king'
                 div
-                // +single_user_edit key='support_id' label='support' icon='chess queen'
+                // +single_user_field key='support_id' label='support' icon='chess queen'
                 div
-                +single_user_edit key='host_id' label='host' icon='shield'
+                +single_user_field key='host_id' label='host' icon='shield'
                 div
                 div 
                 +array_field key='tags' label='tags' icon='red tags'

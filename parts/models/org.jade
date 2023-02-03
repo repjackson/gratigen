@@ -116,6 +116,15 @@ template(name='org_view')
         //             +remove_button
         .row
             .five.wide.column
+                if is_member
+                    .ui.big.button.leave(title='click to leave')
+                        i.checkmark.icon
+                        |member
+                else 
+                    .ui.big.button.join(title='click to join')
+                        i.user.plus.icon
+                        |join 
+                div
                 +image_edit key='image_id' icon='image' label='image'
                 +image_edit key='banner_image_id' icon='image' label='banner image'
                 if currentUser.edit_mode 
@@ -148,23 +157,23 @@ template(name='org_view')
                 +org_history
                 +org_subscription
 
-            .six.wide.column
+            .five.wide.column
                 .centered.row
                     +eft_viewer
                 .ui.header leaders
-                    .ui.four.column.centered.grid
-                        .column 
-                            .ui.centered.small.header lead
-                            +single_user_edit key='lead' label='lead' icon='king'
-                        .column 
-                            .ui.centered.small.header support
-                            +single_user_edit key='support' label='support' icon='users'
-                        .column 
-                            .ui.centered.small.header safety
-                            +single_user_edit key='safety' label='safety'
-                        .column 
-                            .ui.centered.small.header creator
-                            +single_user_edit key='creator' label='creator' icon='edit'
+                .ui.four.column.centered.grid
+                    .column 
+                        .ui.centered.small.header lead
+                        +single_user_field key='lead' label='lead' icon='king'
+                    .column 
+                        .ui.centered.small.header support
+                        +single_user_field key='support' label='support' icon='users'
+                    .column 
+                        .ui.centered.small.header safety
+                        +single_user_field key='safety' label='safety'
+                    .column 
+                        .ui.centered.small.header creator
+                        +single_user_field key='creator' label='creator' icon='edit'
                 +textarea_field key='brief' tagline='breif description or your organization'
                 +textarea_field key='description' tagline='complete description of your organization'
                 +textarea_field key='body' tagline='body'
@@ -179,22 +188,15 @@ template(name='org_view')
                 //     .content
                 //         .header
                 //             |#{username}
-            .five.wide.column
-                if is_member
-                    .ui.big.button.leave(title='click to leave')
-                        i.checkmark.icon
-                        |member
-                else 
-                    .ui.big.button.join(title='click to join')
-                        i.user.plus.icon
-                        |join 
-                div
-                .ui.inline.header members
-                each member_ids
-                    +user_pill
+            .six.wide.column
+                .ui.inline.header 
+                    i.users.icon
+                    |members
                 if currentUser.edit_mode 
                     +multi_user_edit key='member_ids' label='members'
-                
+                else 
+                    each member_ids
+                        +user_pill
                 if currentUser.edit_mode
                     .ui.basic.center.aligned.segment
                         +eft_picker color="FF73EA" icon='food' label='food'
@@ -209,9 +211,6 @@ template(name='org_view')
                         +eft_picker color="FF0000" icon='users' label="community core"
                 // +doc_array_togggle key='member_ids' value=currentUser._id add_label='join' remove_label='joined'
                 +checklist
-                .ui.header 
-                    +i name='rss'
-                    |activity
                 // +group_crud
                 // +product_crud
                 // +service_crud
@@ -220,6 +219,10 @@ template(name='org_view')
                 // +keyresult_crud
                 // +objective_crud
                 // +shift_crud
+                // .ui.header 
+                //     +i name='rss'
+                //     |activity
+            .five.wide.column
                 each log_items
                     +log_item
                 .ui.header.refresh_org_stats
@@ -228,8 +231,12 @@ template(name='org_view')
                 i.refresh.link.icon.refresh_org_stats
                 .ui.large.list
                     .item #{total_credit_exchanged} credits exchanged
-                    .item 
-            .eight.wide.column
+                    .item #{views} views
+                    .item #{points} points
+                    .item #{member_count} members
+                    .item #{event_count} events
+                    .item #{post_count} posts
+            .five.wide.column
                 +related_docs 
             .eight.wide.column
                 +comments
@@ -244,7 +251,7 @@ template(name='org_view')
         //                     +title_link_buttons
         //                     a.ui.icon.green.big.button(href="/d/org/#{_id}" title='save')
         //                         i.checkmark.big.icon
-        //                     +text_edit key='title' label='title'
+        //                     +text_field key='title' label='title'
                             
         //                     +html_edit key='body' label='body'
         //                     +youtube_edit key='youtube_id' label='youtube id'
@@ -278,12 +285,12 @@ template(name='org_view')
         //                         +eft_picker color="FF0000" icon='users' label="community core"
         //                 .column
         //                     if is_dev
-        //                         +single_user_edit key='_author_id' label='author'
+        //                         +single_user_field key='_author_id' label='author'
         //                     +image_edit key='image_id' label='image'
         //                     div 
         //                      +boolean_field key='published' icon='visible'
         //                     if is_dev 
-        //                         +text_edit key='model' label='model'
+        //                         +text_field key='model' label='model'
         //                 .column
         //                     div
         //                     +html_edit key='responsibilities' label='responsibilities'

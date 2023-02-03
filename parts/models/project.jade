@@ -92,31 +92,31 @@ template(name='project_view')
                     .ui.four.column.centered.grid
                         .column 
                             .ui.centered.small.header lead
-                            +single_user_edit key='lead' label='lead' icon='king'
+                            +single_user_field key='lead' label='lead' icon='king'
                         .column 
                             .ui.centered.small.header support
-                            +single_user_edit key='support' label='support' icon='users'
+                            +single_user_field key='support' label='support' icon='users'
                         .column 
                             .ui.centered.small.header safety
-                            +single_user_edit key='safety' label='safety'
+                            +single_user_field key='safety' label='safety'
                         .column 
                             .ui.centered.small.header creator
-                            +single_user_edit key='creator' label='creator' icon='edit'
+                            +single_user_field key='creator' label='creator' icon='edit'
                 // // .ui.basic.button(href="/user/#{lead}") lead
                 // // if currentUser.edit_mode 
-                // +single_user_edit key='lead' label='lead' icon='king'
+                // +single_user_field key='lead' label='lead' icon='king'
                 // // a.ui.basic.button(href="/user/#{lead}") lead
                 // //     with lead
                 // //         +user_pill
                 // // .ui.basic.button(href="/user/#{support}") support
                 // // if currentUser.edit_mode 
-                // +single_user_edit key='support' label='support' icon='users'
+                // +single_user_field key='support' label='support' icon='users'
                 // // .ui.basic.button(href="/user/#{safety}") safety
                 // // if currentUser.edit_mode 
-                // +single_user_edit key='safety' label='safety'
+                // +single_user_field key='safety' label='safety'
                 // // .ui.basic.button(href="/user/#{creator}") creator  
                 // // if currentUser.edit_mode 
-                // +single_user_edit key='creator' label='creator' icon='edit'
+                // +single_user_field key='creator' label='creator' icon='edit'
                 // .ui.header 
                     |#{member_ids.count} members
                 each member_ids
@@ -466,7 +466,7 @@ template(name='project_edit')
                     |edit project
                 a.ui.icon.green.big.button(href="/project/#{_id}" title='save')
                     i.checkmark.big.icon
-                +text_edit key='title' label='title'
+                +text_field key='title' label='title'
                 +html_edit key='content' label='content'
                 +youtube_edit key='youtube_id' label='youtube id'
                 // +array_field key='roles' label='roles' icon='shield'
@@ -477,16 +477,16 @@ template(name='project_edit')
                     small author
                     |#{_author.username}
                 if is_dev
-                    +single_user_edit key='_author_id' label='author'
+                    +single_user_field key='_author_id' label='author'
                 +image_edit key='image_id' label='image'
                 div 
-                +text_edit key='location' 
+                +text_field key='location' 
                 +geolocate_button
                 
                 +array_field key='tags' label='tags' icon='tags'
                 +boolean_field key='published' icon='visible'
                 if is_dev 
-                    +text_edit key='model' label='model'
+                    +text_field key='model' label='model'
                 +array_field key='location_tags' label='location_tags'
                 // unless published
                 //     a.ui.fluid.green.button.submit(href="/save")

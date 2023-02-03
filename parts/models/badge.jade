@@ -77,14 +77,14 @@ template(name='badge_edit')
                 i.remove.circular.link.icon.delete_item
         .row 
             .eight.wide.column
-                +text_edit key='title' icon='header'
+                +text_field key='title' icon='header'
                 +slug_edit key='slug' icon='slug'
                 +icon_edit key='icon' label='icon'
                 +textarea_field key='description' label='description'
                 +image_edit key='image_id' label='image'
                 div 
                 +array_field key='tags' label='tags'
-                +text_edit key='location' label='location' icon='marker'
+                +text_field key='location' label='location' icon='marker'
                 +array_field key='location_tags' label='location_tags'
                 +boolean_field key='published'
                 +group_crud

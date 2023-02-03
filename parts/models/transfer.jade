@@ -119,7 +119,7 @@ template(name='transfer_edit')
                         |cancel
                     .ui.segment
                         .ui.inline.grey.header sender
-                        +single_user_edit key='_author_id'
+                        +single_user_field key='_author_id'
                         .ui.inline.header
                             img.ui.small.image(src="{{c.url _author.image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.darkmode_class)
                             |#{_author.name}
@@ -134,7 +134,7 @@ template(name='transfer_edit')
                         unless recipient
                             .ui.divider
                             // i.large.user.plus.icon
-                            +single_user_edit key='recipient_id' label='search member' icon='user plus'
+                            +single_user_field key='recipient_id' label='search member' icon='user plus'
                             // .ui.icon.input
                             //     i.search.icon
                             //     input.search_username(type='text' placeholder='username')

@@ -25,17 +25,17 @@ template(name='user_edit')
                         +print_this
                 .six.wide.column.scrolling
                     .ui.form
-                        +text_edit key='name' label='name'
-                        +text_edit key='display_name' label='display name'
-                        +text_edit key='first_name' label='first name'
-                        +text_edit key='last_name' label='last name'
-                        +text_edit key='tagline' label='tagline'
+                        +text_field key='name' label='name'
+                        +text_field key='display_name' label='display name'
+                        +text_field key='first_name' label='first name'
+                        +text_field key='last_name' label='last name'
+                        +text_field key='tagline' label='tagline'
                         div
                         // .ui.header 
                         //     i.envelope.outline.icon
                         //     |emails
                         // +emails_edit
-                        +text_edit key='email' label='email'
+                        +text_field key='email' label='email'
                         .ui.hidden.divider
                         +phone_edit key='phone' label='phone' icon='phone'
                         +html_edit key='description' label='description'
@@ -289,8 +289,8 @@ template(name='user_edit_account')
             +image_edit key='avatar_image_id' icon='picture' title='avatar image'
             +password_edit
         .column
-            +text_edit key='first_name' label='first name'
-            +text_edit key='last_name' label='last name'
+            +text_field key='first_name' label='first name'
+            +text_field key='last_name' label='last name'
             .ui.header 
                 i.envelope.outline.icon
                 |emails

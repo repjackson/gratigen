@@ -1,13 +1,18 @@
 template(name='checklist')
     .ui.segment
-        details.ui.styled.accordian
-            summary.title 
+        details.ui.styled.fluid.accordian
+            summary.title.zoomer
+                if currentUser.admin_mode 
+                    |#{complete_count}/
+                    |#{org_task_docs.count}
                 |checklist
                 // .dripdown.icon
             .content
                 .ui.large.input
                     input.quickadd_task(type='text' placeholder='add task')
-                .ui.large.list
+                |#{complete_count} complete
+                |#{incomplete_count} incomplete
+                .ui.big.list
                     each org_task_docs
                         +task_item_small
                 
@@ -23,11 +28,19 @@ template(name='task_item_small')
             // .ui.checkbox
             //     label.details check me
             //     input(type='checkbox' checked="")
+            // i.chevron.down.large.icon.view_more(title='view more')
+            // if viewing_full
             i.remove.link.icon(title='remove task')
-    
+            +array_field key='tags' label='tags' icon='tags'
+            a(href="/d/task/#{_id}")
+                i.chevron.right.icon
+            +edit_button_icon
+            +single_user_field key='assigned_to_user_ids' label='assigned to'
+            // +textarea_field key='body'
                 
                 
-
+template(name='edit_button_icon')
+    i.pencil.icon.toggle(title='edit task')
 
 template(name='tasks')
     .ui.stackable.padded.grid

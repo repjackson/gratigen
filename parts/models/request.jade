@@ -181,7 +181,7 @@ template(name='request_edit')
                 .ui.header 
                     small author
                     |#{_author.username}
-                +text_edit key='title' icon='header'
+                +text_field key='title' icon='header'
                 +boolean_field key='has_date' label='has date'
                 if has_date
                     +date_edit key='date' label='date' icon='calendar'

@@ -24,8 +24,21 @@ if Meteor.isClient
         'click .complete': ->
             Docs.update @_id, 
                 $set:completed:true 
+        'click .view_more': ->
+            Session.set('viewing_more_id',@_id)
+            
             
     Template.checklist.helpers
+        complete_count: ->
+            Docs.find(
+                model:'task'
+                completed:true
+            ).count()
+        incomplete_count: ->
+            Docs.find(
+                model:'task'
+                completed:false
+            ).count()
         org_task_docs: ->
             Docs.find 
                 model:'task'
@@ -41,14 +54,32 @@ if Meteor.isClient
                         model:'task'
                         org_id:@_id
                         title:title
+                $('.quickadd_task').val('')
         'click .checkbox': (e)->
-            console.log e
-            $(e.currentTarget).closest('.checkbox').transition('tada',1000)
+            # console.log e
+            $(e.currentTarget).closest('.item').transition('tada',1000)
+            $('body').toast({
+                title: "#{@title} marked completed"
+                # message: 'yeay'
+                class : 'info'
+                showIcon:'checkmark'
+                showProgress:'bottom'
+                position:'bottom right'
+            })
         'click .remove': (e,t)->
             if confirm "remove #{@title}"
-                $(e.currentTarget).closest('.item').transition('zoom',1000)
+                $(e.currentTarget).closest('.content').transition('zoom',1000)
                 Meteor.setTimeout =>
                     Docs.remove @_id
+                    $('body').toast({
+                        title: "#{@title} removed"
+                        # message: 'yeay'
+                        class : 'info'
+                        showIcon:'checkmark'
+                        showProgress:'bottom'
+                        position:'bottom right'
+                    })
+                
                 , 1000
         'mouseover .checkbox': (e,t)->
             # console.log 'hover'

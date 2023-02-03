@@ -3,7 +3,7 @@ template(name='profile')
         img.ui.image.bg_overlay(src="{{c.url image_id2 width=1000 }}")
         .ui.stackable.padded.grid
             // .row
-            .four.wide.column.scrolling
+            .four.wide.column.scrollin
                 // if me.edit_mode
                 // a.ui.fluid.compact.circular.button.fly_left(href='/users')
                 //     i.chevron.left.icon
@@ -55,7 +55,7 @@ template(name='profile')
                 +link_edit key='profile_link'
                 if editing_account
                     +boolean_field key='online' label='online'
-                    +text_edit key='current_status' label='status' icon='clock'
+                    +text_field key='current_status' label='status' icon='clock'
                 else 
                     if online 
                         .ui.green.large.label.invert
@@ -89,7 +89,7 @@ template(name='profile')
                     | message
                 if is_dev
                     +print_this
-            .twelve.wide.column.scrolling.subtemplate
+            .twelve.wide.column.scrollin.subtemplate
                 .ui.stackable.three.column.grid
                     +profile_section key='info' label='info' icon='info'
                     +profile_section key='roles' label='roles' icon='shield'
@@ -156,9 +156,9 @@ template(name='related_org_icon')
 template(name='user_info')
     .ui.header info
     // if editing_account
-    +text_edit key='first_name' label='first_name'
-    +text_edit key='last_name' label='last_name'
-    +text_edit key='display_name' label='display_name'
+    +text_field key='first_name' label='first_name'
+    +text_field key='last_name' label='last_name'
+    +text_field key='display_name' label='display_name'
 
 
            
@@ -571,7 +571,7 @@ template(name='user_sent')
         .ui.basic.circular.label #{title}
             small #{count}
         
-    .ui.stackable.cards.scrolling
+    .ui.stackable.cards.scrollin
         each sent_items
             .ui.card
                 .content
@@ -620,7 +620,7 @@ template(name='user_sent')
 //         if can_edit 
 //             unless submitted
 //                 +date_edit key='date' label='date'
-//                 +text_edit key='notes' label='notes'
+//                 +text_field key='notes' label='notes'
 //                 +key_value_edit key='tiffen_type' value='meat'
 //                 +key_value_edit key='tiffen_type' value='veggie'
 //                 .ui.green.button.submit_order
@@ -641,7 +641,7 @@ template(name='user_offers')
     .ui.center.aligned.header 
         i.hand.holding.heart.icon
         |user offers
-    .scrolling
+    .scrollin
         each offers
             .ui.segment
                 a.ui.header(href="/m/offer/#{_id}/view") 
@@ -665,7 +665,7 @@ template(name='user_skills')
     .ui.center.aligned.header 
         i.concierge.bell.icon
         |#{current_user.name} skills
-    .scrolling
+    .scrollin
         each skills
             .ui.segment
                 a.ui.header(href="/m/skill/#{_id}/view") #{bounty}pts: #{title}
@@ -681,7 +681,7 @@ template(name='user_requests')
     .ui.center.aligned.header 
         i.concierge.bell.icon
         |#{current_user.name} requests
-    .scrolling
+    .scrollin
         each requests
             .ui.segment
                 a.ui.header(href="/m/request/#{_id}/view") #{bounty}pts: #{title}
@@ -919,7 +919,7 @@ template(name='food_order_view')
         if can_edit 
             unless submitted
                 +date_edit key='date' label='date'
-                +text_edit key='notes' label='notes'
+                +text_field key='notes' label='notes'
                 +key_value_edit key='tiffen_type' value='meat'
                 +key_value_edit key='tiffen_type' value='veggie'
                 .ui.green.button.submit_order
