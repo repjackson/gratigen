@@ -35,7 +35,7 @@ template(name='nav')
             a.icon.item.toggle_admin_mode(title='toggle admin mode' class=admin_mode_class)
                 i.large.shield.icon
         // .six.wide.center.aligned.column
-        a.item(href="/add" title='Engage')
+        a.item.add_doc(title='Engage')
             // i.large.play.icon
             // +add_tab
             +i name='play-button-circled--v1' color='40C057' cl='ui mini image'
@@ -140,7 +140,7 @@ template(name='search')
             |#{title}
 
 
-template(name='add')
+template(name='add_doc')
     // div
     .ui.padded.grid 
         .sixteen.wide.center.aligned.column
@@ -162,7 +162,7 @@ template(name='add')
                 +thing_picker model='request' icon='commercial' color='40C057' 
                 .ui.huge.popup create request
                 //green
-                div
+                // div
                 
                 +thing_picker model='org' icon='groups' color='83DFF4' 
                 .ui.huge.popup create organization
@@ -187,13 +187,17 @@ template(name='add')
                 +thing_picker model='badge' icon='badge' color='1255B8'
                 .ui.huge.popup create badge
                 //blue
-                div
-                +thing_picker model='datetime' icon='overtime--v1' color='FD7E14'
+                // div
+                // +thing_picker model='datetime' icon='overtime--v1' color='FD7E14'
+                // .ui.huge.popup create 
                 +thing_picker model='location' icon='worldwide-location' color='40C057'
+                .ui.huge.popup create location
                 +thing_picker model='accounts' icon='gold-bars' color='FAB005'
+                .ui.huge.popup create transfer
                 //people
-            .ui.fluid.button.save_doc 
-                    i.big.save.icon
+                .ui.big.green.circular.button.save_doc 
+                    i.large.save.icon
+                    |save #{model}
             with current_doc 
                 +Template.dynamic template=model_edit_template
     

@@ -73,12 +73,12 @@ template(name='thing_picker')
         +i name=icon color=color cl='ui mini inline image'
             i.exchange.large.icon
         |#{model}  
-    .ui.animated.fade.basic.inverted.circular.button.pick_thing.zoomer.invert(class=model_picker_class style="color:##{color}")
-            .visible.content
+    .ui.animated.fade.basic.inverted.circular.big.button.pick_thing.zoomer.invert(class=model_picker_class style="color:##{color}")
+        .visible.content
              +i name=icon color=color cl='ui mini inline image'
-                i.big.icon(class=icon)
-            .hidden.content
-                small #{model}
+            // i.big.icon(class=icon)
+        .hidden.content
+            strong #{model}
 
 
 // template(name='thing_view_item')

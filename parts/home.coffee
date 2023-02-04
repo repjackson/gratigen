@@ -3,10 +3,10 @@ if Meteor.isClient
         @layout 'layout'
         @render 'home'
         ), name:'home'
-    Router.route '/add', (->
+    Router.route '/add/:doc_id', (->
         @layout 'layout'
-        @render 'add'
-        ), name:'add'
+        @render 'add_doc'
+        ), name:'add_doc'
     
 
     Template.layout.helpers 
@@ -114,9 +114,9 @@ if Meteor.isClient
         # 'click .toggle_addmode': ->
         #     Session.set('addmode', !Session.get('addmode'))
     Template.home.events 
-        'click .toggle_editmode':->
-            Session.set('editmode', !Session.get('editmode'))
-            console.log Session.get('editmode')
+        'click .toggle_editing':->
+            Session.set('editing', !Session.get('editing'))
+            console.log Session.get('editing')
         'click .show_modal': (e,t)->
             Session.set('current_thing_id', @_id)
             console.log @
@@ -170,36 +170,37 @@ if Meteor.isClient
             # if @model is Template.parentData().model
             # parent = Template.parentData()
             # if parent and parent.model
-    Template.add.onCreated ->
+    Template.add_doc.onCreated ->
         @autorun => Meteor.subscribe 'user_current_doc', ->
 if Meteor.isServer 
     Meteor.publish 'user_current_doc', ->
         Docs.find 
             _id: Meteor.user()._doc_id
 if Meteor.isClient
-    Template.add.helpers 
-        current_doc: ->
-            Docs.findOne Meteor.user()._doc_id, 
+    Template.add_doc.helpers 
+        # current_doc: ->
+        #     Docs.findOne Meteor.user()._doc_id, 
         model_edit_template: ->
-            "#{@model}_edit"
+            "#{@model}_view"
         
     Template.thing_picker.events
         'click .pick_thing':->
-            if Meteor.user()._doc_id
-                edit_post = Docs.findOne Meteor.user()._doc_id
-                Docs.update edit_post._id, 
+            doc_id = Router.current().params.doc_id
+            if doc_id
+                edit_post = Docs.findOne doc_id
+                Docs.update doc_id, 
                     $set:
                         model:@model
-            else 
-                new_id = 
-                    Docs.insert 
-                        model:@model 
-                Meteor.users.update Meteor.userId(), 
-                    $set:
-                        _doc_id:new_id
+            # else 
+            #     new_id = 
+            #         Docs.insert 
+            #             model:@model 
+            #     Meteor.users.update Meteor.userId(), 
+            #         $set:
+            #             _doc_id:new_id
             
             Session.set('current_thing_id', new_id)      
-            Session.set('editmode',true)
+            Session.set('editing',true)
             # $('.ui.modal').modal({
             #     inverted:true
             #     }).modal('show')

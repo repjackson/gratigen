@@ -1,22 +1,23 @@
 template(name='text_field')
-    .ui.segment
-        div
-        if icon
-            i.grey.icon(class=icon)
-            // +i name=icon
-        .ui.inline.small.header
-            if title
-                |#{title}
-            else if label
-                |#{label}
-            else if key
-                |#{key}
-                //- +clear_value
-        if currentUser.editing
-            .ui.icon.large.fluid.input
-                input.edit_text(type='text' value=field_value placeholder=placeholder autocomplete="off")
-        else 
-            .ui.header #{field_value}
+    if currentUser.editing
+        .ui.segment
+            div
+            if icon
+                i.grey.icon(class=icon)
+                // +i name=icon
+            .ui.inline.small.header
+                if title
+                    |#{title}
+                else if label
+                    |#{label}
+                else if key
+                    |#{key}
+                    //- +clear_value
+            if currentUser.editing
+                .ui.icon.large.fluid.input
+                    input.edit_text(type='text' value=field_value placeholder=placeholder autocomplete="off")
+    else 
+        .ui.header(class=view_class) #{field_value}
 
 
 template(name='youtube_edit')

@@ -50,12 +50,13 @@ if Meteor.isServer
             Meteor.users.find match, 
                 limit:3
 if Meteor.isClient
-    Template.add.onRendered ->
+    Template.add_doc.onRendered ->
         Meteor.setTimeout ->
             $('.button').popup()
         , 2000
-    Template.add.events 
+    Template.add_doc.events 
         'click .save_doc': ->
+            Router.go "/d/#{@model}/#{@_id}"
             # current_doc = 
             #     Docs.findOne Meteor.user()._doc_id
             # if current_doc
@@ -134,6 +135,11 @@ if Meteor.isClient
             $('.search_site').val('')
             Session.set('current_query', null)
     Template.nav.events
+        'click .add_doc': ->
+            new_id = 
+                Docs.insert 
+                    model:'post'
+            Router.go "/add/#{new_id}"
         'click .toggle_online': ->
             if Meteor.user().online
                 Meteor.users.update Meteor.userId(),

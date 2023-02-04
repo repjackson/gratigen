@@ -59,17 +59,37 @@ template(name='home')
         .eight.wide.scrolling.column
             // +quickchat
             .ui.one.column.grid 
-                if online_user_docs.count
-                    .centered.column
+                .centered.column
+                
                     
-                        
-                        // .ui.fluid.input 
-                        //     textarea
-                        // // div
-                        +online_users
+                    // .ui.fluid.input 
+                    //     textarea
+                    // // div
+                    +online_users
 
                 .centered
-                    +model_filters
+                    +filter_model model='post' icon='for-you' color='1255B8'
+                    //blue
+                    +filter_model model='offer' icon='hand-holding-heart' color='FF73EA'
+                    //pink
+                    +filter_model model='request' icon='commercial' color='40C057'     
+                    //green
+
+                    div
+                    +filter_model model='org' icon='groups' color='83DFF4'
+                    //light blue
+                    +filter_model model='project' icon='project' color='7229AF' 
+                    //violet
+                    +filter_model model='event' icon='calendar' color='FAB005'
+                    //yellow
+                    +filter_model model='role' icon='what-i-do' color='42E8C4'
+                    //turquoise
+                    +filter_model model='task' icon='task' color='B785E1'
+                    //lavender
+                    +filter_model model='resource' icon='field-and-tractor' color='FD7E14'  
+                    //orange
+                    +filter_model model='skill' icon='wrench' color='ff0000'
+                    //red
                     
                     // +filter_model model='food' icon='food' 83DFF4
                 .centered   
@@ -150,43 +170,46 @@ template(name='home')
         with current_viewing_thing
             .ui.grid
                 .sixteen.wide.column
-                    +model_icon
+                    if _is 'model' 'org'
+                        .ui.circular.basic.button(href="/orgs")
+                            +i name='groups' color='83DFF4'
+                    if _is 'model' 'project'
+                        .ui.circular.basic.button(href="/projects")
+                            +i name='project' color='7229AF'
+                    if _is 'model' 'post'
+                        .ui.circular.basic.button(href="/posts")
+                            +i name='for-you' color='1255B8'
+                    if _is 'model' 'event'
+                        .ui.circular.basic.button(href="/events")
+                            +i name='calendar' color='FAB005'
+                    if _is 'model' 'task'
+                        .ui.circular.basic.button(href="/tasks")
+                            +i name='task' color='B785E1'
+                    if _is 'model' 'offer'
+                        .ui.circular.basic.button(href="/offers")
+                            +i name='hand-holding-heart' color='FF73EA'
+                    if _is 'model' 'request'
+                        .ui.circular.basic.button(href="/requests")
+                            +i name='commercial' color='40C057'
+                    if _is 'model' 'role'
+                        .ui.circular.basic.button(href="/roles")
+                            +i name='what-i-do' color='42E8C4'  
+                    if _is 'model' 'resource'
+                        .ui.circular.basic.button(href="/resources")
+                            +i name='field-and-tractor' color='42E8C4'        
+                            
+                        .ui.icon.right.floated.button.toggle_editing
+                            i.small.pencil.icon
                 .thirteen.wide.centered.column
                     //on click go to full page
-                    .ui.inline.centered.header #{title}
+                    .ui.inline.centered.header.huge #{title}
+
             .scrollin.content
-                if session_is 'editmode' true
+                if session_is 'editing' true
                     +Template.dynamic template=edit_template
                 else 
                     +Template.dynamic template=view_template
     // +view_chats
-
-template(name='model_filters')
-    +filter_model model='post' icon='for-you' color='1255B8'
-    //blue
-    +filter_model model='offer' icon='hand-holding-heart' color='FF73EA'
-    //pink
-    +filter_model model='request' icon='commercial' color='40C057'     
-    //green
-
-    div
-    +filter_model model='org' icon='groups' color='83DFF4'
-    //light blue
-    +filter_model model='project' icon='project' color='7229AF' 
-    //violet
-    +filter_model model='event' icon='calendar' color='FAB005'
-    //yellow
-    +filter_model model='role' icon='what-i-do' color='42E8C4'
-    //turquoise
-    +filter_model model='task' icon='task' color='B785E1'
-    //lavender
-    +filter_model model='resource' icon='field-and-tractor' color='FD7E14'  
-    //orange
-    +filter_model model='skill' icon='wrench' color='ff0000'
-    //red
-
-
-
 
 template(name='home_block')
     details.ui.fluid.styled.accordion
