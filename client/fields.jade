@@ -390,7 +390,7 @@ template(name='raw_view')
 template(name='textarea_field')
     details.ui.styled(class=accordion_class)
         summary.title
-            .ui.dropdown.icon
+            // .ui.dropdown.icon
             .ui.inline.header.zoomer
                 if icon
                     // i.icon(class=field_value)
@@ -579,7 +579,8 @@ template(name='array_field')
                 //         |#{this}
     else 
         each field_value 
-            .ui.basic.label #{this}
+            .ui.basic.label.say_this #{this}
+
 
 // // template(name='array_field')
 // //     .spacer
@@ -609,16 +610,6 @@ template(name='array_field')
 // //                     |#{this}
             
                 
-template(name='array_view')
-    if field_value
-        // div
-        if icon
-            i.icon(class=icon)
-        if label
-            .ui.inline.small.grey.header.say_body(title=title)
-                |#{label}
-        each field_value
-            .ui.basic.label.say_body #{this}
 
 
 // template(name='children_edit')
@@ -1070,7 +1061,7 @@ template(name='single_user_view')
 
 
 
-template(name='multi_user_edit')
+template(name='multi_user_field')
     div
     .ui.inline.header
         if icon

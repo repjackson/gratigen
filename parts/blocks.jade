@@ -357,10 +357,10 @@ template(name='big_user_card')
                 a.header(href="/user/#{username}")
                      |#{first_name} #{last_name} 
                     //- .meta @#{username}
-                    //- +array_view key='tags' label='Tags'
+                    //- +array_field key='tags' label='Tags'
             if is_staff
                 .content
-                    +array_view key='roles'
+                    +array_field key='roles'
                         
 template(name='user_button')
     a.ui.compact.button(href="/user/#{user.username}/")

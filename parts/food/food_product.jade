@@ -549,9 +549,9 @@ template(name='user_food')
         a.ui.circular.basic.icon.button(href="/user/#{current_user.username}/edit/food_product")
             i.pencil.icon
     div
-    +array_view key='allergens' label='allergens'
-    +array_view key='food_product_likes' label='food_product likes'
-    +array_view key='food_product_dislikes' label='food_product dislikes'
+    +array_field key='allergens' label='allergens'
+    +array_field key='food_product_likes' label='food_product likes'
+    +array_field key='food_product_dislikes' label='food_product dislikes'
     each food_product_orders
         +food_product_order_view
 

@@ -59,6 +59,8 @@ template(name='user_edit')
                     +user_edit_finance
                 .eight.wide.column
                     +user_edit_badges
+                    
+                    
                 .six.wide.column
                     .ui.header food intolerances 
                     +array_picker key='food_intolerances' value='Dairy'
@@ -300,7 +302,7 @@ template(name='user_edit_account')
                     i.code.icon
                     +username_edit
                     +boolean_field key='disabled' label='disabled'
-                    +multi_user_edit key='user_representatives' label='user representatives'
+                    +multi_user_field key='user_representatives' label='user representatives'
                     div
                     with current_user
                         .ui.button.remove_user 

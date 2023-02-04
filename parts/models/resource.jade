@@ -37,7 +37,7 @@ template(name='resource_big_card')
                 .ui.inline.header 
                     |#{daily_rate}
                     small p/day
-                +array_view key='tags'
+                +array_field key='tags'
                 unless anonymous
                     a(href="/user/#{_author_username}")
                         img.ui.avatar.image(src="{{c.url _author.image_id width=400 height=600 crop='fit'}}")

@@ -127,7 +127,7 @@ template(name='org_view')
                 if currentUser.editing 
                     +array_field key='tags' icon='tags'
                 else    
-                    +array_view key='tags' icon='tags'
+                    +array_field key='tags' icon='tags'
                 
                 +title_link_buttons
                 .spacer
@@ -191,7 +191,7 @@ template(name='org_view')
                     i.users.icon
                     |members
                 if currentUser.editing 
-                    +multi_user_edit key='member_ids' label='members'
+                    +multi_user_field key='member_ids' label='members'
                 else 
                     each member_ids
                         +user_pill
@@ -305,7 +305,7 @@ template(name='org_view')
         //                         |audience
         //                     +boolean_field key='private' label='private' 
         //                     if private 
-        //                         +multi_user_edit key='access_user_ids' label='user picker'
+        //                         +multi_user_field key='access_user_ids' label='user picker'
         //                     +array_field key='skills' label='skills' icon='wrench'
         //                 .column
         //                     +model_picker model='skill' icon='wrench'

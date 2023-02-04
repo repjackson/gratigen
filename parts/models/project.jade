@@ -21,7 +21,7 @@ template(name='project_card')
                 |#{when}
             // +comments_view_small
             +author_info
-            +array_view key='role_titles' label='roles' icon='shield'
+            +array_field key='role_titles' label='roles' icon='shield'
 
 
 template(name='set_project_sort_key')
@@ -122,7 +122,7 @@ template(name='project_view')
                 each member_ids
                     +user_pill
                 if currentUser.editing 
-                    +multi_user_edit key='member_ids' label='members'
+                    +multi_user_field key='member_ids' label='members'
 
                 +textarea_field key='brief' tagline='breif description or your organization'
                 +textarea_field key='description' tagline='complete description of your organization'
@@ -217,9 +217,9 @@ template(name='project_view')
     //                     .item #{views} views
     //                 each viewers
     //                     .ui.label #{username}
-    //                 +array_view key='tags' label='tags'
-    //                 +array_view key='role_titles' label='roles' icon='shield'
-    //                 +array_view key='task_titles' label='tasks' icon='tasks'
+    //                 +array_field key='tags' label='tags'
+    //                 +array_field key='role_titles' label='roles' icon='shield'
+    //                 +array_field key='task_titles' label='tasks' icon='tasks'
     //                 .ui.header 
     //                     +i name='tasks'
     //                     |task ids (children)
@@ -232,7 +232,7 @@ template(name='project_view')
     //                     // a.ui.large.label(href="/task/#{this}") #{this}
     //                 +voting_full
     //                 .ui.header #{when}
-    //                 //- +array_view key='location_tags' label='location_tags'
+    //                 //- +array_field key='location_tags' label='location_tags'
     //                 +comments
     //         .twelve.wide.column.scrolling
     //             img.ui.image(src="{{c.url image_id }}" class=currentUser.darkmode_class)
@@ -499,7 +499,7 @@ template(name='project_edit')
                     |audience
                 +boolean_field key='private' label='private' 
                 if private 
-                    +multi_user_edit key='access_user_ids' label='user picker'
+                    +multi_user_field key='access_user_ids' label='user picker'
                 +group_crud
                 +role_crud
                 +task_picker

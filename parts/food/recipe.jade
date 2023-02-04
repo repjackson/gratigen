@@ -560,9 +560,9 @@ template(name='user_recipe')
         a.ui.circular.basic.icon.button(href="/user/#{current_user.username}/edit/recipe")
             i.pencil.icon
     div
-    +array_view key='allergens' label='allergens'
-    +array_view key='recipe_likes' label='recipe likes'
-    +array_view key='recipe_dislikes' label='recipe dislikes'
+    +array_field key='allergens' label='allergens'
+    +array_field key='recipe_likes' label='recipe likes'
+    +array_field key='recipe_dislikes' label='recipe dislikes'
     each recipe_orders
         +recipe_order_view
 

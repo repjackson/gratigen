@@ -135,10 +135,10 @@ template(name='service_view')
                             .item #{views} views
                         each viewers
                             .ui.label #{username}
-                        +array_view key='tags' label='tags' 
+                        +array_field key='tags' label='tags' 
                         +voting_full
                         .ui.header #{when}
-                        //- +array_view key='location_tags' label='location_tags' 
+                        //- +array_field key='location_tags' label='location_tags' 
                         +comments
                 .twelve.wide.column.scrolling
                     img.ui.image(src="{{c.url image_id }}" class=currentUser.darkmode_class)
@@ -199,7 +199,7 @@ template(name='service_edit')
                         |audience
                     +boolean_field key='private' label='private' 
                     if private 
-                        +multi_user_edit key='access_user_ids' label='user picker' 
+                        +multi_user_field key='access_user_ids' label='user picker' 
                     +group_crud
                     
 

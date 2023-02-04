@@ -40,11 +40,11 @@ template(name='badge_view')
                 +textarea_view key='description' label='description'
                 +image_view key='image_id' label='image'
                 div 
-                +array_view key='tags' label='tags'
+                +array_field key='tags' label='tags'
                 .spacer
                 .spacer
                 +comments
-                //- +array_view key='location_tags' label='location_tags'
+                //- +array_field key='location_tags' label='location_tags'
             .eight.wide.column
                 .ui.header 
                     +i name='badger'

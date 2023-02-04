@@ -12,6 +12,8 @@ template(name='role_view')
     .ui.stackable.padded.grid
         .two.column.row 
             .column
+                +single_user_field key='assigned_to_user_id'
+                +multi_user_field key='assigned_to_user_ids'
                 .ui.header 
                     |assigned to 
                 each assigned_users
@@ -24,16 +26,16 @@ template(name='role_view')
                     .item #{views} views
                 each viewers
                     .ui.label #{username}
-                +array_view key='tags' label='tags' direct=true
-                +array_view key='badge_titles' label='badges' direct=true
+                +image_field key='image_id' label='image'
+                +array_field key='tags' label='tags' direct=true
+                +array_field key='badge_titles' label='badges' direct=true
                 +voting_full
                 .ui.header #{when}
                 +eft_viewer
-                //- +array_view key='location_tags' label='location_tags' direct=true
+                //- +array_field key='location_tags' label='location_tags' direct=true
+            .column
                 +comments
     
-            .column
-                img.ui.image(src="{{c.url image_id }}" class=currentUser.darkmode_class)
                 // a.ui.header(href="/user/#{target.username}")
                 //     |#{target.username}
                 if youtube_id 
@@ -72,7 +74,7 @@ template(name='role_edit')
                     +task_picker
                 .column
                     +model_picker model='event' icon='calendar'
-                    +multi_user_edit key='permissioned_user_ids' label='permissioned users'
+                    +multi_user_field key='permissioned_user_ids' label='permissioned users'
                     i.large.link.red.remove.icon.delete_role
                 .column
                     .ui.header 
@@ -119,7 +121,7 @@ template(name='role_edit')
                         |audience
                     +boolean_field key='private' label='private' 
                     if private 
-                        +multi_user_edit key='access_user_ids' label='user picker' direct=true
+                        +multi_user_field key='access_user_ids' label='user picker' direct=true
                 .column
                     +group_crud
                     +array_field key='skills' label='skills' icon='wrench' direct=true

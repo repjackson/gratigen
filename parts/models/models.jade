@@ -141,7 +141,7 @@ template(name='task_view')
                     
             .column
                 +html_view key='description' label='description'
-                +array_view key='tags' label='tags' icon='tags'
+                +array_field key='tags' label='tags' icon='tags'
                 if currentUser
                     .ui.button.record_work
                         |record work
@@ -376,7 +376,7 @@ template(name='work_view')
                 .ui.header #{when}
                 div.scrolling
                     +html_view key='notes' label='directions'
-                // +array_view key='tags' label='tags' icon='tags'
+                // +array_field key='tags' label='tags' icon='tags'
                 +comments
             .four.wide.column
                 +voting_full

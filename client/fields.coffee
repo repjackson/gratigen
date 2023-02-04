@@ -620,14 +620,14 @@ Template.multi_doc_edit.events
 
 
 
-Template.multi_user_edit.onCreated ->
+Template.multi_user_field.onCreated ->
     @user_results = new ReactiveVar
     @autorun => @subscribe 'all_users'
-Template.multi_user_edit.helpers
+Template.multi_user_field.helpers
     user_results: -> 
         console.log Template.instance().user_results.get()
         Template.instance().user_results.get()
-Template.multi_user_edit.events
+Template.multi_user_field.events
     'click .clear_results': (e,t)->
         t.user_results.set null
 

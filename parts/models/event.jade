@@ -272,12 +272,12 @@ template(name='event_view')
                 with current_doc
                     +gcal_button
                 .ui.hidden.divider
-                +array_view key='tags' label='tags' icon='tags red'
+                +array_field key='tags' label='tags' icon='tags red'
                 div
                 div
                 if currentUser
                     +voting_full
-                +array_view key='location_tags' label='location tags' icon='marker'
+                +array_field key='location_tags' label='location tags' icon='marker'
                 div
             .eight.wide.column.scrollin
                 a(href="{{c.url image_id }}")
@@ -478,7 +478,7 @@ template(name='ticket_view')
                     .spacer
                     +comments
                     // +voting_full
-                    //- +array_view key='location_tags' label='location_tags'
+                    //- +array_field key='location_tags' label='location_tags'
                     div
                 .four.wide.column
                     //- .ui.fluid.green.button.submit

@@ -214,7 +214,7 @@ template(name='view_chat')
                     +image_field key='image_id' 
                     +array_field key='tags' label='tags'
                 else     
-                    +array_view key='tags' label='tags'
+                    +array_field key='tags' label='tags'
                 //- if can_edit
                 //-     +multi_doc key='view_roles' label='view roles' ref_model='role'
                 //- else     

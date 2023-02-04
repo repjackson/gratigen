@@ -123,7 +123,7 @@ template(name='request_view')
                     img.ui.avatar.image(src="{{c.url _author.image_id height=200 width=200 gravity='face' crop='fill'}}")
                     |#{_author.name}
                 .ui.header #{when}
-                +array_view key='location_tags' label='location_tags'
+                +array_field key='location_tags' label='location_tags'
                 div
                 +voting_full
             .column

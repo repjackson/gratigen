@@ -100,7 +100,7 @@ template(name='transfer_view')
                     .spacer
                     .spacer
                     +comments
-                    //- +array_view key='location_tags' label='location_tags'
+                    //- +array_field key='location_tags' label='location_tags'
                 .five.wide.column
                     a.fly_right(href="/user/#{recipient.username}")
                         img.ui.circular.centered.fluid.pointer.zoom.image(src="{{c.url recipient.image_id height=500 width=500 gravity='face' crop='fill'}}" class=currentUser.darkmode_class)

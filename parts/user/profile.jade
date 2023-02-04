@@ -113,6 +113,7 @@ template(name='profile')
                     +profile_section key='skills' label='Skills' icon='chat'
                     +profile_section key='events' label='Events' icon='prize'
                     +profile_section key='accounts' label='Accounts' icon='car'
+                    +profile_section key='food' label='food' icon='food'
                 +user_dashboard
 
 
@@ -413,12 +414,13 @@ template(name='user_debit_segment')
             .ui.mini.basic.label #{this}
                         
 template(name='friend_button')
-    if is_friend
-        .ui.blue.large.icon.button.unfriend(title='unfriend')
-            i.checkmark.large.icon
-    else
-        .ui.large.icon.button.friend(title='friend')
-            i.user.plus.large.icon
+    unless is_current_user
+        if is_friend
+            .ui.blue.large.icon.button.unfriend(title='unfriend')
+                i.checkmark.large.icon
+        else
+            .ui.large.icon.button.friend(title='friend')
+                i.user.plus.large.icon
                         
                         
                         
@@ -610,9 +612,9 @@ template(name='user_sent')
 //         a.ui.circular.basic.icon.button(href="/user/#{current_user.username}/edit/orders")
 //             i.pencil.icon
 //     div
-//     +array_view key='allergens' label='allergens'
-//     +array_view key='orders_likes' label='orders likes'
-//     +array_view key='orders_dislikes' label='orders dislikes'
+//     +array_field key='allergens' label='allergens'
+//     +array_field key='orders_likes' label='orders likes'
+//     +array_field key='orders_dislikes' label='orders dislikes'
 //     each orders
 //         +user_order_item
 
@@ -715,14 +717,14 @@ template(name='user_friends')
                 .ui.small.header 
                     i.fork.icon
                     |connected to
-                .ui.items
+                .ui.list
                     each friends
                         +user_item_small
             .column
                 .ui.small.header
                     i.fork.icon
                     |connected by
-                .ui.items
+                .ui.list
                     each friends_with
                         +user_item_small
 
@@ -730,13 +732,14 @@ template(name='user_friends')
 template(name='user_item_small')
     a.item(href="/user/#{username}")
         img.ui.avatar.image(src="{{c.url image_id gravity='face' crop='fit'}}")
-        .content
-            .header
-                |#{name}
-                small $#{credit}
-            .description
-                each tags
-                    .ui.basic.label #{this}
+        .ui.inline.header
+            |#{_name}
+        if points
+            small #{points}pts
+    .ui.popup
+        .description
+            each tags
+                .ui.basic.label #{this}
                 
                 
                 
