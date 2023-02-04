@@ -207,6 +207,12 @@ template(name='org_view')
                         +eft_picker color="FAB005" icon='university' label='education'
                         +eft_picker color="FD7E14" icon='paint brush' label='art'
                         +eft_picker color="FF0000" icon='users' label="community core"
+                .ui.header 
+                    +i name='rss'
+                    |activity
+                each log_items
+                    +log_item
+                +org_stats
                 // +doc_array_togggle key='member_ids' value=currentUser._id add_label='join' remove_label='joined'
                 // +group_crud
                 // +product_crud
@@ -216,23 +222,7 @@ template(name='org_view')
                 // +keyresult_crud
                 // +objective_crud
                 // +shift_crud
-                // .ui.header 
-                //     +i name='rss'
-                //     |activity
             .five.wide.column
-                each log_items
-                    +log_item
-                .ui.header.refresh_org_stats
-                    +i name='line-chart'
-                    |stats
-                i.refresh.link.icon.refresh_org_stats
-                .ui.large.list
-                    .item #{total_credit_exchanged} credits exchanged
-                    .item #{views} views
-                    .item #{points} points
-                    .item #{member_count} members
-                    .item #{event_count} events
-                    .item #{post_count} posts
             .five.wide.column
                 +related_docs 
             .six.wide.column
@@ -310,6 +300,21 @@ template(name='org_view')
         //                 .column
         //                     +model_picker model='skill' icon='wrench'
         
+    
+    
+template(name='org_stats')
+    .ui.header.refresh_org_stats
+        +i name='line-chart'
+        |stats
+    i.refresh.link.icon.refresh_org_stats
+    .ui.large.list
+        .item #{total_credit_exchanged} credits exchanged
+        .item #{views} views
+        .item #{points} points
+        .item #{member_count} members
+        .item #{event_count} events
+        .item #{post_count} posts
+
     
     
 template(name='related_docs')

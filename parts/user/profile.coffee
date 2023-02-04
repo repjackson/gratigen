@@ -46,7 +46,7 @@ if Meteor.isClient
 if Meteor.isServer 
     Meteor.publish 'bookmarked_docs', ->
         Docs.find 
-            _id:$in:Meteor.user().bookmark_ids
+            _id:$in:Meteor.user().bookmarked_ids
     Meteor.publish 'user_read_docs', (username)->
         user = Meteor.users.findOne username:username
         Docs.find 

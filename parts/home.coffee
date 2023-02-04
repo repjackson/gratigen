@@ -33,7 +33,7 @@ if Meteor.isClient
 if Meteor.isServer
     Meteor.publish 'my_bookmarks', ()->
         Docs.find 
-            _id: $in: Meteor.user().bookmark_ids
+            _id: $in: Meteor.user().bookmarked_ids
 if Meteor.isServer
     Meteor.publish 'latest_updated', ()->
         Docs.find {_updated_timestamp:$exists:true},{

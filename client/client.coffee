@@ -147,6 +147,14 @@ Template.layout.events
     #     .transition('fade in', 5000)
 
 
+Template.layout.events 
+    'click .say_this': ->
+        synth = window.speechSynthesis;
+        
+        utterThis = new SpeechSynthesisUtterance(@valuOf())
+        synth.speak(utterThis);
+
+
 Tracker.autorun ->
     current = Router.current()
     Tracker.afterFlush ->

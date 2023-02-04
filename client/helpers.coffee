@@ -52,7 +52,7 @@ Template.registerHelper 'is_admin', (model) ->
     Meteor.user() and Meteor.user().admin
 Template.registerHelper 'bookmarked_docs', (model) ->
     Docs.find 
-        _id:$in:Meteor.user().bookmark_ids
+        _id:$in:Meteor.user().bookmarked_ids
 
 Template.registerHelper 'model_docs_helper', (model) ->
     Docs.find 

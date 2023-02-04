@@ -21,20 +21,17 @@ if Meteor.isClient
             console.log @
    
     Template.bookmark_button.helpers
-        is_bookmarked: ->
-            Meteor.user().bookmark_ids and @_id in Meteor.user().bookmark_ids
-            
+        is_bookmarked: -> Meteor.user().bookmarked_ids and @_id in Meteor.user().bookmarked_ids
     Template.bookmark_button.onRendered ->
         Meteor.setTimeout ->
             $('.button').popup()
         , 1000
-
     Template.bookmark_button.events
         'click .toggle_bookmark': (e,t)->
-            if Meteor.user().bookmark_ids and @_id in Meteor.user().bookmark_ids
+            if Meteor.user().bookmarked_ids and @_id in Meteor.user().bookmarked_ids
                 Meteor.users.update Meteor.userId(), 
                     $pull: 
-                        bookmark_ids:@_id
+                        bookmarked_ids:@_id
                 $('body').toast(
                     showIcon: 'bookmark'
                     message: 'bookmark removed'
@@ -47,10 +44,46 @@ if Meteor.isClient
             else 
                 Meteor.users.update Meteor.userId(), 
                     $addToSet: 
-                        bookmark_ids:@_id
+                        bookmarked_ids:@_id
                 $('body').toast(
                     showIcon: 'bookmark'
                     message: 'bookmark added'
+                    # showProgress: 'bottom'
+                    class: 'success'
+                    displayTime: 'auto',
+                    position: "bottom right"
+                )
+                $(e.currentTarget).closest('.button').transition('tada',1000)
+                
+   
+    Template.subscribe_button.helpers
+        is_subscribeed: -> Meteor.user().subscribed_ids and @_id in Meteor.user().subscribed_ids
+    Template.subscribe_button.onRendered ->
+        Meteor.setTimeout ->
+            $('.button').popup()
+        , 1000
+    Template.subscribe_button.events
+        'click .toggle_subscribe': (e,t)->
+            if Meteor.user().subscribed_ids and @_id in Meteor.user().subscribed_ids
+                Meteor.users.update Meteor.userId(), 
+                    $pull: 
+                        subscribed_ids:@_id
+                $('body').toast(
+                    showIcon: 'subscribe'
+                    message: 'subscribe removed'
+                    # showProgress: 'bottom'
+                    class: 'info'
+                    displayTime: 'auto',
+                    position: "bottom right"
+                )
+                $(e.currentTarget).closest('.button').transition('tada',1000)
+            else 
+                Meteor.users.update Meteor.userId(), 
+                    $addToSet: 
+                        subscribed_ids:@_id
+                $('body').toast(
+                    showIcon: 'subscribe'
+                    message: 'subscribe added'
                     # showProgress: 'bottom'
                     class: 'success'
                     displayTime: 'auto',
