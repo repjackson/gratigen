@@ -265,6 +265,12 @@ if Meteor.isServer
 if Meteor.isClient
     Template.online_users.onCreated ->
         @autorun => @subscribe 'online_users', ->
+    Template.online_users.onRendered ->
+        $('.item').popup({
+            inline: true
+            position:'bottom right'
+          })
+
     Template.online_users.helpers 
         online_user_docs: ->
             Meteor.users.find {online:true}

@@ -59,7 +59,7 @@
 
 
 Meteor.users.helpers
-    name: ->
+    _name: ->
         if @display_name
             "#{@display_name}"
         else if @first_name

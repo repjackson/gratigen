@@ -14,6 +14,11 @@ Template.registerHelper 'accordion_class', (input) ->
     else 
         'accordion'
 
+Template.registerHelper 'online_user_docs', () -> 
+    Meteor.users.find 
+        online:true
+
+
 Template.registerHelper 'doc_by_id', (input) -> 
     Docs.findOne @valueOf()
 Template.registerHelper 'all_users', (input) -> 

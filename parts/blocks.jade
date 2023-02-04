@@ -867,10 +867,13 @@ template(name='online_allies')
                         .ui.basic.label #{this}
                         
 template(name='online_users')
-    .ui.header 
-        // |online users
+    if currentUser.admin_mode
+        .ui.header 
+            i.green.globe.icon
+            |#{online_user_docs.count} 
+            |online users
     //.ui.selectable.animated.list.smallscroll
-    .ui.fluid.menu.hscroll.secondary
+    .ui.fluid.secondary.menu.hscroll
         each online_user_docs 
             a.item.fly_right(href="/user/#{username}")
                 img.ui.circular.tiny.image(src="{{c.url image_id width=400 height=400 gravity='face' crop='fill'}}")
@@ -878,10 +881,11 @@ template(name='online_users')
                 //click needs to pop up modal of user page
                 
                 // make sure comments aren't indented under code, it'll break
-                ui.popup.div #{username}
-                // if tags 
-                //     each tags 
-                //         .ui.basic.label #{this}
+            .ui.popup
+                |#{username}
+                if tags 
+                    each tags 
+                        .ui.basic.label #{this}
 
 template(name='open_requests')
     .ui.header open requests
