@@ -172,6 +172,7 @@ if Meteor.isClient
             # if parent and parent.model
     Template.add_doc.onCreated ->
         @autorun => Meteor.subscribe 'user_current_doc', ->
+        @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
 if Meteor.isServer 
     Meteor.publish 'user_current_doc', ->
         Docs.find 
@@ -195,11 +196,11 @@ if Meteor.isClient
             #     new_id = 
             #         Docs.insert 
             #             model:@model 
-            #     Meteor.users.update Meteor.userId(), 
-            #         $set:
-            #             _doc_id:new_id
+            Meteor.users.update Meteor.userId(), 
+                $set:
+                    editing:true
             
-            Session.set('current_thing_id', new_id)      
+            # Session.set('current_thing_id', new_id)      
             Session.set('editing',true)
             # $('.ui.modal').modal({
             #     inverted:true
