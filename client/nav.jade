@@ -43,12 +43,6 @@ template(name='nav')
         //     +i name='play-button-circled--v1' color='40C057'
         //     // i.small.circular.play.green.icon.invert
         //     .ui.huge.popup Engage
-        if currentUser
-            a.icon.item.toggle_online
-                if currentUser.online 
-                    i.green.checkmark.large.icon
-                else 
-                    i.slash.eye.outline.large.icon
         a.item(href='/tasks' title='tasks')
             i.tasks.icon
         a.icon.item.toggle_invert
@@ -57,12 +51,18 @@ template(name='nav')
         // +nav_search
         // .six.wide.column
         .right.menu
-            // if unread_count
-            //     a.ui.item.alerts.select_term(href="#" class=alert_toggle_class)
-            //         i.large.bell.small.yellow.icon
-            // else
-            //     a.ui.icon.item(href="/inbox" class="{{isActiveRoute 'inbox'}}")
-            //         i.large.outline.bell.big.blue.icon
+            if currentUser
+                a.icon.item.toggle_online
+                    if currentUser.online 
+                        i.green.checkmark.large.icon
+                    else 
+                        i.slash.eye.outline.large.icon
+            if unread_messages.count
+                a.ui.item.alerts.select_term(href="#" class=alert_toggle_class)
+                    i.large.bell.small.yellow.icon
+            else
+                a.ui.icon.item(href="/inbox" class="{{isActiveRoute 'inbox'}}")
+                    i.large.outline.bell.big.blue.icon
             // a.ui.item.zoomer.toggle_rightbar(href="/chat" class="{{isActiveRoute 'chat'}}")
             a.ui.item.zoomer.toggle_chatbar
                 if unread_count

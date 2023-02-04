@@ -140,11 +140,28 @@ if Meteor.isClient
                     $set:   
                         online:false
                         last_online_timestamp:Date.now()
+                $('body').toast(
+                    showIcon: 'eye'
+                    message: 'online'
+                    # showProgress: 'bottom'
+                    class: 'success'
+                    displayTime: 'auto',
+                    position: "bottom right"
+                )
+                        
             else 
                 Meteor.users.update Meteor.userId(),
                     $set:
                         online:true
                         last_offline_timestamp:Date.now()
+                $('body').toast(
+                    showIcon: 'eye slash'
+                    message: 'offline'
+                    # showProgress: 'bottom'
+                    class: 'info'
+                    displayTime: 'auto',
+                    position: "bottom right"
+                )
         
         'click .goto_doc': ->
             doc = Docs.findOne @_id 

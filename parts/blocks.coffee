@@ -69,8 +69,8 @@ if Meteor.isClient
                     $pull: 
                         subscribed_ids:@_id
                 $('body').toast(
-                    showIcon: 'subscribe'
-                    message: 'subscribe removed'
+                    showIcon: 'undo'
+                    message: 'unsubscribed'
                     # showProgress: 'bottom'
                     class: 'info'
                     displayTime: 'auto',
@@ -82,8 +82,8 @@ if Meteor.isClient
                     $addToSet: 
                         subscribed_ids:@_id
                 $('body').toast(
-                    showIcon: 'subscribe'
-                    message: 'subscribe added'
+                    showIcon: 'bell'
+                    message: 'subscribed'
                     # showProgress: 'bottom'
                     class: 'success'
                     displayTime: 'auto',
