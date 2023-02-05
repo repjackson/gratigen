@@ -307,7 +307,7 @@ template(name='image_field')
                 if field_value
                     //- label Image
                     a(href="{{c.url field_value }}" target='_window')
-                        img.ui.centered.fluid.rounded.image(src="{{c.url field_value height=500 gravity='face' crop='fill'}}" class=cl)
+                        img.ui.small.centered.fluid.rounded.image(src="{{c.url field_value height=500 gravity='face' crop='fill'}}" class=cl)
                     a#remove_photo.ui.right.corner.link.label
                         i.remove.link.icon
                     // .ui.button.call_cloud_visual

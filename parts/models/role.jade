@@ -10,7 +10,7 @@ template(name='role_item')
 
 template(name='role_view')
     .ui.stackable.padded.grid
-        .two.column.row 
+        .three.column.row 
             .column
                 +single_user_field key='assigned_to_user_id'
                 +multi_user_field key='assigned_to_user_ids'
@@ -27,6 +27,7 @@ template(name='role_view')
                 each viewers
                     .ui.label #{username}
                 +image_field key='image_id' label='image'
+                +image_field key='banner_image_id' icon='image' label='banner image'
                 +array_field key='tags' label='tags' direct=true
                 +array_field key='badge_titles' label='badges' direct=true
                 +voting_full
@@ -34,7 +35,10 @@ template(name='role_view')
                 +eft_viewer
                 //- +array_field key='location_tags' label='location_tags' direct=true
             .column
-                +textarea_field key='body' label='description' tagline='describe this role'
+                +textarea_field key='body' label='description' tagline='what are the characteristics of the person playing this role? what will their days be like?'
+                +textarea_field key='responsibilities' label='responsibilities' tagline='what responsibilities belong to the person playing this role?'
+                +textarea_field key='privaleges' label='privaleges' tagline='what rights and permissions belong to the person playing this role?'
+                
                 +comments
     
                 // a.ui.header(href="/user/#{target.username}")

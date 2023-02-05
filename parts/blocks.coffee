@@ -228,28 +228,37 @@ if Meteor.isServer
 
 if Meteor.isClient
     Template.model_crud.onCreated ->
-        @autorun => @subscribe 'model_search_results', @data.model, Session.get('model_search'), ->
-        # @autorun => @subscribe 'model_docs', @data.model, ->
+        @autorun => @subscribe 'model_search_results', @data.model, Session.get("#{@data.model}_model_search"), ->
+        @autorun => @subscribe 'child_docs', Router.current().params.doc_id, ->
     Template.model_crud.helpers
         model_results: ->
-            Docs.find 
-                model:Template.currentData().model
-                # title: {$regex:"#{Session.get('model_search')}",$options:'i'}
+            query = Session.get("#{Template.currentData().model}_model_search")
+            if query
+                Docs.find 
+                    model:Template.currentData().model
+                    title: {$regex:query,$options:'i'}
                 
-        picked_model: ->
+        model_children: ->
             parent_doc = Docs.findOne Router.current().params.doc_id
             # _id:parent_doc["#{Template.currentData().model}_id"]
             console.log Template.currentData().model
-            Docs.findOne
+            Docs.find
                 # model:Template.currentData().model
-                _id:parent_doc["#{Template.currentData().model}_id"]
+                _id:$in:parent_doc["#{Template.currentData().model}_ids"]
+        # picked_model: ->
+        #     parent_doc = Docs.findOne Router.current().params.doc_id
+        #     # _id:parent_doc["#{Template.currentData().model}_id"]
+        #     console.log Template.currentData().model
+        #     Docs.findOne
+        #         # model:Template.currentData().model
+        #         _id:parent_doc["#{Template.currentData().model}_id"]
         model_search_value: ->
-            Session.get('model_search')
+            Session.get("#{Template.currentData().model}_model_search")
         
     Template.model_crud.events
         'click .clear_search': (e,t)->
-            Session.set('model_search', null)
-            t.$('.model_search').val('')
+            Session.set("#{Template.currentData().model}_model_search", null)
+            $(e.currentTarget).closest('.model_search').val('')
 
             
         'click .remove_model': (e,t)->
@@ -285,8 +294,8 @@ if Meteor.isClient
                 $addToSet:
                     "#{Template.currentData().model}_ids":@_id
                     "#{Template.currentData().model}_titles":@title
-            Session.set('model_search',null)
-            t.$('.model_search').val('')
+            Session.set("#{Template.currentData().model}_model_search", null)
+            $(e.currentTarget).closest('.model_search').val('')
             $('body').toast(
                 # showIcon: 'heart'
                 message: "#{@title} attached"
@@ -302,9 +311,9 @@ if Meteor.isClient
             console.log val
             # wait till 2 characters to change session var which updates search results, keep fast
             if val.length > 1
-                Session.set('model_search', val)
+                Session.set("#{Template.currentData().model}_model_search", val)
 
-        'click .create_model': ->
+        'click .create_model': (e,t)->
             # Template.currentData().model is the declared argument for the template
             if Template.currentData().model
                 new_id = 
@@ -318,8 +327,8 @@ if Meteor.isClient
                     $addToSet:
                         "#{Template.currentData().model}_ids":@_id
                         "#{Template.currentData().model}_titles":@title
-                Session.set('model_search',null)
-                t.$('.model_search').val('')
+                Session.set("#{Template.currentData().model}_model_search", null)
+                $(e.currentTarget).closest('.model_search').val('')
 
                 $('body').toast(
                     # showIcon: 'heart'
@@ -332,20 +341,6 @@ if Meteor.isClient
 
 
             
-        
-
-
-# sdkfjvnkdf
-
-
-        
-        
-
-        
-        
-        
-        
-        
 if Meteor.isClient
     Template.badge_picker.onCreated ->
         @autorun => @subscribe 'badge_search_results', Session.get('badge_search'), ->
