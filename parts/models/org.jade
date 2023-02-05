@@ -174,7 +174,8 @@ template(name='org_view')
                 +textarea_field key='brief' tagline='breif description or your organization'
                 +textarea_field key='description' tagline='complete description of your organization'
                 +textarea_field key='body' tagline='body'
-                +role_crud
+                +model_crud model='role' label='roles'
+                +model_crud model='project'
                 +project_crud
                 +event_crud
                 +task_crud

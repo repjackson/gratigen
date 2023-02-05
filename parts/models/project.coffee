@@ -325,6 +325,7 @@ if Meteor.isClient
             t.$('.project_search').val('')
                     
         'keyup .project_search': (e,t)->
+            parent = Docs.findOne Router.current().params.doc_id
             # if e.which is '13'
             val = t.$('.project_search').val()
             console.log val
@@ -334,6 +335,8 @@ if Meteor.isClient
                     Docs.insert 
                         model:'project'
                         title:Session.get('project_search')
+                        parent_id:parent._id
+                        parent_model:parent.model
                 Docs.update Router.current().params.doc_id,
                     $addToSet:
                         project_ids:new_id
@@ -346,6 +349,7 @@ if Meteor.isClient
                     showProgress:'bottom'
                     position:'bottom right'
                 })
+            val = t.$('.project_search').val('')
 
         'click .create_project': ->
             parent = Docs.findOne Router.current().params.doc_id
@@ -370,6 +374,7 @@ if Meteor.isClient
                     
             Session.set('project_search',null)
         
+            val = t.$('.project_search').val('')
             # Docs.update
             # Router.go "/project/#{new_id}/edit"
 

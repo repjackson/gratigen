@@ -34,6 +34,7 @@ template(name='role_view')
                 +eft_viewer
                 //- +array_field key='location_tags' label='location_tags' direct=true
             .column
+                +textarea_field key='body' label='description' tagline='describe this role'
                 +comments
     
                 // a.ui.header(href="/user/#{target.username}")
