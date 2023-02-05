@@ -225,11 +225,22 @@ if Meteor.isServer
             match.title = {$regex:"#{model_title_queary}",$options:'i'}
             Docs.find match,
                 limit:5
+    Meteor.publish 'related_model_docs', (model,parent_id)->
+        console.log 'looking for related model docs', model, parent_id
+        
+        # match publication for related child docs with model_children helper below
+        if model and parent_id
+            parent = Docs.findOne parent_id
+            match = {model:model}
+            match._id = $in:parent["#{model}_ids"]
+            # match.title = {$regex:"#{model_title_queary}",$options:'i'}
+            Docs.find match,
+                limit:10
 
 if Meteor.isClient
     Template.model_crud.onCreated ->
         @autorun => @subscribe 'model_search_results', @data.model, Session.get("#{@data.model}_model_search"), ->
-        @autorun => @subscribe 'child_docs', Router.current().params.doc_id, ->
+        @autorun => @subscribe 'related_model_docs', @data.model, Router.current().params.doc_id, ->
     Template.model_crud.helpers
         model_results: ->
             query = Session.get("#{Template.currentData().model}_model_search")
