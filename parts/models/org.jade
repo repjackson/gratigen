@@ -210,6 +210,7 @@ template(name='org_view')
                 .ui.header 
                     +i name='rss'
                     |activity
+                +gift_of_gratitude
                 each log_items
                     +log_item
                 +org_stats
@@ -301,6 +302,17 @@ template(name='org_view')
         //                     +model_crud model='skill' icon='wrench'
         
     
+
+template(name='gratitude_engine')
+    .ui.segment 
+        .ui.header Give a Gift of Gratitude
+            .ui.input
+            .button give gratitude points
+            .button give reserve token
+            .button give money
+            .button a -service, product, resource,
+            .button give a time-type [badge, skill, task, role, resource]
+
     
 template(name='org_stats')
     .ui.header.refresh_org_stats

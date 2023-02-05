@@ -148,7 +148,6 @@ template(name='home')
             div
             // +comet_chat_block
             .ui.divider
-            #cometchat.invert
             +home_block template='bookmark_block' label='bookmarks' icon='bookmark'
             // +bookmark_block
             // +model_block model='post' icon='blog' color='42E8C4' title='latest posts'
@@ -317,6 +316,7 @@ template(name='comet_chat_block')
     +launch_comet name='captain_america' id='superhero2' avatar='https://data-us.cometchat.io/assets/images/avatars/captainamerica.png'
     +launch_comet name='spiderman' id='superhero3' avatar='https://data-us.cometchat.io/assets/images/avatars/spiderman.png'
     +launch_comet name='iron man' id='superhero1' avatar='https://data-us.cometchat.io/assets/images/avatars/ironman.png'
+    #cometchat.inver
 
 template(name='launch_comet')
     .ui.circular.basic.icon.button.launch(title=name)

@@ -7,6 +7,7 @@ template(name='badge_card')
                         if icon 
                             +i name=icon color=icon_color
                         img.ui.avatar.image(src="{{c.url _author.image_id}}")
+                        |badge icon
                         // |#{_author.username}
                 .twelve.wide.column
                     .f15.ui.centered.header #{title}
@@ -135,6 +136,7 @@ template(name='badge_view')
                 a.ui.header(href="/user/#{_author.username}") 
                     img.ui.avatar.image(src="{{c.url _author.image_id height=200 width=200 gravity='face' crop='fill'}}")
                     |#{_author.username}
+                .ui |BADGE ICON - icons8 
                         
                 +number_view key='bounty' label='bounty'
                 +textarea_view key='description' label='description'
