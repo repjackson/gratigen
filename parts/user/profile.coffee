@@ -180,41 +180,41 @@ if Meteor.isClient
         # @autorun => Meteor.subscribe 'model_docs', 'reservation'
         # @autorun => Meteor.subscribe 'model_docs', 'withdrawal'
         @autorun => Meteor.subscribe 'my_topups'
-        # if Meteor.isDevelopment
-        #     pub_key = Meteor.settings.public.stripe_test_publishable
-        # else if Meteor.isProduction
-        #     pub_key = Meteor.settings.public.stripe_live_publishable
-        # Template.instance().checkout = StripeCheckout.configure(
-        #     key: pub_key
-        #     image: 'http://res.cloudinary.com/facet/image/upload/c_fill,g_face,h_300,w_300/k2zt563boyiahhjb0run'
-        #     locale: 'auto'
-        #     # zipCode: true
-        #     token: (token) ->
-        #         # product = Docs.findOne Router.current().params.doc_id
-        #         user = Meteor.users.findOne username:Router.current().params.username
-        #         deposit_amount = parseInt $('.deposit_amount').val()*100
-        #         stripe_charge = deposit_amount*100*1.02+20
-        #         # calculated_amount = deposit_amount*100
-        #         # console.log calculated_amount
-        #         charge =
-        #             amount: deposit_amount*1.02+20
-        #             currency: 'usd'
-        #             source: token.id
-        #             description: token.description
-        #             # receipt_email: token.email
-        #         Meteor.call 'STRIPE_single_charge', charge, user, (error, response) =>
-        #             if error then alert error.reason, 'danger'
-        #             else
-        #                 alert 'payment received', 'success'
-        #                 Docs.insert
-        #                     model:'deposit'
-        #                     deposit_amount:deposit_amount/100
-        #                     stripe_charge:stripe_charge
-        #                     amount_with_bonus:deposit_amount*1.05/100
-        #                     bonus:deposit_amount*.05/100
-        #                 Meteor.users.update user._id,
-        #                     $inc: credit: deposit_amount*1.05/100
-    	# )
+        if Meteor.isDevelopment
+            pub_key = Meteor.settings.public.stripe_test_publishable
+        else if Meteor.isProduction
+            pub_key = Meteor.settings.public.stripe_live_publishable
+        Template.instance().checkout = StripeCheckout.configure(
+            key: pub_key
+            image: 'http://res.cloudinary.com/facet/image/upload/c_fill,g_face,h_300,w_300/k2zt563boyiahhjb0run'
+            locale: 'auto'
+            # zipCode: true
+            token: (token) ->
+                # product = Docs.findOne Router.current().params.doc_id
+                user = Meteor.users.findOne username:Router.current().params.username
+                deposit_amount = parseInt $('.deposit_amount').val()*100
+                stripe_charge = deposit_amount*100*1.02+20
+                # calculated_amount = deposit_amount*100
+                # console.log calculated_amount
+                charge =
+                    amount: deposit_amount*1.02+20
+                    currency: 'usd'
+                    source: token.id
+                    description: token.description
+                    # receipt_email: token.email
+                Meteor.call 'STRIPE_single_charge', charge, user, (error, response) =>
+                    if error then alert error.reason, 'danger'
+                    else
+                        alert 'payment received', 'success'
+                        Docs.insert
+                            model:'deposit'
+                            deposit_amount:deposit_amount/100
+                            stripe_charge:stripe_charge
+                            amount_with_bonus:deposit_amount*1.05/100
+                            bonus:deposit_amount*.05/100
+                        Meteor.users.update user._id,
+                            $inc: credit: deposit_amount*1.05/100
+    	)
 
 
     Template.user_credit.events
@@ -989,9 +989,13 @@ if Meteor.isServer
 
 if Meteor.isClient
     Router.route '/user/:username/credits', (->
-        @layout 'profile_layout'
+        @layout 'layout'
         @render 'user_credits'
         ), name:'user_credits'
+    Router.route '/user/:username/credit', (->
+        @layout 'layout'
+        @render 'user_credit'
+        ), name:'user_credit'
 
 
     Template.user_credits.onCreated ->

@@ -98,18 +98,18 @@ template(name='home')
                             input.prompt(type='text' placeholder='add/request/search...')
                             i.search.icon
                         .results
-                        
-                        .search.item.zoomer.mobile.hidden(title='search')
-                            .ui.icon.transparen.large.input
-                                if current_query
-                                    i.remove.large.red.link.icon.clear_search
-                                else
-                                    i.search.large.grey.icon
-                                input.search_site(type='text' autocomplete="off" value=current_query)
-                            each picked_tags
-                                .ui.label
-                                    i.remove.icon
-                                    |#{this}
+                    +home_search
+                        // .search.item.zoomer.mobile.hidden(title='search')
+                            // .ui.icon.transparen.large.input
+                            //     if current_query
+                            //         i.remove.large.red.link.icon.clear_search
+                            //     else
+                            //         i.search.large.grey.icon
+                            //     input.search_site(type='text' autocomplete="off" value=current_query)
+                            // each picked_tags
+                            //     .ui.label
+                            //         i.remove.icon
+                            //         |#{this}
                         // each search_results
                         //     button.ui.button.goto_doc
                         //         img.ui.avatar.image(src="{{c.url image_id width=200 height=200 gravity='face' crop='fill'}}")
@@ -131,10 +131,15 @@ template(name='home')
                         each doc_results
                             +home_card
                 else    
-                    .ui.ten.wide.column.centered
+                    .ui.ten.wide.column.centered.mobile.hidden
                         .ui.centered.one.cards.scrollin
                             each doc_results
                                 +home_card
+                    .ui.sixteen.wide.column.centered.mobile.only
+                        .ui.centered.one.cards.scrolling
+                            each doc_results
+                                +home_card
+                    
                                 
         // .eight.wide.column.bordered
         .five.wide.scrolling.column
@@ -222,6 +227,29 @@ template(name='home_block')
                 |#{template}
         .content
             +Template.dynamic template=template
+
+
+template(name='home_search')
+    .ui.centered.icon.large.input
+        if current_site_search
+            i.remove.large.red.link.icon.clear_search
+        else
+            i.search.large.grey.icon
+        input.search_site(type='text' autocomplete="off" value=current_site_search placeholder='search docs/users...')
+    each picked_tags
+        .ui.label
+            i.remove.icon
+            |#{this}
+    each user_search_results
+        button.ui.button.goto_doc
+            if image_id
+                img.ui.avatar.image(src="{{c.url image_id width=200 height=200 gravity='face' crop='fill'}}")
+            |#{username}
+    each doc_search_results
+        button.ui.button.goto_doc(title=model)
+            if image_id
+                img.ui.avatar.image(src="{{c.url image_id width=200 height=200 gravity='face' crop='fill'}}")
+            |{{cut title}}
 
 
 template(name='latest_updated_block')

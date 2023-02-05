@@ -3,7 +3,8 @@
 		"@babel/runtime": "^7.9.2",
 		"bcrypt": "^5.0.1",
 		"request": "^2.88.2",
-		"request-promise": "^4.2.6"
+		"request-promise": "^4.2.6",
+		"stripe": "^11.5.0"
 	},
 	"scripts": {
 		"start": "MONGO_URL=mongodb+srv://daoadmin:daoadminpassword@cluster1-etul3.mongodb.net/riversidedb meteor --settings settings.json",
