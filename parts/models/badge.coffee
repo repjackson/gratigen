@@ -265,10 +265,13 @@ if Meteor.isClient
                 })
 
         'click .create_badge': ->
+            parent = Docs.findOne Router.current().params.doc_id
             new_id = 
                 Docs.insert 
                     model:'badge'
                     title:Session.get('badge_search')
+                    parent_id:parent._id
+                    parent_model:parent.model
             Docs.update Router.current().params.doc_id,
                 $addToSet:
                     badge_ids:new_id

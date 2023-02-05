@@ -213,13 +213,13 @@ template(name='footer')
             i.users.icon
             |#{user_docs.count} users
         each user_docs 
-            .ui.big.label 
+            a.ui.big.label(href="/user/#{username}")
                 img.ui.avatar.image(src="{{c.url image_id crop='fit'}}")
                 |#{username}
         .ui.header 
             |#{doc_docs.count} docs 
         each doc_docs
-            .ui.large.basic.label 
+            a.ui.large.basic.label.fly_right(href="/d/#{model}/#{_id}")
                 if image_id
                     img.ui.avatar.image(src="{{c.url image_id crop='fit'}}")
                 |#{title}

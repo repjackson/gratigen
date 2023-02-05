@@ -35,10 +35,10 @@ if Meteor.isClient
                 
             
     Template.user_credit.helpers
-        read_docs: ->
-            user = Meteor.users.findOne username:Router.current().params.username 
-            Docs.find 
-                read_by_user_ids: $in: [user._id]
+        # read_docs: ->
+        #     user = Meteor.users.findOne username:Router.current().params.username 
+        #     Docs.find 
+        #         read_by_user_ids: $in: [user._id]
     
     Template.profile.onCreated ->
         @autorun -> Meteor.subscribe 'user_from_username', Router.current().params.username, ->

@@ -471,10 +471,13 @@ if Meteor.isClient
                 })
 
         'click .create_service': ->
+            parent = Docs.findOne Router.current().params.doc_id
             new_id = 
                 Docs.insert 
                     model:'service'
                     title:Session.get('service_search')
+                    parent_id:parent._id
+                    parent_model:parent.model
             Docs.update Router.current().params.doc_id,
                 $addToSet:
                     service_ids:new_id

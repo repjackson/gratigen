@@ -463,10 +463,13 @@ if Meteor.isClient
                 })
 
         'click .create_resource': ->
+            parent = Docs.findOne Router.current().params.doc_id
             new_id = 
                 Docs.insert 
                     model:'resource'
                     title:Session.get('resource_search')
+                    parent_id:parent._id
+                    parent_model:parent.model
             Docs.update Router.current().params.doc_id,
                 $addToSet:
                     resource_ids:new_id

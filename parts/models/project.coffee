@@ -210,7 +210,17 @@ if Meteor.isClient
 if Meteor.isClient
     Template.project_crud.onCreated ->
         @autorun => @subscribe 'project_search_results', Session.get('project_search'), ->
-        @autorun => @subscribe 'model_docs', 'project', ->
+        @autorun => @subscribe 'child_docs', Router.current().params.doc_id,->
+if Meteor.isServer 
+    Meteor.publish 'child_docs', (id)->
+        Docs.find
+            parent_id:id
+
+    Meteor.publish 'project_search_results', (title_query)->
+        Docs.find 
+            model:'project'
+            title: {$regex:"#{title_query}",$options:'i'}
+if Meteor.isClient
     Template.project_crud.helpers
         project_results: ->
             if Session.get('project_search') and Session.get('project_search').length > 1
@@ -338,10 +348,13 @@ if Meteor.isClient
                 })
 
         'click .create_project': ->
+            parent = Docs.findOne Router.current().params.doc_id
             new_id = 
                 Docs.insert 
                     model:'project'
                     title:Session.get('project_search')
+                    parent_id:parent._id
+                    parent_model:parent.model
             Docs.update Router.current().params.doc_id,
                 $addToSet:
                     project_ids:new_id
@@ -360,9 +373,3 @@ if Meteor.isClient
             # Docs.update
             # Router.go "/project/#{new_id}/edit"
 
-
-if Meteor.isServer 
-    Meteor.publish 'project_search_results', (title_query)->
-        Docs.find 
-            model:'project'
-            title: {$regex:"#{title_query}",$options:'i'}

@@ -8,7 +8,7 @@ if Meteor.isClient
                 
     Template.org_view.onCreated ->
         @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
-        # @autorun => Meteor.subscribe 'children', 'org_update', Router.current().params.doc_id
+        @autorun => Meteor.subscribe 'child_docs', Router.current().params.doc_id, ->
         @autorun => Meteor.subscribe 'members', Router.current().params.doc_id, ->
         # @autorun => Meteor.subscribe 'org_dishes', Router.current().params.doc_id, ->
         Meteor.call 'log_view', Router.current().params.doc_id, ->

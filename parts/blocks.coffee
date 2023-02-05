@@ -367,10 +367,13 @@ if Meteor.isClient
                 })
 
         'click .create_role': ->
+            parent = Docs.findOne Router.current().params.doc_id
             new_id = 
                 Docs.insert 
                     model:'role'
                     title:Session.get('role_search')
+                    parent_id:parent._id
+                    parent_model:parent.model
             Docs.update Router.current().params.doc_id,
                 $addToSet:
                     role_ids:new_id
@@ -422,7 +425,6 @@ if Meteor.isClient
         'click .clear_search': (e,t)->
             Session.set('badge_search', null)
             t.$('.badge_search').val('')
-
             
         'click .remove_badge': (e,t)->
             if confirm "remove #{@title} badge?"

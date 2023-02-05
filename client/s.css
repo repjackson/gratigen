@@ -24,6 +24,9 @@ body {
 .left_floated {
   float:left !important;
 }
+
+
+
 .header, .segment {
   margin-top: 1px !important;
   margin-bottom:1px !important;

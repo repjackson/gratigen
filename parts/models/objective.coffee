@@ -129,10 +129,13 @@ if Meteor.isClient
                 })
 
         'click .create_objective': ->
+            parent = Docs.findOne Router.current().params.doc_id
             new_id = 
                 Docs.insert 
                     model:'objective'
                     title:Session.get('objective_search')
+                    parent_id:parent._id
+                    parent_model:parent.model
             Docs.update Router.current().params.doc_id,
                 $addToSet:
                     objective_ids:new_id

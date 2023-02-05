@@ -812,10 +812,13 @@ if Meteor.isClient
                 })
 
         'click .create_event': ->
+            parent = Docs.findOne Router.current().params.doc_id
             new_id = 
                 Docs.insert 
                     model:'event'
                     title:Session.get('event_search')
+                    parent_id:parent._id
+                    parent_model:parent.model
             Docs.update Router.current().params.doc_id,
                 $addToSet:
                     event_ids:new_id

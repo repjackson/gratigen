@@ -129,10 +129,13 @@ if Meteor.isClient
                 })
 
         'click .create_group': ->
+            parent = Docs.findOne Router.current().params.doc_id
             new_id = 
                 Docs.insert 
                     model:'group'
                     title:Session.get('group_search')
+                    parent_id:parent._id
+                    parent_model:parent.model
             Docs.update Router.current().params.doc_id,
                 $addToSet:
                     group_ids:new_id

@@ -129,10 +129,13 @@ if Meteor.isClient
                 })
 
         'click .create_keyresult': ->
+            parent = Docs.findOne Router.current().params.doc_id
             new_id = 
                 Docs.insert 
                     model:'keyresult'
                     title:Session.get('keyresult_search')
+                    parent_id:parent._id
+                    parent_model:parent.model
             Docs.update Router.current().params.doc_id,
                 $addToSet:
                     keyresult_ids:new_id

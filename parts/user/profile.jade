@@ -181,13 +181,13 @@ template(name='user_credit')
             .ui.header user credit
             .ui.large.button.calc_points 
                 |calc points
-            .ui.header 
-                |read docs 
-            .ui.selection.animated.list 
-                each read_docs 
-                    a.item.fly_right(href="/post/#{_id}")
-                        .ui.label #{model}
-                        |#{title}
+            // .ui.header 
+            //     |read docs 
+            // .ui.selection.animated.list.smallscroll
+            //     each read_docs 
+            //         a.item.fly_right(href="/post/#{_id}")
+            //             .ui.label #{model}
+            //             |#{title}
                 
         with current_user
             .ui.header total debit amount: #{total_debit_amount}
