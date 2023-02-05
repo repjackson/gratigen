@@ -1,5 +1,4 @@
 if Meteor.isClient
-    
     Template.give_money.events 
         'click .give_money': ->
             amount = prompt 'how much will you give?'
@@ -11,7 +10,21 @@ if Meteor.isClient
                     gift_type:'money'
                     amount:int_amount
                     parent_id:Router.current().params.doc_id
-                alert 'thanks!'    
+                alert 'thanks!'   
+        'click .add_dollar_credit': ->
+            amount = prompt 'how much credit to add?'
+            if amount
+                console.log amount
+                int_amount = parseInt amount
+                Docs.insert 
+                    model:'deposit'
+                    type:'dollar'
+                    amount:int_amount
+                    parent_id:Router.current().params.doc_id
+                Meteor.users.update Meteor.userId(), 
+                    $inc: dollar_credit_current:int_amount
+                alert 'deposit complete'
+            
     Template.money_gift_item.events 
         'click .refund_gift': ->
             if confirm "refund #{@amount} dollar gift?"

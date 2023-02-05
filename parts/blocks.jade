@@ -1,12 +1,12 @@
 template(name='gratigen')
     .ui.segment 
         .ui.header Give a Gift of Gratitude
-            .ui.input
-            .button give gratitude points
-            .button give reserve token
-            +give_money
-            .button give an item - service, product, resource,
-            .button give a time-type [badge, skill, task, role, resource]
+        .ui.input
+        .button give gratitude points
+        .button give reserve token
+        +give_money
+        .button give an item - service, product, resource,
+        .button give a time-type [badge, skill, task, role, resource]
 
 
 template(name='give_money')
@@ -14,10 +14,37 @@ template(name='give_money')
         +i name='money'
         |give money
     .ui.header total gift amount: #{total_gift_amount}
+    .ui.header your $ credit: #{currentUser.dollar_credit_current}
+    // need to hook this up to stripe
+    .ui.button.add_dollar_credit
+        |add $ credit
+    
     .ui.small.header gifts
     .ui.list
         each money_gift_docs
             +money_gift_item
+    +my_wallet
+    
+    
+template(name='my_wallet')
+    .ui.segment
+        .f12 
+            +i name='wallet'
+            |your wallet
+        .f12 
+            |your deposits
+        .ui.list 
+            each model_docs_helper 'deposit'
+                .item
+                    |#{amount}
+                    +creation_info
+                    +author_info
+        .f12
+            |your gifts
+        .ui.list 
+            each model_docs_helper 'gift' 
+                .item #{amount}
+                    +creation_info
             
 template(name='money_gift_item')
     .item
