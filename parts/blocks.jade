@@ -597,7 +597,7 @@ template(name='model_crud')
         summary.title
             if icon
                 +i name=icon
-            | #{model} picker
+            | #{model}s
         .content
             unless picked_model
                 .ui.icon.large.input 
@@ -613,13 +613,13 @@ template(name='model_crud')
                                 img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
                                 |#{title}
                 // else if model_search_value
-                .ui.button.create_model
+                .ui.green.basic.button.create_model
                     |add #{model_search_value}
             
-            if picked_model
+            if picked_models
                 .ui.header 
                     // |#{picked_models.length}
-                    |picked model
+                    |picked #{model}s
                 .ui.list
                     with picked_model
                         .ui.item

@@ -217,10 +217,19 @@ if Meteor.isClient
             Session.set('post_sort_icon', @icon)
 
 
+if Meteor.isServer 
+    # realtime search results for model_crud
+    Meteor.publish 'model_search_results', (model,model_title_queary)->
+        if model and model_title_queary
+            match = {model:model}
+            match.title = {$regex:"#{model_title_queary}",$options:'i'}
+            Docs.find match,
+                limit:5
+
 if Meteor.isClient
     Template.model_crud.onCreated ->
-        @autorun => @subscribe 'model_search_results', Session.get('model_search'), ->
-        @autorun => @subscribe 'model_docs', @data.model, ->
+        @autorun => @subscribe 'model_search_results', @data.model, Session.get('model_search'), ->
+        # @autorun => @subscribe 'model_docs', @data.model, ->
     Template.model_crud.helpers
         model_results: ->
             Docs.find 
@@ -245,38 +254,84 @@ if Meteor.isClient
             
         'click .remove_model': (e,t)->
             if confirm "remove #{@title} model?"
+                # multi ref version
                 Docs.update Router.current().params.doc_id,
-                    $unset:
-                        "#{Template.currentData().model}_id":@_id
-                        "#{Template.currentData().model}_title":@title
+                    $pull:
+                        "#{Template.currentData().model}_ids":@_id
+                        "#{Template.currentData().model}_titles":@title
+                #   singular ref version
+                # Docs.update Router.current().params.doc_id,
+                #     $unset:
+                #         "#{Template.currentData().model}_id":@_id
+                #         "#{Template.currentData().model}_title":@title
+        
+                $('body').toast(
+                    # showIcon: 'heart'
+                    message: "#{@title} removed"
+                    # showProgress: 'bottom'
+                    # class: 'success'
+                    displayTime: 'auto',
+                    position: "bottom right"
+                )
+
         'click .pick_model': (e,t)->
+            # single
+            # Docs.update Router.current().params.doc_id,
+            #     $set:
+            #         "#{Template.currentData().model}_id":@_id
+            #         "#{Template.currentData().model}_title":@title
+            # multi
             Docs.update Router.current().params.doc_id,
-                $set:
-                    "#{Template.currentData().model}_id":@_id
-                    "#{Template.currentData().model}_title":@title
+                $addToSet:
+                    "#{Template.currentData().model}_ids":@_id
+                    "#{Template.currentData().model}_titles":@title
             Session.set('model_search',null)
             t.$('.model_search').val('')
-                    
+            $('body').toast(
+                # showIcon: 'heart'
+                message: "#{@title} attached"
+                # showProgress: 'bottom'
+                # class: 'success'
+                displayTime: 'auto',
+                position: "bottom right"
+            )
         'keyup .model_search': (e,t)->
+            
             # if e.which is '13'
             val = t.$('.model_search').val()
             console.log val
-            Session.set('model_search', val)
+            # wait till 2 characters to change session var which updates search results, keep fast
+            if val.length > 1
+                Session.set('model_search', val)
 
         'click .create_model': ->
-            new_id = 
-                Docs.insert 
-                    model:'model'
-                    title:Session.get('model_search')
-            Router.go "/model/#{new_id}/edit"
+            # Template.currentData().model is the declared argument for the template
+            if Template.currentData().model
+                new_id = 
+                    Docs.insert 
+                        model:Template.currentData().model
+                        title:Session.get('model_search')
+                        parent_id:Router.current().params.doc_id
+                        parent_model:@model
+                # Router.go "/model/#{new_id}/edit"
+                Docs.update Router.current().params.doc_id,
+                    $addToSet:
+                        "#{Template.currentData().model}_ids":@_id
+                        "#{Template.currentData().model}_titles":@title
+                Session.set('model_search',null)
+                t.$('.model_search').val('')
+
+                $('body').toast(
+                    # showIcon: 'heart'
+                    message: "#{@title} created and attached"
+                    # showProgress: 'bottom'
+                    # class: 'success'
+                    displayTime: 'auto',
+                    position: "bottom right"
+                )
 
 
-if Meteor.isServer 
-    Meteor.publish 'model_search_results', (model_title_queary)->
-        Docs.find 
-            model:'model'
-            title: {$regex:"#{model_title_queary}",$options:'i'}
-        
+            
         
 
 
