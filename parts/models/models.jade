@@ -62,7 +62,7 @@ template(name='task_edit')
                 div
                 // +boolean_field key='has_duedatetime' label='has due date/time' icon='calendar'
                 div
-                +model_picker model='project' icon='project'
+                +model_crud model='project' icon='project'
             .column
                 // if has_duedatetime
                 +datetime_edit key='due_datetime' label='due date/time' icon='calendar'

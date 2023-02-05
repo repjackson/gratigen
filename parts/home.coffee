@@ -160,7 +160,7 @@ if Meteor.isClient
             # Docs.findOne user.current_thing_id
             Docs.findOne Session.get('current_thing_id')
     Template.thing_picker.helpers
-        model_picker_class:->
+        model_crud_class:->
             
             current_doc = Docs.findOne Meteor.user()._doc_id
             if current_doc and @model is current_doc.model

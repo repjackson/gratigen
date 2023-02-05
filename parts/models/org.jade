@@ -157,7 +157,7 @@ template(name='org_view')
             .five.wide.column
                 .centered.row
                     +eft_viewer
-                .ui.header leaders
+                .ui.header Spaceholders
                 .ui.four.column.centered.grid
                     .column 
                         .ui.centered.small.header lead
@@ -176,9 +176,8 @@ template(name='org_view')
                 +textarea_field key='body' tagline='body'
                 +model_crud model='role' label='roles'
                 +model_crud model='project'
-                +project_crud
-                +event_crud
-                +task_crud
+                +model_crud model='event'
+                +model_crud model='task'
 
 
                 // a.item(href="/d/org/#{_id}/#{username}")
@@ -250,7 +249,7 @@ template(name='org_view')
         //                     +task_picker
                             
         //                 .column
-        //                     +model_picker model='event' icon='calendar'
+        //                     +model_crud model='event' icon='calendar'
                             
         //                     i.large.link.red.remove.icon.delete_role
         //                 .column
@@ -299,7 +298,7 @@ template(name='org_view')
         //                         +multi_user_field key='access_user_ids' label='user picker'
         //                     +array_field key='skills' label='skills' icon='wrench'
         //                 .column
-        //                     +model_picker model='skill' icon='wrench'
+        //                     +model_crud model='skill' icon='wrench'
         
     
     

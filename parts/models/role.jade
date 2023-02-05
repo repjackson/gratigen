@@ -74,7 +74,7 @@ template(name='role_edit')
                     +badge_picker
                     +task_picker
                 .column
-                    +model_picker model='event' icon='calendar'
+                    +model_crud model='event' icon='calendar'
                     +multi_user_field key='permissioned_user_ids' label='permissioned users'
                     i.large.link.red.remove.icon.delete_role
                 .column
@@ -127,7 +127,7 @@ template(name='role_edit')
                     +group_crud
                     +array_field key='skills' label='skills' icon='wrench' direct=true
                 .column
-                    +model_picker model='skill' icon='wrench'
+                    +model_crud model='skill' icon='wrench'
 
 template(name='role_crud')
     // .ui.segment
