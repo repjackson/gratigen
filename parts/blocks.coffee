@@ -1,4 +1,40 @@
 if Meteor.isClient
+    
+    Template.give_money.events 
+        'click .give_money': ->
+            amount = prompt 'how much will you give?'
+            if amount
+                console.log amount
+                int_amount = parseInt amount
+                Docs.insert 
+                    model:'gift'
+                    gift_type:'money'
+                    amount:int_amount
+                    parent_id:Router.current().params.doc_id
+                alert 'thanks!'    
+    Template.money_gift_item.events 
+        'click .refund_gift': ->
+            if confirm "refund #{@amount} dollar gift?"
+                Docs.remove @_id
+                alert 'refunded'
+                    
+                    
+    Template.give_money.helpers 
+        money_gift_docs: ->
+            Docs.find 
+                model:'gift'
+                gift_type:'money'
+                parent_id:Router.current().params.doc_id
+        total_gift_amount: ->
+            gifts = 
+                Docs.find
+                    model:'gift'
+                    gift_type:'money'
+                    parent_id:Router.current().params.doc_id
+            total = 0
+            for gift in gifts.fetch()
+                total += gift.amount
+    
     Template.session_toggle.events
         'click .toggle_session_var': ->
             Session.set(@key, !Session.get(@key))
