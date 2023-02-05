@@ -30,14 +30,15 @@ if Meteor.isClient
         			"uid": @id
         		}).then((response)=>
         			CometChatWidget.launch({
-        				"widgetID": "8fbe4a2f-ea19-43fc-83ea-ae4fa5fa7c6b",
-        				"roundedCorners": "false",
-        				"height": "600px",
-        				"target": "#cometchat",
-        				# "width": "400px",
-        				"width": "100%",
-        				"defaultID": 'supergroup'
-        				"defaultType": 'group'
+                        "widgetID": "8fbe4a2f-ea19-43fc-83ea-ae4fa5fa7c6b",
+                        "roundedCorners": "false",
+                        "height": "600px",
+                        # "target": "#cometchat",
+                        "width": "400px",
+                        "docked": "true",
+                        # "width": "100%",
+                        "defaultID": 'supergroup'
+                        "defaultType": 'group'
         			});
         		))
         		
