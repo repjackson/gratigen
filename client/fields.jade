@@ -389,7 +389,7 @@ template(name='raw_view')
 
         
 template(name='textarea_field')
-    details.ui.styled(class=accordion_class)
+    details.ui.styled.fluid.accordion(class=accordion_class)
         summary.title
             // .ui.dropdown.icon
             .ui.inline.header.zoomer
@@ -405,7 +405,7 @@ template(name='textarea_field')
             
         .content
             if currentUser.editing
-                .ui.large.form
+                .ui.large.fluid.form
                     .field
                         //- else
                         //-     |#{this}

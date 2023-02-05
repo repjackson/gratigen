@@ -127,7 +127,7 @@ template(name='home')
                                 .content
                                     .header #{title}
                 else if session_is 'view_mode' 'grid'
-                    .ui.two.stackable.cards.scrollin
+                    .ui.two.stackable.cards.scrolling
                         each doc_results
                             +home_card
                 else    

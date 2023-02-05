@@ -122,10 +122,10 @@ template(name='payment_section')
         +i name='wallet--v1' cl='ui inline image'
         .ui.inline.header ${{fixed currentUser.credit}} credit
         +boolean_field key='use_credit' label='use credit'
-        // +topup_button amount=10
-        // +topup_button amount=20
-        // +topup_button amount=50
-        // +topup_button amount=100
+        +topup_button amount=10
+        +topup_button amount=20
+        +topup_button amount=50
+        +topup_button amount=100
         unless use_credit
             div
             .ui.basic.compact.button.select_credit_card

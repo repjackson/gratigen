@@ -222,11 +222,11 @@ if Meteor.isClient
             amount = parseInt $('.deposit_amount').val()
             amount_times_100 = parseInt amount*100
             calculated_amount = amount_times_100*1.02+20
-            # Template.instance().checkout.open
-            #     name: 'credit deposit'
-            #     # email:Meteor.user().emails[0].address
-            #     description: 'gold run'
-            #     amount: calculated_amount
+            Template.instance().checkout.open
+                name: 'credit deposit'
+                # email:Meteor.user().emails[0].address
+                description: 'gold run'
+                amount: calculated_amount
             Docs.insert
                 model:'deposit'
                 amount: amount
@@ -288,15 +288,15 @@ if Meteor.isClient
             user = Meteor.users.findOne(username:Router.current().params.username)
             Meteor.users.update Meteor.userId(),
                 $inc:points:-1
-        'click .add_credits': ->
-            deposit_amount = parseInt $('.deposit_amount').val()*100
-            calculated_amount = deposit_amount*1.02+20
+        # 'click .add_credits': ->
+        #     deposit_amount = parseInt $('.deposit_amount').val()*100
+        #     calculated_amount = deposit_amount*1.02+20
             
-            # Template.instance().checkout.open
-            #     name: 'credit deposit'
-            #     # email:Meteor.user().emails[0].address
-            #     description: 'gold run'
-            #     amount: calculated_amount
+        #     Template.instance().checkout.open
+        #         name: 'credit deposit'
+        #         # email:Meteor.user().emails[0].address
+        #         description: 'gold run'
+        #         amount: calculated_amount
 
 
             

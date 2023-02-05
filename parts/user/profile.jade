@@ -121,15 +121,15 @@ template(name='profile')
 
 
 template(name='profile_section')
-    .column
+    .column.zoomer
         if currentUser.admin_mode
             .ui.inline.header
                 +i name=icon color='000000' cl='ui mini inline image'
                 |#{key}
             +Template.dynamic template=user_template data=current_user
         else
-            details.ui.styled.fluid.accordion
-                summary.active.title.zoomer
+            details.ui.styled.fluid.accordion.rounded
+                summary.active.title.zoome
                     // .dropdown.icon
                     .ui.inline.small.header
                         // i.large.icon(class=icon)
@@ -212,11 +212,11 @@ template(name='user_credit')
                 +topup_button amount=10
                 +topup_button amount=20
                 +topup_button amount=100
-                // |includes 2% credit card processing fee
-                // .ui.action.input
-                //     input.deposit_amount(type='number' min='1' placeholder='deposit')
-                //     .ui.icon.button.add_credits   
-                //         i.right.chevron.icon
+                |includes 2% credit card processing fee
+                .ui.action.input
+                    input.deposit_amount(type='number' min='1' placeholder='deposit')
+                    .ui.icon.button.add_credits   
+                        i.right.chevron.icon
                         
                 .ui.large.bulleted.list.smallscroll
                     each topups
