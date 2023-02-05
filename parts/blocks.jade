@@ -25,6 +25,14 @@ template(name='give_money')
             +money_gift_item
     +my_wallet
     
+template(name='give_gratitude_points')
+    .ui.button.give_gratitude_points
+        +i name='heart'
+        |Give Gratitude Points
+    .ui.header total gift ammount: #{total_gift_ammount}
+    .ui.header your gratitude points: #{currentUser.gratitude_point_ammount}
+
+    
     
 template(name='my_wallet')
     .ui.segment
@@ -585,38 +593,39 @@ template(name='add_button')
 
 
 template(name='model_crud')
-    .ui.segment
-        .ui.header 
-            +i name=icon
+    details.ui.fluid.styled.accordion
+        summary.title
+            if icon
+                +i name=icon
             | #{model} picker
-        // if is_admin
-        unless picked_model
-            .ui.icon.large.input 
-                if model_search_value
-                    i.large.red.remove.link.icon.zoomer.clear_search
-                else 
-                    i.search.icon
-                input.model_search(type='text' placeholder='search' value=model_search_value)
-            if model_results
-                .ui.selection.link.animated.list.smallscroll
-                    each model_results
-                        .ui.item.pick_model
+        .content
+            unless picked_model
+                .ui.icon.large.input 
+                    if model_search_value
+                        i.large.red.remove.link.icon.zoomer.clear_search
+                    else 
+                        i.search.icon
+                    input.model_search(type='text' placeholder='search' value=model_search_value)
+                if model_results
+                    .ui.selection.link.animated.list.smallscroll
+                        each model_results
+                            .ui.item.pick_model
+                                img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+                                |#{title}
+                // else if model_search_value
+                .ui.button.create_model
+                    |add #{model_search_value}
+            
+            if picked_model
+                .ui.header 
+                    // |#{picked_models.length}
+                    |picked model
+                .ui.list
+                    with picked_model
+                        .ui.item
                             img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
                             |#{title}
-            // else if model_search_value
-            .ui.button.create_model
-                |add #{model_search_value}
-        
-        if picked_model
-            .ui.header 
-                // |#{picked_models.length}
-                |picked model
-            .ui.list
-                with picked_model
-                    .ui.item
-                        img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
-                        |#{title}
-                        i.remove.link.circular.red.icon.zoomer.remove_model
+                            i.remove.link.circular.red.icon.zoomer.remove_model
 
 template(name='small_card')
     a.ui.link.horizontal.card.zoomer.show_modal
