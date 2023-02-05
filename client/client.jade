@@ -84,11 +84,14 @@ template(name='doc_view')
                     .left_floated
                         a.ui.circular.tertiary.large.button.zoomer.fly_left(href="/")
                             i.left.chevron.icon
-                            +ismall name='groups' color='83DFF4' 
-                            |orgs
+                            with parent_model
+                                +ismall name=icon color=icon_color
+                            // |orgs
+                            |#{model}s
                 .nine.wide.center.aligned.column
-                    .ui.centered.inline.huge.center.aligned.header
-                        |#{title}
+                    +text_field key='title' view_classes='ui center aligned inline huge header'
+                    // .ui.centered.inline.huge.center.aligned.header
+                    //     |#{title}
                 .four.wide.right.aligned.column
                     +subscribe_button
                     +bookmark_button

@@ -385,6 +385,14 @@ Template.text_field.events
         else 
             Meteor.users.update parent._id,
                 $set:"#{@key}":val
+        $('body').toast(
+            # showIcon: 'heart'
+            message: "#{@key} saved"
+            showProgress: 'bottom'
+            class: 'success'
+            displayTime: 'auto',
+            position: "bottom right"
+        )
 
 
 

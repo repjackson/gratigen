@@ -17,8 +17,10 @@ template(name='text_field')
                 .ui.icon.large.fluid.input
                     input.edit_text(type='text' value=field_value placeholder=placeholder autocomplete="off")
     else 
-        .ui.header(class=view_class) #{field_value}
-
+        if view_classes
+            div(class=view_classes) #{field_value}
+        else 
+            .f14 #{field_value}
 
 template(name='youtube_edit')
     with ..
