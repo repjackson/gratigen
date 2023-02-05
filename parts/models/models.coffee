@@ -36,7 +36,7 @@ if Meteor.isClient
 
 
 
-    Template.task_edit.events
+    Template.task_view.events
         'click .send_task': ->
             Swal.fire({
                 title: 'confirm send card'
@@ -67,7 +67,7 @@ if Meteor.isClient
                 Docs.remove @_id
                 Router.go "/tasks"
             
-    Template.task_edit.helpers
+    Template.task_view.helpers
         all_shop: ->
             Docs.find
                 model:'task'

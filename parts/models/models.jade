@@ -25,8 +25,59 @@ template(name='task_card')
             
                 
                 
-template(name='task_edit')
+template(name='task_view')
     .ui.stackable.padded.grid
+        .three.column.row
+            .column
+                // +parent_unit_button
+                .ui.inline.header
+                    | #{title}
+                    small task view
+                +image_view key='image_id' label='image'
+                div
+                a.ui.big.button.fly_right(href="/task/#{_id}/edit")
+                    i.pencil.icon
+                    |edit
+            .column
+                +boolean_view key='has_user_assignment' label='has user assignment'
+                if has_user_assignment
+                    each group_members
+                        .ui.button.assign_member #{username}
+                +boolean_view key='has_minute_expectation' label='has minute expectation'
+                if has_minute_expectation
+                    +number_view key='minute_expectation' label='time expectation (minutes)'
+                +boolean_view key='has_duedatetime' label='has due date/time' icon='calendar'
+                if has_duedatetime
+                    +datetime_view key='due_datetime' label='due date/time' icon='calendar'
+                +number_view key='amount' label='amount (leave 0 for infinite)'
+                +boolean_view key='has_point_bounty' label='has point bounty' icon='hashtag'
+                if has_point_bounty
+                    +number_view key='point_bounty' label='point_bounty'
+                // if unit_id 
+                //     +parent_unit_button
+                    
+            .column
+                +html_view key='description' label='description'
+                +array_field key='tags' label='tags' icon='tags'
+                if currentUser
+                    .ui.button.record_work
+                        |record work
+                .ui.header 
+                    i.wrench.icon
+                    |work
+                .ui.selection.animated.list
+                    each task_work
+                        a.item(href="/work/#{_id}") 
+                            img.ui.tiny.inline.image(src="{{c.url image_id width=400 height=300 crop='pad'}}")
+                            if before_image_id
+                                img.ui.tiny.inline.image(src="{{c.url before_image_id width=400 height=300 crop='pad'}}")
+                            if before_image_id
+                                img.ui.tiny.inline.image(src="{{c.url after_image_id width=400 height=300 crop='pad'}}")
+                            |#{when} #{_author_username}
+            .column
+                +voting_full
+                +comments
+    if currentUser.editing
         .three.column.row
             .column
                 .ui.inline.header
@@ -37,7 +88,7 @@ template(name='task_edit')
                     i.checkmark.big.icon
                 +text_field key='title' label='title'
                 +image_field key='image_id' label='image'
-                +role_crud key='image_id' label='image'
+                // +role_crud key='image_id' label='image'
                 div
                 +boolean_field key='complete' label='complete'
                 unless complete
@@ -106,61 +157,6 @@ template(name='task_edit')
                 .ui.red.button.delete_task
                     i.remove.icon   
                     | delete
-            
-                
-template(name='task_view')
-    .ui.stackable.padded.grid
-        .three.column.row
-            .column
-                // +parent_unit_button
-                .ui.inline.header
-                    | #{title}
-                    small task view
-                +image_view key='image_id' label='image'
-                div
-                a.ui.big.button.fly_right(href="/task/#{_id}/edit")
-                    i.pencil.icon
-                    |edit
-            .column
-                +boolean_view key='has_user_assignment' label='has user assignment'
-                if has_user_assignment
-                    each group_members
-                        .ui.button.assign_member #{username}
-                +boolean_view key='has_minute_expectation' label='has minute expectation'
-                if has_minute_expectation
-                    +number_view key='minute_expectation' label='time expectation (minutes)'
-                +boolean_view key='has_duedatetime' label='has due date/time' icon='calendar'
-                if has_duedatetime
-                    +datetime_view key='due_datetime' label='due date/time' icon='calendar'
-                +number_view key='amount' label='amount (leave 0 for infinite)'
-                +boolean_view key='has_point_bounty' label='has point bounty' icon='hashtag'
-                if has_point_bounty
-                    +number_view key='point_bounty' label='point_bounty'
-                // if unit_id 
-                //     +parent_unit_button
-                    
-            .column
-                +html_view key='description' label='description'
-                +array_field key='tags' label='tags' icon='tags'
-                if currentUser
-                    .ui.button.record_work
-                        |record work
-                .ui.header 
-                    i.wrench.icon
-                    |work
-                .ui.selection.animated.list
-                    each task_work
-                        a.item(href="/work/#{_id}") 
-                            img.ui.tiny.inline.image(src="{{c.url image_id width=400 height=300 crop='pad'}}")
-                            if before_image_id
-                                img.ui.tiny.inline.image(src="{{c.url before_image_id width=400 height=300 crop='pad'}}")
-                            if before_image_id
-                                img.ui.tiny.inline.image(src="{{c.url after_image_id width=400 height=300 crop='pad'}}")
-                            |#{when} #{_author_username}
-            .column
-                +voting_full
-                +comments
-                        
                         
                         
                         

@@ -134,7 +134,7 @@ if Meteor.isClient
                 
 
             
-    Template.task_edit.onCreated ->
+    Template.task_view.onCreated ->
         @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
         @autorun => Meteor.subscribe 'task_work', Router.current().params.doc_id, ->
         # @autorun => Meteor.subscribe 'model_docs', 'location', ->
@@ -168,7 +168,7 @@ if Meteor.isClient
                 model:'work'
                 task_id:Router.current().params.doc_id
                 
-    Template.task_edit.helpers
+    Template.task_view.helpers
         task_locations: ->
             Docs.find
                 model:'location'
@@ -178,7 +178,7 @@ if Meteor.isClient
             if task.location_ids and @_id in task.location_ids then 'blue' else 'basic'
             
                 
-    Template.task_edit.events
+    Template.task_view.events
         'click .mark_complete': ->
             Docs.update Router.current().params.doc_id, 
                 $set:
