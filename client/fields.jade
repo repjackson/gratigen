@@ -405,9 +405,13 @@ template(name='textarea_field')
                     |#{label}
                 else if key
                     |#{key}
-            i.pencil.circular.link.icon.toggle_edit(title='local edit mode')
         if is_expanded
+            // should make universal edit local reactive var edit button, will allow specific template edit mode
+            unless is_editing
+                if currentUser.editing
+                    i.pencil.blue.circular.link.icon.toggle_edit(title='local edit mode')
             if is_editing
+                i.green.large.checkmark.circular.link.icon.toggle_edit(title='local edit mode')
                 .ui.large.fluid.form
                     .field
                         //- else

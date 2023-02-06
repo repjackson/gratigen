@@ -243,20 +243,23 @@ if Meteor.isServer
 if Meteor.isClient
     Template.model_crud.onCreated ->
         # reactivevars are like Session.get() but template specific 
+        @editing = new ReactiveVar false
         @expanded = new ReactiveVar false
         @query = new ReactiveVar ''
-        
+        console.log @
+    Template.model_crud_content.onCreated ->
         # this way sucks, using global session vars, will replce with local ReactiveVars
-        @autorun => @subscribe 'model_search_results', @data.model, Session.get("#{@data.model}_model_search"), ->
+        # @autorun => @subscribe 'model_search_results', @data.model, @query.get(), ->
         @autorun => @subscribe 'related_model_docs', @data.model, Router.current().params.doc_id, ->
     Template.model_crud.helpers 
+        is_editing: -> Template.instance().editing.get()
         is_expanded: -> Template.instance().expanded.get()
         user_template:->
             # like user_tasks
             "user_#{@key}"
     Template.model_crud.events
-        'click .toggle_expanded': (e,t)->
-            t.expanded.set !t.expanded.get()
+        'click .toggle_expanded': (e,t)-> t.expanded.set !t.expanded.get()
+        'click .toggle_editing': (e,t)-> t.editing.set !t.editing.get()
     Template.model_crud.helpers
         model_results: ->
             query = Session.get("#{Template.currentData().model}_model_search")
@@ -332,11 +335,12 @@ if Meteor.isClient
                 position: "bottom right"
             )
         'keyup .model_search': (e,t)->
-            
+            # this is all very wrong
+            val = t.$('.model_search').val()
+            console.log val
+            t.query.set val
             if e.which is '13'
                 if Template.currentData().model
-                    val = t.$('.model_search').val()
-                    console.log val
                     # wait till 2 characters to change session var which updates search results, keep fast
                     if val.length > 1
                         Session.set("#{Template.currentData().model}_model_search", val)
