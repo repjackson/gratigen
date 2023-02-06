@@ -244,6 +244,11 @@ if Meteor.isClient
     Template.model_crud.onCreated ->
         # reactivevars are like Session.get() but template specific 
         @expanded = new ReactiveVar false
+        @query = new ReactiveVar ''
+        
+        # this way sucks, using global session vars, will replce with local ReactiveVars
+        @autorun => @subscribe 'model_search_results', @data.model, Session.get("#{@data.model}_model_search"), ->
+        @autorun => @subscribe 'related_model_docs', @data.model, Router.current().params.doc_id, ->
     Template.model_crud.helpers 
         is_expanded: -> Template.instance().expanded.get()
         user_template:->
@@ -252,12 +257,6 @@ if Meteor.isClient
     Template.model_crud.events
         'click .toggle_expanded': (e,t)->
             t.expanded.set !t.expanded.get()
-    
-    
-    
-    Template.model_crud.onCreated ->
-        @autorun => @subscribe 'model_search_results', @data.model, Session.get("#{@data.model}_model_search"), ->
-        @autorun => @subscribe 'related_model_docs', @data.model, Router.current().params.doc_id, ->
     Template.model_crud.helpers
         model_results: ->
             query = Session.get("#{Template.currentData().model}_model_search")

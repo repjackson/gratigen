@@ -141,17 +141,17 @@ template(name='layout')
     .ui.equal.width.grid(class=darkmode_class)
         .column.horani
             +yield
-        if currentUser.view_chatbar
-            .column.horani
-                // .ui.header chat
-                +quickchat
-                +comet_chat_block
+        // if currentUser.view_chatbar
+        //     .column.horani
+        //         // .ui.header chat
+        //         +quickchat
+        //         +comet_chat_block
                 // +view_chats
     //     // +topbar
     //     +leftbar
     //     +rightbar
-    if currentUser.admin_mode
-        +footer
+    +footer
+    // if currentUser.admin_mode
 
 
 template(name='historybar')
@@ -223,6 +223,10 @@ template(name='shortcut_modal')
 
 template(name='footer')
     .ui.segment 
+        // page chat by default, maybe replace individual template calls
+        with current_doc
+            +print_this
+            +comments
         .ui.header 
             i.shield.icon
             |footer 
@@ -230,14 +234,19 @@ template(name='footer')
             i.users.icon
             |#{user_docs.count} users
         each user_docs 
+            // +user_pill
             a.ui.big.label(href="/user/#{username}")
                 img.ui.avatar.image(src="{{c.url image_id crop='fit'}}")
                 |#{username}
         .ui.header 
             |#{doc_docs.count} docs 
         each doc_docs
-            a.ui.large.basic.label.fly_right(href="/d/#{model}/#{_id}")
-                if image_id
-                    img.ui.avatar.image(src="{{c.url image_id crop='fit'}}")
-                |#{title}
-                span(title='model') (#{model})
+            +doc_pill
+            
+            
+template(name='doc_pill')
+    a.ui.large.basic.label.fly_right(href="/d/#{model}/#{_id}" title=model)
+        if image_id
+            img.ui.avatar.image(src="{{c.url image_id crop='fit'}}")
+        |#{title}
+        span(title='model') (#{model})

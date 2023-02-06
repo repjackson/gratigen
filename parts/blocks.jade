@@ -604,6 +604,8 @@ template(name='add_button')
 //         |edit
 
 
+
+// #{model}_item structure for child docs
 template(name='model_crud')
     .ui.segment(class=color)
         .ui.header.toggle_expanded.zoomer(title='expand' class=color)
@@ -611,36 +613,46 @@ template(name='model_crud')
                 +i name=icon
             | #{model}s
         if is_expanded
-            // unless picked_model
-            .ui.icon.large.input 
-                if model_search_value
-                    i.large.red.remove.link.icon.zoomer.clear_search
-                else 
-                    i.search.icon
-                input.model_search(type='text' placeholder='search' value=model_search_value)
-            if model_results
-                .ui.selection.link.animated.list.smallscroll
-                    each model_results
-                        .ui.item.pick_model
-                            img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
-                            |#{title}
-            // else if model_search_value
-            .ui.green.basic.button.create_model
-                |add #{model_search_value}
+            // separate template so data loading conditionally, much faster
+            +model_crud_content
             
-            // if picked_models
-            .ui.header 
-                // |#{picked_models.length}
-                |picked #{model}s
-            .ui.list
-                each model_children
-                    .ui.item
-                        if image_id
-                            img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
-                        .content
-                            .header
-                                |#{title}
-                            i.remove.link.circular.red.icon.zoomer.remove_model
+template(name='model_crud_content')
+    // unless picked_model
+    .ui.icon.large.input 
+        if model_search_value
+            i.large.red.remove.link.icon.zoomer.clear_search
+        else 
+            i.search.icon
+        input.model_search(type='text' placeholder='search' value=model_search_value)
+    if model_results
+        .ui.selection.link.animated.list.smallscroll
+            each model_results
+                .ui.item.pick_model
+                    img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+                    |#{title}
+    // else if model_search_value
+    .ui.green.basic.button.create_model
+        |add #{model_search_value}
+    
+    // if picked_models
+    .ui.header 
+        // |#{picked_models.length}
+        |picked #{model}s
+    .ui.list
+        each model_children
+            // +Template.dynamic template=child_model_item_template
+            +Template.dynamic template='child_model_item_template'
+            
+                    
+template(name='child_model_item_template')    
+    .ui.item
+        .ui.label #{model}
+        if image_id
+            img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+        .content
+            .header
+                |#{title}
+            i.remove.link.circular.red.icon.zoomer.remove_model
 
 template(name='small_card')
     a.ui.link.horizontal.card.zoomer.show_modal

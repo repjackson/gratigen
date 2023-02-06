@@ -487,6 +487,8 @@ template(name='user_badges')
                         .column
                             each tags 
                                 .ui.label #{this}
+                        .column
+                            |related skills icons
                         
 template(name='user_events')  
     .ui.header 
@@ -728,7 +730,7 @@ template(name='user_skills')
     .ui.center.aligned.header 
         i.concierge.bell.icon
         |#{current_user.name} skills
-    .scrollin
+    .scrolling
         each skills
             .ui.segment
                 a.ui.header(href="/m/skill/#{_id}/view") #{bounty}pts: #{title}

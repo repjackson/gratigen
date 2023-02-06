@@ -122,7 +122,14 @@ Template.registerHelper 'cart_product_docs', ()->
             model:'product'
             _id:$in:@cart_product_ids
 
-Template.registerHelper 'user_from_id', (id)-> Meteor.users.findOne id
+Template.registerHelper 'user_from_id', (id)-> 
+    found_by_id = Meteor.users.findOne id
+    found_by_object = Meteor.users.findOne id._id
+    if found_by_id
+        found_by_id
+    else if found_by_object
+        found_by_object
+    
 Template.registerHelper '_is', (key,value)-> @["#{key}"] is value
 Template.registerHelper 'session_is', (key,value)-> Session.equals(key,value)
 
