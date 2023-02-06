@@ -148,11 +148,12 @@ template(name='org_view')
                 +textarea_field key='bylaws' tagline='bylaws of your organization. Articles of incorporation are the primary law of an association used to establish the general organization and governing of the association to achieve corporate existence. Bylaws are the secondary law of an association best used to detail how the society is formed and run.'
                 +textarea_field key='signature' tagline='creators signature'
                 +viewing
-                if in_dev 
-                    +print_this
+                // block template to make everything lazy loading with passed subtemplate
+                +block template='org_history'
+                +block template='org_subscription'
                 // +multi_user_view key='member_ids' label='members' 
-                +org_history
-                +org_subscription
+                // +org_history
+                // +org_subscription
 
             .five.wide.column
                 .centered.row
@@ -174,13 +175,12 @@ template(name='org_view')
                 +textarea_field key='brief' tagline='breif description or your organization'
                 +textarea_field key='description' tagline='complete description of your organization'
                 +textarea_field key='body' tagline='body'
-                +model_crud model='role' label='roles'
-                +model_crud model='project'
-                +model_crud model='event'
-                +model_crud model='task'
-                +request_crud
-                
-
+                // +model_crud model='role' label='roles'
+                // +model_crud model='project'
+                // +model_crud model='event'
+                // +model_crud model='task'
+                +block template='request_crud'
+                +block template='model_crud' model='role' label='role picker block thing'
 
                 // a.item(href="/d/org/#{_id}/#{username}")
                 //     img.ui.mini.image(src="{{c.url image_id width=200 height=200}}")
@@ -215,7 +215,9 @@ template(name='org_view')
                 +gratigen
                 each log_items
                     +log_item
-                +org_stats
+                +block template='org_stats'
+                // +org_stats
+                +block template='role_crud'
                 // +doc_array_togggle key='member_ids' value=currentUser._id add_label='join' remove_label='joined'
                 // +group_crud
                 // +product_crud
@@ -226,10 +228,8 @@ template(name='org_view')
                 // +objective_crud
                 // +shift_crud
             .five.wide.column
-            .five.wide.column
-                +related_docs 
-            .six.wide.column
-                +comments
+                +block template='related_docs' 
+            
         // .ui.stackable.padded.grid
         //     .row
         //         .ui.stackable.padded.grid
