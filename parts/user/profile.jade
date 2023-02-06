@@ -92,6 +92,8 @@ template(name='profile')
                     | message
                 if is_dev
                     +print_this
+                if currentUser.admin_mode 
+                    +boolean_field key='admin' label='admin' icon='shield' tooltip='this allows the admin toggle on nav'
             .twelve.wide.column.scrollin.subtemplate
                 if currentUser.editing
                     .ui.fluid.blue.message 
