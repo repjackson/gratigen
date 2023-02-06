@@ -16,10 +16,6 @@ if Meteor.isClient
         @layout 'layout'
         @render 'badge_view'
         ), name:'badge_view'
-    Router.route '/badge/:doc_id/edit', (->
-        @layout 'layout'
-        @render 'badge_edit'
-        ), name:'badge_edit'
 
     Template.badge_view.onCreated ->
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
@@ -67,13 +63,13 @@ if Meteor.isClient
 
 if Meteor.isClient
 
-    Template.badge_edit.onCreated ->
+    Template.badge_view.onCreated ->
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
         @autorun => Meteor.subscribe 'all_users'
-    Template.badge_edit.onRendered ->
+    Template.badge_view.onRendered ->
 
 
-    Template.badge_edit.events
+    Template.badge_view.events
         'click .delete_item': ->
             if confirm 'delete badge?'
                 Docs.remove @_id
@@ -106,7 +102,7 @@ if Meteor.isClient
                 $pull: 
                     honey_badger_ids: @_id
 
-    Template.badge_edit.helpers
+    Template.badge_view.helpers
         unselected_badgers: ->
             badge = Docs.findOne Router.current().params.doc_id
             if @badger_ids

@@ -195,7 +195,7 @@ template(name='request_edit')
                 +array_field key='tags' label='tags' icon='tags'
                 +array_field key='location_tags' label='location tags' icon='marker'
                 .ui.header your points: #{currentUser.points}
-                +number_edit key='point_offer' label='point offer' icon='hashtag' min='0'
+                +number_field key='point_offer' label='point offer' icon='hashtag' min='0'
                 div
                 // .ui.small.header.thin publishing request holds points from your balance and dispenses them when request is marked complete
                 // .ui.inline.header status:

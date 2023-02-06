@@ -398,7 +398,7 @@ Template.text_field.events
 
 
 
-Template.number_edit.events
+Template.number_field.events
     'blur .edit_number': (e,t)->
         console.log @
         parent = Template.parentData()

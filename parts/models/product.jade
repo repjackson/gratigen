@@ -155,7 +155,7 @@ template(name='product_inventory')
                         |#{staff}
                     i.edit.link.icon.edit_inventory_item
                     if editing_this
-                        +number_edit key='amount' label='amount'
+                        +number_field key='amount' label='amount'
                         +key_value_edit key='location' value='boh' label='boh'
                         +key_value_edit key='location' value='foh' label='foh'
                         // +text_field key='location' label='location' icon='marker'
@@ -297,15 +297,15 @@ template(name='product_edit')
                     +link_field key='product_link' label='old site link'
                     // div
                     +float_edit key='price_usd' label='$ price'
-                    +number_edit key='price_points' label='point price' icon='coins'
+                    +number_field key='price_points' label='point price' icon='coins'
                 // .four.wide.column
                 //     .ui.inline.header 
                 //         +i name='category'
                 //         |section
                 //     div
-                //     +number_edit key='a_number' label="'A' number"
+                //     +number_field key='a_number' label="'A' number"
                 //     div
-                //     +number_edit key='b_number' label="'B' number"
+                //     +number_field key='b_number' label="'B' number"
                 //     +key_value_edit key='shop_section' value='beans' label='beans' icon='white-beans'
                 //     +key_value_edit key='shop_section' value='coffee' label='coffee' icon='coffee'
                 //     +key_value_edit key='shop_section' value='snacks' label='snacks' icon='potato-chips'
@@ -333,7 +333,7 @@ template(name='product_edit')
                         +boolean_field key='organic' label='organic' icon='organic-food'
                         // +boolean_field key='jar' label='jar container (requires deposit & return)' icon='mason-jar'
                         div
-                        +number_edit key='calories' label='calories' icon='food'
+                        +number_field key='calories' label='calories' icon='food'
                 .column
                     div
                     +html_edit key='description' label='description'

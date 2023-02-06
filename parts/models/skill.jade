@@ -121,7 +121,7 @@ template(name='skill_view')
                     img.ui.avatar.image(src="{{c.url _author.image_id height=200 width=200 gravity='face' crop='fill'}}")
                     |#{_author.username}
                         
-                +number_view key='bounty' label='bounty'
+                +number_field key='bounty' label='bounty'
                 +textarea_view key='description' label='description'
                 // +image_view key='image_id' label='image'
                 +image_field key='image_id' icon='image' label='image'
