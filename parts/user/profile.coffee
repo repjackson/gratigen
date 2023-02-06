@@ -10,9 +10,6 @@ if Meteor.isClient
     #     , 1000
 
 
-    Template.send_sms_button.events 
-        'click .send_message': ->
-            Meteor.call 'send_sms', ->
     Template.profile_section.helpers 
         user_template:->
             "user_#{@key}"
