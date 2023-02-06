@@ -605,12 +605,12 @@ template(name='add_button')
 
 
 template(name='model_crud')
-    details.ui.fluid.styled.accordion
-        summary.title
+    .ui.segment(class=color)
+        .ui.header.toggle_expanded.zoomer(title='expand' class=color)
             if icon
                 +i name=icon
             | #{model}s
-        .content
+        if is_expanded
             // unless picked_model
             .ui.icon.large.input 
                 if model_search_value

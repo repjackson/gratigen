@@ -334,23 +334,23 @@ template(name='image_link_view')
 
 
 
-template(name='textarea_view')
-    if field_value
-        div
-        //- if icon
-        //-     i.icon(class=field_value)
-            //- +i name=icon cl='ui inline image'
-        .ui.inline.small.grey.header
-            if title
-                |#{title}
-            else if label
-                |#{label}
-            //- else if key
-            //-     |#{key}
-            //- else
-            //-     |#{this}     
-        //- .spacer       
-        |{{nl2br field_value}}
+// template(name='textarea_field')
+//     if field_value
+//         div
+//         //- if icon
+//         //-     i.icon(class=field_value)
+//             //- +i name=icon cl='ui inline image'
+//         .ui.inline.small.grey.header
+//             if title
+//                 |#{title}
+//             else if label
+//                 |#{label}
+//             //- else if key
+//             //-     |#{key}
+//             //- else
+//             //-     |#{this}     
+//         //- .spacer       
+//         |{{nl2br field_value}}
 
 template(name='raw_edit')
     .ui.large.form

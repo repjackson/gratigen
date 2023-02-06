@@ -350,7 +350,7 @@ template(name='org_section')
             |editing #{key}
             +textarea_field key=key
         else         
-            +textarea_view key=key
+            +textarea_field key=key
     
 template(name='edit_button')
     if currentUser.editing

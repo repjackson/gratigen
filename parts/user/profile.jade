@@ -102,6 +102,8 @@ template(name='profile')
                             i.pencil.icon 
                             |edit mode
                 .ui.stackable.three.column.grid
+                    // each profile_models
+                        // +profile_section
                     +profile_section key='info' label='info' icon='info' icon_color='blue'
                     +profile_section key='roles' label='roles' icon='shield' icon_color='green'
                     +profile_section key='friends' label='friends' icon='friends' icon_color='red'
@@ -119,6 +121,7 @@ template(name='profile')
                     +profile_section key='food' label='food' icon='food'
                     +profile_section key='interests' label='interest' icon='cloud-idea'
                     +profile_section key='requests' label='requests' icon='bell'
+                    +profile_section key='offers' label='offers' icon='give'
                 .ui.one.column.grid
                     // +user_dashboard
                     // user dash is old version below, some good stuff, need 
@@ -482,9 +485,8 @@ template(name='user_badges')
                         .column
                             .header #{title}
                         .column
-                            .description    
-                                each tags 
-                                    .ui.label #{this}
+                            each tags 
+                                .ui.label #{this}
                         
 template(name='user_events')  
     .ui.header 

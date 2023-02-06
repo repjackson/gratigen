@@ -145,12 +145,12 @@ template(name='badge_view')
                 
                         
                 +number_field key='bounty' label='bounty'
-                +textarea_view key='description' label='description'
+                +textarea_field key='description' label='description'
                 // +image_view key='image_id' label='image'
                 +image_field key='image_id' icon='image' label='image'
                 +image_field key='banner_image_id' icon='image' label='banner image'
-                +skill_crud
-                +project_crud
+                +model_crud model='project' color='blue'
+                +model_crud model='skill'
                 div 
                 +array_field key='tags' label='tags'
                 .spacer
