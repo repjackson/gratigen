@@ -316,7 +316,7 @@ template(name='image_field')
                 else
                     input(type='file' name='upload_image' accept='image/*' )
     else if field_value
-        img.ui.centered.rounded.image(src="{{c.url field_value gravity='face' crop='fit'}}" class=cl)
+        img.ui.centered.rounded.small.image(src="{{c.url field_value gravity='face' crop='fit'}}" class=cl)
     
 
 template(name='image_link_field')

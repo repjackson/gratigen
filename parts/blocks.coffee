@@ -317,20 +317,44 @@ if Meteor.isClient
             )
         'keyup .model_search': (e,t)->
             
-            # if e.which is '13'
-            val = t.$('.model_search').val()
-            console.log val
-            # wait till 2 characters to change session var which updates search results, keep fast
-            if val.length > 1
-                Session.set("#{Template.currentData().model}_model_search", val)
+            if e.which is '13'
+                if Template.currentData().model
+                    val = t.$('.model_search').val()
+                    console.log val
+                    # wait till 2 characters to change session var which updates search results, keep fast
+                    if val.length > 1
+                        Session.set("#{Template.currentData().model}_model_search", val)
+                    new_id = 
+                        Docs.insert 
+                            model:Template.currentData().model
+                            title:Session.get("#{Template.currentData().model}_model_search")
+                            parent_id:Router.current().params.doc_id
+                            parent_model:@model
+                    # Router.go "/model/#{new_id}/edit"
+                    Docs.update Router.current().params.doc_id,
+                        $addToSet:
+                            "#{Template.currentData().model}_ids":@_id
+                            "#{Template.currentData().model}_titles":@title
+                    Session.set("#{Template.currentData().model}_model_search", null)
+                    $(e.currentTarget).closest('.model_search').val('')
+    
+                    $('body').toast(
+                        # showIcon: 'heart'
+                        message: "#{@title} created and attached"
+                        # showProgress: 'bottom'
+                        # class: 'success'
+                        displayTime: 'auto',
+                        position: "bottom right"
+                    )
 
         'click .create_model': (e,t)->
             # Template.currentData().model is the declared argument for the template
+            console.log @
             if Template.currentData().model
                 new_id = 
                     Docs.insert 
                         model:Template.currentData().model
-                        title:Session.get('model_search')
+                        title:Session.get("#{Template.currentData().model}_model_search")
                         parent_id:Router.current().params.doc_id
                         parent_model:@model
                 # Router.go "/model/#{new_id}/edit"

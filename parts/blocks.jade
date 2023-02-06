@@ -623,9 +623,12 @@ template(name='model_crud')
             .ui.list
                 each model_children
                     .ui.item
-                        img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
-                        |#{title}
-                        i.remove.link.circular.red.icon.zoomer.remove_model
+                        if image_id
+                            img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+                        .content
+                            .header
+                                |#{title}
+                            i.remove.link.circular.red.icon.zoomer.remove_model
 
 template(name='small_card')
     a.ui.link.horizontal.card.zoomer.show_modal

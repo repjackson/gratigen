@@ -1,5 +1,5 @@
 template(name='badge_card')
-    .ui.fluid.card
+    .ui.flui.card
         a.content.zoomer(href="/d/#{badge}/#{_id}")
             .ui.three.column.grid
                 .two.wide.column
@@ -11,18 +11,27 @@ template(name='badge_card')
                         // |#{_author.username}
                 .twelve.wide.column
                     .f15.ui.centered.header #{title}
-                .tow.wide.column
+                    // if currentUser
+                    //     +text_field key='title' view_classes='ui center aligned inline huge header'
+
+                .two.wide.column
                     .right.floated
                         // |#{when}
                         +model_icon
         if youtube_id 
             +youtube_view key='youtube_id'
-        img.ui.image(src="{{c.url image_id width=10 height=10}}")
+        img.ui.big.centered.image(src="{{c.url image_id width=10 height=10}}")
         .content
                 |!{body}
                 |!{brief}
                 |!{content}
         .content
+            .ui.grid
+                .sixteen.wide.column
+                    .left.floated
+                        +voting
+                    .right.floated
+                        | #{views} views
             .description
                 .ui.header Skills
                     +badge_card_skill_item
@@ -42,14 +51,8 @@ template(name='badge_card')
                 //         .ui.basic.label #{this}
 
                 +eft_view_item_small
-      
             .content
-                .ui.grid
-                    .sixteen.wide.column
-                        .left.floated
-                            +voting
-                        .right.floated
-                            | #{views} views
+
                         // if _author_id
                         //     +author_info
                         
@@ -96,6 +99,7 @@ template(name='badge_card_skill_item')
         // +image_view key='image_id'  cl='zoom ui tiny image'
         .content
             |!{title}
+                    
             |!{body}
             // a.ui.small.header.inline.lowercase(href="/d/org/#{_id}/")
             //     |#{price_per_serving}c / #{serving_unit}
@@ -131,12 +135,14 @@ template(name='badge_view')
                         i.big.pencil.big.blue.icon
         .row 
             .eight.wide.column
+                +eft_viewer
                 .ui.header 
                     small author
                 a.ui.header(href="/user/#{_author.username}") 
                     img.ui.avatar.image(src="{{c.url _author.image_id height=200 width=200 gravity='face' crop='fill'}}")
                     |#{_author.username}
                 .ui |BADGE ICON - icons8 
+                
                         
                 +number_view key='bounty' label='bounty'
                 +textarea_view key='description' label='description'
@@ -144,6 +150,7 @@ template(name='badge_view')
                 +image_field key='image_id' icon='image' label='image'
                 +image_field key='banner_image_id' icon='image' label='banner image'
                 +skill_crud
+                +project_crud
                 div 
                 +array_field key='tags' label='tags'
                 .spacer
@@ -151,6 +158,17 @@ template(name='badge_view')
                 +comments
                 //- +array_field key='location_tags' label='location_tags'
             .eight.wide.column
+                .ui.basic.center.aligned.segment
+                    +eft_picker color="FF73EA" icon='food' label='food'
+                    +eft_picker color="B785E1" icon='home' label='housing'
+                    +eft_picker color="7229AF" icon='tshirt' label='clothing'
+                    +eft_picker color="1255B8" icon='car' label='transportation'
+                    +eft_picker color="83DFF4" icon='lightning' label='energy'
+                    +eft_picker color="42E8C4" icon='leaf' label='zero waste'
+                    +eft_picker color="40C057" icon='smile' label='wellness'
+                    +eft_picker color="FAB005" icon='university' label='education'
+                    +eft_picker color="FD7E14" icon='paint brush' label='art'
+                    +eft_picker color="FF0000" icon='users' label="community core"            
                 +textarea_field key='body' tagline="describe this badge..."
                 +badge_card
                 .ui.header 
@@ -160,7 +178,6 @@ template(name='badge_view')
                     a.ui.button(href="/user/#{username}") 
                         img.ui.avatar.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}")
                         |#{name}
-    
                 // .ui.header 
                 //     +honey_badger
                 //     |honey badgers
@@ -171,6 +188,53 @@ template(name='badge_view')
                 // //- .ui.fluid.green.button.submit
                 // //-     i.checkmark.icon
                 // //-     |submit
+        .row
+            .sixteen.wide.column badge edit
+                .ui.stackable.padded.grid
+                    .row 
+                        .eight.wide.column
+                            +text_field key='title' icon='header'
+                            +slug_edit key='slug' icon='slug'
+                            +icon_edit key='icon' label='icon'
+                            +textarea_field key='description' label='description'
+                            +image_field key='image_id' label='image'
+                            div 
+                            +array_field key='tags' label='tags'
+                            +text_field key='location' label='location' icon='marker'
+                            +array_field key='location_tags' label='location_tags'
+                            +boolean_field key='published'
+                            +group_crud
+                        .eight.wide.column
+                            .ui.header
+                                +i name='badger'
+                                |badgers
+                            each badgers
+                                a.ui.compact.button(href="/user/#{username}") 
+                                    img.ui.avatar.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}")
+                                    |#{name}
+                                i.remove.link.icon.remove_badger
+                            .ui.segment
+                                .ui.small.header add badgers
+                                each unselected_badgers
+                                    .ui.basic.circular.compact.button.add_badger
+                                        img.ui.avatar.circular.compact.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}")
+                                        |#{name}
+                
+                // .ui.header
+                //     +honey_badger
+                //     |honey badgers
+                // each honey_badgers
+                //     a.ui.compact.button(href="/user/#{username}") 
+                //         img.ui.avatar.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}")
+                //         |#{name}
+                //     i.remove.link.icon.remove_honey_badger
+                // .ui.segment
+                //     .ui.small.header add honey badgers
+                //     each unselected_honey_badgers
+                //         .ui.basic.button.add_honey_badger
+                //             img.ui.avatar.compact.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}")
+                //             |#{name}
+
 
 template(name='badge_edit')
     .ui.stackable.padded.grid
