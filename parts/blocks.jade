@@ -610,7 +610,11 @@ template(name='block')
         .ui.header.toggle_expanded.zoomer(title='expand' class=color)
             if icon
                 +i name=icon
-            | #{model}s
+            // | #{model}s
+            if title
+                strong #{title}
+            else 
+                |#{template}
         if is_expanded
             +Template.dynamic template=template
 
