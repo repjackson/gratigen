@@ -103,7 +103,6 @@ template(name='profile')
                             |edit mode
                 .ui.stackable.three.column.grid
                     +profile_section key='info' label='info' icon='info'
-                    +profile_section2 key='info' label='info' icon='info'
                     +profile_section key='roles' label='roles' icon='shield'
                     +profile_section key='friends' label='friends' icon='friends'
                     +profile_section key='orgs' label='Organizations' icon='groups'
@@ -129,32 +128,35 @@ template(name='profile')
 
 
 
-template(name='profile_section2')
-    .column.zoomer
-        .ui.segment 
-            .ui.header.toggle_expanded #{label}
-            if is_expanded
-                .ui.header expanded
-                +Template.dynamic template=user_template data=current_user
-            
 
 template(name='profile_section')
     .column.zoomer
-        if currentUser.admin_mode
-            .ui.inline.header
-                +i name=icon color='000000' cl='ui mini inline image'
-                |#{key}
-            +Template.dynamic template=user_template data=current_user
-        else
-            details.ui.styled.fluid.accordion.rounded
-                summary.active.title.zoome
-                    // .dropdown.icon
-                    .ui.inline.small.header
-                        // i.large.icon(class=icon)
-                        +i name=icon color='000000' cl='ui mini inline image'
-                        |#{key}
-                .active.content
-                    +Template.dynamic template=user_template data=current_user
+        .ui.segment 
+            .ui.header.toggle_expanded.zoomer
+                |#{label}
+                if is_expanded
+                    i.chevron.down.icon
+                else
+                    i.chevron.left.icon
+            if is_expanded
+                .ui.header expanded
+                +Template.dynamic template=user_template data=current_user
+    // .column.zoomer
+    //     if currentUser.admin_mode
+    //         .ui.inline.header
+    //             +i name=icon color='000000' cl='ui mini inline image'
+    //             |#{key}
+    //         +Template.dynamic template=user_template data=current_user
+    //     else
+    //         details.ui.styled.fluid.accordion.rounded
+    //             summary.active.title.zoome
+    //                 // .dropdown.icon
+    //                 .ui.inline.small.header
+    //                     // i.large.icon(class=icon)
+    //                     +i name=icon color='000000' cl='ui mini inline image'
+    //                     |#{key}
+    //             .active.content
+    //                 +Template.dynamic template=user_template data=current_user
          
          
 template(name='send_sms_button')

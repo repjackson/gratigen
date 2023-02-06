@@ -13,15 +13,15 @@ if Meteor.isClient
         user_template:->
             "user_#{@key}"
 
-    Template.profile_section2.onCreated ->
+    Template.profile_section.onCreated ->
         # reactivevars are like Session.get() but template specific 
         @expanded = new ReactiveVar false
-    Template.profile_section2.helpers 
+    Template.profile_section.helpers 
         is_expanded: -> Template.instance().expanded.get()
         user_template:->
             # like user_tasks
             "user_#{@key}"
-    Template.profile_section2.events
+    Template.profile_section.events
         'click .toggle_expanded': (e,t)->
             t.expanded.set !t.expanded.get()
 
