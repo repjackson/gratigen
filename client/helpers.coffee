@@ -248,6 +248,10 @@ Template.registerHelper 'is_text', () ->
 
 Template.registerHelper 'template_parent', () ->
     Template.parentData()
+Template.registerHelper '_parent', () ->
+    if @parent_id
+        Docs.findOne 
+            _id:@parent_id
 
 Template.registerHelper 'fields', () ->
     model = Docs.findOne

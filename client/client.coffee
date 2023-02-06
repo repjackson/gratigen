@@ -11,6 +11,7 @@ Router.route '/d/:model/:doc_id', (->
 
 Template.doc_view.onCreated ->
     @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
+    @autorun => Meteor.subscribe 'parent_doc_by_id', Router.current().params.doc_id, ->
     # @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
     # @autorun => Meteor.subscribe 'model_docs', 'menu_section'
 

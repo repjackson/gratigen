@@ -84,6 +84,11 @@ template(name='doc_view')
                         a.section.zoomer(href='/')
                             |home
                         .divider /
+                        with _parent
+                            a.section(href="/d/#{model}/#{_id}")
+                                img.ui.avatar.image(src="{{c.url image_id }}")
+                                |#{title}
+                            .divider /
                         a.section.zoomer(href="/d/#{model}/#{_id}")
                             img.ui.avatar.image(src="{{c.url image_id }}")
                             |#{title}
