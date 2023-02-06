@@ -120,6 +120,7 @@ template(name='profile')
                     +profile_section key='interests' label='interest' icon='cloud-idea'
                     +profile_section key='requests' label='requests' icon='bell'
                 +user_dashboard
+                +comments
 
 
 
@@ -152,13 +153,13 @@ template(name='send_sms_button')
 template(name='user_roles')
     .ui.small.header 
         i.pencil.icon
-        |authored roles
+        |roles you authored
     .ui.selection.animated.list
         each _authored_docs current_user 'role'
             +role_item_small
     .ui.small.header
         i.checkmark.icon
-        |taken roles
+        |roles you hold
     .ui.selection.animated.list
         each user_taken_roles current_user
             +role_item_small
@@ -454,12 +455,17 @@ template(name='user_badges')
     .ui.list
         each user_badges
             a.ui.item(href="/d/badge/#{_id}")
-                +icolor name=icon cl='ui image'
+
                 .content
-                    .header #{title}
-                    .description    
-                        each tags 
-                            .ui.label #{this}
+                    .ui.four.column.celled.grid
+                        .column
+                            +icolor name=icon cl='ui image' 
+                        .column
+                            .header #{title}
+                        .column
+                            .description    
+                                each tags 
+                                    .ui.label #{this}
                         
 template(name='user_events')  
     .ui.header 

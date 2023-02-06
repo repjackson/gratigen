@@ -28,7 +28,7 @@ if Meteor.isClient
                 if Meteor.user().username
                     switch Meteor.user().username
                         when 'dev' then uid = 'dev'
-                        when 'dev2' then uid = 'dev2'
+                        when 'Dev2' then uid = 'dev2'
                         when 'tryliam' then uid ='tryliam'
                         else uid = 'guest'
                 else 

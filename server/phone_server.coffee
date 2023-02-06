@@ -5,7 +5,7 @@ Meteor.methods
     send_sms: (message_body, recipient)->
         console.log 'sending', message_body, recipient
         if message_body and recipient
-            if recipient in ['cam','dev2']
+            if recipient in ['cam','Dev2']
                 console.log 'texting cam'
                 target_number = '+17206456281'
             else

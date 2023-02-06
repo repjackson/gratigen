@@ -171,14 +171,16 @@ if Meteor.isClient
     Template.comments.onCreated ->
         if Router.current().params.doc_id
             parent = Docs.findOne Router.current().params.doc_id
-        # else
-        #     parent = Docs.findOne Template.parentData()._id
+        else if Router.current().params.username
+            parent = Meteor.users.findOne username:Router.current().params.username
         if parent
             @autorun => Meteor.subscribe 'children', 'comment', parent._id
     Template.comments.helpers
         doc_comments: ->
             if Router.current().params.doc_id
                 parent = Docs.findOne Router.current().params.doc_id
+            else if Router.current().params.username
+                parent = Meteor.users.findOne username:Router.current().params.username
             else if @_id
                 parent = Docs.findOne @_id
             else if Template.parentData()
