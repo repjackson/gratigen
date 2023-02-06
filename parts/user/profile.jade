@@ -24,6 +24,7 @@ template(name='profile')
                             |log out other clients
                 else if is_admin
                     +edit_button
+                +send_sms_button
                 if me.editing
                     +username_edit
                 else
@@ -140,6 +141,11 @@ template(name='profile_section')
                         |#{key}
                 .active.content
                     +Template.dynamic template=user_template data=current_user
+         
+         
+template(name='send_sms_button')
+    .ui.button.send_message 
+        |send text message
                 
                 
 
