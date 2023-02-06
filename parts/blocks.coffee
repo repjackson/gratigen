@@ -165,9 +165,9 @@ if Meteor.isServer
                 
 if Meteor.isClient
     Template.comments.onRendered ->
-        Meteor.setTimeout ->
-            $('.accordion').accordion()
-        , 1000
+        # Meteor.setTimeout ->
+        #     $('.accordion').accordion()
+        # , 1000
     Template.comments.onCreated ->
         if Router.current().params.doc_id
             parent = Docs.findOne Router.current().params.doc_id
@@ -177,6 +177,7 @@ if Meteor.isClient
             @autorun => Meteor.subscribe 'children', 'comment', parent._id
     Template.comments.helpers
         doc_comments: ->
+            # this should all just be @_id but i guess works for now
             if Router.current().params.doc_id
                 parent = Docs.findOne Router.current().params.doc_id
             else if Router.current().params.username

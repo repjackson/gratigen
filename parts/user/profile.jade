@@ -119,8 +119,11 @@ template(name='profile')
                     +profile_section key='food' label='food' icon='food'
                     +profile_section key='interests' label='interest' icon='cloud-idea'
                     +profile_section key='requests' label='requests' icon='bell'
-                +user_dashboard
-                +comments
+                .ui.one.column.grid
+                    // +user_dashboard
+                    // user dash is old version below, some good stuff, need 
+                    // to make each section load dynamically, otherwise will bog down
+                    +comments
 
 
 
