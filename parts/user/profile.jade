@@ -102,15 +102,15 @@ template(name='profile')
                             i.pencil.icon 
                             |edit mode
                 .ui.stackable.three.column.grid
-                    +profile_section key='info' label='info' icon='info'
-                    +profile_section key='roles' label='roles' icon='shield'
-                    +profile_section key='friends' label='friends' icon='friends'
-                    +profile_section key='orgs' label='Organizations' icon='groups'
-                    +profile_section key='products' label='Products' icon='donate'
-                    +profile_section key='resources' label='Resources' icon='gift'
-                    +profile_section key='groups' label='Groups' icon='money'
+                    +profile_section key='info' label='info' icon='info' icon_color='blue'
+                    +profile_section key='roles' label='roles' icon='shield' icon_color='green'
+                    +profile_section key='friends' label='friends' icon='friends' icon_color='red'
+                    +profile_section key='orgs' label='Organizations' icon='groups' icon_color='teal'
+                    +profile_section key='products' label='Products' icon='donate' icon_color='yellow'
+                    +profile_section key='resources' label='Resources' icon='gift' icon_color='orange'
+                    +profile_section key='groups' label='Groups' icon='money' icon_color='green'
                     +profile_section key='services' label='Services' icon='calendar'
-                    +profile_section key='tasks' label='Tasks' icon='service-bell'
+                    +profile_section key='tasks' label='Tasks' icon='service-bell' icon_color='yellow'
                     +profile_section key='projects' label='Projects' icon='hand-holding-heart'
                     +profile_section key='badges' label='Badges' icon='food'
                     +profile_section key='skills' label='Skills' icon='chat'
@@ -132,12 +132,16 @@ template(name='profile')
 template(name='profile_section')
     .column.zoomer
         .ui.segment 
-            .ui.header.toggle_expanded.zoomer
-                |#{label}
+            // pointer class makes link cursor, zoomer zooms on hover
+            a.ui.header.toggle_expanded.zoomer.pointer
+                if icon
+                    +i name=icon color='000000' cl='ui mini inline image'
+                    
                 if is_expanded
-                    i.chevron.down.icon
+                    i.chevron.down.icon(class=icon_color)
                 else
-                    i.chevron.left.icon
+                    i.chevron.right.icon(class=icon_color)
+                |#{label}
             if is_expanded
                 .ui.header expanded
                 +Template.dynamic template=user_template data=current_user
