@@ -112,6 +112,15 @@ img, .button, .selector, .card, p, .header, .item, .image, .fade, .accordion{
   /*border: 30px solid transparent;*/
   /*background-color: blue;*/
 }
+.vertani {
+  /*border:1px solid grey !important;*/
+  transition: max-height 1s ease-in-out;
+  
+  /*height: 100px;*/
+  /*padding: 30px;*/
+  /*border: 30px solid transparent;*/
+  /*background-color: blue;*/
+}
 /*.bordered.column {background-clip: content-box;}*/
   
 /**/

@@ -391,8 +391,9 @@ template(name='raw_view')
 
         
 template(name='textarea_field')
-    details.ui.styled.fluid.accordion(class=accordion_class)
-        summary.title
+    // details.ui.styled.fluid.accordion(class=accordion_class)
+    .ui.segment.vertani
+        .title.toggle_expanded.zoomer.pointer
             // .ui.dropdown.icon
             .ui.inline.header.zoomer
                 if icon
@@ -404,9 +405,9 @@ template(name='textarea_field')
                     |#{label}
                 else if key
                     |#{key}
-            
-        .content
-            if currentUser.editing
+            i.pencil.circular.link.icon.toggle_edit(title='local edit mode')
+        if is_expanded
+            if is_editing
                 .ui.large.fluid.form
                     .field
                         //- else

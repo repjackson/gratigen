@@ -337,16 +337,18 @@ Template.array_field.events
         t.$('.new_element').focus()
         t.$('.new_element').val(element)
 
-# Template.textarea.onCreated ->
-#     @editing = new ReactiveVar false
 
-# Template.textarea.helpers
-#     is_editing: -> Template.instance().editing.get()
-
-
+Template.textarea_field.onCreated ->
+    @editing = new ReactiveVar false
+    @expanded = new ReactiveVar false
+Template.textarea_field.helpers
+    is_editing: -> Template.instance().editing.get()
+    is_expanded: -> Template.instance().expanded.get()
 Template.textarea_field.events
-    # 'click .toggle_edit': (e,t)->
-    #     t.editing.set !t.editing.get()
+    'click .toggle_edit': (e,t)->
+        t.editing.set !t.editing.get()
+    'click .toggle_expanded': (e,t)->
+        t.expanded.set !t.expanded.get()
 
     'blur .edit_textarea': (e,t)->
         textarea_val = t.$('.edit_textarea').val()

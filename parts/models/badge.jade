@@ -137,12 +137,12 @@ template(name='badge_view')
                 +image_field key='image_id' icon='image' label='image'
                 +image_field key='banner_image_id' icon='image' label='banner image'
                 +model_crud model='project' color='blue'
-                +model_crud model='skill'
+                +model_crud model='skill' color='red'
                 div 
                 +array_field key='tags' label='tags'
                 .spacer
                 .spacer
-                +comments
+                // +comments
                 //- +array_field key='location_tags' label='location_tags'
             .eight.wide.column
                 .ui.basic.center.aligned.segment
@@ -158,6 +158,8 @@ template(name='badge_view')
                     +eft_picker color="FF0000" icon='users' label="community core"            
                 +textarea_field key='body' tagline="describe this badge..."
                 // +badge_card
+                // badger picker should be glbal field
+                +multi_user_field key='badger'
                 .ui.header 
                     +i name='badger'
                     |badgers
@@ -175,37 +177,33 @@ template(name='badge_view')
                 // //- .ui.fluid.green.button.submit
                 // //-     i.checkmark.icon
                 // //-     |submit
-        .row
-            .sixteen.wide.column badge edit
-                .ui.stackable.padded.grid
-                    .row 
-                        .eight.wide.column
-                            +text_field key='title' icon='header'
-                            +slug_edit key='slug' icon='slug'
-                            +icon_edit key='icon' label='icon'
-                            +textarea_field key='description' label='description'
-                            +image_field key='image_id' label='image'
-                            div 
-                            +array_field key='tags' label='tags'
-                            +text_field key='location' label='location' icon='marker'
-                            +array_field key='location_tags' label='location_tags'
-                            +boolean_field key='published'
-                            +group_crud
-                        .eight.wide.column
-                            .ui.header
-                                +i name='badger'
-                                |badgers
-                            each badgers
-                                a.ui.compact.button(href="/user/#{username}") 
-                                    img.ui.avatar.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}")
+                    .eight.wide.column
+                        +text_field key='title' icon='header'
+                        +slug_edit key='slug' icon='slug'
+                        +icon_edit key='icon' label='icon'
+                        +textarea_field key='description' label='description'
+                        +image_field key='image_id' label='image'
+                        div 
+                        +array_field key='tags' label='tags'
+                        +text_field key='location' label='location' icon='marker'
+                        +array_field key='location_tags' label='location_tags'
+                        +boolean_field key='published'
+                        +group_crud
+                    .eight.wide.column
+                        .ui.header
+                            +i name='badger'
+                            |badgers
+                        each badgers
+                            a.ui.compact.button(href="/user/#{username}") 
+                                img.ui.avatar.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}")
+                                |#{name}
+                            i.remove.link.icon.remove_badger
+                        .ui.segment
+                            .ui.small.header add badgers
+                            each unselected_badgers
+                                .ui.basic.circular.compact.button.add_badger
+                                    img.ui.avatar.circular.compact.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}")
                                     |#{name}
-                                i.remove.link.icon.remove_badger
-                            .ui.segment
-                                .ui.small.header add badgers
-                                each unselected_badgers
-                                    .ui.basic.circular.compact.button.add_badger
-                                        img.ui.avatar.circular.compact.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}")
-                                        |#{name}
                 
                 // .ui.header
                 //     +honey_badger
