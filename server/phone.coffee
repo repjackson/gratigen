@@ -5,5 +5,5 @@ client = require('twilio')(accountSid, authToken);
 Meteor.methods 
     send_sms: ->
         client.messages
-              .create({body: 'Hi there', from: '+12407512000', to: '+12407512000'})
-              .then(message => console.log(message.sid));
+              .create({body: 'Hi there', from: '+13854383761', to: '+12407512000'})
+              .then((message)=> console.log(message.sid));
