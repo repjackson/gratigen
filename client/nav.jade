@@ -64,13 +64,15 @@ template(name='nav')
                 a.ui.icon.item(href="/inbox" class="{{isActiveRoute 'inbox'}}")
                     i.large.outline.bell.big.blue.icon
             // a.ui.item.zoomer.toggle_rightbar(href="/chat" class="{{isActiveRoute 'chat'}}")
-            a.ui.item.zoomer.toggle_chatbar
-                if unread_count
-                    i.small.chat.big.blue.icon.pulse
-                    |#{unread_count}
-                else
-                    i.small.chat.outline.big.blue.icon
-                // +i name='chat' color='blue'
+            a.ui.item.zoomer.launch(title='launch chat')
+                i.large.chat.outline.icon
+            // a.ui.item.zoomer.toggle_chatbar
+            //     if unread_count
+            //         i.small.chat.big.blue.icon.pulse
+            //         |#{unread_count}
+            //     else
+            //         i.small.chat.outline.big.blue.icon
+            //     // +i name='chat' color='blue'
 
             if currentUser
                 // a.ui.item(href='/user/#{currentUser.username}/credit' class="{{isActiveRoute 'user_credit'}}" title='current wallet balance')

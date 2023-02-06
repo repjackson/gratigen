@@ -1,5 +1,5 @@
 if Meteor.isClient
-    Template.launch_comet.events
+    Template.nav.events
         'click .launch':->
             # $('body').toast({
             #     title: "initializing chat widget for #{name}"
@@ -25,11 +25,19 @@ if Meteor.isClient
                 #     #     toast: 'ui massive message'
                 #     # displayTime: 5000
                 # })
-        	    
-        		CometChatWidget.login({
-        			"uid": @id
-        		}).then((response)=>
-        			CometChatWidget.launch({
+                if Meteor.user().username
+                    switch Meteor.user().username
+                        when 'dev' then uid = 'dev'
+                        when 'dev2' then uid = 'dev2'
+                        when 'tryliam' then uid ='tryliam'
+                        else uid = 'guest'
+                else 
+                    uid = 'guest'
+                console.log 'logging in with uid', uid
+                CometChatWidget.login({
+                    "uid": uid
+                }).then((response)=>
+                	CometChatWidget.launch({
                         "widgetID": "8fbe4a2f-ea19-43fc-83ea-ae4fa5fa7c6b",
                         "roundedCorners": "false",
                         "height": "600px",
@@ -39,8 +47,8 @@ if Meteor.isClient
                         # "width": "100%",
                         "defaultID": 'supergroup'
                         "defaultType": 'group'
-        			});
-        		))
+                	});
+                ))
         		
         		
 #         const fetch = require('node-fetch');
