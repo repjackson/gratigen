@@ -103,6 +103,7 @@ template(name='profile')
                             |edit mode
                 .ui.stackable.three.column.grid
                     +profile_section key='info' label='info' icon='info'
+                    +profile_section2 key='info' label='info' icon='info'
                     +profile_section key='roles' label='roles' icon='shield'
                     +profile_section key='friends' label='friends' icon='friends'
                     +profile_section key='orgs' label='Organizations' icon='groups'
@@ -127,6 +128,15 @@ template(name='profile')
 
 
 
+
+template(name='profile_section2')
+    .column.zoomer
+        .ui.segment 
+            .ui.header.toggle_expanded #{label}
+            if is_expanded
+                .ui.header expanded
+                +Template.dynamic template=user_template data=current_user
+            
 
 template(name='profile_section')
     .column.zoomer
