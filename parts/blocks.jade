@@ -9,6 +9,18 @@ template(name='gratigen')
         .button give a time-type [badge, skill, task, role, resource]
 
 
+template(name='parent_block')
+    with _parent 
+        a.ui.card(href="/d/#{model}/#{_id}")
+            .content 
+                img.ui.image(src="{{c.url image_id width=200 height=200 gravity='face' crop='fill'}}")
+            
+                |#{title}
+                .ui.label #{model}
+                +creation_info
+                +author_info
+
+
 template(name='give_money')
     .ui.button.give_money
         +i name='money'

@@ -226,7 +226,7 @@ if Meteor.isServer
             Docs.find match,
                 limit:5
     Meteor.publish 'related_model_docs', (model,parent_id)->
-        console.log 'looking for related model docs', model, parent_id
+        # console.log 'looking for related model docs', model, parent_id
         
         # match publication for related child docs with model_children helper below
         if model and parent_id
@@ -235,7 +235,7 @@ if Meteor.isServer
             match._id = $in:parent["#{model}_ids"]
             # match.title = {$regex:"#{model_title_queary}",$options:'i'}
             Docs.find match,
-                limit:10
+                limit:3
 
 if Meteor.isClient
     Template.model_crud.onCreated ->
