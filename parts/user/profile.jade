@@ -181,7 +181,9 @@ template(name='user_info')
 template(name='user_credit')
     .ui.stackable.padded.grid
         .eight.wide.column 
-            .ui.header user credit
+            .ui.big.header
+                +i name='coins'
+                |user credit
             .ui.large.button.calc_points 
                 |calc points
             // .ui.header 
@@ -192,6 +194,7 @@ template(name='user_credit')
             //             .ui.label #{model}
             //             |#{title}
                 
+        +membership_block
         with current_user
             .ui.header total debit amount: #{total_debit_amount}
             .ui.header total credit amount: #{total_credit_amount}
@@ -246,7 +249,16 @@ template(name='locate_me')
             .ui.large.label lon:#{current_lon}
 
                                     
-                                    
+template(name='membership_block')
+    .ui.header 
+        |your membership
+    if prime_member 
+        .ui.header 
+            i.checkmark.icon
+            |prime member
+    else 
+        .ui.button.become_prime 
+            |become prime
                     
 template(name='user_dashboard')
     // +user_about
