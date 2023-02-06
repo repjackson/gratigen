@@ -121,16 +121,15 @@ template(name='badge_card_skill_item')
 template(name='badge_view')
     .ui.stackable.padded.grid
         .row
-            .eight.wide.column
+            .five.wide.column
                 +eft_viewer
                 .ui.header 
                     small author
                 a.ui.header(href="/user/#{_author.username}") 
                     img.ui.avatar.image(src="{{c.url _author.image_id height=200 width=200 gravity='face' crop='fill'}}")
                     |#{_author.username}
-                .ui |BADGE ICON - icons8 
-                
-                        
+                .ui |BADGE ICON - icons8 or upload custom svg?
+
                 +number_field key='bounty' label='bounty'
                 +textarea_field key='description' label='description'
                 // +image_view key='image_id' label='image'
@@ -144,7 +143,7 @@ template(name='badge_view')
                 .spacer
                 // +comments
                 //- +array_field key='location_tags' label='location_tags'
-            .eight.wide.column
+            .six.wide.column
                 .ui.basic.center.aligned.segment
                     +eft_picker color="FF73EA" icon='food' label='food'
                     +eft_picker color="B785E1" icon='home' label='housing'
@@ -155,8 +154,12 @@ template(name='badge_view')
                     +eft_picker color="40C057" icon='smile' label='wellness'
                     +eft_picker color="FAB005" icon='university' label='education'
                     +eft_picker color="FD7E14" icon='paint brush' label='art'
-                    +eft_picker color="FF0000" icon='users' label="community core"            
+                    +eft_picker color="FF0000" icon='users' label="community core"  
+            
+            
                 +textarea_field key='body' tagline="describe this badge..."
+            .five.wide.column
+                
                 // +badge_card
                 // badger picker should be glbal field
                 +multi_user_field key='badger'

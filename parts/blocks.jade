@@ -605,6 +605,15 @@ template(name='add_button')
 
 
 
+template(name='block')
+    .ui.segment(class=color)
+        .ui.header.toggle_expanded.zoomer(title='expand' class=color)
+            if icon
+                +i name=icon
+            | #{model}s
+        if is_expanded
+            +Template.dynamic template=template
+
 // #{model}_item structure for child docs
 template(name='model_crud')
     .ui.segment(class=color)
@@ -618,7 +627,7 @@ template(name='model_crud')
             
 template(name='model_crud_content')
     // unless picked_model
-    .ui.icon.large.input 
+    .ui.icon.large.input
         if model_search_value
             i.large.red.remove.link.icon.zoomer.clear_search
         else 
@@ -653,6 +662,13 @@ template(name='child_model_item_template')
             .header
                 |#{title}
             i.remove.link.circular.red.icon.zoomer.remove_model
+            
+            
+
+
+
+
+
 
 template(name='small_card')
     a.ui.link.horizontal.card.zoomer.show_modal

@@ -241,13 +241,25 @@ if Meteor.isServer
                 limit:3
 
 if Meteor.isClient
+    Template.block.onCreated ->
+        # reactivevars are like Session.get() but template specific 
+        @editing = new ReactiveVar false
+        @expanded = new ReactiveVar false
+        # @query = new ReactiveVar ''
+        # console.log @
+    Template.block.helpers 
+        is_editing: -> Template.instance().editing.get()
+        is_expanded: -> Template.instance().expanded.get()
+    Template.block.events
+        'click .toggle_expanded': (e,t)-> t.expanded.set !t.expanded.get()
+        'click .toggle_editing': (e,t)-> t.editing.set !t.editing.get()
     Template.model_crud.onCreated ->
         # reactivevars are like Session.get() but template specific 
         @editing = new ReactiveVar false
         @expanded = new ReactiveVar false
         @query = new ReactiveVar ''
         console.log @
-    Template.model_crud_content.onCreated ->
+    Template.model_crud.onCreated ->
         # this way sucks, using global session vars, will replce with local ReactiveVars
         # @autorun => @subscribe 'model_search_results', @data.model, @query.get(), ->
         @autorun => @subscribe 'related_model_docs', @data.model, Router.current().params.doc_id, ->
