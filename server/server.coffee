@@ -179,6 +179,11 @@ Meteor.publish 'parent_doc_by_id', (child_doc_id)->
     if child and child.parent_id 
         Docs.find 
             _id:child.parent_id
+Meteor.publish 'parent_docs_by_id', (child_doc_id)->
+    child = Docs.findOne child_doc_id
+    if child and child.parent_ids
+        Docs.find 
+            _id:$in:child.parent_ids
 Meteor.publish 'doc_by_id', (doc_id)->
     Docs.find doc_id
 Meteor.publish 'doc', (doc_id)->

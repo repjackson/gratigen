@@ -177,9 +177,10 @@ template(name='org_view')
                 // +model_crud model='event'
                 // +model_crud model='task'
                 +block template='model_crud' model='event' title='events' icon='calender' color='blue'
-                +block template='model_crud' model='task' title='tasks' icon='tasks' color='blue'
+                +block template='model_crud' model='task' title='tasks' icon='tasks' color='purple'
                 +block template='model_crud' model='request' title='requests' color='blue'
                 +block template='model_crud' model='role' title='roles' icon='shield' color='red'
+                +block template='model_crud' model='group' title='groups' icon='group' color='green'
 
                 // a.item(href="/d/org/#{_id}/#{username}")
                 //     img.ui.mini.image(src="{{c.url image_id width=200 height=200}}")

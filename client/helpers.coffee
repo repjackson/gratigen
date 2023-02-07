@@ -255,10 +255,12 @@ Template.registerHelper 'is_text', () ->
 
 Template.registerHelper 'template_parent', () ->
     Template.parentData()
-Template.registerHelper '_parent', () ->
+Template.registerHelper '_parents', () ->
+    console.log 'parent?', @
     if @parent_id
-        Docs.findOne 
-            _id:@parent_id
+        Docs.find
+            # _id:@parent_id
+            _id:$in:[@parent_id]
 
 Template.registerHelper 'fields', () ->
     model = Docs.findOne

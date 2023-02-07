@@ -10,16 +10,22 @@ template(name='gratigen')
 
 
 template(name='parent_block')
-    with _parent 
-        a.ui.card(href="/d/#{model}/#{_id}")
-            .content 
-                img.ui.image(src="{{c.url image_id width=200 height=200 gravity='face' crop='fill'}}")
-            
-                |#{title}
-                .ui.label #{model}
-                +creation_info
-                +author_info
-
+    .ui.segment 
+        .ui.header 
+            i.fork.icon
+            |parent docs
+        each parent_ids 
+            // .ui.label #{this}
+            with doc_by_id 
+                a.ui.card(href="/d/#{model}/#{_id}")
+                    .content 
+                        img.ui.image(src="{{c.url image_id width=200 height=200 gravity='face' crop='fill'}}")
+                    
+                        |#{title}
+                        .ui.label #{model}
+                        +creation_info
+                        +author_info
+    
 
 template(name='give_money')
     .ui.button.give_money
@@ -620,27 +626,28 @@ template(name='block')
             else 
                 |#{template}
         if is_expanded
+            i.fullscreen.circular.link.icon.toggle_fullscreen
             +Template.dynamic template=template
 
 // #{model}_item structure for child docs
             
 template(name='model_crud')
     // unless picked_model
-    .ui.icon.large.input
+    .ui.icon.large.action.fluid.input
         if model_search_value
             i.large.red.remove.link.icon.zoomer.clear_search
         else 
             i.search.icon
         input.model_search(type='text' placeholder='search' value=model_search_value)
+    .ui.green.basic.fluid.button.create_model
+        |add #{model_search_value}
     if model_results
         .ui.selection.link.animated.list.smallscroll
             each model_results
-                .ui.item.pick_model
+                a.ui.item.pick_model
                     img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
                     |#{title}
     // else if model_search_value
-    .ui.green.basic.button.create_model
-        |add #{model_search_value}
     
     // if picked_models
     .ui.header 
@@ -658,7 +665,7 @@ template(name='child_model_item_template')
     .ui.segment
         if image_id
             img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
-        .inline.header
+        a.inline.header(href="/d/#{model}/#{_id}")
             |#{title}
         .ui.label #{model}
         i.remove.link.circular.red.icon.zoomer.remove_model
