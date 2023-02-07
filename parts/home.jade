@@ -93,23 +93,23 @@ template(name='home')
                     
                     // +filter_model model='food' icon='food' 83DFF4
                 .centered   
-                    .ui.search
-                        .ui.large.icon.input.search_bar
-                            input.prompt(type='text' placeholder='add/request/search...')
-                            i.search.icon
-                        .results
+                    // .ui.search
+                    //     .ui.large.icon.input.search_bar
+                    //         input.prompt(type='text' placeholder='add/request/search...')
+                    //         i.search.icon
+                    //     .results
                     +home_search
-                        // .search.item.zoomer.mobile.hidden(title='search')
-                            // .ui.icon.transparen.large.input
-                            //     if current_query
-                            //         i.remove.large.red.link.icon.clear_search
-                            //     else
-                            //         i.search.large.grey.icon
-                            //     input.search_site(type='text' autocomplete="off" value=current_query)
-                            // each picked_tags
-                            //     .ui.label
-                            //         i.remove.icon
-                            //         |#{this}
+                    // .search.item.zoomer.mobile.hidden(title='search')
+                        // .ui.icon.transparen.large.input
+                        //     if current_query
+                        //         i.remove.large.red.link.icon.clear_search
+                        //     else
+                        //         i.search.large.grey.icon
+                        //     input.search_site(type='text' autocomplete="off" value=current_query)
+                        // each picked_tags
+                        //     .ui.label
+                        //         i.remove.icon
+                        //         |#{this}
                         // each search_results
                         //     button.ui.button.goto_doc
                         //         img.ui.avatar.image(src="{{c.url image_id width=200 height=200 gravity='face' crop='fill'}}")
@@ -143,15 +143,16 @@ template(name='home')
                                 
         // .eight.wide.column.bordered
         .five.wide.scrolling.column
-            +latest_updated_block
-            +user_avatars
+            +block template='latest_updated_block' title='latest activity'
+            +block template='user_avatars' title='users'
             div
             // +comet_chat_block
-            .ui.divider
-            +gratigen
-            .ui.divider
+            // .ui.divider
+            +block template='gratigen' open=true
+            // +gratigen
+            // .ui.divider
             
-            +home_block template='bookmark_block' label='bookmarks' icon='bookmark'
+            +block template='bookmark_block' title='bookmarks' icon='bookmark'
             // +bookmark_block
             // +model_block model='post' icon='blog' color='42E8C4' title='latest posts'
             // +model_block model='role' icon='shield' color='42E8C4' title='latest roles'
@@ -162,9 +163,11 @@ template(name='home')
                 +mapbox
             if session_is 'show_calendar' true 
                 +calendar_view
-            +charts
+            +block template='charts'
+            // +charts
             +user_connection_graph
-            +online_allies
+            +block template='online_allies'
+            // +online_allies
         // +thing_maker
         // if current_thing.
         //     if _is 'model'_edit
@@ -177,36 +180,7 @@ template(name='home')
         with current_viewing_thing
             .ui.grid
                 .sixteen.wide.column
-                    if _is 'model' 'org'
-                        .ui.circular.basic.button(href="/orgs")
-                            +i name='groups' color='83DFF4'
-                    if _is 'model' 'project'
-                        .ui.circular.basic.button(href="/projects")
-                            +i name='project' color='7229AF'
-                    if _is 'model' 'post'
-                        .ui.circular.basic.button(href="/posts")
-                            +i name='for-you' color='1255B8'
-                    if _is 'model' 'event'
-                        .ui.circular.basic.button(href="/events")
-                            +i name='calendar' color='FAB005'
-                    if _is 'model' 'task'
-                        .ui.circular.basic.button(href="/tasks")
-                            +i name='task' color='B785E1'
-                    if _is 'model' 'offer'
-                        .ui.circular.basic.button(href="/offers")
-                            +i name='hand-holding-heart' color='FF73EA'
-                    if _is 'model' 'request'
-                        .ui.circular.basic.button(href="/requests")
-                            +i name='commercial' color='40C057'
-                    if _is 'model' 'role'
-                        .ui.circular.basic.button(href="/roles")
-                            +i name='what-i-do' color='42E8C4'  
-                    if _is 'model' 'resource'
-                        .ui.circular.basic.button(href="/resources")
-                            +i name='field-and-tractor' color='42E8C4'        
-                            
-                        .ui.icon.right.floated.button.toggle_editing
-                            i.small.pencil.icon
+                    +model_icon
                 .thirteen.wide.centered.column
                     //on click go to full page
                     .ui.inline.centered.header.huge #{title}
@@ -229,6 +203,8 @@ template(name='home_block')
                 |#{template}
         .content
             +Template.dynamic template=template
+
+
 
 
 template(name='home_search')
@@ -255,35 +231,25 @@ template(name='home_search')
 
 
 template(name='latest_updated_block')
-    details.ui.fluid.styled.accordion
-        summary.title
-            i.clock.icon
-            |latest updated docs 
-        .content
-            .ui.animated.selection.list 
-                each latest_updated_docs
-                    a.item(href="/d/#{model}/#{_id}")
-                        if image_id
-                            img.ui.avatar.image.zoomer(src="{{c.url image_id height='300' width='300'}}")
-                        .content
-                            .header {{cut title}}
-                            |updated {{from_now _updated_timestamp}}
-                        
+    .ui.animated.selection.list 
+        each latest_updated_docs
+            a.item(href="/d/#{model}/#{_id}")
+                if image_id
+                    img.ui.avatar.image.zoomer(src="{{c.url image_id height='300' width='300'}}")
+                .content
+                    .header {{cut title}}
+                    |updated {{from_now _updated_timestamp}}
+                
 
 
 
 template(name='user_avatars')
-    details.ui.fluid.styled.accordion
-        summary.title
-            i.users.icon
-            |users 
-        .content
-            each all_users
-                if image_id
-                    a.fly_right(href="/user/#{username}" title=username)
-                        img.ui.tiny.circular.inline.image.zoomer(src="{{c.url image_id height='300' width='300' gravity='face' crop='fill'}}")
-                    // else 
-                    //     i.large.user.link.icon.zoomer
+    each all_users
+        if image_id
+            a.fly_right(href="/user/#{username}" title=username)
+                img.ui.tiny.circular.inline.image.zoomer(src="{{c.url image_id height='300' width='300' gravity='face' crop='fill'}}")
+            // else 
+            //     i.large.user.link.icon.zoomer
 
 template(name='bookmark_block')
     each bookmarked_docs 
@@ -343,17 +309,17 @@ template(name='model_block')
 
 template(name='charts')
     // +i name='sad'
-    .ui.blue.small.progress.invert(data-percent='65' title="{{to_percent sadness}}% sadness")
+    .ui.blue.small.progress.invert(data-percent='72' title="{{to_percent sadness}}% sadness")
         .bar
         .progress.invert
             .label {{to_percent sadness}}% sadness 
     // +i name='happy'
-    .ui.green.small.progress.invert(data-percent='54' title="{{to_percent joy}}% joy")
+    .ui.green.small.progress.invert(data-percent='88' title="{{to_percent joy}}% joy")
         .bar
         .progress.invert
             .label {{to_percent joy}}% joy 
     // +i name='fear'
-    .ui.small.progress.invert(data-percent='78' title="{{to_percent fear}}% fear")
+    .ui.yellow.small.progress.invert(data-percent='77' title="{{to_percent fear}}% fear")
         .bar
         .progress.invert
             .label {{to_percent fear}}% fear 
@@ -363,7 +329,7 @@ template(name='charts')
     //     .progress.invert
     //         .label {{to_percent disgust}}% disgust 
     // +i name='angry'
-    .ui.orange.small.progress.invert(data-percent='23' title="{{to_percent anger}}% anger")
+    .ui.red.small.progress.invert(data-percent='66' title="{{to_percent anger}}% anger")
         .bar
         .progress.invert
             .label {{to_percent anger}}% anger
@@ -464,7 +430,6 @@ template(name='model_icon')
     if _is 'model' 'resource'
         +i name='field-and-tractor' color='42E8C4' cl='ui inline mini image'
 
-      
       
       
 template(name='calendar_view')    

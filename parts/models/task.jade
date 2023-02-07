@@ -1,21 +1,11 @@
 template(name='checklist')
-    .ui.segment
-        details.ui.styled.fluid.accordian
-            summary.title.zoomer
-                a.ui.inline.header
-                    if currentUser.admin_mode 
-                        |#{complete_count}/
-                        |#{org_task_docs.count}
-                    |checklist
-                    // .dripdown.icon
-            .content
-                .ui.large.input
-                    input.quickadd_task(type='text' placeholder='add task')
-                |#{complete_count} complete
-                |#{incomplete_count} incomplete
-                .ui.big.list
-                    each org_task_docs
-                        +task_item_small
+    .ui.large.input
+        input.quickadd_task(type='text' placeholder='add task')
+    |#{complete_count} complete
+    |#{incomplete_count} incomplete
+    .ui.big.list
+        each org_task_docs
+            +task_item_small
                 
                 
 template(name='task_item_small')

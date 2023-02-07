@@ -169,15 +169,17 @@ template(name='org_view')
                     .column 
                         .ui.centered.small.header creator
                         +single_user_field key='creator' label='creator' icon='edit'
-                +textarea_field key='brief' tagline='breif description or your organization'
+                +textarea_field key='brief' tagline='brief description or your organization'
                 +textarea_field key='description' tagline='complete description of your organization'
                 +textarea_field key='body' tagline='body'
                 // +model_crud model='role' label='roles'
                 // +model_crud model='project'
                 // +model_crud model='event'
                 // +model_crud model='task'
-                +block template='request_crud' color='blue'
-                +block template='model_crud' model='role' label='role picker block thing' color='red'
+                +block template='model_crud' model='event' title='events' icon='calender' color='blue'
+                +block template='model_crud' model='task' title='tasks' icon='tasks' color='blue'
+                +block template='model_crud' model='request' title='requests' color='blue'
+                +block template='model_crud' model='role' title='roles' icon='shield' color='red'
 
                 // a.item(href="/d/org/#{_id}/#{username}")
                 //     img.ui.mini.image(src="{{c.url image_id width=200 height=200}}")
@@ -185,6 +187,7 @@ template(name='org_view')
                 //         .header
                 //             |#{username}
             .six.wide.column
+                +ai name='blockchain'
                 +block template='checklist'
                 .ui.inline.header 
                     i.users.icon
@@ -212,9 +215,9 @@ template(name='org_view')
                 +gratigen
                 each log_items
                     +log_item
-                +block template='org_stats'
+                +block template='org_stats' title='stats' icon='line chart'
                 // +org_stats
-                +block template='role_crud'
+                // +block template='role_crud'
                 // +doc_array_togggle key='member_ids' value=currentUser._id add_label='join' remove_label='joined'
                 // +group_crud
                 // +product_crud
@@ -225,8 +228,7 @@ template(name='org_view')
                 // +objective_crud
                 // +shift_crud
             .five.wide.column
-                +block template='related_docs' 
-            
+                +block template='related_docs' title='related docs'
         // .ui.stackable.padded.grid
         //     .row
         //         .ui.stackable.padded.grid
