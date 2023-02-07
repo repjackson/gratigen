@@ -205,7 +205,7 @@ template(name='reserve_button')
 template(name='event_view')
     // with current_doc
     .ui.stackable.padded.grid
-        .middle.aligned.row 
+        .row 
             .four.wide.column
                 // if currentUser
                 //     a(href="/events")
@@ -217,6 +217,8 @@ template(name='event_view')
                     else 
                         i.big.eye.red.slash.icon(title='unpublished')
                 // div
+                +image_field key='image_id' label='image'
+                +title_link_buttons
                 // .ui.inline.header {{medium_date date}}
                 .ui.inline.header {{long_date start_datetime}}
                 // .ui.inline.grey.header {{from_now date}}
@@ -227,7 +229,11 @@ template(name='event_view')
                 //         i.large.blue.link.pencil.circular.icon
                 +eft_viewer
                 div
-                |parent_id org-project-event-etc...
+                +datetime_field key='start_datetime' label='start datetime'
+                div
+                +datetime_field key='end_datetime' label='end datetime'
+                +parent_block                
+                // |parent_id org-project-event-etc...
                 +block template='model_crud' model='role'
                 +block template='model_crud' model='task'
             .four.wide.column.scrollin

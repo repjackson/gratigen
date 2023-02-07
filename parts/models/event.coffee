@@ -70,7 +70,6 @@ if Meteor.isClient
 
 
     Template.event_view.onCreated ->
-        # @autorun => @subscribe 'model_docs', 'order'
     Template.event_view.events
         'click .buy_ticket': ->
             Docs.insert 
@@ -678,6 +677,7 @@ if Meteor.isServer
         if event 
             Docs.find 
                 model:'order'
+                event_id:event_id
                 
                 
                 

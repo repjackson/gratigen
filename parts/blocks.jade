@@ -645,7 +645,8 @@ template(name='model_crud')
         .ui.selection.link.animated.list.smallscroll
             each model_results
                 a.ui.item.pick_model
-                    img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+                    if image_id
+                        img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
                     |#{title}
     // else if model_search_value
     

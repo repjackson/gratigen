@@ -42,6 +42,7 @@ template(name='task_view')
                 +image_field key='banner_image_id' icon='image' label='banner image'
                 +array_field key='tags' icon='tags'
             .column
+                +textarea_field key='body' label='description' tagline='describe this task'
                 +boolean_view key='has_user_assignment' label='has user assignment'
                 if has_user_assignment
                     each group_members
