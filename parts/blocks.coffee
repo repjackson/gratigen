@@ -298,8 +298,8 @@ if Meteor.isClient
             console.log Template.currentData().model
             Docs.find
                 model:Template.currentData().model
+                parent_ids:$in:[Router.current().params.doc_id]
                 # parent_id:Router.current().params.doc_id
-                parent_ids:$in:Router.current().params.doc_id
                 # _id:$in:parent_doc["#{Template.currentData().model}_ids"]
         # picked_model: ->
         #     parent_doc = Docs.findOne Router.current().params.doc_id
@@ -355,6 +355,10 @@ if Meteor.isClient
                 $addToSet:
                     "#{Template.currentData().model}_ids":@_id
                     "#{Template.currentData().model}_titles":@title
+            # update clicked on doc to add current page doc to parent_ids list
+            Docs.update @_id, 
+                $addToSet:
+                    parent_ids:Router.current().params.doc_id
             t.query.set(null)
             $(e.currentTarget).closest('.model_search').val('')
             $('body').toast(
@@ -378,8 +382,10 @@ if Meteor.isClient
                         Docs.insert 
                             model:Template.currentData().model
                             title:t.query.get()
+                            parent_ids:[Router.current().params.doc_id]
                             parent_id:Router.current().params.doc_id
                             parent_model:@model
+                            parent_models:[@model]
                     # Router.go "/model/#{new_id}/edit"
                     Docs.update Router.current().params.doc_id,
                         $addToSet:
@@ -407,7 +413,10 @@ if Meteor.isClient
                         title:t.query.get()
                         # title:Session.get("#{Template.currentData().model}_model_search")
                         parent_id:Router.current().params.doc_id
+                        parent_ids:[Router.current().params.doc_id]
                         parent_model:@model
+                        parent_models:[@model]
+                        
                 # Router.go "/model/#{new_id}/edit"
                 Docs.update Router.current().params.doc_id,
                     $addToSet:
