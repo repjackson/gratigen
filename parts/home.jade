@@ -143,12 +143,12 @@ template(name='home')
                                 
         // .eight.wide.column.bordered
         .five.wide.scrolling.column
-            +block template='latest_updated_block' title='latest activity'
-            +block template='user_avatars' title='users'
+            +block template='latest_updated_block' title='latest activity' icon='log-history'
+            +block template='user_avatars' title='users' icon='groups'
             div
             // +comet_chat_block
             // .ui.divider
-            +block template='gratigen' open=true
+            +block template='gratigen' open=true icon='donate'
             // +gratigen
             // .ui.divider
             

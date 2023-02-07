@@ -148,7 +148,10 @@ template(name='profile_section')
                 |#{label}
             if is_expanded
                 // .ui.header expanded
+                // if profile_subtemplate_exists
                 +Template.dynamic template=user_template data=current_user
+                // else 
+                //     +user_model_docs key=child_model
     // .column.zoomer
     //     if currentUser.admin_mode
     //         .ui.inline.header
@@ -186,7 +189,50 @@ template(name='user_roles')
     .ui.selection.animated.list
         each user_taken_roles current_user
             +role_item_small
+            
+template(name='user_tasks')
+    .ui.small.header 
+        i.pencil.icon
+        |tasks you authored
+    .ui.small.header 
+        i.pencil.icon
+        |tasks assigned
+    .ui.selection.animated.list
+        each _authored_docs current_user 'task'
+            +role_item_small
+    .ui.small.header
+        i.checkmark.icon
+        |roles you hold
+    .ui.selection.animated.list
+        each user_taken_roles current_user
+            +role_item_small
+template(name='user_groups')
+    .ui.small.header 
+        i.pencil.icon
+        |groups you authored
+    .ui.small.header 
+        i.pencil.icon
+        |groups belonged to
+    .ui.selection.animated.list
+        each _authored_docs current_user 'group'
+            +model_item_small
+template(name='user_projects')
+    .ui.small.header 
+        i.pencil.icon
+        |projects you authored
+    .ui.small.header 
+        i.pencil.icon
+        |projects belonged to
+    .ui.selection.animated.list
+        each _authored_docs current_user 'project'
+            +model_item_small
 
+template(name='model_item_small')
+    a.item(href="/d/role/#{_id}") 
+        if image_id
+            img.ui.avatar.image(src="{{c.url image_id height=200 width=200}}" class=currentUser.darkmode_class)
+        |#{title} #{_org.name}
+        +related_org_icon
 template(name='role_item_small')
     a.item(href="/d/role/#{_id}") 
         if image_id

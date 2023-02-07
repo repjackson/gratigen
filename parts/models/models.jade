@@ -38,6 +38,9 @@ template(name='task_view')
                 a.ui.big.button.fly_right(href="/task/#{_id}/edit")
                     i.pencil.icon
                     |edit
+                +image_field key='image_id' icon='image' label='image'
+                +image_field key='banner_image_id' icon='image' label='banner image'
+                +array_field key='tags' icon='tags'
             .column
                 +boolean_view key='has_user_assignment' label='has user assignment'
                 if has_user_assignment
@@ -57,6 +60,9 @@ template(name='task_view')
                 //     +parent_unit_button
                     
             .column
+                +block template='checklist'
+                +voting_full
+                +comments
                 +html_view key='description' label='description'
                 +array_field key='tags' label='tags' icon='tags'
                 if currentUser
@@ -74,9 +80,7 @@ template(name='task_view')
                             if before_image_id
                                 img.ui.tiny.inline.image(src="{{c.url after_image_id width=400 height=300 crop='pad'}}")
                             |#{when} #{_author_username}
-            .column
-                +voting_full
-                +comments
+
     if currentUser.editing
         .three.column.row
             .column
@@ -317,6 +321,7 @@ template(name='work_edit')
                 // +text_field key='title' label='title'
                 div
                 +textarea_field key='notes' label='notes'
+                +block template='checklist'
                 // if location_id
                 //     if image_id
                 .ui.hidden.divider

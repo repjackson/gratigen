@@ -1,12 +1,11 @@
 template(name='gratigen')
-    .ui.segment
-        a.ui.header.toggle_expanded.zoomer.pointer            .ui.header Give a Gift of Gratitude
-            .ui.input
-            .button give gratitude points
-            .button give reserve token
-            +give_money
-            .button give an item - service, product, resource,
-            .button give a time-type [badge, skill, task, role, resource]
+    .ui.header Give a Gift of Gratitude
+    // .ui.input
+    .button give gratitude points
+    .button give reserve token
+    +give_money
+    .button give an item - service, product, resource,
+    .button give a time-type [badge, skill, task, role, resource]
 
 
 template(name='parent_block')
@@ -619,7 +618,8 @@ template(name='block')
     .ui.segment(class=color)
         a.ui.header.toggle_expanded.zoomer.pointer(title='expand' class=color)
             if icon
-                +i name=icon
+                +i name=icon color='000000'
+                // i.large.icon(class=icon)
             // | #{model}s
             if title
                 strong #{title}
@@ -670,7 +670,16 @@ template(name='child_model_item_template')
         .ui.label #{model}
         i.remove.link.circular.red.icon.zoomer.remove_model
     
-            
+template(name='child_role_item_template')  
+    // if _is 'model' 'role'
+        // .ui.header this is a role
+    .ui.segment
+        if image_id
+            img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+        a.inline.header(href="/d/#{model}/#{_id}")
+            |#{title}
+        .ui.label #{model}
+        i.remove.link.circular.red.icon.zoomer.remove_model
             
 
 

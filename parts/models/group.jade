@@ -95,3 +95,82 @@ template(name='group_crud')
                                         i.chevron.right.icon
                     .ui.modal 
                         .ui.header hi
+                        
+                        
+template(name='goup_view')
+    .ui.stackable.padded.grid
+        .row 
+            .five.wide.column
+                +single_user_field key='assigned_to_user_id'
+                +multi_user_field key='assigned_to_user_ids'
+                .ui.header 
+                    |assigned to 
+                each assigned_users
+                    +user_pill
+                    // .ui.header #{name}
+                .ui.small.grey.header 
+                    i.line.chart.icon
+                    |stats
+                .ui.list
+                    .item #{views} views
+                each viewers
+                    .ui.label #{username}
+                +image_field key='image_id' label='image'
+                +image_field key='banner_image_id' icon='image' label='banner image'
+                +array_field key='tags' label='tags' direct=true
+                +array_field key='badge_titles' label='badges' direct=true
+                +voting_full
+                .ui.header #{when}
+                +eft_viewer
+                +parent_block
+                //- +array_field key='location_tags' label='location_tags' direct=true
+            .five.wide.column
+                .centered.row
+                    +eft_viewer
+                .ui.header Spaceholders
+                .ui.four.column.centered.grid
+                    .column 
+                        .ui.centered.small.header lead
+                        +single_user_field key='lead' label='lead' icon='king'
+                    .column 
+                        .ui.centered.small.header support
+                        +single_user_field key='support' label='support' icon='users'
+                    .column 
+                        .ui.centered.small.header safety
+                        +single_user_field key='safety' label='safety'
+                    .column 
+                        .ui.centered.small.header creator
+                        +single_user_field key='creator' label='creator' icon='edit'
+                +textarea_field key='body' label='description' tagline='what are the characteristics of the person playing this role? what will their days be like?'
+                +textarea_field key='responsibilities' label='responsibilities' tagline='what responsibilities belong to the person playing this role?'
+                +textarea_field key='privaleges' label='privaleges' tagline='what rights and permissions belong to the person playing this role?'
+ 
+            .six.wide.column
+                +checklist
+                .ui.inline.header 
+                    i.users.icon
+                    |members
+                if currentUser.editing 
+                    +multi_user_field key='member_ids' label='members'
+                else 
+                    each member_ids
+                        +user_pill
+                if currentUser.editing
+                    .ui.basic.center.aligned.segment
+                        +eft_picker color="FF73EA" icon='food' label='food'
+                        +eft_picker color="B785E1" icon='home' label='housing'
+                        +eft_picker color="7229AF" icon='tshirt' label='clothing'
+                        +eft_picker color="1255B8" icon='car' label='transportation'
+                        +eft_picker color="83DFF4" icon='lightning' label='energy'
+                        +eft_picker color="42E8C4" icon='leaf' label='zero waste'
+                        +eft_picker color="40C057" icon='smile' label='wellness'
+                        +eft_picker color="FAB005" icon='university' label='education'
+                        +eft_picker color="FD7E14" icon='paint brush' label='art'
+                        +eft_picker color="FF0000" icon='users' label="community core"
+                .ui.header 
+                    +i name='rss'
+                    |activity
+                +gratigen
+                each log_items
+                    +log_item
+                +org_stats
