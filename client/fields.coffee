@@ -147,7 +147,7 @@ Template.link_field.events
         )
             
 
-Template.datetime_edit.events
+Template.datetime_field.events
     'blur .edit_datetime': (e,t)->
         val = t.$('.edit_datetime').val()
         parent = Template.parentData()

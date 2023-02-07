@@ -85,9 +85,9 @@ template(name='event_edit')
                 //     .ui.header date: #{date}
                 //     .ui.header time: #{time}
                 // else
-                +datetime_edit key='start_datetime' label='start datetime'
+                +datetime_field key='start_datetime' label='start datetime'
                 div
-                +datetime_edit key='end_datetime' label='end datetime'
+                +datetime_field key='end_datetime' label='end datetime'
                 div
                 // +time_edit key='time' label='time'
                 div
@@ -206,7 +206,7 @@ template(name='event_view')
     // with current_doc
     .ui.stackable.padded.grid
         .middle.aligned.row 
-            .sixteen.wide.column
+            .four.wide.column
                 // if currentUser
                 //     a(href="/events")
                 //         i.calendar.big.circular.link.icon
@@ -228,13 +228,8 @@ template(name='event_view')
                 +eft_viewer
                 div
                 |parent_id org-project-event-etc...
-                +model_crud model='role'
-                +model_crud model='task'
-    
-        
-                // +role_crud
-                // +task_crud
-        .row 
+                +block template='model_crud' model='role'
+                +block template='model_crud' model='task'
             .four.wide.column.scrollin
                 if location 
                     i.large.marker.icon(title='location')
@@ -272,6 +267,7 @@ template(name='event_view')
                 // .ui.small.grey.header 
                 //     i.line.chart.icon
                 //     |stats
+            .four.wide.column
                 .ui.small.header #{views} views
                 each viewers
                     .ui.label #{username}
@@ -285,7 +281,6 @@ template(name='event_view')
                     +voting_full
                 +array_field key='location_tags' label='location tags' icon='marker'
                 div
-            .eight.wide.column.scrollin
                 a(href="{{c.url image_id }}")
                     img.ui.fluid.rounded.image(src="{{c.url image_id }}" class=currentUser.darkmode_class)
                 // a.ui.header(href="/user/#{target.username}")
@@ -295,7 +290,6 @@ template(name='event_view')
                 // div 
                 // .spacer
                 // .spacer
-                +comments
             .four.wide.column
                 .ui.big.button.buy_for_usd
                     |buy with usd

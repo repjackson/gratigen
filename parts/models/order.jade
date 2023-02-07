@@ -123,7 +123,7 @@ template(name='order')
                     .ui.header #{title}
                 
                 if _is 'when' 'later'
-                    +datetime_view key='pickup_datetime'
+                    +datetime_field key='pickup_datetime'
                 .ui.header status: #{status}
                 // if complete
                 //     .ui.header

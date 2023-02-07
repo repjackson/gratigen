@@ -226,6 +226,16 @@ template(name='user_projects')
     .ui.selection.animated.list
         each _authored_docs current_user 'project'
             +model_item_small
+template(name='user_productss')
+    .ui.small.header 
+        i.pencil.icon
+        |products you authored
+    .ui.small.header 
+        i.pencil.icon
+        |products 
+    .ui.selection.animated.list
+        each _authored_docs current_user 'project'
+            +model_item_small
 
 template(name='model_item_small')
     a.item(href="/d/role/#{_id}") 

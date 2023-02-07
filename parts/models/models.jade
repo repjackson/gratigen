@@ -51,7 +51,7 @@ template(name='task_view')
                     +number_field key='minute_expectation' label='time expectation (minutes)'
                 +boolean_view key='has_duedatetime' label='has due date/time' icon='calendar'
                 if has_duedatetime
-                    +datetime_view key='due_datetime' label='due date/time' icon='calendar'
+                    +datetime_field key='due_datetime' label='due date/time' icon='calendar'
                 +number_field key='amount' label='amount (leave 0 for infinite)'
                 +boolean_view key='has_point_bounty' label='has point bounty' icon='hashtag'
                 if has_point_bounty
@@ -120,7 +120,7 @@ template(name='task_view')
                 +model_crud model='project' icon='project'
             .column
                 // if has_duedatetime
-                +datetime_edit key='due_datetime' label='due date/time' icon='calendar'
+                +datetime_field key='due_datetime' label='due date/time' icon='calendar'
                 // +number_field key='amount' label='amount (leave 0 for infinite)'
                 // div
                 // +boolean_field key='has_point_bounty' label='has point bounty' icon='hashtag'

@@ -530,21 +530,8 @@ template(name='time_view')
                 |#{this}
         .ui.inline.header &nbsp; #{field_value}
 
-template(name='datetime_edit')
-    .ui.form
-        .field
-            label 
-                if icon
-                    i.grey.icon(class=icon)
-                    //- +i name=icon                
-                if label
-                    |#{label}
-                else
-                    |#{key}
-            //- +clear_value                
-            input.edit_datetime(type='datetime-local' value=field_value placeholder=placeholder autocomplete="off")
 
-template(name='datetime_view')
+template(name='datetime_field')
     div
     //- if icon
     //-     +i name=icon cl='ui mini inline image'
@@ -556,7 +543,21 @@ template(name='datetime_view')
         |#{key}
     else
         |#{this}
-    strong &nbsp; #{field_value}
+    unless currentUser.editing
+        strong &nbsp; #{field_value}
+    else 
+        .ui.form
+            .field
+                label 
+                    if icon
+                        i.grey.icon(class=icon)
+                        //- +i name=icon                
+                    if label
+                        |#{label}
+                    else
+                        |#{key}
+                //- +clear_value                
+                input.edit_datetime(type='datetime-local' value=field_value placeholder=placeholder autocomplete="off")
 
 template(name='array_field')
     if currentUser.editing

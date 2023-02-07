@@ -109,9 +109,9 @@ template(name='delivery_section')
         +kvs key='delivery_method' value='pickup' icon='doormat'
         if is delivery_time_type 'later' 
             if key_value_is 'delivery_method' 'delivery'
-                +datetime_edit key='delivery_timedate' label='delivery datetime'
+                +datetime_field key='delivery_timedate' label='delivery datetime'
             if key_value_is 'delivery_method' 'pickup'
-                +datetime_edit key='pickup_timedate' label='pickup timedate'
+                +datetime_field key='pickup_timedate' label='pickup timedate'
         
 template(name='payment_section')                
     .ui.segment
