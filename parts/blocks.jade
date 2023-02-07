@@ -1,12 +1,12 @@
 template(name='gratigen')
-    .ui.segment 
-        .ui.header Give a Gift of Gratitude
-        .ui.input
-        .button give gratitude points
-        .button give reserve token
-        +give_money
-        .button give an item - service, product, resource,
-        .button give a time-type [badge, skill, task, role, resource]
+    .ui.segment
+        a.ui.header.toggle_expanded.zoomer.pointer            .ui.header Give a Gift of Gratitude
+            .ui.input
+            .button give gratitude points
+            .button give reserve token
+            +give_money
+            .button give an item - service, product, resource,
+            .button give a time-type [badge, skill, task, role, resource]
 
 
 template(name='parent_block')

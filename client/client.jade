@@ -222,26 +222,28 @@ template(name='shortcut_modal')
 
 
 template(name='footer')
-    .ui.segment 
-        // page chat by default, maybe replace individual template calls
-        with current_doc
-            +print_this
-            +comments
-        .ui.header 
-            i.shield.icon
-            |footer 
-        .ui.header 
-            i.users.icon
-            |#{user_docs.count} users
-        each user_docs 
-            // +user_pill
-            a.ui.big.label(href="/user/#{username}")
-                img.ui.avatar.image(src="{{c.url image_id crop='fit'}}")
-                |#{username}
-        .ui.header 
-            |#{doc_docs.count} docs 
-        each doc_docs
-            +doc_pill
+    .ui.equal.width.grid 
+        .column
+            // page chat by default, maybe replace individual template calls
+            with current_doc
+                +print_this
+                +comments
+            .ui.header 
+                i.shield.icon
+                |footer 
+            .ui.inline.header 
+                i.users.icon
+                |#{user_docs.count} users
+            each user_docs 
+                // +user_pill
+                a.ui.large.image.label(href="/user/#{username}")
+                    img.ui.avatar.image(src="{{c.url image_id width=300 height=300 crop='fit'}}")
+                    |#{username}
+        .column
+            .ui.header 
+                |#{doc_docs.count} docs 
+            each doc_docs
+                +doc_pill
             
             
 template(name='doc_pill')
