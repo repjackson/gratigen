@@ -607,7 +607,7 @@ template(name='add_button')
 
 template(name='block')
     .ui.segment(class=color)
-        .ui.header.toggle_expanded.zoomer(title='expand' class=color)
+        a.ui.header.toggle_expanded.zoomer.pointer(title='expand' class=color)
             if icon
                 +i name=icon
             // | #{model}s
@@ -619,17 +619,8 @@ template(name='block')
             +Template.dynamic template=template
 
 // #{model}_item structure for child docs
-template(name='model_crud')
-    .ui.segment(class=color)
-        .ui.header.toggle_expanded.zoomer(title='expand' class=color)
-            if icon
-                +i name=icon
-            | #{model}s
-        if is_expanded
-            // separate template so data loading conditionally, much faster
-            +model_crud_content
             
-template(name='model_crud_content')
+template(name='model_crud')
     // unless picked_model
     .ui.icon.large.input
         if model_search_value
@@ -657,15 +648,17 @@ template(name='model_crud_content')
             +Template.dynamic template='child_model_item_template'
             
                     
-template(name='child_model_item_template')    
-    .ui.item
-        .ui.label #{model}
+template(name='child_model_item_template')  
+    // if _is 'model' 'role'
+        // .ui.header this is a role
+    .ui.segment
         if image_id
             img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
-        .content
-            .header
-                |#{title}
-            i.remove.link.circular.red.icon.zoomer.remove_model
+        .inline.header
+            |#{title}
+        .ui.label #{model}
+        i.remove.link.circular.red.icon.zoomer.remove_model
+    
             
             
 

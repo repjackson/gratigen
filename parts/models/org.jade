@@ -124,10 +124,7 @@ template(name='org_view')
                 div
                 +image_field key='image_id' icon='image' label='image'
                 +image_field key='banner_image_id' icon='image' label='banner image'
-                if currentUser.editing 
-                    +array_field key='tags' icon='tags'
-                else    
-                    +array_field key='tags' icon='tags'
+                +array_field key='tags' icon='tags'
                 
                 +title_link_buttons
                 .spacer
@@ -179,8 +176,8 @@ template(name='org_view')
                 // +model_crud model='project'
                 // +model_crud model='event'
                 // +model_crud model='task'
-                +block template='request_crud'
-                +block template='model_crud' model='role' label='role picker block thing'
+                +block template='request_crud' color='blue'
+                +block template='model_crud' model='role' label='role picker block thing' color='red'
 
                 // a.item(href="/d/org/#{_id}/#{username}")
                 //     img.ui.mini.image(src="{{c.url image_id width=200 height=200}}")

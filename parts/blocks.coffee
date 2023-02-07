@@ -222,10 +222,10 @@ if Meteor.isClient
 
 if Meteor.isServer 
     # realtime search results for model_crud
-    Meteor.publish 'model_search_results', (model,model_title_queary)->
-        if model and model_title_queary
+    Meteor.publish 'model_search_results', (model,query)->
+        if model and query
             match = {model:model}
-            match.title = {$regex:"#{model_title_queary}",$options:'i'}
+            match.title = {$regex:"#{query}",$options:'i'}
             Docs.find match,
                 limit:5
     Meteor.publish 'related_model_docs', (model,parent_id)->
@@ -259,9 +259,9 @@ if Meteor.isClient
         @expanded = new ReactiveVar false
         @query = new ReactiveVar ''
         console.log @
-    Template.model_crud.onCreated ->
+        
         # this way sucks, using global session vars, will replce with local ReactiveVars
-        # @autorun => @subscribe 'model_search_results', @data.model, @query.get(), ->
+        @autorun => @subscribe 'model_search_results', @data.model, @query.get(), ->
         @autorun => @subscribe 'related_model_docs', @data.model, Router.current().params.doc_id, ->
     Template.model_crud.helpers 
         is_editing: -> Template.instance().editing.get()
@@ -274,7 +274,9 @@ if Meteor.isClient
         'click .toggle_editing': (e,t)-> t.editing.set !t.editing.get()
     Template.model_crud.helpers
         model_results: ->
-            query = Session.get("#{Template.currentData().model}_model_search")
+            # query = Session.get("#{Template.currentData().model}_model_search")
+            query = Template.instance().query.get()
+            console.log 'local model query', query
             if query
                 Docs.find 
                     model:Template.currentData().model
@@ -295,11 +297,14 @@ if Meteor.isClient
         #         # model:Template.currentData().model
         #         _id:parent_doc["#{Template.currentData().model}_id"]
         model_search_value: ->
-            Session.get("#{Template.currentData().model}_model_search")
+            Template.instance().query.get()
+            # Session.get("#{Template.currentData().model}_model_search")
         
     Template.model_crud.events
         'click .clear_search': (e,t)->
-            Session.set("#{Template.currentData().model}_model_search", null)
+            t.instance().query.set(null)
+            # t.instance().query.set(null)
+
             $(e.currentTarget).closest('.model_search').val('')
 
             
@@ -336,7 +341,7 @@ if Meteor.isClient
                 $addToSet:
                     "#{Template.currentData().model}_ids":@_id
                     "#{Template.currentData().model}_titles":@title
-            Session.set("#{Template.currentData().model}_model_search", null)
+            t.query.set(null)
             $(e.currentTarget).closest('.model_search').val('')
             $('body').toast(
                 # showIcon: 'heart'
@@ -350,16 +355,15 @@ if Meteor.isClient
             # this is all very wrong
             val = t.$('.model_search').val()
             console.log val
-            t.query.set val
+            if val.length > 1
+                t.query.set(val)
             if e.which is '13'
                 if Template.currentData().model
                     # wait till 2 characters to change session var which updates search results, keep fast
-                    if val.length > 1
-                        Session.set("#{Template.currentData().model}_model_search", val)
                     new_id = 
                         Docs.insert 
                             model:Template.currentData().model
-                            title:Session.get("#{Template.currentData().model}_model_search")
+                            title:t.query.get()
                             parent_id:Router.current().params.doc_id
                             parent_model:@model
                     # Router.go "/model/#{new_id}/edit"
@@ -367,12 +371,12 @@ if Meteor.isClient
                         $addToSet:
                             "#{Template.currentData().model}_ids":@_id
                             "#{Template.currentData().model}_titles":@title
-                    Session.set("#{Template.currentData().model}_model_search", null)
-                    $(e.currentTarget).closest('.model_search').val('')
+                    t.query.set(null)
+                    t.$('.model_search').val('')
     
                     $('body').toast(
                         # showIcon: 'heart'
-                        message: "#{@title} created and attached"
+                        message: "#{val} created and attached"
                         # showProgress: 'bottom'
                         # class: 'success'
                         displayTime: 'auto',
@@ -386,7 +390,8 @@ if Meteor.isClient
                 new_id = 
                     Docs.insert 
                         model:Template.currentData().model
-                        title:Session.get("#{Template.currentData().model}_model_search")
+                        title:t.query.get()
+                        # title:Session.get("#{Template.currentData().model}_model_search")
                         parent_id:Router.current().params.doc_id
                         parent_model:@model
                 # Router.go "/model/#{new_id}/edit"
@@ -394,7 +399,7 @@ if Meteor.isClient
                     $addToSet:
                         "#{Template.currentData().model}_ids":@_id
                         "#{Template.currentData().model}_titles":@title
-                Session.set("#{Template.currentData().model}_model_search", null)
+                t.query.set(null)
                 $(e.currentTarget).closest('.model_search').val('')
 
                 $('body').toast(

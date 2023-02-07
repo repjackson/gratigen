@@ -139,7 +139,8 @@ template(name='profile_section')
                 if icon
                     // +i name=icon color=icon_color cl='ui mini inline image'
                     +i name=icon color='000000' cl='ui mini inline image'
-                    
+                if loading 
+                    i.large.refresh.icon
                 if is_expanded
                     i.chevron.down.icon(class=color)
                 else
