@@ -25,7 +25,10 @@ template(name='profile')
                 else if is_admin
                     +edit_button
                 +send_sms_button
-                if me.editing
+                if editing_account
+                    +username_edit
+                +title_link_buttons
+                else if currentUser.admin_mode
                     +username_edit
                 else
                     .ui.center.aligned.header.mobile.hidden
@@ -105,14 +108,14 @@ template(name='profile')
                     // each profile_models
                         // +profile_section
                     +profile_section key='info' label='info' icon='info' icon_color='blue'
-                    +profile_section key='roles' label='roles' icon='actor' icon_color='green'
-                    +profile_section key='friends' label='friends' icon='friends' icon_color='red'
-                    +profile_section key='orgs' label='Organizations' icon='groups' icon_color='teal'
-                    +profile_section key='products' label='Products' icon='donate' icon_color='yellow'
-                    +profile_section key='resources' label='Resources' icon='gift' icon_color='orange'
-                    +profile_section key='groups' label='Groups' icon='money' icon_color='green'
+                    +profile_section key='roles' label='roles' icon='actor' color='green' icon_color=''
+                    +profile_section key='friends' label='friends' icon='friends' color='red'
+                    +profile_section key='orgs' label='Organizations' icon='groups' color='teal'
+                    +profile_section key='products' label='Products' icon='donate' color='yellow'
+                    +profile_section key='resources' label='Resources' icon='gift' color='orange'
+                    +profile_section key='groups' label='Groups' icon='money' color='green'
                     +profile_section key='services' label='Services' icon='calendar'
-                    +profile_section key='tasks' label='Tasks' icon='service-bell' icon_color='yellow'
+                    +profile_section key='tasks' label='Tasks' icon='service-bell' color='yellow'
                     +profile_section key='projects' label='Projects' icon='hand-holding-heart'
                     +profile_section key='badges' label='Badges' icon='badge'
                     +profile_section key='skills' label='Skills' icon='chat'
@@ -134,19 +137,20 @@ template(name='profile')
 
 template(name='profile_section')
     .column.zoomer
-        .ui.segment 
+        .ui.segment(class=color)
             // pointer class makes link cursor, zoomer zooms on hover
             a.ui.header.toggle_expanded.zoomer.pointer
                 if icon
+                    // +i name=icon color=icon_color cl='ui mini inline image'
                     +i name=icon color='000000' cl='ui mini inline image'
                     
                 if is_expanded
-                    i.chevron.down.icon(class=icon_color)
+                    i.chevron.down.icon(class=color)
                 else
-                    i.chevron.right.icon(class=icon_color)
+                    i.chevron.right.icon(class=color)
                 |#{label}
             if is_expanded
-                .ui.header expanded
+                // .ui.header expanded
                 +Template.dynamic template=user_template data=current_user
     // .column.zoomer
     //     if currentUser.admin_mode

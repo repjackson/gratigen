@@ -188,3 +188,28 @@ Meteor.methods
 # I20210606-18:09:20.219(0)?   _timestamp_tags: [ 'am', 'friday', 'january', '22nd', '2021' ],
 # I20210606-18:09:20.219(0)?   homepage_views: 7
 # I20210606-18:09:20.220(0)? }                
+
+
+Meteor.methods
+    change_username:  (old_username, new_username) ->
+        console.log 'changing username', old_username, new_username
+        user = Meteor.users.findOne username:old_username
+        Accounts.setUsername(user._id, new_username)
+        return "Updated Username: #{new_username}"
+
+
+    add_email: (user_id, new_email) ->
+        Accounts.addEmail(user_id, new_email);
+        return "Updated Email to #{new_email}"
+
+    remove_email: (user_id, email)->
+        # user = Meteor.users.findOne username:username
+        console.log 'removing email', email, 'from', user_id
+        Accounts.removeEmail user_id, email
+
+
+    verify_email: (user_id)-> Accounts.sendVerificationEmail(user_id)
+
+    validateEmail: (email) ->
+        re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        re.test String(email).toLowerCase()

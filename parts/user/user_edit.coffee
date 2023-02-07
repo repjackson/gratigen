@@ -107,7 +107,7 @@ if Meteor.isClient
             current_user = Meteor.users.findOne username:Router.current().params.username
             if new_username
                 if confirm "Change username from #{current_user.username} to #{new_username}?"
-                    Meteor.call 'change_username', current_user._id, new_username, (err,res)->
+                    Meteor.call 'change_username', current_user.username, new_username, (err,res)=>
                         if err
                             alert err
                         else
@@ -214,20 +214,6 @@ if Meteor.isClient
                         Meteor.users.update user._id,
                             $set: "image_id": res.public_id
                     return
-
-
-    Template.username_edit.events
-        'click .change_username': (e,t)->
-            new_username = t.$('.new_username').val()
-            current_user = Meteor.users.findOne username:Router.current().params.username
-            if new_username
-                if confirm "change username from #{current_user.username} to #{new_username}?"
-                    Meteor.call 'change_username', current_user._id, new_username, (err,res)->
-                        if err
-                            alert err
-                        else
-                            Router.go("/user/#{new_username}")
-
 
 
 
