@@ -262,7 +262,17 @@ if Meteor.isClient
         
         # this way sucks, using global session vars, will replce with local ReactiveVars
         @autorun => @subscribe 'model_search_results', @data.model, @query.get(), ->
-        @autorun => @subscribe 'related_model_docs', @data.model, Router.current().params.doc_id, ->
+        @autorun => @subscribe 'child_model_docs', @data.model, Router.current().params.doc_id, ->
+        # @autorun => @subscribe 'related_model_docs', @data.model, Router.current().params.doc_id, ->
+if Meteor.isServer
+    Meteor.publish 'child_model_docs', (model, parent_id)->
+        console.log 'publishing child model docs', model, parent_id
+        Docs.find 
+            model:model
+            # parent_id:parent_id
+            parent_ids:$in:[parent_id]
+        
+if Meteor.isClient
     Template.model_crud.helpers 
         is_editing: -> Template.instance().editing.get()
         is_expanded: -> Template.instance().expanded.get()
@@ -287,8 +297,10 @@ if Meteor.isClient
             # _id:parent_doc["#{Template.currentData().model}_id"]
             console.log Template.currentData().model
             Docs.find
-                # model:Template.currentData().model
-                _id:$in:parent_doc["#{Template.currentData().model}_ids"]
+                model:Template.currentData().model
+                # parent_id:Router.current().params.doc_id
+                parent_ids:$in:Router.current().params.doc_id
+                # _id:$in:parent_doc["#{Template.currentData().model}_ids"]
         # picked_model: ->
         #     parent_doc = Docs.findOne Router.current().params.doc_id
         #     # _id:parent_doc["#{Template.currentData().model}_id"]
@@ -304,17 +316,19 @@ if Meteor.isClient
         'click .clear_search': (e,t)->
             t.instance().query.set(null)
             # t.instance().query.set(null)
-
             $(e.currentTarget).closest('.model_search').val('')
 
             
         'click .remove_model': (e,t)->
-            if confirm "remove #{@title} model?"
+            if confirm "remove #{@title} #{@model}?"
                 # multi ref version
                 Docs.update Router.current().params.doc_id,
                     $pull:
                         "#{Template.currentData().model}_ids":@_id
                         "#{Template.currentData().model}_titles":@title
+                Docs.update @_id, 
+                    $pull:
+                        parent_ids:Router.current().params.doc_id
                 #   singular ref version
                 # Docs.update Router.current().params.doc_id,
                 #     $unset:
