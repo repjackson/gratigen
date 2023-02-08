@@ -96,12 +96,13 @@ template(name='doc_view')
                 // img.ui.fluid.image.bg_overlay(src="{{c.url image_id crop='fit'}}")
                 .three.wide.column
                     .left_floated
-                        a.ui.circular.tertiary.large.button.zoomer.fly_left(href="/")
-                            i.left.chevron.icon
-                            with parent_model
-                                +ismall name=icon color=icon_color
-                            // |orgs
-                            |#{model}s
+                        // a.ui.circular.tertiary.large.button.zoomer.fly_left(href="/")
+                        //     i.left.chevron.icon
+                        //     with parent_model
+                        //         +ismall name=icon color=icon_color
+                        //     // |orgs
+                        //     |#{model}s
+                        +parent_block
                 .nine.wide.center.aligned.column
                     +text_field key='title' view_classes='ui center aligned inline huge header'
                     // .ui.centered.inline.huge.center.aligned.header
@@ -110,7 +111,8 @@ template(name='doc_view')
                     +subscribe_button
                     +bookmark_button
                     // .floated
-                    if can_edit
+                    // if can_edit
+                    if currentUser
                         +edit_button
                     if currentUser.editing 
                         +remove_button

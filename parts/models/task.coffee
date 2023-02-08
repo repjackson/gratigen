@@ -42,7 +42,8 @@ if Meteor.isClient
         org_task_docs: ->
             Docs.find 
                 model:'task'
-                org_id:@_id
+                # org_id:@_id
+                parent_ids:$in:[Router.current().params.doc_id]
 
     Template.checklist.events
         'keyup .quickadd_task':(e)->
@@ -88,19 +89,22 @@ if Meteor.isClient
     
     
     Template.checklist.onCreated ->
-        @autorun => @subscribe 'org_tasks',Router.current().params.doc_id,->
-        @autorun => @subscribe 'my_tasks',->
+        @autorun => @subscribe 'child_model_docs','task',Router.current().params.doc_id,->
+        @autorun => @subscribe 'user_authored_docs',->
             
 if Meteor.isServer 
-    Meteor.publish 'my_tasks', ->
+    Meteor.publish 'user_authored_docs',(user=Meteor.user(),model=null)->
+        match = {}
+        if model then match.model = model
+        # if user
+        match._author_id  = user._id
+        Docs.find match,{limit:20}
+    Meteor.publish 'child_model_docs',(model,parent_id)->
         Docs.find {
-            model:'task'
-        }, limit:10
-    Meteor.publish 'org_tasks',(org_id)->
-        Docs.find {
-            model:'task'
-            org_id:org_id
-        }, limit:10
+            model:model
+            # org_id:org_id
+            parent_ids:$in:[org_id]
+        }, limit:20
 
 if Meteor.isClient 
     Template.tasks.onCreated ->

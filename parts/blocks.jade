@@ -9,14 +9,14 @@ template(name='gratigen')
 
 
 template(name='parent_block')
-    .ui.segment 
-        .ui.header 
-            i.fork.icon
-            |parent docs
+    .ui.segmen
+        // .ui.header 
+        //     i.fork.icon
+        //     |parent docs
         each parent_ids 
             // .ui.label #{this}
             with doc_by_id 
-                a.ui.card(href="/d/#{model}/#{_id}")
+                a.ui.tertiary.basic.button(href="/d/#{model}/#{_id}")
                     .content 
                         img.ui.image(src="{{c.url image_id width=200 height=200 gravity='face' crop='fill'}}")
                     
@@ -235,7 +235,7 @@ template(name='comments')
                             
                             .content
                                 a.author(href="/user/#{_author.username}") 
-                                    |#{_author.name}
+                                    |#{_author.username}
                                 .text #{body}
                                 .metadata
                                     .date #{when}

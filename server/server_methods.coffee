@@ -191,6 +191,8 @@ Meteor.methods
 
 
 Meteor.methods
+    update_users: ->
+        Meteor.users.update({},{$set:editing:true},{multi:true})
     change_username:  (old_username, new_username) ->
         console.log 'changing username', old_username, new_username
         user = Meteor.users.findOne username:old_username
