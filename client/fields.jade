@@ -324,10 +324,11 @@ template(name='image_view')
     
 template(name='image_field')
     if currentUser.editing
-        input#invisibleupload1.ui.invisible.file.input(type='file')
+        input#invisibleupload1.ui.invisible.file.input(type='file' name='upload_image' accept='image/*')
         label.ui.red.icon.big.button(for='invisibleupload1')
             // .ui.icon.header
-            i.upload.icon
+            i.image.large.icon
+            i.upload.large.icon
             // i.file.icon
             // |   Open any file
         // input#invisibleupload2.ui.invisible.file.input(type='file')

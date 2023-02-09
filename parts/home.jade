@@ -12,7 +12,7 @@ template(name='home')
             // .ui.fluid.small.button.toggle_leftbar
             //     i.chevron.left.icon
             // .ui.hidden.divider
-            .ui.segment.shadow
+            // .ui.segment.shadow.mobile.hidden
                 img.ui.image(src="{{c.url 'batflash'}}" class=darkmode_class)
             +dash_user_info
             +user_impact_graph
@@ -55,7 +55,7 @@ template(name='home')
             //         +eft_filter color="FF0000" icon='users' label='community core'
                 
             // .ui.button create request
-            img.ui.image(src="{{c.url '12_color_code'}}" class=darkmode_class)
+            // img.ui.image(src="{{c.url '12_color_code'}}" class=darkmode_class)
         .eight.wide.scrolling.column
             // +quickchat
             .ui.one.column.grid 

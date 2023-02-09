@@ -3,10 +3,6 @@ if Meteor.isClient
         @layout 'layout'
         @render 'home'
         ), name:'home'
-    Router.route '/add/:doc_id', (->
-        @layout 'layout'
-        @render 'add_doc'
-        ), name:'add_doc'
     
 
     Template.layout.helpers 
@@ -161,7 +157,6 @@ if Meteor.isClient
             Docs.findOne Session.get('current_thing_id')
     Template.thing_picker.helpers
         model_crud_class:->
-            
             current_doc = Docs.findOne Meteor.user()._doc_id
             if current_doc and @model is current_doc.model
                 'big'
@@ -173,6 +168,13 @@ if Meteor.isClient
     Template.add_doc.onCreated ->
         @autorun => Meteor.subscribe 'user_current_doc', ->
         @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
+            
+    Router.route '/add/:doc_id', (->
+        @layout 'layout'
+        @render 'add_doc'
+        ), name:'add_doc'
+        
+            
 if Meteor.isServer 
     Meteor.publish 'user_current_doc', ->
         Docs.find 

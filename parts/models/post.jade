@@ -120,9 +120,9 @@ template(name='post_view')
                         //- +array_field key='location_tags' label='location_tags'
                         // +comments
                 .eight.wide.column.scrolling
-                    +textarea_field key='body' tagline='write your post!'
-
-                    img.ui.image(src="{{c.url image_id }}" class=currentUser.darkmode_class)
+                    // +textarea_field key='body' tagline='write your post!'
+                    +html_field key='body' label='write your post!'
+                    // img.ui.image(src="{{c.url image_id }}" class=currentUser.darkmode_class)
                     // a.ui.header(href="/user/#{target.username}")
                     //     |#{target.username}
                     if youtube_id 

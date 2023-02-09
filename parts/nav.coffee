@@ -56,12 +56,15 @@ if Meteor.isClient
         , 2000
     Template.add_doc.events 
         'click .save_doc': ->
-            Router.go "/d/#{@model}/#{@_id}"
+            console.log @
+            # Router.go "/d/#{@model}/#{@_id}"
             # current_doc = 
             #     Docs.findOne Meteor.user()._doc_id
             # if current_doc
             Meteor.users.update Meteor.userId(), 
-                $set:_doc_id:null
+                $set:
+                    _doc_id:null
+                    editing:false
     Template.nav.onRendered ->
         Session.setDefault('darkmode', false)
         Meteor.setTimeout ->
@@ -139,7 +142,10 @@ if Meteor.isClient
             new_id = 
                 Docs.insert 
                     model:'post'
+                    published:false
             Router.go "/add/#{new_id}"
+            Meteor.users.update Meteor.userId(),
+                $set:editing:true
         'click .toggle_online': ->
             if Meteor.user().online
                 Meteor.users.update Meteor.userId(),

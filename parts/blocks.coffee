@@ -742,7 +742,9 @@ if Meteor.isClient
         'click .add': ->
             new_id = Docs.insert
                 model: @model
-            Router.go "/m/#{@model}/#{new_id}/edit"
+            Router.go "/d/#{@model}/#{new_id}/"
+            Meteor.users.update Meteor.userId(),
+                $set:editing:true
 
 
     Template.remove_button.events
