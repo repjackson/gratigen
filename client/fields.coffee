@@ -38,7 +38,7 @@ Template.color_edit.events
 
 
 
-Template.html_edit.onRendered ->
+Template.html_field.onRendered ->
     @editor = SUNEDITOR.create((document.getElementById('sample') || 'sample'),{
     # 	"tabDisable": false
         # "minHeight": "400px"
@@ -82,7 +82,7 @@ Template.html_edit.onRendered ->
         # codeMirror: CodeMirror
     });
 
-Template.html_edit.events
+Template.html_field.events
     'blur .testsun': (e,t)->
         html = t.editor.getContents(onlyContents: Boolean);
 
@@ -97,7 +97,7 @@ Template.html_edit.events
                 $set:"#{@key}":html
 
 
-Template.html_edit.helpers
+Template.html_field.helpers
         
 
 

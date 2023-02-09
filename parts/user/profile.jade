@@ -25,7 +25,9 @@ template(name='profile')
                 else if is_admin
                     +edit_button
                 +send_sms_button
-                +quickgive_button
+                +quickgive_button amount=1
+                +quickgive_button amount=5
+                +quickgive_button amount=10
                 +title_link_buttons
                 unless editing_account
                     .ui.center.aligned.header.mobile.hidden
@@ -131,8 +133,8 @@ template(name='profile')
 
 
 template(name='quickgive_button')
-    .ui.button.quickgive 
-        |give 
+    .ui.button.quickgive(class=give_button_class)
+        |give #{amount}
 
 
 template(name='profile_section')

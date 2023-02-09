@@ -41,7 +41,7 @@ template(name='chat_messages_pane')
     if in_chat
         if adding_message
             with new_doc 
-                +html_edit key='body'
+                +html_field key='body'
         .ui.icon.fluid.attached.input
             i.chevron.right.icon
             textarea.add_message(type='text' placeholder='add message...')
@@ -138,7 +138,7 @@ template(name='chat_message')
                     .f14
                         strong !{body}
                 if is_editing 
-                    +html_edit key='body'
+                    +html_field key='body'
                     .ui.big.icon.green.button.invert.save_this
                         i.save.icon
             .actions

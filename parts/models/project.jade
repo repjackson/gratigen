@@ -266,7 +266,7 @@ template(name='project_edit')
                 a.ui.icon.green.big.button(href="/project/#{_id}" title='save')
                     i.checkmark.big.icon
                 +text_field key='title' label='title'
-                +html_edit key='content' label='content'
+                +html_field key='content' label='content'
                 +youtube_edit key='youtube_id' label='youtube id'
                 // +array_field key='projects' label='projects' icon='shield'
             .six.wide.column.scrolling

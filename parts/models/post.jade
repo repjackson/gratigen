@@ -120,6 +120,8 @@ template(name='post_view')
                         //- +array_field key='location_tags' label='location_tags'
                         // +comments
                 .eight.wide.column.scrolling
+                    +textarea_field key='body' tagline='write your post!'
+
                     img.ui.image(src="{{c.url image_id }}" class=currentUser.darkmode_class)
                     // a.ui.header(href="/user/#{target.username}")
                     //     |#{target.username}
@@ -151,7 +153,7 @@ template(name='post_edit')
                 a.ui.icon.green.big.button(href="/post/#{_id}" title='save')
                     i.checkmark.big.icon
                 +text_field key='title' label='title'
-                +html_edit key='content' label='content'
+                +html_field key='content' label='content'
                 +youtube_edit key='youtube_id' label='youtube id'
             .six.wide.column
                 .ui.red.button.delete_post
