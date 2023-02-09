@@ -25,6 +25,7 @@ template(name='profile')
                 else if is_admin
                     +edit_button
                 +send_sms_button
+                +quickgive_button
                 +title_link_buttons
                 unless editing_account
                     .ui.center.aligned.header.mobile.hidden
@@ -129,6 +130,9 @@ template(name='profile')
 
 
 
+template(name='quickgive_button')
+    .ui.button.quickgive 
+        |give 
 
 
 template(name='profile_section')

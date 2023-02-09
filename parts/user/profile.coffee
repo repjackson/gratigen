@@ -27,6 +27,12 @@ if Meteor.isClient
         'click .toggle_expanded': (e,t)->
             t.expanded.set !t.expanded.get()
 
+    Template.quickgive_button.events
+        'click .quickgive': ->
+            current_user = Meteor.users.findOne username:Router.current().params.username
+            if current_user
+                Meteor.users.update current_user._id, 
+                    $inc: points:1
 
 
 
