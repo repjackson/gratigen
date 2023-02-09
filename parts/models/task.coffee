@@ -18,12 +18,18 @@ if Meteor.isClient
             $('.ui.checkbox').checkbox()
         , 2000
     Template.task_item_small.events
-        'click .uncomplete': ->
+        'click .mark_incomplete': ->
             Docs.update @_id, 
-                $set:completed:false 
-        'click .complete': ->
+                $set:
+                    completed:false 
+                
+        'click .mark_complete': ->
             Docs.update @_id, 
-                $set:completed:true 
+                $set:
+                    completed:true 
+                    completed_timestamp:Date.now()
+                    completed_username:Meteor.user().username
+                    completed_user_id:Meteor.userId()
         'click .view_more': ->
             Session.set('viewing_more_id',@_id)
             
@@ -163,8 +169,10 @@ if Meteor.isClient
         'click .record_work': ->
             new_id = Docs.insert 
                 model:'work'
+                parent_ids:[Router.current().params.doc_id]
+                parent_id: Router.current().params.doc_id
                 task_id: Router.current().params.doc_id
-            Router.go "/work/#{new_id}/edit"    
+            Router.go "/d/work/#{new_id}"    
     
                 
            

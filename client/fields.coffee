@@ -152,6 +152,7 @@ Template.datetime_field.events
         val = t.$('.edit_datetime').val()
         parent = Template.parentData()
         doc = Docs.findOne parent._id
+        console.log "parent", parent
         if doc
             Docs.update parent._id,
                 $set:"#{@key}":val

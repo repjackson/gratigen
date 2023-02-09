@@ -293,12 +293,12 @@ if Meteor.isClient
     
 
 
-    Template.service_view.events
-        'click .record_work': ->
-            new_id = Docs.insert 
-                model:'work'
-                service_id: Router.current().params.doc_id
-            Router.go "/work/#{new_id}/edit"    
+    # Template.service_view.events
+    #     'click .record_work': ->
+    #         new_id = Docs.insert 
+    #             model:'work'
+    #             service_id: Router.current().params.doc_id
+    #         Router.go "/work/#{new_id}/edit"    
     
                 
            

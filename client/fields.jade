@@ -544,7 +544,7 @@ template(name='datetime_field')
     else
         |#{this}
     unless currentUser.editing
-        strong &nbsp; #{field_value}
+        strong &nbsp; #{field_value} ({{from_now field_value}})
     else 
         .ui.form
             .field

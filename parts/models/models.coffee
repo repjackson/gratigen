@@ -114,7 +114,7 @@ if Meteor.isClient
             picked_timestamp_tags.array()
             
             
-    Template.work_edit.onCreated ->
+    Template.work_view.onCreated ->
         @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
         @autorun => Meteor.subscribe 'model_docs', 'location', ->
         @autorun => Meteor.subscribe 'model_docs', 'staff', ->
@@ -179,7 +179,7 @@ if Meteor.isClient
             Router.go "/task/#{new_id}/edit"    
     
                 
-    Template.work_edit.events
+    Template.work_view.events
         'click .pick_staff': ->
             Docs.update Router.current().params.doc_id, 
                 $set:
@@ -196,7 +196,7 @@ if Meteor.isClient
         
         
         
-    Template.work_edit.helpers
+    Template.work_view.helpers
         task_locations: ->
             work_doc = Docs.findOne(model:'task')
             Docs.find 
@@ -243,14 +243,14 @@ if Meteor.isClient
 
 
 
-    Template.work_edit.onCreated ->
+    Template.work_view.onCreated ->
         @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id
         @autorun => Meteor.subscribe 'work_task', Router.current().params.doc_id
         # @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
         # @autorun => Meteor.subscribe 'model_docs', 'menu_section'
 
 
-    Template.work_edit.events
+    Template.work_view.events
         # 'click .send_work': ->
         #     Swal.fire({
         #         title: 'confirm send card'
@@ -314,7 +314,7 @@ if Meteor.isClient
                 position: "bottom right"
             )
             
-    Template.work_edit.helpers
+    Template.work_view.helpers
         all_shop: ->
             Docs.find
                 model:'work'

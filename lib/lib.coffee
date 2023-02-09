@@ -282,15 +282,15 @@ Router.configure
     trackPageView: false
 # 	progressDelay: 100
 
-# force_loggedin =  ()->
-#     if !Meteor.userId()
-#         @render 'login'
-#     else
-#         @next()
+force_loggedin =  ()->
+    if !Meteor.userId()
+        @render 'login'
+    else
+        @next()
 
-# Router.onBeforeAction(force_loggedin, {
-#   # only: ['admin']
-#   # except: ['register', 'forgot_password','reset_password','front','delta','doc_view','verify-email']
+Router.onBeforeAction(force_loggedin, {
+   only: ['admin']
+  # except: ['register', 'forgot_password','reset_password','front','delta','doc_view','verify-email']
 #   except: [
 #     'food'
 #     'register'
@@ -311,7 +311,7 @@ Router.configure
 #     'verify-email'
 #     'food_view'
 #   ]
-# });
+});
 
 
 # Router.route('enroll', {
