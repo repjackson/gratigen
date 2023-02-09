@@ -139,9 +139,9 @@ template(name='html_field')
         +call_watson mode='html' key=key
         div
         //- +tone mode='html'
-        // if watson
-        //     .ui.header watson
-        //     +watson_view
+        if watson
+            .ui.header watson
+            +watson_view
             
         // +watson_view
     unless currentUser.editing
@@ -217,11 +217,14 @@ template(name='icon_edit')
 //         //- img(src="https://img.icons8.com/office/48/000000/#{field_value}.png")
 //         //- img(src="https://img.icons8.com/fluent/48/000000/#{field_value}.png")
 //         //- img(src="https://img.icons8.com/ios/48/000000/#{field_value}.png")
+template(name='wani')
+    img(src="https://img.icons8.com/external-wanicon-lineal-wanicon/64/null/external-#{name}-#{calced_category}-wanicon-#{calc_style}-wanicon.png")        
 template(name='i')
     //- i.icon(class=name)
     // if is_hovering
     //     img.content.fade(src="https://img.icons8.com/color/48/000000/#{name}.png" class=cl title=title)
     // else
+    img(src="https://img.icons8.com/external-wanicon-lineal-wanicon/64/null/external-#{name}-#{calced_category}-wanicon-lineal-wanicon.png")        
     if cl.length
         if color
             img.content.fade(src="https://img.icons8.com/ios/48/#{color}/#{name}.png" class=cl title=title)

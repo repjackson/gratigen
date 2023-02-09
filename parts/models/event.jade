@@ -130,9 +130,10 @@ template(name='event_view')
                 +block template='model_crud' model='task' title='tasks' icon='tasks' color='purple'
                 +block template='model_crud' model='group' title='groups' icon='groups' color='green'
                 +block template='model_crud' model='event' title='events' icon='toast' color='blue'
-                
+                .ui.header.say_this #{title}
                 
             .eight.wide.column.scrollin
+                +wani name='chat'
                 +location_field key='location'
                 +html_field key='description'
                 .spacer

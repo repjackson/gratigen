@@ -154,7 +154,8 @@ Template.layout.events
     'click .say_this': ->
         synth = window.speechSynthesis;
         
-        utterThis = new SpeechSynthesisUtterance(@valuOf())
+        # utterThis = new SpeechSynthesisUtterance(@valueOf())
+        utterThis = new SpeechSynthesisUtterance('hello everyone!')
         synth.speak(utterThis);
 
 

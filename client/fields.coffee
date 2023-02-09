@@ -168,7 +168,15 @@ Template.datetime_field.events
             position: "bottom right"
         )
 
-
+Template.wani.helpers 
+    calced_category:->
+        if @category then @category
+        else 
+            'customer-services'
+    calc_style:->
+        if @style then @style
+        else 
+            'lineal'
 # Template.i.onCreated ->
 #     @hovering = new ReactiveVar false
 # Template.i.events
