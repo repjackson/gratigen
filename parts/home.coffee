@@ -268,10 +268,12 @@ if Meteor.isClient
     Template.online_users.onCreated ->
         @autorun => @subscribe 'online_users', ->
     Template.online_users.onRendered ->
-        $('.item').popup({
-            inline: true
-            position:'bottom right'
-          })
+        Meteor.setTimeout =>
+            $('.online_user_item').popup({
+                # inline: true
+                position:'bottom center'
+              })
+        , 2000
 
     Template.online_users.helpers 
         online_user_docs: ->
@@ -380,8 +382,7 @@ if Meteor.isClient
                 
     
     
-    Template.home.events 
-
+    Template.alerts.events 
         'click .check_notifications': ->
             Notification.requestPermission (result) ->
                 console.log result
@@ -393,39 +394,39 @@ if Meteor.isClient
 
                 
     Template.home.onRendered ->
-        categoryContent = [
-            { category:'eft', title:'food', color:"FF73EA", icon:'food' }
-            { category:'eft', title:'housing', color:"B785E1", icon:'home' }
-            { category:'eft', title:'clothing', color:"7229AF", icon:'tshirt' }
-            { category:'eft', title:'transportation', color:"1255B8", icon:'car' }
-            { category:'eft', title:'energy', color:"83DFF4", icon:'lightning' }
-            { category:'eft', title:'zero waste', color:"42E8C4", icon:'leaf' }
-            { category:'eft', title:'wellness', color:"40C057", icon:'smile' }
-            { category:'eft', title:'education', color:"FAB005", icon:'university' }
-            { category:'eft', title:'art', color:"FD7E14", icon:'paint brush' }
-            { category:'eft', title:'community core', color:"FF0000", icon:'users' }
-            { category:'model', title:'org' }
-            { category:'model', title:'project' }
-            { category:'model', title:'event' }
-            { category:'model', title:'role' }
-            { category:'model', title:'tasks' }
-            { category:'model', title:'resource' }
-            { category:'model', title:'post' }
-            { category:'model', title:'offer' }
-            { category:'model', title:'request' }
-            { category:'model', title:'skills' }
-        ]
+        # categoryContent = [
+        #     { category:'eft', title:'food', color:"FF73EA", icon:'food' }
+        #     { category:'eft', title:'housing', color:"B785E1", icon:'home' }
+        #     { category:'eft', title:'clothing', color:"7229AF", icon:'tshirt' }
+        #     { category:'eft', title:'transportation', color:"1255B8", icon:'car' }
+        #     { category:'eft', title:'energy', color:"83DFF4", icon:'lightning' }
+        #     { category:'eft', title:'zero waste', color:"42E8C4", icon:'leaf' }
+        #     { category:'eft', title:'wellness', color:"40C057", icon:'smile' }
+        #     { category:'eft', title:'education', color:"FAB005", icon:'university' }
+        #     { category:'eft', title:'art', color:"FD7E14", icon:'paint brush' }
+        #     { category:'eft', title:'community core', color:"FF0000", icon:'users' }
+        #     { category:'model', title:'org' }
+        #     { category:'model', title:'project' }
+        #     { category:'model', title:'event' }
+        #     { category:'model', title:'role' }
+        #     { category:'model', title:'tasks' }
+        #     { category:'model', title:'resource' }
+        #     { category:'model', title:'post' }
+        #     { category:'model', title:'offer' }
+        #     { category:'model', title:'request' }
+        #     { category:'model', title:'skills' }
+        # ]
         
-        $('.ui.search')
-          .search({
-            type: 'category',
-            source: categoryContent
-            selectFirstResult:true	            
-          })
-        $('.tabular.menu .item').tab();
+        # $('.ui.search')
+        #   .search({
+        #     type: 'category',
+        #     source: categoryContent
+        #     selectFirstResult:true	            
+        #   })
+        # $('.tabular.menu .item').tab();
     Template.nav.onRendered ->
-        $('.popup').popup();
-        $('.tabular.menu .item').tab();
+        $('.menu .item').popup();
+        # $('.tabular.menu .item').tab();
 
 
     # Template.closest_allies.helpers 

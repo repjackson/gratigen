@@ -73,7 +73,7 @@ if Meteor.isClient
         is_bookmarked: -> Meteor.user().bookmarked_ids and @_id in Meteor.user().bookmarked_ids
     Template.bookmark_button.onRendered ->
         Meteor.setTimeout ->
-            $('.button').popup()
+            $('.toggle_bookmark').popup()
         , 1000
     Template.bookmark_button.events
         'click .toggle_bookmark': (e,t)->
@@ -109,7 +109,7 @@ if Meteor.isClient
         is_subscribeed: -> Meteor.user().subscribed_ids and @_id in Meteor.user().subscribed_ids
     Template.subscribe_button.onRendered ->
         Meteor.setTimeout ->
-            $('.button').popup()
+            $('.toggle_subscribe').popup()
         , 1000
     Template.subscribe_button.events
         'click .toggle_subscribe': (e,t)->
