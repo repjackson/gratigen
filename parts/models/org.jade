@@ -159,19 +159,19 @@ template(name='org_view')
                     div
                     +eft_viewer
                 .ui.header Spaceholders
-                .ui.four.column.centered.grid
-                    .column 
-                        .ui.centered.small.header lead
-                        +single_user_field key='lead' label='lead' icon='king'
-                    .column 
-                        .ui.centered.small.header support
-                        +single_user_field key='support' label='support' icon='users'
-                    .column 
-                        .ui.centered.small.header safety
-                        +single_user_field key='safety' label='safety'
-                    .column 
-                        .ui.centered.small.header creator
-                        +single_user_field key='creator' label='creator' icon='edit'
+                .ui.centered.grid
+                    .four.wide.column 
+                        .ui.centered
+                            +single_user_field key='lead' label='lead'
+                    .four.wide.column 
+                        .ui.centered
+                            +single_user_field key='support' label='support'
+                    .four.wide.column 
+                        .ui.centered
+                            +single_user_field key='safety' label='safety'
+                    .four.wide.column 
+                        .ui.centered
+                            +single_user_field key='creator' label='creator'
                 +textarea_field key='brief' tagline='brief description or your organization'
                 +textarea_field key='description' tagline='complete description of your organization'
                 +textarea_field key='body' tagline='body'

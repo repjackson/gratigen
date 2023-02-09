@@ -71,7 +71,13 @@ Meteor.users.find(_id:Meteor.userId()).observe({
                   hideMethod   : 'fade',
                   hideDuration : 250
                 })
+            Notification.requestPermission (result) ->
+                console.log result
 
+            if Notification.permission is "granted"
+                img = '/to-do-notifications/img/icon-128.png';
+                text = "you received #{difference} points";
+                notification = new Notification('points received', { body: text, icon: img });
 })
 
 
