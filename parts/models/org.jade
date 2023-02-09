@@ -125,8 +125,8 @@ template(name='org_view')
                 +image_field key='image_id' icon='image' label='image'
                 +image_field key='banner_image_id' icon='image' label='banner image'
                 +array_field key='tags' icon='tags'
-                
-                +title_link_buttons
+                if currentUser.editing
+                    +title_link_buttons
                 .spacer
                 if link
                     a.ui.basic.circular.button(href=link target='_window')

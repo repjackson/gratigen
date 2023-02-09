@@ -33,14 +33,17 @@ template(name='task_view')
                 .ui.inline.header
                     | #{title}
                     small task view
-                +image_view key='image_id' label='image'
+                // +image_view key='image_id' label='image'
                 div
-                a.ui.big.button.fly_right(href="/task/#{_id}/edit")
+                // a.ui.big.button.fly_right(href="/task/#{_id}/edit")
                     i.pencil.icon
                     |edit
                 +image_field key='image_id' icon='image' label='image'
                 +image_field key='banner_image_id' icon='image' label='banner image'
+                if currentUser.editing
+                    +title_link_buttons               
                 +array_field key='tags' icon='tags'
+
             .column
                 +textarea_field key='body' label='description' tagline='describe this task'
                 +boolean_view key='has_user_assignment' label='has user assignment'
@@ -59,7 +62,9 @@ template(name='task_view')
                     +number_field key='point_bounty' label='point_bounty'
                 // if unit_id 
                 //     +parent_unit_button
-                    
+                .ui.big.button Start/Stop Task
+                    +i name='play-button-circled--v1' color='40C057' cl='ui massive image'
+                |00:00
             .column
                 +block template='checklist'
                     .ui.basic.center.aligned.segment
@@ -316,7 +321,7 @@ template(name='work')
 template(name='work_edit')
     .ui.stackable.padded.grid
         .row
-            .six.wide.column
+            .five.wide.column
                 .ui.inline.small.header
                     i.pencil.icon
                     | #{title}
@@ -339,7 +344,7 @@ template(name='work_edit')
                 .ui.hidden.divider
                 a.ui.massive.icon.fluid.green.button.submit_work(title='submit')
                     i.checkmark.big.icon
-            .ten.wide.column
+            .six.wide.column
                 .ui.segment
                     .ui.header
                         i.image.icon
@@ -358,7 +363,7 @@ template(name='work_edit')
                     | cancel
                 if in_dev
                     +print_this
-                        
+            .five.wide.column
                 
 template(name='work_view')
     .ui.stackable.padded.grid

@@ -15,7 +15,7 @@ body {
 }
 
 .button:hover {
-  border:00px !important;
+  border-width: 0px !important;
 }
 
 .right_floated {
@@ -35,7 +35,9 @@ body {
     /*font-family: 'Bangers', sans-serif !important;*/
 }
 .ui.header, .button {
-    font-family: 'Bangers', sans-serif !important;
+    /*font-family: 'Bangers', sans-serif !important;*/
+    /*font-family: 'Marcellus', sans-serif !important;*/
+    font-family: 'Cinzel Decorative', sans-serif !important;
     font-weight: 300 !important;
 }
 

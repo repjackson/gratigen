@@ -128,6 +128,7 @@ Template.layout.events
         $(e.currentTarget).closest('.card').transition('fade left', 500)
         $(e.currentTarget).closest('.grid').transition('fade left', 500)
     'click .fade_down': (e,t)-> $(e.currentTarget).closest('.grid').transition('fade down', 500)
+    'click .fly_down': (e,t)-> $(e.currentTarget).closest('.grid').transition('fly down', 500)
     # 'click .button': ->
     #     $(e.currentTarget).closest('.button').transition('bounce', 1000)
 

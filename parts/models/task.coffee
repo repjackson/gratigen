@@ -29,15 +29,22 @@ if Meteor.isClient
             
             
     Template.checklist.helpers
+        my_assigned: ->
+            Docs.find
+                model:'task'
+                assigned_to_user_ids:$in:[Meteor.userId()]
+        
         complete_count: ->
             Docs.find(
                 model:'task'
                 completed:true
+                parent_ids:$in:[Router.current().params.doc_id]
             ).count()
         incomplete_count: ->
             Docs.find(
                 model:'task'
                 completed:false
+                parent_ids:$in:[Router.current().params.doc_id]
             ).count()
         org_task_docs: ->
             Docs.find 
@@ -54,6 +61,7 @@ if Meteor.isClient
                     Docs.insert 
                         model:'task'
                         org_id:@_id
+                        parent_ids:[Router.current().params.doc_id]
                         title:title
                 $('.quickadd_task').val('')
         'click .checkbox': (e)->
@@ -103,7 +111,7 @@ if Meteor.isServer
         Docs.find {
             model:model
             # org_id:org_id
-            parent_ids:$in:[org_id]
+            parent_ids:$in:[parent_id]
         }, limit:20
 
 if Meteor.isClient 
