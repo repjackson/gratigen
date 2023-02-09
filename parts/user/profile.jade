@@ -746,14 +746,14 @@ template(name='user_sent')
 //         .ui.header $#{charge.result.amount}
 //         if can_edit 
 //             unless submitted
-//                 +date_edit key='date' label='date'
+//                 +date_field key='date' label='date'
 //                 +text_field key='notes' label='notes'
 //                 +key_value_edit key='tiffen_type' value='meat'
 //                 +key_value_edit key='tiffen_type' value='veggie'
 //                 .ui.green.button.submit_order
 //                     |submit order
 //             else
-//                 +date_view key='date' label='date'
+//                 +date_field key='date' label='date'
 //                 +text_view key='notes' label='notes'
 //                 .ui.large.label
 //                     |tiffen type: #{tiffen_type}
@@ -1046,14 +1046,14 @@ template(name='food_order_view')
         .ui.header $#{charge.result.amount}
         if can_edit 
             unless submitted
-                +date_edit key='date' label='date'
+                +date_field key='date' label='date'
                 +text_field key='notes' label='notes'
                 +key_value_edit key='tiffen_type' value='meat'
                 +key_value_edit key='tiffen_type' value='veggie'
                 .ui.green.button.submit_order
                     |submit order
             else
-                +date_view key='date' label='date'
+                +date_field key='date' label='date'
                 +text_view key='notes' label='notes'
                 .ui.large.label
                     |tiffen type: #{tiffen_type}

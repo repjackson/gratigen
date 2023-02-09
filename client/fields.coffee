@@ -398,6 +398,28 @@ Template.text_field.events
         )
 
 
+Template.location_field.events
+    'blur .edit_location': (e,t)->
+        val = t.$('.edit_location').val()
+        parent = Template.parentData()
+
+        doc = Docs.findOne parent._id
+        if doc
+            Docs.update parent._id,
+                $set:"#{@key}":val
+        else 
+            Meteor.users.update parent._id,
+                $set:"#{@key}":val
+        $('body').toast(
+            # showIcon: 'heart'
+            message: "#{@key} saved"
+            showProgress: 'bottom'
+            class: 'success'
+            displayTime: 'auto',
+            position: "bottom right"
+        )
+
+
 
 
 

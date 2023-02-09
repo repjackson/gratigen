@@ -21,6 +21,33 @@ template(name='text_field')
             div(class=view_classes) #{field_value}
         else 
             .f14 #{field_value}
+            
+            
+template(name='location_field')
+    if currentUser.editing
+        .ui.segment
+            div
+            i.marker.icon
+            if icon
+                i.grey.icon(class=icon)
+                // +i name=icon
+            .ui.inline.small.header
+                if title
+                    |#{title}
+                else if label
+                    |#{label}
+                else if key
+                    |#{key}
+                    //- +clear_value
+                |location
+            if currentUser.editing
+                .ui.icon.large.fluid.input
+                    input.edit_location(type='text' value=field_value placeholder=placeholder autocomplete="off")
+    else 
+        if view_classes
+            div(class=view_classes) #{field_value}
+        else 
+            .f14 #{field_value}
 
 template(name='youtube_edit')
     with ..
@@ -461,7 +488,7 @@ template(name='text_view')
 
 
 
-template(name='date_edit')
+template(name='date_field')
     div
     if icon
         +i name=icon cl='ui inline mini image'   
@@ -475,27 +502,26 @@ template(name='date_edit')
             //-     |#{key}
             //- else
             //-     |#{this}
-            //- +clear_value                
-    .ui.fluid.input
-        input.edit_date(type='date' value=field_value placeholder=placeholder autocomplete="off")
-
-
-template(name='date_view')
-    if field_value
-        div
-        if icon
-            +i name=icon
-        .ui.grey.inline.small.header
-            if title
-                |#{title}
-            else if label
-                |#{label}
-            else if key
-                |#{key}
-            else
-                |#{this}
-        .ui.inline.header 
-            |&nbsp; {{medium_date field_value}}
+            //- +clear_value   
+    if currentUser.editing
+        .ui.fluid.input
+            input.edit_date(type='date' value=field_value placeholder=placeholder autocomplete="off")
+    else 
+        if field_value
+            div
+            if icon
+                +i name=icon
+            .ui.grey.inline.small.header
+                if title
+                    |#{title}
+                else if label
+                    |#{label}
+                else if key
+                    |#{key}
+                else
+                    |#{this}
+            .ui.inline.header 
+                |&nbsp; {{medium_date field_value}}
 
 
 
