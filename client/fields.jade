@@ -224,7 +224,7 @@ template(name='i')
     // if is_hovering
     //     img.content.fade(src="https://img.icons8.com/color/48/000000/#{name}.png" class=cl title=title)
     // else
-    img(src="https://img.icons8.com/external-wanicon-lineal-wanicon/64/null/external-#{name}-#{calced_category}-wanicon-lineal-wanicon.png")        
+    // img(src="https://img.icons8.com/external-wanicon-lineal-wanicon/64/null/external-#{name}-#{calced_category}-wanicon-lineal-wanicon.png")        
     if cl.length
         if color
             img.content.fade(src="https://img.icons8.com/ios/48/#{color}/#{name}.png" class=cl title=title)
@@ -324,6 +324,15 @@ template(name='image_view')
     
 template(name='image_field')
     if currentUser.editing
+        input#invisibleupload1.ui.invisible.file.input(type='file')
+        label.ui.red.icon.big.button(for='invisibleupload1')
+            // .ui.icon.header
+            i.upload.icon
+            // i.file.icon
+            // |   Open any file
+        // input#invisibleupload2.ui.invisible.file.input(type='file')
+        // label.ui.placeholder.segment(for='invisibleupload2')
+        //     | Click here to upload
         .ui.form
             if icon
                 i.icon(class=icon)
@@ -346,8 +355,8 @@ template(name='image_field')
                     // .ui.button.call_cloud_visual
                     //     i.dna.icon
                     //     |autotag
-                else
-                    input(type='file' name='upload_image' accept='image/*' )
+                // else
+                //     input(type='file' name='upload_image' accept='image/*' )
     else if field_value
         img.ui.centered.rounded.small.image(src="{{c.url field_value gravity='face' crop='fit'}}" class=cl)
     

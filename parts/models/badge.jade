@@ -13,7 +13,7 @@ template(name='badge_card')
                     .f15.ui.centered.header #{title}
                     // if currentUser
                     //     +text_field key='title' view_classes='ui center aligned inline huge header'
-
+                div
                 .two.wide.column
                     .right.floated
                         // |#{when}
@@ -150,7 +150,7 @@ template(name='badge_view')
             .five.wide.column
                 
                 // +badge_card
-                // badger picker should be glbal field
+                // badger picker should be global field
                 +multi_user_field key='badger'
                 .ui.header 
                     +i name='badger'

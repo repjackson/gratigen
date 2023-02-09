@@ -67,8 +67,10 @@ template(name='user_card')
 
         .content
             a.ui.inline.header.pointer.blink(href="/user/#{username}" style="color:#{theme_color};")
-                |#{name}
-                //- |#{username}
+                |#{_name}
+                // |#{username}
+                if admin 
+                    i.large.shield.icon
             if points
                 .ui.inline.header(style="color:#{current_user.theme_color};") #{points}pts
             if one_ratio

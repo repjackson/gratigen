@@ -180,8 +180,13 @@ template(name='send_sms_button')
     .ui.button.send_message 
         |send text message
                 
-                
 
+template(name='user_interests')
+    +model_crud model='interest' title='interest' icon='eye' color='red'
+
+    
+    
+    
 template(name='user_roles')
     .ui.small.header 
         i.pencil.icon

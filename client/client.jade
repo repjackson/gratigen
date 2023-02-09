@@ -165,32 +165,33 @@ template(name='layout')
 template(name='historybar')
     .ui.small.attached.menu.hscroll(class=darkmode_class)
         +nav_search
-        .item 
-            i.clock.icon    
-            |#{currentUser.history_ids.length}
-            |history
-        each currentUser.history_ids
-            .item(class=history_item_class)
-                i.remove.link.icon.clear_history_doc.zoomer(title='clear entry')
-                with doc_by_id
-                    span.goto_doc.zoomer.pointer
+        if currentUser
+            .item 
+                i.clock.icon    
+                |#{currentUser.history_ids.length}
+                |history
+            each currentUser.history_ids
+                .item(class=history_item_class)
+                    i.remove.link.icon.clear_history_doc.zoomer(title='clear entry')
+                    with doc_by_id
+                        span.goto_doc.zoomer.pointer
+                            if image_id
+                                img.ui.avatar.image.zoomer(src="{{c.url image_id width=200 height=200 crop='crop'}}")    
+                            span.zoomer #{title} #{_name}
+                .ui.popup 
+                    with doc_by_id
                         if image_id
-                            img.ui.avatar.image.zoomer(src="{{c.url image_id width=200 height=200 crop='crop'}}")    
-                        span.zoomer #{title} #{name}
-            .ui.popup 
-                with doc_by_id
-                    if image_id
-                        img.ui.small.image(src="{{c.url image_id width=400 height=400 crop='fit'}}")    
-                    .ui.inline.header #{title} #{name}
-                    .ui.basic.label
-                        i.grey.database.icon
-                        |#{model}
-                    +author_info
-                    if tags 
-                        i.red.tags.icon.invert(title='tags')
-                        each tags 
-                            .ui.small.basic.label #{this}
-    div
+                            img.ui.small.image(src="{{c.url image_id width=400 height=400 crop='fit'}}")    
+                        .ui.inline.header #{title} #{_name}
+                        .ui.basic.label
+                            i.grey.database.icon
+                            |#{model}
+                        +author_info
+                        if tags 
+                            i.red.tags.icon.invert(title='tags')
+                            each tags 
+                                .ui.small.basic.label #{this}
+        div
     
 
 template(name='mlayout')

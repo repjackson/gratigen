@@ -194,6 +194,7 @@ if Meteor.isClient
                 }, sort:_timestamp:-1
     Template.comments.events
         'keyup .add_comment': (e,t)->
+            console.log @
             if e.which is 13
                 comment = t.$('.add_comment').val()
                 Docs.insert

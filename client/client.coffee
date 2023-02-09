@@ -75,8 +75,8 @@ Meteor.users.find(_id:Meteor.userId()).observe({
                 console.log result
 
             if Notification.permission is "granted"
-                img = '/to-do-notifications/img/icon-128.png';
-                text = "you received #{difference} points";
+                img = "https://img.icons8.com/ios/50/null/hand-holding-heart.png"
+                text = "you received #{difference} points"
                 notification = new Notification('points received', { body: text, icon: img });
 })
 
