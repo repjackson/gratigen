@@ -10,22 +10,25 @@ if Meteor.isClient
         Docs.find(_id:Router.current().params.doc_id).observeChanges({
             changed: (id, fields)->
                 console.log 'parent doc changed,', fields
-                $('body').toast({
-                    title: "doc changed"
-                    # message: 'Please see desk staff for key.'
-                    class : 'success'
-                    # showIcon:''
-                    # showProgress:'bottom'
-                    position:'bottom right'
-                    # className:
-                    #     toast: 'ui massive message'
-                    # displayTime: 5000
-                    transition:
-                      showMethod   : 'zoom',
-                      showDuration : 250,
-                      hideMethod   : 'fade',
-                      hideDuration : 250
-                    })
+                changed_keys = _.keys fields 
+                for key in changed_keys
+                    unless key is _updated_timestamp
+                        $('body').toast({
+                            title: "#{key} changed"
+                            # message: 'Please see desk staff for key.'
+                            class : 'success'
+                            # showIcon:''
+                            # showProgress:'bottom'
+                            position:'bottom right'
+                            # className:
+                            #     toast: 'ui massive message'
+                            # displayTime: 5000
+                            transition:
+                              showMethod   : 'zoom',
+                              showDuration : 250,
+                              hideMethod   : 'fade',
+                              hideDuration : 250
+                            })
         })
             
         Docs.find(parent_ids:$in:[Router.current().params.doc_id]).observe({
