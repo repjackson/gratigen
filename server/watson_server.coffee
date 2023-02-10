@@ -56,11 +56,11 @@ Meteor.methods
                     sentiment: true
                     # limit: 2
                 concepts: {}
-                # categories: {}
+                categories: {}
                 emotion: {}
                 metadata: {}
-                # relations: {}
-                # semantic_roles: {}
+                relations: {}
+                semantic_roles: {}
                 sentiment: {}
 
         switch mode
@@ -124,9 +124,9 @@ Meteor.methods
                 #         watson_keywords: lowered_keywords
                         doc_sentiment_score: response.sentiment.document.score
                         doc_sentiment_label: response.sentiment.document.label
-                Docs.update { _id: doc_id },
-                    $addToSet:
-                        tags:$each:lowered_concepts
+                # Docs.update { _id: doc_id },
+                #     $addToSet:
+                #         tags:$each:lowered_concepts
                 Docs.update { _id: doc_id },
                     $addToSet:
                         tags:$each:lowered_keywords

@@ -86,9 +86,8 @@ template(name='post_item')
 
 template(name='post_view')
     with current_doc
-        .ui.stackable.padded.grid
-            .row 
-                .four.wide.column
+        .ui.ten.wide.centered.segment
+                // .four.wide.column
                     .ui.basic.segment
                         .ui.header #{title}
                         // a.ui.circular.button.fly_left(href="/posts")
@@ -98,9 +97,9 @@ template(name='post_view')
                         // div
                         // .ui.inline.grey.header {{from_now start_datetime}}
                         
-                        if can_edit
-                            a.ui.circular.icon.button.edit_post(href="/post/#{_id}/edit" title='edit')
-                                i.big.link.pencil.icon
+                        // if can_edit
+                        //     a.ui.circular.icon.button.edit_post(href="/post/#{_id}/edit" title='edit')
+                        //         i.big.link.pencil.icon
                         .ui.segment
                             .ui.header 
                                 small author
@@ -111,21 +110,25 @@ template(name='post_view')
                         .ui.header #{when}
                         //- +array_field key='location_tags' label='location_tags'
                         // +comments
-                .twelve.wide.column.scrolling
+                .sixteen.wide.column.scrolling
                     // +textarea_field key='body' tagline='write your post!'
-                    +html_field key='body' label='Post' tagline='write your post!'
+                    // +html_field key='body' label='Post' tagline='write your post!'
+                    // +tags
+                    // +textarea_field key='body' tagline='body'
+                    // +textarea_field key='description' tagline='body'
+                    // +textarea_field key='content' tagline='body'
                     // img.ui.image(src="{{c.url image_id }}" class=currentUser.darkmode_class)
                     // a.ui.header(href="/user/#{target.username}")
                     //     |#{target.username}
                     if youtube_id 
                         +youtube_view key='youtube_id'
-                    +array_field key='tags' label='tags'
-                    div 
-                    .spacer
-                    .spacer
-                    if watson 
-                        +watson_view
-                .four.wide.column
+                    // +array_field key='tags' label='tags'
+                    // div 
+                    // .spacer
+                    // .spacer
+                    // if watson 
+                    //     +watson_view
+                // .four.wide.column
                     .ui.header read by 
                     // each read_users 
                     //     .item #{username}

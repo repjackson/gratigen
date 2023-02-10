@@ -117,6 +117,12 @@ globalHotkeys.add
 
 
 globalHotkeys.add
+	combo: "b a t m a n"
+	callback: -> Router.go '/user/batman'
+globalHotkeys.add
+	combo: "f l a s h"
+	callback: -> Router.go '/user/flash'
+globalHotkeys.add
 	combo: "g h"
 	callback: -> Router.go '/'
 globalHotkeys.add

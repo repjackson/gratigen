@@ -32,14 +32,14 @@ template(name='doc_emotion')
             .bar
             .progress
                 .label {{to_percent joy}}% joy 
-        .ui.small.progress(data-percent=fear_percent title="{{to_percent fear}}% fear")
+        .ui.yellow.small.progress(data-percent=fear_percent title="{{to_percent fear}}% fear")
             .bar
             .progress
                 .label {{to_percent fear}}% fear 
-        .ui.yellow.small.progress(data-percent=disgust_percent title="{{to_percent disgust}}% disgust")
-            .bar
-            .progress
-                .label {{to_percent disgust}}% disgust 
+        // .ui.yellow.small.progress(data-percent=disgust_percent title="{{to_percent disgust}}% disgust")
+            // .bar
+            // .progress
+            //     .label {{to_percent disgust}}% disgust 
         .ui.orange.small.progress(data-percent="{{to_percent anger}}" title="{{to_percent anger}}% anger")
             .bar
             .progress
@@ -49,10 +49,12 @@ template(name='doc_emotion')
             
 template(name='call_watson')
     #call_watson.ui.basic.big.button 
-        i.chess.knight.icon
-        |analyze
         if current_doc.watson 
             i.green.checkmark.icon
+        i.chess.knight.icon
+        |analyze
+        if current_doc.watson
+            |d!
 
 
 
@@ -290,21 +292,22 @@ template(name='watson_view')
     // +tone
     +doc_sentiment
     +doc_emotion
-    +concepts
-    +categories
-    +entities
-    //- +semantic_roles
-    // +keyword_list
-    +keywords
-    +concept_list
-    //- .ui.hidden.divider
-    //- +relations
-    //- if dev
-    //-     .ui.styled.accordion
-    //-         .title 
-    //-             i.code.icon
-    //-             i.dropdown.icon
-    //-         .content
-    //-             +jsonView(json=watson)
-    +personality
-    +consumption_preferences
+    if currentUser.admin_mode
+        // +concepts
+        +categories
+        +entities
+        //- +semantic_roles
+        // +keyword_list
+        // +keywords
+        +concept_list
+        //- .ui.hidden.divider
+        //- +relations
+        //- if dev
+        //-     .ui.styled.accordion
+        //-         .title 
+        //-             i.code.icon
+        //-             i.dropdown.icon
+        //-         .content
+        //-             +jsonView(json=watson)
+        +personality
+        +consumption_preferences
