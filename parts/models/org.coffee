@@ -12,7 +12,7 @@ if Meteor.isClient
                 console.log 'parent doc changed,', fields
                 changed_keys = _.keys fields 
                 for key in changed_keys
-                    unless key is _updated_timestamp
+                    unless key is '_updated_timestamp'
                         $('body').toast({
                             title: "#{key} changed"
                             # message: 'Please see desk staff for key.'

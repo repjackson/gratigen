@@ -327,12 +327,14 @@ template(name='image_view')
 template(name='image_field')
     if currentUser.editing
         input#invisibleupload1.ui.invisible.file.input(type='file' name='upload_image' accept='image/*')
-        label.ui.red.icon.big.button(for='invisibleupload1')
+        label.ui.teal.icon.big.button(for='invisibleupload1')
             // .ui.icon.header
             i.image.large.icon
             i.upload.large.icon
             // i.file.icon
             // |   Open any file
+        with current_doc
+            +title_link_buttons
         // input#invisibleupload2.ui.invisible.file.input(type='file')
         // label.ui.placeholder.segment(for='invisibleupload2')
         //     | Click here to upload
@@ -1139,7 +1141,7 @@ template(name='multi_user_field')
         if title
             |#{title}
         else if label
-            // |#{label}
+            |#{label}
         else if key
             |#{key}
         else

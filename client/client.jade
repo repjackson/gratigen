@@ -92,21 +92,21 @@ template(name='doc_view')
                             a.section.zoomer(href='/')
                                 |home
                             .divider /
-                            each _parents
-                                a.section(href="/d/#{model}/#{_id}")
-                                    img.ui.avatar.image(src="{{c.url image_id }}")
-                                    |#{title}
-                                .divider /
-                            a.section.zoomer(href="/d/#{model}/#{_id}")
-                                img.ui.avatar.image(src="{{c.url image_id }}")
-                                |#{title}
+                            +parent_block
+                            // each _parents
+                            //     a.section(href="/d/#{model}/#{_id}")
+                            //         img.ui.avatar.image(src="{{c.url image_id }}")
+                            //         |#{title}
+                            //     .divider /
+                            // a.section.zoomer(href="/d/#{model}/#{_id}")
+                            //     img.ui.avatar.image(src="{{c.url image_id }}")
+                            //     |#{title}
                         // a.ui.circular.tertiary.large.button.zoomer.fly_left(href="/")
                         //     i.left.chevron.icon
                         //     with parent_model
                         //         +ismall name=icon color=icon_color
                         //     // |orgs
                         //     |#{model}s
-                        +parent_block
                 .nine.wide.center.aligned.column
                     +text_field key='title' view_classes='ui center aligned inline huge header'
                     // .ui.centered.inline.huge.center.aligned.header
@@ -120,8 +120,19 @@ template(name='doc_view')
                         +edit_button
                     if currentUser.editing 
                         +remove_button
-        .subtemplate
-            +Template.dynamic template=doc_view_template
+            .one.column.row.subtemplate
+                .column
+                    +Template.dynamic template=doc_view_template
+            .three.column.row
+                .column
+                    +Template.dynamic template=doc_view_template
+                    // if currentUser.editing 
+                    +image_field key='image_id' label='image' icon='image'
+                .column
+                    +html_field key='body' label='body'
+                .column
+                    +array_field key='tags' label='tags' icon='tags'
+            
         if currentUser.admin_mode 
             .ui.inverted.red.segment
                 .ui.header 

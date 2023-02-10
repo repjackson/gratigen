@@ -254,12 +254,15 @@ template(name='model_item_small')
             img.ui.avatar.image(src="{{c.url image_id height=200 width=200}}" class=currentUser.darkmode_class)
         |#{title} #{_org.name}
         +related_org_icon
+        
 template(name='role_item_small')
     a.item(href="/d/role/#{_id}") 
         if image_id
             img.ui.avatar.image(src="{{c.url image_id height=200 width=200}}" class=currentUser.darkmode_class)
         |#{title} #{_org.name}
         +related_org_icon
+        // +location
+        // +datetime
         
 template(name='related_org_icon')
     +print_this
