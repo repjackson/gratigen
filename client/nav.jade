@@ -150,12 +150,11 @@ template(name='add_doc')
         .sixteen.wide.center.aligned.column
             with current_doc 
                 // .ui.header #{model} #{_id}
-                
                 // .ui.header user _doc_id: #{currentUser._doc_id}
                 // +author_info
                 // +creation_info
                 +text_field key='title' label='title'
-                +image_field key='image_id' label='image'
+                // +image_field key='image_id' label='image'
                 +thing_picker model='post' icon='for-you' color='1255B8'
                 .ui.huge.popup 
                     +i name='blog' color='1255B8'
@@ -203,9 +202,9 @@ template(name='add_doc')
                 .ui.big.green.circular.button.save_doc 
                     i.large.save.icon
                     |save #{model}
-            with current_doc 
-                +Template.dynamic template=model_edit_template
-    
+                with current_doc 
+                    +Template.dynamic template=model_edit_template
+
     
 template(name='add_tab')
     // .ui.top.attached.tabular.menu  

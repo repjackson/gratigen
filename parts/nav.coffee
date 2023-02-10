@@ -17,7 +17,7 @@ if Meteor.isClient
 if Meteor.isServer 
     Meteor.publish 'my_history_docs', ->
         if Meteor.user().history_ids
-            Docs.find 
+            Docs.find
                 _id:$in:Meteor.user().history_ids
     Meteor.publish 'my_history_users', ->
         if Meteor.user().history_ids
@@ -56,8 +56,8 @@ if Meteor.isClient
         , 2000
     Template.add_doc.events 
         'click .save_doc': ->
-            console.log @
-            # Router.go "/d/#{@model}/#{@_id}"
+            # console.log @
+            Router.go "/d/#{@model}/#{@_id}"
             # current_doc = 
             #     Docs.findOne Meteor.user()._doc_id
             # if current_doc

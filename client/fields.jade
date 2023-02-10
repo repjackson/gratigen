@@ -116,50 +116,52 @@ template(name='color_view')
 
 template(name='html_field')
     if currentUser.editing
-        .ui.form
-            .field
-                label 
-                    if icon
-                        i.icon(class=icon)
-                    if title
-                        |#{title}
-                    else if label
-                        |#{label}
-                    else if key
-                        |#{key}
-                    else
-                        |#{this}
-        .ui.fluid.form
-            .field.testsun
-                textarea#sample.sun-editor-editable
-                    |#{field_value}
-        // +call_watson mode='html' key='content'
-        //- div
-        //- //- +tone mode='html'
-        +call_watson mode='html' key=key
-        div
-        //- +tone mode='html'
-        if watson
-            .ui.header watson
-            +watson_view
-            
-        // +watson_view
-    unless currentUser.editing
-        if field_value
-            .spacer
-            // .ui.small.inline.header
-            //     if icon
-            //         i.icon(class=icon)
-            //     if title
-            //         |#{title}
-            //     else if label
-            //         |#{label}
-            //     else if key
-            //         |#{key}
-            //     else
-            //         |#{this}
-            // .f10
-            |!{field_value}
+        .ui.form.vertani(title=tagline)
+            .title.toggle_expanded.zoomer.pointer
+
+                .field
+                    label 
+                        if icon
+                            i.icon(class=icon)
+                        if title
+                            |#{title}
+                        else if label
+                            |#{label}
+                        else if key
+                            |#{key}
+                        else
+                            |#{this}
+            .ui.toggle_expanded.fluid.form
+                .field.testsun
+                    textarea#sample.sun-editor-editable
+                        |#{field_value}
+            // +call_watson mode='html' key='content'
+            //- div
+            //- //- +tone mode='html'
+            +call_watson mode='html' key=key
+            div
+            //- +tone mode='html'
+            if watson
+                .ui.header watson
+                +watson_view
+                
+            // +watson_view
+        unless currentUser.editing
+            if field_value
+                .spacer
+                // .ui.small.inline.header
+                //     if icon
+                //         i.icon(class=icon)
+                //     if title
+                //         |#{title}
+                //     else if label
+                //         |#{label}
+                //     else if key
+                //         |#{key}
+                //     else
+                //         |#{this}
+                // .f10
+                |!{field_value}
 
 
 

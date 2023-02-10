@@ -3,6 +3,7 @@ Template.registerHelper 'cal_time', (input)-> moment(input).calendar()
 Template.registerHelper 'comma', (input) ->
     input.toLocaleString("en-US")
 
+Template.registerHelper 'long', (user) ->
 Template.registerHelper 'user_taken_roles', (user) ->
     if user
         Docs.find 
@@ -149,6 +150,10 @@ Template.registerHelper 'is_grandparent_author', () ->
     grandparent = Template.parentData(2)
     grandparent._author_id is Meteor.userId()
 Template.registerHelper 'to_percent', (number) -> (number*100).toFixed()
+
+
+
+# date formatters
 Template.registerHelper 'long_time', (input) -> moment(input).format("h:mm a")
 Template.registerHelper 'long_date', (input) -> moment(input).format("dddd, MMMM Do h:mm a")
 Template.registerHelper 'short_date', (input) -> moment(input).format("dddd, MMMM Do")

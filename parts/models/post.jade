@@ -107,27 +107,19 @@ template(name='post_view')
                             a.ui.header(href="/user/#{_author.username}") 
                                 img.ui.avatar.image(src="{{c.url _author.image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.darkmode_class)
                                 |#{_author.username}
-                        .ui.small.grey.header 
-                            i.line.chart.icon
-                            |stats
-                        .ui.list
-                            .item #{views} views
-                        each viewers
-                            .ui.label #{username}
-                        +array_field key='tags' label='tags'
                         +voting_full
                         .ui.header #{when}
                         //- +array_field key='location_tags' label='location_tags'
                         // +comments
-                .eight.wide.column.scrolling
+                .twelve.wide.column.scrolling
                     // +textarea_field key='body' tagline='write your post!'
-                    +html_field key='body' label='write your post!'
+                    +html_field key='body' label='Post' tagline='write your post!'
                     // img.ui.image(src="{{c.url image_id }}" class=currentUser.darkmode_class)
                     // a.ui.header(href="/user/#{target.username}")
                     //     |#{target.username}
                     if youtube_id 
                         +youtube_view key='youtube_id'
-                    |!{content}
+                    +array_field key='tags' label='tags'
                     div 
                     .spacer
                     .spacer

@@ -154,7 +154,11 @@ template(name='org_view')
 
             .five.wide.column
                 .centered.row
-                    +datetime_field key='start_time'
+                    // datetime saves in datetime format like: 2023-03-22T19:39
+                    // need to use moment helper to format, helpers.coffee 
+                    .ui.medium.header {{long start_time}} #{date}
+                    if currentUser.editing 
+                        +datetime_field key='start_time'
                     // +text_field
                     div
                     +eft_viewer
@@ -192,16 +196,11 @@ template(name='org_view')
                 //         .header
                 //             |#{username}
             .six.wide.column
+                +members_block
                 +ai name='blockchain'
                 +block template='checklist'
-                .ui.inline.header 
-                    i.users.icon
-                    |members
-                if currentUser.editing 
-                    +multi_user_field key='member_ids' label='members'
-                else 
-                    each member_ids
-                        +user_pill
+
+                        // +user_pill
                 if currentUser.editing
                     .ui.basic.center.aligned.segment
                         +eft_picker color="FF73EA" icon='food' label='food'
@@ -308,7 +307,26 @@ template(name='org_view')
         //                     +model_crud model='skill' icon='wrench'
         
     
-
+    
+    
+template(name='members_block')
+    .ui.inline.header 
+        +block template='user_avatars' title='users' icon='groups'
+        i.users.icon
+        |members
+    if currentUser.editing 
+        +multi_user_field key='member_ids' label='members'
+    else 
+        each member_ids
+            with user_from_id
+                .ui.label #{this}
+                if image_id
+                    a.fly_right(href="/user/#{username}" title=username)
+                        img.ui.tiny.circular.inline.image.zoomer(src="{{c.url image_id height='300' width='300' gravity='face' crop='fill'}}")
+// template(name='user_avatars')
+    each all_users
+        if image_id
+            a.fly_right(href="/user/#{username}" title=username)
 
     
 template(name='org_stats')
