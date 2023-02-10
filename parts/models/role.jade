@@ -38,20 +38,20 @@ template(name='role_view')
             .five.wide.column
                 .centered.row
                     +eft_viewer
-                .ui.header Spaceholders
+                .ui.header Roleplayers
                 .ui.four.column.centered.grid
                     .column 
-                        .ui.centered.small.header lead
-                        +single_user_field key='lead' label='lead' icon='king'
+                        .ui.centered.small.header Lead
+                        +single_user_field key='lead'
                     .column 
-                        .ui.centered.small.header support
-                        +single_user_field key='support' label='support' icon='users'
+                        .ui.centered.small.header Support
+                        +single_user_field key='support'
                     .column 
-                        .ui.centered.small.header safety
-                        +single_user_field key='safety' label='safety'
+                        .ui.centered.small.header Safety
+                        +single_user_field key='safety'
                     .column 
-                        .ui.centered.small.header creator
-                        +single_user_field key='creator' label='creator' icon='edit'
+                        .ui.centered.small.header Supervisor
+                        +single_user_field key='Supervisor'
                 +textarea_field key='body' label='description' tagline='what are the characteristics of the person playing this role? what will their days be like?'
                 +textarea_field key='responsibilities' label='responsibilities' tagline='what responsibilities belong to the person playing this role?'
                 +textarea_field key='privaleges' label='privaleges' tagline='what rights and permissions belong to the person playing this role?'
