@@ -113,15 +113,6 @@ template(name='org_view')
         //             +remove_button
         .row
             .five.wide.column
-                if is_member
-                    .ui.big.button.leave(title='click to leave')
-                        i.checkmark.icon
-                        |member
-                else 
-                    .ui.big.button.join(title='click to join')
-                        i.user.plus.icon
-                        |join 
-                div
                 +image_field key='image_id' icon='image' label='image'
                 +image_field key='banner_image_id' icon='image' label='banner image'
                 +array_field key='tags' icon='tags'
@@ -163,19 +154,20 @@ template(name='org_view')
                     div
                     +eft_viewer
                 .ui.header Spaceholders
-                .ui.centered.grid
+                // .ui.centered
+                        +single_user_field key='lead' label='lead'
+                .ui.center.aligned.grid
                     .four.wide.column 
-                        .ui.centered
-                            +single_user_field key='lead' label='lead'
+                        +single_user_field key='lead' label='lead'
                     .four.wide.column 
-                        .ui.centered
-                            +single_user_field key='support' label='support'
+                        // .ui.centered
+                        +single_user_field key='support' label='support'
                     .four.wide.column 
-                        .ui.centered
-                            +single_user_field key='safety' label='safety'
+                        // .ui.centered
+                        +single_user_field key='safety' label='safety'
                     .four.wide.column 
-                        .ui.centered
-                            +single_user_field key='creator' label='creator'
+                        // .ui.centered
+                        +single_user_field key='creator' label='creator'
                 +textarea_field key='brief' tagline='brief description or your organization'
                 +textarea_field key='description' tagline='complete description of your organization'
                 +textarea_field key='body' tagline='body'
@@ -196,7 +188,8 @@ template(name='org_view')
                 //         .header
                 //             |#{username}
             .six.wide.column
-                +members_block
+                +membership_toggle
+                +block template='members'
                 +ai name='blockchain'
                 +block template='checklist'
 
@@ -306,20 +299,32 @@ template(name='org_view')
         //                 .column
         //                     +model_crud model='skill' icon='wrench'
         
+        
+template(name='membership_toggle')
+    if is_member
+        .ui.big.tertiary.fluid.button.leave_org(title='click to leave')
+            i.checkmark.icon
+            |member
+    else 
+        .ui.big.tertiary.fluid.button.join_org(title='click to join')
+            i.user.plus.icon
+            |join 
+    div
+
     
     
     
-template(name='members_block')
+template(name='members')
     .ui.inline.header 
-        +block template='user_avatars' title='users' icon='groups'
         i.users.icon
-        |members
+        +user_avatars
+        // |members
     if currentUser.editing 
         +multi_user_field key='member_ids' label='members'
     else 
         each member_ids
-            with user_from_id
-                .ui.label #{this}
+            with user_from_id this
+                // .ui.label #{this}
                 if image_id
                     a.fly_right(href="/user/#{username}" title=username)
                         img.ui.tiny.circular.inline.image.zoomer(src="{{c.url image_id height='300' width='300' gravity='face' crop='fill'}}")

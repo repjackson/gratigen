@@ -13,7 +13,6 @@ template(name='badge_card')
                     .f15.ui.centered.header #{title}
                     // if currentUser
                     //     +text_field key='title' view_classes='ui center aligned inline huge header'
-                div
                 .two.wide.column
                     .right.floated
                         // |#{when}
@@ -87,7 +86,7 @@ template(name='badge_card')
     //         .ui.header
     //             |#{title}
     //         // i.marker.icon
-    //         // |#{location} 
+            // |#{location} 
     //         |!{description}
     //         each badgers
     //             img.ui.avatar.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}" title=name)
@@ -135,8 +134,8 @@ template(name='badge_view')
                 // +image_view key='image_id' label='image'
                 +image_field key='image_id' icon='image' label='image'
                 +image_field key='banner_image_id' icon='image' label='banner image'
-                +model_crud model='project' color='blue'
-                +model_crud model='skill' color='red'
+                // +model_crud model='project' color='blue'
+                +block template='model_crud' model='skill' color='red'
                 div 
                 +array_field key='tags' label='tags'
                 .spacer

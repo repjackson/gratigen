@@ -31,7 +31,8 @@ if Meteor.isClient
     Template.org_view.events
         'click .refresh_org_stats': ->
             Meteor.call 'calc_org_stats', Router.current().params.doc_id, ->
-        'click .join': ->
+    Template.membership_toggle.events
+        'click .join_org': ->
             if Meteor.userId()
                 Docs.update @_id, 
                     $addToSet:
@@ -43,8 +44,16 @@ if Meteor.isClient
                         org_titles:@title
             else 
                 Router.go '/login'
+            $('body').toast({
+                title: "#{@title} joined"
+                message: 'yeay'
+                class : 'success'
+                showIcon:'user plus'
+                showProgress:'bottom'
+                position:'bottom right'
+            })
                 
-        'click .leave': ->
+        'click .leave_org': ->
             Docs.update @_id, 
                 $pull:
                     member_ids: Meteor.userId()
@@ -53,6 +62,14 @@ if Meteor.isClient
                 $pull:
                     org_ids:@_id
                     org_titles:@title
+            $('body').toast({
+                title: "#{@title} left"
+                message: 'boo'
+                class : 'info'
+                showIcon:'sign out'
+                showProgress:'bottom'
+                position:'bottom right'
+            })
 
 
 # if Meteor.isServer

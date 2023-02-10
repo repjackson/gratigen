@@ -26,7 +26,7 @@ if Meteor.isServer
 if Meteor.isClient 
     Template.nav.onCreated ->
         @autorun => Meteor.subscribe 'me', ->
-        # @autorun => Meteor.subscribe 'all_users', ->
+        @autorun => Meteor.subscribe 'all_users', ->
         
     Template.nav_search.onCreated ->
         # @autorun => Meteor.subscribe 'model_docs', 'model', ->

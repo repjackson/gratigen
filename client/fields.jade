@@ -602,7 +602,7 @@ template(name='datetime_field')
 
 template(name='array_field')
     if currentUser.editing
-        .ui.inline.header
+        .ui.inline.small.header
             if icon
                 i.grey.icon(class=i)
                 // +i name=icon
@@ -614,7 +614,7 @@ template(name='array_field')
             else if key
                 |#{key}
         div
-        .ui.icon.large.input
+        .ui.icon.input
             i.icon
                 +i name=icon
             input.new_element(type='text' placeholder="#{field_value.length} #{label}" autocomplete="off")
@@ -1053,7 +1053,7 @@ template(name='multi_doc_view')
 template(name='single_user_field')
     if currentUser.editing
         div
-        if icon
+        // if icon
             i.icon(class=icon)
         .ui.inline.header 
             |#{label} #{title}
@@ -1066,7 +1066,7 @@ template(name='single_user_field')
                 input.single_user_select_input(type='text' placeholder='lookup user..' autocomplete='off')
                 each selections
                     .ui.large.label
-                        |#{name} 
+                        |#{_name} 
                     .ui.mini.grey.inline.header 
                         |#{username}
             if user_results
@@ -1077,21 +1077,31 @@ template(name='single_user_field')
                                 .ui.small.inline.header
                                     img.ui.avatar.image(src="{{c.url image_id width=100 height=100 gravity='face' crop='fill'}}" class=cl)
                                     |#{first_name} #{last_name}
-                                .ui.mini.grey.inline.header 
+                                .ui.mini.grey.inline.header
                                     |#{username}
     if field_value
-        .ui.small.inline.header
-            if icon 
-                i.large.icon(class=icon)
-            if label 
-                | #{label}
-            else 
-                |#{key}
+        if label 
+            | #{label}
         with user_from_id field_value
-            // .ui.label #{username}
-            +user_pill
-            // img.ui.avatar.image(src="{{c.url image_id width=100 height=100 gravity='face' crop='fill'}}" class=cl)
-            // |#{name}
+            // a.ui.large.link.basic.button.goto_user(href="/user/#{username}")
+            a.ui.inline.small.header.goto_user(href="/user/#{username}")
+                img.ui.avatar.image(src="{{c.url image_id width=200 height=200 gravity='face' crop='fill'}}")
+                |#{username}
+            .ui.user.popup        
+                .ui.header #{username} #{name}
+                each roles
+                    .ui.basic.label #{this}
+                img.ui.small.image(src="{{c.url image_id width=400 height=400 gravity='face' crop='fill'}}")
+        // .ui.basic.label
+            // i.user.icon
+            // .ui.small.inline.header
+            //     if icon 
+            //         i.large.icon(class=icon)
+            //     else 
+            //         |#{key}
+                // .ui.label #{username}
+                // img.ui.avatar.image(src="{{c.url image_id width=100 height=100 gravity='face' crop='fill'}}" class=cl)
+                // |#{name}
         // +user_card field_value
         // if is_dev
         // |#{field_value}

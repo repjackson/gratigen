@@ -38,7 +38,7 @@ body {
 .menu, .item {
     /*font-family: 'Bangers', sans-serif !important;*/
 }
-.ui.header, .button {
+.ui.header, .button, .menu .item{
     /*font-family: 'Bangers', sans-serif !important;*/
     /*font-family: 'Marcellus', sans-serif !important;*/
     font-family: 'Cinzel Decorative', sans-serif !important;
@@ -352,7 +352,7 @@ img, .button, .selector, .card, p, .header, .item, .image, .fade, .accordion{
 }
 
 input {
-  border-radius:10px !important;
+  /*border-radius:10px !important;*/
 }
 .scrolling{
   overflow-y:scroll;

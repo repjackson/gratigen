@@ -3,7 +3,7 @@ template(name='checklist')
         input.quickadd_task(type='text' placeholder='add task')
     |#{complete_count} complete
     |#{incomplete_count} incomplete
-    .ui.big.list
+    .ui.divided.list
         each org_task_docs
             +task_item_small
                 
@@ -23,13 +23,14 @@ template(name='task_item_small')
             //     input(type='checkbox' checked="")
             // i.chevron.down.large.icon.view_more(title='view more')
             // if viewing_full
-            i.remove.link.icon(title='remove task')
             +array_field key='tags' label='tags' icon='tags'
             a(href="/d/task/#{_id}")
-                i.chevron.right.icon
-            +edit_button_icon
-            +single_user_field key='assigned_to_user_ids' label='assigned to'
+                // i.chevron.right.icon
+                +edit_button_icon
+                
+            +single_user_field key='lead_id' label='Lead'
             // +textarea_field key='body'
+            i.remove.link.icon(title='remove task')
                 
                 
 template(name='edit_button_icon')

@@ -12,7 +12,7 @@ template(name='home')
             // .ui.fluid.small.button.toggle_leftbar
             //     i.chevron.left.icon
             // .ui.hidden.divider
-            // .ui.segment.shadow.mobile.hidden
+            .ui.segment.shadow.mobile.hidden
                 img.ui.image(src="{{c.url 'batflash'}}" class=darkmode_class)
             +dash_user_info
             +user_impact_graph
@@ -250,6 +250,8 @@ template(name='user_avatars')
                 img.ui.tiny.circular.inline.image.zoomer(src="{{c.url image_id height='300' width='300' gravity='face' crop='fill'}}")
             // else 
             //     i.large.user.link.icon.zoomer
+            
+
 
 template(name='bookmark_block')
     each bookmarked_docs 
