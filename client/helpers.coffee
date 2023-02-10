@@ -19,6 +19,10 @@ Template.registerHelper 'online_user_docs', () ->
     Meteor.users.find 
         online:true
 
+Template.registerHelper 'my_roles', (input) ->
+    Docs.find 
+        model:'role'
+        _author_id:Meteor.userId()
 
 Template.registerHelper 'doc_by_id', (input) -> 
     Docs.findOne @valueOf()

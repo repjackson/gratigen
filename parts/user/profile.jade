@@ -148,9 +148,9 @@ template(name='profile_section')
                 if loading 
                     i.large.refresh.icon
                 if is_expanded
-                    i.chevron.down.icon(class=color)
+                    i.chevron.down.small.icon(class=color)
                 else
-                    i.chevron.right.icon(class=color)
+                    i.chevron.right.small.icon(class=color)
                 |#{label}
             if is_expanded
                 // .ui.header expanded
@@ -192,14 +192,19 @@ template(name='user_roles')
         i.pencil.icon
         |roles you authored
     .ui.selection.animated.list
-        each _authored_docs current_user 'role'
-            +role_item_small
+        each my_roles
+            +model_item_small
+        // each _authored_docs current_user 'role'
+            // +role_item_small
     .ui.small.header
         i.checkmark.icon
         |roles you hold
     .ui.selection.animated.list
         each user_taken_roles current_user
             +role_item_small
+            
+            
+            
             
 template(name='user_tasks')
     .ui.small.header 
@@ -249,20 +254,28 @@ template(name='user_productss')
             +model_item_small
 
 template(name='model_item_small')
-    a.item(href="/d/role/#{_id}") 
+    // +print_this
+    a.item(href="/d/#{model}/#{_id}") 
+        // |what am i
         if image_id
             img.ui.avatar.image(src="{{c.url image_id height=200 width=200}}" class=currentUser.darkmode_class)
-        |#{title} #{_org.name}
-        +related_org_icon
+        |#{title}
+        // +related_org_icon
+    // .ui.divider
+    // .ui.label #{model_item_small_subtemplate}
+    +Template.dynamic template=model_item_small_subtemplate
+        
+        
         
 template(name='role_item_small')
-    a.item(href="/d/role/#{_id}") 
-        if image_id
-            img.ui.avatar.image(src="{{c.url image_id height=200 width=200}}" class=currentUser.darkmode_class)
-        |#{title} #{_org.name}
-        +related_org_icon
-        // +location
-        // +datetime
+    .ui.header #{title}?
+    // a.item(href="/d/role/#{_id}") 
+    //     if image_id
+    //         img.ui.avatar.image(src="{{c.url image_id height=200 width=200}}" class=currentUser.darkmode_class)
+    //     |#{title} #{_org.name}
+    //     +related_org_icon
+    //     // +location
+    //     // +datetime
         
 template(name='related_org_icon')
     +print_this

@@ -9,6 +9,9 @@ if Meteor.isClient
     #         $('.accordion').accordion()
     #     , 1000
 
+    Template.model_item_small.helpers 
+        model_item_small_subtemplate: ->
+            "#{@model}_item_small"
     Template.profile_section.helpers 
         user_template:->
             "user_#{@key}"
