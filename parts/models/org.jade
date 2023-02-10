@@ -158,16 +158,24 @@ template(name='org_view')
                         +single_user_field key='lead' label='lead'
                 .ui.center.aligned.grid
                     .four.wide.column 
-                        +single_user_field key='lead' label='lead'
-                    .four.wide.column 
+                        .ui.small.centered.header Lead
+                        div
+                        +single_user_field key='lead'
+                    .four.wide.column
+                        .ui.small.centered.header Support
+                        div
                         // .ui.centered
-                        +single_user_field key='support' label='support'
-                    .four.wide.column 
+                        +single_user_field key='support'
+                    .four.wide.column
+                        .ui.small.centered.header Safety
+                        div
                         // .ui.centered
-                        +single_user_field key='safety' label='safety'
-                    .four.wide.column 
+                        +single_user_field key='safety'
+                    .four.wide.column
+                        .ui.small.centered.header Creator
+                        div
                         // .ui.centered
-                        +single_user_field key='creator' label='creator'
+                        +single_user_field key='creator'
                 +textarea_field key='brief' tagline='brief description or your organization'
                 +textarea_field key='description' tagline='complete description of your organization'
                 +textarea_field key='body' tagline='body'
@@ -180,7 +188,15 @@ template(name='org_view')
                 +block template='model_crud' model='request' title='requests' color='blue' icon='hand-holding-heart'
                 +block template='model_crud' model='role' title='roles' icon='badge' color='red'
                 +block template='model_crud' model='group' title='groups' icon='groups' color='green'
-                +block template='model_crud' model='badge' title='badge' icon='badge' color='blue'
+                +block template='model_crud' model='badge' title='badges' icon='badge' color='blue'
+                +block template='model_crud' model='group' title='groups' icon='groups' color='teal'
+                +block template='model_crud' model='product' title='products' icon='shop' color='teal'
+                +block template='model_crud' model='service' title='services' color='purple'
+                +block template='model_crud' model='badge' title='badges' icon='certificate' color='yellow'
+                +block template='model_crud' model='resource' title='resources' color='teal'
+                +block template='model_crud' model='keyresult' title='key results' color='teal'
+                +block template='model_crud' model='objective' title='objectives' color='teal'
+                +block template='model_crud' model='shift' title='shifts' color='teal'
 
                 // a.item(href="/d/org/#{_id}/#{username}")
                 //     img.ui.mini.image(src="{{c.url image_id width=200 height=200}}")
@@ -206,47 +222,18 @@ template(name='org_view')
                         +eft_picker color="FAB005" icon='university' label='education'
                         +eft_picker color="FD7E14" icon='paint brush' label='art'
                         +eft_picker color="FF0000" icon='users' label="community core"
+                +gratigen
                 .ui.header 
                     +i name='rss'
                     |activity
-                +gratigen
                 each log_items
                     +log_item
                 +block template='org_stats' title='stats' icon='line chart'
                 // +org_stats
                 // +block template='role_crud'
                 // +doc_array_togggle key='member_ids' value=currentUser._id add_label='join' remove_label='joined'
-                // +group_crud
-                // +product_crud
-                // +service_crud
-                // +badge_crud
-                // +resource_crud
-                // +keyresult_crud
-                // +objective_crud
-                // +shift_crud
             .five.wide.column
                 +block template='related_docs' title='related docs'
-        // .ui.stackable.padded.grid
-        //     .row
-        //         .ui.stackable.padded.grid
-        //             .four.column.row 
-        //                 .column
-        //                     .ui.header editing #{title} org
-        //                     .ui.inline.header 
-        //                         +icolor name='group' cl='ui image inline pointer'
-        //                     +title_link_buttons
-        //                     a.ui.icon.green.big.button(href="/d/org/#{_id}" title='save')
-        //                         i.checkmark.big.icon
-        //                     +text_field key='title' label='title'
-                            
-        //                     +html_field key='body' label='body'
-        //                     +youtube_edit key='youtube_id' label='youtube id'
-        //                 .column
-        //                     .ui.header required badges
-        //                     +badge_picker
-        //                     +role_crud
-        //                     +task_picker
-                            
         //                 .column
         //                     +model_crud model='event' icon='calendar'
                             

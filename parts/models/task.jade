@@ -432,7 +432,7 @@ template(name='work_view')
                     .ui.inline.header @#{location_title}
                 .ui.header #{when}
                 div.scrolling
-                    +html_view key='notes' label='directions'
+                    +html_field key='notes' label='directions'
                 // +array_field key='tags' label='tags' icon='tags'
                 +comments
             .four.wide.column
@@ -530,7 +530,7 @@ template(name='task_view')
                         +eft_picker color="FF0000" icon='users' label="community core"
                 +voting_full
                 +comments
-                +html_view key='description' label='description'
+                +html_field key='description' label='description'
                 +array_field key='tags' label='tags' icon='tags'
                 .ui.header 
                     i.wrench.icon

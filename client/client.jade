@@ -85,23 +85,21 @@ template(name='doc_view')
     with current_doc 
         .ui.stackable.padded.grid.scrolling
             .middle.aligned.row
-                .sixteen.wide.column
-                    .ui.breadcrumb
-                        a.section.zoomer(href='/')
-                            |home
-                        .divider /
-                        each _parents
-                            a.section(href="/d/#{model}/#{_id}")
-                                img.ui.avatar.image(src="{{c.url image_id }}")
-                                |#{title}
-                            .divider /
-                        a.section.zoomer(href="/d/#{model}/#{_id}")
-                            img.ui.avatar.image(src="{{c.url image_id }}")
-                            |#{title}
-            .middle.aligned.row
                 // img.ui.fluid.image.bg_overlay(src="{{c.url image_id crop='fit'}}")
                 .three.wide.column
                     .left_floated
+                        .ui.breadcrumb
+                            a.section.zoomer(href='/')
+                                |home
+                            .divider /
+                            each _parents
+                                a.section(href="/d/#{model}/#{_id}")
+                                    img.ui.avatar.image(src="{{c.url image_id }}")
+                                    |#{title}
+                                .divider /
+                            a.section.zoomer(href="/d/#{model}/#{_id}")
+                                img.ui.avatar.image(src="{{c.url image_id }}")
+                                |#{title}
                         // a.ui.circular.tertiary.large.button.zoomer.fly_left(href="/")
                         //     i.left.chevron.icon
                         //     with parent_model

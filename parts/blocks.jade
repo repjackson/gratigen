@@ -620,7 +620,7 @@ template(name='block')
     .ui.segment(class=color)
         a.ui.header.toggle_expanded.zoomer.pointer(title='expand' class=color)
             if icon
-                // +i name=icon color='000000'
+                +i name=icon color='000000'
                 // i.large.icon(class=icon)
             // | #{model}s
             if title
@@ -656,83 +656,86 @@ template(name='model_crud')
     .ui.header 
         // |#{picked_models.length}
         |picked #{model}s
+    each model_children
+        // +Template.dynamic template=child_model_item_template
         .ui.horizontal.fluid.card.show_modal
+            .content
+                +Template.dynamic template=child_model_item_template
+                if image_id
+                    .image
+                        img.ui.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
                 .content
-                    .ui.grid
-                        .row
-                            // .column
-                            .fourteen.wide.column
-                                .left.floated
-                                    a.ui.inline.header
-                                        |!{title}
-                                    div
-                                    +eft_viewer_small
-                                    // img(src="{{c.url image_id width=50 height=50}}")
-                                    // div    
-                                    // |!{content}
-                            .two.wide.column
-                                .right.floated
-                                    if _is 'model' 'role'
-                                        +ismall name='what-i-do' color='42E8C4' cl='ui inline image'
-                                    div
-                                    |#{when}
-                        .row
-                            .six.wide.column
-                                img.invert(src="{{c.url image_id width=10 height=10}}")
-                            .ten.wide.column
-                                |!{content}
-                        .sixteen.wide.column
-                            if currentUser.admin_mode
-                                .ui.tertiary.large.button.zoomer.remove_role 
-                                    i.remove.icon
-                                    |remove 
-                                .ui.tertiary.large.button.zoomer.toggle_assign 
-                                    i.user.plus.icon
-                                    | assign
-                                if assigned_to 
-                                    |assigned to #{asigned_to.username}
-                                else 
-                                    |unnassigned
-                                if is_assigning 
-                                    each role_holders 
-                                        .ui.label #{username}
-                                else 
-                                    with assigned_users
-                                        .ui.green.label #{username}
-                                a.ui.tertiary.right.floated.icon.large.button.zoomer.fly_right(href="/role/#{_id}/edit" title='edit role')
-                                    i.setting.icon
-                            else
-                                // else if can_take
-                                if has_taken 
-                                    |taken by #{taken_user.name}
-                                    .ui.large.button.release_role
-                                        i.undo.icon
-                                        |release 
-                                else if can_take
-                                    .ui.tertiary.large.button.zoomer.take_role 
-                                        i.checkmark.icon
-                                        | take
-                                else if is_taken 
-                                    |taken by #{taken_user.name}
-                            a.ui.tertiary.large.button.zoomer(href="/d/role/#{_id}")
-                                |view
-                                i.chevron.right.icon
+                    a.ui.inline.header(href="/d/#{model}/#{_id}")
+                        |#{title}
+                    .ui.label #{model}
+                    i.remove.link.circular.red.icon.zoomer.remove_model
+            
+                // .ui.grid
+                
+                //     .row
+                //         // .column
+                //         .fourteen.wide.column
+                //             .left.floated
+                //                 a.ui.inline.header
+                //                     |!{title}
+                //                 div
+                //                 +eft_viewer_small
+                //                 // img(src="{{c.url image_id width=50 height=50}}")
+                //                 // div    
+                //                 // |!{content}
+                //         .two.wide.column
+                //             .right.floated
+                //                 if _is 'model' 'role'
+                //                     +ismall name='what-i-do' color='42E8C4' cl='ui inline image'
+                //                 div
+                //                 |#{when}
+                //     .row
+                //         .six.wide.column
+                //             img.invert(src="{{c.url image_id width=10 height=10}}")
+                //         .ten.wide.column
+                //             |!{content}
+                //     .sixteen.wide.column
+                //         if currentUser.admin_mode
+                //             .ui.tertiary.large.button.zoomer.remove_role 
+                //                 i.remove.icon
+                //                 |remove 
+                //             .ui.tertiary.large.button.zoomer.toggle_assign 
+                //                 i.user.plus.icon
+                //                 | assign
+                //             if assigned_to 
+                //                 |assigned to #{asigned_to.username}
+                //             else 
+                //                 |unnassigned
+                //             if is_assigning 
+                //                 each role_holders 
+                //                     .ui.label #{username}
+                //             else 
+                //                 with assigned_users
+                //                     .ui.green.label #{username}
+                //             a.ui.tertiary.right.floated.icon.large.button.zoomer.fly_right(href="/role/#{_id}/edit" title='edit role')
+                //                 i.setting.icon
+                //         else
+                //             // else if can_take
+                //             if has_taken 
+                //                 |taken by #{taken_user.name}
+                //                 .ui.large.button.release_role
+                //                     i.undo.icon
+                //                     |release 
+                //             else if can_take
+                //                 .ui.tertiary.large.button.zoomer.take_role 
+                //                     i.checkmark.icon
+                //                     | take
+                //             else if is_taken 
+                //                 |taken by #{taken_user.name}
+                a.ui.tertiary.large.button.zoomer(href="/d/role/#{_id}")
+                    |view
+                    i.chevron.right.icon
     // .ui.list
-        each model_children
-            // +Template.dynamic template=child_model_item_template
-            +Template.dynamic template='child_model_item_template'
             
                     
 template(name='child_model_item_template')  
     // if _is 'model' 'role'
         // .ui.header this is a role
-    .ui.segment
-        if image_id
-            img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
-        a.inline.header(href="/d/#{model}/#{_id}")
-            |#{title}
-        .ui.label #{model}
-        i.remove.link.circular.red.icon.zoomer.remove_model
     
 template(name='child_role_item_template')  
     // if _is 'model' 'role'

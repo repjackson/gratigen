@@ -277,6 +277,7 @@ if Meteor.isServer
         
 if Meteor.isClient
     Template.model_crud.helpers 
+        child_model_item_template: -> "#{@model}_card"
         is_editing: -> Template.instance().editing.get()
         is_expanded: -> Template.instance().expanded.get()
         user_template:->
@@ -301,7 +302,7 @@ if Meteor.isClient
             console.log Template.currentData().model
             Docs.find
                 model:Template.currentData().model
-                parent_ids:$in:[Router.current().params.doc_id]
+                # parent_ids:$in:[Router.current().params.doc_id]
                 # parent_id:Router.current().params.doc_id
                 # _id:$in:parent_doc["#{Template.currentData().model}_ids"]
         # picked_model: ->

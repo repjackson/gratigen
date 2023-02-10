@@ -50,7 +50,7 @@ template(name='product_view')
                     if image_id2
                         img.ui.rounded.image.zoomer(src="{{c.url image_id2}}")
                 .column
-                    +html_view key='description'
+                    +html_field key='description'
                     // +text_view key='size_description' label='size description' 
                     a.ui.circular.button(href=product_link)
                         // i.wordpress.large.icon
