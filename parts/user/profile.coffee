@@ -41,11 +41,12 @@ if Meteor.isClient
                     $inc: points:@amount
 
 
-
-
     Template.user_roles.onCreated ->
-        @autorun -> Meteor.subscribe 'authored_docs', Router.current().params.username,'role', ->
+        @autorun -> Meteor.subscribe 'user_authored_docs', Router.current().params.username,'role', ->
         @autorun -> Meteor.subscribe 'user_taken_roles', Router.current().params.username, ->
+    Template.user_resources.onCreated ->
+        @autorun -> Meteor.subscribe 'user_authored_docs', Router.current().params.username,'resource', ->
+        # @autorun -> Meteor.subscribe 'user_taken_roles', Router.current().params.username, ->
 if Meteor.isServer 
     Meteor.publish 'user_taken_roles',(username)->
         user = Meteor.users.findOne username:username
