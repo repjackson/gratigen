@@ -114,7 +114,7 @@ template(name='org_view')
         .row
             .five.wide.column
                 +image_field key='image_id' icon='image' label='image'
-                +image_field key='banner_image_id' icon='image' label='banner image'
+                // +image_field key='banner_image_id' icon='image' label='banner image'
                 +array_field key='tags' icon='tags'
                 if currentUser.editing
                     +title_link_buttons
@@ -190,7 +190,7 @@ template(name='org_view')
             .six.wide.column
                 +membership_toggle
                 +block template='members'
-                +ai name='blockchain'
+                +block template='ai' name='blockchain'
                 +block template='checklist'
 
                         // +user_pill
@@ -302,11 +302,12 @@ template(name='org_view')
         
 template(name='membership_toggle')
     if is_member
-        .ui.big.tertiary.fluid.button.leave_org(title='click to leave')
-            i.checkmark.icon
+        .ui.big.tertiary.fluid.green.button.leave_org(title='click to leave')
+            // i.checkmark.icon
+            +i name='membership-card' cl='ui inline mini image'
             |member
     else 
-        .ui.big.tertiary.fluid.button.join_org(title='click to join')
+        .ui.big.tertiary.fluid.orange.button.join_org(title='click to join')
             i.user.plus.icon
             |join 
     div
@@ -317,7 +318,7 @@ template(name='membership_toggle')
 template(name='members')
     .ui.inline.header 
         i.users.icon
-        +user_avatars
+        // +user_avatars
         // |members
     if currentUser.editing 
         +multi_user_field key='member_ids' label='members'

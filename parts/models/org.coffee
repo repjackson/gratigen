@@ -12,7 +12,7 @@ if Meteor.isClient
         @autorun => Meteor.subscribe 'members', Router.current().params.doc_id, ->
         # @autorun => Meteor.subscribe 'org_dishes', Router.current().params.doc_id, ->
         Meteor.call 'log_view', Router.current().params.doc_id, ->
-    Template.org_view.helpers
+    Template.membership_toggle.helpers
         is_member: ->
             Meteor.userId() and Meteor.userId() in @member_ids
         # current_org: ->
@@ -23,7 +23,7 @@ if Meteor.isClient
     Template.edit_button.events
         'click .editing': (e)->
             # console.log 'hi'
-            $('.subtemplate').transition('bounce', 500)
+            $('.subtemplate').transition('tada', 750)
             Meteor.users.update Meteor.userId(),
                 $set:
                     editing:!Meteor.user().editing
@@ -32,7 +32,7 @@ if Meteor.isClient
         'click .refresh_org_stats': ->
             Meteor.call 'calc_org_stats', Router.current().params.doc_id, ->
     Template.membership_toggle.events
-        'click .join_org': ->
+        'click .join_org': (e,t)->
             if Meteor.userId()
                 Docs.update @_id, 
                     $addToSet:
@@ -40,10 +40,12 @@ if Meteor.isClient
                         member_usernames: Meteor.user().username
                 Meteor.users.update Meteor.userId(),
                     $addToSet:
+                        membership_ids:@_id
                         org_ids:@_id
                         org_titles:@title
-            else 
+            else    
                 Router.go '/login'
+            t.$('.button').transition('bounce', 500)
             $('body').toast({
                 title: "#{@title} joined"
                 message: 'yeay'
@@ -53,13 +55,14 @@ if Meteor.isClient
                 position:'bottom right'
             })
                 
-        'click .leave_org': ->
+        'click .leave_org': (e,t)->
             Docs.update @_id, 
                 $pull:
                     member_ids: Meteor.userId()
                     member_usernames: Meteor.user().username
             Meteor.users.update Meteor.userId(),
                 $pull:
+                    membership_ids:@_id
                     org_ids:@_id
                     org_titles:@title
             $('body').toast({
@@ -70,6 +73,7 @@ if Meteor.isClient
                 showProgress:'bottom'
                 position:'bottom right'
             })
+            t.$('.button').transition('bounce', 500)
 
 
 # if Meteor.isServer
