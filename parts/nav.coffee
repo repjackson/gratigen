@@ -27,6 +27,7 @@ if Meteor.isClient
     Template.nav.onCreated ->
         @autorun => Meteor.subscribe 'me', ->
         @autorun => Meteor.subscribe 'all_users', ->
+        @autorun => Meteor.subscribe 'my_current_doc', ->
         
     Template.nav_search.onCreated ->
         # @autorun => Meteor.subscribe 'model_docs', 'model', ->
@@ -35,6 +36,9 @@ if Meteor.isClient
         # @autorun => Meteor.subscribe 'my_cart_products'
     
 if Meteor.isServer
+    Meteor.publish 'my_current_doc', ()->
+        if Meteor.user() and Meteor.user()._doc_id
+            Docs.find Meteor.user()._doc_id
     Meteor.publish 'doc_search_results', (query)->
         match = {model:$nin:['reddit','recipe']}
         if query and query.length > 2
@@ -143,9 +147,11 @@ if Meteor.isClient
                 Docs.insert 
                     model:'post'
                     published:false
-            Router.go "/add/#{new_id}"
+            # Router.go "/add/#{new_id}"
             Meteor.users.update Meteor.userId(),
-                $set:editing:true
+                $set:
+                    editing:true
+                    _doc_id:new_id
         'click .toggle_online': ->
             if Meteor.user().online
                 Meteor.users.update Meteor.userId(),

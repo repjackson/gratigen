@@ -62,10 +62,19 @@ img, .button, .selector, .card, p, .header, .item, .image, .fade, .accordion{
 .f18 {font-size: 180% !important;}
 .f19 {font-size: 190% !important;}
 
+@keyframes fade {
+  0%,100% { opacity: 0 }
+  50% { opacity: 1 }
+}
 
 @keyframes fadein {
+    
   from { opacity: 0}
   to   { opacity: 1}
+}
+@keyframes fadeout {
+  from { opacity: 1}
+  to   { opacity: 0}
 }
 
 

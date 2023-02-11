@@ -35,7 +35,7 @@ template(name='nav')
             a.icon.item.toggle_admin_mode(title='toggle admin mode' class=admin_mode_class)
                 i.large.shield.icon
         // .six.wide.center.aligned.column
-        a.item.launch_modal(title='Engage' data-template='add_doc')
+        a.item.launch_modal.add_doc(title='Engage' data-template='add_doc')
             +i name='play-button-circled--v1' color='40C057' cl='ui mini image'
         // a.item.add_doc(title='Engage')
         //     // i.large.play.icon
@@ -148,7 +148,8 @@ template(name='search')
 
 template(name='add_doc')
     // div
-    with current_doc 
+    .ui.header add doc #{currentUser._doc_id}
+    with current_user_doc 
         .ui.padded.centered.grid 
             .ten.wide.column
                 +text_field key='title' label='title'
