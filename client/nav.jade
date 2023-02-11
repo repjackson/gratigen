@@ -148,10 +148,10 @@ template(name='search')
 
 template(name='add_doc')
     // div
-    .ui.header add doc #{currentUser._doc_id}
+    // .ui.header add doc #{currentUser._doc_id}
     with current_user_doc 
         .ui.padded.centered.grid 
-            .ten.wide.column
+            .sixteen.wide.column
                 +text_field key='title' label='title'
                 +thing_picker model='post' icon='for-you' color='1255B8'
                 .ui.huge.popup 

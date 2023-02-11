@@ -2,9 +2,10 @@
     display: none;
     position: absolute !important;
     z-index: 1 !important; /* Sit on top */
-    padding-top: 100px !important; /* Location of the box */
+    padding-top: 50px !important; /* Location of the box */
     left: 0 !important;
     top: 0 !important;
+    /*this is the fullscreen*/
     width: 100% !important; /* Full width */
     height: 100% !important; /* Full height */
     overflow: auto !important; /* Enable scroll if needed */
@@ -14,13 +15,14 @@
     animation: fadein 1s !important;
 }
 
-/* Modal Content */
+/* Modal Content actual modal*/
 .modal-content {
+  border-radius: 10px !important;
   background-color: #fefefe;
   margin: auto;
-  padding: 20px;
+  padding: 10px;
   border: 1px solid #888;
-  width: 80%;
+  width: 40%;
 }
 
 /* The Close Button */

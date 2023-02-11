@@ -27,6 +27,7 @@ if Meteor.isClient
     Template.nav.onCreated ->
         @autorun => Meteor.subscribe 'me', ->
         @autorun => Meteor.subscribe 'all_users', ->
+        @autorun => Meteor.subscribe 'my_drafts', ->
         @autorun => Meteor.subscribe 'my_current_doc', ->
         
     Template.nav_search.onCreated ->
@@ -36,6 +37,11 @@ if Meteor.isClient
         # @autorun => Meteor.subscribe 'my_cart_products'
     
 if Meteor.isServer
+    Meteor.publish 'my_drafts', ()->
+        Docs.find 
+            _author_id:Meteor.userId()
+            published:false
+    
     Meteor.publish 'my_current_doc', ()->
         if Meteor.user() and Meteor.user()._doc_id
             Docs.find Meteor.user()._doc_id
