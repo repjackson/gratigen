@@ -13,6 +13,24 @@ body {
     /*animation: .25s ease-out 0s 1 fadein;*/
 }
   
+/*body {*/
+/*  padding: 25px;*/
+/*  background-color: white;*/
+/*  color: black;*/
+/*  font-size: 25px;*/
+/*}*/
+
+.dark-mode {
+    background-color: black !important;
+    /*color: white !important;*/
+    filter: invert(1) !important;
+}
+.dark-mode .image {
+    filter: invert(1) !important;
+    
+}
+  
+  
 .invisible {
     display:none !important;
 }

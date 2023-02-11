@@ -40,6 +40,9 @@ if Meteor.isClient
                 Meteor.users.update current_user._id, 
                     $inc: points:@amount
 
+    Template.profile.onCreated ->
+        @autorun -> Meteor.subscribe 'user_from_username', Router.current().params.username, ->
+        # @autorun -> Meteor.subscribe 'user_referenced_docs', Router.current().params.username, ->
 
     Template.user_roles.onCreated ->
         @autorun -> Meteor.subscribe 'user_authored_docs', Router.current().params.username,'role', ->
@@ -53,26 +56,6 @@ if Meteor.isServer
         Docs.find 
             model:'role'
             taken_by_user_id:user._id
-if Meteor.isClient
-    Template.user_credit.onCreated ->
-        @autorun -> Meteor.subscribe 'user_from_username', Router.current().params.username, ->
-        @autorun -> Meteor.subscribe 'user_read_docs', Router.current().params.username, ->
-    
-    Template.user_credit.events 
-        'click .calc_points': ->
-            Meteor.call 'calc_user_points', Meteor.userId(), ->
-                
-                
-            
-    Template.user_credit.helpers
-        # read_docs: ->
-        #     user = Meteor.users.findOne username:Router.current().params.username 
-        #     Docs.find 
-        #         read_by_user_ids: $in: [user._id]
-    
-    Template.profile.onCreated ->
-        @autorun -> Meteor.subscribe 'user_from_username', Router.current().params.username, ->
-        # @autorun -> Meteor.subscribe 'user_referenced_docs', Router.current().params.username, ->
 if Meteor.isServer 
     Meteor.publish 'bookmarked_docs', ->
         Docs.find 

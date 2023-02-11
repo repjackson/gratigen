@@ -1,15 +1,34 @@
 if Meteor.isClient
-#     Template.registerHelper 'transfer_products', () -> 
-#         Docs.find
-#             model:'product'
-#             transfer_id:@_id
-#     Template.registerHelper 'product_transfer', () -> 
-#         found = 
-#             Docs.findOne
-#                 model:'transfer'
-#                 _id:@transfer_id
-#         # console.log found
-#         found
+    Template.registerHelper 'transfer_products', () -> 
+        Docs.find
+            model:'product'
+            transfer_id:@_id
+    Template.registerHelper 'product_transfer', () -> 
+        found = 
+            Docs.findOne
+                model:'transfer'
+                _id:@transfer_id
+        # console.log found
+        found
+    
+    Template.user_credit.onCreated ->
+        @autorun -> Meteor.subscribe 'user_from_username', Router.current().params.username, ->
+        @autorun -> Meteor.subscribe 'user_read_docs', Router.current().params.username, ->
+    
+    Template.user_credit.events 
+        'click .calc_points': ->
+            Meteor.call 'calc_user_points', Meteor.userId(), ->
+                
+                
+            
+    Template.user_credit.helpers
+        # read_docs: ->
+        #     user = Meteor.users.findOne username:Router.current().params.username 
+        #     Docs.find 
+        #         read_by_user_ids: $in: [user._id]
+    
+    
+    
     
     Template.transfers.onCreated ->
         @autorun => Meteor.subscribe 'model_docs', 'transfer', 20, ->
