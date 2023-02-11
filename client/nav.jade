@@ -35,10 +35,12 @@ template(name='nav')
             a.icon.item.toggle_admin_mode(title='toggle admin mode' class=admin_mode_class)
                 i.large.shield.icon
         // .six.wide.center.aligned.column
-        a.item.add_doc(title='Engage')
-            // i.large.play.icon
-            // +add_tab
+        a.item.launch_modal(title='Engage' data-template='add_doc')
             +i name='play-button-circled--v1' color='40C057' cl='ui mini image'
+        // a.item.add_doc(title='Engage')
+        //     // i.large.play.icon
+        //     // +add_tab
+        //     +i name='play-button-circled--v1' color='40C057' cl='ui mini image'
         // a.center.toggle_addmode.item.zoomer.pointer(title='Engage')
         //     +i name='play-button-circled--v1' color='40C057'
         //     // i.small.circular.play.green.icon.invert
