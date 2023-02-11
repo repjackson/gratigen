@@ -150,16 +150,6 @@ template(name='add_doc')
         .ui.padded.centered.grid 
             .ten.wide.column
                 +text_field key='title' label='title'
-                +html_field key='body' label='body'
-    
-                // +Template.dynamic template=doc_view_template
-                +image_field key='image_id' label='image' icon='image'
-                // if currentUser.editing 
-                // .column
-                //     if watson 
-                //         +watson_view
-                +array_field key='tags' label='#'
-                // +image_field key='image_id' label='image'
                 +thing_picker model='post' icon='for-you' color='1255B8'
                 .ui.huge.popup 
                     +i name='blog' color='1255B8'
@@ -203,10 +193,67 @@ template(name='add_doc')
                 .ui.huge.popup create location
                 +thing_picker model='accounts' icon='gold-bars' color='FAB005'
                 .ui.huge.popup create transfer
-                //people
                 .ui.big.green.circular.button.save_doc 
                     i.large.save.icon
                     |save #{model}
+                //people
+                +html_field key='body' label='body'
+    
+                // +Template.dynamic template=doc_view_template
+                +image_field key='image_id' label='image' icon='image'
+                // if currentUser.editing 
+                // .column
+                //     if watson 
+                //         +watson_view
+                +array_field key='tags' label='#'
+                // +image_field key='image_id' label='image'
+                // +thing_picker model='post' icon='for-you' color='1255B8'
+                // .ui.huge.popup 
+                //     +i name='blog' color='1255B8'
+                //     |create post
+                // //blue
+                // +thing_picker model='offer' icon='hand-holding-heart' color='FF73EA'
+                // .ui.huge.popup create offer
+                // //pink
+                // +thing_picker model='request' icon='commercial' color='40C057' 
+                // .ui.huge.popup create request
+                // //green
+                // // div
+                
+                // +thing_picker model='org' icon='groups' color='83DFF4' 
+                // .ui.huge.popup create organization
+                // //light blue
+                // +thing_picker model='project' icon='project' color='7229AF' 
+                // .ui.huge.popup create project
+                // //violet
+                // +thing_picker model='event' icon='calendar' color='FAB005'
+                // .ui.huge.popup create event
+                // //yellow
+                // +thing_picker model='role' icon='what-i-do' color='42E8C4'
+                // .ui.huge.popup create role
+                // //turquoise
+                // +thing_picker model='tasks' icon='task' color='B785E1'
+                // .ui.huge.popup create task
+                // //lavender
+                // +thing_picker model='resource' icon='field-and-tractor' color='FD7E14'
+                // .ui.huge.popup create resource
+                // +thing_picker model='skill' icon='wrench' color='ff0000'
+                // .ui.huge.popup create skill
+                // //red
+                // +thing_picker model='badge' icon='badge' color='1255B8'
+                // .ui.huge.popup create badge
+                // //blue
+                // // div
+                // // +thing_picker model='datetime' icon='overtime--v1' color='FD7E14'
+                // // .ui.huge.popup create 
+                // +thing_picker model='location' icon='worldwide-location' color='40C057'
+                // .ui.huge.popup create location
+                // +thing_picker model='accounts' icon='gold-bars' color='FAB005'
+                // .ui.huge.popup create transfer
+                // //people
+                // .ui.big.green.circular.button.save_doc 
+                //     i.large.save.icon
+                //     |save #{model}
                 // with current_doc 
                 //     +Template.dynamic template=model_edit_template
 
