@@ -1,0 +1,24 @@
+template(name='viewing_info')
+    .ui.header 
+        +i name='eye'
+        |viewing info
+    .ui.small.header 
+        |viewers
+    .ui.list 
+        each read_user_ids
+            +user_pill
+            // img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+    .ui.small.header 
+        |#{views} views
+    .ui.small.header 
+        |last user viewed: {{med_date last_user_viewed_timestamp}}
+        |last user viewed
+    .ui.small.header 
+        |last anon viewed: {{med_date last_anon_viewed_timestamp}}
+
+
+template(name='noel')
+    .ui.header Noel's Page
+    .ui.button.increment 
+        |+1
+    .ui.header button clicks #{button_clicks}
