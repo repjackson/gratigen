@@ -293,11 +293,11 @@ if Meteor.isClient
             Meteor.users.update Meteor.userId(),
                 $set:
                     view_chatbar:!Meteor.user().view_chatbar
-        'click .toggle_invert': ->
+        'click .toggle_invert': (e,t)->
             element = document.body;
             element.classList.toggle("dark-mode");
 
-            $(e.currentTarget).closest('.grid').transition('pulse', 500)
+            $('.grid').transition('pulse', 500)
 
 
             Meteor.users.update Meteor.userId(),

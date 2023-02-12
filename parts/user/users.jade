@@ -42,7 +42,7 @@ template(name='users')
         .twelve.wide.column.scrolling
             .scrolling
                 if session_is 'view_mode' 'cards'
-                    .ui.stackable.centered.cards
+                    .ui.stackable.centered.doubling.cards
                         each user_docs
                             +user_card
                 else if session_is 'view_mode' 'list'

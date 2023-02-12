@@ -1,7 +1,7 @@
 body {
     /* font-family: 'Raleway', sans-serif !important; */
-     /*font-family: 'Roboto', sans-serif !important; */
-    /* font-family: 'Ubuntu+Mono', sans-serif !important; */
+    /*font-family: 'Roboto', sans-serif !important; */
+    font-family: 'Ubuntu', sans-serif !important; 
     /*font-family: 'Bangers', sans-serif !important;*/
     /*font-family: 'Goudy Bookletter 1911', sans-serif !important;*/
     font-size: 110% !important; 
@@ -10,8 +10,21 @@ body {
     /*background: rgba(0,0,0,.9) !important; */
     /* background: rgba(200, 200, 200, .2) !important */
     /* background: #0e0e44 !important; */
-    /*animation: .25s ease-out 0s 1 fadein;*/
+    animation: 1s ease-out 0s 1 fadein;
 }
+  
+.ui.card {
+  /* Add shadows to create the "card" effect */
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2) !important;
+  transition: 1s !important;
+}
+
+/* On mouse-over, add a deeper shadow */
+.ui.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2) !important;
+}
+  
+  
   
 /*body {*/
 /*  padding: 25px;*/
@@ -248,9 +261,21 @@ img, .button, .selector, .card, p, .header, .item, .image, .fade, .accordion{
 }
 .zoomer{
     transition: transform 1s;
-     /*box-shadow: 0 2px 2px 2px rgba(50, 50, 100, 0.1) !important; */
+    
     /*transition: scale 1s !important;*/
     
+}
+.zoom {
+  padding: 50px;
+  background-color: green;
+  transition: transform .2s; /* Animation */
+  width: 200px;
+  height: 200px;
+  margin: 0 auto;
+}
+
+.zoom:hover {
+    transform: scale(1.5); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
 }
 
 .shadow {
@@ -264,15 +289,14 @@ img, .button, .selector, .card, p, .header, .item, .image, .fade, .accordion{
     transition: scale 1s !important;
 }
 .zoomer:hover {
+    box-shadow: 0 2px 2px 2px rgba(50, 50, 100, 0.1) !important; 
     /*box-shadow: inset 0px 0px 10px 10px rgba(250,250,250,0.8);*/
     /*border-radius: 15px !important;*/
     /*transition: scale 1s; */
-    /*filter: drop-shadow(0px 0px 5px 5px rgba(200,200,200,.7)) !important;*/
-    transition: scale 1s !important;
+    filter: drop-shadow(0px 0px 5px 5px rgba(200,200,200,.7)) !important;
+    /*transition: scale 1s !important;*/
     transform: scale(1.1) !important; /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
     z-index:1000 !important;
-
-    
 }
 
 /*.button:not(.circular) {*/

@@ -1,4 +1,12 @@
 template(name='home')
+    // .dropmenu
+    //     button.dropbtn Dropdown
+    //     .dropdown-content
+    //         a(href="#") Link 1
+    //         a(href="#") Link 1
+    //         a(href="#") Link 1
+    //         a(href="#") Link 1
+
     if currentUser.admin_mode
         img.ui.fluid.image.home_banner(src="{{c.url 'gratigenlayout'}}" class=darkmode_class)
     // else 
@@ -367,6 +375,11 @@ template(name='home_card')
             span.right.floated
                 |#{when}
                 +model_icon
+            div
+            if location
+                |#{location}            
+            if location
+                |#{datetime}
         if youtube_id 
             +youtube_view key='youtube_id'
         .content 
