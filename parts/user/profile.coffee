@@ -59,13 +59,22 @@ if Meteor.isServer
             taken_by_user_id:user._id
 if Meteor.isServer 
     Meteor.publish 'bookmarked_docs', ->
-        Docs.find 
-            _id:$in:Meteor.user().bookmarked_ids
+        Docs.find {_id:$in:Meteor.user().bookmarked_ids},{
+            fields: 
+                title:1
+                model:1
+                image_id:1
+                read_by_user_ids:1
+        }
     Meteor.publish 'user_read_docs', (username)->
         user = Meteor.users.findOne username:username
-        Docs.find 
-            read_by_user_ids: $in: [user._id]
-
+        Docs.find {read_by_user_ids: $in: [user._id]},{
+            fields: 
+                title:1
+                model:1
+                image_id:1
+                read_by_user_ids:1
+        }
 if Meteor.isClient 
     Template.profile.onRendered ->
         Meteor.setTimeout ->
@@ -83,6 +92,11 @@ if Meteor.isClient
             },
                 sort:
                     _updated_timestamp:-1
+                fields:
+                    title:1
+                    image_id:1
+                    tags:1
+                    model:1
                 
         
 if Meteor.isClient
@@ -106,6 +120,23 @@ if Meteor.isClient
 
 
     Template.profile.events
+        'click .boop': (e)->
+            current_user = Meteor.users.findOne username:Router.current().params.username
+            Meteor.users.update current_user._id, 
+                $inc:
+                    boops: 1
+                $addToSet:
+                    booper_ids:Meteor.userId()
+            $(e.currentTarget).closest('.boop').transition('bounce',500)
+            $('body').toast(
+                showIcon: 'hand point up outline'
+                message: "boop!"
+                showProgress: 'bottom'
+                class: 'success'
+                # displayTime: 'auto',
+                position: "bottom left"
+            )
+
         'click .sponsor': ->
             current_user = Meteor.users.findOne username:Router.current().params.username
             Meteor.users Meteor.userId(), 

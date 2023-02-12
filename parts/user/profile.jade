@@ -15,8 +15,11 @@ template(name='profile')
                     +image_field key='image_id' label='profile image'
                     div
                     +image_field key='banner_image_id' label='banner image'
-                a.item.mobile.hidden(href="/user/#{username}")
-                    img.ui.circular.centered.image(src="{{c.url image_id height=400 width=400 gravity='face' crop='fill'}}")
+                    // +title_link_buttons
+                else 
+                    a.item.mobile.hidden(href="/user/#{username}")
+                        img.ui.circular.centered.image.boop(src="{{c.url image_id height=400 width=400 gravity='face' crop='fill'}}")
+                        |#{boops} boops
                 if is_current_user
                     +edit_button
                     if currentUser.editing
@@ -29,13 +32,12 @@ template(name='profile')
                 +quickgive_button amount=1
                 +quickgive_button amount=5
                 +quickgive_button amount=10
-                +title_link_buttons
                 unless editing_account
                     .ui.center.aligned.header.mobile.hidden
                         strong #{name}
                         // strong #{first_name} #{last_name}
                         | @#{username}        
-                    a.mobile.only(href="/user/#{username}")
+                    a.mobile.only.boop(href="/user/#{username}")
                         img.ui.circular.tiny.inline.image(src="{{c.url image_id height=400 width=400 gravity='face' crop='fill'}}")
                     .ui.inline.header.mobile.only
                         strong #{name}
@@ -125,7 +127,7 @@ template(name='profile')
                     +profile_section key='interests' label='interests' icon='cloud-idea'
                     +profile_section key='requests' label='requests' icon='bell'
                     +profile_section key='offers' label='offers' icon='give'
-                    +profile_section key='posts' label='posts' icon='post'
+                    +profile_section key='posts' label='posts' icon='blog'
                     +profile_section key='comments' label='comments' icon='comment'
                     +profile_section key='chats' label='chats' icon='chat'
                 .ui.one.column.grid

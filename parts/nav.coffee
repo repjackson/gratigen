@@ -27,7 +27,7 @@ if Meteor.isClient
     Template.nav.onCreated ->
         @autorun => Meteor.subscribe 'me', ->
         @autorun => Meteor.subscribe 'all_users', ->
-        @autorun => Meteor.subscribe 'my_drafts', ->
+        # @autorun => Meteor.subscribe 'my_drafts', ->
         @autorun => Meteor.subscribe 'my_current_doc', ->
         
     Template.nav_search.onCreated ->
@@ -301,8 +301,15 @@ if Meteor.isClient
             element = document.body;
             element.classList.toggle("dark-mode");
 
-            $('.grid').transition('pulse', 500)
+            # $('.grid').transition('pulse', 500)
 
+            $('.grid .column')
+              .transition({
+                animation : 'jiggle',
+                duration  : 300,
+                interval  : 50
+              })
+            ;
 
             Meteor.users.update Meteor.userId(),
                 $set:

@@ -39,13 +39,25 @@ if Meteor.isClient
             }
 if Meteor.isServer
     Meteor.publish 'my_bookmarks', ()->
-        Docs.find 
-            _id: $in: Meteor.user().bookmarked_ids
+        Docs.find {_id: $in: Meteor.user().bookmarked_ids},{
+            fields:
+                model:1
+                title:1
+                image_id:1
+                _timestamp:1
+                _updated_timestamp:1
+        }
 if Meteor.isServer
     Meteor.publish 'latest_updated', ()->
         Docs.find {_updated_timestamp:$exists:true},{
             sort:_updated_timestamp:-1
             limit:5
+            fields:
+                model:1
+                title:1
+                image_id:1
+                _timestamp:1
+                _updated_timestamp:1
         }
 if Meteor.isClient
     Template.model_block.onCreated ->

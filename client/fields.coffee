@@ -663,7 +663,7 @@ Template.multi_doc_edit.events
 
 Template.multi_user_field.onCreated ->
     @user_results = new ReactiveVar
-    @autorun => @subscribe 'all_users'
+    @autorun => @subscribe 'all_users', ->
 Template.multi_user_field.helpers
     user_results: -> 
         console.log Template.instance().user_results.get()
