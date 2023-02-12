@@ -39,10 +39,10 @@ body {
     filter: invert(1) !important;
 }
 .dark-mode .image{
-    /*filter: invert(1) !important;*/
+    filter: invert(1) !important;
 }
 .dark-mode img{
-    filter: invert(0) !important;
+    /*filter: invert(0) !important;*/
 }
   
   

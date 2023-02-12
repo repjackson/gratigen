@@ -208,6 +208,9 @@ template(name='add_doc')
                     i.large.save.icon
                     |save #{model}
                 //people
+                // +youtube_id
+                +youtube_edit key='youtube_id' label='youtube id'
+                // +youtube_view
                 +html_field key='body' label='body'
     
                 // +Template.dynamic template=doc_view_template

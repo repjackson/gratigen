@@ -210,7 +210,8 @@ if Meteor.isClient
                     history_ids:@_id
     Template.nav_search.events
         'click .clear_search': -> Session.set('current_query',null)
-        'keyup .search_site': _.throttle((e,t)->
+        'keyup .search_site': _.throttle((event,template)->
+            
             # console.log Router.current().route.getName()
             # current_name = Router.current().route.getName()
             $(e.currentTarget).closest('.input').transition('pulse', 200)
@@ -226,8 +227,10 @@ if Meteor.isClient
             if e.key == "Escape"
                 Session.set('current_query', null)
                 $('.search_site').val('')
-                
+            # e.which is keycode and 13 is 'enter'
             if e.which is 13
+                console.log event 
+                console.log template
                 search = $('.search_site').val().trim().toLowerCase()
                 if search.length > 0
                     match = {}
@@ -252,7 +255,7 @@ if Meteor.isClient
                     # Meteor.setTimeout ->
                     #     Session.set('dummy', !Session.get('dummy'))
                     # , 10000
-        , 250)
+        , 500)
     
     Template.nav.events
         'click .reset': ->

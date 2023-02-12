@@ -27,31 +27,34 @@ template(name='home')
            
 
             .ui.fluid.big.menu.hscroll.mobile.only
-                +eft_filter color="FF73EA" icon='food' label='food'
-                +eft_filter color="B785E1" icon='home' label='housing'
-                +eft_filter color="7229AF" icon='tshirt' label='clothing'
-                +eft_filter color="1255B8" icon='car' label='transportation'
-                +eft_filter color="83DFF4" icon='lightning' label='energy'
-                +eft_filter color="42E8C4" icon='leaf' label='zero waste'
-                +eft_filter color="40C057" icon='smile' label='wellness'
-                +eft_filter color="FAB005" icon='university' label='education'
-                +eft_filter color="FD7E14" icon='paint brush' label='art'
-                +eft_filter color="FF0000" icon='users' label='community core'
-            // if session_is 'expand_leftbar' true
-            .ui.vertical.fluid.menu.mobile.hidden
-                +eft_filter color="FF73EA" icon='food' label='food'
-                +eft_filter color="B785E1" icon='home' label='housing'
-                +eft_filter color="7229AF" icon='tshirt' label='clothing'
-                +eft_filter color="1255B8" icon='car' label='transportation'
-                +eft_filter color="83DFF4" icon='lightning' label='energy'
-                +eft_filter color="42E8C4" icon='leaf' label='plants'
-                +eft_filter color="42E8C4" icon='dog' label='animals'
-                +eft_filter color="40C057" icon='smile' label='wellness'
-                +eft_filter color="40C057" icon='recycle' label='regen'
-                +eft_filter color="FAB005" icon='university' label='education'
-                +eft_filter color="FD7E14" icon='paint brush' label='art'
+                +eft_filter color="ff6fd9" icon='food' label='food'
+                +eft_filter color="d27bf8" icon='home' label='housing'
+                +eft_filter color="6b0fb9" icon='tshirt' label='clothing'
+                +eft_filter color="0000f7" icon='smile' label='wellness'
+                +eft_filter color="00ddff" icon='car' label='travel'
+                +eft_filter color="00ffc3" icon='dog' label='animals'
+                +eft_filter color="148023" icon='leaf' label='plants'
+                +eft_filter color="35ca2d" icon='recycle' label='regen'
+                +eft_filter color="ffff00" icon='lightning' label='energy'
+                +eft_filter color="ffd000" icon='paint brush' label='art'
+                +eft_filter color="ff6f00" icon='university' label='education'
                 +eft_filter color="FF0000" icon='users' label='community'
-                +eft_filter color="FF0000" icon='ambulance' label='emergency'
+                +eft_filter color="000000" icon='ambulance' label='emergency'
+            // if session_is 'expand_leftbar' true
+            .ui.vertical.fluid.invert.menu.mobile.hidden
+                +eft_filter color="ff6fd9" icon='food' label='food'
+                +eft_filter color="d27bf8" icon='home' label='housing'
+                +eft_filter color="6b0fb9" icon='tshirt' label='clothing'
+                +eft_filter color="0000f7" icon='smile' label='wellness'
+                +eft_filter color="00ddff" icon='car' label='travel'
+                +eft_filter color="00ffc3" icon='dog' label='animals'
+                +eft_filter color="148023" icon='leaf' label='plants'
+                +eft_filter color="35ca2d" icon='recycle' label='regen'
+                +eft_filter color="ffff00" icon='lightning' label='energy'
+                +eft_filter color="ffd000" icon='paint brush' label='art'
+                +eft_filter color="ff6f00" icon='university' label='education'
+                +eft_filter color="FF0000" icon='users' label='community'
+                +eft_filter color="000000" icon='ambulance' label='emergency'
             // else 
             //     .ui.vertical.fluid.icon.menu.mobile.hidden
             //         +eft_filter color="FF73EA" icon='food' label='food'
@@ -66,7 +69,7 @@ template(name='home')
             //         +eft_filter color="FF0000" icon='users' label='community core'
                 
             // .ui.button create request
-            // img.ui.image(src="{{c.url '12_color_code'}}" class=darkmode_class)
+            img.ui.image(src="{{c.url '12_color_code'}}" class=darkmode_class)
         .eight.wide.scrolling.column
             // +quickchat
             .ui.one.column.grid 
@@ -113,6 +116,7 @@ template(name='home')
                     //red
                     
                     // +filter_model model='food' icon='food' 83DFF4
+                    .ui.dropdown-content
                 .centered   
                     // .ui.search
                     //     .ui.large.icon.input.search_bar
@@ -164,6 +168,7 @@ template(name='home')
                                 
         // .eight.wide.column.bordered
         .five.wide.scrolling.column
+            // +icon_browser
             +alerts
             +block template='latest_updated_block' title='latest activity' icon='log-history'
             +block template='user_avatars' title='users' icon='groups'
@@ -214,6 +219,17 @@ template(name='home')
                     +Template.dynamic template=view_template
     // +view_chats
 
+template(name='icon_browser')
+    // .ui.header icons
+    // .ui.large.input
+    //     input.search_task(type='text' placeholder='add task')
+    // |#{complete_count} complete
+    // |#{incomplete_count} incomplete
+    // .ui.divided.list
+    //     each org_task_docs
+    //         +task_item_small
+
+
 template(name='home_block')
     details.ui.fluid.styled.accordion
         summary.title
@@ -236,15 +252,21 @@ template(name='home_search')
         else
             i.search.large.grey.icon
         input.search_site(type='text' autocomplete="off" value=current_site_search placeholder='search docs/users...')
+    // tags
     each picked_tags
         .ui.label
             i.remove.icon
             |#{this}
+            
+    // users
     each user_search_results
         button.ui.button.goto_doc
             if image_id
                 img.ui.avatar.image(src="{{c.url image_id width=200 height=200 gravity='face' crop='fill'}}")
             |#{username}
+            
+            
+    // doc results       
     each doc_search_results
         button.ui.button.goto_doc(title=model)
             if image_id
