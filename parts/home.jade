@@ -88,41 +88,6 @@ template(name='home')
                 // .ui.big.center.aligned.button Engage
                 //     +i name='play-button-circled--v1' color='40C057' cl='ui small image'
                 .centered
-                    .ui.dropdown
-                        .text file
-                        i.dropdown.icon 
-                        .menu 
-                            .item new 
-                            item
-                    +filter_model model='post' icon='for-you' color='1255B8'
-                    //blue
-                    +filter_model model='offer' icon='hand-holding-heart' color='FF73EA'
-                    //pink
-                    +filter_model model='request' icon='commercial' color='40C057'     
-                    //green
-
-                    div
-                    +filter_model model='org' icon='groups' color='83DFF4'
-                    //light blue
-                    +filter_model model='project' icon='project' color='7229AF' 
-                    //violet
-                    +filter_model model='event' icon='calendar' color='FAB005'
-                    //yellow
-                    +filter_model model='role' icon='what-i-do' color='42E8C4'
-                    //turquoise
-                    +filter_model model='task' icon='task' color='B785E1'
-                    +filter_model model='product' icon='product' color='40C057'
-                    +filter_model model='service' icon='service' color='FF73EA'
-
-                    //lavender
-                    +filter_model model='resource' icon='field-and-tractor' color='FD7E14'  
-                    //orange
-                    +filter_model model='skill' icon='wrench' color='ff0000'
-                    
-                    //red
-                    
-                    // +filter_model model='food' icon='food' 83DFF4
-                    .ui.dropdown-content
                 .centered   
                     // .ui.search
                     //     .ui.large.icon.input.search_bar
@@ -252,12 +217,47 @@ template(name='home_block')
 
 
 template(name='home_search')
-    .ui.centered.icon.large.input
+    .ui.centered.icon.large.action.input
         if current_site_search
             i.remove.large.red.link.icon.clear_search
         else
             i.search.large.grey.icon
         input.search_site(type='text' autocomplete="off" value=current_site_search placeholder='search docs/users...')
+        .ui.dropdown.button
+            .text model
+            i.dropdown.icon 
+            .menu 
+                .item new 
+                +filter_model model='post' icon='for-you' color='1255B8'
+                //blue
+                +filter_model model='offer' icon='hand-holding-heart' color='FF73EA'
+                //pink
+                +filter_model model='request' icon='commercial' color='40C057'     
+                //green
+
+                div
+                +filter_model model='org' icon='groups' color='83DFF4'
+                //light blue
+                +filter_model model='project' icon='project' color='7229AF' 
+                //violet
+                +filter_model model='event' icon='calendar' color='FAB005'
+                //yellow
+                +filter_model model='role' icon='what-i-do' color='42E8C4'
+                //turquoise
+                +filter_model model='task' icon='task' color='B785E1'
+                +filter_model model='product' icon='product' color='40C057'
+                +filter_model model='service' icon='service' color='FF73EA'
+
+                //lavender
+                +filter_model model='resource' icon='field-and-tractor' color='FD7E14'  
+                //orange
+                +filter_model model='skill' icon='wrench' color='ff0000'
+                
+                //red
+                
+                // +filter_model model='food' icon='food' 83DFF4
+                .ui.dropdown-content
+    
     // tags
     each picked_tags
         .ui.label
@@ -573,7 +573,8 @@ template(name='dash_user_info')
            
            
 template(name='filter_model')
-    .ui.compact.circular.secondary.basic.small.button.pick_model.zoomer(class=button_class)
+    // .ui.compact.circular.secondary.basic.small.button.pick_model.zoomer(class=button_class)
+    .item.pick_model(class=button_class)
         +i name=icon color=color cl='ui avatar inline image'
         // i.exchange.large.icon
         |#{model}

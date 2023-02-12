@@ -418,7 +418,9 @@ if Meteor.isClient
         #     { category:'model', title:'request' }
         #     { category:'model', title:'skills' }
         # ]
-        
+        $('.dropdown').dropdown({
+            inline: true
+          })
         # $('.ui.search')
         #   .search({
         #     type: 'category',
