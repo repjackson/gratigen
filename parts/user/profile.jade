@@ -333,19 +333,18 @@ template(name='user_credit')
                 |user credit
             .ui.large.button.calc_points 
                 |calc points
-            // .ui.header 
-            //     |read docs 
-            // .ui.selection.animated.list.smallscroll
-            //     each read_docs 
-            //         a.item.fly_right(href="/post/#{_id}")
-            //             .ui.label #{model}
-            //             |#{title}
-                
-        +membership_block
-        with current_user
-            .ui.header total debit amount: #{total_debit_amount}
-            .ui.header total credit amount: #{total_credit_amount}
-            .ui.header total read docs: #{total_read_docs}
+            .ui.header 
+                |read docs 
+            .ui.selection.animated.list.smallscroll
+                each read_docs 
+                    a.item.fly_right(href="/post/#{_id}")
+                        .ui.label #{model}
+                        |#{title}
+            +membership_block
+            with current_user
+                .ui.header total debit amount: #{total_debit_amount}
+                .ui.header total credit amount: #{total_credit_amount}
+                .ui.header total read docs: #{total_read_docs}
         if is_current_user
             .eight.wide.column 
                 .ui.inline.header
@@ -401,8 +400,8 @@ template(name='membership_block')
         |your membership
     if prime_member 
         .ui.header 
-            i.checkmark.icon
-            |prime member
+        i.checkmark.icon
+        |prime member
     else 
         .ui.button.become_prime 
             |become prime
