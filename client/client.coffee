@@ -121,6 +121,10 @@ $.cloudinary.config
 # Router.notFound =
     # action: 'not_found'
 
+Template.layout.onRendered ->
+    element = document.body;
+    element.classList.toggle("dark-mode");
+
 Template.layout.events
     'click .log_history': ->
         if Meteor.user()
