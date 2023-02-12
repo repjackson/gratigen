@@ -13,7 +13,7 @@ if Meteor.isClient
     
     Template.user_credit.onCreated ->
         @autorun -> Meteor.subscribe 'user_from_username', Router.current().params.username, ->
-        @autorun -> Meteor.subscribe 'user_read_docs', Router.current().params.username, ->
+        # @autorun -> Meteor.subscribe 'user_read_docs', Router.current().params.username, ->
     
     Template.user_credit.events 
         'click .calc_points': ->

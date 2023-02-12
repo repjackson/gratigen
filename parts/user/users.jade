@@ -1,6 +1,6 @@
 template(name='users')
     .ui.padded.stackable.grid
-        .four.wide.column
+        .sixteen.wide.column
             .ui.inline.header
                 +i name='groups'
                 |users
@@ -39,7 +39,7 @@ template(name='users')
             // +session_set key='view_limit' value=10
             // +session_set key='view_limit' value=20
             // +session_set key='view_limit' value=50
-        .twelve.wide.column.scrolling
+        .sixteen.wide.column.scrolling
             .scrolling
                 if session_is 'view_mode' 'cards'
                     .ui.stackable.centered.doubling.cards

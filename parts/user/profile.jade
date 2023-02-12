@@ -13,6 +13,7 @@ template(name='profile')
                 // .spacer
                 if currentUser.editing
                     +image_field key='image_id' label='profile image'
+                    div
                     +image_field key='banner_image_id' label='banner image'
                 a.item.mobile.hidden(href="/user/#{username}")
                     img.ui.circular.centered.image(src="{{c.url image_id height=400 width=400 gravity='face' crop='fill'}}")

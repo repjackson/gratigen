@@ -12,6 +12,9 @@ body {
     /* background: #0e0e44 !important; */
     animation: 1s ease-out 0s 1 fadein;
 }
+.one.column.row {
+    padding: 5px !important;
+}
   
 .ui.card {
   /* Add shadows to create the "card" effect */
