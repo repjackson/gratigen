@@ -34,7 +34,7 @@ globalHotkeys.add
 
         # Session.set('view_chat', !Session.get('view_chat'))
 globalHotkeys.add
-	combo: "v c"
+	combo: "c"
 	callback: ->
 	    if Meteor.user()
             Meteor.users.update Meteor.userId(),
@@ -61,8 +61,16 @@ globalHotkeys.add
 
 globalHotkeys.add
 	combo: "?"
-	callback: ->
-		$('.global_search').focus()
+	callback: ->    
+        $('.search_site').focus()
+        $('body').toast(
+            # showIcon: 'edit'
+            message: "search focused"
+            # showProgress: 'bottom'
+            class: 'info'
+            # displayTime: 'auto',
+            position: "bottom right"
+        )
 
 		# $('.ui.basic.modal').modal(
 		# 	inverted:true
@@ -93,11 +101,20 @@ globalHotkeys.add
 
 
 globalHotkeys.add
-	combo: "r a"
+	combo: "a"
 	callback: ->
         if Meteor.user().admin
             Meteor.users.update Meteor.userId(), 
                 $set: admin_mode:!Meteor.user().admin_mode
+        $('body').toast(
+            showIcon: 'shield loading'
+            message: "admin mode toggled"
+            # showProgress: 'bottom'
+            class: 'info'
+            # displayTime: 'auto',
+            position: "bottom right"
+        )
+                
         # if Meteor.userId() and Meteor.userId() in ['vwCi2GTJgvBJN5F6c','YFPxjXCgjhMYEPADS']
         #     if Meteor.user().roles and 'admin' in Meteor.user().roles
         #         Meteor.users.update Meteor.userId(), $pull:roles:'admin'

@@ -254,8 +254,11 @@ if Meteor.isClient
         is_editing: -> Template.instance().editing.get()
         is_expanded: -> Template.instance().expanded.get()
     Template.block.events
-        'click .toggle_expanded': (e,t)-> t.expanded.set !t.expanded.get()
-        'click .toggle_editing': (e,t)-> t.editing.set !t.editing.get()
+        'click .toggle_expanded': (e,t)-> 
+            t.expanded.set !t.expanded.get()
+            $(e.currentTarget).closest('.segment').transition('pulse',500)
+        'click .toggle_editing': (e,t)-> 
+            t.editing.set !t.editing.get()
     Template.model_crud.onCreated ->
         # reactivevars are like Session.get() but template specific 
         @editing = new ReactiveVar false

@@ -20,10 +20,11 @@ template(name='home')
             // .ui.fluid.small.button.toggle_leftbar
             //     i.chevron.left.icon
             // .ui.hidden.divider
-            .ui.segment.shadow.mobile.hidden
-                img.ui.image(src="{{c.url 'batflash'}}" class=darkmode_class)
             +dash_user_info
-            +user_impact_graph
+            if currentUser.admin_mode
+                .ui.segment.shadow.mobile.hidden
+                    img.ui.image(src="{{c.url 'batflash'}}" class=darkmode_class)
+                +user_impact_graph
            
 
             .ui.fluid.big.menu.hscroll.mobile.only
@@ -69,7 +70,8 @@ template(name='home')
             //         +eft_filter color="FF0000" icon='users' label='community core'
                 
             // .ui.button create request
-            img.ui.image(src="{{c.url '12_color_code'}}" class=darkmode_class)
+            if currentUser.admin_mode
+                img.ui.image(src="{{c.url '12_color_code'}}" class=darkmode_class)
         .eight.wide.scrolling.column
             // +quickchat
             .ui.one.column.grid 
@@ -80,7 +82,7 @@ template(name='home')
                     // // div
                     +online_users
             .ui.one.center.aligned.column.grid
-                .ui.animated.fade.inverted.tertiary.circular.large.centered.zoomer.invert.button.launch_modal.add_doc(style="color:green")
+                .ui.animated.fade.inverted.tertiary.circular.large.centered.zoomer.invert.button.launch_modal(style="color:green")
                     .visible.content
                         i.big.green.play.icon(class=icon)
                     .hidden.content
@@ -88,6 +90,19 @@ template(name='home')
                 // .ui.big.center.aligned.button Engage
                 //     +i name='play-button-circled--v1' color='40C057' cl='ui small image'
                 .centered
+                    +filter_model model='post' icon='for-you' color='1255B8' color_name='blue'
+                    +filter_model model='offer' icon='hand-holding-heart' color='FF73EA' color_name='pink'
+                    +filter_model model='request' icon='commercial' color='40C057' color_name='green'
+                    +filter_model model='org' icon='groups' color='83DFF4' color_name='light blue'
+                    +filter_model model='project' icon='project' color='7229AF' olor_name='violet'
+                    +filter_model model='event' icon='calendar' color='FAB005' color_name='yellow'
+                    +filter_model model='role' icon='what-i-do' color='42E8C4' color_name='turquoise'
+                    +filter_model model='task' icon='task' color='B785E1'
+                    +filter_model model='product' icon='product' color='40C057'
+                    +filter_model model='service' icon='service' color='FF73EA' color_name='lavender'
+                    +filter_model model='resource' icon='field-and-tractor' color='FD7E14' color_name='orange'
+                    +filter_model model='skill' icon='wrench' color='ff0000' color_name='red'
+                    // +filter_model model='food' icon='food' 83DFF4
                 .centered   
                     // .ui.search
                     //     .ui.large.icon.input.search_bar
@@ -141,16 +156,16 @@ template(name='home')
         .five.wide.scrolling.column
             // +icon_browser
             +alerts
-            +block template='latest_updated_block' title='latest activity' icon='log-history'
-            +block template='user_avatars' title='users' icon='groups'
+            +block template='latest_updated_block' title='latest' icon='time-machine' color='teal'
+            +block template='user_avatars' title='users' icon='groups' color='blue'
             div
             // +comet_chat_block
             // .ui.divider
-            +block template='gratigen' open=true icon='donate'
+            +block template='gratigen' open=true icon='donate' color='green'
             // +gratigen
             // .ui.divider
             
-            +block template='bookmark_block' title='bookmarks' icon='bookmark'
+            +block template='bookmark_block' title='bookmarks' icon='bookmark' color='violet'
             // +bookmark_block
             // +model_block model='post' icon='blog' color='42E8C4' title='latest posts'
             // +model_block model='role' icon='shield' color='42E8C4' title='latest roles'
@@ -215,7 +230,6 @@ template(name='home_block')
 
 
 
-
 template(name='home_search')
     .ui.centered.icon.large.action.input
         if current_site_search
@@ -234,7 +248,6 @@ template(name='home_search')
                 //pink
                 +filter_model model='request' icon='commercial' color='40C057'     
                 //green
-
                 div
                 +filter_model model='org' icon='groups' color='83DFF4'
                 //light blue
@@ -573,8 +586,7 @@ template(name='dash_user_info')
            
            
 template(name='filter_model')
-    // .ui.compact.circular.secondary.basic.small.button.pick_model.zoomer(class=button_class)
-    .item.pick_model(class=button_class)
+    .ui.compact.circular.secondary.basic.small.button.pick_model.zoomer(class=button_class)
         +i name=icon color=color cl='ui avatar inline image'
         // i.exchange.large.icon
         |#{model}

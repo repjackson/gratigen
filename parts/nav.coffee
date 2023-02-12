@@ -147,17 +147,6 @@ if Meteor.isClient
                     history_ids:@_id
             $('.search_site').val('')
             Session.set('current_query', null)
-    Template.home.events
-        'click .add_doc': ->
-            new_id = 
-                Docs.insert 
-                    model:'post'
-                    published:false
-            # Router.go "/add/#{new_id}"
-            Meteor.users.update Meteor.userId(),
-                $set:
-                    editing:true
-                    _doc_id:new_id
     Template.nav.events
         'click .add_doc': ->
             new_id = 
