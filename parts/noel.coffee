@@ -3,8 +3,9 @@ if Meteor.isClient
         @layout 'layout'
         @render 'noel'
         ), name:'noel'
-    
-
+    # https://github.com/repjackson/gratigen        
+    # session var documentation
+    # https://docs.meteor.com/api/session.html
     Template.noel.helpers 
         button_clicks: ->
             Session.get('button_clicks')
