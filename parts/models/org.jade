@@ -112,7 +112,7 @@ template(name='org_view')
         //         if currentUser.editing 
         //             +remove_button
         .row
-            .five.wide.column
+            .four.wide.column
                 +image_field key='image_id' icon='image' label='image'
                 // +image_field key='banner_image_id' icon='image' label='banner image'
                 +array_field key='tags' icon='tags'
@@ -143,7 +143,7 @@ template(name='org_view')
                 // +org_history
                 // +org_subscription
 
-            .five.wide.column
+            .six.wide.column
                 .centered.row
                     // datetime saves in datetime format like: 2023-03-22T19:39
                     // need to use moment helper to format, helpers.coffee 

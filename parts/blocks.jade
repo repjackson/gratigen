@@ -600,19 +600,24 @@ template(name='ai')
 
 
 template(name='block')
-    .ui.segment(class=color)
-        a.ui.header.toggle_expanded.zoomer.pointer(title='expand' class=color)
-            if icon
-                +i name=icon color='000000'
-                // i.large.icon(class=icon)
-            // | #{model}s
-            if title
-                strong #{title}
-            else 
-                |#{template}
-        if is_expanded
-            // i.fullscreen.circular.link.icon.toggle_fullscreen
-            +Template.dynamic template=template
+    .ui.segment.grid(class=color)
+        .one.column.row.toggle_expanded.zoomer.pointer(title='expand' class=color)
+            .column
+                .ui.header
+                    if icon
+                        +i name=icon color='000000'
+                        // i.large.icon(class=icon)
+                    // | #{model}s
+                    if title
+                        strong #{title}
+                    else 
+                        |#{template}
+        .one.column.row
+            .column
+                if is_expanded
+                    // i.fullscreen.circular.link.icon.toggle_fullscreen
+                    +Template.dynamic template=template
+        
 
 // #{model}_item structure for child docs
             

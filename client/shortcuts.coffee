@@ -3,6 +3,21 @@ globalHotkeys = new Hotkeys();
 
 
 globalHotkeys.add
+	combo: "i"
+	callback: ->
+        element = document.body;
+        element.classList.toggle("dark-mode");
+
+        $('.grid').transition('pulse', 200)
+
+
+        Meteor.users.update Meteor.userId(),
+            $set:
+                darkmode:!Meteor.user().darkmode
+        Session.set('darkmode', !Session.get('darkmode'))
+        console.log Session.get('darkmode')
+	    
+globalHotkeys.add
 	combo: "e"
 	callback: ->
         Meteor.users.update Meteor.userId(),

@@ -461,19 +461,19 @@ template(name='work_view')
                     
                     
 template(name='task_card')
-    a.ui.card(href="/d/task/#{_id}")
-        img.ui.image(src="{{c.url image_id width=400 height=300 crop='pad'}}")
-        .content
-            .ui.header 
-                if complete 
-                    i.large.green.checkmark.icon
-                |#{title}
-            .ui.inline.header #{when}
-            |!{description}
-            .ui.inline.header #{points}pts
-            each tags
-                .ui.small.basic.label #{this}
-            +author_info
+    // a.ui.card(href="/d/task/#{_id}")
+    img.ui.image(src="{{c.url image_id width=400 height=300 crop='pad'}}")
+    .content
+        .ui.header 
+            if complete 
+                i.large.green.checkmark.icon
+            |#{title}
+        .ui.inline.header #{when}
+        |!{description}
+        .ui.inline.header #{points}pts
+        each tags
+            .ui.small.basic.label #{this}
+        +author_info
             
             
                 
