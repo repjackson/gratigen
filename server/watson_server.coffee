@@ -13,6 +13,7 @@ natural_language_understanding = new NaturalLanguageUnderstandingV1(
 
 Meteor.methods
     'call_icon':(query)->
+        console.log 'calling icon', query
         HTTP.get "https://search.icons8.com/api/iconsets/v5/search?term=#{query}&token=402e8373258e2ef9000ec9df86ffa46bb7ac442a", (err, response)->
             if err 
                 # then Throw new Meteor.Error

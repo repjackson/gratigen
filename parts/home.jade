@@ -80,14 +80,20 @@ template(name='home')
                     // // div
                     +online_users
             .ui.one.center.aligned.column.grid
-                .ui.animated.fade.inverted.tertiary.circular.large.center.zoomer.invert(style="color:green")
-            .visible.content
-                i.big.green.play.icon(class=icon)
-            .hidden.content
-                small Engage
+                .ui.animated.fade.inverted.tertiary.circular.large.centered.zoomer.invert.button.launch_modal.add_doc(style="color:green")
+                    .visible.content
+                        i.big.green.play.icon(class=icon)
+                    .hidden.content
+                        small Engage
                 // .ui.big.center.aligned.button Engage
                 //     +i name='play-button-circled--v1' color='40C057' cl='ui small image'
                 .centered
+                    .ui.dropdown
+                        .text file
+                        i.dropdown.icon 
+                        .menu 
+                            .item new 
+                            item
                     +filter_model model='post' icon='for-you' color='1255B8'
                     //blue
                     +filter_model model='offer' icon='hand-holding-heart' color='FF73EA'
@@ -567,7 +573,7 @@ template(name='dash_user_info')
            
            
 template(name='filter_model')
-    .ui.compact.circular.secondary.basic.button.pick_model.zoomer(class=button_class)
-        +i name=icon color=color cl='ui mini inline image'
+    .ui.compact.circular.secondary.basic.small.button.pick_model.zoomer(class=button_class)
+        +i name=icon color=color cl='ui avatar inline image'
         // i.exchange.large.icon
         |#{model}
