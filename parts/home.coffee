@@ -4,6 +4,17 @@ if Meteor.isClient
         @render 'home'
         ), name:'home'
     
+    Template.home.events
+        'click .add_doc': ->
+            new_id = 
+                Docs.insert 
+                    model:'post'
+                    published:false
+            # Router.go "/add/#{new_id}"
+            Meteor.users.update Meteor.userId(),
+                $set:
+                    editing:true
+                    _doc_id:new_id
 
     Template.layout.helpers 
         current_image_id:->
