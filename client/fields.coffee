@@ -358,7 +358,7 @@ Template.textarea_field.events
         t.editing.set !t.editing.get()
     'click .toggle_expanded': (e,t)->
         t.expanded.set !t.expanded.get()
-
+        $(e.currentTarget).closest('.segment').transition('pulse',500)
     'blur .edit_textarea': (e,t)->
         textarea_val = t.$('.edit_textarea').val()
         parent = Template.parentData()

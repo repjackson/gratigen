@@ -29,6 +29,7 @@ if Meteor.isClient
     Template.profile_section.events
         'click .toggle_expanded': (e,t)->
             t.expanded.set !t.expanded.get()
+            $(e.currentTarget).closest('.segment').transition('pulse',500)
 
     Template.quickgive_button.helpers 
         give_button_class: ->

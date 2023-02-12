@@ -142,25 +142,29 @@ template(name='quickgive_button')
 
 template(name='profile_section')
     .column
-        .ui.segment(class=color)
-            // pointer class makes link cursor, zoomer zooms on hover
-            a.ui.header.toggle_expanded.zoomer.pointer
-                if icon
-                    // +i name=icon color=icon_color cl='ui mini inline image'
-                    +i name=icon color='000000' cl='ui mini inline image'
-                if loading 
-                    i.large.refresh.icon
-                if is_expanded
-                    i.chevron.down.small.icon(class=color)
-                else
-                    i.chevron.right.small.icon(class=color)
-                |#{label}
+        .ui.segment.grid(class=color)
+            .one.column.row.toggle_expanded.zoomer.pointer
+                .column
+                    // pointer class makes link cursor, zoomer zooms on hover
+                    a.ui.header
+                        if icon
+                            // +i name=icon color=icon_color cl='ui mini inline image'
+                            +i name=icon color='ffffff' cl='ui mini inline image'
+                        if loading 
+                            i.large.refresh.icon
+                        if is_expanded
+                            i.chevron.down.small.icon(class=color)
+                        else
+                            i.chevron.right.small.icon(class=color)
+                        |#{label}
             if is_expanded
-                // .ui.header expanded
-                // if profile_subtemplate_exists
-                +Template.dynamic template=user_template data=current_user
-                // else 
-                //     +user_model_docs key=child_model
+                .one.column.row
+                    .column
+                        // .ui.header expanded
+                        // if profile_subtemplate_exists
+                        +Template.dynamic template=user_template data=current_user
+                        // else 
+                        //     +user_model_docs key=child_model
     // .column.zoomer
     //     if currentUser.admin_mode
     //         .ui.inline.header
