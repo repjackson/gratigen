@@ -440,7 +440,7 @@ template(name='raw_view')
         
 template(name='textarea_field')
     // details.ui.styled.fluid.accordion(class=accordion_class)
-    .ui.segment.vertani(title=tagline)
+    .ui.segment.vertani.zoomer(title=tagline)
         .title.toggle_expanded.zoomer.pointer
             // .ui.dropdown.icon
             .ui.inline.header.zoomer
@@ -471,6 +471,9 @@ template(name='textarea_field')
             else 
                 if field_value
                     |{{nl2br field_value}}
+                // for each field emotional, but need to update the call for field responses
+                if watson_field
+                    +watson_field_view
         
         
 

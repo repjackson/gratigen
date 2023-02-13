@@ -306,8 +306,8 @@ if Meteor.isClient
             $('.grid .column')
               .transition({
                 animation : 'jiggle',
-                duration  : 300,
-                interval  : 50
+                duration  : 500,
+                interval  : 400
               })
             ;
 

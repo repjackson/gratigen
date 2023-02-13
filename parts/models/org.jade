@@ -118,8 +118,8 @@ template(name='org_view')
                 +textarea_field key='signature' tagline='creators signature'
                 +viewing
                 // block template to make everything lazy loading with passed subtemplate
-                +block template='org_history'
-                +block template='org_subscription'
+                +block template='org_history' label='activity'
+                +block template='org_subscription' label='subscriptions'
                 // +multi_user_view key='member_ids' label='members' 
                 // +org_history
                 // +org_subscription
