@@ -28,15 +28,16 @@ if Meteor.isClient
         #         read_by_user_ids: $in: [user._id]
     
     Template.user_credit.onCreated ->
-        @autorun => Meteor.subscribe 'user_by_username', Router.current().params.username
-        # @autorun => Meteor.subscribe 'model_docs', 'deposit'
+        @autorun => Meteor.subscribe 'user_by_username', Router.current().params.username, ->
+        @autorun => Meteor.subscribe 'model_docs', 'deposit', ->
         # @autorun => Meteor.subscribe 'model_docs', 'reservation'
         # @autorun => Meteor.subscribe 'model_docs', 'withdrawal'
         # @autorun => Meteor.subscribe 'my_topups'
-        if Meteor.isDevelopment
-            pub_key = Meteor.settings.public.stripe_test_publishable
-        else if Meteor.isProduction
-            pub_key = Meteor.settings.public.stripe_live_publishable
+        pub_key = Meteor.settings.public.stripe_test_publishable
+        # if Meteor.isDevelopment
+        #     pub_key = Meteor.settings.public.stripe_test_publishable
+        # else if Meteor.isProduction
+        #     pub_key = Meteor.settings.public.stripe_live_publishable
         Template.instance().checkout = StripeCheckout.configure(
             key: pub_key
             image: 'http://res.cloudinary.com/facet/image/upload/c_fill,g_face,h_300,w_300/k2zt563boyiahhjb0run'
@@ -72,13 +73,15 @@ if Meteor.isClient
 
     Template.user_credit.events
         'click .add_credits': ->
+            note = prompt 'note'
+            note = if note then note else ''
             amount = parseInt $('.deposit_amount').val()
             amount_times_100 = parseInt amount*100
             calculated_amount = amount_times_100*1.02+20
             Template.instance().checkout.open
                 name: 'credit deposit'
                 # email:Meteor.user().emails[0].address
-                description: 'gold run'
+                description: "gratigen fiat deposit #{note}"
                 amount: calculated_amount
             Docs.insert
                 model:'deposit'

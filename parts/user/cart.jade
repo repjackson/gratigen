@@ -122,10 +122,10 @@ template(name='payment_section')
         +i name='wallet--v1' cl='ui inline image'
         .ui.inline.header ${{fixed currentUser.credit}} credit
         +boolean_field key='use_credit' label='use credit'
-        +topup_button amount=10
-        +topup_button amount=20
-        +topup_button amount=50
-        +topup_button amount=100
+        +buy_coin amount=10
+        +buy_coin amount=20
+        +buy_coin amount=50
+        +buy_coin amount=100
         unless use_credit
             div
             .ui.basic.compact.button.select_credit_card
@@ -140,6 +140,6 @@ template(name='payment_section')
             .ui.basic.compact.button.select_new_credit_card
                 +i name='plus' cl='ui avatar image'
                 |new credit card
-template(name='topup_button')                
+template(name='buy_coin')                
     .ui.compact.button.topup
-        |+$#{amount}                    
+        |buy $#{amount} coin                    

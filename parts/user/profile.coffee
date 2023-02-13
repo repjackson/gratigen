@@ -169,53 +169,27 @@ if Meteor.isClient
             
                 pos = Geolocation.currentLocation()
 
-            
-    Template.topup_button.events
-        'click .topup': ->
-            $('body').toast(
-                showIcon: 'food'
-                message: "100 points added"
-                showProgress: 'bottom'
-                class: 'success'
-                # displayTime: 'auto',
-                position: "bottom right"
-            )
-            Docs.insert 
-                model:'topup'
-                amount:100
-            Meteor.call 'calc_user_credit', Meteor.userId(), ->
-            # Meteor.users.update Meteor.userId(),
-            #     $inc:
-            #         points:@amount
-            
-            
-if Meteor.isServer
-    Meteor.methods
-        'calc_user_credit': (user_id)->
-            total_points = 0
-            topups = 
-                Docs.find 
-                    model:'topup'
-                    _author_id:Meteor.userId()
-                    amount:$exists:true
-            for topup in topups.fetch()
-                total_points += topup.amount
-            console.log total_points
-            
-            Meteor.users.update Meteor.userId(),
-                $set:points:total_points
-            
-            
+
+if Meteor.isServer            
     Meteor.publish 'username_model_docs', (model, username)->
+        match = {model:model}
         if username 
-            Docs.find   
-                model:model
-                _author_username:username
+            match._author_username = username
         else 
-            Docs.find   
-                model:model
-                _author_username:Meteor.user().username            
-                
+            match._author_username = Meteor.user().username            
+        Docs.find match, 
+            limit:10
+            sort:
+                _timestamp:-1
+            fields:
+                title:1
+                tags:1
+                model:1
+                image_id:1
+                _timestamp:1
+                _author_id:1
+                _author_username:1
+            
                 
                 
 if Meteor.isClient

@@ -328,64 +328,6 @@ template(name='user_info')
 
 
            
-template(name='user_credit')
-    .ui.stackable.padded.grid
-        .eight.wide.column 
-            .ui.big.header
-                +i name='coins'
-                |user credit
-            .ui.large.button.calc_points 
-                |calc points
-            .ui.header 
-                |read docs 
-            .ui.selection.animated.list.smallscroll
-                each read_docs 
-                    a.item.fly_right(href="/post/#{_id}")
-                        .ui.label #{model}
-                        |#{title}
-            +membership_block
-            with current_user
-                .ui.header total debit amount: #{total_debit_amount}
-                .ui.header total credit amount: #{total_credit_amount}
-                .ui.header total read docs: #{total_read_docs}
-        if is_current_user
-            .eight.wide.column 
-                .ui.inline.header
-                    // i.money.icon
-                    +i name='money'
-                    |{{current_user.points}}
-                    |points
-                // .ui.inline.header 
-                //     // i.shield.icon
-                //     +i name='shield'
-                //     |admin
-                .ui.big.icon.button.add_credit(title='add credit')
-                    |+1
-                // // +number_field key='credit' label='edit credit' min='0' step='1' max='1000'
-                // .ui.big.icon.button.remove_credit(title='remove credit')
-                //     |-1
-                +topup_button amount=10
-                +topup_button amount=20
-                +topup_button amount=100
-                |includes 2% credit card processing fee
-                .ui.action.input
-                    input.deposit_amount(type='number' min='1' placeholder='deposit')
-                    .ui.icon.button.add_credits   
-                        i.right.chevron.icon
-                        
-                .ui.large.bulleted.list.smallscroll
-                    each topups
-                        .item 
-                            .content
-                                .header 
-                                    |$#{amount}
-                                .description 
-                                    |#{when} {{long_date _timestamp}}
-                                    //- if is_dev
-                                    +remove_button        
-                                    
-                                    
-      
       
 template(name='locate_me')
     .ui.button.locate_me
