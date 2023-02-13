@@ -600,10 +600,10 @@ template(name='ai')
 
 
 template(name='block')
-    .ui.grid(class=color)
-        .one.inverted.column.row.toggle_expanded.zoomer.pointer(title='expand' class=color)
+    .ui.grid
+        .one.inverted.column.row.toggle_expanded.zoomer.pointer(title='expand')
             .column
-                .ui.header
+                .ui.header(class=color)
                     if icon
                         +i name=icon color='000000'
                         // i.large.icon(class=icon)

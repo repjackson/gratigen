@@ -61,13 +61,13 @@ template(name='nav')
         //         a(href="#") Link 1
         //         a(href="#") Link 1
         //         a(href="#") Link 1
-
-        a.item(href='/tasks' title='tasks')
-            i.tasks.large.icon
+        if currentUser.admin_mode
+            a.item(href='/tasks' title='tasks')
+                i.tasks.large.icon
         a.item(href='/users' title='users')
             i.users.large.icon
         a.icon.item.toggle_invert
-            i.lightbulb.icon
+            i.lightbulb.large.icon
         // .search.item.zoomer(title='search')
         // +nav_search
         // .six.wide.column
