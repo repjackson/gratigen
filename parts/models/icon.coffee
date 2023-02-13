@@ -10,6 +10,7 @@ if Meteor.isClient
         @autorun => Meteor.subscribe 'icon_counter', ->
             
     Template.icons.helpers
+        icon_count: -> Counts.get('icon_counter')
         picked_tags_helper: ->
             picked_tags.array()
         
@@ -24,7 +25,6 @@ if Meteor.isClient
     Template.icon_field.onCreated ->
         # @autorun => @subscribe 'icons', ->
     Template.icon_field.helpers
-        icon_count: -> Counts.get('icon_count')
 
         icon_results: ->
             Docs.find
@@ -34,6 +34,7 @@ if Meteor.isClient
             picked_tags.remove @valueOf()
         'click .pick': (e,t)->
             picked_tags.push @name
+            Meteor.call 'call_icon', @name, ->
         'keyup .search_icon': (e,t)->
             if e.which is 13
                 val = t.$('.search_icon').val()
@@ -70,7 +71,7 @@ if Meteor.isClient
     
 if Meteor.isServer   
     Meteor.publish 'icon_counter', ->
-      Counts.publish this, 'icon_counter', Docs.find({model:'artist'})
+      Counts.publish this, 'icon_counter', Docs.find({model:'icon'})
       return undefined    # otherwise coffeescript returns a Counts.publish
     
     Meteor.publish 'icons', (picked_tags=[])->
