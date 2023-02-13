@@ -16,7 +16,7 @@ Template.youtube_view.onRendered ->
     , 1000
 
 Template.icon_field.onCreated ->
-    @autorun => @subscribe 'model_docs', 'icon', ->
+    @autorun => @subscribe 'icons', ->
 Template.icon_field.helpers
     icon_results: ->
         Docs.find

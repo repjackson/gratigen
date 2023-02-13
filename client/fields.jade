@@ -4,7 +4,20 @@ template(name='icon_field')
         input.search_icon(type='text')
     .ui.list 
         each icon_results
-            .item #{title}
+            .item
+                with icons8
+                    +i name=name
+                    .ui.label id #{id}
+                    .ui.label name #{name}
+                    .ui.label commonName #{commonName}
+                    .ui.label category #{category}
+                    .ui.label platform #{platform}
+                    .ui.label isAnimated #{isAnimated}
+                    .ui.label isFree #{isFree}
+                    .ui.label isExternal #{isExternal}
+                    .ui.label isColor #{isColor}
+                    .ui.label sourceFormat #{sourceFormat}
+            
                 +print_this
     
 template(name='text_field')
@@ -280,6 +293,19 @@ template(name='ismall')
 // template(name='ivit')
 //         https://icons8.com/icon/hvQTxi4UrDQc/apple
 //         https://icons8.com/icon/hvQTxi4UrDQc/apple
+template(name='ilarge')
+            // img(src="https://img.icons8.com/ios/24/#{color}/#{name}.png" class=cl title=title)
+            // img.ui.inline.gimage(src="https://img.icons8.com/ios/96/#{color}/#{name}.png" title=title)
+            if cl.length
+        if color
+            img.gicon(src="https://img.icons8.com/ios/96/#{color}/#{name}.png" class=cl title=title)
+        else 
+            img.gicon(src="https://img.icons8.com/ios/96/ffffff/#{name}.png" class=cl title=title)
+    else 
+        if color
+            img.gicon(src="https://img.icons8.com/ios/96/#{color}/#{name}.png" class='ui image' title=title)
+        else 
+            img.gicon(src="https://img.icons8.com/ios/96/ffffff/#{name}.png" class='ui image' title=title)
 template(name='icolor')
     // i.icon(name=name)
     img(src="https://img.icons8.com/color/48/000000/#{name}.png" class=cl title=title)
