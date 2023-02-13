@@ -34,13 +34,14 @@ if Meteor.isClient
             picked_tags.remove @valueOf()
         'click .pick': (e,t)->
             picked_tags.push @name
-            Meteor.call 'call_icon', @name, ->
+            Meteor.call 'call_icon', picked_tags.array(), ->
         'keyup .search_icon': (e,t)->
             if e.which is 13
                 val = t.$('.search_icon').val()
                 if val.length > 0
-                    Meteor.call 'call_icon', val, ->
                     picked_tags.push val
+                    # Meteor.call 'call_icon', val, ->
+                    Meteor.call 'call_icon', picked_tags.array(), ->
                     $('body').toast({
                         title: "#{val} searched and tagged"
                         # message: 'Please see desk staff for key.'
@@ -86,16 +87,19 @@ if Meteor.isServer
         }
     Meteor.methods
         'call_icon':(query)->
+            # query is array
             console.log 'calling icon', query
             HTTP.get "https://search.icons8.com/api/iconsets/v5/search?term=#{query}&token=402e8373258e2ef9000ec9df86ffa46bb7ac442a", (err, response)->
                 if err 
                     # then Throw new Meteor.Error
                     console.log err
                 else 
-                    console.log response
+                    # console.log response
                     data = response.data 
                     console.log data.icons.length
                     # if data.icons.length 
+                    console.log query, typeof query
+                    # if typeof query is 'array'
                     for icon in data.icons 
                         found_icon_doc = 
                             Docs.findOne 
@@ -104,27 +108,27 @@ if Meteor.isServer
                         if found_icon_doc
                             console.log 'found icon doc', found_icon_doc.icons8.name
                             Docs.update found_icon_doc._id, 
-                                $addToSet:tags:query
+                                $addToSet:tags:$each:query
                         unless found_icon_doc 
                             new_icon_id = 
                                 Docs.insert 
                                     model:'icon'
                                     icons8:icon
-                                    tags:[query]
+                                    tags:query
                             new_doc = Docs.findOne new_icon_id
                             console.log 'new icon doc', new_doc.icons8.name
-                            # {
-                            # "id": "pgnkAal3-Ns3",
-                            # "name": "Car",
-                            # "commonName": "car",
-                            # "category": "Transport",
-                            # "platform": "example123",
-                            # "isAnimated": false,
-                            # "isFree": true,
-                            # "isExternal": true,
-                            # "isColor": true,
-                            # "sourceFormat": "example123"
-                            # }
+                    #         # {
+                    #         # "id": "pgnkAal3-Ns3",
+                    #         # "name": "Car",
+                    #         # "commonName": "car",
+                    #         # "category": "Transport",
+                    #         # "platform": "example123",
+                    #         # "isAnimated": false,
+                    #         # "isFree": true,
+                    #         # "isExternal": true,
+                    #         # "isColor": true,
+                    #         # "sourceFormat": "example123"
+                    #         # }
 if Meteor.isServer
     Meteor.publish 'icon_facets', (
         picked_tags=[]

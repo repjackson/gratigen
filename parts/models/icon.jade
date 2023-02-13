@@ -16,7 +16,7 @@ template(name='icons')
                 .ui.basic.button.pick 
                     span.ginvert
                         +icolor name=name
-                    +i name=name
+                    // +i name=name
                     |#{name}
                     small #{count}
         .four.column.row 
@@ -54,6 +54,8 @@ template(name='icon_item')
                 .ui.label commonName #{commonName}
                 .ui.label category #{category}
                 .ui.label platform #{platform}
+                each tags 
+                    .ui.basic.label #{this}
                 if isAnimated
                     .ui.label is Animated
                 if isFree
