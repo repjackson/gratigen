@@ -12,41 +12,6 @@ natural_language_understanding = new NaturalLanguageUnderstandingV1(
 
 
 Meteor.methods
-    'call_icon':(query)->
-        console.log 'calling icon', query
-        HTTP.get "https://search.icons8.com/api/iconsets/v5/search?term=#{query}&token=402e8373258e2ef9000ec9df86ffa46bb7ac442a", (err, response)->
-            if err 
-                # then Throw new Meteor.Error
-                console.log err
-            else 
-                console.log response
-                data = response.data 
-                console.log data.icons.length
-                # if data.icons.length 
-                for icon in data.icons 
-                    found_icon_doc = 
-                        Docs.findOne 
-                            model:'icon'
-                            id:icon.id
-                    unless found_icon_doc 
-                        new_icon_id = 
-                            Docs.insert 
-                                model:'icon'
-                                icons8:icon
-                        new_doc = Docs.findOne new_icon_id
-                        console.log 'new doc', new_doc
-                        # {
-                        # "id": "pgnkAal3-Ns3",
-                        # "name": "Car",
-                        # "commonName": "car",
-                        # "category": "Transport",
-                        # "platform": "example123",
-                        # "isAnimated": false,
-                        # "isFree": true,
-                        # "isExternal": true,
-                        # "isColor": true,
-                        # "sourceFormat": "example123"
-                        # }
 
                             
 

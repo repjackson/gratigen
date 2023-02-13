@@ -1,8 +1,9 @@
 template(name='icons')
     .ui.stackable.padded.grid 
         .sixteen.wide.column
-            .ui.header 
-                |icons
+            .ui.inline.header 
+                +i name='brain'
+                |things
             .ui.input 
                 input.search_icon(type='text')
         .four.column.row 
@@ -12,37 +13,87 @@ template(name='icons')
         
                 
 template(name='icon_item')
-    .item
-        with icons8
-            if _is 'platform' 'color'
-                img(src="https://img.icons8.com/color/48/000000/#{commonName}.png")
-            else if _is 'platform' 'ios'
-                img(src="https://img.icons8.com/ios/48/000000/#{commonName}.png")
-            else if _is 'platform' 'neon'
-                img(src="https://img.icons8.com/neon/48/000000/#{commonName}.png")
-            else if _is 'platform' 'wanicon'
-                img(src="https://img.icons8.com/neon/48/000000/#{commonName}.png")
-                // <img src="https://img.icons8.com/3d-plastilina/69/null/picture--v2.png"/>
-            else 
-                img(src="https://img.icons8.com/#{platform}/48/000000/#{commonName}.png")
-                img(src="https://icons8.com/icon/#{id}/#{commonName}")
-            // img(src="https://icons8.com/#{platform}/48/null/#{commonName}")
-            // <img src="https://img.icons8.com/ios/50/null/airdrop.png"/>
-
-
-            // +i name=name
-            .ui.label id #{id}
-            .ui.label name #{name}
-            .ui.label commonName #{commonName}
-            .ui.label category #{category}
-            .ui.label platform #{platform}
-            .ui.label isAnimated #{isAnimated}
-            .ui.label isFree #{isFree}
-            .ui.label isExternal #{isExternal}
-            .ui.label isColor #{isColor}
-            .ui.label sourceFormat #{sourceFormat}
-    
+    .ui.card
+        .content
+            with icons8
+                if _is 'platform' 'color'
+                    img(src="https://img.icons8.com/color/48/000000/#{commonName}.png")
+                else if _is 'platform' 'ios'
+                    img(src="https://img.icons8.com/ios/48/000000/#{commonName}.png")
+                else if _is 'platform' 'neon'
+                    img(src="https://img.icons8.com/neon/48/000000/#{commonName}.png")
+                else if _is 'platform' 'wanicon'
+                    img(src="https://img.icons8.com/neon/48/000000/#{commonName}.png")
+                    // <img src="https://img.icons8.com/3d-plastilina/69/null/picture--v2.png"/>
+                else 
+                    img(src="https://img.icons8.com/#{platform}/48/000000/#{commonName}.png")
+                    img(src="https://icons8.com/icon/#{id}/#{commonName}")
+                    img(src="https://img.icons8.com/external-#{iconSet}-#{designer}/64/000000/external-#{commonName}-#{category}-#{iconSet}-#{designer}.png")       
+                // <img src="https://img.icons8.com/external-phatplus-lineal-phatplus/64/null/external-bank-money-phatplus-lineal-phatplus.png"/>
+                // img(src="https://icons8.com/#{platform}/48/null/#{commonName}")
+                // <img src="https://img.icons8.com/ios/50/null/airdrop.png"/>
+                    https://img.icons8.com/external-wanicon-lineal-wanicon/64/null/external-torii-gate-landmark-wanicon-lineal-wanicon.png
+                    https://img.icons8.com/external-photo3ideastudio-lineal-photo3ideastudio/64/null/external-bra-clothes-photo3ideastudio-lineal-photo3ideastudio.png
+                    https://img.icons8.com/external-{set}-{designer}/64/null/external-{commonName}.png           
+                // +i name=name
+                a.ui.inline.header(href="/d/icon/#{../_id}" title='name') #{name}
+                .ui.label id #{id}
+                .ui.label commonName #{commonName}
+                .ui.label category #{category}
+                .ui.label platform #{platform}
+                if isAnimated
+                    .ui.label is Animated
+                if isFree
+                    .ui.label is Free
+                if isExternal
+                    .ui.label is External
+                if isColor
+                    .ui.label is color
+                .ui.label format: #{sourceFormat}
         +print_this
+
+template(name='icon_view')
+    with current_doc 
+        .ui.grid 
+            .sixteen.wide.column
+                with icons8
+                    if _is 'platform' 'color'
+                        img(src="https://img.icons8.com/color/48/000000/#{commonName}.png")
+                    else if _is 'platform' 'ios'
+                        img(src="https://img.icons8.com/ios/48/000000/#{commonName}.png")
+                    else if _is 'platform' 'neon'
+                        img(src="https://img.icons8.com/neon/48/000000/#{commonName}.png")
+                    else if _is 'platform' 'wanicon'
+                        img(src="https://img.icons8.com/neon/48/000000/#{commonName}.png")
+                        // <img src="https://img.icons8.com/3d-plastilina/69/null/picture--v2.png"/>
+                    else 
+                        img(src="https://img.icons8.com/#{platform}/48/000000/#{commonName}.png")
+                        img(src="https://icons8.com/icon/#{id}/#{commonName}")
+                        img(src="https://img.icons8.com/external-#{iconSet}-#{designer}/64/null/external-#{commonName}-#{category}-#{iconSet}-#{designer}.png")       
+                        // <img src="https://img.icons8.com/external-phatplus-lineal-phatplus/64/null/external-bank-money-phatplus-lineal-phatplus.png"/>
+                    
+                    
+                        // img(src="https://icons8.com/#{platform}/48/null/#{commonName}")
+                        // <img src="https://img.icons8.com/ios/50/null/airdrop.png"/>
+                        // https://img.icons8.com/external-wanicon-lineal-wanicon/64/null/external-torii-gate-landmark-wanicon-lineal-wanicon.png
+                        // https://img.icons8.com/external-photo3ideastudio-lineal-photo3ideastudio/64/null/external-bra-clothes-photo3ideastudio-lineal-photo3ideastudio.png
+                        // https://img.icons8.com/external-{set}-{designer}/64/null/external-{commonName}.png           
+                    // +i name=name
+                    a.ui.inline.header(href="/d/icon/#{_id}" title='name') #{name}
+                    .ui.label id #{id}
+                    .ui.label commonName #{commonName}
+                    .ui.label category #{category}
+                    .ui.label platform #{platform}
+                    if isAnimated
+                        .ui.label is Animated
+                    if isFree
+                        .ui.label is Free
+                    if isExternal
+                        .ui.label is External
+                    if isColor
+                        .ui.label is color
+                    .ui.label format: #{sourceFormat}
+            +print_this
 
 
 template(name='icon_field')

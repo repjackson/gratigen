@@ -8,13 +8,6 @@ Meteor.publish 'user_by_id',(user_id)->
                 last_name:1
                 tags:1
         }
-Meteor.publish 'icons', ->
-    Docs.find {
-        model:'icon'
-    },{
-        limit:50
-        sort:_timestamp:-1
-    }
 Meteor.publish 'latest_docs', ->
     Docs.find {_updated_timestamp:$exists:true},
         sort:
