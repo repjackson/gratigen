@@ -308,7 +308,13 @@ if Meteor.isClient
             
 if Meteor.isServer
     Meteor.publish 'online_users', ->
-        Meteor.users.find {online:true}
+        Meteor.users.find {online:true}, 
+            fields:
+                username:1
+                image_id:1
+                tags:1
+                first_name:1
+                views:1
         
     Meteor.publish 'latest_home_docs', (model_filters=[])->
         match = {}
@@ -322,7 +328,14 @@ if Meteor.isServer
         Docs.find match,
             limit:20
             sort:_timestamp:-1
-            
+            fields:
+                title:1
+                model:1
+                image_id:1
+                views:1
+                points:1
+                parent_id:1
+                efts:1
     
 if Meteor.isClient
     @model_filters = new ReactiveArray []

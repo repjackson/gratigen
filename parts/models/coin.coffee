@@ -169,7 +169,9 @@ if Meteor.isClient
                 Docs.insert 
                     model:'transfer'
             
-            Router.go "/transfer/#{new_id}/edit"
+            Router.go "/transfer/#{new_id}"
+            Meteor.users.update Meteor.userId(),
+                editing:true
             
         
 # if Meteor.isServer
@@ -180,13 +182,6 @@ if Meteor.isClient
             
             
 # if Meteor.isClient
-#     Router.route '/transfer/:doc_id/edit', (->
-#         @layout 'layout'
-#         @render 'transfer_view'
-#         ), name:'transfer_view'
-
-
-
 #     Template.transfer_view.onCreated ->
 #         @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id
 #         # @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
@@ -231,15 +226,9 @@ if Meteor.isClient
 
 
 if Meteor.isClient
-    Router.route '/transfer/:doc_id/edit', (->
-        @layout 'layout'
-        @render 'transfer_view'
-        ), name:'transfer_view'
-        
-        
     Template.transfer_view.onCreated ->
         # @autorun => Meteor.su    Template.user_credit.onCreated ->
-        @autorun => Meteor.subscribe 'user_by_username', Router.current().params.username
+        @autorun => Meteor.subscribe 'user_by_username', Router.current().params.username, ->
         # @autorun => Meteor.subscribe 'model_docs', 'deposit'
         # @autorun => Meteor.subscribe 'model_docs', 'reservation'
         # @autorun => Meteor.subscribe 'model_docs', 'withdrawal'
@@ -529,9 +518,9 @@ if Meteor.isClient
     
 
     Template.transfer_view.onCreated ->
-        @autorun => Meteor.subscribe 'product_from_transfer_id', Router.current().params.doc_id
-        @autorun => Meteor.subscribe 'author_from_doc_id', Router.current().params.doc_id
-        @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
+        @autorun => Meteor.subscribe 'product_from_transfer_id', Router.current().params.doc_id, ->
+        @autorun => Meteor.subscribe 'author_from_doc_id', Router.current().params.doc_id, ->
+        @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id, ->
 
 
 

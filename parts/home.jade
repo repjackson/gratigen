@@ -7,8 +7,8 @@ template(name='home')
     //         a(href="#") Link 1
     //         a(href="#") Link 1
 
-    if currentUser.admin_mode
-        img.ui.fluid.image.home_banner(src="{{c.url 'gratigenlayout'}}" class=darkmode_class)
+    // if currentUser.admin_mode
+    //     img.ui.fluid.image.home_banner(src="{{c.url 'gratigenlayout'}}" class=darkmode_class)
     // else 
     //     img.ui.fluid.image.bg_overlay(src="{{c.url 'nightbg' width=1000 crop='fit'}}")    
     .ui.padded.divided.celled.stackable.grid
@@ -179,7 +179,7 @@ template(name='home')
             // +charts
             if currentUser.admin_mode
                 +user_connection_graph
-            +block template='online_allies'
+            // +block template='online_allies'
             +alerts
             // +online_allies
         // +thing_maker
@@ -190,20 +190,20 @@ template(name='home')
         //      +eft_picker
     // .ui.add.modal    
     //     +add
-    .ui.fullscreen.modal
-        with current_viewing_thing
-            .ui.grid
-                .sixteen.wide.column
-                    +model_icon
-                .thirteen.wide.centered.column
-                    //on click go to full page
-                    .ui.inline.centered.header.huge #{title}
+    // .ui.fullscreen.modal
+    //     with current_viewing_thing
+    //         .ui.grid
+    //             .sixteen.wide.column
+    //                 +model_icon
+    //             .thirteen.wide.centered.column
+    //                 //on click go to full page
+    //                 .ui.inline.centered.header.huge #{title}
 
-            .scrollin.content
-                if session_is 'editing' true
-                    +Template.dynamic template=edit_template
-                else 
-                    +Template.dynamic template=view_template
+    //         .scrollin.content
+    //             if session_is 'editing' true
+    //                 +Template.dynamic template=edit_template
+    //             else 
+    //                 +Template.dynamic template=view_template
     // +view_chats
 
 template(name='icon_browser')

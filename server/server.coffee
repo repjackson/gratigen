@@ -135,16 +135,23 @@ Meteor.publish 'all_users', ()->
     
 Meteor.publish 'model_docs', (model,limit=1)->
     if limit
-        Docs.find {
-            model: model
-            # app:'nf'
-        }, 
+        Docs.find {model: model}, 
             limit:limit
+            fields:
+                title:1
+                image_id:1
+                tags:1
+                model:1
+                _timestamp:1
     else
-        Docs.find {
-            # app:'nf'
-            model: model
-        }, sort:_timestamp:-1
+        Docs.find {model: model}, 
+            sort:_timestamp:-1
+            fields:
+                title:1
+                image_id:1
+                tags:1
+                model:1
+                _timestamp:1
 Meteor.publish 'me', ->
     Meteor.users.find({_id:@userId})
 
