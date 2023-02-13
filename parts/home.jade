@@ -150,6 +150,7 @@ template(name='home')
                         .ui.centered.one.cards.scrolling
                             each doc_results
                                 +home_card
+                                
                     
                                 
         // .eight.wide.column.bordered
@@ -181,6 +182,9 @@ template(name='home')
                 +user_connection_graph
             // +block template='online_allies'
             +alerts
+            a.ui.button(href="www.github.com/repjackson/gratigen" target='_window')
+                i.github.icon 
+                |github code
             // +online_allies
         // +thing_maker
         // if current_thing.

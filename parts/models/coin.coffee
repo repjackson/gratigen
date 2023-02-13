@@ -13,7 +13,7 @@ if Meteor.isClient
     
     Template.user_credit.onCreated ->
         @autorun -> Meteor.subscribe 'user_from_username', Router.current().params.username, ->
-        # @autorun -> Meteor.subscribe 'user_read_docs', Router.current().params.username, ->
+        @autorun -> Meteor.subscribe 'deposits', Router.current().params.username, ->
     
     Template.user_credit.events 
         'click .calc_points': ->
@@ -121,7 +121,7 @@ if Meteor.isClient
                 model:'payment'
                 _author_username: Router.current().params.username
             }, sort:_timestamp:-1
-        deposits: ->
+        user_deposits: ->
             Docs.find {
                 model:'deposit'
                 _author_username: Router.current().params.username
@@ -491,6 +491,9 @@ if Meteor.isClient
 
 
 if Meteor.isServer
+    Meteor.publish 'deposits', ->
+        Docs.find 
+            model:'deposit'
     Meteor.methods
         send_transfer: (transfer_id)->
             transfer = Docs.findOne transfer_id

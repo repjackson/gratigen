@@ -73,15 +73,17 @@ template(name='user_credit')
                         i.right.chevron.icon
                         
                 .ui.large.bulleted.list.smallscroll
-                    each model_docs_helper 'deposit'
+                    each user_deposits
                         .item 
                             .content
                                 .header 
                                     |$#{amount}
                                 .description 
+                                    +print_this
                                     |#{when} {{long_date _timestamp}}
                                     //- if is_dev
-                                    +remove_button        
+                                    if currentUser.admin_mode
+                                        +remove_button        
                 +payment_section        
                                     
       
