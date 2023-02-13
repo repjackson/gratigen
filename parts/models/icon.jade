@@ -5,13 +5,32 @@ template(name='icons')
                 |icons
             .ui.input 
                 input.search_icon(type='text')
-            each icons_docs 
-                +icon_item 
+        .four.column.row 
+            each icons_docs
+                .column
+                    +icon_item 
+        
                 
 template(name='icon_item')
     .item
         with icons8
-            +i name=name
+            if _is 'platform' 'color'
+                img(src="https://img.icons8.com/color/48/000000/#{commonName}.png")
+            else if _is 'platform' 'ios'
+                img(src="https://img.icons8.com/ios/48/000000/#{commonName}.png")
+            else if _is 'platform' 'neon'
+                img(src="https://img.icons8.com/neon/48/000000/#{commonName}.png")
+            else if _is 'platform' 'wanicon'
+                img(src="https://img.icons8.com/neon/48/000000/#{commonName}.png")
+                // <img src="https://img.icons8.com/3d-plastilina/69/null/picture--v2.png"/>
+            else 
+                img(src="https://img.icons8.com/#{platform}/48/000000/#{commonName}.png")
+                img(src="https://icons8.com/icon/#{id}/#{commonName}")
+            // img(src="https://icons8.com/#{platform}/48/null/#{commonName}")
+            // <img src="https://img.icons8.com/ios/50/null/airdrop.png"/>
+
+
+            // +i name=name
             .ui.label id #{id}
             .ui.label name #{name}
             .ui.label commonName #{commonName}

@@ -9,8 +9,10 @@ if Meteor.isClient
             
     Template.icons.helpers
         icons_docs: ->
-            Docs.find 
+            Docs.find {
                 model:'icon'
+            }, 
+                sort:_timestamp:-1
                 
     Template.icon_field.onCreated ->
         @autorun => @subscribe 'icons', ->

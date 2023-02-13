@@ -12,7 +12,7 @@ Meteor.publish 'icons', ->
     Docs.find {
         model:'icon'
     },{
-        limit:10
+        limit:50
         sort:_timestamp:-1
     }
 Meteor.publish 'latest_docs', ->
