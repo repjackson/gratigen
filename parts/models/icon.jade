@@ -4,12 +4,13 @@ template(name='icons')
             .ui.inline.header 
                 +i name='brain'
                 |things
-            .ui.input 
-                input.search_icon(type='text')
-            each picked_tags 
-                .ui.large.active.button #{this}
+            each picked_tags_helper
+                .ui.large.active.button.unpick #{this}
+            .ui.inline.icon.input
+                i.search.icon
+                input.search_icon(type='text' placeholder='name...')
             each icon_tag_results 
-                .ui.large.active.button #{name}
+                .ui.basic.button.pick #{name}
         .four.column.row 
             each icons_docs
                 .column

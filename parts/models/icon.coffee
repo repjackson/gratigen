@@ -6,9 +6,12 @@ Router.route '/icons', (->
 if Meteor.isClient
     Template.icons.onCreated ->
         @autorun => Meteor.subscribe 'icons', ->
-        @autorun => Meteor.subscribe 'icon_facets', ->
+        @autorun => Meteor.subscribe 'icon_facets', picked_tags.array(), ->
             
     Template.icons.helpers
+        picked_tags_helper: ->
+            picked_tags.array()
+        
         icons_docs: ->
             Docs.find {
                 model:'icon'
@@ -24,17 +27,31 @@ if Meteor.isClient
             Docs.find
                 model:'icon'
     Template.icons.events
+        'keyup .unpick': (e,t)->
+            picked_tags.pull @valueOf()
+        'keyup .pick': (e,t)->
+            picked_tags.push @name
         'keyup .search_icon': (e,t)->
             if e.which is 13
                 val = t.$('.search_icon').val()
                 if val.length > 0
                     Meteor.call 'call_icon', val, ->
+                    picked_tags.push val
+                    $('body').toast({
+                        title: "#{val} searched and tagged"
+                        # message: 'Please see desk staff for key.'
+                        class : 'success'
+                        # showIcon:''
+                        showProgress:'bottom'
+                        position:'bottom right'
+                        })
+                    val = t.$('.search_icon').val('')
                 # parent = Template.parentData()
                 # doc = Docs.findOne parent._id
                 # if doc
                 #     Docs.update parent._id,
                 #         $set:"#{@key}":val
-    
+
                 
     Template.icon_field.events
         'keyup .search_icon': (e,t)->
@@ -101,14 +118,14 @@ if Meteor.isServer
                             # }
 if Meteor.isServer
     Meteor.publish 'icon_facets', (
-        picked_recipe_tags=[]
+        picked_tags=[]
         name_search=''
         )->
     
             self = @
             match = {}
     
-            # match.tags = $all: picked_recipe_tags
+            # match.tags = $all: picked_tags
             match.model = 'icon'
             # if parent_id then match.parent_id = parent_id
     
@@ -120,7 +137,7 @@ if Meteor.isServer
             # if view_private is false
             #     match.published = $in: [0,1]
     
-            if picked_recipe_tags.length > 0 then match.tags = $all: picked_recipe_tags
+            if picked_tags.length > 0 then match.tags = $all: picked_tags
             # if picked_styles.length > 0 then match.strStyle = $all: picked_styles
             # if picked_moods.length > 0 then match.strMood = $all: picked_moods
             # if picked_genres.length > 0 then match.strGenre = $all: picked_genres
@@ -133,7 +150,7 @@ if Meteor.isServer
                 { $project: tags: 1 }
                 { $unwind: "$tags" }
                 { $group: _id: '$tags', count: $sum: 1 }
-                { $match: _id: $nin: picked_recipe_tags }
+                { $match: _id: $nin: picked_tags }
                 { $sort: count: -1, _id: 1 }
                 { $match: count: $lt: total_count }
                 { $limit: 15}
@@ -153,7 +170,7 @@ if Meteor.isServer
                 { $project: "category": 1 }
                 # { $unwind: "$tags" }
                 { $group: _id: '$category', count: $sum: 1 }
-                # { $match: _id: $nin: picked_recipe_tags }
+                # { $match: _id: $nin: picked_tags }
                 { $sort: count: -1, _id: 1 }
                 { $match: count: $lt: total_count }
                 { $limit: 15}
