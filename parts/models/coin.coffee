@@ -27,6 +27,134 @@ if Meteor.isClient
         #     Docs.find 
         #         read_by_user_ids: $in: [user._id]
     
+    Template.user_credit.onCreated ->
+        @autorun => Meteor.subscribe 'user_by_username', Router.current().params.username
+        # @autorun => Meteor.subscribe 'model_docs', 'deposit'
+        # @autorun => Meteor.subscribe 'model_docs', 'reservation'
+        # @autorun => Meteor.subscribe 'model_docs', 'withdrawal'
+        # @autorun => Meteor.subscribe 'my_topups'
+        if Meteor.isDevelopment
+            pub_key = Meteor.settings.public.stripe_test_publishable
+        else if Meteor.isProduction
+            pub_key = Meteor.settings.public.stripe_live_publishable
+        Template.instance().checkout = StripeCheckout.configure(
+            key: pub_key
+            image: 'http://res.cloudinary.com/facet/image/upload/c_fill,g_face,h_300,w_300/k2zt563boyiahhjb0run'
+            locale: 'auto'
+            # zipCode: true
+            token: (token) ->
+                # product = Docs.findOne Router.current().params.doc_id
+                user = Meteor.users.findOne username:Router.current().params.username
+                deposit_amount = parseInt $('.deposit_amount').val()*100
+                stripe_charge = deposit_amount*100*1.02+20
+                # calculated_amount = deposit_amount*100
+                # console.log calculated_amount
+                charge =
+                    amount: deposit_amount*1.02+20
+                    currency: 'usd'
+                    source: token.id
+                    description: token.description
+                    # receipt_email: token.email
+                Meteor.call 'STRIPE_single_charge', charge, user, (error, response) =>
+                    if error then alert error.reason, 'danger'
+                    else
+                        alert 'payment received', 'success'
+                        Docs.insert
+                            model:'deposit'
+                            deposit_amount:deposit_amount/100
+                            stripe_charge:stripe_charge
+                            amount_with_bonus:deposit_amount*1.05/100
+                            bonus:deposit_amount*.05/100
+                        Meteor.users.update user._id,
+                            $inc: credit: deposit_amount*1.05/100
+    	)
+
+
+    Template.user_credit.events
+        'click .add_credits': ->
+            amount = parseInt $('.deposit_amount').val()
+            amount_times_100 = parseInt amount*100
+            calculated_amount = amount_times_100*1.02+20
+            Template.instance().checkout.open
+                name: 'credit deposit'
+                # email:Meteor.user().emails[0].address
+                description: 'gold run'
+                amount: calculated_amount
+            Docs.insert
+                model:'deposit'
+                amount: amount
+            Meteor.users.update Meteor.userId(),
+                $inc: credit: amount_times_100
+
+
+        'click .initial_withdrawal': ->
+            withdrawal_amount = parseInt $('.withdrawal_amount').val()
+            if confirm "initiate withdrawal for #{withdrawal_amount}?"
+                Docs.insert
+                    model:'withdrawal'
+                    amount: withdrawal_amount
+                    status: 'started'
+                    complete: false
+                Meteor.users.update Meteor.userId(),
+                    $inc: credit: -withdrawal_amount
+
+        'click .cancel_withdrawal': ->
+            if confirm "cancel withdrawal for #{@amount}?"
+                Docs.remove @_id
+                Meteor.users.update Meteor.userId(),
+                    $inc: credit: @amount
+
+        'click .send_points': ->
+            new_id = 
+                Docs.insert 
+                    model:'transfer'
+                    amount:10
+            Router.go "/transfer/#{new_id}/edit"
+
+
+    Template.user_credit.helpers
+        payments: ->
+            Docs.find {
+                model:'payment'
+                _author_username: Router.current().params.username
+            }, sort:_timestamp:-1
+        deposits: ->
+            Docs.find {
+                model:'deposit'
+                _author_username: Router.current().params.username
+            }, sort:_timestamp:-1
+        topups: ->
+            Docs.find {
+                model:'topup'
+                _author_username: Router.current().params.username
+            }, sort:_timestamp:-1
+
+
+
+    Template.user_credit.events
+        'click .add_credit': ->
+            user = Meteor.users.findOne(username:Router.current().params.username)
+            Meteor.users.update Meteor.userId(),
+                $inc:points:10
+                # $set:points:1
+        'click .remove_points': ->
+            user = Meteor.users.findOne(username:Router.current().params.username)
+            Meteor.users.update Meteor.userId(),
+                $inc:points:-1
+        # 'click .add_credits': ->
+        #     deposit_amount = parseInt $('.deposit_amount').val()*100
+        #     calculated_amount = deposit_amount*1.02+20
+            
+        #     Template.instance().checkout.open
+        #         name: 'credit deposit'
+        #         # email:Meteor.user().emails[0].address
+        #         description: 'gold run'
+        #         amount: calculated_amount
+
+
+            
+            
+        
     
     
     
@@ -54,12 +182,12 @@ if Meteor.isClient
 # if Meteor.isClient
 #     Router.route '/transfer/:doc_id/edit', (->
 #         @layout 'layout'
-#         @render 'transfer_edit'
-#         ), name:'transfer_edit'
+#         @render 'transfer_view'
+#         ), name:'transfer_view'
 
 
 
-#     Template.transfer_edit.onCreated ->
+#     Template.transfer_view.onCreated ->
 #         @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id
 #         # @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
 #         @autorun => Meteor.subscribe 'username_search', Session.get('username_query'), ->
@@ -83,14 +211,14 @@ if Meteor.isClient
 #             val = $('.search_user').val()
 #             Session.set('username_query',val)
         
-#     Template.transfer_edit.events
+#     Template.transfer_view.events
 #         'click .delete_transfer':->
 #             if confirm 'delete?'
 #                 Docs.remove @_id
 #                 Router.go "/transfers"
 
             
-#     Template.transfer_edit.helpers
+#     Template.transfer_view.helpers
 #         all_shop: ->
 #             Docs.find
 #                 model:'transfer'
@@ -105,26 +233,148 @@ if Meteor.isClient
 if Meteor.isClient
     Router.route '/transfer/:doc_id/edit', (->
         @layout 'layout'
-        @render 'transfer_edit'
-        ), name:'transfer_edit'
+        @render 'transfer_view'
+        ), name:'transfer_view'
         
         
-    Template.transfer_edit.onCreated ->
-        @autorun => Meteor.subscribe 'all_users', ->
-        @autorun => Meteor.subscribe 'recipient_from_transfer_id', Router.current().params.doc_id
-        @autorun => Meteor.subscribe 'author_from_doc_id', Router.current().params.doc_id
-        @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
+    Template.transfer_view.onCreated ->
+        # @autorun => Meteor.su    Template.user_credit.onCreated ->
+        @autorun => Meteor.subscribe 'user_by_username', Router.current().params.username
+        # @autorun => Meteor.subscribe 'model_docs', 'deposit'
+        # @autorun => Meteor.subscribe 'model_docs', 'reservation'
+        # @autorun => Meteor.subscribe 'model_docs', 'withdrawal'
+        # @autorun => Meteor.subscribe 'my_topups'
+        if Meteor.isDevelopment
+            pub_key = Meteor.settings.public.stripe_test_publishable
+        else if Meteor.isProduction
+            pub_key = Meteor.settings.public.stripe_live_publishable
+        Template.instance().checkout = StripeCheckout.configure(
+            key: pub_key
+            image: 'http://res.cloudinary.com/facet/image/upload/c_fill,g_face,h_300,w_300/k2zt563boyiahhjb0run'
+            locale: 'auto'
+            # zipCode: true
+            token: (token) ->
+                # product = Docs.findOne Router.current().params.doc_id
+                user = Meteor.users.findOne username:Router.current().params.username
+                deposit_amount = parseInt $('.deposit_amount').val()*100
+                stripe_charge = deposit_amount*100*1.02+20
+                # calculated_amount = deposit_amount*100
+                # console.log calculated_amount
+                charge =
+                    amount: deposit_amount*1.02+20
+                    currency: 'usd'
+                    source: token.id
+                    description: token.description
+                    # receipt_email: token.email
+                Meteor.call 'STRIPE_single_charge', charge, user, (error, response) =>
+                    if error then alert error.reason, 'danger'
+                    else
+                        alert 'payment received', 'success'
+                        Docs.insert
+                            model:'deposit'
+                            deposit_amount:deposit_amount/100
+                            stripe_charge:stripe_charge
+                            amount_with_bonus:deposit_amount*1.05/100
+                            bonus:deposit_amount*.05/100
+                        Meteor.users.update user._id,
+                            $inc: credit: deposit_amount*1.05/100
+    	)
+
+
+    Template.user_credit.events
+        'click .add_credits': ->
+            amount = parseInt $('.deposit_amount').val()
+            amount_times_100 = parseInt amount*100
+            calculated_amount = amount_times_100*1.02+20
+            Template.instance().checkout.open
+                name: 'credit deposit'
+                # email:Meteor.user().emails[0].address
+                description: 'gold run'
+                amount: calculated_amount
+            Docs.insert
+                model:'deposit'
+                amount: amount
+            Meteor.users.update Meteor.userId(),
+                $inc: credit: amount_times_100
+
+
+        'click .initial_withdrawal': ->
+            withdrawal_amount = parseInt $('.withdrawal_amount').val()
+            if confirm "initiate withdrawal for #{withdrawal_amount}?"
+                Docs.insert
+                    model:'withdrawal'
+                    amount: withdrawal_amount
+                    status: 'started'
+                    complete: false
+                Meteor.users.update Meteor.userId(),
+                    $inc: credit: -withdrawal_amount
+
+        'click .cancel_withdrawal': ->
+            if confirm "cancel withdrawal for #{@amount}?"
+                Docs.remove @_id
+                Meteor.users.update Meteor.userId(),
+                    $inc: credit: @amount
+
+        'click .send_points': ->
+            new_id = 
+                Docs.insert 
+                    model:'transfer'
+                    amount:10
+            Router.go "/transfer/#{new_id}/edit"
+
+
+    Template.user_credit.helpers
+        payments: ->
+            Docs.find {
+                model:'payment'
+                _author_username: Router.current().params.username
+            }, sort:_timestamp:-1
+        deposits: ->
+            Docs.find {
+                model:'deposit'
+                _author_username: Router.current().params.username
+            }, sort:_timestamp:-1
+        topups: ->
+            Docs.find {
+                model:'topup'
+                _author_username: Router.current().params.username
+            }, sort:_timestamp:-1
+
+
+
+    Template.user_credit.events
+        'click .add_credit': ->
+            user = Meteor.users.findOne(username:Router.current().params.username)
+            Meteor.users.update Meteor.userId(),
+                $inc:points:10
+                # $set:points:1
+        'click .remove_points': ->
+            user = Meteor.users.findOne(username:Router.current().params.username)
+            Meteor.users.update Meteor.userId(),
+                $inc:points:-1
+        # 'click .add_credits': ->
+        #     deposit_amount = parseInt $('.deposit_amount').val()*100
+        #     calculated_amount = deposit_amount*1.02+20
+            
+        #     Template.instance().checkout.open
+        #         name: 'credit deposit'
+        #         # email:Meteor.user().emails[0].address
+        #         description: 'gold run'
+        #         amount: calculated_amount
+
+
+    Template.transfer_view.onRendered ->
+        @autorun => Meteor.subscribe 'recipient_from_transfer_id', Router.current().params.doc_id, ->
+        @autorun => Meteor.subscribe 'author_from_doc_id', Router.current().params.doc_id, ->
+        @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id, ->
         @autorun => @subscribe 'tag_results',
             # Router.current().params.doc_id
             picked_tags.array()
             Session.get('searching')
             Session.get('current_query')
             Session.get('dummy')
-        
-    Template.transfer_edit.onRendered ->
 
-
-    Template.transfer_edit.helpers
+    Template.transfer_view.helpers
         terms: ->
             Terms.find()
         suggestions: ->
@@ -156,7 +406,7 @@ if Meteor.isClient
         can_submit: ->
             transfer = Docs.findOne Router.current().params.doc_id
             transfer.amount and transfer.recipient_id
-    Template.transfer_edit.events
+    Template.transfer_view.events
         'click .add_recipient': ->
             Docs.update Router.current().params.doc_id,
                 $set:
@@ -206,26 +456,6 @@ if Meteor.isClient
             Session.set('searching', false)
             Session.set('dummy', !Session.get('dummy'))
 
-    
-        'blur .edit_description': (e,t)->
-            textarea_val = t.$('.edit_textarea').val()
-            Docs.update Router.current().params.doc_id,
-                $set:description:textarea_val
-    
-    
-        'blur .edit_text': (e,t)->
-            val = t.$('.edit_text').val()
-            Docs.update Router.current().params.doc_id,
-                $set:"#{@key}":val
-    
-    
-        'blur .point_amount': (e,t)->
-            # console.log @
-            val = parseInt t.$('.point_amount').val()
-            Docs.update Router.current().params.doc_id,
-                $set:amount:val
-
-
 
         'click .cancel_transfer': ->
             Swal.fire({
@@ -267,8 +497,6 @@ if Meteor.isClient
             )
 
 
-    Template.transfer_edit.helpers
-    Template.transfer_edit.events
 
 if Meteor.isServer
     Meteor.methods
@@ -300,18 +528,10 @@ if Meteor.isClient
         ), name:'my_accounts'
     
 
-    Router.route '/transfer/:doc_id', (->
-        @layout 'layout'
-        @render 'transfer_view'
-        ), name:'transfer_view'
-
     Template.transfer_view.onCreated ->
         @autorun => Meteor.subscribe 'product_from_transfer_id', Router.current().params.doc_id
         @autorun => Meteor.subscribe 'author_from_doc_id', Router.current().params.doc_id
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
-        @autorun => Meteor.subscribe 'all_users'
-        
-    Template.transfer_view.onRendered ->
 
 
 

@@ -92,25 +92,6 @@ template(name='org_view')
     // if currentUser.admin_mode 
     //     +org_edit
     .ui.stackable.padded.grid.scrolling
-        // .middle.aligned.row
-        //     img.ui.fluid.image.bg_overlay(src="{{c.url image_id crop='fit'}}")
-        //     .three.wide.column
-        //         .left_floated
-        //             a.ui.circular.tertiary.large.button.zoomer.fly_left(href="/")
-        //                 i.left.chevron.icon
-        //                 +ismall name='groups' color='83DFF4' 
-        //                 |orgs
-        //     .nine.wide.center.aligned.column
-        //         .ui.centered.inline.huge.center.aligned.header
-        //             |#{title}
-        //     .four.wide.right.aligned.column
-        //         +subscribe_button
-        //         +bookmark_button
-        //         // .floated
-        //         if can_edit
-        //             +edit_button
-        //         if currentUser.editing 
-        //             +remove_button
         .row
             .four.wide.column
                 +image_field key='image_id' icon='image' label='image'
@@ -142,7 +123,6 @@ template(name='org_view')
                 // +multi_user_view key='member_ids' label='members' 
                 // +org_history
                 // +org_subscription
-
             .six.wide.column
                 .centered.row
                     // datetime saves in datetime format like: 2023-03-22T19:39

@@ -26,36 +26,6 @@ template(name='transfers')
                                 .ui.header #{username}
                                 +user_pill
                 
-// template(name='transfer_edit')
-//     with current_doc
-//         .ui.stackable.padded.grid
-//             .row
-//                 .six.wide.column
-//                     .ui.inline.header
-//                         i.pencil.icon
-//                         strong !{notes}
-//                         small transfer edit
-//                     a.ui.large.icon.green.button(href="/transfer/#{_id}" title='save draft')
-//                         i.checkmark.big.icon
-//                         |save draft
-//                     +image_field key='image_id' label='image' icon='image'
-//                     div
-//                     +array_field key='location_tags' label='location tags' icon='marker'
-//                 .ten.wide.column
-//                     div
-//                     +array_field key='tags' label='tags' icon='tags'
-//                     +textarea_field key='notes' label='notes' icon='content'
-//                     +user_picker
-                    
-//                     if can_edit
-//                         .ui.red.button.delete_transfer
-//                             i.remove.icon   
-//                             | delete
-//                     unless complete
-//                         a.ui.big.green.button.complete_transfer(href="/transfer/#{_id}")
-//                             |complete transfer
-                
-                
 template(name='user_picker')
     .ui.header 
         |user picker
@@ -84,7 +54,7 @@ template(name='transfer_view')
                     if is_dev
                         +remove_button
                     .f14
-                        |!{description}
+                        +html_field key='body'
                     .spacer
                     +image_view key='image_id' label='image'
                     +link_view key='link' label='link' icon='link'
@@ -106,11 +76,6 @@ template(name='transfer_view')
                         img.ui.circular.centered.fluid.pointer.zoom.image(src="{{c.url recipient.image_id height=500 width=500 gravity='face' crop='fill'}}" class=currentUser.darkmode_class)
                         .ui.large.center.aligned.header.pointer.zoom
                             |#{recipient.name}
-                            
-                            
-                            
-template(name='transfer_edit')
-    with current_doc
         .ui.stackable.padded.grid
             .row 
                 .six.wide.column
@@ -145,7 +110,7 @@ template(name='transfer_edit')
                             //         |#{name}
                             //         small #{points}p
                     +date_field key='date' label='date'   
-                    +time_edit key='time' label='time'   
+                    +time_field key='time' label='time'   
                     +array_field key='location_tags' label='location tags' icon='marker'
                 .six.wide.column
                     +html_field key='description' label='description'

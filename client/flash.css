@@ -1,5 +1,5 @@
 .batman > *{
-    animation: fly 25s linear infinite;
+    animation: fly 100s linear infinite;
     top: 0;
 	left: 0;
 	position: fixed;
@@ -7,7 +7,7 @@
 	pointer-events: none;
 }
 .flash > *{
-    animation: fly 15s linear infinite;
+    animation: fly 50s linear infinite;
     top: 0;
 	left: 0;
 	position: fixed;

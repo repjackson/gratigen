@@ -155,7 +155,6 @@ template(name='home')
         // .eight.wide.column.bordered
         .five.wide.scrolling.column
             // +icon_browser
-            +alerts
             +block template='latest_updated_block' title='latest' icon='time-machine' color='teal'
             +block template='user_avatars' title='users' icon='groups' color='blue'
             // div
@@ -178,8 +177,10 @@ template(name='home')
                 +calendar_view
             +block template='charts'
             // +charts
-            +user_connection_graph
+            if currentUser.admin_mode
+                +user_connection_graph
             +block template='online_allies'
+            +alerts
             // +online_allies
         // +thing_maker
         // if current_thing.
