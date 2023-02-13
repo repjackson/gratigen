@@ -62,8 +62,8 @@ head
     
     
     // script(src="https://cdn.jsdelivr.net/npm/sweetalert2@9")
-    script(src="https://cdn.jsdelivr.net/npm/suneditor@latest/dist/suneditor.min.js")
-    script(src="https://cdn.jsdelivr.net/npm/suneditor@latest/src/lang/en.js")
+    // script(src="https://cdn.jsdelivr.net/npm/suneditor@latest/dist/suneditor.min.js")
+    // script(src="https://cdn.jsdelivr.net/npm/suneditor@latest/src/lang/en.js")
     
     script(src="https://widget-js.cometchat.io/v3/cometchatwidget.js")
 
@@ -109,11 +109,6 @@ template(name='doc_view')
                     +text_field key='title' view_classes='ui center aligned inline huge header'
                     // .ui.centered.inline.huge.center.aligned.header
                     //     |#{title}
-                    +author_info
-                    +creation_info
-                    if currentUser.admin_mode
-                        +viewing
-                        +voting
                 .four.wide.right.aligned.column
                     +subscribe_button
                     +bookmark_button

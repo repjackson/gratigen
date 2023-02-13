@@ -155,11 +155,11 @@ template(name='profile_section')
                             +i name=icon color='ffffff' cl='ui mini inline image'
                         if loading 
                             i.large.refresh.icon
+                        |#{label}
                         if is_expanded
                             i.chevron.down.small.icon(class=color)
                         else
                             i.chevron.right.small.icon(class=color)
-                        |#{label}
             if is_expanded
                 .one.column.row
                     .column

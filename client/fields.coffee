@@ -39,48 +39,49 @@ Template.color_edit.events
 
 
 Template.html_field.onRendered ->
-    @editor = SUNEDITOR.create((document.getElementById('sample') || 'sample'),{
-    # 	"tabDisable": false
-        # "minHeight": "400px"
-        buttonList: [
-            [
-                'undo' 
-                'redo'
-                'font' 
-                'fontSize' 
-                # 'formatBlock' 
-                'paragraphStyle' 
-                # 'blockquote'
-                'bold' 
-                'underline' 
-                'italic' 
-                # 'strike' 
-                # 'subscript' 
-                # 'superscript'
-                # 'fontColor' 
-                # # 'hiliteColor' 
-                # 'textStyle'
-                # 'removeFormat'
-                # 'outdent' 
-                # 'indent'
-                # 'align' 
-                # # 'horizontalRule' 
-                # 'list' 
-                # # 'lineHeight'
-                # 'fullScreen' 
-                # # 'showBlocks' 
-                # # 'codeView' 
-                # # 'preview' 
-                # # 'table' 
-                # # 'image' 
-                # # 'video' 
-                # # 'audio' 
-                # 'link'
+    if Meteor.user().editing
+        @editor = SUNEDITOR.create((document.getElementById('sample') || 'sample'),{
+        # 	"tabDisable": false
+            # "minHeight": "400px"
+            buttonList: [
+                [
+                    'undo' 
+                    'redo'
+                    'font' 
+                    'fontSize' 
+                    # 'formatBlock' 
+                    'paragraphStyle' 
+                    # 'blockquote'
+                    'bold' 
+                    'underline' 
+                    'italic' 
+                    # 'strike' 
+                    # 'subscript' 
+                    # 'superscript'
+                    # 'fontColor' 
+                    # # 'hiliteColor' 
+                    # 'textStyle'
+                    # 'removeFormat'
+                    # 'outdent' 
+                    # 'indent'
+                    # 'align' 
+                    # # 'horizontalRule' 
+                    # 'list' 
+                    # # 'lineHeight'
+                    # 'fullScreen' 
+                    # # 'showBlocks' 
+                    # # 'codeView' 
+                    # # 'preview' 
+                    # # 'table' 
+                    # # 'image' 
+                    # # 'video' 
+                    # # 'audio' 
+                    # 'link'
+                ]
             ]
-        ]
-        lang: SUNEDITOR_LANG['en']
-        # codeMirror: CodeMirror
-    });
+            lang: SUNEDITOR_LANG['en']
+            # codeMirror: CodeMirror
+        });
 
 Template.html_field.events
     'blur .testsun': (e,t)->

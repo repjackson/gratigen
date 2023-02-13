@@ -6,6 +6,10 @@ template(name='icons')
                 |things
             .ui.input 
                 input.search_icon(type='text')
+            each picked_tags 
+                .ui.large.active.button #{this}
+            each icon_tag_results 
+                .ui.large.active.button #{name}
         .four.column.row 
             each icons_docs
                 .column
@@ -22,13 +26,13 @@ template(name='icon_item')
                     img(src="https://img.icons8.com/ios/48/000000/#{commonName}.png")
                 else if _is 'platform' 'neon'
                     img(src="https://img.icons8.com/neon/48/000000/#{commonName}.png")
-                else if _is 'platform' 'wanicon'
-                    img(src="https://img.icons8.com/neon/48/000000/#{commonName}.png")
+                else if _is 'platform' 'waniconLineal'
+                    img(src="https://img.icons8.com/external-phatplus-linear-phatplus/48/000000/external-#{commonName}-#{category}-phatplus-lineal-phatplus.png")
                     // <img src="https://img.icons8.com/3d-plastilina/69/null/picture--v2.png"/>
                 else 
                     img(src="https://img.icons8.com/#{platform}/48/000000/#{commonName}.png")
                     img(src="https://icons8.com/icon/#{id}/#{commonName}")
-                    img(src="https://img.icons8.com/external-#{iconSet}-#{designer}/64/000000/external-#{commonName}-#{category}-#{iconSet}-#{designer}.png")       
+                    img(src="https://img.icons8.com/ external-#{iconSet}-#{designer} /64/000000/external-#{commonName}-#{category}-#{iconSet}-#{designer}.png")       
                 // <img src="https://img.icons8.com/external-phatplus-lineal-phatplus/64/null/external-bank-money-phatplus-lineal-phatplus.png"/>
                 // img(src="https://icons8.com/#{platform}/48/null/#{commonName}")
                 // <img src="https://img.icons8.com/ios/50/null/airdrop.png"/>
@@ -50,7 +54,8 @@ template(name='icon_item')
                 if isColor
                     .ui.label is color
                 .ui.label format: #{sourceFormat}
-        +print_this
+            +voting
+            +print_this
 
 template(name='icon_view')
     with current_doc 
