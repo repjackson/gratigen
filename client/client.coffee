@@ -53,7 +53,7 @@ moment.locale('en', {
 
 Meteor.users.find({}).observeChanges({
     changed: (id,fields)->
-        console.log 'parent doc changed,', fields
+        # console.log 'parent doc changed,', fields
         user = Meteor.users.findOne id
         changed_keys = _.keys fields 
         for key in changed_keys

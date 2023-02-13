@@ -230,6 +230,7 @@ Template.image_link_field.events
 
 Template.image_field.events
     "change input[name='upload_image']": (e) ->
+        # alert 'hi'
         files = e.currentTarget.files
         parent = Template.parentData()
         Cloudinary.upload files[0],
@@ -240,6 +241,7 @@ Template.image_field.events
                     console.error 'Error uploading', err
                 else
                     doc = Docs.findOne parent._id
+                    # console.log 'updated image'
                     if doc
                         Docs.update parent._id,
                             $set:"#{@key}":res.public_id

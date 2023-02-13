@@ -194,12 +194,12 @@ if Meteor.isClient
                 }, sort:_timestamp:-1
     Template.comments.events
         'keyup .add_comment': (e,t)->
-            console.log @
+            # console.log @
             if e.which is 13
                 comment = t.$('.add_comment').val()
                 Docs.insert
                     parent_id: @_id
-                    parent_ids:$in:[@_id]
+                    # parent_ids:$in:[@_id]
                     model:'comment'
                     parent_model:@model
                     body:comment

@@ -9,7 +9,7 @@ if Meteor.isClient
     Template.org_view.onCreated ->
         Docs.find(_id:Router.current().params.doc_id).observeChanges({
             changed: (id, fields)->
-                console.log 'parent doc changed,', fields
+                # console.log 'parent doc changed,', fields
                 changed_keys = _.keys fields 
                 for key in changed_keys
                     unless key is '_updated_timestamp'

@@ -349,15 +349,16 @@ template(name='image_field')
                     // .ui.button.call_cloud_visual
                     //     i.dna.icon
                     //     |autotag
-                // else
-                //     input(type='file' name='upload_image' accept='image/*' )
-        input#invisibleupload1.ui.invisible.file.input(type='file' name='upload_image' accept='image/*')
-        label.ui.teal.icon.big.button(for='invisibleupload1')
-            // .ui.icon.header
-            i.image.large.icon
-            i.upload.large.icon
-            // i.file.icon
-            // |   Open any file
+                else
+                    .ui.input
+                        input(type='file' name='upload_image' accept='image/*' )
+        // input#invisibleupload1.ui.invisible.file.input(type='file' name='upload_image' accept='image/*')
+        // label.ui.teal.icon.big.button(for='invisibleupload1')
+        //     // .ui.icon.header
+        //     i.image.large.icon
+        //     i.upload.large.icon
+        //     // i.file.icon
+        //     // |   Open any file
         with current_doc
             +title_link_buttons
         // input#invisibleupload2.ui.invisible.file.input(type='file')

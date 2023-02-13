@@ -158,6 +158,16 @@ if Meteor.isClient
                 $set:
                     editing:true
                     _doc_id:new_id
+        'click .new_doc': ->
+            new_id = 
+                Docs.insert 
+                    model:'post'
+                    published:false
+            Router.go "/d/post/#{new_id}"
+            Meteor.users.update Meteor.userId(),
+                $set:
+                    editing:true
+                    _doc_id:new_id
         'click .toggle_online': ->
             if Meteor.user().online
                 Meteor.users.update Meteor.userId(),
@@ -305,7 +315,7 @@ if Meteor.isClient
 
             $('.grid .column')
               .transition({
-                animation : 'jiggle',
+                animation : 'pulse',
                 duration  : 300,
                 interval  : 50
               })

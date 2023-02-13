@@ -21,12 +21,12 @@ template(name='nav')
             // else 
             //     a.icon.item.toggle_leftbar
             //         i.large.bars.icon
-        a.ui.header.item.zoomer(href='/' class="{{isActivePath '/'}}" )
+        a.item.zoomer(href='/' class="{{isActivePath '/'}}" )
             // +i name='network'
             
             // i.large.home.icon
             img.ui.mini.inline.compact.image(src="/logo.png")
-            strong.mobile.hidden
+            span.mobile.hidden
                 | Gratigen
             // +top_nav_item route='my_accounts' label='accounts' icon='data-in-both-directions' color='40C057'
             // +top_nav_item route='my_orgs' icon='groups' color='83DFF4' label='organizations'
@@ -62,6 +62,8 @@ template(name='nav')
         //         a(href="#") Link 1
         //         a(href="#") Link 1
         if currentUser.admin_mode
+            a.item.new_doc 
+                i.plus.icon
             a.item(href='/tasks' title='tasks')
                 i.tasks.large.icon
         a.item(href='/users' title='users')

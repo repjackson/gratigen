@@ -49,7 +49,7 @@ Template.registerHelper 'can_take', () ->
     
     
 Template.registerHelper '_authored_docs', (user,model) ->
-    console.log user, model
+    # console.log user, model
     if user and model
         Docs.find 
             model:model
