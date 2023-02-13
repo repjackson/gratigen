@@ -15,23 +15,6 @@ Template.youtube_view.onRendered ->
         $('.ui.embed').embed();
     , 1000
 
-Template.icon_field.onCreated ->
-    @autorun => @subscribe 'icons', ->
-Template.icon_field.helpers
-    icon_results: ->
-        Docs.find
-            model:'icon'
-Template.icon_field.events
-    'keyup .search_icon': (e,t)->
-        if e.which is 13
-            val = t.$('.search_icon').val()
-            if val.length > 0
-                Meteor.call 'call_icon', val, ->
-            # parent = Template.parentData()
-            # doc = Docs.findOne parent._id
-            # if doc
-            #     Docs.update parent._id,
-            #         $set:"#{@key}":val
 
 Template.youtube_field.events
     'blur .youtube_id': (e,t)->

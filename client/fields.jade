@@ -1,25 +1,3 @@
-template(name='icon_field')
-    .ui.header icons 8 icons 
-    .ui.input 
-        input.search_icon(type='text')
-    .ui.list 
-        each icon_results
-            .item
-                with icons8
-                    +i name=name
-                    .ui.label id #{id}
-                    .ui.label name #{name}
-                    .ui.label commonName #{commonName}
-                    .ui.label category #{category}
-                    .ui.label platform #{platform}
-                    .ui.label isAnimated #{isAnimated}
-                    .ui.label isFree #{isFree}
-                    .ui.label isExternal #{isExternal}
-                    .ui.label isColor #{isColor}
-                    .ui.label sourceFormat #{sourceFormat}
-            
-                +print_this
-    
 template(name='text_field')
     if currentUser.editing
         .ui.segment
