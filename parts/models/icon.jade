@@ -3,14 +3,19 @@ template(name='icons')
         .sixteen.wide.column
             .ui.inline.header 
                 +i name='brain'
+                |#{icon_count}
                 |things
             each picked_tags_helper
-                .ui.large.active.button.unpick #{this}
+                .ui.large.active.button.unpick
+                    +icolor name=this cl=''
+                    |#{this}
             .ui.inline.icon.input
                 i.search.icon
                 input.search_icon(type='text' placeholder='name...')
             each icon_tag_results 
                 .ui.basic.button.pick 
+                    span.ginvert
+                        +icolor name=name
                     +i name=name
                     |#{name}
                     small #{count}

@@ -23,8 +23,8 @@ body {
 
 .button:active {
   background-color: #3e8e41;
-  box-shadow: 0 5px #666;
-  transform: translateY(4px);
+  box-shadow: 0 5px #666 !important;
+  transform: translateY(4px) !important;
 }
 
 /*.button:after {*/
@@ -271,8 +271,9 @@ img, .button, .selector, .card, p, .header, .item, .image, .fade, .accordion{
   /*filter: invert(1) !important;*/
 }
 
-.invert, .ui.image, .toast, .progress, .message{
-  /*filter: invert(1) !important;*/
+/*.invert, .ui.image, .toast, .progress, .message{*/
+.ginvert{
+  filter: invert(1) !important;
 }
 
 .hscroll{

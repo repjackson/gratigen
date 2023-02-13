@@ -5,8 +5,9 @@ Router.route '/icons', (->
 
 if Meteor.isClient
     Template.icons.onCreated ->
-        @autorun => Meteor.subscribe 'icons', ->
+        @autorun => Meteor.subscribe 'icons', picked_tags.array(),->
         @autorun => Meteor.subscribe 'icon_facets', picked_tags.array(), ->
+        @autorun => Meteor.subscribe 'icon_counter', ->
             
     Template.icons.helpers
         picked_tags_helper: ->
@@ -23,6 +24,8 @@ if Meteor.isClient
     Template.icon_field.onCreated ->
         # @autorun => @subscribe 'icons', ->
     Template.icon_field.helpers
+        icon_count: -> Counts.get('icon_count')
+
         icon_results: ->
             Docs.find
                 model:'icon'
@@ -65,13 +68,18 @@ if Meteor.isClient
                 #     Docs.update parent._id,
                 #         $set:"#{@key}":val
     
-if Meteor.isServer            
-    Meteor.publish 'icons', ->
+if Meteor.isServer   
+    Meteor.publish 'icon_counter', ->
+      Counts.publish this, 'icon_counter', Docs.find({model:'artist'})
+      return undefined    # otherwise coffeescript returns a Counts.publish
+    
+    Meteor.publish 'icons', (picked_tags=[])->
         user = Meteor.user()
+        match = {model:'icon'}
+        if picked_tags.length > 0 then match.tags = $all: picked_tags
+        
         limit = if user._limit then user._limit else 20
-        Docs.find {
-            model:'icon'
-        },{
+        Docs.find match,{
             limit:limit
             sort:_timestamp:-1
         }
@@ -153,7 +161,7 @@ if Meteor.isServer
                 { $match: _id: $nin: picked_tags }
                 { $sort: count: -1, _id: 1 }
                 { $match: count: $lt: total_count }
-                { $limit: 15}
+                { $limit: 42}
                 { $project: _id: 0, name: '$_id', count: 1 }
                 ]
             # console.log 'theme tag_cloud, ', tag_cloud
@@ -165,24 +173,24 @@ if Meteor.isServer
                     model:'tag'
                     index: i
                     
-            category_cloud = Docs.aggregate [
-                { $match: match }
-                { $project: "category": 1 }
-                # { $unwind: "$tags" }
-                { $group: _id: '$category', count: $sum: 1 }
-                # { $match: _id: $nin: picked_tags }
-                { $sort: count: -1, _id: 1 }
-                { $match: count: $lt: total_count }
-                { $limit: 15}
-                { $project: _id: 0, name: '$_id', count: 1 }
-                ]
-            # console.log 'themecategory_cloud, ',category_cloud
-            category_cloud.forEach (category, i) ->
-                # console.log category
-                self.added 'results', Random.id(),
-                    name: category.name
-                    count: category.count
-                    model:'category'
-                    index: i
+            # category_cloud = Docs.aggregate [
+            #     { $match: match }
+            #     { $project: "category": 1 }
+            #     # { $unwind: "$tags" }
+            #     { $group: _id: '$category', count: $sum: 1 }
+            #     # { $match: _id: $nin: picked_tags }
+            #     { $sort: count: -1, _id: 1 }
+            #     { $match: count: $lt: total_count }
+            #     { $limit: 15}
+            #     { $project: _id: 0, name: '$_id', count: 1 }
+            #     ]
+            # # console.log 'themecategory_cloud, ',category_cloud
+            # category_cloud.forEach (category, i) ->
+            #     # console.log category
+            #     self.added 'results', Random.id(),
+            #         name: category.name
+            #         count: category.count
+            #         model:'category'
+            #         index: i
                     
             self.ready()
