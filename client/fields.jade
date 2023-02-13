@@ -45,20 +45,6 @@ template(name='text_field')
             .f14 #{field_value}
             
             
-// template(name='icon_field')
-    // if currentUser.editing
-    //     .ui.segment
-    //         div
-    //         if icon
-    //             i.grey.icon(class=icon)
-    //             // +i name=icon
-    //         .ui.inline.small.header
-    //             |icon editor
-    //         if currentUser.editing
-    //             .ui.input
-    //                 input.edit_text(type='text' value=field_value placeholder=placeholder autocomplete="off")
-    //         result
-            
 template(name='location_field')
     if currentUser.editing
         .ui.segment
@@ -294,9 +280,9 @@ template(name='ismall')
 //         https://icons8.com/icon/hvQTxi4UrDQc/apple
 //         https://icons8.com/icon/hvQTxi4UrDQc/apple
 template(name='ilarge')
-            // img(src="https://img.icons8.com/ios/24/#{color}/#{name}.png" class=cl title=title)
-            // img.ui.inline.gimage(src="https://img.icons8.com/ios/96/#{color}/#{name}.png" title=title)
-            if cl.length
+    // img(src="https://img.icons8.com/ios/24/#{color}/#{name}.png" class=cl title=title)
+    // img.ui.inline.gimage(src="https://img.icons8.com/ios/96/#{color}/#{name}.png" title=title)
+    if cl.length
         if color
             img.gicon(src="https://img.icons8.com/ios/96/#{color}/#{name}.png" class=cl title=title)
         else 
