@@ -109,6 +109,11 @@ template(name='doc_view')
                     +text_field key='title' view_classes='ui center aligned inline huge header'
                     // .ui.centered.inline.huge.center.aligned.header
                     //     |#{title}
+                    +author_info
+                    +creation_info
+                    if currentUser.admin_mode
+                        +viewing
+                        +voting
                 .four.wide.right.aligned.column
                     +subscribe_button
                     +bookmark_button

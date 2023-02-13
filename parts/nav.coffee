@@ -26,7 +26,7 @@ if Meteor.isServer
 if Meteor.isClient 
     Template.nav.onCreated ->
         @autorun => Meteor.subscribe 'me', ->
-        # @autorun => Meteor.subscribe 'all_users', ->
+        @autorun => Meteor.subscribe 'all_users', ->
         # @autorun => Meteor.subscribe 'my_drafts', ->
         @autorun => Meteor.subscribe 'my_current_doc', ->
         
@@ -306,8 +306,8 @@ if Meteor.isClient
             $('.grid .column')
               .transition({
                 animation : 'jiggle',
-                duration  : 500,
-                interval  : 400
+                duration  : 300,
+                interval  : 50
               })
             ;
 

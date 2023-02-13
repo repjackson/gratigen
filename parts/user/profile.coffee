@@ -40,6 +40,14 @@ if Meteor.isClient
             if current_user
                 Meteor.users.update current_user._id, 
                     $inc: points:@amount
+            Docs.insert 
+                model:'transfer'
+                amount_points:10
+                amount_credit:.01
+                target_user_id: current_user._id
+                target_username:current_user.username
+                # target_ego_id: current_user._id
+                # target_egoname:current_user.current_
 
     Template.profile.onCreated ->
         @autorun -> Meteor.subscribe 'user_from_username', Router.current().params.username, ->

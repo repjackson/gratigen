@@ -78,9 +78,9 @@ template(name='user_credit')
                     each user_deposits
                         .item 
                             .content
-                                .header 
-                                    |$#{amount}
                                 .description 
+                                    .ui.inline.header 
+                                        |$#{amount}
                                     +print_this
                                     |#{when} {{long_date _timestamp}}
                                     //- if is_dev
