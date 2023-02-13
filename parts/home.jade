@@ -543,8 +543,8 @@ template(name='my_things')
     
 template(name='eft_filter')
     a.ui.header.item.toggle_item.invert(style="color:##{color}" class=side_item_class)
-        |#{label}
-        i.icon(class=icon)
+        span.glabel #{label}
+        i.gicon(class=icon)
         // if session_is 'expand_leftbar' true
         
         // if is_toggled

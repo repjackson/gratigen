@@ -81,12 +81,18 @@ body {
     /*color: white !important;*/
     filter: invert(.9) !important;
 }
-.dark-mode .image{
+.dark-mode > .nav{
     filter: invert(.9) !important;
 }
-.dark-mode img{
-    /*filter: invert(0) !important;*/
+.dark-mode .image{
+    filter: invert(1) !important;
 }
+.dark-mode .gicon{
+    filter: invert(1) !important;
+}.dark-mode .glabel{
+    filter: invert(1) !important;
+}
+
   
   
 .invisible {

@@ -576,6 +576,10 @@ if Meteor.isServer
             
             
 if Meteor.isClient
+    Router.route '/bank/', (->
+        @layout 'layout'
+        @render 'bank'
+        ), name:'bank'
     Router.route '/transfers/', (->
         @layout 'layout'
         @render 'transfers'

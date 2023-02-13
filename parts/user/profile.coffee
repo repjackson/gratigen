@@ -18,7 +18,7 @@ if Meteor.isClient
 
     Template.profile_section.onCreated ->
         # reactivevars are like Session.get() but template specific 
-        @expanded = new ReactiveVar true
+        @expanded = new ReactiveVar false
         @loading = new ReactiveVar false
     Template.profile_section.helpers 
         is_expanded: -> Template.instance().expanded.get()

@@ -600,13 +600,14 @@ template(name='ai')
 
 
 template(name='block')
-    .ui.grid
+    .ui.grid.segment(class=color)
+        // .one.inverted.column.row.toggle_expanded.zoomer.pointer(title='expand' class=color)
         .one.inverted.column.row.toggle_expanded.zoomer.pointer(title='expand')
             .column
-                .ui.header(class=color)
-                    if icon
-                        +i name=icon color='000000'
-                        // i.large.icon(class=icon)
+                if icon
+                    +ismall name=icon color='000000'
+                .ui.inline.header(class=color)
+                    // i.large.icon(class=icon)
                     // | #{model}s
                     if title
                         strong #{title}

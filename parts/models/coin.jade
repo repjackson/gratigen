@@ -1,3 +1,12 @@
+template(name='bank')
+    .ui.stackable.padded.grid 
+        .sixteen.wide.column
+            .ui.big.header 
+                +i name='bank'
+                |bank
+            +block template='transfers'
+
+
 template(name='transfers')
     .ui.stackable.padded.grid
         .sixteen.wide.column
