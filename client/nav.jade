@@ -36,7 +36,7 @@ template(name='nav')
             // +top_nav_item route='my_tasks' icon='task' color='B785E1' label='tasks'
             // +top_nav_item route='my_resources' icon='car' color='FD7E14' label='resources'
             // +top_nav_item route='my_skills' icon='wrench' color='ff0000' label='skills'
-            +top_nav_item route='bank' label='bank' icon='bank' color='1255B8'
+        +top_nav_item route='bank' label='bank' icon='bank' color='1255B8'
             //accounts gold-bars
     
         if currentUser.admin
@@ -220,7 +220,7 @@ template(name='add_doc')
                     |save #{model}
                 //people
                 // +youtube_id
-                +youtube_edit key='youtube_id' label='youtube id'
+                +youtube_field key='youtube_id' label='youtube id'
                 // +youtube_view
                 +html_field key='body' label='body'
     

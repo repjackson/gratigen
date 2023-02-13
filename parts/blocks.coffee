@@ -89,7 +89,7 @@ if Meteor.isClient
                     displayTime: 'auto',
                     position: "bottom right"
                 )
-                $(e.currentTarget).closest('.button').transition('tada',1000)
+                $(e.currentTarget).closest('.button').transition('pulse',1000)
             else 
                 Meteor.users.update Meteor.userId(), 
                     $addToSet: 
@@ -102,7 +102,7 @@ if Meteor.isClient
                     displayTime: 'auto',
                     position: "bottom right"
                 )
-                $(e.currentTarget).closest('.button').transition('tada',1000)
+                $(e.currentTarget).closest('.button').transition('pulse',1000)
                 
    
     Template.subscribe_button.helpers
@@ -125,7 +125,7 @@ if Meteor.isClient
                     displayTime: 'auto',
                     position: "bottom right"
                 )
-                $(e.currentTarget).closest('.button').transition('tada',1000)
+                $(e.currentTarget).closest('.button').transition('pulse',1000)
             else 
                 Meteor.users.update Meteor.userId(), 
                     $addToSet: 
@@ -138,7 +138,7 @@ if Meteor.isClient
                     displayTime: 'auto',
                     position: "bottom right"
                 )
-                $(e.currentTarget).closest('.button').transition('tada',1000)
+                $(e.currentTarget).closest('.button').transition('pulse',1000)
                 
    
     Template.related_docs.onRendered ->

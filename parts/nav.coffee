@@ -175,10 +175,10 @@ if Meteor.isClient
                         online:false
                         last_online_timestamp:Date.now()
                 $('body').toast(
-                    showIcon: 'eye'
-                    message: 'online'
+                    showIcon: 'eye slash'
+                    message: 'offline'
                     # showProgress: 'bottom'
-                    class: 'success'
+                    class: 'info'
                     displayTime: 'auto',
                     position: "bottom right"
                 )
@@ -189,10 +189,10 @@ if Meteor.isClient
                         online:true
                         last_offline_timestamp:Date.now()
                 $('body').toast(
-                    showIcon: 'eye slash'
-                    message: 'offline'
+                    showIcon: 'eye'
+                    message: 'online'
                     # showProgress: 'bottom'
-                    class: 'info'
+                    class: 'success'
                     displayTime: 'auto',
                     position: "bottom right"
                 )

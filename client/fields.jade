@@ -1,3 +1,12 @@
+template(name='icon_field')
+    .ui.header icons 8 icons 
+    .ui.input 
+        input.search_icon(type='text')
+    .ui.list 
+        each icon_results
+            .item #{title}
+                +print_this
+    
 template(name='text_field')
     if currentUser.editing
         .ui.segment
@@ -14,7 +23,7 @@ template(name='text_field')
                     |#{key}
                     //- +clear_value
             if currentUser.editing
-                .ui.icon.large.fluid.input
+                .ui.icon.input
                     input.edit_text(type='text' value=field_value placeholder=placeholder autocomplete="off")
     else 
         if view_classes
@@ -22,6 +31,20 @@ template(name='text_field')
         else 
             .f14 #{field_value}
             
+            
+// template(name='icon_field')
+    // if currentUser.editing
+    //     .ui.segment
+    //         div
+    //         if icon
+    //             i.grey.icon(class=icon)
+    //             // +i name=icon
+    //         .ui.inline.small.header
+    //             |icon editor
+    //         if currentUser.editing
+    //             .ui.input
+    //                 input.edit_text(type='text' value=field_value placeholder=placeholder autocomplete="off")
+    //         result
             
 template(name='location_field')
     if currentUser.editing
@@ -49,7 +72,7 @@ template(name='location_field')
         else 
             .f14 #{field_value}
 
-template(name='youtube_edit')
+template(name='youtube_field')
     with ..
         +boolean_field key='has_youtube' label='attach youtube' icon='youtube'
         if has_youtube
@@ -253,7 +276,7 @@ template(name='i')
 //     img(src="https://img.icons8.com/office/48/000000/#{name}.png" class=cl title=title)
 template(name='ismall')
     // img(src="https://img.icons8.com/ios/24/#{color}/#{name}.png" class=cl title=title)
-    img.ui.inline.image(src="https://img.icons8.com/ios/24/#{color}/#{name}.png" title=title)
+    img.ui.inline.gimage(src="https://img.icons8.com/ios/24/#{color}/#{name}.png" title=title)
 // template(name='ivit')
 //         https://icons8.com/icon/hvQTxi4UrDQc/apple
 //         https://icons8.com/icon/hvQTxi4UrDQc/apple
@@ -345,8 +368,9 @@ template(name='image_field')
                     //- label Image
                     a(href="{{c.url field_value }}" target='_window')
                         img.ui.small.centered.fluid.rounded.image(src="{{c.url field_value height=500 gravity='face' crop='fill'}}" class=cl)
-                    a#remove_photo.ui.right.corner.link.label
+                    a#remove_photo.ui.red.button
                         i.remove.link.icon
+                        |remove
                     // .ui.button.call_cloud_visual
                     //     i.dna.icon
                     //     |autotag

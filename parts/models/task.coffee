@@ -72,7 +72,7 @@ if Meteor.isClient
                 $('.quickadd_task').val('')
         'click .checkbox': (e)->
             # console.log e
-            $(e.currentTarget).closest('.item').transition('tada',1000)
+            $(e.currentTarget).closest('.item').transition('pulse',1000)
             $('body').toast({
                 title: "#{@title} marked completed"
                 # message: 'yeay'

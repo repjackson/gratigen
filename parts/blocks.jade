@@ -602,10 +602,11 @@ template(name='ai')
 template(name='block')
     .ui.grid.segment(class=color)
         // .one.inverted.column.row.toggle_expanded.zoomer.pointer(title='expand' class=color)
-        .one.inverted.column.row.toggle_expanded.zoomer.pointer(title='expand')
-            .column
+        .inverted.row.toggle_expanded.pointer(title='expand')
+            .two.wide.column
                 if icon
                     +ismall name=icon color='000000'
+            .fourteen.wide.column
                 .ui.inline.header(class=color)
                     // i.large.icon(class=icon)
                     // | #{model}s
@@ -613,8 +614,6 @@ template(name='block')
                         strong #{title}
                     else 
                         |#{template}
-        .one.column.row
-            .column
                 if is_expanded
                     // i.fullscreen.circular.link.icon.toggle_fullscreen
                     +Template.dynamic template=template

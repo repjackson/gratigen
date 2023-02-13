@@ -13,10 +13,13 @@ body {
     animation: 1s ease-out 0s 1 fadein;
 }
 .one.column.row {
-    border-radius: 7px !important;
-    padding: 5px !important;
+    border-radius: 10px !important;
+    padding: 10px !important;
 }
   
+.ui.segment {
+    border-radius: 10px !important;
+}
 .ui.card {
   /* Add shadows to create the "card" effect */
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2) !important;
@@ -89,6 +92,12 @@ body {
 }
 .dark-mode .gicon{
     filter: invert(1) !important;
+}
+.dark-mode .toast{
+    filter: invert(1) !important;
+}
+.gicon{
+    /*filter: invert(1) !important;*/
 }.dark-mode .glabel{
     filter: invert(1) !important;
 }
@@ -311,7 +320,7 @@ img, .button, .selector, .card, p, .header, .item, .image, .fade, .accordion{
     
 }
 .zoomer{
-    transition: transform 1s;
+    transition: transform .75s;
     
     /*transition: scale 1s !important;*/
     
@@ -340,7 +349,7 @@ img, .button, .selector, .card, p, .header, .item, .image, .fade, .accordion{
     transition: scale 1s !important;
 }
 .zoomer:hover {
-    box-shadow: 2px 2px 2px 2px rgba(50, 50, 100, 0.1) !important; 
+    /*box-shadow: 2px 2px 2px 2px rgba(50, 50, 100, 0.1) !important; */
     /*box-shadow: inset 0px 0px 10px 10px rgba(250,250,250,0.8);*/
     /*border-radius: 15px !important;*/
     /*transition: scale 1s; */
