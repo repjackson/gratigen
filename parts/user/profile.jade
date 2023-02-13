@@ -201,7 +201,7 @@ template(name='user_roles')
     .ui.small.header 
         i.pencil.icon
         |roles you authored
-    .ui.selection.animated.list
+    .ui.selection.animated.list.smallscroll
         each my_roles
             +model_item_small
         // each _authored_docs current_user 'role'
@@ -209,7 +209,7 @@ template(name='user_roles')
     .ui.small.header
         i.checkmark.icon
         |roles you hold
-    .ui.selection.animated.list
+    .ui.selection.animated.list.smallscroll
         each user_taken_roles current_user
             +role_item_small
             
@@ -536,7 +536,7 @@ template(name='user_badges')
     .ui.center.aligned.header 
         +i name='prize'
         |user badges
-    .ui.list
+    .ui.list.smallscroll
         each user_badges
             a.ui.item(href="/d/badge/#{_id}")
 

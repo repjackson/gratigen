@@ -131,7 +131,8 @@ Meteor.publish 'all_users', ()->
             first_name:1
             last_name:1
             tags:1
-    
+            online:1
+            online_last_timestamp:1
     
 Meteor.publish 'model_docs', (model,limit=10)->
     if limit

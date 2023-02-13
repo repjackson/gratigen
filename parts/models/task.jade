@@ -104,7 +104,8 @@ template(name='tasks')
         
             span.ui.doubling.cards.scrolling
                 each task_docs
-                    +task_card
+                    .ui.card
+                        +task_card
                     
                     
 template(name='my_tasks')

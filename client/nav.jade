@@ -21,12 +21,12 @@ template(name='nav')
             // else 
             //     a.icon.item.toggle_leftbar
             //         i.large.bars.icon
-        a.item.zoomer(href='/' class="{{isActivePath '/'}}" )
+        a.ui.header.item.zoomer(href='/' class="{{isActivePath '/'}}" )
             // +i name='network'
             
             // i.large.home.icon
             img.ui.mini.inline.compact.image(src="/logo.png")
-            span.mobile.hidden
+            strong.mobile.hidden
                 | Gratigen
             // +top_nav_item route='my_accounts' label='accounts' icon='data-in-both-directions' color='40C057'
             // +top_nav_item route='my_orgs' icon='groups' color='83DFF4' label='organizations'
