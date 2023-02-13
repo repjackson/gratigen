@@ -27,9 +27,9 @@ if Meteor.isClient
             Docs.find
                 model:'icon'
     Template.icons.events
-        'keyup .unpick': (e,t)->
-            picked_tags.pull @valueOf()
-        'keyup .pick': (e,t)->
+        'click .unpick': (e,t)->
+            picked_tags.remove @valueOf()
+        'click .pick': (e,t)->
             picked_tags.push @name
         'keyup .search_icon': (e,t)->
             if e.which is 13
@@ -68,7 +68,7 @@ if Meteor.isClient
 if Meteor.isServer            
     Meteor.publish 'icons', ->
         user = Meteor.user()
-        limit = if user._limit then user._limit else 50
+        limit = if user._limit then user._limit else 20
         Docs.find {
             model:'icon'
         },{

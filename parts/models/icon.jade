@@ -10,7 +10,10 @@ template(name='icons')
                 i.search.icon
                 input.search_icon(type='text' placeholder='name...')
             each icon_tag_results 
-                .ui.basic.button.pick #{name}
+                .ui.basic.button.pick 
+                    +i name=name
+                    |#{name}
+                    small #{count}
         .four.column.row 
             each icons_docs
                 .column
