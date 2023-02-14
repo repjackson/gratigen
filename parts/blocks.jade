@@ -199,35 +199,27 @@ template(name='bookmark_button')
             +user_pill
 
 template(name='comments')
-    .ui.segment
-        details.ui.fluid.accordion
-            summary.title.active
-                // i.dropdown.icon
-                .ui.inline.header 
-                    i.chat.icon
-                    |Comments
-            .content.active
-                if currentUser
-                    .ui.fluid.icon.large.input
-                        input.add_comment(type='text' placeholder='write a comment')
-                .ui.comments
-                    each doc_comments
-                        .comment
-                            a.avatar(href="/user/#{_author.username}") 
-                                img.ui.avatar.image(src="{{c.url _author.image_id width=200 height=200 gravity='face' crop='fill'}}")
-                            .ui.popup
-                                img.ui.image(src="{{c.url _author.image_id width=200 height=200 gravity='face' crop='fill'}}")
-                            
-                            .content
-                                a.author(href="/user/#{_author.username}") 
-                                    |#{_author.username}
-                                .text #{body}
-                                .metadata
-                                    .date #{when}
-                                    if currentUser
-                                        +voting_small
-                                        if currentUser.admin_mode
-                                            +remove_button
+    if currentUser
+        .ui.fluid.icon.large.input
+            input.add_comment(type='text' placeholder='write a comment')
+    .ui.comments
+        each doc_comments
+            .comment
+                a.avatar(href="/user/#{_author.username}") 
+                    img.ui.avatar.image(src="{{c.url _author.image_id width=200 height=200 gravity='face' crop='fill'}}")
+                .ui.popup
+                    img.ui.image(src="{{c.url _author.image_id width=200 height=200 gravity='face' crop='fill'}}")
+                
+                .content
+                    a.author(href="/user/#{_author.username}") 
+                        |#{_author.username}
+                    .text #{body}
+                    .metadata
+                        .date #{when}
+                        if currentUser
+                            +voting_small
+                            if currentUser.admin_mode
+                                +remove_button
                                 
                                 
 template(name='reviews')

@@ -10,7 +10,7 @@ template(name='profile')
                 //     i.chevron.left.icon
                     +i name='groups'
                     |users
-                // .spacer
+                // .spaceromm
                 if currentUser.editing
                     +image_field key='image_id' label='profile image'
                     div
@@ -134,7 +134,8 @@ template(name='profile')
                     // +user_dashboard
                     // user dash is old version below, some good stuff, need 
                     // to make each section load dynamically, otherwise will bog down
-                    +comments
+                    .column
+                        +block template='comments' icon='chat' label='comments' color='blue'
 
 
 
