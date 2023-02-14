@@ -200,8 +200,9 @@ if Meteor.isClient
             
 if Meteor.isServer 
     Meteor.publish 'user_current_doc', ->
-        Docs.find 
-            _id: Meteor.user()._doc_id
+        if Meteor.user()
+            Docs.find 
+                _id: Meteor.user()._doc_id
 if Meteor.isClient
     Template.add_doc.helpers 
         # current_doc: ->

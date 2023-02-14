@@ -99,7 +99,9 @@ if Meteor.isServer
         'call_icon':(query)->
             # query is array
             console.log 'calling icon', query
-            HTTP.get "https://search.icons8.com/api/iconsets/v5/search?term=#{query}&token=402e8373258e2ef9000ec9df86ffa46bb7ac442a", (err, response)->
+            icons8_key = Meteor.settings.private.icons8
+            console.log 'key', icons8_key
+            HTTP.get "https://search.icons8.com/api/iconsets/v5/search?term=#{query}&token=#{icons8_key}", (err, response)->
                 if err 
                     # then Throw new Meteor.Error
                     console.log err
@@ -110,7 +112,7 @@ if Meteor.isServer
                     # if data.icons.length 
                     console.log query, typeof query
                     # if typeof query is 'array'
-                    for icon in data.icons 
+                    for icon in data.icons[..42]
                         found_icon_doc = 
                             Docs.findOne 
                                 model:'icon'

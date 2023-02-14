@@ -16,11 +16,11 @@ if Meteor.isClient
 
 if Meteor.isServer 
     Meteor.publish 'my_history_docs', ->
-        if Meteor.user().history_ids
+        if Meteor.user() and Meteor.user().history_ids
             Docs.find
                 _id:$in:Meteor.user().history_ids
     Meteor.publish 'my_history_users', ->
-        if Meteor.user().history_ids
+        if Meteor.user() and Meteor.user().history_ids
             Meteor.users.find 
                 _id:$in:Meteor.user().history_ids
 if Meteor.isClient 

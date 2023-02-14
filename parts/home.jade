@@ -20,6 +20,10 @@ template(name='home')
             // .ui.fluid.small.button.toggle_leftbar
             //     i.chevron.left.icon
             // .ui.hidden.divider
+            a.ui.fluid.icon.basic.circular.large.button(href="/icons" title='gai!')
+                +icolor name='brain'
+                div
+                |gai browser
             +dash_user_info
             if currentUser.admin_mode
                 .ui.segment.shadow.mobile.hidden
