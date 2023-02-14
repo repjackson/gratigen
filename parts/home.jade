@@ -47,8 +47,8 @@ template(name='home')
                 +eft_filter color="000000" icon='ambulance' label='emergency'
             // if session_is 'expand_leftbar' true
             .ui.vertical.fluid.invert.menu.mobile.hidden
-                +eft_filter color="ff6fd9" icon='food' label='food'
-                +eft_filter color="d27bf8" icon='home' label='housing'
+                +eft_filter color="FF73EA" icon='food' label='food'
+                +eft_filter color="B785E1" icon='home' label='housing'
                 +eft_filter color="6b0fb9" icon='tshirt' label='clothing'
                 +eft_filter color="0000f7" icon='smile' label='wellness'
                 +eft_filter color="00ddff" icon='car' label='travel'
@@ -600,6 +600,6 @@ template(name='dash_user_info')
            
 template(name='filter_model')
     .ui.compact.circular.secondary.basic.small.button.pick_model.zoomer(class=button_class)
-        +i name=icon color=color cl='ui avatar inline image'
+        +i name=icon color=color cl='ui mini inline image'
         // i.exchange.large.icon
         |#{model}

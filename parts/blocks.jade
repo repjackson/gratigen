@@ -606,7 +606,9 @@ template(name='block')
                         strong #{title}
                     else 
                         |#{template}
-                if is_expanded
+        if is_expanded
+            .row
+                .sixteen.wide.scrolling.column
                     // i.fullscreen.circular.link.icon.toggle_fullscreen
                     +Template.dynamic template=template
         

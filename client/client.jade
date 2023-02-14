@@ -247,7 +247,8 @@ template(name='footer')
             // page chat by default, maybe replace individual template calls
             with current_doc
                 +print_this
-                +comments
+                +block template='comments' label='comments' icon='chat' color='blue'
+                
             .ui.header 
                 i.shield.icon
                 |footer 

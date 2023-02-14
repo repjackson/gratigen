@@ -188,20 +188,23 @@ if Meteor.isClient
                 parent = Docs.findOne Template.parentData()._id
             if parent
                 Docs.find {
-                    parent_id:parent._id
-                    # parent_ids:$in:[parent._id]
+                    # parent_id:parent._id
+                    parent_ids:$in:[parent._id]
                     model:'comment'
                 }, sort:_timestamp:-1
     Template.comments.events
         'keyup .add_comment': (e,t)->
-            # console.log @
+            console.log Template.parentData(1)
+            parent = Template.parentData(2).data.data
+            console.log Template.parentData(2).data.data
+            console.log Template.parentData(3)
             if e.which is 13
                 comment = t.$('.add_comment').val()
                 Docs.insert
-                    parent_id: @_id
-                    parent_ids:[@_id]
+                    parent_id: parent._id
+                    parent_ids:[parent._id]
                     model:'comment'
-                    parent_model:@model
+                    parent_model:parent.model
                     body:comment
                 t.$('.add_comment').val('')
                 t.$('.add_comment').transition('bounce', 1000)
@@ -879,8 +882,8 @@ if Meteor.isServer
         limit = if limit then limit else 10
         Docs.find {
             model:model
-            parent_id:parent_id
-            # parent_ids:$in:[parent_id]
+            # parent_id:parent_id
+            parent_ids:$in:[parent_id]
         }, limit:limit
         
         
