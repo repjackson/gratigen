@@ -30,14 +30,14 @@ template(name='icons')
                         |#{name}
                         // small #{count}
                 // .ui.inline.header titles
-                each title_results 
-                    .ui.basic.compact.circular.icon.button.pick_title(title="#{name} #{count}")
-                        span.ginvert
-                            +gnameicon name=name
-                        // +i name=name
-                        div
-                        |#{name}
-                        // small #{count}
+                // each title_results 
+                //     .ui.basic.compact.circular.icon.button.pick_title(title="#{name} #{count}")
+                //         span.ginvert
+                //             +gnameicon name=name
+                //         // +i name=name
+                //         div
+                //         |#{name}
+                //         // small #{count}
         .row.scrolling
             .ui.four.stackable.centered.cards
                 each icons_docs
@@ -46,7 +46,7 @@ template(name='icons')
 template(name='gicon')           
     with found_icon_doc
         // +print_this
-        img(src="https://img.icons8.com/#{icons8.platform}/48/000000/#{icons8.commonName}.png")
+        img(src="https://img.icons8.com/#{icons8.platform}/96/000000/#{icons8.commonName}.png")
         
 template(name='gnameicon')           
     with found_icon_doc
