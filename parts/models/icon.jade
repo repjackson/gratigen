@@ -5,9 +5,15 @@ template(name='icons')
                 +i name='brain'
                 |#{icon_count}
                 |things
+            .ui.inline.header 
+                +icolor name='the-flash-head'
+                |#{cam_count}
+            .ui.inline.header 
+                +icolor name='batman'
+                |#{eric_count}
             each picked_tags_helper
                 .ui.large.active.button.unpick
-                    +icolor name=this cl=''
+                    +gicon name=this cl=''
                     |#{this}
             .ui.inline.icon.input
                 i.search.icon
@@ -16,10 +22,11 @@ template(name='icons')
                 .ui.basic.compact.circular.icon.button.pick(title=count)
                     span.ginvert
                         // +i name=name
-                        +icolor name=name
+                        +gicon name=name
                     // +i name=name
                     |#{name}
                     // small #{count}
+            div
             .ui.inline.header titles
             each title_results 
                 .ui.basic.compact.circular.icon.button.pick_title(title=count)
@@ -33,6 +40,11 @@ template(name='icons')
                 each icons_docs
                     +icon_item 
         
+                
+template(name='gicon')                
+    img(src="https://img.icons8.com/#{platform}/48/000000/#{commonName}.png")
+    
+    
                 
 template(name='icon_item')
     .ui.card

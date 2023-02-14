@@ -8,9 +8,13 @@ if Meteor.isClient
         @autorun => Meteor.subscribe 'icons', picked_tags.array(),->
         @autorun => Meteor.subscribe 'icon_facets', picked_tags.array(), ->
         @autorun => Meteor.subscribe 'icon_counter', ->
+        @autorun => Meteor.subscribe 'eric_counter', ->
+        @autorun => Meteor.subscribe 'cam_counter', ->
             
     Template.icons.helpers
         icon_count: -> Counts.get('icon_counter')
+        cam_count: -> Counts.get('cam_counter')
+        eric_count: -> Counts.get('eric_counter')
         picked_tags_helper: ->
             picked_tags.array()
         
@@ -27,10 +31,6 @@ if Meteor.isClient
     Template.icon_field.onCreated ->
         # @autorun => @subscribe 'icons', ->
     Template.icon_field.helpers
-
-        icon_results: ->
-            Docs.find
-                model:'icon'
     Template.icon_item.events
         'click .pick_tag': ->
             console.log @
@@ -101,15 +101,22 @@ if Meteor.isClient
         #         #     Docs.update parent._id,
         #         #         $set:"#{@key}":val
     
+    Template.icon_field.onCreated ->
+        # @autorun => @subscribe 'icons', ->
+    Template.icon_field.helpers
+        icon_results: ->
+            Docs.find
+                model:'icon'
+            
 if Meteor.isServer   
     Meteor.publish 'icon_counter', ->
       Counts.publish this, 'icon_counter', Docs.find({model:'icon'})
       return undefined    # otherwise coffeescript returns a Counts.publish
     Meteor.publish 'cam_counter', ->
-      Counts.publish this, 'cam_counter', Docs.find({model:'icon',_author_username:'Dev2'})
+      Counts.publish this, 'cam_counter', Docs.find({model:'icon', _author_username:'Dev2'})
       return undefined    # otherwise coffeescript returns a Counts.publish
-    Meteor.publish 'cam_counter', ->
-      Counts.publish this, 'cam_counter', Docs.find({model:'icon',_author_username:'dev'})
+    Meteor.publish 'eric_counter', ->
+      Counts.publish this, 'eric_counter', Docs.find({model:'icon', _author_username:'dev'})
       return undefined    # otherwise coffeescript returns a Counts.publish
     
     Meteor.publish 'icons', (picked_tags=[])->
@@ -125,6 +132,14 @@ if Meteor.isServer
     Meteor.methods
         'call_icon':(query)->
             # query is array
+            # const request = require('request');
+            
+            # request('https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY', { json: true }, (err, res, body) => {
+            #   if (err) { return console.log(err); }
+            #   console.log(body.url);
+            #   console.log(body.explanation);
+            # });
+            
             console.log 'calling icon', query
             icons8_key = Meteor.settings.private.icons8
             console.log 'key', icons8_key
