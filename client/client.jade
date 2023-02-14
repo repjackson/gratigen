@@ -121,17 +121,16 @@ template(name='doc_view')
             .one.column.row.subtemplate
                 .column
                     +Template.dynamic template=doc_view_template
-            .three.column.row
+            .two.column.row
                 .column
                     // +Template.dynamic template=doc_view_template
                     +image_field key='image_id' label='image' icon='image'
                     // if currentUser.editing 
+                    +array_field key='tags' label='tags' icon='tags'
                 .column
                     +textarea_field key='body' label='body'
                     if watson 
                         +watson_view
-                .column
-                    +array_field key='tags' label='tags' icon='tags'
         if currentUser.admin_mode 
             .ui.inverted.red.segment
                 .ui.header 

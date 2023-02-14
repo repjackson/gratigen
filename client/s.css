@@ -160,7 +160,7 @@ body {
 .dark-mode > .nav{
     filter: invert(.9) !important;
 }
-.dark-mode .image{
+.dark-mode .image, .progress{
     filter: invert(1) !important;
 }
 .dark-mode .gicon{

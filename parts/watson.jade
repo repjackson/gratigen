@@ -48,15 +48,11 @@ template(name='doc_emotion')
             
             
 template(name='call_watson')
-    #call_watson.ui.basic.big.button 
+    #call_watson.ui.tertiary.big.button 
         if current_doc.watson 
             i.green.checkmark.icon
         i.chess.knight.icon
-        |analyze
-        if current_doc.watson
-            |d!
-
-
+        
 
 template(name='call_visual')
     #call_visual.ui.large.icon.button(title='analyze')
