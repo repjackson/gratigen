@@ -5,7 +5,7 @@ Router.route '/icons', (->
 
 if Meteor.isServer 
     Meteor.publish 'found_icon', (data)->
-        console.log 'found icon data', data.name
+        # console.log 'found icon data', data.name
         Docs.find {
             model:'icon'
             tags:$in:[data.name]
@@ -26,14 +26,14 @@ if Meteor.isClient
         @autorun => Meteor.subscribe 'found_icon_name', @data,->
     Template.gicon.helpers
         found_icon_doc: ->
-            console.log @
+            # console.log @
             Docs.findOne
                 model:'icon'
                 tags:$in:[@name]
                 "icons8.platform":'color'
     Template.gnameicon.helpers
         found_icon_doc: ->
-            console.log @
+            # console.log @
             Docs.findOne
                 model:'icon'
                 "icons8.name":@name
@@ -194,7 +194,7 @@ if Meteor.isServer
                 else 
                     # console.log response
                     data = response.data 
-                    console.log data.icons.length
+                    # console.log data.icons.length
                     # if data.icons.length 
                     console.log query, typeof query
                     # if typeof query is 'array'
@@ -204,13 +204,13 @@ if Meteor.isServer
                                 model:'icon'
                                 "icons8.id":icon.id
                         if found_icon_doc
-                            console.log 'found icon doc', found_icon_doc.icons8.name
+                            # console.log 'found icon doc', found_icon_doc.icons8.name
                             Docs.update found_icon_doc._id, 
                                 # $addToSet:tags:$each:query
                                 $addToSet:tags:query
                             # category
                             lowered_category = found_icon_doc.icons8.category.toLowerCase().split(',')
-                            console.log 'lowered_category',lowered_category
+                            # console.log 'lowered_category',lowered_category
                             Docs.update found_icon_doc._id, 
                                 # $addToSet:tags:$each:query
                                 $addToSet:tags:$each:lowered_category
@@ -219,11 +219,11 @@ if Meteor.isServer
                             Docs.update found_icon_doc._id, 
                                 # $addToSet:tags:$each:query
                                 $addToSet:tags:lowered_name
-                            console.log "added #{lowered_category} category to #{found_icon_doc.icons8.name}"
-                            console.log "added #{lowered_name} name to #{found_icon_doc.icons8.name}"
+                            # console.log "added #{lowered_category} category to #{found_icon_doc.icons8.name}"
+                            # console.log "added #{lowered_name} name to #{found_icon_doc.icons8.name}"
                         unless found_icon_doc 
                             tags = icon.category.toLowerCase().split(',')
-                            console.log 'new tags', tags 
+                            # console.log 'new tags', tags 
                             tags.push query
                             tags.push icon.name.toLowerCase()
                             console.log 'new tags with query and name', tags 

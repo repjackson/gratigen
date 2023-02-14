@@ -12,45 +12,42 @@ template(name='icons')
                 +icolor name='batman'
                 |#{eric_count}
             each picked_tags_helper
-                .ui.large.active.button.unpick
+                .ui.large.active.button.unpick(title=this)
                     +gicon name=this cl=''
-                    |#{this}
+                    // |#{this}
             .ui.inline.icon.input
                 i.search.icon
                 input.search_icon(type='text' placeholder='name...')
             each icon_tag_results 
-                .ui.basic.compact.circular.icon.button.pick(title=count)
+                .ui.basic.compact.circular.icon.button.pick(title="#{name} #{count}")
                     span.ginvert
                         // +i name=name
                         +gicon name=name
                     // +i name=name
-                    |#{name}
-                    small #{count}
-            div
-            .ui.inline.header titles
+                    // |#{name}
+                    // small #{count}
+            // .ui.inline.header titles
             each title_results 
-                .ui.basic.compact.circular.icon.button.pick_title(title=count)
+                .ui.basic.compact.circular.icon.button.pick_title(title="#{name} #{count}")
                     span.ginvert
                         +gnameicon name=name
                     // +i name=name
-                    |#{name}
-                    small #{count}
+                    // |#{name}
+                    // small #{count}
         .row.scrolling
             .ui.four.stackable.cards
                 each icons_docs
                     +icon_item 
-        
-                
+
 template(name='gicon')           
     with found_icon_doc
-        +print_this
+        // +print_this
         img(src="https://img.icons8.com/#{icons8.platform}/48/000000/#{icons8.commonName}.png")
+        
 template(name='gnameicon')           
     with found_icon_doc
-        +print_this
+        // +print_this
         img(src="https://img.icons8.com/#{icons8.platform}/48/000000/#{icons8.commonName}.png")
-
-
 
 template(name='icon_item')
     .ui.card
