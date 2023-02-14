@@ -113,17 +113,23 @@ if Meteor.isServer
                             Docs.update found_icon_doc._id, 
                                 # $addToSet:tags:$each:query
                                 $addToSet:tags:query
-                            lowered = found_icon_doc.icons8.category.toLowerCase()
+                            lowered = found_icon_doc.icons8.category.toLowerCase().split(',')
+                            console.log 'lowered',lowered
                             Docs.update found_icon_doc._id, 
                                 # $addToSet:tags:$each:query
-                                $addToSet:tags:lowered
+                                $addToSet:tags:$each:lowered
                             console.log "added #{lowered} to #{found_icon_doc.icons8.name}"
                         unless found_icon_doc 
+                            lowered = icon.category.toLowerCase().split(',')
+                            console.log 'new lowered', lowered 
+                            lowered.push query
+                            console.log 'new lowered with query', lowered 
+                            
                             new_icon_id = 
                                 Docs.insert 
                                     model:'icon'
                                     icons8:icon
-                                    tags:[query, icon.category.toLowerCase()]
+                                    tags:lowered
                             new_doc = Docs.findOne new_icon_id
                             console.log 'new icon doc', new_doc.icons8.name
                     #         # {
