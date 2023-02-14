@@ -3,7 +3,22 @@ Router.route '/icons', (->
     @render 'icons'
     ), name:'icons'
 
+if Meteor.isServer 
+    Meteor.publish 'found_icon', (data)->
+        console.log 'found icon data', data.name
+        Docs.find 
+            model:'icon'
+            tags:$in:[data.name]
 if Meteor.isClient
+    Template.gicon.onCreated ->
+        @autorun => Meteor.subscribe 'found_icon', @data,->
+    Template.gicon.helpers
+        found_icon_doc: ->
+            console.log @
+            Docs.findOne 
+                model:'icon'
+                
+        
     Template.icons.onCreated ->
         @autorun => Meteor.subscribe 'icons', picked_tags.array(),->
         @autorun => Meteor.subscribe 'icon_facets', picked_tags.array(), ->

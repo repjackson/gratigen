@@ -41,8 +41,9 @@ template(name='icons')
                     +icon_item 
         
                 
-template(name='gicon')                
-    img(src="https://img.icons8.com/#{platform}/48/000000/#{commonName}.png")
+template(name='gicon')           
+    with found_icon_doc
+        img(src="https://img.icons8.com/#{platform}/48/000000/#{commonName}.png")
     
     
                 
