@@ -32,6 +32,15 @@ if Meteor.isClient
             Docs.find
                 model:'icon'
     Template.icon_item.events
+        'click .pick_tag': ->
+            console.log @
+            # lowered = @icons8.name.toLowerCase()
+            picked_tags.push @valueOf()
+            Meteor.call 'call_icon', @valueOf, ->
+                
+            synth = window.speechSynthesis;
+            utterThis = new SpeechSynthesisUtterance(@valueOf())
+            synth.speak(utterThis);
         'click .search_title': (e,t)->
             console.log @
             lowered = @icons8.name.toLowerCase()

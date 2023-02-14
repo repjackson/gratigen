@@ -74,7 +74,7 @@ template(name='icon_item')
                 //     .ui.label is color
                 // .ui.label format: #{sourceFormat}
             each tags 
-                .ui.basic.label 
+                a.ui.basic.label.zoomer.pick_tag
                     +icolor name=this
                     |#{this}
             +voting
