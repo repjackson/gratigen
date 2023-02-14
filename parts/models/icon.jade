@@ -20,9 +20,9 @@ template(name='icons')
                     // +i name=name
                     |#{name}
                     // small #{count}
-            .ui.inline.header categories
-            each category_tag_results 
-                .ui.basic.compact.circular.icon.button.pick(title=count)
+            .ui.inline.header titles
+            each title_results 
+                .ui.basic.compact.circular.icon.button.pick_title(title=count)
                     span.ginvert
                         +icolor name=name
                     // +i name=name

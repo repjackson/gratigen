@@ -21,8 +21,8 @@ if Meteor.isClient
                 sort:_timestamp:-1
         icon_tag_results:->
             Results.find(model:'tag')
-        category_tag_results:->
-            Results.find(model:'category')
+        title_results:->
+            Results.find(model:'title')
                 
     Template.icon_field.onCreated ->
         # @autorun => @subscribe 'icons', ->
@@ -225,7 +225,7 @@ if Meteor.isServer
                 { $match: _id: $nin: picked_tags }
                 { $sort: count: -1, _id: 1 }
                 { $match: count: $lt: total_count }
-                { $limit: 42}
+                { $limit: 20}
                 { $project: _id: 0, name: '$_id', count: 1 }
                 ]
             # console.log 'theme tag_cloud, ', tag_cloud
@@ -237,24 +237,24 @@ if Meteor.isServer
                     model:'tag'
                     index: i
                     
-            # category_cloud = Docs.aggregate [
-            #     { $match: match }
-            #     { $project: "category": 1 }
-            #     # { $unwind: "$tags" }
-            #     { $group: _id: '$category', count: $sum: 1 }
-            #     # { $match: _id: $nin: picked_tags }
-            #     { $sort: count: -1, _id: 1 }
-            #     { $match: count: $lt: total_count }
-            #     { $limit: 15}
-            #     { $project: _id: 0, name: '$_id', count: 1 }
-            #     ]
-            # # console.log 'themecategory_cloud, ',category_cloud
-            # category_cloud.forEach (category, i) ->
-            #     # console.log category
-            #     self.added 'results', Random.id(),
-            #         name: category.name
-            #         count: category.count
-            #         model:'category'
-            #         index: i
+            title_cloud = Docs.aggregate [
+                { $match: match }
+                { $project: "icons8.name": 1 }
+                # { $unwind: "$tags" }
+                { $group: _id: "$icons8.name", count: $sum: 1 }
+                # { $match: _id: $nin: picked_tags }
+                { $sort: count: -1, _id: 1 }
+                # { $match: count: $lt: total_count }
+                { $limit: 15}
+                { $project: _id: 0, name: '$_id', count: 1 }
+                ]
+            # console.log 'themetitle_cloud, ',title_cloud
+            title_cloud.forEach (title, i) ->
+                # console.log title
+                self.added 'results', Random.id(),
+                    name: title.name
+                    count: title.count
+                    model:'title'
+                    index: i
                     
             self.ready()
