@@ -131,9 +131,13 @@ body {
 .dark-mode .toast{
     filter: invert(1) !important;
 }
+.dark-mode .ginvert{
+    filter: invert(1) !important;
+}
 .gicon{
     /*filter: invert(1) !important;*/
-}.dark-mode .glabel{
+}
+.dark-mode .glabel{
     filter: invert(1) !important;
 }
 
