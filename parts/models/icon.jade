@@ -1,41 +1,45 @@
 template(name='icons')
     .ui.stackable.padded.grid 
-        .sixteen.wide.column
-            .ui.inline.header 
-                +i name='brain'
-                |#{icon_count}
-                |things
-            .ui.inline.header 
-                +icolor name='the-flash-head'
-                |#{cam_count}
-            .ui.inline.header 
-                +icolor name='batman'
-                |#{eric_count}
-            each picked_tags_helper
-                .ui.large.active.button.unpick(title=this)
-                    +gicon name=this cl=''
-                    // |#{this}
-            .ui.inline.icon.input
-                i.search.icon
-                input.search_icon(type='text' placeholder='name...')
-            each icon_tag_results 
-                .ui.basic.compact.circular.icon.button.pick(title="#{name} #{count}")
-                    span.ginvert
+        .row
+            .sixteen.wide.center.aligned.column
+                .ui.inline.header 
+                    +i name='brain'
+                    |#{icon_count}
+                    |things
+                .ui.inline.header 
+                    +icolor name='the-flash-head'
+                    |#{cam_count}
+                .ui.inline.header 
+                    +icolor name='batman'
+                    |#{eric_count}
+                each picked_tags_helper
+                    .ui.large.active.tertiary.button.unpick(title=this)
+                        +gicon name=this cl=''
+                        div
+                        |#{this}
+                .ui.inline.icon.input
+                    i.search.icon
+                    input.search_icon(type='text' placeholder='name...')
+                each icon_tag_results 
+                    .ui.basic.compact.circular.icon.button.pick(title="#{name} #{count}")
+                        span.ginvert
+                            // +i name=name
+                            +gicon name=name
                         // +i name=name
-                        +gicon name=name
-                    // +i name=name
-                    // |#{name}
-                    // small #{count}
-            // .ui.inline.header titles
-            each title_results 
-                .ui.basic.compact.circular.icon.button.pick_title(title="#{name} #{count}")
-                    span.ginvert
-                        +gnameicon name=name
-                    // +i name=name
-                    // |#{name}
-                    // small #{count}
+                        div
+                        |#{name}
+                        // small #{count}
+                // .ui.inline.header titles
+                each title_results 
+                    .ui.basic.compact.circular.icon.button.pick_title(title="#{name} #{count}")
+                        span.ginvert
+                            +gnameicon name=name
+                        // +i name=name
+                        div
+                        |#{name}
+                        // small #{count}
         .row.scrolling
-            .ui.four.stackable.cards
+            .ui.four.stackable.centered.cards
                 each icons_docs
                     +icon_item 
 

@@ -154,20 +154,21 @@ if Meteor.isClient
             
 if Meteor.isServer   
     Meteor.publish 'icon_counter', ->
-      Counts.publish this, 'icon_counter', Docs.find({model:'icon'})
+      Counts.publish this, 'icon_counter', Docs.find({model:'icon',"icons8.platform":'color'})
       return undefined    # otherwise coffeescript returns a Counts.publish
     Meteor.publish 'cam_counter', ->
-      Counts.publish this, 'cam_counter', Docs.find({model:'icon', _author_username:'Dev2'})
+      Counts.publish this, 'cam_counter', Docs.find({model:'icon', _author_username:'Dev2',"icons8.platform":'color'})
       return undefined    # otherwise coffeescript returns a Counts.publish
     Meteor.publish 'eric_counter', ->
-      Counts.publish this, 'eric_counter', Docs.find({model:'icon', _author_username:'dev'})
+      Counts.publish this, 'eric_counter', Docs.find({model:'icon', _author_username:'dev',"icons8.platform":'color'})
       return undefined    # otherwise coffeescript returns a Counts.publish
     
     Meteor.publish 'icons', (picked_tags=[])->
         user = Meteor.user()
         match = {model:'icon'}
         if picked_tags.length > 0 then match.tags = $all: picked_tags
-        
+        match["icons8.platform"] = 'color'
+
         # limit = if user._limit then user._limit else 42
         Docs.find match,{
             limit:5
@@ -259,7 +260,8 @@ if Meteor.isServer
             # match.tags = $all: picked_tags
             match.model = 'icon'
             # if parent_id then match.parent_id = parent_id
-    
+            match["icons8.platform"] = 'color'
+
             # if view_private is true
             #     match.author_id = Meteor.userId()
             if name_search.length > 1
@@ -284,7 +286,7 @@ if Meteor.isServer
                 { $match: _id: $nin: picked_tags }
                 { $sort: count: -1, _id: 1 }
                 { $match: count: $lt: total_count }
-                { $limit: 10}
+                { $limit: 25}
                 { $project: _id: 0, name: '$_id', count: 1 }
                 ]
             # console.log 'theme tag_cloud, ', tag_cloud
@@ -304,7 +306,7 @@ if Meteor.isServer
                 # { $match: _id: $nin: picked_tags }
                 { $sort: count: -1, _id: 1 }
                 # { $match: count: $lt: total_count }
-                { $limit: 10}
+                { $limit: 6}
                 { $project: _id: 0, name: '$_id', count: 1 }
                 ]
             # console.log 'themetitle_cloud, ',title_cloud
