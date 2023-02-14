@@ -13,13 +13,13 @@ template(name='icons')
                 i.search.icon
                 input.search_icon(type='text' placeholder='name...')
             each icon_tag_results 
-                .ui.basic.button.pick 
+                .ui.basic.compact.circular.icon.button.pick(title=count)
                     span.ginvert
                         +icolor name=name
                     // +i name=name
                     |#{name}
-                    small #{count}
-        .four.column.row 
+                    // small #{count}
+        .four.column.row.scrolling
             each icons_docs
                 .column
                     +icon_item 
@@ -54,8 +54,6 @@ template(name='icon_item')
                 .ui.label commonName #{commonName}
                 .ui.label category #{category}
                 .ui.label platform #{platform}
-                each tags 
-                    .ui.basic.label #{this}
                 if isAnimated
                     .ui.label is Animated
                 if isFree
@@ -65,6 +63,9 @@ template(name='icon_item')
                 if isColor
                     .ui.label is color
                 .ui.label format: #{sourceFormat}
+        .content
+            each tags 
+                .ui.basic.label #{this}
             +voting
             +print_this
 
@@ -74,18 +75,18 @@ template(name='icon_view')
             .sixteen.wide.column
                 with icons8
                     if _is 'platform' 'color'
-                        img(src="https://img.icons8.com/color/48/000000/#{commonName}.png")
+                        img(src="https://img.icons8.com/color/96/000000/#{commonName}.png")
                     else if _is 'platform' 'ios'
-                        img(src="https://img.icons8.com/ios/48/000000/#{commonName}.png")
+                        img(src="https://img.icons8.com/ios/96/000000/#{commonName}.png")
                     else if _is 'platform' 'neon'
-                        img(src="https://img.icons8.com/neon/48/000000/#{commonName}.png")
+                        img(src="https://img.icons8.com/neon/96/000000/#{commonName}.png")
                     else if _is 'platform' 'wanicon'
-                        img(src="https://img.icons8.com/neon/48/000000/#{commonName}.png")
+                        img(src="https://img.icons8.com/neon/96/000000/#{commonName}.png")
                         // <img src="https://img.icons8.com/3d-plastilina/69/null/picture--v2.png"/>
                     else 
                         img(src="https://img.icons8.com/#{platform}/48/000000/#{commonName}.png")
-                        img(src="https://icons8.com/icon/#{id}/#{commonName}")
-                        img(src="https://img.icons8.com/external-#{iconSet}-#{designer}/64/null/external-#{commonName}-#{category}-#{iconSet}-#{designer}.png")       
+                        // img(src="https://icons8.com/icon/#{id}/#{commonName}")
+                        // img(src="https://img.icons8.com/external-#{iconSet}-#{designer}/64/null/external-#{commonName}-#{category}-#{iconSet}-#{designer}.png")       
                         // <img src="https://img.icons8.com/external-phatplus-lineal-phatplus/64/null/external-bank-money-phatplus-lineal-phatplus.png"/>
                     
                     

@@ -34,14 +34,15 @@ if Meteor.isClient
             picked_tags.remove @valueOf()
         'click .pick': (e,t)->
             picked_tags.push @name
-            Meteor.call 'call_icon', picked_tags.array(), ->
+            Meteor.call 'call_icon',[@name], ->
+            # Meteor.call 'call_icon', picked_tags.array(), ->
         'keyup .search_icon': (e,t)->
             if e.which is 13
                 val = t.$('.search_icon').val()
                 if val.length > 0
                     picked_tags.push val
-                    # Meteor.call 'call_icon', val, ->
-                    Meteor.call 'call_icon', picked_tags.array(), ->
+                    Meteor.call 'call_icon', [val], ->
+                    # Meteor.call 'call_icon', picked_tags.array(), ->
                     $('body').toast({
                         title: "#{val} searched and tagged"
                         # message: 'Please see desk staff for key.'
@@ -59,16 +60,16 @@ if Meteor.isClient
 
                 
     Template.icon_field.events
-        'keyup .search_icon': (e,t)->
-            if e.which is 13
-                val = t.$('.search_icon').val()
-                if val.length > 0
-                    Meteor.call 'call_icon', val, ->
-                # parent = Template.parentData()
-                # doc = Docs.findOne parent._id
-                # if doc
-                #     Docs.update parent._id,
-                #         $set:"#{@key}":val
+        # 'keyup .search_icon': (e,t)->
+        #     if e.which is 13
+        #         val = t.$('.search_icon').val()
+        #         if val.length > 0
+        #             Meteor.call 'call_icon', val, ->
+        #         # parent = Template.parentData()
+        #         # doc = Docs.findOne parent._id
+        #         # if doc
+        #         #     Docs.update parent._id,
+        #         #         $set:"#{@key}":val
     
 if Meteor.isServer   
     Meteor.publish 'icon_counter', ->
@@ -80,7 +81,7 @@ if Meteor.isServer
         match = {model:'icon'}
         if picked_tags.length > 0 then match.tags = $all: picked_tags
         
-        limit = if user._limit then user._limit else 20
+        limit = if user._limit then user._limit else 100
         Docs.find match,{
             limit:limit
             sort:_timestamp:-1
@@ -108,7 +109,8 @@ if Meteor.isServer
                         if found_icon_doc
                             console.log 'found icon doc', found_icon_doc.icons8.name
                             Docs.update found_icon_doc._id, 
-                                $addToSet:tags:$each:query
+                                # $addToSet:tags:$each:query
+                                $addToSet:tags:query[0]
                         unless found_icon_doc 
                             new_icon_id = 
                                 Docs.insert 
