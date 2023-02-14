@@ -26,27 +26,28 @@ template(name='icons')
                     // +i name=name
                     |#{name}
                     // small #{count}
-            div
-            .ui.inline.header titles
-            each title_results 
-                .ui.basic.compact.circular.icon.button.pick_title(title=count)
-                    span.ginvert
-                        +icolor name=name
-                    // +i name=name
-                    |#{name}
-                    // small #{count}
-        .row.scrolling
-            .ui.four.stackable.cards
-                each icons_docs
-                    +icon_item 
+            // div
+            // .ui.inline.header titles
+            // each title_results 
+            //     .ui.basic.compact.circular.icon.button.pick_title(title=count)
+            //         span.ginvert
+            //             +gicon name=name
+            //         // +i name=name
+            //         |#{name}
+            //         // small #{count}
+        // .row.scrolling
+        //     .ui.four.stackable.cards
+        //         each icons_docs
+        //             +icon_item 
         
                 
 template(name='gicon')           
     with found_icon_doc
-        img(src="https://img.icons8.com/#{platform}/48/000000/#{commonName}.png")
-    
-    
-                
+        +print_this
+        img(src="https://img.icons8.com/#{icons8.platform}/48/000000/#{icons8.commonName}.png")
+
+
+
 template(name='icon_item')
     .ui.card
         .content
@@ -59,6 +60,7 @@ template(name='icon_item')
                 else if _is 'platform' 'neon'
                     img(src="https://img.icons8.com/neon/48/000000/#{commonName}.png")
                 else if _is 'platform' 'waniconLineal'
+                    // img(src="https://img.icons8.com/external-phatplus-linear-phatplus/48/000000/external-#{commonName}-#{category}-#{iconSet}-#{author}.png")
                     img(src="https://img.icons8.com/external-phatplus-linear-phatplus/48/000000/external-#{commonName}-#{category}-phatplus-lineal-phatplus.png")
                     // <img src="https://img.icons8.com/3d-plastilina/69/null/picture--v2.png"/>
                 else 

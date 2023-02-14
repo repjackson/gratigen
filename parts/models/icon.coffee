@@ -6,19 +6,20 @@ Router.route '/icons', (->
 if Meteor.isServer 
     Meteor.publish 'found_icon', (data)->
         console.log 'found icon data', data.name
-        Docs.find 
+        Docs.find {
             model:'icon'
             tags:$in:[data.name]
+        }, limit:1
 if Meteor.isClient
     Template.gicon.onCreated ->
         @autorun => Meteor.subscribe 'found_icon', @data,->
     Template.gicon.helpers
         found_icon_doc: ->
             console.log @
-            Docs.findOne 
+            Docs.findOne
                 model:'icon'
-                
-        
+                tags:$in:[@name]
+
     Template.icons.onCreated ->
         @autorun => Meteor.subscribe 'icons', picked_tags.array(),->
         @autorun => Meteor.subscribe 'icon_facets', picked_tags.array(), ->
@@ -169,7 +170,7 @@ if Meteor.isServer
                     # if data.icons.length 
                     console.log query, typeof query
                     # if typeof query is 'array'
-                    for icon in data.icons[..420]
+                    for icon in data.icons[..42]
                         found_icon_doc = 
                             Docs.findOne 
                                 model:'icon'
