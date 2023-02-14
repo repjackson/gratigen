@@ -102,7 +102,7 @@ template(name='role_edit')
                     +text_field key='title' label='title' direct=true
                     +title_link_buttons
                 .column
-                    +html_field key='content' label='content' direct=true
+                    +textarea_field key='content' label='content' direct=true
                     +youtube_field key='youtube_id' label='youtube id' direct=true
                 .column
                     .ui.header required badges
@@ -142,7 +142,7 @@ template(name='role_edit')
                         +text_field key='model' label='model' direct=true
                 .column
                     div
-                    +html_field key='responsibilities' label='responsibilities'
+                    +textarea_field key='responsibilities' label='responsibilities'
                     div
                     +array_field key='location_tags' label='location_tags' direct=true
                     // unless published

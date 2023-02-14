@@ -179,18 +179,18 @@ template(name='home')
         // .eight.wide.column.bordered
         .five.wide.scrolling.column
             // +icon_browser
-            +block template='latest_updated_block' title='latest' icon='time-machine' color='teal'
-            +block template='user_avatars' title='users' icon='groups' color='blue'
+            +block template='latest_updated_block' title='latest' icon='time-machine' color='blue'
+            +block template='user_avatars' title='users' icon='groups' color='green'
             // div
             // +comet_chat_block
             // .ui.divider
-            +block template='gratigen' open=true icon='donate' color='green'
-            +icon_item designer='phatplus' iconSet='phatplus-linear' category='business-online' commonName='server' color='green'
-            +icon_item platform='wanicon-lineal' commonName='server' color='green'
+            +block template='gratigen' open=true icon='donate' color='yellow'
+            +icon_item designer='phatplus' iconSet='phatplus-linear' category='business-online' commonName='server' color='orange'
+            +icon_item platform='wanicon-lineal' commonName='server' color='red'
             // +gratigen
             // .ui.divider
             
-            +block template='bookmark_block' title='bookmarks' icon='bookmark' color='violet'
+            +block template='bookmark_block' title='bookmarks' icon='bookmark' color='orange'
             // +bookmark_block
             // +model_block model='post' icon='blog' color='42E8C4' title='latest posts'
             // +model_block model='role' icon='shield' color='42E8C4' title='latest roles'
@@ -201,7 +201,7 @@ template(name='home')
                 +mapbox
             if session_is 'show_calendar' true 
                 +calendar_view
-            +block template='charts'
+            +block template='charts' icon='chart' color='red'
             // +charts
             if currentUser.admin_mode
                 +user_connection_graph

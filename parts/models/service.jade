@@ -170,7 +170,7 @@ template(name='service_edit')
                     a.ui.icon.green.big.button(href="/service/#{_id}" title='save')
                         i.checkmark.big.icon
                     +text_field key='title' label='title' 
-                    +html_field key='content' label='content' 
+                    +textarea_field key='content' label='content' 
                     +youtube_field key='youtube_id' label='youtube id' 
                 .six.wide.column
                     .ui.large.red.button.delete_service

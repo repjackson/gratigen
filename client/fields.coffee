@@ -38,67 +38,66 @@ Template.color_edit.events
 
 
 
-Template.html_field.onRendered ->
-    if Meteor.user().editing
-        @editor = SUNEDITOR.create((document.getElementById('sample') || 'sample'),{
-        # 	"tabDisable": false
-            # "minHeight": "400px"
-            buttonList: [
-                [
-                    'undo' 
-                    'redo'
-                    'font' 
-                    'fontSize' 
-                    # 'formatBlock' 
-                    'paragraphStyle' 
-                    # 'blockquote'
-                    'bold' 
-                    'underline' 
-                    'italic' 
-                    # 'strike' 
-                    # 'subscript' 
-                    # 'superscript'
-                    # 'fontColor' 
-                    # # 'hiliteColor' 
-                    # 'textStyle'
-                    # 'removeFormat'
-                    # 'outdent' 
-                    # 'indent'
-                    # 'align' 
-                    # # 'horizontalRule' 
-                    # 'list' 
-                    # # 'lineHeight'
-                    # 'fullScreen' 
-                    # # 'showBlocks' 
-                    # # 'codeView' 
-                    # # 'preview' 
-                    # # 'table' 
-                    # # 'image' 
-                    # # 'video' 
-                    # # 'audio' 
-                    # 'link'
-                ]
-            ]
-            lang: SUNEDITOR_LANG['en']
-            # codeMirror: CodeMirror
-        });
+# Template.html_edit.onRendered ->
+#     @editor = SUNEDITOR.create((document.getElementById('sample') || 'sample'),{
+#     # 	"tabDisable": false
+#         # "minHeight": "400px"
+#         buttonList: [
+#             [
+#                 'undo' 
+#                 'redo'
+#                 'font' 
+#                 'fontSize' 
+#                 # 'formatBlock' 
+#                 'paragraphStyle' 
+#                 # 'blockquote'
+#                 'bold' 
+#                 'underline' 
+#                 'italic' 
+#                 # 'strike' 
+#                 # 'subscript' 
+#                 # 'superscript'
+#                 # 'fontColor' 
+#                 # # 'hiliteColor' 
+#                 # 'textStyle'
+#                 # 'removeFormat'
+#                 # 'outdent' 
+#                 # 'indent'
+#                 # 'align' 
+#                 # # 'horizontalRule' 
+#                 # 'list' 
+#                 # # 'lineHeight'
+#                 # 'fullScreen' 
+#                 # # 'showBlocks' 
+#                 # # 'codeView' 
+#                 # # 'preview' 
+#                 # # 'table' 
+#                 # # 'image' 
+#                 # # 'video' 
+#                 # # 'audio' 
+#                 # 'link'
+#             ]
+#         ]
+#         lang: SUNEDITOR_LANG['en']
+#         # codeMirror: CodeMirror
+#     });
 
-Template.html_field.events
-    'blur .testsun': (e,t)->
-        html = t.editor.getContents(onlyContents: Boolean);
+# Template.html_edit.events
+#     'blur .testsun': (e,t)->
+#         html = t.editor.getContents(onlyContents: Boolean);
 
-        parent = Template.parentData()
-        doc = Docs.findOne parent._id
-        user = Meteor.users.findOne parent._id
-        if doc
-            Docs.update parent._id,
-                $set:"#{@key}":html
-        else 
-            Meteor.users.update parent._id,
-                $set:"#{@key}":html
+#         parent = Template.parentData()
+#         doc = Docs.findOne parent._id
+#         user = Meteor.users.findOne parent._id
+#         if doc
+#             Docs.update parent._id,
+#                 $set:"#{@key}":html
+#         else 
+#             Meteor.users.update parent._id,
+#                 $set:"#{@key}":html
 
 
-Template.html_field.helpers
+Template.textarea_field.helpers
         
 
 

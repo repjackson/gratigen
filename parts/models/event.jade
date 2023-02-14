@@ -134,7 +134,7 @@ template(name='event_view')
             .eight.wide.column.scrollin
                 +wani name='chat'
                 +location_field key='location'
-                +html_field key='description'
+                +textarea_field key='description'
                 .spacer
                 // a(href="/m/room/#{event_room._id}")
                 //     img.ui.small.circular.inline.image.pointer.zoom(src="{{c.url event_room.image_id }}" class=currentUser.darkmode_class)
@@ -317,7 +317,7 @@ template(name='event_view')
                 div
                 +number_field key='price_usd' label='dollar price' min='0' max='100'
                 div
-                +html_field key='description' label='description'
+                +textarea_field key='description' label='description'
                 div
                 // .ui.buttons 
                 .ui.basic.center.aligned.segment

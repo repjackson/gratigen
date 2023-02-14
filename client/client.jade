@@ -28,7 +28,7 @@ head
     link(rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png")
     link(rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png")
     link(rel="manifest" href="/site.webmanifest")
-    link(href="https://cdn.jsdelivr.net/npm/suneditor@latest/dist/css/suneditor.min.css" rel="stylesheet")
+    // link(href="https://cdn.jsdelivr.net/npm/suneditor@latest/dist/css/suneditor.min.css" rel="stylesheet")
     // link(rel='stylesheet', href='/layerslider/css/layerslider.css', type='text/css')
     // link(rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
     //      integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
@@ -62,8 +62,8 @@ head
     
     
     // script(src="https://cdn.jsdelivr.net/npm/sweetalert2@9")
-    script(src="https://cdn.jsdelivr.net/npm/suneditor@latest/dist/suneditor.min.js")
-    script(src="https://cdn.jsdelivr.net/npm/suneditor@latest/src/lang/en.js")
+    // script(src="https://cdn.jsdelivr.net/npm/suneditor@latest/dist/suneditor.min.js")
+    // script(src="https://cdn.jsdelivr.net/npm/suneditor@latest/src/lang/en.js")
     
     script(src="https://widget-js.cometchat.io/v3/cometchatwidget.js")
 
@@ -127,7 +127,7 @@ template(name='doc_view')
                     +image_field key='image_id' label='image' icon='image'
                     // if currentUser.editing 
                 .column
-                    +html_field key='body' label='body'
+                    +textarea_field key='body' label='body'
                     if watson 
                         +watson_view
                 .column

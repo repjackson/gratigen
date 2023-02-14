@@ -50,7 +50,7 @@ template(name='product_view')
                     if image_id2
                         img.ui.rounded.image.zoomer(src="{{c.url image_id2}}")
                 .column
-                    +html_field key='description'
+                    +textarea_field key='description'
                     // +text_view key='size_description' label='size description' 
                     a.ui.circular.button(href=product_link)
                         // i.wordpress.large.icon
@@ -336,7 +336,7 @@ template(name='product_edit')
                         +number_field key='calories' label='calories' icon='food'
                 .column
                     div
-                    +html_field key='description' label='description'
+                    +textarea_field key='description' label='description'
                     if can_delete
                         .ui.red.button.delete_product
                             i.remove.icon   

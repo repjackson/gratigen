@@ -135,7 +135,7 @@ template(name='transfer_view')
                     if is_dev
                         +remove_button
                     .f14
-                        +html_field key='body'
+                        +textarea_field key='body'
                     .spacer
                     +image_view key='image_id' label='image'
                     +link_view key='link' label='link' icon='link'
@@ -194,7 +194,7 @@ template(name='transfer_view')
                     +time_field key='time' label='time'   
                     +array_field key='location_tags' label='location tags' icon='marker'
                 .six.wide.column
-                    +html_field key='description' label='description'
+                    +textarea_field key='description' label='description'
                     +image_field key='image_id' label='image'
                     +link_field key='link' label='link' icon='link'
                     div 

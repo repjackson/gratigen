@@ -153,7 +153,7 @@ if Meteor.isClient
                 Docs.insert 
                     model:'post'
                     published:false
-            # Router.go "/add/#{new_id}"
+            Router.go "/add/#{new_id}"
             Meteor.users.update Meteor.userId(),
                 $set:
                     editing:true

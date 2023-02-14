@@ -182,7 +182,8 @@ template(name='add_doc')
     // .ui.header add doc #{currentUser._doc_id}
     with current_user_doc 
         .ui.padded.centered.grid 
-            .sixteen.wide.column
+            .four.wide.column
+            .eight.wide.center.aligned.column
                 +text_field key='title' label='title'
                 +thing_picker model='post' icon='for-you' color='1255B8'
                 .ui.huge.popup 
@@ -234,7 +235,7 @@ template(name='add_doc')
                 // +youtube_id
                 +youtube_field key='youtube_id' label='youtube id'
                 // +youtube_view
-                +html_field key='body' label='body'
+                +textarea_field key='body' label='body'
     
                 // +Template.dynamic template=doc_view_template
                 +image_field key='image_id' label='image' icon='image'
@@ -293,6 +294,7 @@ template(name='add_doc')
                 //     |save #{model}
                 // with current_doc 
                 //     +Template.dynamic template=model_edit_template
+            .four.wide.column
 
     
 template(name='add_tab')
