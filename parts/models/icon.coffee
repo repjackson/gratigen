@@ -96,6 +96,12 @@ if Meteor.isServer
     Meteor.publish 'icon_counter', ->
       Counts.publish this, 'icon_counter', Docs.find({model:'icon'})
       return undefined    # otherwise coffeescript returns a Counts.publish
+    Meteor.publish 'cam_counter', ->
+      Counts.publish this, 'cam_counter', Docs.find({model:'icon',_author_username:'Dev2'})
+      return undefined    # otherwise coffeescript returns a Counts.publish
+    Meteor.publish 'cam_counter', ->
+      Counts.publish this, 'cam_counter', Docs.find({model:'icon',_author_username:'dev'})
+      return undefined    # otherwise coffeescript returns a Counts.publish
     
     Meteor.publish 'icons', (picked_tags=[])->
         user = Meteor.user()
