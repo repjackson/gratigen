@@ -434,6 +434,14 @@ if Meteor.isServer
             limit:10
             sort:
                 _timestamp:-1
+            fields:
+                title:1
+                model:1
+                image_id:1
+                tags:1
+                _timestamp:1
+                _author_id:1
+                _author_username:1
     
     
 if Meteor.isClient    

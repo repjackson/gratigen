@@ -113,12 +113,6 @@ if Meteor.isServer
         # if user
         match._author_id  = user._id
         Docs.find match,{limit:20}
-    Meteor.publish 'child_model_docs',(model,parent_id)->
-        Docs.find {
-            model:model
-            # org_id:org_id
-            parent_ids:$in:[parent_id]
-        }, limit:20
 
 if Meteor.isClient 
     Template.tasks.onCreated ->

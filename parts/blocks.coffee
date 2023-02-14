@@ -276,11 +276,12 @@ if Meteor.isClient
 if Meteor.isServer
     Meteor.publish 'child_model_docs', (model, parent_id)->
         console.log 'publishing child model docs', model, parent_id
-        Docs.find 
+        Docs.find {
             model:model
             # parent_id:parent_id
             parent_ids:$in:[parent_id]
-        
+        }, limit:20
+
 if Meteor.isClient
     Template.model_crud.helpers 
         child_model_item_template: -> "#{@model}_card"
