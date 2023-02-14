@@ -110,7 +110,7 @@ if Meteor.isServer
         
         # limit = if user._limit then user._limit else 42
         Docs.find match,{
-            limit:20
+            limit:5
             sort:_timestamp:-1
         }
     Meteor.methods
@@ -216,7 +216,7 @@ if Meteor.isServer
                 { $match: _id: $nin: picked_tags }
                 { $sort: count: -1, _id: 1 }
                 { $match: count: $lt: total_count }
-                { $limit: 20}
+                { $limit: 42}
                 { $project: _id: 0, name: '$_id', count: 1 }
                 ]
             # console.log 'theme tag_cloud, ', tag_cloud
@@ -228,24 +228,24 @@ if Meteor.isServer
                     model:'tag'
                     index: i
                     
-            category_cloud = Docs.aggregate [
-                { $match: match }
-                { $project: "category": 1 }
-                # { $unwind: "$tags" }
-                { $group: _id: '$category', count: $sum: 1 }
-                # { $match: _id: $nin: picked_tags }
-                { $sort: count: -1, _id: 1 }
-                { $match: count: $lt: total_count }
-                { $limit: 15}
-                { $project: _id: 0, name: '$_id', count: 1 }
-                ]
-            # console.log 'themecategory_cloud, ',category_cloud
-            category_cloud.forEach (category, i) ->
-                # console.log category
-                self.added 'results', Random.id(),
-                    name: category.name
-                    count: category.count
-                    model:'category'
-                    index: i
+            # category_cloud = Docs.aggregate [
+            #     { $match: match }
+            #     { $project: "category": 1 }
+            #     # { $unwind: "$tags" }
+            #     { $group: _id: '$category', count: $sum: 1 }
+            #     # { $match: _id: $nin: picked_tags }
+            #     { $sort: count: -1, _id: 1 }
+            #     { $match: count: $lt: total_count }
+            #     { $limit: 15}
+            #     { $project: _id: 0, name: '$_id', count: 1 }
+            #     ]
+            # # console.log 'themecategory_cloud, ',category_cloud
+            # category_cloud.forEach (category, i) ->
+            #     # console.log category
+            #     self.added 'results', Random.id(),
+            #         name: category.name
+            #         count: category.count
+            #         model:'category'
+            #         index: i
                     
             self.ready()

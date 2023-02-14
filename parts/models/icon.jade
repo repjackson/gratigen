@@ -74,7 +74,9 @@ template(name='icon_item')
                 //     .ui.label is color
                 // .ui.label format: #{sourceFormat}
             each tags 
-                .ui.basic.label #{this}
+                .ui.basic.label 
+                    +icolor name=this
+                    |#{this}
             +voting
             +print_this
             +author_info
