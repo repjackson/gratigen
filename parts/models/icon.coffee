@@ -142,7 +142,7 @@ if Meteor.isServer
         
         # limit = if user._limit then user._limit else 42
         Docs.find match,{
-            limit:5
+            limit:10
             sort:_timestamp:-1
         }
     Meteor.methods
@@ -276,7 +276,7 @@ if Meteor.isServer
                 # { $match: _id: $nin: picked_tags }
                 { $sort: count: -1, _id: 1 }
                 # { $match: count: $lt: total_count }
-                { $limit: 15}
+                { $limit: 20}
                 { $project: _id: 0, name: '$_id', count: 1 }
                 ]
             # console.log 'themetitle_cloud, ',title_cloud

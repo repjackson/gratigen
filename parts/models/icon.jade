@@ -25,20 +25,20 @@ template(name='icons')
                         +gicon name=name
                     // +i name=name
                     |#{name}
-                    // small #{count}
-            // div
-            // .ui.inline.header titles
-            // each title_results 
-            //     .ui.basic.compact.circular.icon.button.pick_title(title=count)
-            //         span.ginvert
-            //             +gicon name=name
-            //         // +i name=name
-            //         |#{name}
-            //         // small #{count}
-        // .row.scrolling
-        //     .ui.four.stackable.cards
-        //         each icons_docs
-        //             +icon_item 
+                    small #{count}
+            div
+            .ui.inline.header titles
+            each title_results 
+                .ui.basic.compact.circular.icon.button.pick_title(title=count)
+                    span.ginvert
+                        +gicon name=name
+                    // +i name=name
+                    |#{name}
+                    small #{count}
+        .row.scrolling
+            .ui.four.stackable.cards
+                each icons_docs
+                    +icon_item 
         
                 
 template(name='gicon')           
