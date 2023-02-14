@@ -367,18 +367,18 @@ img, .button, .selector, .card, p, .header, .item, .image, .fade, .accordion{
     /*transition: scale 1s !important;*/
     
 }
-.zoom {
-  padding: 50px;
-  background-color: green;
+/*.zoom {*/
+/*  padding: 50px;*/
+/*  background-color: green;*/
   transition: transform .2s; /* Animation */
-  width: 200px;
-  height: 200px;
-  margin: 0 auto;
-}
+/*  width: 200px;*/
+/*  height: 200px;*/
+/*  margin: 0 auto;*/
+/*}*/
 
-.zoom:hover {
+/*.zoom:hover {*/
     transform: scale(1.5); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
-}
+/*}*/
 
 .shadow {
   box-shadow: 0 2px 2px 2px rgba(50, 50, 100, 0.1) !important; 

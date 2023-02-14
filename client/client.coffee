@@ -59,21 +59,17 @@ Meteor.users.find({}).observeChanges({
         for key in changed_keys
             if key is 'online'
                 if user.online 
-                    $('body').toast({
-                        title: "#{user.username} came online"
-                        # message: 'Please see desk staff for key.'
-                        class : 'success'
-                        # showIcon:''
-                        # showProgress:'bottom'
-                        position:'bottom center'
-                        # className:
-                        #     toast: 'ui massive message'
-                        # displayTime: 5000
-                        transition:
-                          showMethod   : 'zoom',
-                          showDuration : 250,
-                          hideMethod   : 'fade',
-                          hideDuration : 250
+                    unless user._id is Meteor.userId()
+                        $('body').toast({
+                            title: "#{user.username} came online"
+                            # message: 'Please see desk staff for key.'
+                            class : 'success'
+                            # showIcon:''
+                            # showProgress:'bottom'
+                            position:'bottom center'
+                            # className:
+                            #     toast: 'ui massive message'
+                            # displayTime: 5000
                         })
                 else   
                     $('body').toast({
@@ -86,12 +82,7 @@ Meteor.users.find({}).observeChanges({
                         # className:
                         #     toast: 'ui massive message'
                         # displayTime: 5000
-                        transition:
-                          showMethod   : 'zoom',
-                          showDuration : 250,
-                          hideMethod   : 'fade',
-                          hideDuration : 250
-                        })
+                    })
         })
         
 Meteor.users.find(_id:Meteor.userId()).observe({
