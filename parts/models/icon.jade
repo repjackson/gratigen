@@ -31,7 +31,7 @@ template(name='icons')
             each title_results 
                 .ui.basic.compact.circular.icon.button.pick_title(title=count)
                     span.ginvert
-                        +gicon name=name
+                        +gnameicon name=name
                     // +i name=name
                     |#{name}
                     small #{count}
@@ -42,6 +42,10 @@ template(name='icons')
         
                 
 template(name='gicon')           
+    with found_icon_doc
+        +print_this
+        img(src="https://img.icons8.com/#{icons8.platform}/48/000000/#{icons8.commonName}.png")
+template(name='gnameicon')           
     with found_icon_doc
         +print_this
         img(src="https://img.icons8.com/#{icons8.platform}/48/000000/#{icons8.commonName}.png")

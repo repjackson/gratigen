@@ -10,15 +10,31 @@ if Meteor.isServer
             model:'icon'
             tags:$in:[data.name]
         }, limit:1
+    Meteor.publish 'found_icon_name', (data)->
+        console.log 'found icon data', data.name
+        Docs.find {
+            model:'icon'
+            "icons8.name":data.name
+            # tags:$in:[data.name]
+        }, limit:1
 if Meteor.isClient
     Template.gicon.onCreated ->
         @autorun => Meteor.subscribe 'found_icon', @data,->
+    Template.gnameicon.onCreated ->
+        @autorun => Meteor.subscribe 'found_icon_name', @data,->
     Template.gicon.helpers
         found_icon_doc: ->
             console.log @
             Docs.findOne
                 model:'icon'
                 tags:$in:[@name]
+    Template.gnameicon.helpers
+        found_icon_doc: ->
+            console.log @
+            Docs.findOne
+                model:'icon'
+                "icons8.name":@name
+                # tags:$in:[@name]
 
     Template.icons.onCreated ->
         @autorun => Meteor.subscribe 'icons', picked_tags.array(),->
@@ -142,7 +158,7 @@ if Meteor.isServer
         
         # limit = if user._limit then user._limit else 42
         Docs.find match,{
-            limit:10
+            limit:5
             sort:_timestamp:-1
         }
     Meteor.methods
@@ -256,7 +272,7 @@ if Meteor.isServer
                 { $match: _id: $nin: picked_tags }
                 { $sort: count: -1, _id: 1 }
                 { $match: count: $lt: total_count }
-                { $limit: 20}
+                { $limit: 10}
                 { $project: _id: 0, name: '$_id', count: 1 }
                 ]
             # console.log 'theme tag_cloud, ', tag_cloud
@@ -276,7 +292,7 @@ if Meteor.isServer
                 # { $match: _id: $nin: picked_tags }
                 { $sort: count: -1, _id: 1 }
                 # { $match: count: $lt: total_count }
-                { $limit: 20}
+                { $limit: 10}
                 { $project: _id: 0, name: '$_id', count: 1 }
                 ]
             # console.log 'themetitle_cloud, ',title_cloud
