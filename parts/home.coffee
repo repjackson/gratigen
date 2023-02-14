@@ -94,6 +94,7 @@ if Meteor.isClient
     
     
     Template.home.helpers
+        model_filters: -> model_filters.array()
         view_template: -> "#{@model}_view"
         edit_template: -> "#{@model}_edit"
         current_viewing_thing: ->
@@ -119,8 +120,8 @@ if Meteor.isClient
         doc_results: ->
             # Docs.find {model:$ne:'comment'},
             match = {}
-            if Meteor.user() and Meteor.user().eft_filter_array and Meteor.user().eft_filter_array.length > 0
-                match.efts = $in:Meteor.user().eft_filter_array
+            # if Meteor.user() and Meteor.user().eft_filter_array and Meteor.user().eft_filter_array.length > 0
+            #     match.efts = $in:Meteor.user().eft_filter_array
             if model_filters.array().length
                 match.model = $in:model_filters.array()
             else 
@@ -133,6 +134,7 @@ if Meteor.isClient
         # 'click .toggle_addmode': ->
         #     Session.set('addmode', !Session.get('addmode'))
     Template.home.events 
+        'click .unpick_model': -> model_filters.remove @valueOf()
         'click .toggle_editing':->
             Session.set('editing', !Session.get('editing'))
             console.log Session.get('editing')
@@ -380,7 +382,8 @@ if Meteor.isClient
                 
             
     Template.home.onCreated ->
-        @autorun => @subscribe 'post_docs',
+        @autorun => @subscribe 'home_docs',
+            model_filters.array()
             picked_tags.array()
             Session.get('post_title_filter')
         
@@ -392,8 +395,48 @@ if Meteor.isClient
             picked_tags.array()
             Session.get('post_title_filter')
 
+if Meteor.isServer
+    Meteor.publish 'post_docs', (
+        model_filters=[]
+        # title_filter
+        # picked_authors=[]
+        # picked_tasks=[]
+        # picked_locations=[]
+        # picked_timestamp_tags=[]
+        # product_query
+        # view_vegan
+        # view_gf
+        # doc_limit
+        # doc_sort_key
+        # doc_sort_direction
+        )->
+    
+        self = @
+        match = {}
+        # match = {app:'pes'}
+        # match.model = 'post'
+        # match.group_id = Meteor.user().current_group_id
+        # if title_filter and title_filter.length > 1
+        #     match.title = {$regex:title_filter, $options:'i'}
+        
+        # if view_vegan
+        #     match.vegan = true
+        # if view_gf
+        #     match.gluten_free = true
+        # if view_local
+        #     match.local = true
+        # if picked_authors.length > 0 then match._author_username = $in:picked_authors
+        if model_filters.length > 0 then match.model = $all:model_filters 
+        # if picked_locations.length > 0 then match.location_title = $in:picked_locations 
+        # if picked_timestamp_tags.length > 0 then match._timestamp_tags = $in:picked_timestamp_tags 
+        console.log match
+        Docs.find match, 
+            limit:10
+            sort:
+                _timestamp:-1
     
     
+if Meteor.isClient    
     Template.filter_model.helpers
         button_class:->
             if @model in model_filters.array()

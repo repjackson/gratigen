@@ -32,19 +32,32 @@ template(name='home')
            
 
             .ui.fluid.menu.hscroll.mobile.only
-                +eft_filter color="ff6fd9" icon='food' label='food'
-                +eft_filter color="d27bf8" icon='home' label='housing'
+                +eft_filter color="FF73EA" icon='food' label='food'
+                    //pink
+                +eft_filter color="B785E1" icon='home' label='housing'
+                    //lavender
                 +eft_filter color="6b0fb9" icon='tshirt' label='clothing'
+                    //purple
                 +eft_filter color="0000f7" icon='smile' label='wellness'
+                    //darkblue
                 +eft_filter color="00ddff" icon='car' label='travel'
+                    //lightblue
                 +eft_filter color="00ffc3" icon='dog' label='animals'
+                    //turquoise
                 +eft_filter color="148023" icon='leaf' label='plants'
+                    //darkgreen
                 +eft_filter color="35ca2d" icon='recycle' label='regen'
+                    //brightgreen
                 +eft_filter color="ffff00" icon='lightning' label='energy'
+                    //yellow
                 +eft_filter color="ffd000" icon='paint brush' label='art'
+                    //gold
                 +eft_filter color="ff6f00" icon='university' label='education'
+                    //orange
                 +eft_filter color="FF0000" icon='users' label='community'
+                    //red
                 +eft_filter color="000000" icon='ambulance' label='emergency'
+                    //white
             // if session_is 'expand_leftbar' true
             .ui.vertical.fluid.invert.menu.mobile.hidden
                 +eft_filter color="FF73EA" icon='food' label='food'
@@ -115,6 +128,10 @@ template(name='home')
                     //         input.prompt(type='text' placeholder='add/request/search...')
                     //         i.search.icon
                     //     .results
+                    each picked_models 
+                        a.ui.label.unpick_model(title='remove filter')
+                            i.remove.icon
+                            |#{this}
                     +home_search
                     // .search.item.zoomer.mobile.hidden(title='search')
                         // .ui.icon.transparen.large.input
