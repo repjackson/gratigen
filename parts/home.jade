@@ -12,7 +12,7 @@ template(name='home')
     // else 
     //     img.ui.fluid.image.bg_overlay(src="{{c.url 'nightbg' width=1000 crop='fit'}}")    
     .ui.padded.divided.celled.stackable.grid
-        .two.wide.scrolling.column
+        .three.wide.scrolling.column
             // +session_toggle key='expand_leftbar' icon='horizontal-line'
             // +session_toggle key='add_mode' icon='plus'
             //.ui.icon.button.show_model
@@ -72,7 +72,7 @@ template(name='home')
             // .ui.button create request
             if currentUser.admin_mode
                 img.ui.image(src="{{c.url '12_color_code'}}" class=darkmode_class)
-        .nine.wide.scrolling.column
+        .eight.wide.scrolling.column
             // +quickchat
             .ui.one.column.grid 
                 .centered.column

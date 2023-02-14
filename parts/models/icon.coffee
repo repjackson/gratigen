@@ -31,6 +31,13 @@ if Meteor.isClient
         icon_results: ->
             Docs.find
                 model:'icon'
+    Template.icon_item.events
+        'click .search_title': (e,t)->
+            console.log @
+            lowered = @icons8.name.toLowerCase()
+            picked_tags.push lowered
+            Meteor.call 'call_icon', lowered, ->
+            
     Template.icons.events
         'click .unpick': (e,t)->
             picked_tags.remove @valueOf()
