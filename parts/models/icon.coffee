@@ -130,7 +130,7 @@ if Meteor.isServer
                     # if data.icons.length 
                     console.log query, typeof query
                     # if typeof query is 'array'
-                    for icon in data.icons[..42]
+                    for icon in data.icons[..420]
                         found_icon_doc = 
                             Docs.findOne 
                                 model:'icon'
@@ -140,23 +140,31 @@ if Meteor.isServer
                             Docs.update found_icon_doc._id, 
                                 # $addToSet:tags:$each:query
                                 $addToSet:tags:query
-                            lowered = found_icon_doc.icons8.category.toLowerCase().split(',')
-                            console.log 'lowered',lowered
+                            # category
+                            lowered_category = found_icon_doc.icons8.category.toLowerCase().split(',')
+                            console.log 'lowered_category',lowered_category
                             Docs.update found_icon_doc._id, 
                                 # $addToSet:tags:$each:query
-                                $addToSet:tags:$each:lowered
-                            console.log "added #{lowered} to #{found_icon_doc.icons8.name}"
+                                $addToSet:tags:$each:lowered_category
+                            # adding name to existing docs
+                            lowered_name = found_icon_doc.icons8.name.toLowerCase()
+                            Docs.update found_icon_doc._id, 
+                                # $addToSet:tags:$each:query
+                                $addToSet:tags:lowered_name
+                            console.log "added #{lowered_category} category to #{found_icon_doc.icons8.name}"
+                            console.log "added #{lowered_name} name to #{found_icon_doc.icons8.name}"
                         unless found_icon_doc 
-                            lowered = icon.category.toLowerCase().split(',')
-                            console.log 'new lowered', lowered 
-                            lowered.push query
-                            console.log 'new lowered with query', lowered 
+                            tags = icon.category.toLowerCase().split(',')
+                            console.log 'new tags', tags 
+                            tags.push query
+                            tags.push icon.name.toLowerCase()
+                            console.log 'new tags with query and name', tags 
                             
                             new_icon_id = 
                                 Docs.insert 
                                     model:'icon'
                                     icons8:icon
-                                    tags:lowered
+                                    tags:tags
                             new_doc = Docs.findOne new_icon_id
                             console.log 'new icon doc', new_doc.icons8.name
                     #         # {
@@ -220,24 +228,24 @@ if Meteor.isServer
                     model:'tag'
                     index: i
                     
-            # category_cloud = Docs.aggregate [
-            #     { $match: match }
-            #     { $project: "category": 1 }
-            #     # { $unwind: "$tags" }
-            #     { $group: _id: '$category', count: $sum: 1 }
-            #     # { $match: _id: $nin: picked_tags }
-            #     { $sort: count: -1, _id: 1 }
-            #     { $match: count: $lt: total_count }
-            #     { $limit: 15}
-            #     { $project: _id: 0, name: '$_id', count: 1 }
-            #     ]
-            # # console.log 'themecategory_cloud, ',category_cloud
-            # category_cloud.forEach (category, i) ->
-            #     # console.log category
-            #     self.added 'results', Random.id(),
-            #         name: category.name
-            #         count: category.count
-            #         model:'category'
-            #         index: i
+            category_cloud = Docs.aggregate [
+                { $match: match }
+                { $project: "category": 1 }
+                # { $unwind: "$tags" }
+                { $group: _id: '$category', count: $sum: 1 }
+                # { $match: _id: $nin: picked_tags }
+                { $sort: count: -1, _id: 1 }
+                { $match: count: $lt: total_count }
+                { $limit: 15}
+                { $project: _id: 0, name: '$_id', count: 1 }
+                ]
+            # console.log 'themecategory_cloud, ',category_cloud
+            category_cloud.forEach (category, i) ->
+                # console.log category
+                self.added 'results', Random.id(),
+                    name: category.name
+                    count: category.count
+                    model:'category'
+                    index: i
                     
             self.ready()
