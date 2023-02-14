@@ -9,12 +9,14 @@ if Meteor.isServer
         Docs.find {
             model:'icon'
             tags:$in:[data.name]
+            "icons8.platform":'color'
         }, limit:1
     Meteor.publish 'found_icon_name', (data)->
         console.log 'found icon data', data.name
         Docs.find {
             model:'icon'
             "icons8.name":data.name
+            "icons8.platform":'color'
             # tags:$in:[data.name]
         }, limit:1
 if Meteor.isClient
@@ -28,12 +30,14 @@ if Meteor.isClient
             Docs.findOne
                 model:'icon'
                 tags:$in:[@name]
+                "icons8.platform":'color'
     Template.gnameicon.helpers
         found_icon_doc: ->
             console.log @
             Docs.findOne
                 model:'icon'
                 "icons8.name":@name
+                "icons8.platform":'color'
                 # tags:$in:[@name]
 
     Template.icons.onCreated ->
@@ -186,7 +190,7 @@ if Meteor.isServer
                     # if data.icons.length 
                     console.log query, typeof query
                     # if typeof query is 'array'
-                    for icon in data.icons[..42]
+                    for icon in data.icons[..20]
                         found_icon_doc = 
                             Docs.findOne 
                                 model:'icon'
