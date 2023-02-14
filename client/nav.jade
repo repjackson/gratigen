@@ -3,12 +3,16 @@ template(name='nav')
     // #topnav.topnav.ui.fluid.padded.divided.centered.middle.aligned.grid 
     // #topnav.topnav.ui.attached.borderless.fixed.menu.hscroll(class=darkmode_class)
     // .topnav.ui.borderless.fixed.sticky.menu.hscroll(class=darkmode_class)
-    .flash
-        // +icolor name='the flash head'
-        img(src="https://img.icons8.com/color/64/null/the-flash-head.png")
-    .batman
-        // +icolor name='the flash head'
-        img(src="https://img.icons8.com/color/64/null/batman.png")
+    each picked_tags
+        // |#{this}
+        .flash
+            img(src="https://img.icons8.com/color/96/null/#{this}.png")
+    // .flash
+    //     // +icolor name='the flash head'
+    //     img(src="https://img.icons8.com/color/64/null/the-flash-head.png")
+    // .batman
+    //     // +icolor name='the flash head'
+        // img(src="https://img.icons8.com/color/64/null/batman.png")
     // .batman
     //     // +icolor name='the flash head'
     //     img(src="https://img.icons8.com/color/64/null/batman.png")

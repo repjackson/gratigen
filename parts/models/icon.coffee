@@ -199,7 +199,8 @@ if Meteor.isServer
                     # if data.icons.length 
                     console.log query, typeof query
                     # if typeof query is 'array'
-                    for icon in data.icons[..20]
+                    # for icon in data.icons[..20]
+                    for icon in data.icons
                         found_icon_doc = 
                             Docs.findOne 
                                 model:'icon'
