@@ -92,8 +92,16 @@ if Meteor.isClient
         'click .unpick': (e,t)->
             picked_tags.remove @valueOf()
         'click .pick': (e,t)->
-            picked_tags.push @name
-            Meteor.call 'call_icon',@name, ->
+            picked_tags.push @name.toLowerCase()
+            Meteor.call 'call_icon',@name.toLowerCase(), ->
+                
+            synth = window.speechSynthesis;
+            utterThis = new SpeechSynthesisUtterance(@name)
+            synth.speak(utterThis);
+            # Meteor.call 'call_icon', picked_tags.array(), ->
+        'click .pick_title': (e,t)->
+            picked_tags.push @name.toLowerCase()
+            Meteor.call 'call_icon',@name.toLowerCase(), ->
                 
             synth = window.speechSynthesis;
             utterThis = new SpeechSynthesisUtterance(@name)
@@ -101,7 +109,7 @@ if Meteor.isClient
             # Meteor.call 'call_icon', picked_tags.array(), ->
         'keyup .search_icon': (e,t)->
             if e.which is 13
-                val = t.$('.search_icon').val()
+                val = t.$('.search_icon').val().trim().toLowerCase()
                 if val.length > 0
                     picked_tags.push val
                     synth = window.speechSynthesis;
