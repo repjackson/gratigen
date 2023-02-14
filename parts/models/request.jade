@@ -82,7 +82,7 @@ template(name='request_card')
     .card.pointer.request_card.zoomer
         .image
             if youtube_id
-                +youtube_view key='youtube_id'
+                +youtube_field key='youtube_id'
             else if image_id
                 img.ui.zoom.image(src="{{c.url image_id width=400 height=300 crop='fill'}}" class=currentUser.darkmode_class)    
         .content
@@ -133,7 +133,7 @@ template(name='request_view')
                 //     img.ui.avatar.image(src="{{c.url target.image_id height=200 width=200 gravity='face' crop='fill'}}")
                 //     |#{target.username}
                 if youtube_id
-                    +youtube_view key='youtube_id'
+                    +youtube_field key='youtube_id'
                 .spacer
                 i.large.tags.icon
                 each tags 

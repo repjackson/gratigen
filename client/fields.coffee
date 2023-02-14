@@ -10,10 +10,10 @@ Template.youtube_field.onRendered ->
         $('.ui.embed').embed();
     , 1000
 
-Template.youtube_view.onRendered ->
-    Meteor.setTimeout ->
-        $('.ui.embed').embed();
-    , 1000
+# Template.youtube_field.onRendered ->
+#     Meteor.setTimeout ->
+#         $('.ui.embed').embed();
+#     , 1000
 
 
 Template.youtube_field.events

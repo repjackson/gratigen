@@ -84,6 +84,11 @@ template(name='money_gift_item')
 
 
 
+template(name='live_button')
+    if is_subscribeed
+        i.big.bell.yellow.icon.zoomer.link.zoomer.toggle_subscribe(title='subscribe')
+    else 
+        i.big.bell.slash.link.icon.zoomer.toggle_subscribe(title='unsubscribe')
 template(name='subscribe_button')
     if is_subscribeed
         i.big.bell.yellow.icon.zoomer.link.zoomer.toggle_subscribe(title='subscribe')

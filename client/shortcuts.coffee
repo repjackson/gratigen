@@ -101,7 +101,7 @@ globalHotkeys.add
 
 
 globalHotkeys.add
-	combo: "a"
+	combo: "r a"
 	callback: ->
         if Meteor.user().admin
             Meteor.users.update Meteor.userId(), 

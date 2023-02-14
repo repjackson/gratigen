@@ -1,7 +1,7 @@
 template(name='post_card')
     .ui.card
         if youtube_id 
-            +youtube_view key='youtube_id'
+            +youtube_field key='youtube_id'
         if image_id 
             +image_view key='image_id'
         .content
@@ -87,7 +87,7 @@ template(name='post_item')
 template(name='post_view')
     // with current_doc
     //     if youtube_id 
-    //         +youtube_view key='youtube_id'
+    //         +youtube_field key='youtube_id'
     //     .ui.ten.wide.centered.segment
     //             // .four.wide.column
     //                 .ui.basic.segment

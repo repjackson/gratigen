@@ -147,7 +147,7 @@ body {
   text-orientation: upright;
 }
 
-.youtube_view {
+.youtube_field {
     /* border-radius: 10px !important; */
 }
 

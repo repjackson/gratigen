@@ -25,7 +25,7 @@ template(name='services')
 template(name='service_card')
     a.ui.card.fly_right(href="/service/#{_id}")
         if youtube_id 
-            +youtube_view key='youtube_id' 
+            +youtube_field key='youtube_id' 
         if image_id 
             +image_view key='image_id' 
         .content
@@ -145,7 +145,7 @@ template(name='service_view')
                     // a.ui.header(href="/user/#{target.username}")
                     //     |#{target.username}
                     if youtube_id 
-                        +youtube_view key='youtube_id' 
+                        +youtube_field key='youtube_id' 
                     |!{content}
                     div 
                     .spacer

@@ -11,7 +11,7 @@ template(name='toggle_sort_direction_button')
 template(name='role_card')
     .ui.card
         if youtube_id 
-            +youtube_view key='youtube_id'
+            +youtube_field key='youtube_id'
         if image_id 
             +image_view key='image_id'
         .content

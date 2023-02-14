@@ -22,7 +22,7 @@ template(name='offer_view')
                 //     img.ui.avatar.image(src="{{c.url target.image_id height=200 width=200 gravity='face' crop='fill'}}")
                 //     |#{target.username}
                 if youtube_id
-                    +youtube_view key='youtube_id'
+                    +youtube_field key='youtube_id'
                 .spacer
                 i.large.tags.icon
                 each tags 
