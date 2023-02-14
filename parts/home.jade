@@ -12,7 +12,7 @@ template(name='home')
     // else 
     //     img.ui.fluid.image.bg_overlay(src="{{c.url 'nightbg' width=1000 crop='fit'}}")    
     .ui.padded.divided.celled.stackable.grid
-        .three.wide.scrolling.column
+        .two.wide.scrolling.column
             // +session_toggle key='expand_leftbar' icon='horizontal-line'
             // +session_toggle key='add_mode' icon='plus'
             //.ui.icon.button.show_model
@@ -89,7 +89,7 @@ template(name='home')
             // .ui.button create request
             if currentUser.admin_mode
                 img.ui.image(src="{{c.url '12_color_code'}}" class=darkmode_class)
-        .eight.wide.scrolling.column
+        .nine.wide.scrolling.column
             // +quickchat
             .ui.one.column.grid 
                 .centered.column
@@ -288,7 +288,7 @@ template(name='home_search')
                 +filter_model model='role' icon='what-i-do' color='42E8C4'
                 //turquoise
                 +filter_model model='task' icon='task' color='B785E1'
-                +filter_model model='product' icon='product' color='40C057'
+                +filter_model model='product' icon='shop' color='40C057'
                 +filter_model model='service' icon='service' color='FF73EA'
 
                 //lavender

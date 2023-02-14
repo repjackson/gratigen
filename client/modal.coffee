@@ -1,5 +1,5 @@
 Template.layout.events
-    'click .launch_modal': (e,t)->
+    'click .launch_moda': (e,t)->
         console.log e
         # Get the modal
         modal = document.getElementById('global_modal')
