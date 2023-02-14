@@ -164,19 +164,28 @@ template(name='org_view')
                 // +model_crud model='project'
                 // +model_crud model='event'
                 // +model_crud model='task'
+                +block template='model_crud' model='post' title='posts' icon='for-you' color='1255B8'
+                +block template='model_crud' model='group' title='groups' icon='groups' color='83DFF4'
+                +block template='model_crud' model='resource' title='resources' icon='field-and-tractor' color='FD7E14'
+                +block template='model_crud' model='project' title='project' icon='project' color='7229AF'
                 +block template='model_crud' model='event' title='events' icon='toast' color='orange'
-                +block template='model_crud' model='task' title='tasks' icon='tasks' color='purple'
-                +block template='model_crud' model='request' title='requests' color='blue' icon='hand-holding-heart'
-                +block template='model_crud' model='role' title='roles' icon='badge' color='red'
-                +block template='model_crud' model='group' title='groups' icon='groups' color='green'
                 +block template='model_crud' model='badge' title='badges' icon='badge' color='blue'
-                +block template='model_crud' model='product' title='products' icon='shop' color='teal'
-                +block template='model_crud' model='service' title='services' color='purple'
-                +block template='model_crud' model='badge' title='badges' icon='certificate' color='yellow'
-                +block template='model_crud' model='resource' title='resources' color='teal'
-                +block template='model_crud' model='keyresult' title='key results' color='orange'
-                +block template='model_crud' model='objective' title='objectives' color='teal'
+                +block template='model_crud' model='role' title='roles' icon='badge' color='red'
+                +block template='model_crud' model='task' title='tasks' icon='tasks' color='purple'
                 +block template='model_crud' model='shift' title='shifts' color='teal'
+                
+                +block template='model_crud' model='request' title='requests' color='blue' icon='hand-holding-heart'
+                
+                +block template='model_crud' model='offer' title='offers' icon='offer' color='purple'
+                
+                +block template='model_crud' model='product' title='products' icon='shop' color='teal'
+                
+                +block template='model_crud' model='service' title='services' color='purple'
+
+                +block template='model_crud' model='keyresult' title='key results' color='orange'
+                
+                +block template='model_crud' model='objective' title='objectives' color='teal'
+                
 
                 // a.item(href="/d/org/#{_id}/#{username}")
                 //     img.ui.mini.image(src="{{c.url image_id width=200 height=200}}")

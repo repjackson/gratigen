@@ -78,15 +78,16 @@ template(name='nav')
                         i.green.checkmark.large.icon
                     else 
                         i.slash.eye.outline.large.icon
-            if unread_messages.count
-                a.ui.item.alerts.select_term(href="#" class=alert_toggle_class)
-                    i.large.bell.small.yellow.icon
-            else
-                a.ui.icon.item(href="/inbox" class="{{isActiveRoute 'inbox'}}")
-                    i.large.outline.bell.big.blue.icon
+                if unread_messages.count
+                    a.ui.item.alerts.select_term(href="#" class=alert_toggle_class)
+                        i.large.bell.small.yellow.icon
+                else
+                    a.ui.icon.item(href="/inbox" class="{{isActiveRoute 'inbox'}}")
+                        i.large.outline.bell.big.blue.icon
             // a.ui.item.zoomer.toggle_rightbar(href="/chat" class="{{isActiveRoute 'chat'}}")
-            a.ui.item.zoomer.launch(title='launch chat')
-                i.large.chat.outline.icon
+            if currentUser
+                a.ui.item.zoomer.launch(title='launch chat')
+                    i.large.chat.outline.icon
             // a.ui.item.zoomer.toggle_chatbar
             //     if unread_count
             //         i.small.chat.big.blue.icon.pulse

@@ -442,7 +442,11 @@ if Meteor.isServer
                 _timestamp:1
                 _author_id:1
                 _author_username:1
-    
+                body:1
+                points:1
+                views:1
+                parent_id:1
+                efts:1
     
 if Meteor.isClient    
     Template.filter_model.helpers

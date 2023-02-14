@@ -1,3 +1,5 @@
+request = require('request');
+
 Router.route '/icons', (->
     @layout 'layout'
     @render 'icons'
@@ -184,78 +186,77 @@ if Meteor.isServer
     Meteor.methods
         'call_icon':(query)->
             # query is array
-            # const request = require('request');
             
-            # request('https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY', { json: true }, (err, res, body) => {
-            #   if (err) { return console.log(err); }
-            #   console.log(body.url);
-            #   console.log(body.explanation);
-            # });
-            
-            console.log 'calling icon', query
-            icons8_key = Meteor.settings.private.icons8
-            console.log 'key', icons8_key
-            HTTP.get "https://search.icons8.com/api/iconsets/v5/search?term=#{query}&token=#{icons8_key}", (err, response)->
-                if err 
-                    # then Throw new Meteor.Error
-                    console.log err
-                else 
-                    # console.log response
-                    data = response.data 
-                    # console.log data.icons.length
-                    # if data.icons.length 
-                    console.log query, typeof query
-                    # if typeof query is 'array'
-                    # for icon in data.icons
-                    for icon in data.icons[..20]
-                        found_icon_doc = 
-                            Docs.findOne 
-                                model:'icon'
-                                "icons8.id":icon.id
-                        if found_icon_doc
-                            # console.log 'found icon doc', found_icon_doc.icons8.name
-                            Docs.update found_icon_doc._id, 
-                                # $addToSet:tags:$each:query
-                                $addToSet:tags:query
-                            # category
-                            lowered_category = found_icon_doc.icons8.category.toLowerCase().split(',')
-                            # console.log 'lowered_category',lowered_category
-                            Docs.update found_icon_doc._id, 
-                                # $addToSet:tags:$each:query
-                                $addToSet:tags:$each:lowered_category
-                            # adding name to existing docs
-                            lowered_name = found_icon_doc.icons8.name.toLowerCase()
-                            Docs.update found_icon_doc._id, 
-                                # $addToSet:tags:$each:query
-                                $addToSet:tags:lowered_name
-                            # console.log "added #{lowered_category} category to #{found_icon_doc.icons8.name}"
-                            # console.log "added #{lowered_name} name to #{found_icon_doc.icons8.name}"
-                        unless found_icon_doc 
-                            tags = icon.category.toLowerCase().split(',')
-                            # console.log 'new tags', tags 
-                            tags.push query
-                            tags.push icon.name.toLowerCase()
-                            console.log 'new tags with query and name', tags 
+            request("https://search.icons8.com/api/iconsets/v5/search?term=#{query}&token=#{icons8_key}", { json: true }, (err, res, body)=>
+                if err
+                    console.log(err)
+                console.log(body.url);
+                console.log(body.explanation);
+            )
+            # console.log 'calling icon', query
+            # icons8_key = Meteor.settings.private.icons8
+            # console.log 'key', icons8_key
+            # HTTP.get "https://search.icons8.com/api/iconsets/v5/search?term=#{query}&token=#{icons8_key}", (err, response)->
+            #     if err 
+            #         # then Throw new Meteor.Error
+            #         console.log err
+            #     else 
+            #         # console.log response
+            #         data = response.data 
+            #         # console.log data.icons.length
+            #         # if data.icons.length 
+            #         console.log query, typeof query
+            #         # if typeof query is 'array'
+            #         # for icon in data.icons
+            #         for icon in data.icons[..20]
+            #             found_icon_doc = 
+            #                 Docs.findOne 
+            #                     model:'icon'
+            #                     "icons8.id":icon.id
+            #             if found_icon_doc
+            #                 # console.log 'found icon doc', found_icon_doc.icons8.name
+            #                 Docs.update found_icon_doc._id, 
+            #                     # $addToSet:tags:$each:query
+            #                     $addToSet:tags:query
+            #                 # category
+            #                 lowered_category = found_icon_doc.icons8.category.toLowerCase().split(',')
+            #                 # console.log 'lowered_category',lowered_category
+            #                 Docs.update found_icon_doc._id, 
+            #                     # $addToSet:tags:$each:query
+            #                     $addToSet:tags:$each:lowered_category
+            #                 # adding name to existing docs
+            #                 lowered_name = found_icon_doc.icons8.name.toLowerCase()
+            #                 Docs.update found_icon_doc._id, 
+            #                     # $addToSet:tags:$each:query
+            #                     $addToSet:tags:lowered_name
+            #                 # console.log "added #{lowered_category} category to #{found_icon_doc.icons8.name}"
+            #                 # console.log "added #{lowered_name} name to #{found_icon_doc.icons8.name}"
+            #             unless found_icon_doc 
+            #                 tags = icon.category.toLowerCase().split(',')
+            #                 # console.log 'new tags', tags 
+            #                 tags.push query
+            #                 tags.push icon.name.toLowerCase()
+            #                 console.log 'new tags with query and name', tags 
                             
-                            new_icon_id = 
-                                Docs.insert 
-                                    model:'icon'
-                                    icons8:icon
-                                    tags:tags
-                            new_doc = Docs.findOne new_icon_id
-                            console.log 'new icon doc', new_doc.icons8.name
-                    #         # {
-                    #         # "id": "pgnkAal3-Ns3",
-                    #         # "name": "Car",
-                    #         # "commonName": "car",
-                    #         # "category": "Transport",
-                    #         # "platform": "example123",
-                    #         # "isAnimated": false,
-                    #         # "isFree": true,
-                    #         # "isExternal": true,
-                    #         # "isColor": true,
-                    #         # "sourceFormat": "example123"
-                    #         # }
+            #                 new_icon_id = 
+            #                     Docs.insert 
+            #                         model:'icon'
+            #                         icons8:icon
+            #                         tags:tags
+            #                 new_doc = Docs.findOne new_icon_id
+            #                 console.log 'new icon doc', new_doc.icons8.name
+            #         #         # {
+            #         #         # "id": "pgnkAal3-Ns3",
+            #         #         # "name": "Car",
+            #         #         # "commonName": "car",
+            #         #         # "category": "Transport",
+            #         #         # "platform": "example123",
+            #         #         # "isAnimated": false,
+            #         #         # "isFree": true,
+            #         #         # "isExternal": true,
+            #         #         # "isColor": true,
+            #         #         # "sourceFormat": "example123"
+            #         #         # }
 if Meteor.isServer
     Meteor.publish 'icon_facets', (
         picked_tags=[]
