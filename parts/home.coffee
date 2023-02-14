@@ -237,7 +237,7 @@ if Meteor.isClient
             #         model:@model
     
     Template.eft_filter.events
-        'click .toggle_item': ->
+        'click .toggle_item': (e,t)->
             console.log @label 
             console.log Meteor.user().eft_filter_array
             if Meteor.user().eft_filter_array
@@ -250,6 +250,7 @@ if Meteor.isClient
             else 
                 Meteor.users.update Meteor.userId(),
                     $addToSet:eft_filter_array:@label
+            # $(e.currentTarget).closest('.toggle_item').transition('pulse', 500)
     Template.eft_filter.helpers
         is_toggled: ->
             @label in Meteor.user().eft_filter_array
@@ -396,7 +397,7 @@ if Meteor.isClient
     Template.filter_model.helpers
         button_class:->
             if @model in model_filters.array()
-                'blue'
+                'gactive'
             else 
                 'small secondary'
             # if Session.equals('current_model_filter',@model) then 'blue large' else 'small'
