@@ -15,7 +15,8 @@ template(name='icons')
             each icon_tag_results 
                 .ui.basic.compact.circular.icon.button.pick(title=count)
                     span.ginvert
-                        +icolor name=name
+                        +i name=name
+                        // +icolor name=name
                     // +i name=name
                     |#{name}
                     // small #{count}

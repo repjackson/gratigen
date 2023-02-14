@@ -36,14 +36,14 @@ if Meteor.isClient
             picked_tags.remove @valueOf()
         'click .pick': (e,t)->
             picked_tags.push @name
-            Meteor.call 'call_icon',[@name], ->
+            Meteor.call 'call_icon',@name, ->
             # Meteor.call 'call_icon', picked_tags.array(), ->
         'keyup .search_icon': (e,t)->
             if e.which is 13
                 val = t.$('.search_icon').val()
                 if val.length > 0
                     picked_tags.push val
-                    Meteor.call 'call_icon', [val], ->
+                    Meteor.call 'call_icon', val, ->
                     # Meteor.call 'call_icon', picked_tags.array(), ->
                     $('body').toast({
                         title: "#{val} searched and tagged"
@@ -83,9 +83,9 @@ if Meteor.isServer
         match = {model:'icon'}
         if picked_tags.length > 0 then match.tags = $all: picked_tags
         
-        limit = if user._limit then user._limit else 42
+        # limit = if user._limit then user._limit else 42
         Docs.find match,{
-            limit:limit
+            limit:20
             sort:_timestamp:-1
         }
     Meteor.methods
@@ -112,7 +112,7 @@ if Meteor.isServer
                             console.log 'found icon doc', found_icon_doc.icons8.name
                             Docs.update found_icon_doc._id, 
                                 # $addToSet:tags:$each:query
-                                $addToSet:tags:query[0]
+                                $addToSet:tags:query
                             lowered = found_icon_doc.icons8.category.toLowerCase()
                             Docs.update found_icon_doc._id, 
                                 # $addToSet:tags:$each:query
@@ -123,7 +123,7 @@ if Meteor.isServer
                                 Docs.insert 
                                     model:'icon'
                                     icons8:icon
-                                    tags:query
+                                    tags:[query, icon.category.toLowerCase()]
                             new_doc = Docs.findOne new_icon_id
                             console.log 'new icon doc', new_doc.icons8.name
                     #         # {
