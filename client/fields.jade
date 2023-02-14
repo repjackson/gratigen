@@ -253,26 +253,49 @@ template(name='i')
 //     img(src="https://img.icons8.com/office/48/000000/#{name}.png" class=cl title=title)
 template(name='ismall')
     // img(src="https://img.icons8.com/ios/24/#{color}/#{name}.png" class=cl title=title)
-    img.ui.inline.gimage(src="https://img.icons8.com/ios/24/#{color}/#{name}.png" title=title)
+    // img.ui.inline.image.gimage(src="https://img.icons8.com/ios/24/#{color}/#{name}.png" title=title)
+    if cl.length
+        if color
+            img.gicon(src="https://img.icons8.com/ios/24/#{color}/#{name}.png" class=cl title=title)
+        else 
+            img.gicon(src="https://img.icons8.com/ios/24/ffffff/#{name}.png" class=cl title=title)
+    else 
+        if color
+            img.gicon(src="https://img.icons8.com/ios/24/#{color}/#{name}.png" class='ui image' title=title)
+        else 
+            img.gicon(src="https://img.icons8.com/ios/24/ffffff/#{name}.png" class='ui image' title=title)
 // template(name='ivit')
 //         https://icons8.com/icon/hvQTxi4UrDQc/apple
 //         https://icons8.com/icon/hvQTxi4UrDQc/apple
 
+
+template(name='ilarge')
+    // img(src="https://img.icons8.com/ios/24/#{color}/#{name}.png" class=cl title=title)
+    // img.ui.inline.gimage(src="https://img.icons8.com/ios/96/#{color}/#{name}.png" title=title)
+    if cl.length
+        if color
+            img.gicon(src="https://img.icons8.com/ios/96/#{color}/#{name}.png" class=cl title=title)
+        else 
+            img.gicon(src="https://img.icons8.com/ios/96/ffffff/#{name}.png" class=cl title=title)
+    else 
+        if color
+            img.gicon(src="https://img.icons8.com/ios/96/#{color}/#{name}.png" class='ui image' title=title)
+        else 
+            img.gicon(src="https://img.icons8.com/ios/96/ffffff/#{name}.png" class='ui image' title=title)
 
 template(name='itiny')
     // img(src="https://img.icons8.com/ios/24/#{color}/#{name}.png" class=cl title=title)
     // img.ui.inline.gimage(src="https://img.icons8.com/ios/96/#{color}/#{name}.png" title=title)
     if cl.length
         if color
-            img.gicon(src="https://img.icons8.com/ios/12/#{color}/#{name}.png" class=cl title=title)
+            img.gicon(src="https://img.icons8.com/ios/48/#{color}/#{name}.png" class=cl title=title)
         else 
-            img.gicon(src="https://img.icons8.com/ios/12/ffffff/#{name}.png" class=cl title=title)
+            img.gicon(src="https://img.icons8.com/ios/48/ffffff/#{name}.png" class=cl title=title)
     else 
         if color
-            img.gicon(src="https://img.icons8.com/ios/12/#{color}/#{name}.png" class='ui image' title=title)
+            img.gicon(src="https://img.icons8.com/ios/48/#{color}/#{name}.png" class='ui image' title=title)
         else 
-            img.gicon(src="https://img.icons8.com/ios/12/ffffff/#{name}.png" class='ui image' title=title)
-
+            img.gicon(src="https://img.icons8.com/ios/48/ffffff/#{name}.png" class='ui image' title=title)
 
 
 template(name='icolor')
@@ -284,7 +307,7 @@ template(name='ibig')
     // if is_hovering
     //     img.content.fade(src="https://img.icons8.com/color/96/000000/#{name}.png" class=cl title=title)
     // else
-    img.content.fade(src="https://img.icons8.com/color/96/000000/#{name}.png" class=cl title=title)
+    img.content.fade.gicon(src="https://img.icons8.com/color/96/000000/#{name}.png" class=cl title=title)
 // template(name='iios')
 //     img(src="https://img.icons8.com/ios/48/000000/#{name}.png" class=cl title=title)
 //     //- img(src="https://img.icons8.com/ultraviolet/48/000000/#{name}.png" class=cl title=title)
@@ -1267,9 +1290,9 @@ template(name='range_edit')
                 +i name='date-to'
                 start date
             #rangestart.ui.calendar
-                .ui.input.left.icon
+                .ui.left.icon.input
                     i.calendar.icon
-                    input(type='text', placeholder='start' value=start_time)
+                    input(type='text' placeholder='start' value=start_time)
             .ui.button.fluid.get_start save start
         .field
             label 
@@ -1278,5 +1301,5 @@ template(name='range_edit')
             #rangeend.ui.calendar
                 .ui.input.left.icon
                     i.calendar.icon
-                    input(type='text', placeholder='end' value=end_time)
+                    input(type='text' placeholder='end' value=end_time)
             .ui.button.fluid.get_end save end

@@ -41,7 +41,12 @@ Template.registerHelper 'parent_doc', () ->
     # Template.parentData()
 
 Template.registerHelper 'editing_account', () ->
-    Meteor.user() and Router.current().params.username is Meteor.user().username and Meteor.user().editing
+    if Meteor.user() and Router.current().params.username is Meteor.user().username and Meteor.user().editing
+        true
+    else if Meteor.user() and Meteor.user().admin_mode
+        true
+    else 
+        false
 
 Template.registerHelper 'can_take', () ->
     Meteor.user() and Meteor.userId() in @permissioned_user_ids

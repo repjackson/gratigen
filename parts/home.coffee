@@ -255,7 +255,7 @@ if Meteor.isClient
             @label in Meteor.user().eft_filter_array
         side_item_class: ->
             if Meteor.user().eft_filter_array and @label in Meteor.user().eft_filter_array
-                'inverted active'
+                'gactive small' 
             else 
                 'small'
                 
@@ -379,9 +379,9 @@ if Meteor.isClient
                 
             
     Template.home.onCreated ->
-        # @autorun => @subscribe 'post_docs',
-        #     picked_tags.array()
-        #     Session.get('post_title_filter')
+        @autorun => @subscribe 'post_docs',
+            picked_tags.array()
+            Session.get('post_title_filter')
         
         @autorun => @subscribe 'all_markers',->
         @autorun => @subscribe 'latest_home_docs',model_filters.array(),->

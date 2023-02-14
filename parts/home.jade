@@ -599,7 +599,9 @@ template(name='dash_user_info')
            
            
 template(name='filter_model')
-    .ui.compact.circular.secondary.basic.small.button.pick_model.zoomer(class=button_class)
-        +itiny name=icon color=color cl='ui inline image'
+    .ui.compact.secondary.basic.button.inverted.gactive.pick_model.zoomer(class=button_class)
+        // .item.pick_model.zoomer(class=button_class)
+        // +i name=icon color=color cl="ui mini inline image"
+        +i name=icon color=color cl="model_item_icon ui inline image"
         // i.exchange.large.icon
         |#{model}

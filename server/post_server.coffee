@@ -146,7 +146,7 @@ Meteor.publish 'post_docs', (
     self = @
     match = {}
     # match = {app:'pes'}
-    match.model = 'post'
+    # match.model = 'post'
     # match.group_id = Meteor.user().current_group_id
     # if title_filter and title_filter.length > 1
     #     match.title = {$regex:title_filter, $options:'i'}
@@ -163,6 +163,6 @@ Meteor.publish 'post_docs', (
     # if picked_timestamp_tags.length > 0 then match._timestamp_tags = $in:picked_timestamp_tags 
     console.log match
     Docs.find match, 
-        limit:20
+        limit:10
         sort:
             _timestamp:-1

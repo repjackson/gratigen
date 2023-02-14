@@ -204,7 +204,7 @@ template(name='comments')
             input.add_comment(type='text' placeholder='write a comment')
     .ui.comments
         each doc_comments
-            .comment
+            .comment.mark_viewed
                 a.avatar.pointer.zoomer.fly_right(href="/user/#{_author.username}") 
                     img.ui.avatar.image.zoomer(src="{{c.url _author.image_id width=200 height=200 gravity='face' crop='fill'}}")
                 .ui.popup
@@ -220,7 +220,15 @@ template(name='comments')
                         if currentUser
                             +voting_small
                             if currentUser.admin_mode
+                                +viewing_small
                                 +remove_button
+                                
+                                
+template(name='viewing_small')
+    i.grey.small.eye.icon
+    |#{views}
+    each viewers 
+        .ui.label #{username}
                                 
                                 
 template(name='reviews')
