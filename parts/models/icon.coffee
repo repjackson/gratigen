@@ -37,6 +37,11 @@ if Meteor.isClient
             lowered = @icons8.name.toLowerCase()
             picked_tags.push lowered
             Meteor.call 'call_icon', lowered, ->
+                
+            synth = window.speechSynthesis;
+            utterThis = new SpeechSynthesisUtterance(lowered)
+            synth.speak(utterThis);
+            
             
     Template.icons.events
         'click .unpick': (e,t)->
@@ -44,12 +49,19 @@ if Meteor.isClient
         'click .pick': (e,t)->
             picked_tags.push @name
             Meteor.call 'call_icon',@name, ->
+                
+            synth = window.speechSynthesis;
+            utterThis = new SpeechSynthesisUtterance(@name)
+            synth.speak(utterThis);
             # Meteor.call 'call_icon', picked_tags.array(), ->
         'keyup .search_icon': (e,t)->
             if e.which is 13
                 val = t.$('.search_icon').val()
                 if val.length > 0
                     picked_tags.push val
+                    synth = window.speechSynthesis;
+                    utterThis = new SpeechSynthesisUtterance(val)
+                    synth.speak(utterThis);
                     Meteor.call 'call_icon', val, ->
                     # Meteor.call 'call_icon', picked_tags.array(), ->
                     $('body').toast({

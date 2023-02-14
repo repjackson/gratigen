@@ -60,20 +60,19 @@ template(name='icon_item')
                     https://img.icons8.com/external-{set}-{designer}/64/null/external-{commonName}.png           
                 // +i name=name
                 // a.ui.inline.header(href="/d/icon/#{../_id}" title='name') #{name}
-                .ui.label id #{id}
-                .ui.label commonName #{commonName}
-                .ui.label category #{category}
-                .ui.label platform #{platform}
-                if isAnimated
-                    .ui.label is Animated
-                if isFree
-                    .ui.label is Free
-                if isExternal
-                    .ui.label is External
-                if isColor
-                    .ui.label is color
-                .ui.label format: #{sourceFormat}
-        .content
+                // .ui.label id #{id}
+                // .ui.label commonName #{commonName}
+                // .ui.label category #{category}
+                // .ui.label platform #{platform}
+                // if isAnimated
+                //     .ui.label is Animated
+                // if isFree
+                //     .ui.label is Free
+                // if isExternal
+                //     .ui.label is External
+                // if isColor
+                //     .ui.label is color
+                // .ui.label format: #{sourceFormat}
             each tags 
                 .ui.basic.label #{this}
             +voting
