@@ -19,9 +19,17 @@ template(name='icons')
                     // +i name=name
                     |#{name}
                     // small #{count}
-        .four.column.row.scrolling
-            each icons_docs
-                .column
+            .ui.inline.header categories
+            each category_tag_results 
+                .ui.basic.compact.circular.icon.button.pick(title=count)
+                    span.ginvert
+                        +icolor name=name
+                    // +i name=name
+                    |#{name}
+                    // small #{count}
+        .row.scrolling
+            .ui.four.cards
+                each icons_docs
                     +icon_item 
         
                 
@@ -68,6 +76,8 @@ template(name='icon_item')
                 .ui.basic.label #{this}
             +voting
             +print_this
+            +author_info
+            +creation_info
 
 template(name='icon_view')
     with current_doc 

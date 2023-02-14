@@ -20,7 +20,9 @@ if Meteor.isClient
             }, 
                 sort:_timestamp:-1
         icon_tag_results:->
-            Results.find()
+            Results.find(model:'tag')
+        category_tag_results:->
+            Results.find(model:'category')
                 
     Template.icon_field.onCreated ->
         # @autorun => @subscribe 'icons', ->
@@ -81,7 +83,7 @@ if Meteor.isServer
         match = {model:'icon'}
         if picked_tags.length > 0 then match.tags = $all: picked_tags
         
-        limit = if user._limit then user._limit else 100
+        limit = if user._limit then user._limit else 42
         Docs.find match,{
             limit:limit
             sort:_timestamp:-1
@@ -168,7 +170,7 @@ if Meteor.isServer
                 { $match: _id: $nin: picked_tags }
                 { $sort: count: -1, _id: 1 }
                 { $match: count: $lt: total_count }
-                { $limit: 42}
+                { $limit: 20}
                 { $project: _id: 0, name: '$_id', count: 1 }
                 ]
             # console.log 'theme tag_cloud, ', tag_cloud
