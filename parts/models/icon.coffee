@@ -6,19 +6,26 @@ Router.route '/icons', (->
 if Meteor.isServer 
     Meteor.publish 'found_icon', (data)->
         # console.log 'found icon data', data.name
-        Docs.find {
-            model:'icon'
-            tags:$in:[data.name]
-            "icons8.platform":'color'
-        }, limit:1
-    Meteor.publish 'found_icon_name', (data)->
-        console.log 'found icon data', data.name
-        Docs.find {
-            model:'icon'
-            "icons8.name":data.name
-            "icons8.platform":'color'
-            # tags:$in:[data.name]
-        }, limit:1
+        found = 
+            Docs.findOne 
+                model:'icon'
+                "icons8.platform":'color'
+                "icons8.name":data.name
+        if found
+            Docs.find {
+                model:'icon'
+                "icons8.name":data.name
+                "icons8.platform":'color'
+                # tags:$in:[data.name]
+            }, limit:1
+        else
+            Docs.find {
+                model:'icon'
+                tags:$in:[data.name]
+                "icons8.platform":'color'
+            }, 
+                limit:1
+                sort:points:-1
 if Meteor.isClient
     Template.gicon.onCreated ->
         @autorun => Meteor.subscribe 'found_icon', @data,->

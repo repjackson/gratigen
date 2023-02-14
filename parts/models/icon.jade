@@ -20,6 +20,7 @@ template(name='icons')
                 .ui.inline.icon.input
                     i.search.icon
                     input.search_icon(type='text' placeholder='name...')
+                div
                 each icon_tag_results 
                     .ui.basic.compact.circular.icon.tertiary.button.pick(title="#{name} #{count}")
                         span.ginvert
