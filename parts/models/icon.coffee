@@ -178,7 +178,7 @@ if Meteor.isServer
 
         # limit = if user._limit then user._limit else 42
         Docs.find match,{
-            limit:5
+            limit:10
             sort:_timestamp:-1
         }
     Meteor.methods
@@ -206,8 +206,8 @@ if Meteor.isServer
                     # if data.icons.length 
                     console.log query, typeof query
                     # if typeof query is 'array'
-                    # for icon in data.icons[..20]
-                    for icon in data.icons
+                    # for icon in data.icons
+                    for icon in data.icons[..20]
                         found_icon_doc = 
                             Docs.findOne 
                                 model:'icon'
@@ -294,7 +294,7 @@ if Meteor.isServer
                 { $match: _id: $nin: picked_tags }
                 { $sort: count: -1, _id: 1 }
                 { $match: count: $lt: total_count }
-                { $limit: 25}
+                { $limit: 20}
                 { $project: _id: 0, name: '$_id', count: 1 }
                 ]
             # console.log 'theme tag_cloud, ', tag_cloud
@@ -306,24 +306,24 @@ if Meteor.isServer
                     model:'tag'
                     index: i
                     
-            title_cloud = Docs.aggregate [
-                { $match: match }
-                { $project: "icons8.name": 1 }
-                # { $unwind: "$tags" }
-                { $group: _id: "$icons8.name", count: $sum: 1 }
-                # { $match: _id: $nin: picked_tags }
-                { $sort: count: -1, _id: 1 }
-                # { $match: count: $lt: total_count }
-                { $limit: 6}
-                { $project: _id: 0, name: '$_id', count: 1 }
-                ]
-            # console.log 'themetitle_cloud, ',title_cloud
-            title_cloud.forEach (title, i) ->
-                # console.log title
-                self.added 'results', Random.id(),
-                    name: title.name
-                    count: title.count
-                    model:'title'
-                    index: i
+            # title_cloud = Docs.aggregate [
+            #     { $match: match }
+            #     { $project: "icons8.name": 1 }
+            #     # { $unwind: "$tags" }
+            #     { $group: _id: "$icons8.name", count: $sum: 1 }
+            #     # { $match: _id: $nin: picked_tags }
+            #     { $sort: count: -1, _id: 1 }
+            #     # { $match: count: $lt: total_count }
+            #     { $limit: 6}
+            #     { $project: _id: 0, name: '$_id', count: 1 }
+            #     ]
+            # # console.log 'themetitle_cloud, ',title_cloud
+            # title_cloud.forEach (title, i) ->
+            #     # console.log title
+            #     self.added 'results', Random.id(),
+            #         name: title.name
+            #         count: title.count
+            #         model:'title'
+            #         index: i
                     
             self.ready()

@@ -174,7 +174,7 @@ if Meteor.isClient
         else if Router.current().params.username
             parent = Meteor.users.findOne username:Router.current().params.username
         if parent
-            @autorun => Meteor.subscribe 'children', 'comment', parent._id
+            @autorun => Meteor.subscribe 'children', 'comment', parent._id, ->
     Template.comments.helpers
         doc_comments: ->
             # this should all just be @_id but i guess works for now
@@ -188,8 +188,8 @@ if Meteor.isClient
                 parent = Docs.findOne Template.parentData()._id
             if parent
                 Docs.find {
-                    # parent_id:parent._id
-                    parent_ids:$in:[parent._id]
+                    parent_id:parent._id
+                    # parent_ids:$in:[parent._id]
                     model:'comment'
                 }, sort:_timestamp:-1
     Template.comments.events
@@ -199,7 +199,7 @@ if Meteor.isClient
                 comment = t.$('.add_comment').val()
                 Docs.insert
                     parent_id: @_id
-                    # parent_ids:$in:[@_id]
+                    parent_ids:[@_id]
                     model:'comment'
                     parent_model:@model
                     body:comment
@@ -879,8 +879,8 @@ if Meteor.isServer
         limit = if limit then limit else 10
         Docs.find {
             model:model
-            # parent_id:parent_id
-            parent_ids:$in:[parent_id]
+            parent_id:parent_id
+            # parent_ids:$in:[parent_id]
         }, limit:limit
         
         
