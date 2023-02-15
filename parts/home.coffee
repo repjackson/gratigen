@@ -5,20 +5,21 @@ if Meteor.isClient
         ), name:'home'
     
     Template.home_search.events
-        'keyup .search_site': _.throttle((e,t)->
-            
+        # 'keyup .search_site': _.throttle((e,t)->
+        'keyup .search_site': (e,t)->
             # console.log Router.current().route.getName()
             # current_name = Router.current().route.getName()
-            $(e.currentTarget).closest('.input').transition('pulse', 200)
+            $(e.currentTarget).closest('.input').transition('pulse', 100)
 
             # unless current_name is 'shop'
             #     Router.go '/shop'
             
-            search = $('.search_site').val().trim().toLowerCase()
+            search = t.$('.search_site').val().trim().toLowerCase()
             
             # query = $('.search_site').val()
-            if search.length > 2
+            if search.length > 1
                 Session.set('current_query', search)
+                console.log 'searching', search
             # console.log Session.get('current_query')
             # if e.key == "Escape"
             #     Session.set('current_query', null)
@@ -51,7 +52,7 @@ if Meteor.isClient
                     # Meteor.setTimeout ->
                     #     Session.set('dummy', !Session.get('dummy'))
                     # , 10000
-        , 500)
+        # , 200)
     
     Template.home.events
         'click .add_doc': ->
@@ -168,15 +169,15 @@ if Meteor.isClient
             match = {}
             if Session.get('current_query')
                 match.title = {$regex:Session.get('current_query'), $options:'i'}
-            if Meteor.user() and Meteor.user().eft_filter_array and Meteor.user().eft_filter_array.length > 0
-                match.efts = $in:Meteor.user().eft_filter_array
+            # if Meteor.user() and Meteor.user().eft_filter_array and Meteor.user().eft_filter_array.length > 0
+            #     match.efts = $in:Meteor.user().eft_filter_array
             if model_filters.array().length
                 match.model = $in:model_filters.array()
             else 
                 match.model = $nin:['model','comment','message'] 
             Docs.find match,
                 sort:_timestamp:-1
-                limit:10
+                limit:20
             
     Template.add_tab.events 
         # 'click .toggle_addmode': ->
