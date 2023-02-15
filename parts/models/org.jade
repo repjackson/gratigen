@@ -157,7 +157,7 @@ template(name='org_view')
                         div
                         // .ui.centered
                         +single_user_field key='creator'
-                +textarea_field key='brief' tagline='brief description or your organization'
+                +textarea_field key='brief' tagline='what kink of organization is this? breifly describe it.'
                 +textarea_field key='description' tagline='complete description of your organization'
                 +textarea_field key='body' tagline='body'
                 // +model_crud model='role' label='roles'
@@ -215,10 +215,9 @@ template(name='org_view')
                         +eft_picker color="FAB005" icon='university' label='education'
                         +eft_picker color="FD7E14" icon='paint brush' label='art'
                         +eft_picker color="FF0000" icon='users' label="community core"
-                +gratigen
+                +block template='gratigen'
                 .ui.header 
-                    +i name='rss'
-                    |activity
+                +block template='latest_updated_block' title='latest' icon='time-machine' color='blue'
                 each log_items
                     +log_item
                 +block template='org_stats' title='stats' icon='line chart'

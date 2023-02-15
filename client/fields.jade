@@ -50,24 +50,22 @@ template(name='location_field')
             .f14 #{field_value}
 
 template(name='youtube_field')
-    with ..
-        +boolean_field key='has_youtube' label='attach youtube' icon='youtube'
-        if has_youtube
-            .ui.labeled.fluid.icon.input
-                .ui.label 
-                    // if icon
-                    //     i.icon(class=icon)
-                    +i name='youtube'
-                    // |youtube id
-                input.youtube_id(type='text' value=field_value placeholder=placeholder autocomplete="off")
-            if field_value
-                iframe.invert(width='100%' height='500px' src="https://www.youtube.com/embed/#{field_value}" frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen='')
-        if currentUser.editing
-            if field_value
-                if icon
-                    +i name=icon
-                    //- i.icon(class=icon)
-                .ui.embed.invert(data-source="youtube" data-id=field_value)
+    // with ..
+    //     +boolean_field key='has_youtube' icon='youtube'
+        // if has_youtube
+    .ui.labeled.fluid.icon.input
+        .ui.label 
+            if icon
+                +i name=icon
+            // if icon
+            //     i.icon(class=icon)
+            +i name='youtube'
+            // |youtube id
+    if currentUser.editing
+        input.youtube_id(type='text' value=field_value placeholder=placeholder autocomplete="off")
+        // .ui.embed.invert(data-source="youtube" data-id=field_value)
+    if field_value
+        iframe.invert(width='100%' height='500px' src="https://www.youtube.com/embed/#{field_value}" frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen='')
 
         //- // iframe(width='560' height='315' src="https://www.youtube.com/embed/#{field_value}" frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen='')
         //- iframe(src="https://www.youtube.com/embed/#{field_value}" frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen='')

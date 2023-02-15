@@ -197,7 +197,6 @@ template(name='add_doc')
                 .ui.huge.popup create request
                 //green
                 // div
-                
                 +thing_picker model='org' icon='groups' color='83DFF4' 
                 .ui.huge.popup create organization
                 //light blue
@@ -227,18 +226,22 @@ template(name='add_doc')
                 +thing_picker model='location' icon='worldwide-location' color='40C057'
                 .ui.huge.popup create location
                 +thing_picker model='accounts' icon='gold-bars' color='FAB005'
+                div
                 .ui.huge.popup create transfer
                 .ui.big.green.circular.button.save_doc 
                     i.large.save.icon
                     |save #{model}
                 //people
                 // +youtube_id
-                +youtube_field key='youtube_id' label='youtube id'
                 // +youtube_field
                 +textarea_field key='body' label='body'
-    
+                div
                 // +Template.dynamic template=doc_view_template
                 +image_field key='image_id' label='image' icon='image'
+                
+                +youtube_field key='youtube_id' label='youtube id'
+                div
+                
                 // if currentUser.editing 
                 // .column
                 //     if watson 

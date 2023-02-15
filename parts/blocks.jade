@@ -611,7 +611,7 @@ template(name='block')
         .inverted.row.toggle_expanded.pointer(title='expand')
             .two.wide.column
                 if icon
-                    +ismall name=icon color='000000'
+                    +i name=icon color='000000' cl="ui mini inline image"
             .fourteen.wide.column
                 .ui.inline.header(class=color)
                     // i.large.icon(class=icon)
@@ -622,7 +622,7 @@ template(name='block')
                         |#{template}
         if is_expanded
             .row
-                .sixteen.wide.scrolling.column
+                .sixteen.wide.small.scroll.column
                     // i.fullscreen.circular.link.icon.toggle_fullscreen
                     +Template.dynamic template=template
         
