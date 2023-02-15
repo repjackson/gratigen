@@ -91,13 +91,14 @@ template(name='home')
                 img.ui.image(src="{{c.url '12_color_code'}}" class=darkmode_class)
         .eleven.wide.scrolling.column
             // +quickchat
-            .ui.one.column.grid 
-                .centered.column
-                
-                    // .ui.fluid.input 
-                    //     textarea
-                    // // div
-                    +online_users
+            unless is_searching
+                .ui.one.column.grid 
+                    .centered.column
+                    
+                        // .ui.fluid.input 
+                        //     textarea
+                        // // div
+                        +online_users
             .ui.one.center.aligned.column.grid
                 .ui.animated.fade.tertiary.circular.large.center.alligned.zoomer.button.launch_modal.add_doc(style="color:green")
                     .visible.content

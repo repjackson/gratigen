@@ -5,8 +5,8 @@ if Meteor.isClient
         ), name:'home'
     
     Template.home_search.events
-        # 'keyup .search_site': _.throttle((e,t)->
         'keyup .search_site': (e,t)->
+        'keyup .search_site': _.throttle((e,t)->
             # console.log Router.current().route.getName()
             # current_name = Router.current().route.getName()
             $(e.currentTarget).closest('.input').transition('pulse', 100)
@@ -17,7 +17,7 @@ if Meteor.isClient
             search = t.$('.search_site').val().trim().toLowerCase()
             
             # query = $('.search_site').val()
-            if search.length > 1
+            if search.length > 2
                 Session.set('current_query', search)
                 console.log 'searching', search
             # console.log Session.get('current_query')
@@ -52,7 +52,7 @@ if Meteor.isClient
                     # Meteor.setTimeout ->
                     #     Session.set('dummy', !Session.get('dummy'))
                     # , 10000
-        # , 200)
+        , 200)
     
     Template.home.events
         'click .add_doc': ->
@@ -141,6 +141,7 @@ if Meteor.isClient
     
     
     Template.home.helpers
+        is_searching: -> Session.get('current_query')
         model_filters: -> model_filters.array()
         view_template: -> "#{@model}_view"
         edit_template: -> "#{@model}_edit"
