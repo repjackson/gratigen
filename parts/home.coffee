@@ -4,6 +4,55 @@ if Meteor.isClient
         @render 'home'
         ), name:'home'
     
+    Template.home_search.events
+        'keyup .search_site': _.throttle((e,t)->
+            
+            # console.log Router.current().route.getName()
+            # current_name = Router.current().route.getName()
+            $(e.currentTarget).closest('.input').transition('pulse', 200)
+
+            # unless current_name is 'shop'
+            #     Router.go '/shop'
+            
+            search = $('.search_site').val().trim().toLowerCase()
+            
+            # query = $('.search_site').val()
+            if search.length > 2
+                Session.set('current_query', search)
+            # console.log Session.get('current_query')
+            # if e.key == "Escape"
+            #     Session.set('current_query', null)
+            #     $('.search_site').val('')
+            # # e.which is keycode and 13 is 'enter'
+            # if e.which is 13
+            #     console.log e 
+            #     console.log t
+            #     if search.length > 0
+            #         match = {}
+            #         match.title =  {$regex:search, $options: 'i'}
+            #         found_results = Docs.find(match).count()
+            #         if found_results is 1
+            #             found_result = Docs.findOne match 
+            #             console.log found_result
+            #             Meteor.users.update Meteor.userId(),
+            #                 $addToSet:
+            #                     history_ids:found_result._id
+            #             Router.go "/d/#{found_result.model}/#{found_result._id}"
+            #         else 
+            #             picked_tags.push search
+            #             Meteor.call 'call_icon', search, ->
+            #             console.log 'search', search
+            #         # Meteor.call 'log_term', search, ->
+            #         $('.search_site').val('')
+            #         Session.set('current_query', null)
+                    
+                    # # $('#search').val('').blur()
+                    # # $( "p" ).blur();
+                    # Meteor.setTimeout ->
+                    #     Session.set('dummy', !Session.get('dummy'))
+                    # , 10000
+        , 500)
+    
     Template.home.events
         'click .add_doc': ->
             new_id = 
@@ -67,9 +116,6 @@ if Meteor.isClient
             Docs.find {
                 model:@model
             }, limit:5
-    Template.home.onCreated ->
-        # @autorun => @subscribe 'my_current_thing', ->
-        @autorun => @subscribe 'my_current_thing', Session.get('current_thing_id'),->
 if Meteor.isServer
     Meteor.publish 'my_current_thing', (current_thing_id)->
         # user = Meteor.user()
@@ -120,8 +166,10 @@ if Meteor.isClient
         doc_results: ->
             # Docs.find {model:$ne:'comment'},
             match = {}
-            # if Meteor.user() and Meteor.user().eft_filter_array and Meteor.user().eft_filter_array.length > 0
-            #     match.efts = $in:Meteor.user().eft_filter_array
+            if Session.get('current_query')
+                match.title = {$regex:Session.get('current_query'), $options:'i'}
+            if Meteor.user() and Meteor.user().eft_filter_array and Meteor.user().eft_filter_array.length > 0
+                match.efts = $in:Meteor.user().eft_filter_array
             if model_filters.array().length
                 match.model = $in:model_filters.array()
             else 
@@ -341,6 +389,35 @@ if Meteor.isServer
                 parent_id:1
                 efts:1
     
+    Meteor.publish 'home_docs', (
+        search=null
+        model_filters=[]
+        )->
+        match = {}
+        essentials = ['post','offer','request','org','project','event','role','task','resource','skill']
+        # user = Meteor.user()
+        # console.log Meteor.user().current_model_filters
+        if search 
+            match.title = {$regex:search, $options:'i'}  
+        if model_filters.length > 0
+            match.model = $in:model_filters
+        else 
+            match.model = model:$in:essentials
+        console.log 'home match', match
+        Docs.find match,
+            limit:20
+            sort:_timestamp:-1
+            fields:
+                title:1
+                model:1
+                image_id:1
+                views:1
+                points:1
+                parent_id:1
+                efts:1
+                _author_id:1
+                _timestamp:1
+    
 if Meteor.isClient
     @model_filters = new ReactiveArray []
     
@@ -382,13 +459,17 @@ if Meteor.isClient
                 
             
     Template.home.onCreated ->
+        # @autorun => @subscribe 'my_current_thing', ->
+        @autorun => @subscribe 'my_current_thing', Session.get('current_thing_id'),->
+        
         @autorun => @subscribe 'home_docs',
+            Session.get('current_query')
             model_filters.array()
             picked_tags.array()
             Session.get('post_title_filter')
         
-        @autorun => @subscribe 'all_markers',->
-        @autorun => @subscribe 'latest_home_docs',model_filters.array(),->
+        # @autorun => @subscribe 'all_markers',->
+        # @autorun => @subscribe 'latest_home_docs',model_filters.array(),->
         
         @autorun => @subscribe 'all_users', ->
         @autorun => @subscribe 'post_facets',

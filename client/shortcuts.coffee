@@ -63,6 +63,7 @@ globalHotkeys.add
 	combo: "?"
 	callback: ->    
         $('.search_site').focus()
+        Session.set('searching', true)
         $('body').toast(
             # showIcon: 'edit'
             message: "search focused"
