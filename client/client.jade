@@ -150,7 +150,8 @@ template(name='layout')
     // +rightbar
     // +chatbar
     // if currentUser.history_ids.length
-    +historybar
+    if currentUser.view_searchbar
+        +historybar
     // img.ui.fluid.image.home_banner(src="{{c.url 'frontrange'}}" class=darkmode_class)
     // #main.ui.bottom.attached.pushable.segment.maincontent
     // +addbar

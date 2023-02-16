@@ -326,6 +326,25 @@ if Meteor.isClient
                     darkmode:!Meteor.user().darkmode
             Session.set('darkmode', !Session.get('darkmode'))
             console.log Session.get('darkmode')
+        'click .toggle_searchbar': (e,t)->
+            # element = document.body;
+            # element.classList.toggle("dark-mode");
+
+            # # $('.grid').transition('pulse', 500)
+
+            $('.nav')
+              .transition({
+                animation : 'pulse',
+                duration  : 500,
+                # interval  : 50
+              })
+            ;
+
+            Meteor.users.update Meteor.userId(),
+                $set:
+                    view_searchbar:!Meteor.user().view_searchbar
+            # Session.set('darkmode', !Session.get('darkmode'))
+            # console.log Session.get('darkmode')
         
     Template.nav_search.helpers
         doc_search_results: ->
