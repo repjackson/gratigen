@@ -21,7 +21,12 @@ if Meteor.isClient
                 Session.set('current_query', search)
                 console.log 'searching', search
             # console.log Session.get('current_query')
-            if e.key == "Escape"
+            if e.key is 8
+                if search.length is 0
+                    Session.set('current_query', null)
+                    
+                    
+            if e.key is "Escape"
                 Session.set('current_query', null)
                 $('.search_site').val('')
             # # e.which is keycode and 13 is 'enter'
@@ -390,6 +395,7 @@ if Meteor.isServer
                 points:1
                 parent_id:1
                 efts:1
+                link:1
     
     Meteor.publish 'home_docs', (
         search=null
@@ -416,6 +422,7 @@ if Meteor.isServer
                 image_id:1
                 views:1
                 points:1
+                link:1
                 parent_id:1
                 efts:1
                 _author_id:1
