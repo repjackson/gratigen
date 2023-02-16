@@ -66,7 +66,6 @@ template(name='youtube_field')
         // .ui.embed.invert(data-source="youtube" data-id=field_value)
     if field_value
         iframe.invert(width='100%' height='500px' src="https://www.youtube.com/embed/#{field_value}" frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen='')
-
         //- // iframe(width='560' height='315' src="https://www.youtube.com/embed/#{field_value}" frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen='')
         //- iframe(src="https://www.youtube.com/embed/#{field_value}" frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen='')
 
@@ -334,13 +333,14 @@ template(name='link_field')
         // i.icon(class=icon)
     .ui.inline.header
         |#{title} #{label}
-    if me.editing 
+    if currentUser.editing 
         .ui.fluid.input
             input.edit_url(type='url' value=field_value placeholder=key autocomplete="off")
     .spacer
     if field_value 
         a.ui.tertiary.button(href=field_value target='_window')
             |#{field_value}
+        iframe(width='100%' height='500px' src=field_value frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen='')
 
         
 template(name='image_view')
@@ -410,17 +410,16 @@ template(name='image_field')
     
 
 template(name='image_link_field')
-    .ui.fluid.input
-        .ui.label image link
-        i.image.icon
-        input.image_link_val(type='link' value=field_value placeholder='image link'  autocomplete="off")
-    if field_value
-        img.ui.fluid.image(src=field_value)
-    // +call_visual
-    
-    
-template(name='image_link_view')
-    img.ui.rounded.zoomer.image(src=field_value)
+    if currentUser.editing
+        .ui.fluid.input
+            .ui.label image link
+            i.image.icon
+            input.image_link_val(type='link' value=field_value placeholder='image link'  autocomplete="off")
+        if field_value
+            img.ui.fluid.image(src=field_value)
+        // +call_visual
+    else 
+        img.ui.rounded.zoomer.image(src=field_value)
 
 
 
