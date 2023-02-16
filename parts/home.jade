@@ -161,7 +161,7 @@ template(name='home')
                         each doc_results 
                             +home_list_item
                 else if session_is 'view_mode' 'grid'
-                    .ui.three.stackable.cards.small.scroll
+                    .ui.three.stackable.cards
                         each doc_results
                             +home_card
                 else    
@@ -445,7 +445,9 @@ template(name='home_card')
     //     +recipe_card
     // else 
     .ui.card
-        a.center.aligned.content.show_moda.zoomer(href="/d/#{model}/#{_id}")
+        .content.smallscroll 
+            .ui.centered.inline.header(href="/d/#{model}/#{_id}")
+                |#{title}
             span.left.floated
                 if icon 
                     +i name=icon color=icon_color
@@ -453,8 +455,6 @@ template(name='home_card')
                 |#{_author.username}
                 div
                 +parent_block
-            .f15.ui.centered.inline.header
-                |#{title}
             span.right.floated
                 |#{when}
                 +model_icon
@@ -465,10 +465,10 @@ template(name='home_card')
                 |#{datetime}
         if youtube_id 
             +youtube_view key='youtube_id'
-        .content 
-                |!{body}
-                |!{brief}
-                |!{content}
+        .content.smallscroll 
+            |!{body}
+            |!{brief}
+            |!{content}
         img.ui.fluid.image(src="{{c.url image_id width=400 height=400}}")
         .content 
             .description

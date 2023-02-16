@@ -164,6 +164,51 @@ template(name='org_view')
                 // +model_crud model='project'
                 // +model_crud model='event'
                 // +model_crud model='task'
+    
+                unless is_searching
+                    .ui.one.column.grid 
+                        .centered.column
+
+                            +online_users
+                .ui.one.center.aligned.column.grid
+                    unless is_searching
+                        .ui.animated.fade.tertiary.circular.large.center.alligned.zoomer.button.launch_modal.add_doc(style="color:green")
+                            .visible.content
+                                +ilarge name='play-button-circled--v1' color='40C057' cl='ui image'
+    
+                            .hidden.content
+                                .ui.massive.header Engage
+         
+                    .centered   
+
+                        each model_filters 
+                            a.ui.label.unpick_model(title='remove filter')
+                                i.remove.icon
+                                |#{this}
+                        +home_search
+                        +session_set key='view_mode' value='grid' icon='th' 
+                        +session_set key='view_mode' value='list' icon='list'
+                        +session_set key='view_mode' value='feed' icon='stream'
+                        +session_toggle key='show_map' icon='map'
+                        +session_toggle key='show_calendar' icon='calendar'
+                    if session_is 'view_mode' 'list'
+                        .ui.divided.selection.items 
+                            each doc_results 
+                                +home_list_item
+                    else if session_is 'view_mode' 'grid'
+                        .ui.three.stackable.cards.small.scroll
+                            each doc_results
+                                +home_card
+                    else    
+                        .ui.ten.wide.column.centered.mobile.hidden
+                            .ui.centered.one.cards.scrollin
+                                each doc_results
+                                    +home_card
+                        .ui.sixteen.wide.column.centered.mobile.only
+                            .ui.centered.one.cards.scrolling
+                                each doc_results
+                                    +home_card
+                
                 +block template='model_crud' model='post' title='posts' icon='for-you' color='1255B8'
                 +block template='model_crud' model='group' title='groups' icon='groups' color='83DFF4'
                 +block template='model_crud' model='resource' title='resources' icon='field-and-tractor' color='FD7E14'

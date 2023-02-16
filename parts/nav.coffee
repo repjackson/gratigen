@@ -332,14 +332,7 @@ if Meteor.isClient
 
             # # $('.grid').transition('pulse', 500)
 
-            $('.nav')
-              .transition({
-                animation : 'pulse',
-                duration  : 500,
-                # interval  : 50
-              })
-            ;
-
+            $('.nav').transition('pulse', 500)
             Meteor.users.update Meteor.userId(),
                 $set:
                     view_searchbar:!Meteor.user().view_searchbar
