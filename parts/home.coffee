@@ -312,10 +312,11 @@ if Meteor.isClient
         is_toggled: ->
             @label in Meteor.user().eft_filter_array
         side_item_class: ->
-            if Meteor.user().eft_filter_array and @label in Meteor.user().eft_filter_array
-                'gactive small' 
-            else 
-                'small'
+            if Meteor.user() and Meteor.user().eft_filter_array
+                if Meteor.user().eft_filter_array and @label in Meteor.user().eft_filter_array
+                    'gactive small' 
+                else 
+                    'small'
                 
         
     Template.latest_activity.onCreated ->
@@ -411,7 +412,9 @@ if Meteor.isServer
             match.model = $in:model_filters
         else 
             match.model = model:$in:essentials
-        console.log 'home match', match
+        console.log 'home match', match, model_filters
+        result_count = Docs.find(match).count()
+        console.log result_count
         Docs.find match,
             limit:20
             sort:_timestamp:-1
