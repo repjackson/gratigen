@@ -125,6 +125,7 @@ template(name='org_view')
                 // +org_history
                 // +org_subscription
             .eight.wide.column
+                +home_search
                 +link_field key='link' label='link'
                 // if link
                 //     iframe.invert(width='100%' height='500px' src=link frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen='')
@@ -161,59 +162,16 @@ template(name='org_view')
                         div
                         // .ui.centered
                         +single_user_field key='creator'
-                +textarea_field key='brief' tagline='what kink of organization is this? breifly describe it.'
-                +textarea_field key='description' tagline='complete description of your organization'
+                // +textarea_field key='brief' tagline='what kink of organization is this? breifly describe it.'
+                // +textarea_field key='description' tagline='complete description of your organization'
                 +textarea_field key='body' tagline='body'
                 // +link_field
                 // +model_crud model='role' label='roles'
                 // +model_crud model='project'
                 // +model_crud model='event'
                 // +model_crud model='task'
-    
-                unless is_searching
-                    .ui.one.column.grid 
-                        .centered.column
+                +home_search
 
-                            +online_users
-                .ui.one.center.aligned.column.grid
-                    unless is_searching
-                        .ui.animated.fade.tertiary.circular.large.center.alligned.zoomer.button.launch_modal.add_doc(style="color:green")
-                            .visible.content
-                                +ilarge name='play-button-circled--v1' color='40C057' cl='ui image'
-    
-                            .hidden.content
-                                .ui.massive.header Engage
-
-                    .centered   
-
-                        each model_filters 
-                            a.ui.label.unpick_model(title='remove filter')
-                                i.remove.icon
-                                |#{this}
-                        +home_search
-                        +session_set key='view_mode' value='grid' icon='th' 
-                        +session_set key='view_mode' value='list' icon='list'
-                        +session_set key='view_mode' value='feed' icon='stream'
-                        +session_toggle key='show_map' icon='map'
-                        +session_toggle key='show_calendar' icon='calendar'
-                    if session_is 'view_mode' 'list'
-                        .ui.divided.selection.items 
-                            each doc_results 
-                                +home_list_item
-                    else if session_is 'view_mode' 'grid'
-                        .ui.three.stackable.cards.small.scroll
-                            each doc_results
-                                +home_card
-                    else    
-                        .ui.ten.wide.column.centered.mobile.hidden
-                            .ui.centered.one.cards.scrollin
-                                each doc_results
-                                    +home_card
-                        .ui.sixteen.wide.column.centered.mobile.only
-                            .ui.centered.one.cards.scrolling
-                                each doc_results
-                                    +home_card
-                
                 +block template='model_crud' model='post' title='posts' icon='for-you' color='1255B8'
                 +block template='model_crud' model='group' title='groups' icon='groups' color='83DFF4'
                 +block template='model_crud' model='resource' title='resources' icon='field-and-tractor' color='FD7E14'
@@ -224,21 +182,13 @@ template(name='org_view')
                 +block template='model_crud' model='task' title='tasks' icon='task' color='B785E1'
                 +block template='model_crud' model='shift' title='shifts' icon='shift' color='teal'
                 +block template='model_crud' model='skill' title='skills' icon='wrench' color='ff0000'
-                
-                
-                
+                div
                 +block template='model_crud' model='request' title='requests' color='40C057' icon='commercial'
-                
                 +block template='model_crud' model='offer' title='offers' icon='hand-holding-heart' color='FF73EA'
-                
                 +block template='model_crud' model='product' title='products' icon='shop' color='40C057'
-                
                 +block template='model_crud' model='service' title='services' icon='service' color='FF73EA'
-
                 +block template='model_crud' model='keyresult' title='key results' color='orange'
-                
                 +block template='model_crud' model='objective' title='objectives' color='teal'
-                
 
                 // a.item(href="/d/org/#{_id}/#{username}")
                 //     img.ui.mini.image(src="{{c.url image_id width=200 height=200}}")
