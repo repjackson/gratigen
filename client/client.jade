@@ -247,7 +247,7 @@ template(name='footer')
             // page chat by default, maybe replace individual template calls
             with current_doc
                 +print_this
-                +block template='comments' label='comments' icon='chat' color='blue'
+                +block template='comments' label='comments' icon='chat' color='blue' data=this
                 
             .ui.header 
                 i.shield.icon
@@ -257,7 +257,7 @@ template(name='footer')
                 |#{user_docs.count} users
             each user_docs 
                 // +user_pill
-                a.ui.large.image.label(href="/user/#{username}")
+                a.ui.large.image.basic.inverted.label(href="/user/#{username}")
                     img.ui.avatar.image(src="{{c.url image_id width=300 height=300 crop='fit'}}")
                     |#{username}
         .column

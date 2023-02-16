@@ -5,11 +5,11 @@ if Meteor.isClient
         ), name:'home'
     
     Template.home_search.events
+        # 'keyup .search_site': _.throttle((e,t)->
         'keyup .search_site': (e,t)->
-        'keyup .search_site': _.throttle((e,t)->
             # console.log Router.current().route.getName()
             # current_name = Router.current().route.getName()
-            $(e.currentTarget).closest('.input').transition('pulse', 100)
+            $(e.currentTarget).closest('.search_site').transition('pulse', 100)
 
             # unless current_name is 'shop'
             #     Router.go '/shop'
@@ -21,9 +21,9 @@ if Meteor.isClient
                 Session.set('current_query', search)
                 console.log 'searching', search
             # console.log Session.get('current_query')
-            # if e.key == "Escape"
-            #     Session.set('current_query', null)
-            #     $('.search_site').val('')
+            if e.key == "Escape"
+                Session.set('current_query', null)
+                $('.search_site').val('')
             # # e.which is keycode and 13 is 'enter'
             # if e.which is 13
             #     console.log e 
@@ -52,7 +52,7 @@ if Meteor.isClient
                     # Meteor.setTimeout ->
                     #     Session.set('dummy', !Session.get('dummy'))
                     # , 10000
-        , 200)
+        # , 100)
     
     Template.home.events
         'click .add_doc': ->
@@ -412,6 +412,7 @@ if Meteor.isServer
             fields:
                 title:1
                 model:1
+                body:1
                 image_id:1
                 views:1
                 points:1
