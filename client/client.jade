@@ -129,6 +129,7 @@ template(name='doc_view')
                     // if currentUser.editing 
                     +array_field key='tags' label='tags' icon='tags'
                 .column
+                    +link_field
                     +textarea_field key='body' label='body'
                     if watson 
                         +watson_view

@@ -400,7 +400,7 @@ if Meteor.isServer
     
     Meteor.publish 'home_docs', (
         search=null
-        model_filters=[]
+        model_filter=null
         )->
         match = {}
         essentials = ['post','offer','request','org','project','event','role','task','resource','skill']
@@ -408,8 +408,10 @@ if Meteor.isServer
         # console.log Meteor.user().current_model_filters
         if search 
             match.title = {$regex:search, $options:'i'}  
-        if model_filters.length > 0
-            match.model = $in:model_filters
+        # if model_filters.length > 0
+        #     match.model = $in:model_filters
+        if model_filter
+            match.model = model_filter
         else 
             match.model = model:$in:essentials
         console.log 'home match', match, model_filters
@@ -477,7 +479,8 @@ if Meteor.isClient
         
         @autorun => @subscribe 'home_docs',
             Session.get('current_query')
-            model_filters.array()
+            Session.get('current_model_filter')
+            # model_filters.array()
             picked_tags.array()
             Session.get('post_title_filter')
         
@@ -553,7 +556,8 @@ if Meteor.isClient
             # if  @model in Meteor.user().current_model_filters then 'blue big' else 'small basic'
     Template.filter_model.events
         'click .pick_model': ->
-            # Session.set('current_model_filter',@model)
+            Session.set('current_model_filter',@model)
+            
             if @model in model_filters.array()
                 model_filters.remove @model 
             else 

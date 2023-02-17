@@ -17,16 +17,28 @@ if Meteor.isClient
 if Meteor.isServer 
     Meteor.publish 'my_history_docs', ->
         if Meteor.user() and Meteor.user().history_ids
-            Docs.find
-                _id:$in:Meteor.user().history_ids
+            Docs.find {_id:$in:Meteor.user().history_ids},{
+                fields:
+                    title:1
+                    image_id:1
+                    model:1
+                    tags:1
+                    _timestamp:1
+            }
     Meteor.publish 'my_history_users', ->
         if Meteor.user() and Meteor.user().history_ids
-            Meteor.users.find 
-                _id:$in:Meteor.user().history_ids
+            Meteor.users.find {_id:$in:Meteor.user().history_ids},{
+                fields:
+                    title:1
+                    image_id:1
+                    model:1
+                    tags:1
+                    _timestamp:1
+            }
 if Meteor.isClient 
     Template.nav.onCreated ->
         @autorun => Meteor.subscribe 'me', ->
-        @autorun => Meteor.subscribe 'all_users', ->
+        # @autorun => Meteor.subscribe 'all_users', ->
         # @autorun => Meteor.subscribe 'my_drafts', ->
         @autorun => Meteor.subscribe 'my_current_doc', ->
         
