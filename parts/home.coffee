@@ -60,6 +60,14 @@ if Meteor.isClient
         # , 100)
     
     Template.home.events
+        'click .view_latest': ->
+            current_persona = Docs.findOne Meteor.user().current_persona_id
+            if current_persona
+                Docs.update current_persona._id, 
+                    $set: view_latest:true
+            Session.set('view_latest',true)
+            Meteor.users.update Meteor.userId(),
+                $set:view_latest:true
         'click .add_doc': ->
             new_id = 
                 Docs.insert 
