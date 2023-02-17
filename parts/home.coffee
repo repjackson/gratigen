@@ -7,12 +7,12 @@ if Meteor.isClient
     Template.smaba.events
         # 'keyup .search_site': _.throttle((e,t)->
         'click .search_site': (e,t)->
-            synth = window.speechSynthesis;
+            # synth = window.speechSynthesis;
         
-            utterThis = new SpeechSynthesisUtterance(@valueOf())
-            # utterThis = new SpeechSynthesisUtterance('wat ah yoo freakin queah, ask the smaht bah!')
-            utterThis = new SpeechSynthesisUtterance('smaht bah')
-            synth.speak(utterThis);
+            # utterThis = new SpeechSynthesisUtterance(@valueOf())
+            # # utterThis = new SpeechSynthesisUtterance('wat ah yoo freakin queah, ask the smaht bah!')
+            # # utterThis = new SpeechSynthesisUtterance('ask the smaht bah, its wicked smaht')
+            # synth.speak(utterThis);
             
         'keyup .search_site': (e,t)->
         
@@ -34,8 +34,10 @@ if Meteor.isClient
             if e.key is 8
                 if search.length is 0
                     Session.set('current_query', null)
-                    
-                    
+            if e.key is 13
+                synth = window.speechSynthesis
+                utterThis = new SpeechSynthesisUtterance(search)
+                synth.speak(utterThis)
             if e.key is "Escape"
                 Session.set('current_query', null)
                 $('.search_site').val('')
@@ -87,7 +89,7 @@ if Meteor.isClient
             # Meteor.users.update Meteor.userId(),
             #     $set:view_latest:true
             $('body').toast({
-                title: "viewing latest #{Sesssion.get('view_latest')}"
+                title: "viewing latest #{Session.get('view_latest')}"
                 class : 'success'
                 showProgress:'bottom'
                 position:'bottom right'
@@ -523,7 +525,7 @@ if Meteor.isServer
         if model_filter
             match.model = model_filter
         else 
-            match.model = model:$in:essentials
+            match.model = $in:essentials
         console.log 'home match', match, model_filter
         result_count = Docs.find(match).count()
         console.log result_count

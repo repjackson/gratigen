@@ -92,15 +92,16 @@ template(name='home')
         .eleven.wide.scrolling.column
             // +quickchat
             unless is_searching
-                .ui.one.column.grid 
-                    .centered.column
-                    
-                        // .ui.fluid.input 
-                        //     textarea
-                        // // div
-                        +online_users
+                unless currentUser.admin_mode
+                    .ui.one.column.grid 
+                        .centered.column
+                        
+                            // .ui.fluid.input 
+                            //     textarea
+                            // // div
+                            +online_users
             .ui.one.center.aligned.column.grid
-                unless is_searching
+                unless currentUser.admin_mode
                     .ui.animated.fade.tertiary.circular.large.center.alligned.zoomer.button.launch_modal.add_doc(style="color:green")
                         .visible.content
                             // i.big.green.play.dark-mode.icon(class=gicon)
@@ -178,9 +179,9 @@ template(name='home')
             // div
             // +comet_chat_block
             // .ui.divider
-            +block template='gratigen' open=true icon='donate' color='yellow'
-            +icon_item designer='phatplus' iconSet='phatplus-linear' category='business-online' commonName='server' color='orange'
-            +icon_item platform='wanicon-lineal' commonName='server' color='red'
+            // +block template='gratigen' open=true icon='donate' color='yellow'
+            // +icon_item designer='phatplus' iconSet='phatplus-linear' category='business-online' commonName='server' color='orange'
+            // +icon_item platform='wanicon-lineal' commonName='server' color='red'
             // +gratigen
             // .ui.divider
             
@@ -271,7 +272,7 @@ template(name='smaba')
             i.database.icon
             i.dropdown.icon 
             .menu 
-                .item
+                // .item
                 +filter_model model='post' icon='for-you' color='1255B8'
                 //blue
                 +filter_model model='offer' icon='hand-holding-heart' color='FF73EA'
@@ -296,12 +297,10 @@ template(name='smaba')
                 //orange
                 +filter_model model='skill' icon='wrench' color='ff0000'
                 +filter_model model='badge' icon='badge' color='ff0000'
-                
                 //red
-                
                 // +filter_model model='food' icon='food' 83DFF4
                 .ui.dropdown-content
-        input.search_site(type='text' autocomplete="off" value=current_site_search placeholder='ask alfred...')
+        input.search_site(type='text' autocomplete="off" value=current_site_search placeholder='ask smaba...')
     // tags
     each picked_tags
         .ui.label

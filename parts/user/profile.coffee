@@ -144,6 +144,12 @@ if Meteor.isClient
                 # displayTime: 'auto',
                 position: "bottom left"
             )
+            synth = window.speechSynthesis;
+        
+            utterThis = new SpeechSynthesisUtterance(@valueOf())
+            # utterThis = new SpeechSynthesisUtterance('wat ah yoo freakin queah, ask the smaht bah!')
+            utterThis = new SpeechSynthesisUtterance('boop')
+            synth.speak(utterThis);
 
         'click .sponsor': ->
             current_user = Meteor.users.findOne username:Router.current().params.username
