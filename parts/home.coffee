@@ -6,7 +6,17 @@ if Meteor.isClient
     
     Template.smaba.events
         # 'keyup .search_site': _.throttle((e,t)->
+        'click .search_site': (e,t)->
+            synth = window.speechSynthesis;
+        
+            utterThis = new SpeechSynthesisUtterance(@valueOf())
+            # utterThis = new SpeechSynthesisUtterance('wat ah yoo freakin queah, ask the smaht bah!')
+            utterThis = new SpeechSynthesisUtterance('smaht bah')
+            synth.speak(utterThis);
+            
         'keyup .search_site': (e,t)->
+        
+            
             # console.log Router.current().route.getName()
             # current_name = Router.current().route.getName()
             $(e.currentTarget).closest('.search_site').transition('pulse', 100)

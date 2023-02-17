@@ -236,7 +236,7 @@ if Meteor.isServer
                 limit:5
     Meteor.publish 'related_model_docs', (model,parent_id)->
         # console.log 'looking for related model docs', model, parent_id
-        
+
         # match publication for related child docs with model_children helper below
         if model and parent_id
             parent = Docs.findOne parent_id

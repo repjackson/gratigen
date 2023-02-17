@@ -444,6 +444,8 @@ Template.registerHelper 'current_doc', ->
 
 Template.registerHelper 'field_value', () ->
     parent = Template.parentData()
+    # console.log @
+    # console.log 'parent', parent
 
     # if @direct
     parent = Template.parentData()
