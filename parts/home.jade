@@ -131,26 +131,16 @@ template(name='home')
                     //         input.prompt(type='text' placeholder='add/request/search...')
                     //         i.search.icon
                     //     .results
-                    each model_filters 
+                    with model_filter_doc
                         a.ui.label.unpick_model(title='remove filter')
                             i.remove.icon
                             |#{this}
+                        
+                    // each model_filters 
+                    //     a.ui.label.unpick_model(title='remove filter')
+                    //         i.remove.icon
+                    //         |#{this}
                     +home_search
-                    // .search.item.zoomer.mobile.hidden(title='search')
-                        // .ui.icon.transparen.large.input
-                        //     if current_query
-                        //         i.remove.large.red.link.icon.clear_search
-                        //     else
-                        //         i.search.large.grey.icon
-                        //     input.search_site(type='text' autocomplete="off" value=current_query)
-                        // each picked_tags
-                        //     .ui.label
-                        //         i.remove.icon
-                        //         |#{this}
-                        // each search_results
-                        //     button.ui.button.goto_doc
-                        //         img.ui.avatar.image(src="{{c.url image_id width=200 height=200 gravity='face' crop='fill'}}")
-                        //         |{{cut title}}
                 
                     +session_set key='view_mode' value='grid' icon='th' 
                     +session_set key='view_mode' value='list' icon='list'
@@ -183,7 +173,7 @@ template(name='home')
         // .eight.wide.column.bordered
         .three.wide.scrolling.column
             // +icon_browser
-            +block template='latest_updated_block' title='latest' icon='time-machine' color='blue'
+            // +block template='latest_updated_block' title='latest' icon='time-machine' color='blue'
             +block template='user_avatars' title='users' icon='groups' color='green'
             // div
             // +comet_chat_block
@@ -194,7 +184,7 @@ template(name='home')
             // +gratigen
             // .ui.divider
             
-            +block template='bookmark_block' title='bookmarks' icon='bookmark' color='orange'
+            // +block template='bookmark_block' title='bookmarks' icon='bookmark' color='orange'
             // +bookmark_block
             // +model_block model='post' icon='blog' color='42E8C4' title='latest posts'
             // +model_block model='role' icon='shield' color='42E8C4' title='latest roles'
@@ -272,12 +262,11 @@ template(name='home_block')
 
 
 template(name='home_search')
-    .ui.centered.icon.large.action.input(title='pick model')
+    .ui.centered.icon.large.left.action.input(title='search/create')
         if current_site_search
             i.remove.large.red.link.icon.clear_search
         else
-            i.search.large.grey.icon
-        input.search_site(type='text' autocomplete="off" value=current_site_search placeholder='ask alfred...')
+            i.search.large.grey.link.icon.zoomer(title='search')
         .ui.dropdown.button
             i.database.icon
             i.dropdown.icon 
@@ -311,7 +300,7 @@ template(name='home_search')
                 
                 // +filter_model model='food' icon='food' 83DFF4
                 .ui.dropdown-content
-    
+        input.search_site(type='text' autocomplete="off" value=current_site_search placeholder='ask alfred...')
     // tags
     each picked_tags
         .ui.label
@@ -334,15 +323,15 @@ template(name='home_search')
             |{{cut title}}
 
 
-template(name='latest_updated_block')
-    .ui.animated.selection.list 
-        each latest_updated_docs
-            a.item(href="/d/#{model}/#{_id}")
-                if image_id
-                    img.ui.avatar.image.zoomer(src="{{c.url image_id height='300' width='300'}}")
-                .content
-                    .header {{cut title}}
-                    |updated {{from_now _updated_timestamp}}
+// template(name='latest_updated_block')
+//     .ui.animated.selection.list 
+//         each latest_updated_docs
+//             a.item(href="/d/#{model}/#{_id}")
+//                 if image_id
+//                     img.ui.avatar.image.zoomer(src="{{c.url image_id height='300' width='300'}}")
+//                 .content
+//                     .header {{cut title}}
+//                     |updated {{from_now _updated_timestamp}}
                 
 
 
@@ -357,31 +346,31 @@ template(name='user_avatars')
             
 
 
-template(name='bookmark_block')
-    each bookmarked_docs 
-        a.ui.tertiary.button.zoomer(href="/d/#{model}/#{_id}")
-            img.ui.avatar.image.zoomer(src="{{c.url image_id height='300' width='300'}}")
-            |#{title}
+// template(name='bookmark_block')
+//     each bookmarked_docs 
+//         a.ui.tertiary.button.zoomer(href="/d/#{model}/#{_id}")
+//             img.ui.avatar.image.zoomer(src="{{c.url image_id height='300' width='300'}}")
+//             |#{title}
 
 
-template(name='quickchat')
-    .ui.inline.header 
-        i.chat.icon
-        |quickchat
-    .ui.list
-        each model_docs_helper 'quickchat_message' 
-            .item #{body}
-    .ui.fluid.icon.input 
-        input.add_quickchat(type='text' placeholder='add...')
-template(name='your_bookmarks')
-    details.ui.fluid.styled.accordion
-        summary.title
-            i.large.bookmark.icon
-            | bookmarks
-        .content 
-            each bookmark_docs 
-                a.ui.button(href="/#{model}/#{_id}")
-                    |#{title}
+// template(name='quickchat')
+//     .ui.inline.header 
+//         i.chat.icon
+//         |quickchat
+//     .ui.list
+//         each model_docs_helper 'quickchat_message' 
+//             .item #{body}
+//     .ui.fluid.icon.input 
+//         input.add_quickchat(type='text' placeholder='add...')
+// template(name='your_bookmarks')
+//     details.ui.fluid.styled.accordion
+//         summary.title
+//             i.large.bookmark.icon
+//             | bookmarks
+//         .content 
+//             each bookmark_docs 
+//                 a.ui.button(href="/#{model}/#{_id}")
+//                     |#{title}
 template(name='comet_chat_block')
     i.large.chat.icon(title='popup comet chat')
     // .ui.inline.header 
@@ -465,6 +454,11 @@ template(name='home_card')
             span.right.floated
                 |#{when}
                 +model_icon
+                if currentUser.admin_mode
+                    if published 
+                        i.green.icon(title='published')
+                    else 
+                        i.yellow.save.icon(title='draft')
             div
             if location
                 |#{location}            

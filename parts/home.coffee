@@ -108,16 +108,16 @@ if Meteor.isClient
                     Meteor.user().banner_image_id
             else 
                 'nightbg'
-    Template.bookmark_block.onCreated ->
-        @autorun => @subscribe 'my_bookmarks',->
-    Template.latest_updated_block.onCreated ->
-        @autorun => @subscribe 'latest_updated',->
-    Template.latest_updated_block.helpers
-        latest_updated_docs: ->
-            Docs.find {_updated_timestamp:$exists:true}, {
-                sort:_updated_timestamp:-1
-                limit:5
-            }
+    # Template.bookmark_block.onCreated ->
+    #     @autorun => @subscribe 'my_bookmarks',->
+    # Template.latest_updated_block.onCreated ->
+    #     @autorun => @subscribe 'latest_updated',->
+    # Template.latest_updated_block.helpers
+    #     latest_updated_docs: ->
+    #         Docs.find {_updated_timestamp:$exists:true}, {
+    #             sort:_updated_timestamp:-1
+    #             limit:5
+    #         }
 # if Meteor.isServer
 #     Meteor.publish 'my_bookmarks', ()->
 #         Docs.find {_id: $in: Meteor.user().bookmarked_ids},{
@@ -152,7 +152,7 @@ if Meteor.isServer
     Meteor.publish 'my_current_thing', (current_thing_id)->
         # user = Meteor.user()
         Docs.find current_thing_id
-if Meteor.isClient
+# if Meteor.isClient
     # Template.quickchat.onCreated ->
     #     @autorun => @subscribe 'model_docs', 'quickchat_message', 10,->
     # Template.quickchat.events
@@ -170,10 +170,10 @@ if Meteor.isClient
     #                 # if true
 
     
-    
+if Meteor.isClient
     Template.home.helpers
         is_searching: -> Session.get('current_query')
-        model_filters: -> model_filters.array()
+        # model_filters: -> model_filters.array()
         view_template: -> "#{@model}_view"
         edit_template: -> "#{@model}_edit"
         current_viewing_thing: ->
@@ -203,8 +203,10 @@ if Meteor.isClient
                 match.title = {$regex:Session.get('current_query'), $options:'i'}
             # if Meteor.user() and Meteor.user().eft_filter_array and Meteor.user().eft_filter_array.length > 0
             #     match.efts = $in:Meteor.user().eft_filter_array
-            if model_filters.array().length
-                match.model = $in:model_filters.array()
+            # if model_filters.array().length
+            if Session.get('model_filter')
+                # match.model = $in:model_filters.array()
+                match.model = Session.get('model_filter')
             else 
                 match.model = $nin:['model','comment','message'] 
             Docs.find match,
@@ -215,7 +217,9 @@ if Meteor.isClient
         # 'click .toggle_addmode': ->
         #     Session.set('addmode', !Session.get('addmode'))
     Template.home.events 
-        'click .unpick_model': -> model_filters.remove @valueOf()
+        'click .unpick_model': -> 
+            # model_filters.remove @valueOf()
+            Session.set('model_filter',null)
         'click .toggle_editing':->
             Session.set('editing', !Session.get('editing'))
             console.log Session.get('editing')
@@ -227,40 +231,40 @@ if Meteor.isClient
                 inverted:true
                 # blurring:true
                 }).modal('show')
-    Template.thing_maker.events 
-        'click .show_modal': ->
-            $('.ui.modal').modal({
-                inverted:true
-                }).modal('show')
-            unless Session.get('current_thing_id')
-                # unless Meteor.user().current_thing_id
-                new_id = 
-                    Docs.insert 
-                        thing:true
-                # Session.set('editing_thing_id')
-                Session.set('current_thing_id', new_id)
-                # Meteor.users.update Meteor.userId(),
-                #     $set:
-                #         current_thing_id: new_id
+    # Template.thing_maker.events 
+    #     'click .show_modal': ->
+    #         $('.ui.modal').modal({
+    #             inverted:true
+    #             }).modal('show')
+    #         unless Session.get('current_thing_id')
+    #             # unless Meteor.user().current_thing_id
+    #             new_id = 
+    #                 Docs.insert 
+    #                     thing:true
+    #             # Session.set('editing_thing_id')
+    #             Session.set('current_thing_id', new_id)
+    #             # Meteor.users.update Meteor.userId(),
+    #             #     $set:
+    #             #         current_thing_id: new_id
                 
-        'click .delete_thing':->
-            if confirm 'delete?'
-                Docs.remove @_id
-                Session.set('current_thing_id', null)
-                Meteor.users.update Meteor.userId(),
-                    $unset:current_thing_id:1
-        'click .add_thing':->
-            new_id = 
-                Docs.insert 
-                    thing:true
-            Meteor.users.update Meteor.userId(),
-                $set:
-                    current_thing_id: new_id
-    Template.thing_maker.helpers 
-        current_thing:->
-            # user = Meteor.user()
-            # Docs.findOne user.current_thing_id
-            Docs.findOne Session.get('current_thing_id')
+    #     'click .delete_thing':->
+    #         if confirm 'delete?'
+    #             Docs.remove @_id
+    #             Session.set('current_thing_id', null)
+    #             Meteor.users.update Meteor.userId(),
+    #                 $unset:current_thing_id:1
+    #     'click .add_thing':->
+    #         new_id = 
+    #             Docs.insert 
+    #                 thing:true
+    #         Meteor.users.update Meteor.userId(),
+    #             $set:
+    #                 current_thing_id: new_id
+    # Template.thing_maker.helpers 
+    #     current_thing:->
+    #         # user = Meteor.user()
+    #         # Docs.findOne user.current_thing_id
+    #         Docs.findOne Session.get('current_thing_id')
     Template.thing_picker.helpers
         model_crud_class:->
             current_doc = Docs.findOne Meteor.user()._doc_id
@@ -402,31 +406,31 @@ if Meteor.isServer
                 first_name:1
                 views:1
         
-    Meteor.publish 'latest_home_docs', (model_filters=[])->
-        match = {}
-        essentials = ['post','offer','request','org','project','event','role','task','resource','skill']
-        # user = Meteor.user()
-        # console.log Meteor.user().current_model_filters
-        if model_filters.length > 0
-            match.model = $in:model_filters
-        else 
-            match.model = model:$in:essentials
-        Docs.find match,
-            limit:20
-            sort:_timestamp:-1
-            fields:
-                title:1
-                model:1
-                image_id:1
-                views:1
-                points:1
-                parent_id:1
-                efts:1
-                link:1
+    # Meteor.publish 'latest_home_docs', (model_filters=[])->
+    #     match = {}
+    #     essentials = ['post','offer','request','org','project','event','role','task','resource','skill']
+    #     # user = Meteor.user()
+    #     # console.log Meteor.user().model_filters
+    #     if model_filters.length > 0
+    #         match.model = $in:model_filters
+    #     else 
+    #         match.model = model:$in:essentials
+    #     Docs.find match,
+    #         limit:20
+    #         sort:_timestamp:-1
+    #         fields:
+    #             title:1
+    #             model:1
+    #             image_id:1
+    #             views:1
+    #             points:1
+    #             parent_id:1
+    #             efts:1
+    #             link:1
     
     
 if Meteor.isClient
-    @model_filters = new ReactiveArray []
+    # @model_filters = new ReactiveArray []
     
     Template.home_card.onDestroyed ->
         # console.log 'destroy', @data
@@ -471,7 +475,7 @@ if Meteor.isClient
         
         @autorun => @subscribe 'home_docs',
             Session.get('current_query')
-            Session.get('current_model_filter')
+            Session.get('model_filter')
             # model_filters.array()
             picked_tags.array()
             Session.get('view_latest')
@@ -494,7 +498,7 @@ if Meteor.isServer
         match = {}
         essentials = ['post','offer','request','org','project','event','role','task','resource','skill']
         # user = Meteor.user()
-        # console.log Meteor.user().current_model_filters
+        # console.log Meteor.user().model_filters
         if search 
             match.title = {$regex:search, $options:'i'}  
         # if model_filters.length > 0
@@ -514,7 +518,7 @@ if Meteor.isServer
         result_count = Docs.find(match).count()
         console.log result_count
         Docs.find match,
-            limit:20
+            limit:10
             sort:"#{sort_key}":sort_direction
             fields:
                 title:1
@@ -529,85 +533,89 @@ if Meteor.isServer
                 _author_id:1
                 _timestamp:1
     
-    Meteor.publish 'post_docs', (
-        model_filters=[]
-        # title_filter
-        # picked_authors=[]
-        # picked_tasks=[]
-        # picked_locations=[]
-        # picked_timestamp_tags=[]
-        # product_query
-        # view_vegan
-        # view_gf
-        # doc_limit
-        # doc_sort_key
-        # doc_sort_direction
-        )->
+    # Meteor.publish 'post_docs', (
+    #     model_filters=[]
+    #     # title_filter
+    #     # picked_authors=[]
+    #     # picked_tasks=[]
+    #     # picked_locations=[]
+    #     # picked_timestamp_tags=[]
+    #     # product_query
+    #     # view_vegan
+    #     # view_gf
+    #     # doc_limit
+    #     # doc_sort_key
+    #     # doc_sort_direction
+    #     )->
     
-        self = @
-        match = {}
-        # match = {app:'pes'}
-        # match.model = 'post'
-        # match.group_id = Meteor.user().current_group_id
-        # if title_filter and title_filter.length > 1
-        #     match.title = {$regex:title_filter, $options:'i'}
+    #     self = @
+    #     match = {}
+    #     # match = {app:'pes'}
+    #     # match.model = 'post'
+    #     # match.group_id = Meteor.user().current_group_id
+    #     # if title_filter and title_filter.length > 1
+    #     #     match.title = {$regex:title_filter, $options:'i'}
         
-        # if view_vegan
-        #     match.vegan = true
-        # if view_gf
-        #     match.gluten_free = true
-        # if view_local
-        #     match.local = true
-        # if picked_authors.length > 0 then match._author_username = $in:picked_authors
-        if model_filters.length > 0 then match.model = $all:model_filters 
-        # if picked_locations.length > 0 then match.location_title = $in:picked_locations 
-        # if picked_timestamp_tags.length > 0 then match._timestamp_tags = $in:picked_timestamp_tags 
-        console.log match
-        Docs.find match, 
-            limit:10
-            sort:
-                _timestamp:-1
-            fields:
-                title:1
-                model:1
-                image_id:1
-                tags:1
-                _timestamp:1
-                _author_id:1
-                _author_username:1
-                body:1
-                points:1
-                views:1
-                parent_id:1
-                efts:1
+    #     # if view_vegan
+    #     #     match.vegan = true
+    #     # if view_gf
+    #     #     match.gluten_free = true
+    #     # if view_local
+    #     #     match.local = true
+    #     # if picked_authors.length > 0 then match._author_username = $in:picked_authors
+    #     if model_filters.length > 0 then match.model = $all:model_filters 
+    #     # if picked_locations.length > 0 then match.location_title = $in:picked_locations 
+    #     # if picked_timestamp_tags.length > 0 then match._timestamp_tags = $in:picked_timestamp_tags 
+    #     console.log match
+    #     Docs.find match, 
+    #         limit:10
+    #         sort:
+    #             _timestamp:-1
+    #         fields:
+    #             title:1
+    #             model:1
+    #             image_id:1
+    #             tags:1
+    #             _timestamp:1
+    #             _author_id:1
+    #             _author_username:1
+    #             body:1
+    #             points:1
+    #             views:1
+    #             parent_id:1
+    #             efts:1
     
 if Meteor.isClient    
     Template.filter_model.helpers
         button_class:->
-            if @model in model_filters.array()
-                'gactive'
+            if @model is Session.get('model_filter')
+                'large active'
             else 
-                'small secondary'
-            # if Session.equals('current_model_filter',@model) then 'blue large' else 'small'
-            # if  @model in Meteor.user().current_model_filters then 'blue big' else 'small basic'
+                'small secondary basic'
+            # if @model in model_filters.array()
+            #     'gactive'
+            # else 
+            #     'small secondary'
+            # if Session.equals('model_filter',@model) then 'blue large' else 'small'
+            # if  @model in Meteor.user().model_filters then 'blue big' else 'small basic'
     Template.filter_model.events
         'click .pick_model': ->
-            Session.set('current_model_filter',@model)
+            Session.set('model_filter',@model)
             
-            if @model in model_filters.array()
-                model_filters.remove @model 
-            else 
-                model_filters.push @model 
+            # if @model in model_filters.array()
+            #     model_filters.remove @model 
+            # else 
+            #     model_filters.push @model 
                 
-            # # if @model in Meteor.user().current_model_filters 
-            # if @model in Meteor.user().current_model_filters 
+            # # if @model in Meteor.user().model_filters 
+            # if @model in Meteor.user().model_filters 
             #     Meteor.users.update Meteor.userId(),
             #         $pull:
-            #             current_model_filters:@model
+            #             model_filters:@model
             # else 
             #     Meteor.users.update Meteor.userId(),
             #         $addToSet:
-            #             current_model_filters:@model
+            #             model_filters:@model
                 
     
     

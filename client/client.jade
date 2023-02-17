@@ -123,6 +123,7 @@ template(name='doc_view')
                 .column
                     +Template.dynamic template=doc_view_template
                     +link_field key='link'
+                    +boolean_field key='published' label='published'
             .two.column.row
                 .column
                     // +Template.dynamic template=doc_view_template
