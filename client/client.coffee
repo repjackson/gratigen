@@ -51,68 +51,68 @@ moment.locale('en', {
 });
 
 
-Meteor.users.find({}).observeChanges({
-    changed: (id,fields)->
-        # console.log 'parent doc changed,', fields
-        user = Meteor.users.findOne id
-        changed_keys = _.keys fields 
-        for key in changed_keys
-            if key is 'online'
-                if user.online 
-                    unless user._id is Meteor.userId()
-                        $('body').toast({
-                            title: "#{user.username} came online"
-                            # message: 'Please see desk staff for key.'
-                            class : 'success'
-                            # showIcon:''
-                            # showProgress:'bottom'
-                            position:'bottom center'
-                            # className:
-                            #     toast: 'ui massive message'
-                            # displayTime: 5000
-                        })
-                else   
-                    $('body').toast({
-                        title: "#{user.username} went offline"
-                        # message: 'Please see desk staff for key.'
-                        class : 'info'
-                        # showIcon:''
-                        showProgress:'bottom'
-                        position:'bottom center'
-                        # className:
-                        #     toast: 'ui massive message'
-                        # displayTime: 5000
-                    })
-        })
+# Meteor.users.find({}).observeChanges({
+#     changed: (id,fields)->
+#         # console.log 'parent doc changed,', fields
+#         user = Meteor.users.findOne id
+#         changed_keys = _.keys fields 
+#         for key in changed_keys
+#             if key is 'online'
+#                 if user.online 
+#                     unless user._id is Meteor.userId()
+#                         $('body').toast({
+#                             title: "#{user.username} came online"
+#                             # message: 'Please see desk staff for key.'
+#                             class : 'success'
+#                             # showIcon:''
+#                             # showProgress:'bottom'
+#                             position:'bottom center'
+#                             # className:
+#                             #     toast: 'ui massive message'
+#                             # displayTime: 5000
+#                         })
+#                 else   
+#                     $('body').toast({
+#                         title: "#{user.username} went offline"
+#                         # message: 'Please see desk staff for key.'
+#                         class : 'info'
+#                         # showIcon:''
+#                         showProgress:'bottom'
+#                         position:'bottom center'
+#                         # className:
+#                         #     toast: 'ui massive message'
+#                         # displayTime: 5000
+#                     })
+#         })
         
-Meteor.users.find(_id:Meteor.userId()).observe({
-    changed: (new_doc, old_doc)->
-        difference = new_doc.points-old_doc.points
-        if difference > 0
-            $('body').toast({
-                title: "#{new_doc.points-old_doc.points}p earned"
-                # message: 'Please see desk staff for key.'
-                class : 'success'
-                showIcon:'hashtag'
-                # showProgress:'bottom'
-                position:'bottom right'
-                # className:
-                #     toast: 'ui massive message'
-                # displayTime: 5000
-                transition:
-                  showMethod   : 'zoom',
-                  showDuration : 250,
-                  hideMethod   : 'fade',
-                  hideDuration : 250
-                })
-            Notification.requestPermission (result) ->
-                console.log result
+# Meteor.users.find(_id:Meteor.userId()).observe({
+#     changed: (new_doc, old_doc)->
+#         difference = new_doc.points-old_doc.points
+#         if difference > 0
+#             $('body').toast({
+#                 title: "#{new_doc.points-old_doc.points}p earned"
+#                 # message: 'Please see desk staff for key.'
+#                 class : 'success'
+#                 showIcon:'hashtag'
+#                 # showProgress:'bottom'
+#                 position:'bottom right'
+#                 # className:
+#                 #     toast: 'ui massive message'
+#                 # displayTime: 5000
+#                 transition:
+#                   showMethod   : 'zoom',
+#                   showDuration : 250,
+#                   hideMethod   : 'fade',
+#                   hideDuration : 250
+#                 })
+#             Notification.requestPermission (result) ->
+#                 console.log result
 
-            if Notification.permission is "granted"
-                img = "https://img.icons8.com/ios/50/null/hand-holding-heart.png"
-                text = "you received #{difference} points"
-                notification = new Notification('points received', { body: text, icon: img });
-})
+#             if Notification.permission is "granted"
+#                 img = "https://img.icons8.com/ios/50/null/hand-holding-heart.png"
+#                 text = "you received #{difference} points"
+#                 notification = new Notification('points received', { body: text, icon: img });
+# })
 
 
 Template.footer.helpers

@@ -483,7 +483,7 @@ if Meteor.isClient
             
     Template.home.onCreated ->
         # @autorun => @subscribe 'my_current_thing', ->
-        @autorun => @subscribe 'my_current_thing', Session.get('current_thing_id'),->
+        # @autorun => @subscribe 'my_current_thing', Session.get('current_thing_id'),->
         
         @autorun => @subscribe 'home_docs',
             Session.get('current_query')
@@ -496,19 +496,28 @@ if Meteor.isClient
         # @autorun => @subscribe 'all_markers',->
         # @autorun => @subscribe 'latest_home_docs',model_filters.array(),->
         
-        @autorun => @subscribe 'all_users', ->
-        @autorun => @subscribe 'post_facets',
-            picked_tags.array()
-            Session.get('post_title_filter')
+        # @autorun => @subscribe 'all_users', ->
+        # @autorun => @subscribe 'post_facets',
+        #     picked_tags.array()
+        #     Session.get('post_title_filter')
 
 if Meteor.isServer
+    Meteor.publish 'home_docs_count', (query_object, sort_object)->
+        # if model 
+        Counts.publish this, 'food_product_counter', 
+            Docs.find({
+                model:'recipe'
+            })
+        return undefined    # otherwise coffeescript returns a Counts.publish
+    
     Meteor.publish 'home_docs', (
         search=null
         model_filter=null
         view_latest=false
         )->
         match = {}
-        essentials = ['post','offer','request','org','project','event','role','task','resource','skill']
+        # essentials = ['post','offer','request','org','project','event','role','task','resource','skill']
+        essentials = ['post']
         # user = Meteor.user()
         # console.log Meteor.user().model_filters
         if search 
@@ -526,7 +535,7 @@ if Meteor.isServer
             match.model = model_filter
         else 
             match.model = $in:essentials
-        console.log 'home match', match, model_filter
+        # console.log 'home match', match, model_filter
         result_count = Docs.find(match).count()
         console.log result_count
         Docs.find match,

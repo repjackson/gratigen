@@ -154,83 +154,85 @@ template(name='home')
                     .ui.button.view_bookmarks(class=viewing_bookmarks)
                         i.bookmark.icon 
                         |bookmarks
-                if session_is 'view_mode' 'list'
-                    .ui.divided.selection.items 
-                        each doc_results 
-                            +home_list_item
-                else if session_is 'view_mode' 'grid'
-                    .ui.three.stackable.cards
-                        each doc_results
-                            +home_card
-                else    
-                    .ui.ten.wide.column.centered.mobile.hidden
-                        .ui.centered.one.cards.scrollin
+                .scrolling
+                    if session_is 'view_mode' 'list'
+                        .ui.divided.selection.items 
+                            each doc_results 
+                                +home_list_item
+                    else if session_is 'view_mode' 'grid'
+                        .ui.three.stackable.cards
                             each doc_results
                                 +home_card
-                    .ui.sixteen.wide.column.centered.mobile.only
-                        .ui.centered.one.cards.scrolling
-                            each doc_results
-                                +home_card
+                    else    
+                        .ui.ten.wide.column.centered.mobile.hidden
+                            .ui.centered.one.cards.scrollin
+                                each doc_results
+                                    +home_card
+                        .ui.sixteen.wide.column.centered.mobile.only
+                            .ui.centered.one.cards.scrolling
+                                each doc_results
+                                    +home_card
         // .eight.wide.column.bordered
-        .three.wide.scrolling.column
-            // +icon_browser
-            // +block template='latest_updated_block' title='latest' icon='time-machine' color='blue'
-            +block template='user_avatars' title='users' icon='groups' color='green'
-            // div
-            // +comet_chat_block
-            // .ui.divider
-            // +block template='gratigen' open=true icon='donate' color='yellow'
-            // +icon_item designer='phatplus' iconSet='phatplus-linear' category='business-online' commonName='server' color='orange'
-            // +icon_item platform='wanicon-lineal' commonName='server' color='red'
-            // +gratigen
-            // .ui.divider
-            
-            // +block template='bookmark_block' title='bookmarks' icon='bookmark' color='orange'
-            // +bookmark_block
-            // +model_block model='post' icon='blog' color='42E8C4' title='latest posts'
-            // +model_block model='role' icon='shield' color='42E8C4' title='latest roles'
-            // +model_block model='resource' icon='car' color='42E8C4' title='nearest resources'
-            // +model_block model='org' icon='groups' color='42E8C4' title='organizations'
-            // +my_things
-            if session_is 'show_map' true
-                +mapbox
-            if session_is 'show_calendar' true 
-                +calendar_view
-            +block template='charts' icon='chart' color='red'
-            // +charts
-            if currentUser.admin_mode
-                +user_connection_graph
-            // +block template='online_allies'
-            +alerts
-            a.ui.button(href="www.github.com/repjackson/gratigen" target='_window')
-                i.github.icon 
-                |github code
-            +block template='models_chart'
-            // +online_allies
-        // +thing_maker
-        // if current_thing.
-        //     if _is 'model'_edit
-        // [current_thing_type]_edit
-        //     +thing_picker
-        //      +eft_picker
-    // .ui.add.modal    
-    //     +add
-    // .ui.fullscreen.modal
-    //     with current_viewing_thing
-    //         .ui.grid
-    //             .sixteen.wide.column
-    //                 +model_icon
-    //             .thirteen.wide.centered.column
-    //                 //on click go to full page
-    //                 .ui.inline.centered.header.huge #{title}
-
-    //         .scrollin.content
-    //             if session_is 'editing' true
-    //                 +Template.dynamic template=edit_template
-    //             else 
-    //                 +Template.dynamic template=view_template
-    // +view_chats
+        unless currentUser.admin_mode
+            .three.wide.scrolling.column
+                // +icon_browser
+                // +block template='latest_updated_block' title='latest' icon='time-machine' color='blue'
+                +block template='user_avatars' title='users' icon='groups' color='green'
+                // div
+                // +comet_chat_block
+                // .ui.divider
+                // +block template='gratigen' open=true icon='donate' color='yellow'
+                // +icon_item designer='phatplus' iconSet='phatplus-linear' category='business-online' commonName='server' color='orange'
+                // +icon_item platform='wanicon-lineal' commonName='server' color='red'
+                // +gratigen
+                // .ui.divider
+                
+                // +block template='bookmark_block' title='bookmarks' icon='bookmark' color='orange'
+                // +bookmark_block
+                // +model_block model='post' icon='blog' color='42E8C4' title='latest posts'
+                // +model_block model='role' icon='shield' color='42E8C4' title='latest roles'
+                // +model_block model='resource' icon='car' color='42E8C4' title='nearest resources'
+                // +model_block model='org' icon='groups' color='42E8C4' title='organizations'
+                // +my_things
+                if session_is 'show_map' true
+                    +mapbox
+                if session_is 'show_calendar' true 
+                    +calendar_view
+                // +block template='charts' icon='chart' color='red'
+                // +charts
+                // if currentUser.admin_mode
+                //     +user_connection_graph
+                // +block template='online_allies'
+                +alerts
+                a.ui.button(href="www.github.com/repjackson/gratigen" target='_window')
+                    i.github.icon 
+                    |github code
+                +block template='models_chart'
+                // +online_allies
+            // +thing_maker
+            // if current_thing.
+            //     if _is 'model'_edit
+            // [current_thing_type]_edit
+            //     +thing_picker
+            //      +eft_picker
+        // .ui.add.modal    
+        //     +add
+        // .ui.fullscreen.modal
+        //     with current_viewing_thing
+        //         .ui.grid
+        //             .sixteen.wide.column
+        //                 +model_icon
+        //             .thirteen.wide.centered.column
+        //                 //on click go to full page
+        //                 .ui.inline.centered.header.huge #{title}
     
+        //         .scrollin.content
+        //             if session_is 'editing' true
+        //                 +Template.dynamic template=edit_template
+        //             else 
+        //                 +Template.dynamic template=view_template
+        // +view_chats
+        
     
 template(name='models_chart')
     iframe(style="background: #21313C;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="100%" height="100%" src="https://charts.mongodb.com/charts-project-0-seecq/embed/charts?id=eff00e0b-77a0-4b15-8130-7f6d743361e2&maxDataAge=3600&theme=light&autoRefresh=false")
@@ -261,46 +263,50 @@ template(name='home_block')
             +Template.dynamic template=template
 
 
+template(name='model_dropdown')
+    .ui.dropdown.button
+        i.database.icon
+        i.dropdown.icon 
+        .menu 
+            // .item
+            +filter_model model='post' icon='for-you' color='1255B8'
+            //blue
+            +filter_model model='offer' icon='hand-holding-heart' color='FF73EA'
+            //pink
+            +filter_model model='request' icon='commercial' color='40C057'     
+            //green
+            div
+            +filter_model model='org' icon='groups' color='83DFF4'
+            //light blue
+            +filter_model model='project' icon='project' color='7229AF' 
+            //violet
+            +filter_model model='event' icon='calendar' color='FAB005'
+            //yellow
+            +filter_model model='role' icon='what-i-do' color='42E8C4'
+            //turquoise
+            +filter_model model='task' icon='task' color='B785E1'
+            +filter_model model='product' icon='shop' color='40C057'
+            +filter_model model='service' icon='service' color='FF73EA'
+    
+            //lavender
+            +filter_model model='resource' icon='field-and-tractor' color='FD7E14'  
+            //orange
+            +filter_model model='skill' icon='wrench' color='ff0000'
+            +filter_model model='badge' icon='badge' color='ff0000'
+            //red
+            // +filter_model model='food' icon='food' 83DFF4
+            .ui.dropdown-content
+
+
 
 template(name='smaba')
-    .ui.centered.icon.large.left.action.input(title='search/create')
+    .ui.icon.left.action.input(title='search/create')
         if current_site_search
             i.remove.large.red.link.icon.clear_search
         else
             i.search.large.grey.link.icon.zoomer(title='search')
-        .ui.dropdown.button
-            i.database.icon
-            i.dropdown.icon 
-            .menu 
-                // .item
-                +filter_model model='post' icon='for-you' color='1255B8'
-                //blue
-                +filter_model model='offer' icon='hand-holding-heart' color='FF73EA'
-                //pink
-                +filter_model model='request' icon='commercial' color='40C057'     
-                //green
-                div
-                +filter_model model='org' icon='groups' color='83DFF4'
-                //light blue
-                +filter_model model='project' icon='project' color='7229AF' 
-                //violet
-                +filter_model model='event' icon='calendar' color='FAB005'
-                //yellow
-                +filter_model model='role' icon='what-i-do' color='42E8C4'
-                //turquoise
-                +filter_model model='task' icon='task' color='B785E1'
-                +filter_model model='product' icon='shop' color='40C057'
-                +filter_model model='service' icon='service' color='FF73EA'
-
-                //lavender
-                +filter_model model='resource' icon='field-and-tractor' color='FD7E14'  
-                //orange
-                +filter_model model='skill' icon='wrench' color='ff0000'
-                +filter_model model='badge' icon='badge' color='ff0000'
-                //red
-                // +filter_model model='food' icon='food' 83DFF4
-                .ui.dropdown-content
         input.search_site(type='text' autocomplete="off" value=current_site_search placeholder='ask smaba...')
+    +model_dropdown
     // tags
     each picked_tags
         .ui.label
@@ -447,7 +453,7 @@ template(name='home_card')
             span.left.floated
                 if icon 
                     +i name=icon color=icon_color
-                img.ui.avatar.image(src="{{c.url _author.image_id}}" title=_author.username)
+                img.ui.avatar.image(src="{{c.url _author.image_id height=200}}" title=_author.username)
                 |#{_author.username}
                 div
                 +parent_block
@@ -466,18 +472,18 @@ template(name='home_card')
                 |#{datetime}
         if youtube_id 
             +youtube_view key='youtube_id'
-        if link
-            .content.smallscroll 
-                iframe.invert(width='100%' height='500px' src=link frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen='')
+        // if link
+        //     .content.smallscroll 
+        //         iframe.invert(width='100%' height='500px' src=link frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen='')
 
         .content.smallscroll 
             |!{body}
             |!{brief}
             |!{content}
-        if link
-            +link_field
-        else
-            img.ui.fluid.image(src="{{c.url image_id width=400 height=400}}")
+        // if link
+        //     +link_field
+        // else
+        img.ui.fluid.image(src="{{c.url image_id width=500 height=500}}")
         .content 
             .description
                 // .ui.header lat: #{lat}
@@ -532,24 +538,23 @@ template(name='home_list_item')
     .ui.item
         img.ui.small.inline.image(src="{{c.url image_id width=400 height=400}}")
         .content
-            .ui.header
+            a.ui.inline.header.zoomer(href="/d/#{model}/#{_id}")
                 |#{title}
-            a.zoomer(href="/d/#{model}/#{_id}")
-                span.left.floated
-                    if icon 
-                        +i name=icon color=icon_color
-                    img.ui.avatar.image(src="{{c.url _author.image_id}}" title=_author.username)
-                    |#{_author.username}
-                    div
-                    +parent_block
-                span.right.floated
-                    |#{when}
-                    +model_icon
+            span.left.floated
+                if icon 
+                    +i name=icon color=icon_color
+                img.ui.avatar.image(src="{{c.url _author.image_id}}" title=_author.username)
+                |#{_author.username}
                 div
-                if location
-                    |#{location}            
-                if location
-                    |#{datetime}
+                +parent_block
+            span.right.floated
+                |#{when}
+                +model_icon
+            div
+            if location
+                |#{location}            
+            if location
+                |#{datetime}
         if youtube_id 
             +youtube_view key='youtube_id'
         .content 

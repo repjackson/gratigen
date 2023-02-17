@@ -50,14 +50,6 @@ if Meteor.isClient
         
             
 
-if Meteor.isServer
-    Meteor.publish 'food_product_counter', (model)->
-        # if model 
-        Counts.publish this, 'food_product_counter', 
-            Docs.find({
-                model:'recipe'
-            })
-        return undefined    # otherwise coffeescript returns a Counts.publish
 
 if Meteor.isClient    
     Template.agg_food_product_tag.onCreated ->

@@ -40,12 +40,12 @@ if Meteor.isClient
         @autorun => Meteor.subscribe 'me', ->
         # @autorun => Meteor.subscribe 'all_users', ->
         # @autorun => Meteor.subscribe 'my_drafts', ->
-        @autorun => Meteor.subscribe 'my_current_doc', ->
+        # @autorun => Meteor.subscribe 'my_current_doc', ->
         
     Template.nav_search.onCreated ->
         # @autorun => Meteor.subscribe 'model_docs', 'model', ->
-        @autorun => Meteor.subscribe 'doc_search_results', Session.get('current_query'), ->
-        @autorun => Meteor.subscribe 'user_search_results', Session.get('current_query'), ->
+        # @autorun => Meteor.subscribe 'doc_search_results', Session.get('current_query'), ->
+        # @autorun => Meteor.subscribe 'user_search_results', Session.get('current_query'), ->
         # @autorun => Meteor.subscribe 'my_cart_products'
     
 if Meteor.isServer

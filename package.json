@@ -2,12 +2,9 @@
 	"dependencies": {
 		"@babel/runtime": "^7.9.2",
 		"bcrypt": "^5.0.1",
-		"ibm-watson": "^5.2.1",
 		"meteor-node-stubs": "^1.2.5",
 		"request": "^2.88.2",
-		"request-promise": "^4.2.6",
-		"stripe": "^11.5.0",
-		"twilio": "^3.84.1"
+		"request-promise": "^4.2.6"
 	},
 	"scripts": {
 		"start": "MONGO_URL=mongodb+srv://daoadmin:daoadminpassword@cluster1-etul3.mongodb.net/riversidedb meteor --settings settings.json",

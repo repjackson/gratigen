@@ -37,8 +37,3 @@ flowkey:hotkeys
 mdg:geolocation
 http
 reactive-var
-constellation:console
-constellation:subscriptions
-constellation:autopublish
-constellation:session
-babrahams:temple
