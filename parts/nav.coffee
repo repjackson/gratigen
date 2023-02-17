@@ -365,7 +365,7 @@ if Meteor.isClient
                 Meteor.users.find match, 
                     limit:5
         current_site_search: -> Session.get('current_query')
-    Template.home_search.helpers
+    Template.smaba.helpers
         current_site_search: -> Session.get('current_query')
 
     Template.nav.helpers

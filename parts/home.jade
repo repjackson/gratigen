@@ -140,7 +140,7 @@ template(name='home')
                     //     a.ui.label.unpick_model(title='remove filter')
                     //         i.remove.icon
                     //         |#{this}
-                    +home_search
+                    +smaba
                 
                     +session_set key='view_mode' value='grid' icon='th' 
                     +session_set key='view_mode' value='list' icon='list'
@@ -261,7 +261,7 @@ template(name='home_block')
 
 
 
-template(name='home_search')
+template(name='smaba')
     .ui.centered.icon.large.left.action.input(title='search/create')
         if current_site_search
             i.remove.large.red.link.icon.clear_search
@@ -295,6 +295,7 @@ template(name='home_search')
                 +filter_model model='resource' icon='field-and-tractor' color='FD7E14'  
                 //orange
                 +filter_model model='skill' icon='wrench' color='ff0000'
+                +filter_model model='badge' icon='badge' color='ff0000'
                 
                 //red
                 

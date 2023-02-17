@@ -4,7 +4,7 @@ if Meteor.isClient
         @render 'home'
         ), name:'home'
     
-    Template.home_search.events
+    Template.smaba.events
         # 'keyup .search_site': _.throttle((e,t)->
         'keyup .search_site': (e,t)->
             # console.log Router.current().route.getName()
