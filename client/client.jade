@@ -122,6 +122,7 @@ template(name='doc_view')
             .one.column.row.subtemplate
                 .column
                     +Template.dynamic template=doc_view_template
+                    +link_field key='link'
             .two.column.row
                 .column
                     // +Template.dynamic template=doc_view_template

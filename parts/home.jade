@@ -506,7 +506,7 @@ template(name='home_card')
             .content
                 .left.floated
                     +voting
-                .right.floated
+                a.right.floated.zoomer.fly_right(href="/d/#{model}/#{_id}")
                     | #{views} views
                 // if _author_id
                 //     +author_info

@@ -510,7 +510,7 @@ if Meteor.isServer
             match.model = model_filter
         else 
             match.model = model:$in:essentials
-        console.log 'home match', match, model_filters
+        console.log 'home match', match, model_filter
         result_count = Docs.find(match).count()
         console.log result_count
         Docs.find match,
