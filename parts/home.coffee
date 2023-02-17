@@ -60,7 +60,8 @@ if Meteor.isClient
         # , 100)
     
     Template.home.helpers
-        viewing_latest: -> Session.get('viewing_latest')
+        view_latest_class: -> 
+            if Session.get('view_latest') then 'large active' else 'compact basic'
     Template.home.events
         'click .view_latest': ->
             # trying different view session storage
@@ -68,11 +69,15 @@ if Meteor.isClient
             if current_role
                 Docs.update current_role._id, 
                     $set: view_latest:true
-            Session.set('view_latest',true)
-            Meteor.users.update Meteor.userId(),
-                $set:view_latest:true
+            if Session.get('view_latest')
+                Session.set('view_latest',false)
+            else 
+                Session.set('view_latest',true)
+                
+            # Meteor.users.update Meteor.userId(),
+            #     $set:view_latest:true
             $('body').toast({
-                title: "viewing latest"
+                title: "viewing latest #{Sesssion.get('view_latest')}"
                 class : 'success'
                 showProgress:'bottom'
                 position:'bottom right'
@@ -113,28 +118,28 @@ if Meteor.isClient
                 sort:_updated_timestamp:-1
                 limit:5
             }
-if Meteor.isServer
-    Meteor.publish 'my_bookmarks', ()->
-        Docs.find {_id: $in: Meteor.user().bookmarked_ids},{
-            fields:
-                model:1
-                title:1
-                image_id:1
-                _timestamp:1
-                _updated_timestamp:1
-        }
-if Meteor.isServer
-    Meteor.publish 'latest_updated', ()->
-        Docs.find {_updated_timestamp:$exists:true},{
-            sort:_updated_timestamp:-1
-            limit:5
-            fields:
-                model:1
-                title:1
-                image_id:1
-                _timestamp:1
-                _updated_timestamp:1
-        }
+# if Meteor.isServer
+#     Meteor.publish 'my_bookmarks', ()->
+#         Docs.find {_id: $in: Meteor.user().bookmarked_ids},{
+#             fields:
+#                 model:1
+#                 title:1
+#                 image_id:1
+#                 _timestamp:1
+#                 _updated_timestamp:1
+#         }
+# if Meteor.isServer
+#     Meteor.publish 'latest_updated', ()->
+#         Docs.find {_updated_timestamp:$exists:true},{
+#             sort:_updated_timestamp:-1
+#             limit:5
+#             fields:
+#                 model:1
+#                 title:1
+#                 image_id:1
+#                 _timestamp:1
+#                 _updated_timestamp:1
+#         }
 if Meteor.isClient
     Template.model_block.onCreated ->
         @autorun => @subscribe 'model_docs', @data.model, 5,->
@@ -148,21 +153,21 @@ if Meteor.isServer
         # user = Meteor.user()
         Docs.find current_thing_id
 if Meteor.isClient
-    Template.quickchat.onCreated ->
-        @autorun => @subscribe 'model_docs', 'quickchat_message', 10,->
-    Template.quickchat.events
-        'keyup .add_quickchat': (e,t)->
-            if e.which is 13
-                body = t.$('.add_quickchat').val().trim()
-                if body.length>0
-                    parent = Template.parentData()
-                    new_id = 
-                        Docs.insert 
-                            model:'quickchat'
-                            body:body 
-                $('.add_quickchat').val('')
+    # Template.quickchat.onCreated ->
+    #     @autorun => @subscribe 'model_docs', 'quickchat_message', 10,->
+    # Template.quickchat.events
+    #     'keyup .add_quickchat': (e,t)->
+    #         if e.which is 13
+    #             body = t.$('.add_quickchat').val().trim()
+    #             if body.length>0
+    #                 parent = Template.parentData()
+    #                 new_id = 
+    #                     Docs.insert 
+    #                         model:'quickchat'
+    #                         body:body 
+    #             $('.add_quickchat').val('')
                     
-                    # if true
+    #                 # if true
 
     
     
@@ -340,13 +345,13 @@ if Meteor.isClient
                     'small'
                 
         
-    Template.latest_activity.onCreated ->
-        @autorun => @subscribe 'latest_home_docs', ->
-    Template.latest_activity.helpers 
-        latest_docs: ->
-            Docs.find {_updated_timestamp:$exists:true},
-                sort:
-                    _updated_timestamp:-1
+    # Template.latest_activity.onCreated ->
+    #     @autorun => @subscribe 'latest_home_docs', ->
+    # Template.latest_activity.helpers 
+    #     latest_docs: ->
+    #         Docs.find {_updated_timestamp:$exists:true},
+    #             sort:
+    #                 _updated_timestamp:-1
                 
 # if Meteor.isServer
 #     Meteor.publish 'latest_docs', ->
@@ -419,40 +424,6 @@ if Meteor.isServer
                 efts:1
                 link:1
     
-    Meteor.publish 'home_docs', (
-        search=null
-        model_filter=null
-        )->
-        match = {}
-        essentials = ['post','offer','request','org','project','event','role','task','resource','skill']
-        # user = Meteor.user()
-        # console.log Meteor.user().current_model_filters
-        if search 
-            match.title = {$regex:search, $options:'i'}  
-        # if model_filters.length > 0
-        #     match.model = $in:model_filters
-        if model_filter
-            match.model = model_filter
-        else 
-            match.model = model:$in:essentials
-        console.log 'home match', match, model_filters
-        result_count = Docs.find(match).count()
-        console.log result_count
-        Docs.find match,
-            limit:20
-            sort:_timestamp:-1
-            fields:
-                title:1
-                model:1
-                body:1
-                image_id:1
-                views:1
-                points:1
-                link:1
-                parent_id:1
-                efts:1
-                _author_id:1
-                _timestamp:1
     
 if Meteor.isClient
     @model_filters = new ReactiveArray []
@@ -503,7 +474,8 @@ if Meteor.isClient
             Session.get('current_model_filter')
             # model_filters.array()
             picked_tags.array()
-            Session.get('post_title_filter')
+            Session.get('view_latest')
+            # Session.get('post_title_filter')
         
         # @autorun => @subscribe 'all_markers',->
         # @autorun => @subscribe 'latest_home_docs',model_filters.array(),->
@@ -514,6 +486,49 @@ if Meteor.isClient
             Session.get('post_title_filter')
 
 if Meteor.isServer
+    Meteor.publish 'home_docs', (
+        search=null
+        model_filter=null
+        view_latest=false
+        )->
+        match = {}
+        essentials = ['post','offer','request','org','project','event','role','task','resource','skill']
+        # user = Meteor.user()
+        # console.log Meteor.user().current_model_filters
+        if search 
+            match.title = {$regex:search, $options:'i'}  
+        # if model_filters.length > 0
+        #     match.model = $in:model_filters
+        sort_key = "_timestamp"
+        # sort_key = "_timestamp"
+        sort_direction = -1
+        
+        if view_latest
+            sort_key = '_timestamp'
+            sort_direction = -1
+        if model_filter
+            match.model = model_filter
+        else 
+            match.model = model:$in:essentials
+        console.log 'home match', match, model_filters
+        result_count = Docs.find(match).count()
+        console.log result_count
+        Docs.find match,
+            limit:20
+            sort:"#{sort_key}":sort_direction
+            fields:
+                title:1
+                model:1
+                body:1
+                image_id:1
+                views:1
+                points:1
+                link:1
+                parent_id:1
+                efts:1
+                _author_id:1
+                _timestamp:1
+    
     Meteor.publish 'post_docs', (
         model_filters=[]
         # title_filter
