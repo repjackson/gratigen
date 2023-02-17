@@ -59,15 +59,25 @@ if Meteor.isClient
                     # , 10000
         # , 100)
     
+    Template.home.helpers
+        viewing_latest: -> Session.get('viewing_latest')
     Template.home.events
         'click .view_latest': ->
-            current_persona = Docs.findOne Meteor.user().current_persona_id
-            if current_persona
-                Docs.update current_persona._id, 
+            # trying different view session storage
+            current_role = Docs.findOne Meteor.user().current_role_id
+            if current_role
+                Docs.update current_role._id, 
                     $set: view_latest:true
             Session.set('view_latest',true)
             Meteor.users.update Meteor.userId(),
                 $set:view_latest:true
+            $('body').toast({
+                title: "viewing latest"
+                class : 'success'
+                showProgress:'bottom'
+                position:'bottom right'
+            })
+                
         'click .add_doc': ->
             new_id = 
                 Docs.insert 
@@ -88,6 +98,9 @@ if Meteor.isClient
                         doc.banner_image_id
                     else if doc.image_id
                         doc.image_id
+            else if Meteor.user()
+                if Meteor.user().banner_image_id
+                    Meteor.user().banner_image_id
             else 
                 'nightbg'
     Template.bookmark_block.onCreated ->
