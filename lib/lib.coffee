@@ -66,13 +66,13 @@ Meteor.users.helpers
             "#{@first_name} #{@last_name}"
         else
             "#{@username}"
-    shortname: ->
-        if @nickname
-            "#{@nickname}"
-        else if @first_name
-            "#{@first_name}"
-        else
-            "#{@username}"
+    # shortname: ->
+    #     if @nickname
+    #         "#{@nickname}"
+    #     else if @first_name
+    #         "#{@first_name}"
+    #     else
+    #         "#{@username}"
     email_address: -> if @emails and @emails[0] then @emails[0].address
     email_verified: -> if @emails and @emails[0] then @emails[0].verified
     first_five_tags: ->
@@ -88,11 +88,11 @@ Meteor.users.helpers
 #     return
 # , {fetchPrevious: false})
 
-Docs.before.update( (userId, doc, fieldNames, modifier, options)->
-    modifier.$set = modifier.$set || {};
-    modifier.$set._updated_timestamp = Date.now();
-    # console.log 'updating', doc
-)
+# Docs.before.update( (userId, doc, fieldNames, modifier, options)->
+#     modifier.$set = modifier.$set || {};
+#     modifier.$set._updated_timestamp = Date.now();
+#     # console.log 'updating', doc
+# )
 
 
 
@@ -154,10 +154,10 @@ if Meteor.isServer
 Docs.helpers
     _author: -> Meteor.users.findOne @_author_id
     # cook: -> Meteor.users.findOne @cook_user_id
-    source_products: ->
-        Docs.find
-            model:'product'
-            source_id:@_id
+    # source_products: ->
+    #     Docs.find
+    #         model:'product'
+    #         source_id:@_id
     when: -> moment(@_timestamp).fromNow()
     ten_tags: -> if @tags then @tags[..10]
     five_tags: -> if @tags then @tags[..4]
@@ -179,14 +179,14 @@ Docs.helpers
     #     @serving_purchase_price+@cook_tip
 
 
-    order: ->
-        Docs.findOne
-            model:'order'
-            _id:@order_id
-    product: ->
-        Docs.findOne
-            model:'product'
-            _id:@product_id
+    # order: ->
+    #     Docs.findOne
+    #         model:'order'
+    #         _id:@order_id
+    # product: ->
+    #     Docs.findOne
+    #         model:'product'
+    #         _id:@product_id
 
 
 
@@ -282,36 +282,36 @@ Router.configure
     trackPageView: false
 # 	progressDelay: 100
 
-force_loggedin =  ()->
-    if !Meteor.userId()
-        @render 'login'
-    else
-        @next()
+# force_loggedin =  ()->
+#     if !Meteor.userId()
+#         @render 'login'
+#     else
+#         @next()
 
-Router.onBeforeAction(force_loggedin, {
-   only: ['admin']
-  # except: ['register', 'forgot_password','reset_password','front','delta','doc_view','verify-email']
-#   except: [
-#     'food'
-#     'register'
-#     'users'
-#     'services'
-#     'service_view'
-#     'products'
-#     'product_view'
-#     'rentals'
-#     'rental_view'
-#     'home'
-#     'forgot_password'
-#     'reset_password'
-#     'user_orders'
-#     'user_food'
-#     'user_finance'
-#     'user_dashboard'
-#     'verify-email'
-#     'food_view'
-#   ]
-});
+# Router.onBeforeAction(force_loggedin, {
+#   only: ['admin']
+#   # except: ['register', 'forgot_password','reset_password','front','delta','doc_view','verify-email']
+# #   except: [
+# #     'food'
+# #     'register'
+# #     'users'
+# #     'services'
+# #     'service_view'
+# #     'products'
+# #     'product_view'
+# #     'rentals'
+# #     'rental_view'
+# #     'home'
+# #     'forgot_password'
+# #     'reset_password'
+# #     'user_orders'
+# #     'user_food'
+# #     'user_finance'
+# #     'user_dashboard'
+# #     'verify-email'
+# #     'food_view'
+# #   ]
+# });
 
 
 # Router.route('enroll', {

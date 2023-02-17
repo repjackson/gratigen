@@ -17,7 +17,7 @@ Template.doc_view.onCreated ->
     # @autorun => Meteor.subscribe 'model_docs', 'menu_section'
 
 Template.doc_view.onRendered ->
-    Meteor.call 'log_view', Router.current().params.doc_id, ->
+    # Meteor.call 'log_view', Router.current().params.doc_id, ->
 
 Template.doc_view.helpers
     doc_view_template: ->

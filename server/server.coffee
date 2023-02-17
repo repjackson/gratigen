@@ -140,6 +140,7 @@ Meteor.publish 'model_docs', (model,limit=3)->
             limit:limit
             fields:
                 title:1
+                body:1
                 image_id:1
                 tags:1
                 model:1
@@ -149,6 +150,7 @@ Meteor.publish 'model_docs', (model,limit=3)->
             sort:_timestamp:-1
             fields:
                 title:1
+                body:1
                 image_id:1
                 tags:1
                 model:1
@@ -185,17 +187,47 @@ Meteor.publish 'user_from_id', (user_id)->
 Meteor.publish 'parent_doc_by_id', (child_doc_id)->
     child = Docs.findOne child_doc_id
     if child and child.parent_id 
-        Docs.find 
-            _id:child.parent_id
+        Docs.find _id:child.parent_id
+            fields:
+                title:1
+                body:1
+                parent_id:1
+                image_id:1
+                tags:1
+                model:1
+                _author_id:1
 Meteor.publish 'parent_docs_by_id', (child_doc_id)->
     child = Docs.findOne child_doc_id
     if child and child.parent_ids
-        Docs.find 
-            _id:$in:child.parent_ids
+        Docs.find {_id:$in:child.parent_ids},
+            fields:
+                title:1
+                body:1
+                parent_id:1
+                image_id:1
+                tags:1
+                model:1
+                _author_id:1
 Meteor.publish 'doc_by_id', (doc_id)->
-    Docs.find doc_id
+    Docs.find doc_id,
+        fields:
+            title:1
+            body:1
+            parent_id:1
+            image_id:1
+            tags:1
+            model:1
+            _author_id:1
 Meteor.publish 'doc', (doc_id)->
-    Docs.find doc_id
+    Docs.find doc_id, 
+        fields:
+            title:1
+            body:1
+            image_id:1
+            parent_id:1
+            tags:1
+            model:1
+            _author_id:1
 
 Meteor.publish 'author_from_doc_id', (doc_id)->
     doc = Docs.findOne doc_id

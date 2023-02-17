@@ -444,41 +444,45 @@ if Meteor.isServer
 if Meteor.isClient
     # @model_filters = new ReactiveArray []
     
-    Template.home_card.onDestroyed ->
-        # console.log 'destroy', @data
-        if @data
-            found = Markers.findOne
-                lat:@data.lat
-            if found
-                Markers.remove found._id
+    # Template.home_card.onDestroyed ->
+    #     # console.log 'destroy', @data
+    #     if @data
+    #         found = Markers.findOne
+    #             lat:@data.lat
+    #         if found
+    #             Markers.remove found._id
     Template.calendar_view.onRendered ->
         $('#inline_calendar')
           .calendar()
 
-    Template.home_card.onRendered ->
-        # console.log @data
-        if @data
-            if @data.lat and @data.lng
-                Markers.insert 
-                    title:@data.title
-                    lat:@data.lat
-                    lng:@data.lng
+    # Template.home_card.onRendered ->
+    #     # console.log @data
+    #     if @data
+    #         if @data.lat and @data.lng
+    #             Markers.insert 
+    #                 title:@data.title
+    #                 lat:@data.lat
+    #                 lng:@data.lng
     Template.home_card.events 
-        'click .map_me': ->
-            # navigator.geolocation.getCurrentPosition (position) =>
-            #     console.log 'navigator position', position
-            #     Session.set('current_lat', position.coords.latitude)
-            #     Session.set('current_long', position.coords.longitude)
+        'click .toggle_fullview': ->
+            Session.set('fullview_id',@_id)
+            $('body').toast({message: 'toggle full view'})
+
+    #     'click .map_me': ->
+    #         # navigator.geolocation.getCurrentPosition (position) =>
+    #         #     console.log 'navigator position', position
+    #         #     Session.set('current_lat', position.coords.latitude)
+    #         #     Session.set('current_long', position.coords.longitude)
                 
-            #     console.log 'saving long', position.coords.longitude
-            #     console.log 'saving lat', position.coords.latitude
+    #         #     console.log 'saving long', position.coords.longitude
+    #         #     console.log 'saving lat', position.coords.latitude
             
-            #     pos = Geolocation.currentLocation()
-            #     map.setView([Session.get('current_lat'), Session.get('current_long')], 13);
-                Markers.insert 
-                    title:@title
-                    lat: "#{@lat}"
-                    lng:"#{@lng}"
+    #         #     pos = Geolocation.currentLocation()
+    #         #     map.setView([Session.get('current_lat'), Session.get('current_long')], 13);
+    #             Markers.insert 
+    #                 title:@title
+    #                 lat: "#{@lat}"
+    #                 lng:"#{@lng}"
                 
             
     Template.home.onCreated ->
