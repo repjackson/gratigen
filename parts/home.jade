@@ -89,94 +89,96 @@ template(name='home')
             // .ui.button create request
             // if currentUser.admin_mode
             //     img.ui.image(src="{{c.url '12_color_code'}}" class=darkmode_class)
-        .eleven.wide.scrolling.column
+        .eleven.wide.column
             // +quickchat
-            unless is_searching
-                unless currentUser.admin_mode
-                    .ui.one.column.grid 
-                        .centered.column
-                        
-                            // .ui.fluid.input 
-                            //     textarea
-                            // // div
-                            +online_users
-            .ui.one.center.aligned.column.grid
-                unless currentUser.admin_mode
-                    .ui.animated.fade.tertiary.circular.large.center.alligned.zoomer.button.launch_modal.add_doc(style="color:green")
-                        .visible.content
-                            // i.big.green.play.dark-mode.icon(class=gicon)
-                            +ilarge name='play-button-circled--v1' color='40C057' cl='ui image'
-    
-                        .hidden.content
-                            .ui.massive.header Engage
-    
-                // .ui.big.center.aligned.button Engage
-                //     +i name='play-button-circled--v1' color='40C057' cl='ui small image'
-                // .centered
-                //     +filter_model model='post' icon='for-you' color='1255B8' color_name='blue'
-                //     +filter_model model='offer' icon='hand-holding-heart' color='FF73EA' color_name='pink'
-                //     +filter_model model='request' icon='commercial' color='40C057' color_name='green'
-                //     +filter_model model='org' icon='groups' color='83DFF4' color_name='light blue'
-                //     +filter_model model='project' icon='project' color='7229AF' olor_name='violet'
-                //     +filter_model model='event' icon='calendar' color='FAB005' color_name='yellow'
-                //     +filter_model model='role' icon='what-i-do' color='42E8C4' color_name='turquoise'
-                //     +filter_model model='task' icon='task' color='B785E1'
-                //     +filter_model model='product' icon='product' color='40C057'
-                //     +filter_model model='service' icon='service' color='FF73EA' color_name='lavender'
-                //     +filter_model model='resource' icon='field-and-tractor' color='FD7E14' color_name='orange'
-                //     +filter_model model='skill' icon='wrench' color='ff0000' color_name='red'
-                //     // +filter_model model='food' icon='food' 83DFF4
-                .centered   
-                    // .ui.search
-                    //     .ui.large.icon.input.search_bar
-                    //         input.prompt(type='text' placeholder='add/request/search...')
-                    //         i.search.icon
-                    //     .results
-                    // with model_filter_doc
-                    //     a.ui.label.unpick_model(title='remove filter')
-                    //         i.remove.icon
-                    //         |#{this}
-                        
-                    // each model_filters 
-                    //     a.ui.label.unpick_model(title='remove filter')
-                    //         i.remove.icon
-                    //         |#{this}
-                    +smaba
-                
-                    +session_set key='view_mode' value='grid' icon='th' 
-                    +session_set key='view_mode' value='list' icon='list'
-                    +session_set key='view_mode' value='feed' icon='stream'
-                    +session_toggle key='show_map' icon='map'
-                    +session_toggle key='show_calendar' icon='calendar'
-                    .ui.button.view_latest(class=view_latest_class)
-                        i.clock.icon 
-                        |latest
-                    .ui.button.view_bookmarks(class=viewing_bookmarks)
-                        i.bookmark.icon 
-                        |bookmarks
-                .scrolling
-                    if session_get 'fullview_id'
-                        .ui.button.clear_fullview 
-                            i.large.remove.icon
-                        with fullview_doc 
+            unless session_get 'fullview_id'
+                unless is_searching
+                    unless currentUser.admin_mode
+                        .ui.one.column.grid 
+                            .centered.column
+                            
+                                // .ui.fluid.input 
+                                //     textarea
+                                // // div
+                                +online_users
+                .ui.center.aligned.column.grid
+                    unless currentUser.admin_mode
+                        .ui.animated.fade.tertiary.circular.large.center.alligned.zoomer.button.launch_modal.add_doc(style="color:green")
+                            .visible.content
+                                // i.big.green.play.dark-mode.icon(class=gicon)
+                                +ilarge name='play-button-circled--v1' color='40C057' cl='ui image'
+        
+                            .hidden.content
+                                .ui.massive.header Engage
+        
+                    // .ui.big.center.aligned.button Engage
+                    //     +i name='play-button-circled--v1' color='40C057' cl='ui small image'
+                    // .centered
+                    //     +filter_model model='post' icon='for-you' color='1255B8' color_name='blue'
+                    //     +filter_model model='offer' icon='hand-holding-heart' color='FF73EA' color_name='pink'
+                    //     +filter_model model='request' icon='commercial' color='40C057' color_name='green'
+                    //     +filter_model model='org' icon='groups' color='83DFF4' color_name='light blue'
+                    //     +filter_model model='project' icon='project' color='7229AF' olor_name='violet'
+                    //     +filter_model model='event' icon='calendar' color='FAB005' color_name='yellow'
+                    //     +filter_model model='role' icon='what-i-do' color='42E8C4' color_name='turquoise'
+                    //     +filter_model model='task' icon='task' color='B785E1'
+                    //     +filter_model model='product' icon='product' color='40C057'
+                    //     +filter_model model='service' icon='service' color='FF73EA' color_name='lavender'
+                    //     +filter_model model='resource' icon='field-and-tractor' color='FD7E14' color_name='orange'
+                    //     +filter_model model='skill' icon='wrench' color='ff0000' color_name='red'
+                    //     // +filter_model model='food' icon='food' 83DFF4
+                    .centered   
+                        // .ui.search
+                        //     .ui.large.icon.input.search_bar
+                        //         input.prompt(type='text' placeholder='add/request/search...')
+                        //         i.search.icon
+                        //     .results
+                        // with model_filter_doc
+                        //     a.ui.label.unpick_model(title='remove filter')
+                        //         i.remove.icon
+                        //         |#{this}
+                            
+                        // each model_filters 
+                        //     a.ui.label.unpick_model(title='remove filter')
+                        //         i.remove.icon
+                        //         |#{this}
+                        +smaba
+                    
+                        +session_set key='view_mode' value='grid' icon='th' 
+                        +session_set key='view_mode' value='list' icon='list'
+                        +session_set key='view_mode' value='feed' icon='stream'
+                        +session_toggle key='show_map' icon='map'
+                        +session_toggle key='show_calendar' icon='calendar'
+                        .ui.button.view_latest(class=view_latest_class)
+                            i.clock.icon 
+                            |latest
+                        .ui.button.view_bookmarks(class=viewing_bookmarks)
+                            i.bookmark.icon 
+                            |bookmarks
+            .scrolling
+                if session_get 'fullview_id'
+                    .ui.button.clear_fullview 
+                        i.large.remove.icon
+                    with fullview_doc 
+                        .ui.one.cards
                             +home_card
-                    else if session_is 'view_mode' 'list'
-                        .ui.divided.selection.items 
-                            each doc_results 
-                                +home_list_item
-                    else if session_is 'view_mode' 'grid'
-                        .ui.three.stackable.cards
+                else if session_is 'view_mode' 'list'
+                    .ui.divided.selection.items 
+                        each doc_results 
+                            +home_list_item
+                else if session_is 'view_mode' 'grid'
+                    .ui.three.stackable.cards
+                        each doc_results
+                            +home_card
+                else    
+                    .ui.ten.wide.column.centered.mobile.hidden
+                        .ui.centered.one.cards.scrollin
                             each doc_results
                                 +home_card
-                    else    
-                        .ui.ten.wide.column.centered.mobile.hidden
-                            .ui.centered.one.cards.scrollin
-                                each doc_results
-                                    +home_card
-                        .ui.sixteen.wide.column.centered.mobile.only
-                            .ui.centered.one.cards.scrolling
-                                each doc_results
-                                    +home_card
+                    .ui.sixteen.wide.column.centered.mobile.only
+                        .ui.centered.one.cards.scrolling
+                            each doc_results
+                                +home_card
         // .eight.wide.column.bordered
         unless currentUser.admin_mode
             .three.wide.scrolling.column
@@ -382,21 +384,21 @@ template(name='user_avatars')
 //             each bookmark_docs 
 //                 a.ui.button(href="/#{model}/#{_id}")
 //                     |#{title}
-template(name='comet_chat_block')
-    i.large.chat.icon(title='popup comet chat')
-    // .ui.inline.header 
-    //     i.chat.icon
-    //     |popup chat 
-    +launch_comet name='wolverine' id='superhero2' avatar='https://data-us.cometchat.io/assets/images/avatars/wolverine.png'
-    +launch_comet name='captain_america' id='superhero2' avatar='https://data-us.cometchat.io/assets/images/avatars/captainamerica.png'
-    +launch_comet name='spiderman' id='superhero3' avatar='https://data-us.cometchat.io/assets/images/avatars/spiderman.png'
-    +launch_comet name='iron man' id='superhero1' avatar='https://data-us.cometchat.io/assets/images/avatars/ironman.png'
-    #cometchat.inver
+// template(name='comet_chat_block')
+//     i.large.chat.icon(title='popup comet chat')
+//     // .ui.inline.header 
+//     //     i.chat.icon
+//     //     |popup chat 
+//     +launch_comet name='wolverine' id='superhero2' avatar='https://data-us.cometchat.io/assets/images/avatars/wolverine.png'
+//     +launch_comet name='captain_america' id='superhero2' avatar='https://data-us.cometchat.io/assets/images/avatars/captainamerica.png'
+//     +launch_comet name='spiderman' id='superhero3' avatar='https://data-us.cometchat.io/assets/images/avatars/spiderman.png'
+//     +launch_comet name='iron man' id='superhero1' avatar='https://data-us.cometchat.io/assets/images/avatars/ironman.png'
+//     #cometchat.inver
 
-template(name='launch_comet')
-    .ui.circular.basic.icon.button.launch(title=name)
-        img.ui.avatar.image(src=avatar)
-        // |#{name}
+// template(name='launch_comet')
+//     .ui.circular.basic.icon.button.launch(title=name)
+//         img.ui.avatar.image(src=avatar)
+//         // |#{name}
 
 template(name='model_block')
     details.ui.fluid.styled.accordion
@@ -454,13 +456,14 @@ template(name='home_card')
     .ui.card
         .content.smallscroll 
             // a.ui.centered.inline.header.zoomer(href="/d/#{model}/#{_id}")
-            a.ui.centered.inline.header.zoomer.toggle_fullview()
+            a.ui.centered.inline.header.zoomer.toggle_fullview
                 |#{title}
             span.left.floated
                 if icon 
                     +i name=icon color=icon_color
-                img.ui.avatar.image(src="{{c.url _author.image_id height=200}}" title=_author.username)
-                |#{_author.username}
+                a(href="/user/#{username}" title='view profile')
+                    img.ui.avatar.image(src="{{c.url _author.image_id height=200}}" title=_author.username)
+                    |#{_author.username}
                 div
                 +parent_block
             span.right.floated
@@ -489,7 +492,7 @@ template(name='home_card')
         // if link
         //     +link_field
         // else
-        img.ui.fluid.image(src="{{c.url image_id width=500 height=500}}")
+        img.ui.fluid.image.toggle_fullview.pointer(src="{{c.url image_id width=500 height=500}}")
         .content 
             .description
                 // .ui.header lat: #{lat}

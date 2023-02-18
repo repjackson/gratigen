@@ -7,7 +7,7 @@
     top: 0 !important;
     /*this is the fullscreen*/
     width: 100% !important; /* Full width */
-    height: 180% !important; /* Full height */
+    height: 100% !important; /* Full height */
     overflow: auto !important; /* Enable scroll if needed */
     background-color: rgb(0,0,0) !important; /* Fallback color */
     background-color: rgba(0,0,0,0.4) !important; /* Black w/ opacity */
