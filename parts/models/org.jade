@@ -124,7 +124,7 @@ template(name='org_view')
                 // +multi_user_view key='member_ids' label='members' 
                 // +org_history
                 // +org_subscription
-            .eight.wide.column
+            .eight.wide.centered.column
                 // +block template='link_field' key='link' label='link'
                 +link_field key='link' label='link'
                 // if link
@@ -170,6 +170,7 @@ template(name='org_view')
                 // +model_crud model='project'
                 // +model_crud model='event'
                 // +model_crud model='task'
+                div
                 +smaba
 
                 // +block template='model_crud' model='post' title='posts' icon='for-you' color='1255B8'
