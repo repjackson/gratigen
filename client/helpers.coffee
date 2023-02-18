@@ -1,12 +1,12 @@
 Template.registerHelper 'from_now', (input)-> moment(input).fromNow()
 Template.registerHelper 'cal_time', (input)-> moment(input).calendar()
-Template.registerHelper 'comma', (input) ->
-    input.toLocaleString("en-US")
+# Template.registerHelper 'comma', (input) ->
+#     input.toLocaleString("en-US")
 
 Template.registerHelper 'session_get', (key) -> Session.get("#{key}")
-Template.registerHelper 'current_user_doc', (user) ->
-    if Meteor.user() and Meteor.user()._doc_id
-        Docs.findOne Meteor.user()._doc_id
+# Template.registerHelper 'current_user_doc', (user) ->
+#     if Meteor.user() and Meteor.user()._doc_id
+#         Docs.findOne Meteor.user()._doc_id
         
 Template.registerHelper 'long', (user) ->
 Template.registerHelper 'user_taken_roles', (user) ->
@@ -14,11 +14,11 @@ Template.registerHelper 'user_taken_roles', (user) ->
         Docs.find 
             model:'role'
             taken_by_user_id:user._id
-Template.registerHelper 'accordion_class', (input) -> 
-    if Meteor.user().editing 
-        ''
-    else 
-        'accordion'
+# Template.registerHelper 'accordion_class', (input) -> 
+#     if Meteor.user().editing 
+#         ''
+#     else 
+#         'accordion'
 
 Template.registerHelper 'online_user_docs', () -> 
     Meteor.users.find 
@@ -92,27 +92,27 @@ Template.registerHelper 'darkmode_class',->
     
 
 
-Template.registerHelper 'order_count',-> Counts.get('order_count')
-Template.registerHelper 'product_count',-> Counts.get('product_count')
-Template.registerHelper 'ingredient_count',-> Counts.get('ingredient_count')
-Template.registerHelper 'subscription_count',-> Counts.get('subscription_count')
-Template.registerHelper 'source_count',-> Counts.get('source_count')
-# Template.registerHelper 'giftcard_count',-> Counts.get('giftcard_count')
-Template.registerHelper 'user_count',-> Counts.get('user_count')
-Template.registerHelper 'staff_count',-> Counts.get('staff_count')
-Template.registerHelper 'customer_count',-> Counts.get('customer_count')
+# Template.registerHelper 'order_count',-> Counts.get('order_count')
+# Template.registerHelper 'product_count',-> Counts.get('product_count')
+# Template.registerHelper 'ingredient_count',-> Counts.get('ingredient_count')
+# Template.registerHelper 'subscription_count',-> Counts.get('subscription_count')
+# Template.registerHelper 'source_count',-> Counts.get('source_count')
+# # Template.registerHelper 'giftcard_count',-> Counts.get('giftcard_count')
+# Template.registerHelper 'user_count',-> Counts.get('user_count')
+# Template.registerHelper 'staff_count',-> Counts.get('staff_count')
+# Template.registerHelper 'customer_count',-> Counts.get('customer_count')
 
 
-Template.registerHelper 'cart_subtotal', () -> 
-    store_session_document = 
-        Docs.findOne 
-            model:'store_session'
-    if store_session_document.cart_product_ids
-        subtotal = 0
-        for product in Docs.find(_id:$in:store_session_document.cart_product_ids).fetch()
-            if product.price_usd
-                subtotal += product.price_usd
-        subtotal
+# Template.registerHelper 'cart_subtotal', () -> 
+#     store_session_document = 
+#         Docs.findOne 
+#             model:'store_session'
+#     if store_session_document.cart_product_ids
+#         subtotal = 0
+#         for product in Docs.find(_id:$in:store_session_document.cart_product_ids).fetch()
+#             if product.price_usd
+#                 subtotal += product.price_usd
+#         subtotal
     
 # Template.registerHelper 'my_cart_subtotal', () ->
     
@@ -131,11 +131,11 @@ Template.registerHelper 'product_sort_icon', () -> Session.get('product_sort_ico
 Template.registerHelper 'active_path', (metric) ->
     false
 
-Template.registerHelper 'cart_product_docs', ()->
-    if @cart_product_ids
-        Docs.find
-            model:'product'
-            _id:$in:@cart_product_ids
+# Template.registerHelper 'cart_product_docs', ()->
+#     if @cart_product_ids
+#         Docs.find
+#             model:'product'
+#             _id:$in:@cart_product_ids
 
 Template.registerHelper 'user_from_id', (id)-> 
     found_by_id = Meteor.users.findOne id
@@ -151,12 +151,11 @@ Template.registerHelper 'session_is', (key,value)-> Session.equals(key,value)
 Template.registerHelper 'lower', (input) ->
     input.toLowerCase()
 
-Template.registerHelper 'gs', () ->
-    Docs.findOne
-        model:'global_settings'
+# Template.registerHelper 'gs', () ->
+#     Docs.findOne
+#         model:'global_settings'
 Template.registerHelper 'display_mode', () -> Session.get('display_mode',true)
 Template.registerHelper 'is_loading', () -> Session.get 'loading'
-Template.registerHelper 'dev', () -> Meteor.isDevelopment
 # Template.registerHelper 'is_author', ()-> @_author_id is Meteor.userId()
 # Template.registerHelper 'is_handler', ()-> @handler_username is Meteor.user().username
 # Template.registerHelper 'is_owner', ()-> @owner_username is Meteor.user().username
@@ -205,11 +204,11 @@ Template.registerHelper 'current_month', () -> moment(Date.now()).format("MMMM")
 Template.registerHelper 'current_day', () -> moment(Date.now()).format("DD")
 
 
-Template.registerHelper 'current_delta', () -> Docs.findOne model:'delta'
+# Template.registerHelper 'current_delta', () -> Docs.findOne model:'delta'
 
-Template.registerHelper 'hsd', () ->
-    Docs.findOne
-        model:'home_stats'
+# Template.registerHelper 'hsd', () ->
+#     Docs.findOne
+#         model:'home_stats'
 
 
 # Template.registerHelper 'grabber', () ->
@@ -281,41 +280,41 @@ Template.registerHelper '_parents', () ->
             # _id:@parent_id
             _id:$in:[@parent_id]
 
-Template.registerHelper 'fields', () ->
-    model = Docs.findOne
-        model:'model'
-        slug:Router.current().params.model_slug
-    if model
-        match = {}
-        # if Meteor.user()
-        #     match.view_roles = $in:Meteor.user().roles
-        match.model = 'field'
-        match.parent_id = model._id
-        cur = Docs.find match,
-            sort:rank:1
-        cur
+# Template.registerHelper 'fields', () ->
+#     model = Docs.findOne
+#         model:'model'
+#         slug:Router.current().params.model_slug
+#     if model
+#         match = {}
+#         # if Meteor.user()
+#         #     match.view_roles = $in:Meteor.user().roles
+#         match.model = 'field'
+#         match.parent_id = model._id
+#         cur = Docs.find match,
+#             sort:rank:1
+#         cur
 
-Template.registerHelper 'edit_fields', () ->
-    model = Docs.findOne
-        model:'model'
-        slug:Router.current().params.model_slug
-    if model
-        Docs.find {
-            model:'field'
-            parent_id:model._id
-            # edit_roles:$in:Meteor.user().roles
-        }, sort:rank:1
+# Template.registerHelper 'edit_fields', () ->
+#     model = Docs.findOne
+#         model:'model'
+#         slug:Router.current().params.model_slug
+#     if model
+#         Docs.find {
+#             model:'field'
+#             parent_id:model._id
+#             # edit_roles:$in:Meteor.user().roles
+#         }, sort:rank:1
 
-Template.registerHelper 'sortable_fields', () ->
-    model = Docs.findOne
-        model:'model'
-        slug:Router.current().params.model_slug
-    if model
-        Docs.find {
-            model:'field'
-            parent_id:model._id
-            sortable:true
-        }, sort:rank:1
+# Template.registerHelper 'sortable_fields', () ->
+#     model = Docs.findOne
+#         model:'model'
+#         slug:Router.current().params.model_slug
+#     if model
+#         Docs.find {
+#             model:'field'
+#             parent_id:model._id
+#             sortable:true
+#         }, sort:rank:1
 
 
 Template.registerHelper 'nl2br', (text)->
@@ -454,20 +453,20 @@ Template.registerHelper 'field_value', () ->
         parent["#{@key}"]
 
 
-Template.registerHelper 'sorted_field_values', () ->
-    parent = Template.parentData()
-    parent5 = Template.parentData(5)
-    parent6 = Template.parentData(6)
+# Template.registerHelper 'sorted_field_values', () ->
+#     parent = Template.parentData()
+#     parent5 = Template.parentData(5)
+#     parent6 = Template.parentData(6)
 
 
-    if @direct
-        parent = Template.parentData()
-    else if parent5._id
-        parent = Template.parentData(5)
-    else if parent6._id
-        parent = Template.parentData(6)
-    if parent
-        _.sortBy parent["#{@key}"], 'number'
+#     if @direct
+#         parent = Template.parentData()
+#     else if parent5._id
+#         parent = Template.parentData(5)
+#     else if parent6._id
+#         parent = Template.parentData(6)
+#     if parent
+#         _.sortBy parent["#{@key}"], 'number'
 
 
 # Template.registerHelper 'is_marketplace', () -> @model is 'marketplace'
@@ -477,22 +476,21 @@ Template.registerHelper 'sorted_field_values', () ->
 
 Template.registerHelper 'in_dev', () -> Meteor.isDevelopment
 
-Template.registerHelper 'calculated_size', (metric) ->
-    whole = parseInt(@["#{metric}"]*10)
+# Template.registerHelper 'calculated_size', (metric) ->
+#     whole = parseInt(@["#{metric}"]*10)
 
-    if whole is 2 then 'f2'
-    else if whole is 3 then 'f3'
-    else if whole is 4 then 'f4'
-    else if whole is 5 then 'f5'
-    else if whole is 6 then 'f6'
-    else if whole is 7 then 'f7'
-    else if whole is 8 then 'f8'
-    else if whole is 9 then 'f9'
-    else if whole is 10 then 'f10'
+#     if whole is 2 then 'f2'
+#     else if whole is 3 then 'f3'
+#     else if whole is 4 then 'f4'
+#     else if whole is 5 then 'f5'
+#     else if whole is 6 then 'f6'
+#     else if whole is 7 then 'f7'
+#     else if whole is 8 then 'f8'
+#     else if whole is 9 then 'f9'
+#     else if whole is 10 then 'f10'
 
 
 
-Template.registerHelper 'in_dev', () -> Meteor.isDevelopment
 
 
 # Template.registerHelper 'building_lead', () ->
