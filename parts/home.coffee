@@ -660,7 +660,7 @@ if Meteor.isClient
 
 
                 
-    Template.home.onRendered ->
+    Template.smaba.onRendered ->
         # categoryContent = [
         #     { category:'eft', title:'food', color:"FF73EA", icon:'food' }
         #     { category:'eft', title:'housing', color:"B785E1", icon:'home' }

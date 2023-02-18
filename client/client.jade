@@ -79,6 +79,11 @@ head
     // script(type="text/javascript" src="https://cdn.jsdelivr.net/npm/jsmind@0.5/es6/jsmind.js")
 
     
+template(name='page_view')
+    .ui.stackable.padded.grid 
+        .sixteen.wide.column 
+            +Template.dynamic template=page_template
+    
 template(name='doc_view')
     with current_doc 
         .ui.stackable.padded.grid.scrolling

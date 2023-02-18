@@ -8,7 +8,13 @@ Router.route '/d/:model/:doc_id', (->
     @layout 'layout'
     @render 'doc_view'
     ), name:'doc_view'
+Router.route '/p/:template', (->
+    @layout 'layout'
+    @render 'page_view'
+    ), name:'page_view'
 
+Template.page_view.helpers
+    page_template: -> Router.current().params.template
 Template.doc_view.onCreated ->
     @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
     # @autorun => Meteor.subscribe 'parent_doc_by_id', Router.current().params.doc_id, ->

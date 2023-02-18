@@ -122,13 +122,13 @@ template(name='nav')
                 i.yin.yang.large.loading.icon
             unless currentUser
                 a.ui.item(href="/register" title='register')
-                    +i name='plus'
+                    +i name='plus' cl='ui inline mini image'
                     // i.user.add.green.big.icon
                     span.mobile.hidde register            
                 a.ui.item(href='/login' title='login') 
                     // i.user.add.icon
                     // i.sign.in.big.blue.icon
-                    +i name='internal'
+                    +i name='internal' cl='ui inline mini image'
                     span.mobile.hidde login
             // if session_is 'viewing_alerts'
             //     +topbar

@@ -534,7 +534,7 @@ img, .button, .selector, .card, p, .header, .item, .image, .fade, .accordion{
 
 #map {
   height:300px !important;
-  /*width: 100% !important;*/
+  width: 100% !important;*/
   /*border: 2px !important;*/
 }
 #localmap {

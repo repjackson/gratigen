@@ -185,7 +185,9 @@ template(name='home')
                 // +icon_browser
                 // +block template='latest_updated_block' title='latest' icon='time-machine' color='blue'
                 +block template='user_avatars' title='users' icon='groups' color='green'
-                +iframe src="https://calendar.google.com/calendar/embed?src=c_da87bb84ed0c3082acd899c7447c4651752e0007bfe155b07fe319ca61939e22%40group.calendar.google.com&ctz=America%2FLos_Angeles" style="border: 0" width="800" height="600" frameborder="0" scrolling="no"
+                // hm
+                div
+                +gmap
                 // div
                 // +comet_chat_block
                 // .ui.divider
@@ -256,6 +258,8 @@ template(name='icon_browser')
     //     each org_task_docs
     //         +task_item_small
 
+template(name='gcal')
+    iframe(src="https://calendar.google.com/calendar/embed?src=c_da87bb84ed0c3082acd899c7447c4651752e0007bfe155b07fe319ca61939e22%40group.calendar.google.com&ctz=America%2FLos_Angeles" style="border: 0" width="800" height="600" frameborder="0" scrolling="no")
 
 template(name='home_block')
 // template(name='model_chart')
