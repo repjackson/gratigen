@@ -71,40 +71,6 @@ if Meteor.isClient
                     # , 10000
         # , 100)
     
-    Template.home.helpers
-        view_latest_class: -> 
-            if Session.get('view_latest') then 'large active' else 'compact basic'
-    Template.home.events
-        'click .view_latest': ->
-            # trying different view session storage
-            current_role = Docs.findOne Meteor.user().current_role_id
-            if current_role
-                Docs.update current_role._id, 
-                    $set: view_latest:true
-            if Session.get('view_latest')
-                Session.set('view_latest',false)
-            else 
-                Session.set('view_latest',true)
-                
-            # Meteor.users.update Meteor.userId(),
-            #     $set:view_latest:true
-            $('body').toast({
-                title: "viewing latest #{Session.get('view_latest')}"
-                class : 'success'
-                showProgress:'bottom'
-                position:'bottom right'
-            })
-                
-        'click .add_doc': ->
-            new_id = 
-                Docs.insert 
-                    model:'post'
-                    published:false
-            Router.go "/add/#{new_id}"
-            Meteor.users.update Meteor.userId(),
-                $set:
-                    editing:true
-                    _doc_id:new_id
 
     Template.layout.helpers 
         current_image_id:->
@@ -228,7 +194,46 @@ if Meteor.isClient
     Template.add_tab.events 
         # 'click .toggle_addmode': ->
         #     Session.set('addmode', !Session.get('addmode'))
-    Template.home.events 
+    Template.home.helpers
+        view_latest_class: -> 
+            if Session.get('view_latest') then 'large active' else 'compact basic'
+        fullview_doc: ->
+            if Session.get('fullview_id')
+                Docs.findOne Session.get('fullview_id')
+    Template.home.events
+        'click .view_latest': ->
+            # trying different view session storage
+            current_role = Docs.findOne Meteor.user().current_role_id
+            if current_role
+                Docs.update current_role._id, 
+                    $set: view_latest:true
+            if Session.get('view_latest')
+                Session.set('view_latest',false)
+            else 
+                Session.set('view_latest',true)
+                
+            # Meteor.users.update Meteor.userId(),
+            #     $set:view_latest:true
+            $('body').toast({
+                title: "viewing latest #{Session.get('view_latest')}"
+                class : 'success'
+                showProgress:'bottom'
+                position:'bottom right'
+            })
+                
+        'click .add_doc': ->
+            new_id = 
+                Docs.insert 
+                    model:'post'
+                    published:false
+            Router.go "/add/#{new_id}"
+            Meteor.users.update Meteor.userId(),
+                $set:
+                    editing:true
+                    _doc_id:new_id
+        'click .clear_fullview': -> 
+            Session.set('fullview_id',null)
+            $('body').toast('full view cleared')
         'click .unpick_model': -> 
             # model_filters.remove @valueOf()
             Session.set('model_filter',null)

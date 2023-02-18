@@ -3,6 +3,7 @@ Template.registerHelper 'cal_time', (input)-> moment(input).calendar()
 Template.registerHelper 'comma', (input) ->
     input.toLocaleString("en-US")
 
+Template.registerHelper 'session_get', (key) -> Session.get("#{key}")
 Template.registerHelper 'current_user_doc', (user) ->
     if Meteor.user() and Meteor.user()._doc_id
         Docs.findOne Meteor.user()._doc_id
