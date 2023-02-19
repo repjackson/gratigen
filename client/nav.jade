@@ -89,7 +89,9 @@ template(name='nav')
             // a.ui.item.zoomer.toggle_rightbar(href="/chat" class="{{isActiveRoute 'chat'}}")
             if currentUser
                 a.ui.item.zoomer.launch(title='launch chat')
-                    i.large.chat.outline.icon
+                    i.large.chat.outline.orange.icon
+                a.ui.item.zoomer.launch(href="/p/gchat")
+                    +i name='chat'
             // a.ui.item.zoomer.toggle_chatbar
             //     if unread_count
             //         i.small.chat.big.blue.icon.pulse
