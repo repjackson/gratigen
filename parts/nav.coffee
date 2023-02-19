@@ -327,9 +327,9 @@ if Meteor.isClient
 
             $('.grid .column')
               .transition({
-                animation : 'pulse',
+                animation : 'tada',
                 duration  : 300,
-                interval  : 50
+                interval  : 100
               })
             ;
 
