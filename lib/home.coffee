@@ -14,6 +14,10 @@ if Meteor.isClient
             # # utterThis = new SpeechSynthesisUtterance('ask the smaht bah, its wicked smaht')
             # synth.speak(utterThis);
             
+        'click .clear_search': (e,t)->
+            Session.set('current_query', null)
+            t.$('.current_query').val('')
+            
         'keyup .search_site': (e,t)->
             # console.log Router.current().route.getName()
             # current_name = Router.current().route.getName()

@@ -265,6 +265,8 @@ template(name='model_dropdown')
     .ui.simple.dropdown.button
         i.database.icon
         i.dropdown.icon 
+        if current_model_filter
+            |#{current_model_filter}
         .menu
             // .ui.dropdown-content
             // .item
@@ -302,9 +304,9 @@ template(name='model_dropdown')
 
 
 template(name='smaba')
-    .ui.icon.left.action.input(title='search/create')
+    .ui.icon.left.action.input
         if current_site_search
-            i.remove.large.red.link.icon.clear_search
+            i.remove.large.red.link.icon.clear_search.zoomer(title='clear search')
         else
             i.search.large.grey.link.icon.zoomer(title='search')
         input.search_site(type='text' autocomplete="off" value=current_site_search placeholder='ask alfred...')
@@ -526,6 +528,8 @@ template(name='home_card')
                 //     +remove_button
                 // each tags 
                 //     .ui.small.label #{this}
+                if currentUser.admin_mode 
+                    +remove_button
             // if template_exists
             //     +Template.dynamic template=model_template
         .extra.content
