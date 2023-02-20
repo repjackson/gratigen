@@ -604,12 +604,14 @@ Template.multi_doc_view.helpers
             model:@ref_model
         }, sort:number:-1
 
-# Template.multi_doc_edit.onRendered ->
-#     $('.ui.dropdown').dropdown(
-#         clearable:true
-#         action: 'activate'
-#         onChange: (text,value,$pickedItem)->
-#         )
+Template.model_dropdown.onRendered ->
+    Meteor.setTimeout ->
+        $('.ui.dropdown').dropdown(
+            # clearable:true
+            # action: 'activate'
+            # onChange: (text,value,$pickedItem)->
+        )
+    , 500
 
 
 

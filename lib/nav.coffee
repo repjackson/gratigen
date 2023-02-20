@@ -232,53 +232,53 @@ if Meteor.isClient
                     history_ids:@_id
     Template.nav_search.events
         'click .clear_search': -> Session.set('current_query',null)
-        'keyup .search_site': _.throttle((e,t)->
+        # 'keyup .search_site': _.throttle((e,t)->
             
-            # console.log Router.current().route.getName()
-            # current_name = Router.current().route.getName()
-            $(e.currentTarget).closest('.input').transition('pulse', 200)
+        #     # console.log Router.current().route.getName()
+        #     # current_name = Router.current().route.getName()
+        #     $(e.currentTarget).closest('.input').transition('pulse', 200)
 
-            # unless current_name is 'shop'
-            #     Router.go '/shop'
+        #     # unless current_name is 'shop'
+        #     #     Router.go '/shop'
             
-            search = $('.search_site').val().trim().toLowerCase()
+        #     search = $('.search_site').val().trim().toLowerCase()
             
-            # query = $('.search_site').val()
-            if search.length > 2
-                Session.set('current_query', search)
-            # console.log Session.get('current_query')
-            if e.key == "Escape"
-                Session.set('current_query', null)
-                $('.search_site').val('')
-            # e.which is keycode and 13 is 'enter'
-            if e.which is 13
-                console.log e 
-                console.log t
-                if search.length > 0
-                    match = {}
-                    match.title =  {$regex:search, $options: 'i'}
-                    found_results = Docs.find(match).count()
-                    if found_results is 1
-                        found_result = Docs.findOne match 
-                        console.log found_result
-                        Meteor.users.update Meteor.userId(),
-                            $addToSet:
-                                history_ids:found_result._id
-                        Router.go "/d/#{found_result.model}/#{found_result._id}"
-                    else 
-                        picked_tags.push search
-                        Meteor.call 'call_icon', search, ->
-                        console.log 'search', search
-                    # Meteor.call 'log_term', search, ->
-                    $('.search_site').val('')
-                    Session.set('current_query', null)
+        #     # query = $('.search_site').val()
+        #     if search.length > 2
+        #         Session.set('current_query', search)
+        #     # console.log Session.get('current_query')
+        #     if e.key == "Escape"
+        #         Session.set('current_query', null)
+        #         $('.search_site').val('')
+        #     # e.which is keycode and 13 is 'enter'
+        #     if e.which is 13
+        #         console.log e 
+        #         console.log t
+        #         if search.length > 0
+        #             match = {}
+        #             match.title =  {$regex:search, $options: 'i'}
+        #             found_results = Docs.find(match).count()
+        #             if found_results is 1
+        #                 found_result = Docs.findOne match 
+        #                 console.log found_result
+        #                 Meteor.users.update Meteor.userId(),
+        #                     $addToSet:
+        #                         history_ids:found_result._id
+        #                 Router.go "/d/#{found_result.model}/#{found_result._id}"
+        #             else 
+        #                 picked_tags.push search
+        #                 Meteor.call 'call_icon', search, ->
+        #                 console.log 'search', search
+        #             # Meteor.call 'log_term', search, ->
+        #             $('.search_site').val('')
+        #             Session.set('current_query', null)
                     
-                    # # $('#search').val('').blur()
-                    # # $( "p" ).blur();
-                    # Meteor.setTimeout ->
-                    #     Session.set('dummy', !Session.get('dummy'))
-                    # , 10000
-        , 500)
+        #             # # $('#search').val('').blur()
+        #             # # $( "p" ).blur();
+        #             # Meteor.setTimeout ->
+        #             #     Session.set('dummy', !Session.get('dummy'))
+        #             # , 10000
+        # , 500)
     
     Template.nav.events
         'click .reset': ->

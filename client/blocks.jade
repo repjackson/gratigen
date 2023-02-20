@@ -20,15 +20,20 @@ template(name='viewing_info')
 template(name='gratigen')
     .ui.header Give a Gift of Gratitude
     // .ui.input
-    .ui.button give gratitude points
+    .ui.button Incetivize Action
+    .ui.header Incentivize a task, role, or resource
+    // .ui.input
+    .ui.button Give Gratitude Points
         +i name='heart' color='40C057' cl='ui small image'
     .ui.inline.input
         imput(type='number')
 
-    .button give reserve token
+    .button Give Reserve Token
     +give_money
-    .button give an item - service, product, resource,
-    .button give a time-type [badge, skill, task, role, resource]
+    .ui.header Give an item as a service, product or resource
+    .button give item
+    .ui.header Give time as a badge, skill, task, role, or resource
+    .button give time
 
 template(name='alerts')
     .ui.button.check_notifications

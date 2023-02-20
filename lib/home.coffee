@@ -6,7 +6,7 @@ if Meteor.isClient
     
     Template.smaba.events
         # 'keyup .search_site': _.throttle((e,t)->
-        'click .search_site': (e,t)->
+        # 'click .search_site': (e,t)->
             # synth = window.speechSynthesis;
         
             # utterThis = new SpeechSynthesisUtterance(@valueOf())
@@ -15,30 +15,32 @@ if Meteor.isClient
             # synth.speak(utterThis);
             
         'keyup .search_site': (e,t)->
-        
-            
             # console.log Router.current().route.getName()
             # current_name = Router.current().route.getName()
-            $(e.currentTarget).closest('.search_site').transition('pulse', 100)
-
-            # unless current_name is 'shop'
-            #     Router.go '/shop'
-            
-            search = t.$('.search_site').val().trim().toLowerCase()
             
             # query = $('.search_site').val()
+            search = t.$('.search_site').val().trim().toLowerCase()
             if search.length > 2
                 Session.set('current_query', search)
-                console.log 'searching', search
-            # console.log Session.get('current_query')
-            if e.key is 8
+            # console.log 'hi'
+            #     # Session.set('current_query', search)
+            #     console.log 'searching', search
+            if e.which is 8
                 if search.length is 0
                     Session.set('current_query', null)
-            if e.key is 13
-                synth = window.speechSynthesis
-                utterThis = new SpeechSynthesisUtterance(search)
-                synth.speak(utterThis)
-            if e.key is "Escape"
+            if e.which is 13
+                $(e.currentTarget).closest('.search_site').transition('pulse', 100)
+    
+                # unless current_name is 'shop'
+                #     Router.go '/shop'
+                
+                # console.log Session.get('current_query')
+                # console.log 'hi'
+                # synth = window.speechSynthesis
+                # utterThis = new SpeechSynthesisUtterance(search)
+                # synth.speak(utterThis)
+                $('.search_site').val('')
+            if e.which is "Escape"
                 Session.set('current_query', null)
                 $('.search_site').val('')
             # # e.which is keycode and 13 is 'enter'
@@ -163,16 +165,16 @@ if Meteor.isClient
                 'two wide center aligned column'
                 
                 
-        main_column_class: ->
-            if Session.get('show_map') or Session.get('show_calendar')
-                'eight wide column'
-            else 
-                'twelve wide column'
-        right_column_class: ->
-            if Session.get('show_map') or Session.get('show_calendar')
-                'four wide column'
-            else 
-                'no_show'
+        # main_column_class: ->
+        #     if Session.get('show_map') or Session.get('show_calendar')
+        #         'eight wide column'
+        #     else 
+        #         'twelve wide column'
+        # right_column_class: ->
+        #     if Session.get('show_map') or Session.get('show_calendar')
+        #         'four wide column'
+        #     else 
+        #         'no_show'
                 
         doc_results: ->
             # Docs.find {model:$ne:'comment'},
@@ -185,11 +187,11 @@ if Meteor.isClient
             if Session.get('model_filter')
                 # match.model = $in:model_filters.array()
                 match.model = Session.get('model_filter')
-            else 
-                match.model = $nin:['model','comment','message'] 
+            # else 
+                # match.model = $nin:['model','comment','message'] 
             Docs.find match,
                 sort:_timestamp:-1
-                limit:20
+                limit:5
             
     Template.add_tab.events 
         # 'click .toggle_addmode': ->
@@ -525,8 +527,8 @@ if Meteor.isServer
         view_latest=false
         )->
         match = {}
-        # essentials = ['post','offer','request','org','project','event','role','task','resource','skill']
-        essentials = ['post']
+        essentials = ['post','offer','request','org','project','event','role','task','resource','skill']
+        # essentials = ['post']
         # user = Meteor.user()
         # console.log Meteor.user().model_filters
         if search 
@@ -537,9 +539,9 @@ if Meteor.isServer
         # sort_key = "_timestamp"
         sort_direction = -1
         
-        if view_latest
-            sort_key = '_timestamp'
-            sort_direction = -1
+        # if view_latest
+        #     sort_key = '_timestamp'
+        #     sort_direction = -1
         if model_filter
             match.model = model_filter
         else 
@@ -548,7 +550,7 @@ if Meteor.isServer
         result_count = Docs.find(match).count()
         console.log result_count
         Docs.find match,
-            limit:10
+            limit:6
             sort:"#{sort_key}":sort_direction
             fields:
                 title:1
