@@ -418,7 +418,7 @@ template(name='work_view')
                 div
                 a.ui.icon.button(href="/work/#{_id}/edit")
                     i.pencil.icon
-            .eight.wide.column
+            .eight.wide.centered.column
                 a.zoomer(href="/user/#{_author_username}/")
                     img.ui.small.inline.image(src="{{c.url author.image_id width=200 height=200 gravity='face' crop='fill'}}")
                     .ui.large.inline.header #{_author_username} 
@@ -435,6 +435,10 @@ template(name='work_view')
                 div.scrolling
                     +textarea_field key='notes' label='directions'
                 // +array_field key='tags' label='tags' icon='tags'
+                .ui.big.button Start/Stop Task
+                    +i name='play-button-circled--v1' color='40C057' cl='ui medium image'
+                |00:00
+
                 +comments
             .four.wide.column
                 +voting_full

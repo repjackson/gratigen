@@ -343,11 +343,15 @@ if Meteor.isClient
             # element.classList.toggle("dark-mode");
 
             # # $('.grid').transition('pulse', 500)
-
-            $('.nav').transition('pulse', 500)
-            Meteor.users.update Meteor.userId(),
-                $set:
-                    view_searchbar:!Meteor.user().view_searchbar
+            if Meteor.user().view_searchbar
+                $('.searchbar').transition('shake', 500)
+                Meteor.setTimeout ->
+                    Meteor.users.update Meteor.userId(),
+                        $set:view_searchbar:false
+                , 500
+            else 
+                Meteor.users.update Meteor.userId(),
+                    $set:view_searchbar:true
             # Session.set('darkmode', !Session.get('darkmode'))
             # console.log Session.get('darkmode')
         

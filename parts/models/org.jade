@@ -164,14 +164,33 @@ template(name='org_view')
                         +single_user_field key='creator'
                 // +textarea_field key='brief' tagline='what kink of organization is this? breifly describe it.'
                 // +textarea_field key='description' tagline='complete description of your organization'
+                +link_field key='link' label='link'
                 +textarea_field key='body' tagline='body'
-                // +link_field
-                // +model_crud model='role' label='roles'
-                // +model_crud model='project'
-                // +model_crud model='event'
-                // +model_crud model='task'
+
+                .ui.animated.fade.tertiary.circular.large.center.alligned.zoomer.button.launch_modal.add_doc(style="color:green")
+                    .visible.content
+                        // i.big.green.play.dark-mode.icon(class=gicon)
+                        +ilarge name='play-button-circled--v1' color='40C057' cl='ui image'
+
+                    .hidden.content
+                        .ui.massive.header Engage
+                .centered   
+    
+                    +smaba
+                    div
+                    +session_set key='view_mode' value='grid' icon='th' 
+                    +session_set key='view_mode' value='list' icon='list'
+                    +session_set key='view_mode' value='feed' icon='stream'
+                    +session_toggle key='show_map' icon='map'
+                    +session_toggle key='show_calendar' icon='calendar'
+                    .ui.button.view_latest(class=view_latest_class)
+                        i.clock.icon 
+                        |latest
+                    .ui.button.view_bookmarks(class=viewing_bookmarks)
+                        i.bookmark.icon 
+                        |bookmarks
                 div
-                +smaba
+                // +smaba
 
                 // +block template='model_crud' model='post' title='posts' icon='for-you' color='1255B8'
                 // +block template='model_crud' model='group' title='groups' icon='groups' color='83DFF4'
@@ -179,8 +198,8 @@ template(name='org_view')
                 // +block template='model_crud' model='project' title='project' icon='project' color='7229AF'
                 // +block template='model_crud' model='event' title='events' icon='calendar' color='FAB005'
                 // +block template='model_crud' model='badge' title='badges' icon='badge' color='blue'
-                // +block template='model_crud' model='role' title='roles' icon='what-i-do' color='42E8C4'
-                // +block template='model_crud' model='task' title='tasks' icon='task' color='B785E1'
+                +block template='model_crud' model='role' title='roles' icon='what-i-do' color='42E8C4'
+                +block template='model_crud' model='task' title='tasks' icon='task' color='B785E1'
                 // +block template='model_crud' model='shift' title='shifts' icon='shift' color='teal'
                 // +block template='model_crud' model='skill' title='skills' icon='wrench' color='ff0000'
                 // div
@@ -202,6 +221,9 @@ template(name='org_view')
                 +block template='ai' name='blockchain'
                 +block template='comments' label='comments' icon='chat' color='blue' data=this
                 +block template='checklist'
+                +block template='gchat'
+                +block template='model_crud' model='event' title='events' icon='calendar' color='FAB005'
+
 
                         // +user_pill
                 if currentUser.editing

@@ -64,7 +64,7 @@ head
     // script(src="https://cdn.jsdelivr.net/npm/suneditor@latest/dist/suneditor.min.js")
     // script(src="https://cdn.jsdelivr.net/npm/suneditor@latest/src/lang/en.js")
     
-    script(src="https://widget-js.cometchat.io/v3/cometchatwidget.js")
+    // script(src="https://widget-js.cometchat.io/v3/cometchatwidget.js")
 
     //- script(async='', src='https://www.googletagmanager.com/gtag/js?id=UA-140259454-1')
     script.
@@ -180,7 +180,7 @@ template(name='layout')
 
 
 template(name='historybar')
-    .ui.small.attached.menu.hscroll(class=darkmode_class)
+    .ui.small.attached.menu.hscroll.searchbar(class=darkmode_class)
         +nav_search
         if currentUser
             .item 
@@ -250,8 +250,6 @@ template(name='shortcut_modal')
 template(name='footer')
     .ui.equal.width.stackable.grid 
         .column
-            a.ui.button(href="/noel")
-                |Noel
             // page chat by default, maybe replace individual template calls
             with current_doc
                 +print_this
@@ -285,3 +283,7 @@ template(name='doc_pill')
         
 template(name='gchat')
     iframe.invert(width='100%' height='800px' src="https://chat.gratigen.one" frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen='')
+    
+    
+template(name='coin')
+    iframe.invert(width='100%' height='800px' src="https://coin.gratigen.one" frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen='')

@@ -141,6 +141,7 @@ template(name='service_view')
                         //- +array_field key='location_tags' label='location_tags' 
                         +comments
                 .twelve.wide.column.scrolling
+                    +service_card
                     img.ui.image(src="{{c.url image_id }}" class=currentUser.darkmode_class)
                     // a.ui.header(href="/user/#{target.username}")
                     //     |#{target.username}

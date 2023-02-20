@@ -246,6 +246,32 @@ template(name='comments')
                             if currentUser.admin_mode
                                 +viewing_small
                                 +remove_button
+                    +replys
+
+template(name='replys')
+    if currentUser
+        .ui.fluid.icon.large.input
+            input.add_comment(type='text' placeholder='write a reply')
+    .ui.comments
+        each doc_comments
+            .comment.mark_viewed
+                a.avatar.pointer.zoomer.fly_right(href="/user/#{_author.username}") 
+                    img.ui.avatar.image.zoomer(src="{{c.url _author.image_id width=200 height=200 gravity='face' crop='fill'}}")
+                .ui.popup
+                    a.pointer.zoomer(href="/user/#{_author.username}") 
+                        img.ui.image.zoomer(src="{{c.url _author.image_id width=200 height=200 gravity='face' crop='fill'}}")
+                
+                .content
+                    a.author.zoomer(href="/user/#{_author.username}") 
+                        |#{_author.username}
+                    .text #{body}
+                    .metadata
+                        .date #{when}
+                        if currentUser
+                            +voting_small
+                            if currentUser.admin_mode
+                                +viewing_small
+                                +remove_button
                                 
                                 
 template(name='viewing_small')
@@ -675,73 +701,75 @@ template(name='model_crud')
         // +Template.dynamic template=child_model_item_template
         .ui.horizontal.fluid.card.show_modal
             .content
-                +Template.dynamic template=child_model_item_template
-                if image_id
-                    .image
-                        img.ui.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
-                .content
-                    a.ui.inline.header(href="/d/#{model}/#{_id}")
-                        |#{title}
-                    .ui.label #{model}
-                    i.remove.link.circular.red.icon.zoomer.remove_model
+                // +Template.dynamic template=child_model_item_template
+                // if image_id
+                //     .image
+                //         img.ui.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+                // .content
+                //     a.ui.inline.header(href="/d/#{model}/#{_id}")
+                //         |#{title}
+                //     .ui.label #{model}
+                //     i.remove.link.circular.red.icon.zoomer.remove_model
             
-                // .ui.grid
-                
-                //     .row
-                //         // .column
-                //         .fourteen.wide.column
-                //             .left.floated
-                //                 a.ui.inline.header
-                //                     |!{title}
-                //                 div
-                //                 +eft_viewer_small
-                //                 // img(src="{{c.url image_id width=50 height=50}}")
-                //                 // div    
-                //                 // |!{content}
-                //         .two.wide.column
-                //             .right.floated
-                //                 if _is 'model' 'role'
-                //                     +ismall name='what-i-do' color='42E8C4' cl='ui inline image'
-                //                 div
-                //                 |#{when}
-                //     .row
-                //         .six.wide.column
-                //             img.invert(src="{{c.url image_id width=10 height=10}}")
-                //         .ten.wide.column
-                //             |!{content}
-                //     .sixteen.wide.column
-                //         if currentUser.admin_mode
-                //             .ui.tertiary.large.button.zoomer.remove_role 
-                //                 i.remove.icon
-                //                 |remove 
-                //             .ui.tertiary.large.button.zoomer.toggle_assign 
-                //                 i.user.plus.icon
-                //                 | assign
-                //             if assigned_to 
-                //                 |assigned to #{asigned_to.username}
-                //             else 
-                //                 |unnassigned
-                //             if is_assigning 
-                //                 each role_holders 
-                //                     .ui.label #{username}
-                //             else 
-                //                 with assigned_users
-                //                     .ui.green.label #{username}
-                //             a.ui.tertiary.right.floated.icon.large.button.zoomer.fly_right(href="/role/#{_id}/edit" title='edit role')
-                //                 i.setting.icon
-                //         else
-                //             // else if can_take
-                //             if has_taken 
-                //                 |taken by #{taken_user.name}
-                //                 .ui.large.button.release_role
-                //                     i.undo.icon
-                //                     |release 
-                //             else if can_take
-                //                 .ui.tertiary.large.button.zoomer.take_role 
-                //                     i.checkmark.icon
-                //                     | take
-                //             else if is_taken 
-                //                 |taken by #{taken_user.name}
+            
+                .ui.grid
+                    .row
+                        // .column
+                        .fourteen.wide.column
+                            .left.floated
+                                img.ui.avatar.image(src="{{c.url author.profile_image_id height=200 width=200 gravity='face' crop='fill'}}")
+                                a.ui.inline.header
+                                    |!{title}
+                                div
+                                +eft_viewer_small
+                                // img(src="{{c.url image_id width=50 height=50}}")
+                                // div    
+                                // |!{content}
+                        .two.wide.column
+                            .right.floated
+                                if _is 'model' 'model'
+                                    // +template.dynamic template='ismall'
+                                    +ismall name='what-i-do' color='42E8C4' cl='ui inline image'
+                                div
+                                |#{when}
+                    .row
+                        .six.wide.column
+                            img.invert(src="{{c.url image_id width=10 height=10}}")
+                        .ten.wide.column
+                            |!{content}
+                    .sixteen.wide.column
+                        if currentUser.admin_mode
+                            .ui.tertiary.large.button.zoomer.remove_role 
+                                i.remove.icon
+                                |remove 
+                            .ui.tertiary.large.button.zoomer.toggle_assign 
+                                i.user.plus.icon
+                                | assign
+                            if assigned_to 
+                                |assigned to #{asigned_to.username}
+                            else 
+                                |unnassigned
+                            if is_assigning 
+                                each role_holders 
+                                    .ui.label #{username}
+                            else 
+                                with assigned_users
+                                    .ui.green.label #{username}
+                            a.ui.tertiary.right.floated.icon.large.button.zoomer.fly_right(href="/role/#{_id}/edit" title='edit role')
+                                i.setting.icon
+                        else
+                            // else if can_take
+                            if has_taken 
+                                |taken by #{taken_user.name}
+                                .ui.large.button.release_role
+                                    i.undo.icon
+                                    |release 
+                            else if can_take
+                                .ui.tertiary.large.button.zoomer.take_role 
+                                    i.checkmark.icon
+                                    | take
+                            else if is_taken 
+                                |taken by #{taken_user.name}
                 a.ui.tertiary.large.button.zoomer(href="/d/role/#{_id}")
                     |view
                     i.chevron.right.icon
@@ -1022,7 +1050,7 @@ template(name='create_model_view')
         .ui.popup create request
         //green
         div
-        +thing_picker model='org' icon='groups' color='83DFF4' 
+        +thing_picker model='org' icon='building' color='83DFF4' 
         .ui.popup create organization
         //light blue
         +thing_picker model='project' icon='project' color='7229AF' 

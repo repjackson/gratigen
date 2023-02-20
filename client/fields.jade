@@ -340,7 +340,7 @@ template(name='link_field')
     with field_value 
         a.ui.tertiary.button(href=field_value target='_window')
             |#{field_value}
-        +block template='site_embed' data=this label='site browser' icon='globe'
+        +site_embed data=this label='site browser' icon='globe'
         
         
 template(name='site_embed')       

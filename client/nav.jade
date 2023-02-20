@@ -1,78 +1,26 @@
 template(name='nav')
-    // https://fomantic-ui.com/elements/icon.html#/icon
-    // #topnav.topnav.ui.fluid.padded.divided.centered.middle.aligned.grid 
-    // #topnav.topnav.ui.attached.borderless.fixed.menu.hscroll(class=darkmode_class)
-    // .topnav.ui.borderless.fixed.sticky.menu.hscroll(class=darkmode_class)
-    each picked_tags
-        // |#{this}
-        .flash
-            +gicon name=this
-            // img(src="https://img.icons8.com/color/96/null/#{this}.png")
-    // .flash
-    //     // +icolor name='the flash head'
-    //     img(src="https://img.icons8.com/color/64/null/the-flash-head.png")
-    // .batman
-    //     // +icolor name='the flash head'
-        // img(src="https://img.icons8.com/color/64/null/batman.png")
-    // .batman
-    //     // +icolor name='the flash head'
-    //     img(src="https://img.icons8.com/color/64/null/batman.png")
     .topnav.ui.borderless.attached.menu.hscroll(class=darkmode_class)
         // .four.wide.column
-        // .item
-            // if is_loading
-            //     .icon.item
-            //         i.big.loading.grey.refresh.icon.cancel
-            // else 
-            //     a.icon.item.toggle_leftbar
-            //         i.large.bars.icon
         a.item.zoomer(href='/' class="{{isActivePath '/'}}" )
-            // +i name='network'
-            
-            // i.large.home.icon
-            img.ui.mini.inline.compact.image(src="/logo.png")
+            if is_loading
+                    i.big.loading.grey.refresh.icon.cancel
+            else 
+                img.ui.mini.inline.compact.image(src="/logo.png")
             span.mobile.hidden
                 | Gratigen
-            // +top_nav_item route='my_accounts' label='accounts' icon='data-in-both-directions' color='40C057'
-            // +top_nav_item route='my_orgs' icon='groups' color='83DFF4' label='organizations'
-            // +top_nav_item route='my_projects' icon='project' color='7229AF' label='projects'
-            // +top_nav_item route='my_events' icon='calendar' color='FAB005' label='events'
-            // +top_nav_item route='my_roles' icon='what-i-do' color='42E8C4' label='roles'
-            // +top_nav_item route='my_tasks' icon='task' color='B785E1' label='tasks'
-            // +top_nav_item route='my_resources' icon='car' color='FD7E14' label='resources'
-            // +top_nav_item route='my_skills' icon='wrench' color='ff0000' label='skills'
-    
         if currentUser.admin
             // +nav_item route='admin' icon='shield' color='FFFFFF' label='admin'
             a.icon.item.toggle_admin_mode(title='toggle admin mode' class=admin_mode_class)
                 i.large.shield.icon
         // .six.wide.center.aligned.column
-        a.item.launch_modal.add_doc(title='Engage' data-template='add_doc')
+        a.item.launch_modal.add_doc(title='Engage')
             +i name='play-button-circled--v1' color='40C057' cl='ui mini image'
-        // a.item.add_doc(title='Engage')
-        //     // i.large.play.icon
-        //     // +add_tab
-        //     +i name='play-button-circled--v1' color='40C057' cl='ui mini image'
-        // a.center.toggle_addmode.item.zoomer.pointer(title='Engage')
-        //     +i name='play-button-circled--v1' color='40C057'
-        //     // i.small.circular.play.green.icon.invert
-        //     .ui.huge.popup Engage
-        // .dropmenu
-        //     button.dropbtn Dropdown
-        //     .dropdown-content
-        //         a(href="#") Link 1
-        //         a(href="#") Link 1
-        //         a(href="#") Link 1
-        //         a(href="#") Link 1
         a.item(href='/users' title='users')
             i.users.large.icon
         a.icon.item.toggle_invert
             i.lightbulb.large.icon
         a.icon.item.toggle_searchbar
             i.search.large.icon
-        // .search.item.zoomer(title='search')
-        // +nav_search
-        // .six.wide.column
         .right.menu
             if currentUser
                 a.icon.item.toggle_online
@@ -80,18 +28,18 @@ template(name='nav')
                         i.green.checkmark.large.icon
                     else 
                         i.slash.eye.outline.large.icon
-                if unread_messages.count
-                    a.ui.item.alerts.select_term(href="#" class=alert_toggle_class)
-                        i.large.bell.small.yellow.icon
-                else
-                    a.ui.icon.item(href="/inbox" class="{{isActiveRoute 'inbox'}}")
-                        i.large.outline.bell.big.blue.icon
+                // if unread_messages.count
+                //     a.ui.item.alerts.select_term(href="#" class=alert_toggle_class)
+                //         i.large.bell.small.yellow.icon
+                // else
+                //     a.ui.icon.item(href="/inbox" class="{{isActiveRoute 'inbox'}}")
+                //         i.large.outline.bell.big.blue.icon
             // a.ui.item.zoomer.toggle_rightbar(href="/chat" class="{{isActiveRoute 'chat'}}")
             if currentUser
                 a.ui.item.zoomer.launch(title='launch chat')
                     i.large.chat.outline.orange.icon
-                a.ui.item.zoomer.launch(href="/p/gchat")
-                    +i name='chat'
+                a.ui.item.zoomer(href="/p/gchat")
+                    +i name='chat' cl='ui mini inline image'
             // a.ui.item.zoomer.toggle_chatbar
             //     if unread_count
             //         i.small.chat.big.blue.icon.pulse
@@ -102,7 +50,8 @@ template(name='nav')
 
             if currentUser
                 // a.ui.item(href='/user/#{currentUser.username}/credit' class="{{isActiveRoute 'user_credit'}}" title='current wallet balance')
-                a.ui.item(href="/user/#{currentUser.username}/credit" class="{{isActiveRoute regex='user_credit'}}" title='your credits')
+                // a.ui.item(href="/user/#{currentUser.username}/credit" class="{{isActiveRoute regex='user_credit'}}" title='your credits')
+                a.ui.item(href="/p/coin" class="{{isActiveRoute regex='user_credit'}}" title='your credits')
                     strong
                         |&nbsp;
                         |#{currentUser.points}p
@@ -201,8 +150,12 @@ template(name='add_doc')
                 .ui.huge.popup create request
                 //green
                 // div
-                +thing_picker model='org' icon='groups' color='83DFF4' 
+                +thing_picker model='org' icon='building' color='83DFF4' 
                 .ui.huge.popup create organization
+                
+                +thing_picker model='group' icon='groups' color='83DFF4' 
+                .ui.huge.popup create group                
+                
                 //light blue
                 +thing_picker model='project' icon='project' color='7229AF' 
                 .ui.huge.popup create project
