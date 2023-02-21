@@ -678,9 +678,9 @@ template(name='ai')
 
 
 template(name='block')
-    .ui.grid.segment(class=color)
+    .ui.grid.segment.glow(class=color)
         // .one.inverted.column.row.toggle_expanded.zoomer.pointer(title='expand' class=color)
-        .inverted.row.toggle_expanded.pointer(title='expand')
+        .inverted.row.toggle_expanded.pointer.zoomer.glow(title='expand')
             .two.wide.column
                 if icon
                     +i name=icon color='000000' cl="ui inline image"
@@ -761,9 +761,12 @@ template(name='model_crud')
                                 |#{when}
                     .row
                         .six.wide.column
-                            img.invert(src="{{c.url image_id width=10 height=10}}")
+                            img.small.invert(src="{{c.url image_id width=10 height=10}}")
                         .ten.wide.column
+                            |!{body}
+                            |!{brief}
                             |!{content}
+                            |!{description}
                     .sixteen.wide.column
                         if currentUser.admin_mode
                             .ui.tertiary.large.button.zoomer.remove_role 

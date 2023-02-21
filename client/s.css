@@ -17,6 +17,14 @@ body {
     height: auto !important;
 }
 
+.glow:active {
+  /*box-shadow: 0 5px #666 !important;*/
+  transform: translateY(4px) !important;
+}
+.glow:hover {
+    animation: shadow-pulse 1s !important;
+}
+
 .gactive {
     border-style: solid !important;
     border-width: 1px 1px !important; /* 5px top and bottom, 20px on the sides */
@@ -28,8 +36,10 @@ body {
 {
      0% {
         box-shadow: 0 0 0 0px rgba(0, 0, 0, 0.2);
+        filter: drop-shadow(1px 1px 1px rgba(250,250,250, 0.5)) !important;
      }
      100% {
+        filter: drop-shadow(10px 10px 10px rgba(250,250,250, 0.5)) !important;
         box-shadow: 0 0 0 35px rgba(0, 0, 0, 0);
      }
 } 
@@ -59,8 +69,13 @@ body {
 }
 /*.button:hover {background-color: #3e8e41}*/
 
-.button:active {
+.ui.button:active {
   background-color: #3e8e41;
+  box-shadow: 0 5px #666 !important;
+  transform: translateY(4px) !important;
+}
+a:active {
+  /*background-color: #3e8e41;*/
   box-shadow: 0 5px #666 !important;
   transform: translateY(4px) !important;
 }
@@ -299,7 +314,7 @@ img, .button, .selector, .card, p, .header, .item, .image, .fade, .accordion{
 }
 .vertani {
   /*border:1px solid grey !important;*/
-  transition: max-height 1s ease-in-out;
+  transition: height 1s ease-in-out;
   
   /*height: 100px;*/
   /*padding: 30px;*/

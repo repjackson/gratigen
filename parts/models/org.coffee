@@ -85,8 +85,7 @@ if Meteor.isClient
         # @autorun => Meteor.subscribe 'org_dishes', Router.current().params.doc_id, ->
         Meteor.call 'log_view', Router.current().params.doc_id, ->
     Template.membership_toggle.helpers
-        is_member: ->
-            Meteor.userId() and Meteor.userId() in @member_ids
+        is_member: -> @member_ids and Meteor.userId() and Meteor.userId() in @member_ids
         # current_org: ->
         #     Docs.findOne
         #         model:'org'

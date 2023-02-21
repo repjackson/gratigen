@@ -487,8 +487,8 @@ template(name='raw_view')
         
 template(name='textarea_field')
     // details.ui.styled.fluid.accordion(class=accordion_class)
-    .ui.segment.vertani.zoomer(title=tagline)
-        .title.toggle_expanded.zoomer.pointer
+    .ui.segment.vertani(title=tagline)
+        .title.toggle_expanded.zoomer.pointer.glow
             // .ui.dropdown.icon
             .ui.inline.header.zoomer
                 if icon
@@ -500,6 +500,10 @@ template(name='textarea_field')
                     |#{label}
                 else if key
                     |#{key}
+            if is_expanded
+                i.grey.chevron.down.icon
+            else
+                i.grey.chevron.right.icon
         if is_expanded
             // should make universal edit local reactive var edit button, will allow specific template edit mode
             unless is_editing
