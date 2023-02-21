@@ -211,15 +211,15 @@ Meteor.publish 'parent_docs_by_id', (child_doc_id)->
                 model:1
                 _author_id:1
 Meteor.publish 'doc_by_id', (doc_id)->
-    Docs.find doc_id,
-        fields:
-            title:1
-            body:1
-            parent_id:1
-            image_id:1
-            tags:1
-            model:1
-            _author_id:1
+    Docs.find doc_id
+        # fields:
+        #     title:1
+        #     body:1
+        #     parent_id:1
+        #     image_id:1
+        #     tags:1
+        #     model:1
+        #     _author_id:1
 Meteor.publish 'doc', (doc_id)->
     Docs.find doc_id, 
         fields:

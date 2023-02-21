@@ -129,6 +129,7 @@ Template.link_field.events
     'blur .edit_url': (e,t)->
         val = t.$('.edit_url').val()
         parent = Template.parentData()
+        console.log 'parent?', parent, @key
         doc = Docs.findOne parent._id
         if doc
             Docs.update parent._id,
