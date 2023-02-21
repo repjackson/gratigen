@@ -1,0 +1,100 @@
+// template(name='objective_crud')
+//     // .ui.segment
+//     .ui.styled.accordion
+//         .title
+//             .dropdown.icon
+//             .ui.inline.header
+//                 // +i name='shield'
+//                 // |#{picked_objectives.count}
+//                 | objectives
+//         .content
+//             .ui.text
+//                 | objectives are qualitative what you will make this your project sucessful?
+//             .ui.icon.large.input 
+//                 if objective_search_value
+//                     i.large.red.remove.link.icon.zoomer.clear_search
+//                 else 
+//                     i.search.icon
+//                 input.objective_search(type='text' placeholder='search' value=objective_search_value)
+//             if objective_results
+//                 // .ui.selection.link.animated.list
+//                 each objective_results
+//                     .ui.basic.circular.large.button.pick_objective.zoomer
+//                         i.grey.plus.icon
+//                         if image_id
+//                             img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+//                         |#{title}
+//             if objective_search_value
+//                 .ui.large.button.create_objective(title='add')
+//                     i.plus.icon
+//                     |#{objective_search_value}
+//             .ui.header
+//                 // +i name='shield'
+//                 |#{picked_objectives.count}
+//                 | objectives
+//             // if picked_objectives
+//             .smallscroll
+//                 each picked_objectives
+//                      .ui.horizontal.fluid.card.show_modal
+//                         .content
+//                             .ui.grid
+//                                 .row
+//                                     // .column
+//                                     .fourteen.wide.column
+//                                         .left.floated
+//                                             a.ui.inline.header
+//                                                 |!{title}
+//                                             div
+//                                             +eft_viewer_small
+//                                             // img(src="{{c.url image_id width=50 height=50}}")
+//                                             // div    
+//                                             // |!{content}
+//                                     .two.wide.column
+//                                         .right.floated
+//                                             if _is 'model' 'objective'
+//                                                 +ismall name='what-i-do' color='42E8C4' cl='ui inline image'
+//                                             div
+//                                             |#{when}
+//                                 .row
+//                                     .six.wide.column
+//                                         img.invert(src="{{c.url image_id width=10 height=10}}")
+//                                     .ten.wide.column
+//                                         |!{content}
+//                                 .sixteen.wide.column
+//                                     if currentUser.admin_mode
+//                                         .ui.tertiary.large.button.zoomer.remove_objective 
+//                                             i.remove.icon
+//                                             |remove 
+//                                         .ui.tertiary.large.button.zoomer.toggle_assign 
+//                                             i.user.plus.icon
+//                                             | assign
+//                                         if assigned_to 
+//                                             |assigned to #{asigned_to.username}
+//                                         else 
+//                                             |unnassigned
+//                                         if is_assigning 
+//                                             each objective_holders 
+//                                                 .ui.label #{username}
+//                                         else 
+//                                             with assigned_users
+//                                                 .ui.green.label #{username}
+//                                         a.ui.tertiary.right.floated.icon.large.button.zoomer.fly_right(href="/objective/#{_id}/edit" title='edit objective')
+//                                             i.setting.icon
+//                                     else
+//                                         // else if can_take
+//                                         if has_taken 
+//                                             |taken by #{taken_user.name}
+//                                             .ui.large.button.release_objective
+//                                                 i.undo.icon
+//                                                 |release 
+//                                         else if can_take
+//                                             .ui.tertiary.large.button.zoomer.take_objective 
+//                                                 i.checkmark.icon
+//                                                 | take
+//                                         else if is_taken 
+//                                             |taken by #{taken_user.name}
+//                                     a.ui.tertiary.large.button.zoomer(href="/d/objective/#{_id}")
+//                                         |view
+//                                         i.chevron.right.icon
+//                     .ui.modal 
+//                         .ui.header hi

@@ -1,0 +1,303 @@
+// template(name='services')
+//     .ui.stackable.padded.grid 
+//         .four.wide.column
+//             .ui.inline.header 
+//                 +i name='blog'
+//                 |services
+//                 // if currentUser
+//                 .ui.icon.button.add_service
+//                     i.plus.large.icon
+//             each picked_tags
+//                 a.ui.blue.button.unpick_service_tag
+//                     |#{this}
+//             each tag_results
+//                 // if title
+//                 a.ui.compact.button.pick_service_tag
+//                     |#{title} 
+//                     // small.ui.grey.text #{count}
+                    
+//         .twelve.wide.column
+//             .ui.centered.stackable.cards
+//                 each service_docs 
+//                     +service_card
+                    
+                    
+// template(name='service_card')
+//     a.ui.card.fly_right(href="/service/#{_id}")
+//         if youtube_id 
+//             +youtube_field key='youtube_id' 
+//         if image_id 
+//             +image_view key='image_id' 
+//         .content
+//             .ui.inline.header #{title}
+//             if private 
+//                 i.large.lock.icon
+//             .smallscroll
+//                 |!{content}
+//                 .ui.label 
+//                     i.user.icon
+//                     |#{_author_username}
+//                 i.tag.icon
+//                 each tags 
+//                     .ui.basic.label #{this}
+//             .ui.small.grey.header
+//                 i.clock.icon
+//                 |#{when}
+//             // +comments_view_small
+//             +author_info
+
+
+// template(name='set_service_sort_key')
+//     .item.set_sort
+//         if color
+//             .ui.label(class=color) #{label}
+//         else 
+//             if emoji
+//                 em(data-emoji=emoji)
+//             else if icon
+//                 i.icon(class=icon)
+//             |#{label}
+        
+        
+                
+// template(name='user_services')
+//     .ui.inline.header 
+//         +i name='blog'
+//         |user services
+//     if is_current_user
+//         .ui.basic.icon.button.add_service
+//             i.large.plus.icon
+//     .smallscroll
+//         each service_docs 
+//             a.ui.fluid.card(href="/d/service/#{_id}")
+//                 .image
+//                     img.ui.image(src="{{c.url image_id width=400 height=400 crop='pad'}}")
+//                 .content
+//                     .ui.inline.header #{title}
+//                     // .smallscroll 
+//                         // |!{content}
+//                     +creation_info
+//                     a.ui.icon.button(href='/d/service/#{_id}')
+//                         i.large.chevron.right.icon
+           
+        
+        
+
+// template(name='set_view_mode_service')
+//     .item.set_view
+//         i.icon(class=icon)
+//         |#{title}
+
+
+// // template(name='set_limit')
+//     .ui.compact.small.basic.button.set_limit #{amount}
+
+
+
+        
+// template(name='service_item')
+//     .ui.fluid.segment.view_service.pointer
+//         a.ui.header(href="/service/#{_id}") #{title}
+//         div
+//         .ui.small.grey.inline.header #{when}
+//         | #{content}
+//         each tags 
+//             .ui.basic.small.label #{this}
+        
+
+// template(name='service_view')
+//     with current_doc
+//         .ui.stackable.grid
+//             .row 
+//                 .four.wide.column
+//                     .ui.basic.segment
+//                         .ui.header #{title}
+//                         a.ui.circular.button.fly_left(href="/services")
+//                             i.chevron.left.big.icon
+//                             i.newspaper.big.icon
+//                             |services
+//                         // div
+//                         // .ui.inline.grey.header {{from_now start_datetime}}
+                        
+//                         if can_edit
+//                             a.ui.circular.icon.button.edit_service(href="/d/service/#{_id}/edit" title='edit')
+//                                 i.big.link.pencil.icon
+//                         .ui.segment
+//                             .ui.header 
+//                                 small author
+//                             a.ui.header(href="/user/#{_author.username}") 
+//                                 img.ui.avatar.image(src="{{c.url _author.image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.darkmode_class)
+//                                 |#{_author.username}
+//                         .ui.small.grey.header 
+//                             i.line.chart.icon
+//                             |stats
+//                         .ui.list
+//                             .item #{views} views
+//                         each viewers
+//                             .ui.label #{username}
+//                         +array_field key='tags' label='tags' 
+//                         +voting_full
+//                         .ui.header #{when}
+//                         //- +array_field key='location_tags' label='location_tags' 
+//                         +comments
+//                 .twelve.wide.column.scrolling
+//                     +service_card
+//                     img.ui.image(src="{{c.url image_id }}" class=currentUser.darkmode_class)
+//                     // a.ui.header(href="/user/#{target.username}")
+//                     //     |#{target.username}
+//                     if youtube_id 
+//                         +youtube_field key='youtube_id' 
+//                     |!{content}
+//                     div 
+//                     .spacer
+//                     .spacer
+//                     if watson 
+//                         +watson_view
+//                 // .four.wide.column
+//                     //- .ui.fluid.green.button.submit
+//                     //-     i.checkmark.icon
+//                     //-     |submit
+                    
+                    
+                    
+// template(name='service_edit')
+//     with current_doc
+//         .ui.stackable.padded.grid
+//             .row 
+//                 .ten.wide.column
+//                     .ui.inline.header 
+//                         +icolor name='news' cl='ui image inline pointer'
+//                         |edit service
+//                     a.ui.icon.green.big.button(href="/service/#{_id}" title='save')
+//                         i.checkmark.big.icon
+//                     +text_field key='title' label='title' 
+//                     +textarea_field key='content' label='content' 
+//                     +youtube_field key='youtube_id' label='youtube id' 
+//                 .six.wide.column
+//                     .ui.large.red.button.delete_service
+//                         i.remove.icon
+//                         |delete service
+//                     .ui.header 
+//                         small author
+//                         |#{_author.username}
+//                     if is_dev
+//                         +single_user_field key='_author_id' label='author' 
+//                     +image_field key='image_id' label='image' 
+//                     div 
+//                     +array_field key='tags' label='tags'  icon='tags'
+//                     +boolean_field key='published' icon='visible' 
+//                     if is_dev 
+//                         +text_field key='model' label='model' 
+//                     +array_field key='location_tags' label='location tags' icon='marker'
+//                     // unless published
+//                     //     a.ui.fluid.green.button.submit(href="/save")
+//                     //         i.checkmark.icon
+//                     //         |publish
+//                     // else
+//                     //     .ui.basic.button.unpublish 
+//                     //         |unpublish
+//                     .ui.header
+//                         |audience
+//                     +boolean_field key='private' label='private' 
+//                     if private 
+//                         +multi_user_field key='access_user_ids' label='user picker' 
+//                     +group_crud
+                    
+
+// template(name='service_crud')
+//     // .ui.segment
+//     .ui.styled.accordion
+//         .title
+//             .dropdown.icon
+//             .ui.inline.header
+//                 // +i name='shield'
+//                 // |#{picked_services.count}
+//                 | services
+//         .content
+//             .ui.icon.large.input 
+//                 if service_search_value
+//                     i.large.red.remove.link.icon.zoomer.clear_search
+//                 else 
+//                     i.search.icon
+//                 input.service_search(type='text' placeholder='search' value=service_search_value)
+//             if service_results
+//                 // .ui.selection.link.animated.list
+//                 each service_results
+//                     .ui.basic.circular.large.button.pick_service.zoomer
+//                         i.grey.plus.icon
+//                         if image_id
+//                             img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+//                         |#{title}
+//             if service_search_value
+//                 .ui.large.button.create_service(title='add')
+//                     i.plus.icon
+//                     |#{service_search_value}
+//             // if picked_services
+//             .ui.header 
+//                 |#{picked_services.count}
+//                 |services
+//             .smallscroll
+//                 each picked_services
+//                      .ui.horizontal.fluid.card.show_modal
+//                         .content
+//                             .ui.grid
+//                                 .row
+//                                     // .column
+//                                     .fourteen.wide.column
+//                                         .left.floated
+//                                             a.ui.inline.header
+//                                                 |!{title}
+//                                             div
+//                                             +eft_viewer_small
+//                                             // img(src="{{c.url image_id width=50 height=50}}")
+//                                             // div    
+//                                             // |!{content}
+//                                     .two.wide.column
+//                                         .right.floated
+//                                             if _is 'model' 'service'
+//                                                 +ismall name='what-i-do' color='42E8C4' cl='ui inline image'
+//                                             div
+//                                             |#{when}
+//                                 .row
+//                                     .six.wide.column
+//                                         img.invert(src="{{c.url image_id width=10 height=10}}")
+//                                     .ten.wide.column
+//                                         |!{content}
+//                                 .sixteen.wide.column
+//                                     if currentUser.admin_mode
+//                                         .ui.tertiary.large.button.zoomer.remove_service 
+//                                             i.remove.icon
+//                                             |remove 
+//                                         .ui.tertiary.large.button.zoomer.toggle_assign 
+//                                             i.user.plus.icon
+//                                             | assign
+//                                         if assigned_to 
+//                                             |assigned to #{asigned_to.username}
+//                                         else 
+//                                             |unnassigned
+//                                         if is_assigning 
+//                                             each service_holders 
+//                                                 .ui.label #{username}
+//                                         else 
+//                                             with assigned_users
+//                                                 .ui.green.label #{username}
+//                                         a.ui.tertiary.right.floated.icon.large.button.zoomer.fly_right(href="/d/service/#{_id}/edit" title='edit service')
+//                                             i.setting.icon
+//                                     else
+//                                         // else if can_take
+//                                         if has_taken 
+//                                             |taken by #{taken_user.name}
+//                                             .ui.large.button.release_service
+//                                                 i.undo.icon
+//                                                 |release 
+//                                         else if can_take
+//                                             .ui.tertiary.large.button.zoomer.take_service 
+//                                                 i.checkmark.icon
+//                                                 | take
+//                                         else if is_taken 
+//                                             |taken by #{taken_user.name}
+//                                     a.ui.tertiary.large.button.zoomer(href="/d/service/#{_id}")
+//                                         |view
+//                                         i.chevron.right.icon
+//                     .ui.modal 
+//                         .ui.header hi

@@ -1,0 +1,155 @@
+// template(name='skill_crud')
+//     // .ui.segment
+//     .ui.styled.accordion
+//         .title
+//             .dropdown.icon
+//             .ui.inline.header
+//                 // +i name='shield'
+//                 // |#{picked_skills.count}
+//                 | skills
+//         .content
+//             .ui.icon.large.input 
+//                 if skill_search_value
+//                     i.large.red.remove.link.icon.zoomer.clear_search
+//                 else 
+//                     i.search.icon
+//                 input.skill_search(type='text' placeholder='search' value=skill_search_value)
+//             if skill_results
+//                 // .ui.selection.link.animated.list
+//                 each skill_results
+//                     .ui.basic.circular.large.button.pick_skill.zoomer
+//                         i.grey.plus.icon
+//                         if image_id
+//                             img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+//                         |#{title}
+//             if skill_search_value
+//                 .ui.large.button.create_skill(title='add')
+//                     i.plus.icon
+//                     |#{skill_search_value}
+//             .ui.header
+//                 // +i name='shield'
+//                 |#{picked_skills.count}
+//                 | skills
+//             // if picked_skills
+//             .smallscroll
+//                 each picked_skills
+//                      .ui.horizontal.fluid.card.show_modal
+//                         .content
+//                             .ui.grid
+//                                 .row
+//                                     // .column
+//                                     .fourteen.wide.column
+//                                         .left.floated
+//                                             a.ui.inline.header
+//                                                 |!{title}
+//                                             div
+//                                             +eft_viewer_small
+//                                             // img(src="{{c.url image_id width=50 height=50}}")
+//                                             // div    
+//                                             // |!{content}
+//                                     .two.wide.column
+//                                         .right.floated
+//                                             if _is 'model' 'skill'
+//                                                 +ismall name='what-i-do' color='42E8C4' cl='ui inline image'
+//                                             div
+//                                             |#{when}
+//                                 .row
+//                                     .six.wide.column
+//                                         img.invert(src="{{c.url image_id width=10 height=10}}")
+//                                     .ten.wide.column
+//                                         |!{content}
+//                                 .sixteen.wide.column
+//                                     if currentUser.admin_mode
+//                                         .ui.tertiary.large.button.zoomer.remove_skill 
+//                                             i.remove.icon
+//                                             |remove 
+//                                         .ui.tertiary.large.button.zoomer.toggle_assign 
+//                                             i.user.plus.icon
+//                                             | assign
+//                                         if assigned_to 
+//                                             |assigned to #{asigned_to.username}
+//                                         else 
+//                                             |unnassigned
+//                                         if is_assigning 
+//                                             each skill_holders 
+//                                                 .ui.label #{username}
+//                                         else 
+//                                             with assigned_users
+//                                                 .ui.green.label #{username}
+//                                         a.ui.tertiary.right.floated.icon.large.button.zoomer.fly_right(href="/skill/#{_id}/edit" title='edit skill')
+//                                             i.setting.icon
+//                                     else
+//                                         // else if can_take
+//                                         if has_taken 
+//                                             |taken by #{taken_user.name}
+//                                             .ui.large.button.release_skill
+//                                                 i.undo.icon
+//                                                 |release 
+//                                         else if can_take
+//                                             .ui.tertiary.large.button.zoomer.take_skill 
+//                                                 i.checkmark.icon
+//                                                 | take
+//                                         else if is_taken 
+//                                             |taken by #{taken_user.name}
+//                                     a.ui.tertiary.large.button.zoomer(href="/d/skill/#{_id}")
+//                                         |view
+//                                         i.chevron.right.icon
+//                     .ui.modal 
+//                         .ui.header hi
+                        
+                        
+// template(name='skill_view')
+//     .ui.stackable.padded.grid
+//         .row
+//             .sixteen.wide.column
+//                 // if can_edit
+//                 a.ui.icon.button(href="/skills")
+//                     i.chevron.left.icon
+//                     +i name='prize'
+//                 +i name=icon cl='ui inline image'
+//                 .ui.center.aligned.inline.header 
+//                     small viewing skill: 
+//                     |#{title}
+//                 if can_edit
+//                     a.ui.icon.large.button.edit_skill(href="/skill/#{_id}/edit")
+//                         i.big.pencil.big.blue.icon
+//         .row 
+//             .eight.wide.column
+//                 .ui.header 
+//                     small author
+//                 a.ui.header(href="/user/#{_author.username}") 
+//                     img.ui.avatar.image(src="{{c.url _author.image_id height=200 width=200 gravity='face' crop='fill'}}")
+//                     |#{_author.username}
+                        
+//                 +number_field key='bounty' label='bounty'
+//                 +textarea_field key='description' label='description'
+//                 // +image_view key='image_id' label='image'
+//                 +image_field key='image_id' icon='image' label='image'
+//                 +image_field key='banner_image_id' icon='image' label='banner image'
+//                 +skill_crud
+//                 div 
+//                 +array_field key='tags' label='tags'
+//                 .spacer
+//                 .spacer
+//                 +comments
+//                 //- +array_field key='location_tags' label='location_tags'
+//             .eight.wide.column
+//                 +skill_card
+//                 .ui.header 
+//                     +i name='skillr'
+//                     |skillrs
+//                 each skillrs
+//                     a.ui.button(href="/user/#{username}") 
+//                         img.ui.avatar.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}")
+//                         |#{name}
+    
+//                 // .ui.header 
+//                 //     +honey_skillr
+//                 //     |honey skillrs
+//                 // each honey_skillrs
+//                 //     a.ui.basic.button(href="/user/#{username}") 
+//                 //         img.ui.avatar.image(src="{{c.url image_id height=200 width=200 gravity='face' crop='fill'}}")
+//                 //         |#{name}
+//                 // //- .ui.fluid.green.button.submit
+//                 // //-     i.checkmark.icon
+//                 // //-     |submit

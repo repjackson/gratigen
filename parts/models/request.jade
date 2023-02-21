@@ -1,0 +1,314 @@
+// template(name='requests')
+//     .ui.stackable.padded.grid
+//         .four.wide.column
+//             .ui.inline.header 
+//                 // i.requests.icon
+//                 +i name='service-bell'
+//                 |requests
+//             div
+//             if currentUser
+//                 i.plus.large.link.circular.icon.add_request
+//             .ui.inline.small.header 
+//                 i.user.friends.icon
+//                 |authors
+//             each picked_authors
+//                 a.ui.blue.label.unpick_author
+//                     |#{this}
+//             each author_results
+//                 if title
+//                     a.ui.basic.circular.small.link.label.pick_author
+//                         |#{title} 
+//                         small.ui.grey.text #{count}
+//             div
+//             .ui.small.inline.header
+//                 i.tags.icon
+//                 |tags
+//             each picked_request_tags
+//                 a.ui.blue.label.unpick_request
+//                     |#{this}
+//             each request_tag_results
+//                 if title
+//                     a.ui.basic.circular.small.link.label.pick_request
+//                         |#{title} 
+//                         small.ui.grey.text #{count}
+//             div
+//             // .ui.small.inline.header
+//             //     i.fire.icon
+//             //     |groups
+//             // each picked_request_groups
+//             //     a.ui.blue.label.unpick_group
+//             //         |#{this}
+//             // each request_group_results
+//             //     if title
+//             //         a.ui.basic.circular.small.link.label.pick_group
+//             //             |#{title} 
+//             //             small.ui.grey.text #{count}
+//         .twelve.wide.column
+//             span.sorting_row
+//                 // +search_input model='request' field='title'
+//                 // +session_set key='view_users' value='grid' icon='th' 
+//                 // +session_set key='view_users' value='list' icon='list'
+//                 // +session_set key='sort_users_direction' value='-1' icon='chevron down'
+//                 // +session_set key='sort_users_direction' value='1' icon='chevron up'
+//                 // +session_set key='sort_users_key' value='points' icon='coins'
+//                 // +session_set key='sort_users_key' value='created_date' icon='clock'
+//                 // +session_set key='view_limit' value=1
+//                 +session_set key='view_limit' value=10
+//                 +session_set key='view_limit' value=20
+//                 +session_set key='view_limit' value=50
+
+                
+//                 i.large.sort.icon
+//                 // +set_sort_key key='comment_count' label='comment count' icon='chat'
+//                 // +set_sort_key key='views' label='views' icon='eye'
+//                 // +set_sort_key key='points' label='points' icon='line chart'
+//                 .ui.compact.icon.button.set_sort_direction(title='toggle sort direction')
+//                     if sorting_up
+//                         i.sort.amount.down.icon
+//                     else
+//                         i.sort.amount.up.icon
+//                 |&nbsp;
+//                 |&nbsp;
+//                 .spacer 
+        
+//             span.ui.doubling.cards.scrolling
+//                 each request_docs
+//                     +request_card
+                    
+
+
+
+// template(name='request_card')
+//     .card.pointer.request_card.zoomer
+//         .image
+//             if youtube_id
+//                 +youtube_field key='youtube_id'
+//             else if image_id
+//                 img.ui.zoom.image(src="{{c.url image_id width=400 height=300 crop='fill'}}" class=currentUser.darkmode_class)    
+//         .content
+//             .ui.header
+//                 |#{title}
+//                 if complete
+//                     i.green.checkmark.icon
+//             |!{description}
+//         .content
+//             +comments
+//         .content
+//             |by 
+//             if _author.image_id
+//                 img.ui.avatar.compact.image(src="{{c.url _author.image_id height=200 width=200 gravity='face' crop='fill'}}")
+//             |#{_author.name}
+//             .ui.big.basic.label
+//                 |#{point_bounty}pts
+//             .ui.small.inline.header status:#{status}
+//             if complete
+//                 .ui.basic.label 
+//                     |completed by #{completer.name}
+//                     |{{from_now completed_timestamp}}
+        
+
+
+
+// template(name='request_view')
+//     .ui.stackable.padded.grid
+//         .two.column.row 
+//             .column
+//                 .ui.header
+//                     |#{point_bounty}pts offered
+//                 if image_id
+//                     img.ui.rounded.image(src="{{c.url image_id gravity='face' crop='fit'}}")
+//                 .ui.header 
+//                     small posted by
+//                 a.ui.header(href="/user/#{_author.username}") 
+//                     img.ui.avatar.image(src="{{c.url _author.image_id height=200 width=200 gravity='face' crop='fill'}}")
+//                     |#{_author.name}
+//                 .ui.header #{when}
+//                 +array_field key='location_tags' label='location_tags'
+//                 div
+//                 +voting_full
+//             .column
+//                 .f13
+//                     |!{description}
+//                 // a.ui.header(href="/user/#{target.username}")
+//                 //     img.ui.avatar.image(src="{{c.url target.image_id height=200 width=200 gravity='face' crop='fill'}}")
+//                 //     |#{target.username}
+//                 if youtube_id
+//                     +youtube_field key='youtube_id'
+//                 .spacer
+//                 i.large.tags.icon
+//                 each tags 
+//                     .ui.basic.large.label #{this}
+//                 .spacer
+//                 .spacer
+//                 +comments
+//                 .ui.header status: #{status}
+//                 if can_claim
+//                     .ui.fluid.green.big.button.claim
+//                         i.grab.large.icon
+//                         |claim
+//                 if can_edit
+//                     a.ui.button(href="/request/#{_id}/edit")
+//                         i.large.pencil.icon
+//                 if claimer
+//                     .ui.header claimed by
+//                     a.ui.header(href="/user/#{claimer.name}")
+//                         img.ui.avatar.image(src="{{c.url claimer.image_id height=200 width=200 gravity='face' crop='fill'}}")
+//                         |#{claimer.name}
+//                     unless complete
+//                         if can_unclaim
+//                             .ui.button.unclaim
+//                                 i.undo.icon
+//                                 |unclaim
+//                         if can_edit
+//                             div
+//                             unless complete
+//                                 .ui.big.basic.button.mark_complete
+//                                     i.checkmark.green.icon
+//                                     |mark complete
+//                             else 
+//                                 .ui.big.basic.button.mark_incomplete
+//                                     i.undo.orange.icon
+//                                     |mark incomplete
+//                     if complete
+//                         .ui.segment
+//                             .ui.header completed by #{completer.name} {{from_now completed_timestamp}}
+
+
+// template(name='request_edit')
+//     .ui.stackable.padded.grid
+//         .two.column.row 
+//             .column
+//                 .ui.header 
+//                     small author
+//                     |#{_author.username}
+//                 +text_field key='title' icon='header'
+//                 +boolean_field key='has_date' label='has date'
+//                 if has_date
+//                     +date_field key='date' label='date' icon='calendar'
+//                 +boolean_field key='has_youtube' label='has youtube'
+//                 if has_youtube
+//                     +youtube_field key='youtube_id' label='youtube id'
+//                 +textarea_field key='description' label='description'
+//                 +image_field key='image_id' label='image'
+//             .column
+//                 div 
+//                 +array_field key='tags' label='tags' icon='tags'
+//                 +array_field key='location_tags' label='location tags' icon='marker'
+//                 .ui.header your points: #{currentUser.points}
+//                 +number_field key='point_offer' label='point offer' icon='hashtag' min='0'
+//                 div
+//                 // .ui.small.header.thin publishing request holds points from your balance and dispenses them when request is marked complete
+//                 // .ui.inline.header status:
+//                 // if published
+//                 //     .ui.green.inline.header published
+//                 // else
+//                 //     .ui.orange.inline.header unpublished
+//                 a.ui.green.fluid.large.button(href="/request/#{_id}")
+//                     i.checkmark.big.icon
+//                     |save 
+//                 // if published
+//                 //     .ui.fluid.orange.basic.large.button.unpublish
+//                 //         i.undo.icon
+//                 //         |unpublish
+//                 // else
+//                 //     .ui.fluid.teal.big.button.publish
+//                 //         i.checkmark.icon
+//                 //         |publish
+// template(name='request_crud')
+//     // .ui.segment
+//     // .ui.styled.accordion
+//     //     .title
+//     //         .dropdown.icon
+//     //         .ui.inline.header
+//     //             // +i name='shield'
+//     //             // |#{picked_requests.count}
+//     //             | requests
+//     //     .content
+//     .ui.icon.large.input 
+//         if request_search_value
+//             i.large.red.remove.link.icon.zoomer.clear_search
+//         else 
+//             i.search.icon
+//         input.request_search(type='text' placeholder='search' value=request_search_value)
+//     if request_results
+//         // .ui.selection.link.animated.list
+//         each request_results
+//             .ui.basic.circular.large.button.pick_request.zoomer
+//                 i.grey.plus.icon
+//                 if image_id
+//                     img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+//                 |#{title}
+//     if request_search_value
+//         .ui.large.button.create_request(title='add')
+//             i.plus.icon
+//             |#{request_search_value}
+//     .ui.header
+//         // +i name='shield'
+//         |#{picked_requests.count}
+//         | requests
+//     // if picked_requests
+//     .smallscroll
+//         each picked_requests
+//              .ui.horizontal.fluid.card.show_modal
+//                 .content
+//                     .ui.grid
+//                         .row
+//                             // .column
+//                             .fourteen.wide.column
+//                                 .left.floated
+//                                     a.ui.inline.header
+//                                         |!{title}
+//                                     div
+//                                     +eft_viewer_small
+//                                     // img(src="{{c.url image_id width=50 height=50}}")
+//                                     // div    
+//                                     // |!{content}
+//                             .two.wide.column
+//                                 .right.floated
+//                                     if _is 'model' 'request'
+//                                         +ismall name='what-i-do' color='42E8C4' cl='ui inline image'
+//                                     div
+//                                     |#{when}
+//                         .row
+//                             .six.wide.column
+//                                 img.invert(src="{{c.url image_id width=10 height=10}}")
+//                             .ten.wide.column
+//                                 |!{content}
+//                         .sixteen.wide.column
+//                             if currentUser.admin_mode
+//                                 .ui.tertiary.large.button.zoomer.remove_request 
+//                                     i.remove.icon
+//                                     |remove 
+//                                 .ui.tertiary.large.button.zoomer.toggle_assign 
+//                                     i.user.plus.icon
+//                                     | assign
+//                                 if assigned_to 
+//                                     |assigned to #{asigned_to.username}
+//                                 else 
+//                                     |unnassigned
+//                                 if is_assigning 
+//                                     each request_holders 
+//                                         .ui.label #{username}
+//                                 else 
+//                                     with assigned_users
+//                                         .ui.green.label #{username}
+//                                 a.ui.tertiary.right.floated.icon.large.button.zoomer.fly_right(href="/request/#{_id}/edit" title='edit request')
+//                                     i.setting.icon
+//                             else
+//                                 // else if can_take
+//                                 if has_taken 
+//                                     |taken by #{taken_user.name}
+//                                     .ui.large.button.release_request
+//                                         i.undo.icon
+//                                         |release 
+//                                 else if can_take
+//                                     .ui.tertiary.large.button.zoomer.take_request 
+//                                         i.checkmark.icon
+//                                         | take
+//                                 else if is_taken 
+//                                     |taken by #{taken_user.name}
+//                             a.ui.tertiary.large.button.zoomer(href="/d/request/#{_id}")
+//                                 |view
+//                                 i.chevron.right.icon
+//             .ui.modal 
+//                 .ui.header hi

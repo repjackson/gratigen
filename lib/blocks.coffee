@@ -310,7 +310,7 @@ if Meteor.isClient
     Template.block.events
         'click .toggle_expanded': (e,t)-> 
             t.expanded.set !t.expanded.get()
-            t.$('.grid').transition('pulse',300)
+            t.$('.grid').transition('shake',100)
         'click .toggle_editing': (e,t)-> 
             t.editing.set !t.editing.get()
     Template.model_crud.onCreated ->

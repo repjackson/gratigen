@@ -1,0 +1,63 @@
+template(name='offer_view')
+    .ui.stackable.padded.grid
+        .two.column.row 
+            .column
+                .ui.header
+                    |#{point_bounty}pts offered
+                if image_id
+                    img.ui.rounded.image(src="{{c.url image_id gravity='face' crop='fit'}}")
+                .ui.header 
+                    small posted by
+                a.ui.header(href="/user/#{_author.username}") 
+                    img.ui.avatar.image(src="{{c.url _author.image_id height=200 width=200 gravity='face' crop='fill'}}")
+                    |#{_author.name}
+                .ui.header #{when}
+                +array_field key='location_tags' label='location_tags'
+                div
+                +voting_full
+            .column
+                .f13
+                    |!{description}
+                // a.ui.header(href="/user/#{target.username}")
+                //     img.ui.avatar.image(src="{{c.url target.image_id height=200 width=200 gravity='face' crop='fill'}}")
+                //     |#{target.username}
+                if youtube_id
+                    +youtube_field key='youtube_id'
+                .spacer
+                i.large.tags.icon
+                each tags 
+                    .ui.basic.large.label #{this}
+                .spacer
+                .spacer
+                +comments
+                .ui.header status: #{status}
+                if can_claim
+                    .ui.fluid.green.big.button.claim
+                        i.grab.large.icon
+                        |claim
+                if can_edit
+                    a.ui.button(href="/request/#{_id}/edit")
+                        i.large.pencil.icon
+                if claimer
+                    .ui.header claimed by
+                    a.ui.header(href="/user/#{claimer.name}")
+                        img.ui.avatar.image(src="{{c.url claimer.image_id height=200 width=200 gravity='face' crop='fill'}}")
+                        |#{claimer.name}
+                    unless complete
+                        if can_unclaim
+                            .ui.button.unclaim
+                                i.undo.icon
+                                |unclaim
+                        if can_edit
+                            div
+                            unless complete
+                                .ui.big.basic.button.mark_complete
+                                    i.checkmark.green.icon
+                                    |mark complete
+                            else 
+                                .ui.big.basic.button.mark_incomplete
+                                    i.undo.orange.icon
+                                    |mark incomplete
+                    if complete
+                        .ui.segment
+                            .ui.header completed by #{completer.name} {{from_now completed_timestamp}}

@@ -103,14 +103,15 @@ template(name='event_view')
                 //     a(href="/events")
                 //         i.calendar.big.circular.link.icon
                 // .ui.large.inline.header #{title}
-                if can_edit
+                // if can_edit
                     if published 
                         i.big.eye.green.icon(title='published')
                     else 
                         i.big.eye.red.slash.icon(title='unpublished')
                 // div
                 +image_field key='image_id' label='image'
-                +title_link_buttons
+                if currentUser.admin_mode
+                    +title_link_buttons
                 // .ui.inline.header {{medium_date date}}
                 // .ui.inline.header {{long_date start_datetime}}
                 // .ui.inline.grey.header {{from_now date}}
@@ -120,10 +121,10 @@ template(name='event_view')
                 //     a.edit_event(href="/event/#{_id}/edit" title='edit')
                 //         i.large.blue.link.pencil.circular.icon
                 +eft_viewer
-                div
-                +datetime_field key='start_datetime' label='start datetime'
-                div
-                +datetime_field key='end_datetime' label='end datetime'
+                // div
+                // +datetime_field key='start_datetime' label='start datetime'
+                // div
+                // +datetime_field key='end_datetime' label='end datetime'
                 // |parent_id org-project-event-etc...
                 +block template='model_crud' model='role' title='roles' icon='badge' color='red'
                 +block template='model_crud' model='task' title='tasks' icon='tasks' color='purple'
@@ -402,6 +403,7 @@ template(name='event_view')
 
 
 template(name='eft_viewer')
+    +eft_view_item color="FF0000" icon='heart' label='care'
     +eft_view_item color="FF73EA" icon='food' label='food'
     +eft_view_item color="B785E1" icon='home' label='housing'
     +eft_view_item color="6b0fb9" icon='tshirt' label='clothing'
@@ -417,6 +419,7 @@ template(name='eft_viewer')
     +eft_view_item color="000000" icon='ambulance' label='emergency'
     
 template(name='eft_viewer_small')
+    +eft_view_item_small color="FF0000" icon='heart' label='care'
     +eft_view_item_small color="FF73EA" icon='food' label='food'
     +eft_view_item_small color="B785E1" icon='home' label='housing'
     +eft_view_item_small color="6b0fb9" icon='tshirt' label='clothing'

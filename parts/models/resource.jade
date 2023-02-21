@@ -1,0 +1,399 @@
+// template(name='resource_card')
+//     .ui.card(class=resource_card_class)
+//         a.image.fly_right(href="/resource/#{_id}/") 
+//             if image_id
+//                 img.ui.zoomer.pointer.goto_resource.image(src="{{c.url image_id width=400 height=300 crop='pad'}}")
+//             if image_link
+//                 img.ui.zoomer.pointer.goto_resource.image(src=image_link)
+//         .content
+//             a.header.zoomer.fly_right(href="/resource/#{_id}/") 
+//                 | #{title}
+//             div
+//             .ui.inline.header 
+//                 |#{daily_rate}
+//                 small p/day
+//             if tags
+//                 i.tag.icon
+//             each tags
+//                 a.ui.small.link.black.label.flat_pick_tag.spaced #{this}
+//             .right.floated.meta
+//                 | added #{when}
+//             +author_info
+// template(name='resource_big_card')
+//     .ui.fluid.segment
+//         .ui.fluid.two.column.grid(class=resource_card_class)
+//             .column
+//                 a.image.fly_right(href="/resource/#{_id}/") 
+//                     if image_id
+//                         img.ui.zoomer.pointer.goto_resource.image(src="{{c.url image_id width=400 height=300 crop='pad'}}")
+//                     if image_link
+//                         img.ui.zoomer.pointer.goto_resource.image(src=image_link)
+    
+    
+//             .column
+//                 a.header.zoomer.fly_right(href="/resource/#{_id}/") 
+//                     | #{title}
+//                 div
+//                 .ui.inline.header 
+//                     |#{daily_rate}
+//                     small p/day
+//                 +array_field key='tags'
+//                 unless anonymous
+//                     a(href="/user/#{_author_username}")
+//                         img.ui.avatar.image(src="{{c.url _author.image_id width=400 height=600 crop='fit'}}")
+//                         |#{_author_username}
+//                 // +quickbuy day_diff=0
+//                 +quickbuy day_diff=1
+//                 +quickbuy day_diff=2
+//                 +quickbuy day_diff=3
+//                 +quickbuy day_diff=4
+//                 +quickbuy day_diff=5
+
+
+
+// template(name='set_resource_sort_key')
+//     .item.set_sort
+//         if color
+//             .ui.label(class=color) #{label}
+//         else 
+//             if emoji
+//                 em(data-emoji=emoji)
+//             else if icon
+//                 i.icon(class=icon)
+//             |#{label}
+        
+
+// template(name='set_view_mode_resource')
+//     .item.set_view
+//         i.icon(class=icon)
+//         |#{title}
+
+
+// template(name='set_resource_limit')
+//     .item.set_limit #{amount}
+    
+    
+
+// // .ui.header resource view
+// template(name='resource_view')
+//     .ui.stackable.padded.grid
+//         //- img.ui.large.rounded.image(src="{{c.url image width=500 height=500 gravity='face' crop='fill'}}")
+//         .three.column.row
+//             .column
+//                 // .ui.header 
+//                 //     small viewing
+//                 //     |#{title}
+//                 //     small resource
+//                 .ui.big.header #{title}
+//                 if can_edit
+//                     a.zoomer(href="/resource/#{_id}/edit")
+//                         i.pencil.big.circular.icon
+//                 div
+//                 +text_view key='location' icon='marker' label='location' 
+//                 .ui.hidden.divider
+//                 if image_id
+//                     img.ui.centered.rounded.shadowed.fluid.image(src="{{c.url image_id crop='fit'}}")
+//                 if image_link
+//                     img.ui.centered.rounded.shadowed.fluid.image(src=image_link)
+
+//                 .ui.hidden.divider
+//                 i.large.tag.icon        
+//                 each tags 
+//                     a.ui.compact.button.goto_tag
+//                         |#{this}
+//                 div
+//                 .ui.header 
+//                     +i name='order-history'
+//                     |#{past_order_docs.count}
+//                     |past orders
+//                 .ui.selection.animated.large.middle.aligned.divided.list
+//                     each past_order_docs
+//                         .item
+//                             .right.floated.content
+//                                 a(href="/order/#{_id}")
+//                                     i.chevron.right.circular.icon
+//                             .content
+//                                 a(href="user/#{_author_username}")
+//                                     | #{_author_username}
+//                                     small for
+//                                     |#{order_date}
+//             .column
+//                 .ui.header #{daily_rate}p/day
+//                 //- unless is_author
+//                 // .ui.big.green.fluid.button.new_order 
+//                 //     i.large.clock.icon
+//                 //     small reserve for 
+//                 //     strong #{daily_rate}p/day
+//                 // +quickbuy day_diff=0
+//                 +quickbuy day_diff=1
+//                 +quickbuy day_diff=2
+//                 +quickbuy day_diff=3
+//                 +quickbuy day_diff=4
+//                 +quickbuy day_diff=5
+//                 div
+//                 if description.length
+//                     +textarea_field key='description' label='description' icon='content' 
+//                 div
+//                 .ui.small.list
+//                     .item total earnings
+//                     .item resource ranking #orders
+//                     .item resource ranking $ earned
+//                     .item # different renters
+//                     .item avg resource time
+//                     .item avg daily earnings
+//                     .item avg weekly earnings
+//                     .item avg monthly earnings
+//                     .item biggest renter
+//                     .item predicted payback duration
+//                     .item predicted payback date
+//             .column
+//                 .ui.header 
+//                     +i name='clock'
+//                     |#{future_order_docs.count}
+//                     |future orders
+//                 .ui.link.large.divided.middle.aligned.list
+//                     each future_order_docs
+//                         .item
+//                             .right.floated.content
+//                                 a(href="/order/#{_id}")
+//                                     i.chevron.right.circular.icon
+//                                 if can_edit
+//                                     i.red.circular.cancel.link.icon.zoomer.cancel_order
+//                             .content
+//                                 a(href="/user/#{_author_username}")
+//                                     img.ui.avatar.image(src="{{c.url _author.image_id width=200 height=200 crop='crop'}}")
+//                                     | #{_author_username}
+//                                 small for
+//                                 |#{order_date}, {{from_now order_date}}
+//                 +resource_stats
+//                 // +last_viewed
+//                 +creation_info
+//                 +comments
+// template(name='quickbuy')
+//     .ui.green.button.buy(class=button_class)
+//         i.lightning.icon
+//         | #{human_form}
+//         small #{from_form}
+        
+
+// template(name='resource_edit')
+//     .ui.stackable.padded.grid
+//         .three.column.row
+//             .column
+//                 .ui.inline.header
+//                     small editing
+//                     |'#{title}'
+//                     small resource
+//                 a.ui.big.icon.green.fluid.button(href="/resource/#{_id}/")
+//                     i.checkmark.big.icon
+//                 +text_field key='title' icon='header' 
+//                 +number_field key='daily_rate' label='daily rate' icon='exchange' 
+//                 .ui.icon.small.red.button.delete_resource_item 
+//                     i.trash.icon
+//             .column
+//                 +key_value_edit key='category' value='clothing' icon='tshirt'
+//                 +key_value_edit key='category' value='housing' icon='home'
+//                 if in_dev
+//                     +print_this
+//                 +boolean_field key='published' label='published' icon='checkmark'
+//                 +boolean_field key='anonymous' label='anonymous' icon='visible'
+//                 div
+//                 // a.ui.header.pointer.refresh_gps(href='#') 
+//                 //     |gps coords
+//                 // .ui.label #{lat}
+//                 // .ui.label #{long}
+//                 +text_field key='location' label='location text' icon='marker' 
+//                 +geolocate_button
+//                 +textarea_field key='description' label='description' icon='content' 
+//             .column
+//                 +array_field key='tags' icon='tags' label='tags' 
+//                 +array_field key='location_tags' label='public location tags' icon='marker' 
+//                 +array_field key='private_location_tags' label='private location tags' icon='marker'  tooltip='for handlers and buyers who are picking up'
+//                 +image_field key='image_id' label='image' 
+//                 +image_link_field key='image_link' label='image link' 
+
+    
+// template(name='profile_resource_item')
+//     .ui.segment.grid
+//         .row
+//             .three.column
+//                 +image_view key='image'  cl='zoom ui tiny image'
+//             .twelve.wide.column
+//                 .ui.header #{title}
+//                 a.ui.header.inline.lowercase(href="/resource/#{_id}/")
+//                     |#{daily_rate}p/day
+//                 .ui.small.inline.header #{when}
+//                 a.ui.button(href="/resource/#{_id}/")
+//                     |view
+//                     i.right.chevron.icon
+
+
+
+
+// template(name='sort_item')
+//     .item.set_sort #{label}
+    
+    
+    
+
+                    
+                    
+// template(name='last_viewed')
+//     i.large.grey.eye.icon
+//     .ui.inline.small.header last viewed {{long_date last_viewed_timestamp}}
+//     .ui.inline.small.header {{from_now last_viewed_timestamp}}
+                    
+                    
+
+// template(name='resource_stats')
+//     //- .ui.accordion
+//     //-     .title
+//     .ui.grey.header.refresh_resource_stats
+//         i.line.chart.icon
+//         |stats
+//     //- .content
+//     .ui.big.list
+//         .item #{views} views
+//         .item #{order_count} orders
+//         .item #{total_earnings}p/#{total_resource_hours}hrs total
+//         // .item #{average_resource_cost}c / #{average_resource_duration}hrs avg resource
+//         //- .item resource ranking # orders
+//         //- .item resource ranking $ earned
+//         //- .item # different renters
+//         //- .item avg daily earnings
+//         //- .item avg weekly earnings
+//         //- .item avg monthly earnings
+//         //- .item biggest renter
+//         //- .item predicted payback duration 
+//         //- .item predicted payback date 
+//     //-     //- .ui.header res slot exists
+//     //-     +order_slot_template
+//     //- else
+//     //-     if is_product_author
+//     //-         .ui.button.new_slot
+//     //-             |new slot
+        
+    
+// template(name='set_date_filter')        
+//     .ui.button.set_date_filter(class=date_filter_class)
+//         |#{label}
+        
+        
+
+// template(name='order_segment')
+//     .ui.segment
+//         a.ui.small.header.inline.lowercase(href="/order/#{_id}/")
+//             small from 
+//             |{{cal_time start_datetime}}
+//             //- |{{cal_time start_datetime}} [#{start_date}, hour: #{start_hour}]
+//             //- |{{long_date start_datetime}}
+//             small to 
+//             |{{cal_time end_datetime}}
+//         //- .ui.inline.header #{_author_username}
+//         .ui.inline.header #{author.name}
+//         .ui.grey.inline.header #{hour_duration}hrs
+//         .ui.grey.inline.header(title='credits')
+//             | $#{cost}
+//         .ui.small.inline.header #{when} by #{_author_username}
+//         a.ui.large.button(href="/order/#{_id}/")
+//             |view
+//             i.right.chevron.icon
+                
+                
+// template(name='resource_crud')
+//     // .ui.segment
+//     .ui.styled.accordion
+//         .title
+//             .dropdown.icon
+//             .ui.inline.header
+//                 // +i name='shield'
+//                 // |#{picked_resources.count}
+//                 | resources
+//         .content
+//             .ui.icon.large.input 
+//                 if resource_search_value
+//                     i.large.red.remove.link.icon.zoomer.clear_search
+//                 else 
+//                     i.search.icon
+//                 input.resource_search(type='text' placeholder='search' value=resource_search_value)
+//             if resource_results
+//                 // .ui.selection.link.animated.list
+//                 each resource_results
+//                     .ui.basic.circular.large.button.pick_resource.zoomer
+//                         i.grey.plus.icon
+//                         if image_id
+//                             img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+//                         |#{title}
+//             if resource_search_value
+//                 .ui.large.button.create_resource(title='add')
+//                     i.plus.icon
+//                     |#{resource_search_value}
+//             // if picked_resources
+//             .ui.header 
+//                 |#{picked_resources.count}
+//                 |resources
+//             .smallscroll
+//                 each picked_resources
+//                      .ui.horizontal.fluid.card.show_modal
+//                         .content
+//                             .ui.grid
+//                                 .row
+//                                     // .column
+//                                     .fourteen.wide.column
+//                                         .left.floated
+//                                             a.ui.inline.header
+//                                                 |!{title}
+//                                             div
+//                                             +eft_viewer_small
+//                                             // img(src="{{c.url image_id width=50 height=50}}")
+//                                             // div    
+//                                             // |!{content}
+//                                     .two.wide.column
+//                                         .right.floated
+//                                             if _is 'model' 'resource'
+//                                                 +ismall name='what-i-do' color='42E8C4' cl='ui inline image'
+//                                             div
+//                                             |#{when}
+//                                 .row
+//                                     .six.wide.column
+//                                         img.invert(src="{{c.url image_id width=10 height=10}}")
+//                                     .ten.wide.column
+//                                         |!{content}
+//                                 .sixteen.wide.column
+//                                     if currentUser.admin_mode
+//                                         .ui.tertiary.large.button.zoomer.remove_resource 
+//                                             i.remove.icon
+//                                             |remove 
+//                                         .ui.tertiary.large.button.zoomer.toggle_assign 
+//                                             i.user.plus.icon
+//                                             | assign
+//                                         if assigned_to 
+//                                             |assigned to #{asigned_to.username}
+//                                         else 
+//                                             |unnassigned
+//                                         if is_assigning 
+//                                             each resource_holders 
+//                                                 .ui.label #{username}
+//                                         else 
+//                                             with assigned_users
+//                                                 .ui.green.label #{username}
+//                                         a.ui.tertiary.right.floated.icon.large.button.zoomer.fly_right(href="/d/resource/#{_id}/edit" title='edit resource')
+//                                             i.setting.icon
+//                                     else
+//                                         // else if can_take
+//                                         if has_taken 
+//                                             |taken by #{taken_user.name}
+//                                             .ui.large.button.release_resource
+//                                                 i.undo.icon
+//                                                 |release 
+//                                         else if can_take
+//                                             .ui.tertiary.large.button.zoomer.take_resource 
+//                                                 i.checkmark.icon
+//                                                 | take
+//                                         else if is_taken 
+//                                             |taken by #{taken_user.name}
+//                                     a.ui.tertiary.large.button.zoomer(href="/d/resource/#{_id}")
+//                                         |view
+//                                         i.chevron.right.icon
+//                     .ui.modal 
+//                         .ui.header hi

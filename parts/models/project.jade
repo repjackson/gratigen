@@ -1,0 +1,405 @@
+// template(name='project_card')
+//     a.ui.card.fly_right(href="/project/#{_id}")
+//         if youtube_id 
+//             +youtube_field key='youtube_id'
+//         if image_id 
+//             +image_view key='image_id'
+//         .content
+//             .ui.inline.header #{title}
+//             if private 
+//                 i.large.lock.icon
+//             .smallscroll
+//                 |!{content}
+//                 .ui.label 
+//                     i.user.icon
+//                     |#{_author_username}
+//                 i.tag.icon
+//                 each tags 
+//                     .ui.basic.label #{this}
+//             .ui.small.grey.header
+//                 i.clock.icon
+//                 |#{when}
+//             // +comments_view_small
+//             +author_info
+//             +array_field key='role_titles' label='roles' icon='shield'
+
+
+// template(name='set_project_sort_key')
+//     .item.set_sort
+//         if color
+//             .ui.label(class=color) #{label}
+//         else 
+//             if emoji
+//                 em(data-emoji=emoji)
+//             else if icon
+//                 i.icon(class=icon)
+//             |#{label}
+        
+        
+                
+// template(name='set_view_mode_project')
+//     .item.set_view
+//         i.icon(class=icon)
+//         |#{title}
+
+
+// // template(name='set_limit')
+//     .ui.compact.small.basic.button.set_limit #{amount}
+
+
+
+        
+
+// template(name='project_view')
+//       // if currentUser.admin_mode 
+//     //     +org_edit
+//     // img.ui.fluid.image.bg_overlay(src="{{c.url image_id crop='fit'}}")
+//     .ui.stackable.padded.grid.scrollin
+//         .row
+//             .five.wide.column
+//                 .ui.header project view
+//                 +image_view key='image_id' icon='image' label='image'
+//                 +array_field key='tags' icon='tags'
+//                 +title_link_buttons
+//                 .spacer
+//                 if link
+//                     a.ui.basic.circular.button(href=link target='_window')
+//                         i.external.icon
+//                         |view site
+//                     .spacer
+//                 div
+//                 .spacer
+//                 if address
+//                     a.ui.compact.basic.circular.button(href=address_link target='_window')
+//                         i.marker.icon
+//                         |#{address}
+//                 +textarea_field key='purpose' tagline="what is the basic purpose of your organization? what principals does it serve?"
+//                 +textarea_field key='vision' label='vision' tagline="how will your organization impact society? how will it look for people?"
+//                 +textarea_field key='mission' tagline='your business goals and the values you will embrace to achieve them'
+//                 +textarea_field key='bylaws' tagline='bylaws of your organization. Articles of incorporation are the primary law of an association used to establish the general organization and governing of the association to achieve corporate existence. Bylaws are the secondary law of an association best used to detail how the society is formed and run.'
+//                 +textarea_field key='signature' tagline='creators signature'
+//                 +viewing
+//                 if in_dev 
+//                     +print_this
+//                 // +multi_user_view key='member_ids' label='members' 
+//                 +org_history
+//                 +org_subscription
+
+//             .six.wide.column
+//                 .centered.row
+//                     +eft_viewer
+//                 .ui.header leaders
+//                     .ui.four.column.centered.grid
+//                         .column 
+//                             .ui.centered.small.header lead
+//                             +single_user_field key='lead' label='lead' icon='king'
+//                         .column 
+//                             .ui.centered.small.header support
+//                             +single_user_field key='support' label='support' icon='users'
+//                         .column 
+//                             .ui.centered.small.header safety
+//                             +single_user_field key='safety' label='safety'
+//                         .column 
+//                             .ui.centered.small.header creator
+//                             +single_user_field key='creator' label='creator' icon='edit'
+//                 // // .ui.basic.button(href="/user/#{lead}") lead
+//                 // // if currentUser.editing 
+//                 // +single_user_field key='lead' label='lead' icon='king'
+//                 // // a.ui.basic.button(href="/user/#{lead}") lead
+//                 // //     with lead
+//                 // //         +user_pill
+//                 // // .ui.basic.button(href="/user/#{support}") support
+//                 // // if currentUser.editing 
+//                 // +single_user_field key='support' label='support' icon='users'
+//                 // // .ui.basic.button(href="/user/#{safety}") safety
+//                 // // if currentUser.editing 
+//                 // +single_user_field key='safety' label='safety'
+//                 // // .ui.basic.button(href="/user/#{creator}") creator  
+//                 // // if currentUser.editing 
+//                 // +single_user_field key='creator' label='creator' icon='edit'
+//                 // .ui.header 
+//                     |#{member_ids.count} members
+//                 each member_ids
+//                     +user_pill
+//                 if currentUser.editing 
+//                     +multi_user_field key='member_ids' label='members'
+
+//                 +textarea_field key='brief' tagline='breif description or your organization'
+//                 +textarea_field key='description' tagline='complete description of your organization'
+//                 +textarea_field key='body' tagline='body'
+                
+//                 // |!{body}
+//                 +role_crud
+//                 +event_picker
+//                         // a.item(href="/d/org/#{_id}/#{username}")
+//                         //     img.ui.mini.image(src="{{c.url image_id width=200 height=200}}")
+//                         //     .content
+//                         //         .header
+//                         //             |#{username}
+//             .five.wide.column
+//                 if is_member
+//                     .ui.big.button.leave(title='click to leave')
+//                         i.checkmark.icon
+//                         |member
+//                 else 
+//                     .ui.big.button.join(title='')
+//                         i.user.plus.icon
+//                         |join
+                
+//                 if currentUser.editing
+//                     .ui.basic.center.aligned.segment
+//                         +eft_picker color="FF73EA" icon='food' label='food'
+//                         +eft_picker color="B785E1" icon='home' label='housing'
+//                         +eft_picker color="7229AF" icon='tshirt' label='clothing'
+//                         +eft_picker color="1255B8" icon='car' label='transportation'
+//                         +eft_picker color="83DFF4" icon='lightning' label='energy'
+//                         +eft_picker color="42E8C4" icon='leaf' label='zero waste'
+//                         +eft_picker color="40C057" icon='smile' label='wellness'
+//                         +eft_picker color="FAB005" icon='university' label='education'
+//                         +eft_picker color="FD7E14" icon='paint brush' label='art'
+//                         +eft_picker color="FF0000" icon='users' label="community core"
+//                 // +doc_array_togggle key='member_ids' value=currentUser._id add_label='join' remove_label='joined'
+//                 .ui.header 
+//                     +i name='rss'
+//                     |activity
+//                 // +objectives_crud
+//                 // +keyresults_crud
+//                 +group_crud
+//                 +block template='model_crud' model='sprint' title='sprints' icon='shift' color='teal'
+
+//                 each log_items
+//                     +log_item
+//                 .ui.header.refresh_org_stats
+//                     +i name='line-chart'
+//                     |stats
+//                 i.refresh.link.icon.refresh_org_stats
+//                 .ui.large.list
+//                     // .item #{member_count} members
+//                     // .item roles
+//                     .item resources
+//                     .item groups
+//                     .item projects
+//                     .item tasks
+//                     .item badges
+//                     .item services
+//                     .item products
+                    
+//                     // .item #{meal_count} meals
+//                     // .item #{dish_count} dishes
+//                     .item #{total_credit_exchanged} credits exchanged
+//                     .item 
+//                 +comments
+
+
+
+   
+   
+   
+   
+//     // .ui.stackable.grid
+//     //     .row 
+//     //         .four.wide.column
+//     //             .ui.basic.segment
+//     //                 // div
+//     //                 // .ui.inline.grey.header {{from_now start_datetime}}
+                    
+//     //                 if can_edit
+//     //                     a.ui.circular.icon.button.edit_project(href="/project/#{_id}/edit" title='edit')
+//     //                         i.big.link.pencil.icon
+//     //                 .ui.segment
+//     //                     .ui.header 
+//     //                         small author
+//     //                     a.ui.header(href="/user/#{_author.username}") 
+//     //                         img.ui.avatar.image(src="{{c.url _author.image_id height=200 width=200 gravity='face' crop='fill'}}" class=currentUser.darkmode_class)
+//     //                         |#{_author.username}
+//     //                 .ui.small.grey.header 
+//     //                     i.line.chart.icon
+//     //                     |stats
+//     //                 .ui.list
+//     //                     .item #{views} views
+//     //                 each viewers
+//     //                     .ui.label #{username}
+//     //                 +array_field key='tags' label='tags'
+//     //                 +array_field key='role_titles' label='roles' icon='shield'
+//     //                 +array_field key='task_titles' label='tasks' icon='tasks'
+//     //                 .ui.header 
+//     //                     +i name='tasks'
+//     //                     |task ids (children)
+//     //                 each task_ids
+//     //                     +child_task
+//     //                     a.ui.large.label(href="/task/#{this}") #{this}
+//     //                 .ui.header dynamic
+//     //                 each child_tasks
+//     //                     +child_task
+//     //                     // a.ui.large.label(href="/task/#{this}") #{this}
+//     //                 +voting_full
+//     //                 .ui.header #{when}
+//     //                 //- +array_field key='location_tags' label='location_tags'
+//     //                 +comments
+//     //         .twelve.wide.column.scrolling
+//     //             img.ui.image(src="{{c.url image_id }}" class=currentUser.darkmode_class)
+//     //             // a.ui.header(href="/user/#{target.username}")
+//     //             //     |#{target.username}
+//     //             if youtube_id 
+//     //                 +youtube_field key='youtube_id'
+//     //             |!{content}
+//     //             div 
+//     //             .spacer
+//     //             .spacer
+//     //             if watson 
+//     //                 +watson_view
+//     //         // .four.wide.column
+//     //             //- .ui.fluid.green.button.submit
+//     //             //-     i.checkmark.icon
+//     //             //-     |submit
+                    
+                    
+// template(name='child_task')
+//     .ui.header #{title}
+                    
+                    
+// template(name='project_edit')
+//     .ui.stackable.padded.grid
+//         .row 
+//             .ten.wide.column
+//                 .ui.inline.header 
+//                     +icolor name='news' cl='ui image inline pointer'
+//                     |edit project
+//                 a.ui.icon.green.big.button(href="/project/#{_id}" title='save')
+//                     i.checkmark.big.icon
+//                 +text_field key='title' label='title'
+//                 +textarea_field key='content' label='content'
+//                 +youtube_field key='youtube_id' label='youtube id'
+//                 // +array_field key='projects' label='projects' icon='shield'
+//             .six.wide.column.scrolling
+//                 // +array_field key='tasks' label='tasks'
+//                 i.large.link.red.remove.icon.delete_project
+//                 .ui.header 
+//                     small author
+//                     |#{_author.username}
+//                 if is_dev
+//                     +single_user_field key='_author_id' label='author'
+//                 +image_field key='image_id' label='image'
+//                 div 
+//                 +text_field key='location' 
+//                 +geolocate_button
+                
+//                 +array_field key='tags' label='tags' icon='tags'
+//                 +boolean_field key='published' icon='visible'
+//                 if is_dev 
+//                     +text_field key='model' label='model'
+//                 +array_field key='location_tags' label='location_tags'
+//                 // unless published
+//                 //     a.ui.fluid.green.button.submit(href="/save")
+//                 //         i.checkmark.icon
+//                 //         |publish
+//                 // else
+//                 //     .ui.basic.button.unpublish 
+//                 //         |unpublish
+//                 .ui.header
+//                     |audience
+//                 +boolean_field key='private' label='private' 
+//                 if private 
+//                     +multi_user_field key='access_user_ids' label='user picker'
+//                 +group_crud
+//                 +role_crud
+//                 +task_picker
+                
+
+// template(name='project_crud')
+//     // .ui.segment
+//     .ui.styled.accordion
+//         .title
+//             .dropdown.icon
+//             .ui.inline.header
+//                 // +i name='shield'
+//                 // |#{picked_projects.count}
+//                 | projects
+//         .content
+//             .ui.icon.large.input 
+//                 if project_search_value
+//                     i.large.red.remove.link.icon.zoomer.clear_search
+//                 else 
+//                     i.search.icon
+//                 input.project_search(type='text' placeholder='search' value=project_search_value)
+//             if project_results
+//                 // .ui.selection.link.animated.list
+//                 each project_results
+//                     .ui.basic.circular.large.button.pick_project.zoomer
+//                         i.grey.plus.icon
+//                         if image_id
+//                             img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+//                         |#{title}
+//             if project_search_value
+//                 .ui.large.button.create_project(title='add')
+//                     i.plus.icon
+//                     |#{project_search_value}
+//             // if picked_projects
+//             .ui.header 
+//                 |#{picked_projects.count}
+//                 |projects
+//             .smallscroll
+//                 each picked_projects
+//                      .ui.horizontal.fluid.card.show_modal
+//                         .content
+//                             .ui.grid
+//                                 .row
+//                                     // .column
+//                                     .fourteen.wide.column
+//                                         .left.floated
+//                                             a.ui.inline.header
+//                                                 |!{title}
+//                                             div
+//                                             +eft_viewer_small
+//                                             // img(src="{{c.url image_id width=50 height=50}}")
+//                                             // div    
+//                                             // |!{content}
+//                                     .two.wide.column
+//                                         .right.floated
+//                                             if _is 'model' 'project'
+//                                                 +ismall name='what-i-do' color='42E8C4' cl='ui inline image'
+//                                             div
+//                                             |#{when}
+//                                 .row
+//                                     .six.wide.column
+//                                         img.invert(src="{{c.url image_id width=10 height=10}}")
+//                                     .ten.wide.column
+//                                         |!{content}
+//                                 .sixteen.wide.column
+//                                     if currentUser.admin_mode
+//                                         .ui.tertiary.large.button.zoomer.remove_project 
+//                                             i.remove.icon
+//                                             |remove 
+//                                         .ui.tertiary.large.button.zoomer.toggle_assign 
+//                                             i.user.plus.icon
+//                                             | assign
+//                                         if assigned_to 
+//                                             |assigned to #{asigned_to.username}
+//                                         else 
+//                                             |unnassigned
+//                                         if is_assigning 
+//                                             each project_holders 
+//                                                 .ui.label #{username}
+//                                         else 
+//                                             with assigned_users
+//                                                 .ui.green.label #{username}
+//                                         a.ui.tertiary.right.floated.icon.large.button.zoomer.fly_right(href="/project/#{_id}/edit" title='edit project')
+//                                             i.setting.icon
+//                                     else
+//                                         // else if can_take
+//                                         if has_taken 
+//                                             |taken by #{taken_user.name}
+//                                             .ui.large.button.release_project
+//                                                 i.undo.icon
+//                                                 |release 
+//                                         else if can_take
+//                                             .ui.tertiary.large.button.zoomer.take_project 
+//                                                 i.checkmark.icon
+//                                                 | take
+//                                         else if is_taken 
+//                                             |taken by #{taken_user.name}
+//                                     a.ui.tertiary.large.button.zoomer(href="/project/#{_id}")
+//                                         |view
+//                                         i.chevron.right.icon
+//                     .ui.modal 
+//                         .ui.header hi

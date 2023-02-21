@@ -1,0 +1,584 @@
+// template(name='products')
+//     .ui.stackable.padded.grid 
+//         .four.wide.column
+//             .ui.inline.header 
+//                 +i name='blog'
+//                 |products
+//                 // if currentUser
+//                 +add_model_button model='product'
+//             each picked_tags
+//                 a.ui.blue.button.unpick_product_tag
+//                     |#{this}
+//             each tag_results
+//                 // if title
+//                 a.ui.compact.button.pick_product_tag
+//                     |#{title} 
+//                     // small.ui.grey.text #{count}
+                    
+//         .twelve.wide.column
+//             .ui.centered.stackable.cards
+//                 each product_docs 
+//                     +product_card
+                    
+
+
+
+
+// template(name='product_view')
+//     with current_doc
+//         .ui.stackable.padded.three.column.grid
+//             .row
+//                 .column
+//                     .ui.large.inline.header 
+//                         //- small viewing
+//                         | #{title}
+//                     div
+//                     .ui.small.grey.inline.header 
+//                         i.code.icon
+//                         |#{slug}
+//                     div
+//                     a.ui.basic.icon.button.fly_left(href="/shop")
+//                         i.chevron.left.large.icon
+//                         // i.large.food.icon
+//                         +i name='food-cart' cl='ui mini inline image'
+//                     if in_dev
+//                         a(href="/product/#{_id}/edit")
+//                             i.pencil.blue.large.link.circular.icon
+//                     // a(href="{{c.url image_id}}" target="_window")
+//                     // .four.wide.column
+//                     img.ui.rounded.fluid.image.zoomer(src="{{c.url image_id}}")
+//                     if image_id2
+//                         img.ui.rounded.image.zoomer(src="{{c.url image_id2}}")
+//                 .column
+//                     +textarea_field key='description'
+//                     // +text_view key='size_description' label='size description' 
+//                     a.ui.circular.button(href=product_link)
+//                         // i.wordpress.large.icon
+//                         i.external.icon
+//                         |#{product_link}
+                    
+//                     +boolean_view key='gluten_free' label='gluten free' icon='no-gluten'
+//                     +boolean_view key='vegetarian' label='vegetarian' icon='vegetarian-mark'
+//                     +boolean_view key='no_sugar_added' label='no sugar added' icon='no-sugar2'
+//                     +boolean_view key='vegan' label='vegan' icon='vegan-symbol'
+//                     +boolean_view key='paleo' label='paleo' icon='caveman'
+//                     +boolean_view key='local' label='local' icon='marker'
+//                     +boolean_view key='nut_free' label='nut free' icon='no-peanut'
+//                     +boolean_view key='rescued' label='rescued' icon='nothing-found'
+//                     +boolean_view key='organic' label='organic' icon='organic-food'
+//                     +boolean_view key='no_gmo' label='no gmo' icon='no-gmo'
+//                     +boolean_view key='jar' label='jar container (requires deposit & return)' icon='mason-jar'
+//                     // .ui.header #{menu_section}
+//                             +link_field key='amazon_referral_link' label='amazon referral link' icon='amazon'
+//                     // +boolean_view key='has_2cup' label='2 cup' icon='cup'
+//                     div
+//                     .ui.inline.header 
+//                         +i name='ingredients'
+//                         |ingredients
+//                     each ingredients
+//                         .ui.large.basic.label.goto_ingredient #{this}
+//                     div
+//                     +voting_full
+//                     +link_field key='amazon_referral_link' label='amazon link' icon='amazon'
+//                     +link_field key='external_link' label='external link' icon='globe'
+//                     +comments
+                    
+//                     // +product_orders
+//                 .column
+//                     .ui.header #{price_points} points
+//                     .ui.header $#{price_usd}
+//                     .ui.big.fluid.green.button.add_to_cart
+//                         i.cart.plus.large.icon
+//                         |add to cart
+//                     +bookmark_button
+//                 .column
+//                     // .ui.large.button.generate_qrcode
+//                     //     i.large.qrcode.icon
+//                     //     |generate qr code
+//                     // #qrcode(width='400px')
+//                     .ui.segment
+//                         +product_inventory
+//                     .ui.list
+//                         .item #{product_link}
+//                         .item calculated inventory
+//                         .item #{total_units_sold} total units sold
+//                         .item $#{total_revenue} total revenue
+//                         .item expected inventory
+//                         .item query params: #{query_params}
+//                         .item #{last_inventory_boh_record} most recent BOH record
+//                         .item #{last_inventory_foh_record} most recent FOH record
+//                     i.refresh.large.link.icon.calc_stats(title='refresh_stats')
+//                 .column
+//                     +product_reviews
+//                 .five.wide.column
+//                     +product_subscriptions
+//                     // .ui.green.large.button.add_to_cart
+//                     //     // i.cart.plus.large.icon
+//                     //     +i name='add-shopping-cart--v1' cl='ui avatar image'
+//                     //     |add to cart
+//                     // .ui.link.card.zoomer.goto_source
+//                     //     img.ui.fluid.image(src="{{c.url product_source.image_id width=200 height=200 gravity='face' crop='fill'}}")
+//                     //     .content
+//                     //         .ui.header.zoomer
+//                     //             |#{product_source.title}
+//                     .ui.header 
+//                         i.fork.icon
+//                         |related products
+//                     each related_products
+//                         a.ui.header(href="/product/#{_id}") #{title}
+                            
+        
+        
+            
+// template(name='product_inventory')      
+//     .ui.inline.header 
+//         +i name='shield'
+//         |inventory
+//     div 
+//     .ui.list #{last_inventory_record} most recent record
+//     a.ui.icon.basic.button.add_inventory
+//         i.plus.icon
+//     .ui.large.selection.list
+//         each inventory_items
+//             .item
+//                 .content
+//                     // unless editing_this
+//                     img.ui.rounded.small.inline.image(src="{{c.url image_id gravity='face' crop='fit'}}" class=cl)
+                    
+//                     // +image_view key='image_id' cl='ui tiny inline image'
+//                     .ui.basic.label ##{amount}
+//                     .ui.basic.label #{location}
+//                     if notes
+//                         .ui.basic.label notes: #{notes}
+//                     .ui.basic.label
+//                         i.user.icon
+//                         |#{staff}
+//                     i.edit.link.icon.edit_inventory_item
+//                     if editing_this
+//                         +number_field key='amount' label='amount'
+//                         +key_value_edit key='location' value='boh' label='boh'
+//                         +key_value_edit key='location' value='foh' label='foh'
+//                         // +text_field key='location' label='location' icon='marker'
+//                         +text_field key='notes' label='notes' icon='pencil'
+//                         // +text_field key='staff' label='staff' icon='user'
+//                         +image_field key='image_id'
+//                         +key_value_edit key='staff' value='matt'
+//                         +key_value_edit key='staff' value='nena'
+//                         +key_value_edit key='staff' value='rachel'
+//                         +key_value_edit key='staff' value='jimmy'
+//                         +key_value_edit key='staff' value='elena'
+//                         +key_value_edit key='staff' value='eric'
+//                         +key_value_edit key='staff' value='luke'
+//                         +key_value_edit key='staff' value='mateo'
+//                         i.checkmark.green.link.circular.large.icon.save_inventory_item
+
+// template(name='product_reviews')
+//     .ui.inline.header 
+//         +i name='popular-topic'
+//         |reviews
+//     .ui.circular.basic.icon.button.add_review
+//         i.plus.icon
+//     div
+//     each product_recipes
+//         a.ui.header(href="/recipe/#{_id}/view") #{title}
+        
+// template(name='product_subscriptions')     
+//     div
+//     if subscribed
+//         .ui.basic.green.inverted.button.unsubscribe
+//             i.undo.icon
+//             |unsubscribe
+//     else
+//         .ui.basic.green.inverted.button.subscribe
+//             i.undo.icon
+//             |subscribe
+//     .ui.small.header 
+//         +i name='clock'
+//         |subs
+//     .ui.link.selection.animated.list
+//         each product_subs
+//             a.item(href="/sub/#{_id}") 
+//                 |#{when} #{_author_username}
+//                 .ui.basic.label #{sub_day}
+//                 .ui.basic.label #{sub_frequency}
+//     .ui.small.header 
+//         |your subscriptions
+
+// template(name='product_orders')                            
+//     if can_order
+//         +order_button
+//     each subs
+//         .ui.header #{_author_username}
+//     .ui.header 
+//         +i name='order-history'
+//         |#{product_orders.count}
+//         |orders
+//         |(${{fixed product_order_total}})
+//     .ui.basic.segments
+//         each product_orders
+//             +product_order_card
+//     .ui.header #{views} views
+//     +order_status_icons
+//     .ui.hidden.divider
+                
+// template(name='order_status_icons')  
+//     a.zoomer(href="/order/#{_id}")
+//         if runner_viewed
+//             +icolor name='eye-checked' cl='ui avatar image'
+//         if preparing
+//             +icolor name='new-product--v1' cl='ui avatar image'
+//         if prepared
+//             +icolor name='handle-with-care' cl='ui inline image'
+//         if arrived
+//             +icolor name='checked-truck' cl='ui inline image'
+//         if delivered
+//             +icolor name='checkmark' cl='ui inline image'
+        
+//         if delivery_photo
+//             +image_view key='delivery_photo' cl='ui tiny inline image'
+
+         
+// template(name='product_order_card')
+//     .ui.segment(class=product_order_class)
+//         .ui.inline.green.header
+//             |${{fixed order_price}} 
+//             if _author.image_id
+//                 img.ui.avatar.image(src="{{c.url _author.image_id width=100 height=100 gravity='face' crop='fill'}}")
+//             |#{_author.username}
+//         // div
+//         .ui.large.basic.label
+//             i.clock.icon
+//             |status: #{status}
+//         .ui.small.inline.header
+//             | #{when} ({{long_date _timestamp}})
+//         a.ui.compact.big.icon.button(href="/order/#{_id}")
+//             i.right.chevron.large.icon
+//         if is_author
+//             .ui.small.compact.basic.button.cancel_order(title='cancel')
+//                 i.remove.red.icon
+//                 |cancel
+
+
+
+// template(name='order_button')
+//     // if servings_left
+//     .ui.green.large.button.order_product
+//         i.cart.plus.large.icon
+//         strong ${{fixed price_usd}}
+//         // |order #{serving_unit}
+//         // small order for
+//         // strong #{price_franc}f
+//     // else 
+//     //     .ui.grey.header sold out
+//         //- .ui.teal.large.button.join_waitlist
+//         //-     i.clock.large.icon
+//         //-     |join wait list
+
+
+
+
+// template(name='product_edit')
+//     with current_doc
+//         .ui.stackable.padded.three.column.grid
+//             .row
+//                 .column
+//                     .ui.inline.header
+//                         i.pencil.icon
+//                         | #{title}
+//                         small product
+//                     .ui.large.icon.fluid.green.button.save_product.fly_right(title='save product')
+//                         i.checkmark.large.icon   
+//                     +text_field key='title' label='title' icon='header'
+//                     +text_field key='slug' label='slug' icon='slug'
+//                     +print_this
+//                 .column
+//                     +image_field key='image_id' label='image'
+//                     +image_field key='image_id2' label='alt image'
+//                     +link_field key='product_link' label='old site link'
+//                     // div
+//                     +float_edit key='price_usd' label='$ price'
+//                     +number_field key='price_points' label='point price' icon='coins'
+//                 // .four.wide.column
+//                 //     .ui.inline.header 
+//                 //         +i name='category'
+//                 //         |section
+//                 //     div
+//                 //     +number_field key='a_number' label="'A' number"
+//                 //     div
+//                 //     +number_field key='b_number' label="'B' number"
+//                 //     +key_value_edit key='shop_section' value='beans' label='beans' icon='white-beans'
+//                 //     +key_value_edit key='shop_section' value='coffee' label='coffee' icon='coffee'
+//                 //     +key_value_edit key='shop_section' value='snacks' label='snacks' icon='potato-chips'
+//                 //     +key_value_edit key='shop_section' value='fridge' label='fridge' icon='fridge'
+//                 //     +key_value_edit key='shop_section' value='freezer' label='freezer' icon='ice-cream-freezer'
+//                 //     +key_value_edit key='shop_section' value='nuts_seeds' label='nuts & seeds' icon='chia-seeds'
+//                 //     +key_value_edit key='shop_section' value='rice_grains' label='rice & grains' icon='wheat'
+//                 //     // +key_value_edit key='shop_section' value='seeds' label='seeds' icon='seeds'
+//                 .column
+//                     +text_field key='size_description' label='size description' icon='content'
+//                     .ui.inline.header food
+//                     +boolean_field key='is_food' label='is food' icon='food'
+//                     if is_food
+//                         +ingredient_picker
+//                         +boolean_field key='gluten_free' label='gluten free' icon='no-gluten'
+//                         +boolean_field key='paleo' label='paleo' icon='caveman'
+//                         +boolean_field key='vegetarian' label='vegetarian' icon='vegetarian-mark'
+//                         +boolean_field key='no_sugar_added' label='no sugar added' icon='no-sugar2'
+//                         +boolean_field key='vegan' label='vegan' icon='vegan-symbol'
+//                         +boolean_field key='no_gmo' label='no gmo' icon='no-gmo'
+//                         +boolean_field key='local' label='local' icon='marker'
+//                         +boolean_field key='nut_free' label='nut free' icon='no-peanut'
+//                         +boolean_field key='rescued' label='rescued' icon='nothing-found'
+//                         +boolean_field key='kosher' label='kosher' icon='judaism'
+//                         +boolean_field key='organic' label='organic' icon='organic-food'
+//                         // +boolean_field key='jar' label='jar container (requires deposit & return)' icon='mason-jar'
+//                         div
+//                         +number_field key='calories' label='calories' icon='food'
+//                 .column
+//                     div
+//                     +textarea_field key='description' label='description'
+//                     if can_delete
+//                         .ui.red.button.delete_product
+//                             i.remove.icon   
+//                             | delete
+//                 .column
+//                     .ui.header 
+//                         +i name='field-and-tractor'
+//                         |source
+//                         with product_source
+//                             a.ui.header.pointer.zoomer(href="/source/#{_id}")
+//                                 img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+//                                 |#{title}
+//                             i.remove.link.circular.red.icon.remove_source
+//                             // if is_admin
+                            
+//                     unless source_id
+//                         // if is_admin
+//                         .ui.icon.input 
+//                             i.building.icon
+//                             input.source_search(type='text' placeholder='search source title')
+//                         .ui.selection.link.animated.list
+//                             each search_results
+//                                 .ui.item.pick_source.zoomer
+//                                     img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+//                                     |#{title}
+                            
+                                
+                                
+                                
+                                
+// // template(name='group_crud')
+//     // +boolean_field key='has_group' label='attach group'
+//     // if has_group
+//     //     .ui.header 
+//     //         +i name='campfire'
+//     //         |groups
+        
+//     //     // if is_admin
+//     //     .ui.icon.large.input 
+//     //         if group_search_value
+//     //             i.large.red.remove.link.icon.zoomer.clear_search
+//     //         else 
+//     //             i.search.icon
+//     //         input.group_search(type='text' placeholder='search' value=group_search_value)
+//     //     if group_results
+//     //         .ui.selection.link.animated.list
+//     //             each group_results
+//     //                 .ui.item.pick_group.zoomer
+//     //                     img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+//     //                     |#{title}
+//     //     // else if group_search_value
+//     //     .ui.button.create_group
+//     //         |add #{group_search_value}
+        
+//     //     if product_groups
+//     //         .ui.header 
+//     //             |#{product_groups.length}
+//     //             |picked groups
+//     //         .ui.list
+//     //             each product_groups
+//     //                 .ui.item
+//     //                     |#{title}
+//     //                     i.remove.link.icon.zoomer.remove_group
+                        
+                    
+
+                            
+// template(name='ingredient_picker')
+//     .ui.header 
+//         +i name='ingredients'
+//         |ingredients
+//     // if is_admin
+//     .ui.icon.large.input 
+//         if ingredient_search_value
+//             i.large.red.remove.link.icon.zoomer.clear_search
+//         else 
+//             i.search.icon
+//         input.ingredient_search(type='text' placeholder='search' value=ingredient_search_value)
+//     if ingredient_results
+//         .ui.selection.link.animated.list
+//             each ingredient_results
+//                 .ui.item.pick_ingredient.zoomer
+//                     img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+//                     |#{title}
+//     // else if ingredient_search_value
+//     .ui.button.create_ingredient
+//         |add #{ingredient_search_value}
+    
+//     if product_ingredients
+//         .ui.header 
+//             |#{product_ingredients.length}
+//             |picked ingredients
+//         .ui.list
+//             each product_ingredients
+//                 .ui.item
+//                     |#{title}
+//                     i.remove.link.icon.zoomer.remove_ingredient
+
+                            
+                            
+                            
+// template(name='product_card')
+//     // .ui.card.zoomer(class=product_card_class title=ingredients)
+//     if rescued 
+//         .ui.top.right.attached.blue.label(title='rescued')
+//             i.search.icon
+//     if local 
+//         .ui.top.right.attached.corner.green.label(title='local')
+//             i.marker.icon
+//     a.zoomer.fly_right(href="/product/#{_id}") 
+//         img.ui.centered.image(src="{{c.url image_id width=400 height=300 crop='pad'}}")
+//     .content
+//         a.ui.header.fly_right(href="/product/#{_id}") 
+//             //- |#{_author.name}'s
+//             | #{title}
+//         //- if session_is 'view_ingredients' true
+//         // +ismall name='ingredients'
+//         // each ingredients
+//         //     .ui.small.label #{this}
+//         if gluten_free
+//             +i name='no-gluten' cl='ui mini inline image' title='gluten free'
+//         if vegan
+//             +i name='vegan-food' cl='ui mini inline image' title='vegan'
+//         //- .ui.inline.small.header tags
+//         // .content
+//         //     .right.floated.meta
+//         //         | {{from_now datetime_available}}
+//         //     //- if session_is 'view_users' true
+//         // //- a.image(href="/product/#{_id}")
+            
+//     .content    
+//         .ui.inline.header 
+//             |${{fixed price_usd}}
+//         i.big.link.cart.plus.green.icon.add_to_cart
+//         if is_admin
+//             a(href="/product/#{_id}/edit")
+//                 i.pencil.link.icon
+//         .ui.inline.small.header 
+//             |(#{menu_section}) 
+//         div
+//         .ui.inline.inline.small.grey.header #{views}
+//             i.eye.icon
+//         .ui.inline.inline.small.grey.header #{points} 
+//             i.line.chart.icon
+                
+                
+                
+
+// template(name='product_crud')
+//     // .ui.segment
+//     .ui.styled.accordion
+//         .title
+//             .dropdown.icon
+//             .ui.inline.header
+//                 // +i name='shield'
+//                 // |#{picked_products.count}
+//                 | products
+//         .content
+//             .ui.icon.large.input 
+//                 if product_search_value
+//                     i.large.red.remove.link.icon.zoomer.clear_search
+//                 else 
+//                     i.search.icon
+//                 input.product_search(type='text' placeholder='search' value=product_search_value)
+//             if product_results
+//                 // .ui.selection.link.animated.list
+//                 each product_results
+//                     .ui.basic.circular.large.button.pick_product.zoomer
+//                         i.grey.plus.icon
+//                         if image_id
+//                             img.ui.avatar.image(src="{{c.url image_id width=300 height=300 gravity='face' crop='fill'}}")
+//                         |#{title}
+//             if product_search_value
+//                 .ui.large.button.create_product(title='add')
+//                     i.plus.icon
+//                     |#{product_search_value}
+//             // if picked_products
+//             .ui.header
+//                 |#{picked_products.count}
+//                 | products
+//             .smallscroll
+//                 each picked_products
+//                      .ui.horizontal.fluid.card.show_modal
+//                         .content
+//                             .ui.grid
+//                                 .row
+//                                     // .column
+//                                     .fourteen.wide.column
+//                                         .left.floated
+//                                             a.ui.inline.header
+//                                                 |!{title}
+//                                             div
+//                                             +eft_viewer_small
+//                                             // img(src="{{c.url image_id width=50 height=50}}")
+//                                             // div    
+//                                             // |!{content}
+//                                     .two.wide.column
+//                                         .right.floated
+//                                             if _is 'model' 'product'
+//                                                 +ismall name='what-i-do' color='42E8C4' cl='ui inline image'
+//                                             div
+//                                             |#{when}
+//                                 .row
+//                                     .six.wide.column
+//                                         img.invert(src="{{c.url image_id width=10 height=10}}")
+//                                     .ten.wide.column
+//                                         |!{content}
+//                                 .sixteen.wide.column
+//                                     if currentUser.admin_mode
+//                                         .ui.tertiary.large.button.zoomer.remove_product 
+//                                             i.remove.icon
+//                                             |remove 
+//                                         .ui.tertiary.large.button.zoomer.toggle_assign 
+//                                             i.user.plus.icon
+//                                             | assign
+//                                         if assigned_to 
+//                                             |assigned to #{asigned_to.username}
+//                                         else 
+//                                             |unnassigned
+//                                         if is_assigning 
+//                                             each product_holders 
+//                                                 .ui.label #{username}
+//                                         else 
+//                                             with assigned_users
+//                                                 .ui.green.label #{username}
+//                                         a.ui.tertiary.right.floated.icon.large.button.zoomer.fly_right(href="/product/#{_id}/edit" title='edit product')
+//                                             i.setting.icon
+//                                     else
+//                                         // else if can_take
+//                                         if has_taken 
+//                                             |taken by #{taken_user.name}
+//                                             .ui.large.button.release_product
+//                                                 i.undo.icon
+//                                                 |release 
+//                                         else if can_take
+//                                             .ui.tertiary.large.button.zoomer.take_product 
+//                                                 i.checkmark.icon
+//                                                 | take
+//                                         else if is_taken 
+//                                             |taken by #{taken_user.name}
+//                                     a.ui.tertiary.large.button.zoomer(href="/d/product/#{_id}")
+//                                         |view
+//                                         i.chevron.right.icon
+//                     .ui.modal 
+//                         .ui.header hi

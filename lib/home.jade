@@ -32,8 +32,9 @@ template(name='home')
            
 
             .ui.fluid.menu.hscroll.mobile.only
+                +eft_filter color="red" icon='heart' label='care'
                 +eft_filter color="FF73EA" icon='food' label='food'
-                    pink
+                    //pink
                 +eft_filter color="B785E1" icon='home' label='housing'
                     //lavender
                 +eft_filter color="6b0fb9" icon='tshirt' label='clothing'
@@ -60,6 +61,7 @@ template(name='home')
                     //white
             // if session_is 'expand_leftbar' true
             .ui.vertical.fluid.invert.menu.mobile.hidden
+                +eft_filter color="FF0000" icon='heart' label='care'
                 +eft_filter color="FF73EA" icon='food' label='food'
                 +eft_filter color="B785E1" icon='home' label='housing'
                 +eft_filter color="6b0fb9" icon='tshirt' label='clothing'
@@ -90,7 +92,8 @@ template(name='home')
             // if currentUser.admin_mode
             //     img.ui.image(src="{{c.url '12_color_code'}}" class=darkmode_class)
         .eleven.wide.column
-            // +quickchat
+            iframe(style="background: #21313C;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);" width="100%" height="800px" src="https://home.gratigen.one")
+
             unless session_get 'fullview_id'
                 unless is_searching
                     unless currentUser.admin_mode
@@ -102,14 +105,14 @@ template(name='home')
                                 // // div
                                 +online_users
                 .ui.center.aligned.column.grid
-                    unless currentUser.admin_mode
-                        .ui.animated.fade.tertiary.circular.large.center.alligned.zoomer.button.launch_modal.add_doc(style="color:green")
-                            .visible.content
-                                // i.big.green.play.dark-mode.icon(class=gicon)
-                                +ilarge name='play-button-circled--v1' color='40C057' cl='ui image'
-        
-                            .hidden.content
-                                .ui.massive.header Engage
+                    // unless currentUser.admin_mode
+                    .ui.animated.fade.tertiary.circular.large.center.alligned.zoomer.button.launch_modal.add_doc(style="color:green")
+                        .visible.content
+                            // i.big.green.play.dark-mode.icon(class=gicon)
+                            +ilarge name='play-button-circled--v1' color='40C057' cl='ui image'
+    
+                        .hidden.content
+                            .ui.massive.header Engage
                     .centered   
                         // .ui.search
                         //     .ui.large.icon.input.search_bar
@@ -203,7 +206,7 @@ template(name='home')
                 //     |github code
                 // +block template='models_chart'
                 +block template='checklist'
-                +block template='gratigen'
+                +block template='gratigen' icon='heart' color='red'
 
                 // +online_allies
             // +thing_maker
@@ -462,7 +465,7 @@ template(name='home_card')
                     img.ui.avatar.image(src="{{c.url _author.image_id height=200}}" title=_author.username)
                     |#{_author.username}
                 div
-                // +parent_block
+                +parent_block
                 // +parent_avatar
             span.right.floated
                 |#{when}

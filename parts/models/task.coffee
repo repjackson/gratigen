@@ -36,10 +36,10 @@ if Meteor.isClient
             
     Template.checklist.helpers
         my_assigned: ->
-            Docs.find
+            Docs.find {
                 model:'task'
                 assigned_to_user_ids:$in:[Meteor.userId()]
-        
+            }, sort:points:-1
         complete_count: ->
             Docs.find(
                 model:'task'
@@ -53,11 +53,14 @@ if Meteor.isClient
                 parent_ids:$in:[Router.current().params.doc_id]
             ).count()
         org_task_docs: ->
-            Docs.find 
+            Docs.find {
                 model:'task'
                 # org_id:@_id
                 parent_ids:$in:[Router.current().params.doc_id]
-
+            }, 
+                sort:
+                    points:-1
+                    _timestamp:-1
     Template.grat_small.events
         'click .tip': ->
             Docs.update @_id, 
