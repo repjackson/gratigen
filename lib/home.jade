@@ -476,8 +476,8 @@ template(name='home_card')
                 |#{location}            
             if location
                 |#{datetime}
-        if youtube_id 
-            +youtube_view key='youtube_id'
+        // if youtube_id 
+        //     +youtube_view key='youtube_id'
         // if link
         //     .content.smallscroll 
         //         iframe.invert(width='100%' height='500px' src=link frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen='')
@@ -488,7 +488,9 @@ template(name='home_card')
             |!{content}
         if link
             +link_field
-        else
+        else if youtube_id
+            +youtube_view key='youtube_id'
+
             img.ui.fluid.image.toggle_fullview.pointer(src="{{c.url image_id width=500 height=500}}")
         .content 
             .description

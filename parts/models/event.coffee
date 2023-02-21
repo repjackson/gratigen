@@ -443,40 +443,40 @@ if Meteor.isClient
         @autorun => Meteor.subscribe 'event_orders', Router.current().params.doc_id, ->
         # @autorun => Meteor.subscribe 'model_docs', 'room'
         
-        if Meteor.isDevelopment
-            pub_key = Meteor.settings.public.stripe_test_publishable
-        else if Meteor.isProduction
-            pub_key = Meteor.settings.public.stripe_live_publishable
-        Template.instance().checkout = StripeCheckout.configure(
-            key: pub_key
-            image: 'https://res.cloudinary.com/facet/image/upload/v1585357133/one_logo.png'
-            locale: 'auto'
-            zipCode: true
-            token: (token) =>
-                # amount = parseInt(Session.get('topup_amount'))
-                event = Docs.findOne Router.current().params.doc_id
-                charge =
-                    amount: event.price_usd*100
-                    event_id:event._id
-                    currency: 'usd'
-                    source: token.id
-                    input:'number'
-                    # description: token.description
-                    description: "gratigen event ticket purchase"
-                    event_title:event.title
-                    # receipt_email: token.email
-                Meteor.call 'buy_ticket', charge, (err,res)=>
-                    if err then alert err.reason, 'danger'
-                    else
-                        console.log 'res', res
-                        Swal.fire(
-                            'ticket purchased',
-                            ''
-                            'success'
-                        # Meteor.users.update Meteor.userId(),
-                        #     $inc: points:500
-                        )
-        )
+        # if Meteor.isDevelopment
+        #     pub_key = Meteor.settings.public.stripe_test_publishable
+        # else if Meteor.isProduction
+        #     pub_key = Meteor.settings.public.stripe_live_publishable
+        # Template.instance().checkout = StripeCheckout.configure(
+        #     key: pub_key
+        #     image: 'https://res.cloudinary.com/facet/image/upload/v1585357133/one_logo.png'
+        #     locale: 'auto'
+        #     zipCode: true
+        #     token: (token) =>
+        #         # amount = parseInt(Session.get('topup_amount'))
+        #         event = Docs.findOne Router.current().params.doc_id
+        #         charge =
+        #             amount: event.price_usd*100
+        #             event_id:event._id
+        #             currency: 'usd'
+        #             source: token.id
+        #             input:'number'
+        #             # description: token.description
+        #             description: "gratigen event ticket purchase"
+        #             event_title:event.title
+        #             # receipt_email: token.email
+        #         Meteor.call 'buy_ticket', charge, (err,res)=>
+        #             if err then alert err.reason, 'danger'
+        #             else
+        #                 console.log 'res', res
+        #                 Swal.fire(
+        #                     'ticket purchased',
+        #                     ''
+        #                     'success'
+        #                 # Meteor.users.update Meteor.userId(),
+        #                 #     $inc: points:500
+        #                 )
+        # )
     
     Template.event_view.onRendered ->
         Docs.update Router.current().params.doc_id, 

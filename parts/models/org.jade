@@ -127,7 +127,6 @@ template(name='org_view')
                 // +org_subscription
             .eight.wide.center.aligned.column
                 // +block template='link_field' key='link' label='link'
-                +link_field key='link' label='link'
                 // if link
                 //     iframe.invert(width='100%' height='500px' src=link frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen='')
             
@@ -167,6 +166,8 @@ template(name='org_view')
                 // +textarea_field key='description' tagline='complete description of your organization'
                 // +link_field key='link' label='link'
                 +textarea_field key='body' tagline='body'
+                +link_field key='link' label='link'
+
 
                 .ui.animated.fade.tertiary.circular.large.center.alligned.zoomer.button.launch_modal.add_doc(style="color:green")
                     .visible.content

@@ -27,11 +27,11 @@ template(name='task_item_small')
             a(href="/d/task/#{_id}")
                 // i.chevron.right.icon
                 +edit_button_icon
-                
+            +voting    
             +single_user_field key='lead_id' label='Lead'
             // +textarea_field key='body'
             i.remove.link.icon(title='remove task')
-                
+            
                 
 template(name='edit_button_icon')
     i.pencil.icon.toggle(title='edit task')

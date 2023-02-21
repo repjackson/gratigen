@@ -325,13 +325,13 @@ if Meteor.isClient
 
             # $('.grid').transition('pulse', 500)
 
-            $('.grid .column')
-              .transition({
-                animation : 'tada',
-                duration  : 300,
-                interval  : 100
-              })
-            ;
+            # $('.grid .column')
+            #   .transition({
+            #     animation : 'tada',
+            #     duration  : 300,
+            #     interval  : 100
+            #   })
+            # ;
 
             Meteor.users.update Meteor.userId(),
                 $set:
