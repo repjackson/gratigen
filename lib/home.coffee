@@ -21,14 +21,14 @@ if Meteor.isClient
             Session.set('current_query', null)
             t.$('.current_query').val('')
             
+        # 'keyup .search_site': _.throttle((e,t)->
         'keyup .search_site': (e,t)->
             # console.log Router.current().route.getName()
             # current_name = Router.current().route.getName()
             
             # query = $('.search_site').val()
             search = t.$('.search_site').val().trim().toLowerCase()
-            if search.length > 3
-                Session.set('current_query', search)
+            # if search.length > 4
             # console.log 'hi'
             #     # Session.set('current_query', search)
             #     console.log 'searching', search
@@ -40,6 +40,7 @@ if Meteor.isClient
     
                 # unless current_name is 'shop'
                 #     Router.go '/shop'
+                Session.set('current_query', search)
                 
                 # console.log Session.get('current_query')
                 # console.log 'hi'
@@ -78,7 +79,7 @@ if Meteor.isClient
                     # Meteor.setTimeout ->
                     #     Session.set('dummy', !Session.get('dummy'))
                     # , 10000
-        # , 100)
+        # , 250)
     
 
     Template.layout.helpers 

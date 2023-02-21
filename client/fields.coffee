@@ -351,7 +351,7 @@ Template.array_field.events
 
 Template.textarea_field.onCreated ->
     @editing = new ReactiveVar false
-    @expanded = new ReactiveVar false
+    @expanded = new ReactiveVar true
 Template.textarea_field.helpers
     is_editing: -> Template.instance().editing.get()
     is_expanded: -> Template.instance().expanded.get()

@@ -180,7 +180,7 @@ template(name='home')
                 // +gratigen
                 // .ui.divider
                 
-                // +block template='bookmark_block' title='bookmarks' icon='bookmark' color='orange'
+                +block template='bookmark_block' title='bookmarks' icon='bookmark' color='orange'
                 // +bookmark_block
                 // +model_block model='post' icon='blog' color='42E8C4' title='latest posts'
                 // +model_block model='role' icon='shield' color='42E8C4' title='latest roles'
@@ -197,11 +197,11 @@ template(name='home')
                 // if currentUser.admin_mode
                 //     +user_connection_graph
                 // +block template='online_allies'
-                +alerts
-                a.ui.button(href="www.github.com/repjackson/gratigen" target='_window')
-                    i.github.icon 
-                    |github code
-                +block template='models_chart'
+                // +alerts
+                // a.ui.button(href="www.github.com/repjackson/gratigen" target='_window')
+                //     i.github.icon 
+                //     |github code
+                // +block template='models_chart'
                 +block template='checklist'
                 +block template='gratigen'
 
@@ -359,7 +359,7 @@ template(name='user_avatars')
 // template(name='bookmark_block')
 //     each bookmarked_docs 
 //         a.ui.tertiary.button.zoomer(href="/d/#{model}/#{_id}")
-//             img.ui.avatar.image.zoomer(src="{{c.url image_id height='300' width='300'}}")
+//             img.uif.avatar.image.zoomer(src="{{c.url image_id height='300' width='300'}}")
 //             |#{title}
 
 
@@ -532,8 +532,8 @@ template(name='home_card')
                     +remove_button
             // if template_exists
             //     +Template.dynamic template=model_template
-        .extra.content
-            +comments
+        // .extra.content
+        //     +comments
       
 template(name='home_list_item')
     // if _is 'model' 'role'

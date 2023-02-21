@@ -25,19 +25,30 @@ template(name='gratigen')
     // .ui.input
     .ui.header Give Gratitude Points
     .ui.button Give Gratitude Points
-        // +i name='heart' color='40C057' cl='ui small image'
-    .ui.inline.input
-        imput(type='number')
+        i.pink.praying.hands.icon 
     .ui.header Give Reserve Token
     .ui.button Give Token
-    .ui.header Give an item as a service, product or resource
+        i.purple.infinity.icon 
+
+    .ui.header Give an item
+    |service, product, resource
     .ui.button give item
-    .ui.header Give time as a badge, skill, task, role, or resource
+        i.green.hands.icon
+    .ui.header Give time
+    |badge, skill, task, role, resource
     .ui.button give time
-    .ui.header Incentivize a task, role, or resource
+                i.blue.clock.icon 
+    .ui.header Incentivize an action
+    |task, role, resource
     .ui.button Incetivize Action
+        i.orange.carrot.icon 
+
     .ui.header Give Money
-    +give_money
+    .ui.button Give Money
+        i.green.money.icon 
+    // +give_money
+    // .ui.inline.input
+    //     imput(type='number')
 
 
 template(name='alerts')
@@ -55,6 +66,12 @@ template(name='parent_block')
                 img.ui.mini.rounded.inline.image(src="{{c.url image_id width=200 height=200 gravity='face' crop='fill'}}")
                 |#{title}
                 +model_icon
+        // .ui.label #{this}
+    with doc_by_id parent_id
+        a.ui.tertiary.basic.button.fly_down(href="/d/#{model}/#{_id}" title=model)
+            img.ui.mini.rounded.inline.image(src="{{c.url image_id width=200 height=200 gravity='face' crop='fill'}}")
+            |#{title}
+            +model_icon
 
 
 template(name='give_money')

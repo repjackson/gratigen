@@ -79,6 +79,7 @@ if Meteor.isClient
         # })
         
         @autorun => Meteor.subscribe 'doc_by_id', Router.current().params.doc_id, ->
+        @autorun => Meteor.subscribe 'all_users', ->
         # @autorun => Meteor.subscribe 'child_docs', Router.current().params.doc_id, ->
         @autorun => Meteor.subscribe 'members', Router.current().params.doc_id, ->
         # @autorun => Meteor.subscribe 'org_dishes', Router.current().params.doc_id, ->

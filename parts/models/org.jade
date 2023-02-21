@@ -117,10 +117,10 @@ template(name='org_view')
                 +textarea_field key='mission' tagline='your business goals and the values you will embrace to achieve them'
                 +textarea_field key='bylaws' tagline='bylaws of your organization. Articles of incorporation are the primary law of an association used to establish the general organization and governing of the association to achieve corporate existence. Bylaws are the secondary law of an association best used to detail how the society is formed and run.'
                 +textarea_field key='signature' tagline='creators signature'
-                +viewing
-                // block template to make everything lazy loading with passed subtemplate
-                +block template='org_history' label='activity'
-                +block template='org_subscription' label='subscriptions'
+                // +viewing
+                // // block template to make everything lazy loading with passed subtemplate
+                // +block template='org_history' label='activity'
+                // +block template='org_subscription' label='subscriptions'
                 // +multi_user_view key='member_ids' label='members' 
                 // +org_history
                 // +org_subscription
@@ -133,9 +133,9 @@ template(name='org_view')
                 .centered.row
                     // datetime saves in datetime format like: 2023-03-22T19:39
                     // need to use moment helper to format, helpers.coffee 
-                    .ui.medium.header {{long start_time}} #{date}
-                    if currentUser.editing 
-                        +datetime_field key='start_time'
+                    // .ui.medium.header {{long start_time}} #{date}
+                    // if currentUser.editing 
+                    //     +datetime_field key='start_time'
                     // +text_field
                     div
                     +eft_viewer
@@ -193,7 +193,7 @@ template(name='org_view')
                 // +smaba
 
                 // +block template='model_crud' model='post' title='posts' icon='for-you' color='1255B8'
-                // +block template='model_crud' model='group' title='groups' icon='groups' color='83DFF4'
+                +block template='model_crud' model='group' title='groups' icon='groups' color='83DFF4'
                 // +block template='model_crud' model='resource' title='resources' icon='field-and-tractor' color='FD7E14'
                 // +block template='model_crud' model='project' title='project' icon='project' color='7229AF'
                 // +block template='model_crud' model='event' title='events' icon='calendar' color='FAB005'
@@ -218,7 +218,7 @@ template(name='org_view')
             .four.wide.column
                 +membership_toggle
                 +block template='members'
-                +block template='ai' name='blockchain'
+                // +block template='ai' name='blockchain'
                 +block template='comments' label='comments' icon='chat' color='blue' data=this
                 +block template='checklist'
                 +block template='gchat'
@@ -250,7 +250,7 @@ template(name='org_view')
                 // +org_stats
                 // +block template='role_crud'
                 // +doc_array_togggle key='member_ids' value=currentUser._id add_label='join' remove_label='joined'
-            .five.wide.column
+            // .five.wide.column
                 +block template='related_docs' title='related docs'
         //                 .column
         //                     +model_crud model='event' icon='calendar'

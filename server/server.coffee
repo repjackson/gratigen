@@ -185,9 +185,11 @@ Meteor.publish 'user_from_id', (user_id)->
     Meteor.users.find user_id
 
 Meteor.publish 'parent_doc_by_id', (child_doc_id)->
+    console.log 'finding parent', child_doc_id
     child = Docs.findOne child_doc_id
+    # console.log 'found parent', Docs.findOne _id:child.parent_id
     if child and child.parent_id 
-        Docs.find _id:child.parent_id
+        Docs.find {_id:child.parent_id},
             fields:
                 title:1
                 body:1
