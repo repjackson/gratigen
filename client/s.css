@@ -20,9 +20,12 @@ body {
 .glow:active {
   /*box-shadow: 0 5px #666 !important;*/
   transform: translateY(4px) !important;
+  
 }
 .glow:hover {
-    animation: shadow-pulse 1s !important;
+    /*animation: shadow-pulse 1s !important;*/
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 30px 90px;
+    
 }
 
 .gactive {

@@ -486,10 +486,10 @@ template(name='home_card')
             |{{nl2br  body}}
             |!{brief}
             |!{content}
-        // if link
-        //     +link_field
-        // else
-        img.ui.fluid.image.toggle_fullview.pointer(src="{{c.url image_id width=500 height=500}}")
+        if link
+            +link_field
+        else
+            img.ui.fluid.image.toggle_fullview.pointer(src="{{c.url image_id width=500 height=500}}")
         .content 
             .description
                 // .ui.header lat: #{lat}

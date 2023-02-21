@@ -165,7 +165,7 @@ template(name='org_view')
                         +single_user_field key='creator'
                 // +textarea_field key='brief' tagline='what kink of organization is this? breifly describe it.'
                 // +textarea_field key='description' tagline='complete description of your organization'
-                +link_field key='link' label='link'
+                // +link_field key='link' label='link'
                 +textarea_field key='body' tagline='body'
 
                 .ui.animated.fade.tertiary.circular.large.center.alligned.zoomer.button.launch_modal.add_doc(style="color:green")
@@ -200,7 +200,7 @@ template(name='org_view')
                 // +block template='model_crud' model='event' title='events' icon='calendar' color='FAB005'
                 // +block template='model_crud' model='badge' title='badges' icon='badge' color='blue'
                 +block template='model_crud' model='role' title='roles' icon='what-i-do' color='42E8C4'
-                +block template='model_crud' model='task' title='tasks' icon='task' color='B785E1'
+                +block template='model_crud' model='task' title='tasks' icon='tasks' color='B785E1'
                 // +block template='model_crud' model='shift' title='shifts' icon='shift' color='teal'
                 // +block template='model_crud' model='skill' title='skills' icon='wrench' color='ff0000'
                 // div
@@ -221,12 +221,12 @@ template(name='org_view')
                 +block template='members'
                 // +block template='ai' name='blockchain'
                 +block template='comments' label='comments' icon='chat' color='blue' data=this
-                +block template='checklist'
-                +block template='gchat'
+                +block template='checklist' icon='tasks'
+                +block template='gchat' icon='chat'
                 +block template='model_crud' model='event' title='events' icon='calendar' color='FAB005'
 
 
-                        // +user_pill
+                // +user_pill
                 if currentUser.editing
                     .ui.basic.center.aligned.segment
                         +eft_picker color="FF73EA" icon='food' label='food'
