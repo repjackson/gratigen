@@ -19,15 +19,15 @@ template(name='role_view')
                 each assigned_users
                     +user_pill
                     // .ui.header #{name}
-                .ui.small.grey.header 
-                    i.line.chart.icon
-                    |stats
-                .ui.list
-                    .item #{views} views
-                each viewers
-                    .ui.label #{username}
+                // .ui.small.grey.header 
+                //     i.line.chart.icon
+                //     |stats
+                // .ui.list
+                //     .item #{views} views
+                // each viewers
+                //     .ui.label #{username}
                 +image_field key='image_id' label='image'
-                +image_field key='banner_image_id' icon='image' label='banner image'
+                // +image_field key='banner_image_id' icon='image' label='banner image'
                 +array_field key='tags' label='tags' direct=true
                 +array_field key='badge_titles' label='badges' direct=true
                 +voting_full
@@ -62,32 +62,66 @@ template(name='role_view')
             .six.wide.column
                 +checklist
                 .ui.inline.header 
-                    i.users.icon
-                    |members
-                if currentUser.editing 
-                    +multi_user_field key='member_ids' label='members'
-                else 
-                    each member_ids
-                        +user_pill
+                
+                 .four.wide.column
+                +membership_toggle
+                +block template='members'
+                // +block template='ai' name='blockchain'
+                +block template='comments' label='comments' icon='chat' color='blue' data=this
+                +block template='checklist'
+                +block template='gchat'
+
+                        // +user_pill
                 if currentUser.editing
                     .ui.basic.center.aligned.segment
                         +eft_picker color="FF73EA" icon='food' label='food'
                         +eft_picker color="B785E1" icon='home' label='housing'
-                        +eft_picker color="7229AF" icon='tshirt' label='clothing'
-                        +eft_picker color="1255B8" icon='car' label='transportation'
-                        +eft_picker color="83DFF4" icon='lightning' label='energy'
-                        +eft_picker color="42E8C4" icon='leaf' label='zero waste'
-                        +eft_picker color="40C057" icon='smile' label='wellness'
-                        +eft_picker color="FAB005" icon='university' label='education'
-                        +eft_picker color="FD7E14" icon='paint brush' label='art'
-                        +eft_picker color="FF0000" icon='users' label="community core"
-                .ui.header 
-                    +i name='rss'
-                    |activity
+                        +eft_picker color="6b0fb9" icon='tshirt' label='clothing'
+                        +eft_picker color="0000f7" icon='smile' label='wellness'
+                        +eft_picker color="00ddff" icon='car' label='travel'
+                        +eft_picker color="00ffc3" icon='dog' label='animals'
+                        +eft_picker color="148023" icon='leaf' label='plants'
+                        +eft_picker color="35ca2d" icon='recycle' label='regen'
+                        +eft_picker color="ffff00" icon='lightning' label='energy'
+                        +eft_picker color="ffd000" icon='paint brush' label='art'
+                        +eft_picker color="ff6f00" icon='university' label='education'
+                        +eft_picker color="FF0000" icon='users' label='community'
+                        +eft_picker color="000000" icon='ambulance' label='emergency'
                 +block template='gratigen'
-                each log_items
-                    +log_item
-                +org_stats
+                // .ui.header 
+                // +block template='latest_updated_block' title='latest' icon='time-machine' color='blue'
+                // each log_items
+                //     +log_item
+                // +block template='org_stats' title='stats' icon='line chart'
+
+                
+                
+                //     i.users.icon
+                //     |members
+                // if currentUser.editing 
+                //     +multi_user_field key='member_ids' label='members'
+                // else 
+                //     each member_ids
+                //         +user_pill
+                // if currentUser.editing
+                //     .ui.basic.center.aligned.segment
+                //         +eft_picker color="FF73EA" icon='food' label='food'
+                //         +eft_picker color="B785E1" icon='home' label='housing'
+                //         +eft_picker color="7229AF" icon='tshirt' label='clothing'
+                //         +eft_picker color="1255B8" icon='car' label='transportation'
+                //         +eft_picker color="83DFF4" icon='lightning' label='energy'
+                //         +eft_picker color="42E8C4" icon='leaf' label='zero waste'
+                //         +eft_picker color="40C057" icon='smile' label='wellness'
+                //         +eft_picker color="FAB005" icon='university' label='education'
+                //         +eft_picker color="FD7E14" icon='paint brush' label='art'
+                //         +eft_picker color="FF0000" icon='users' label="community core"
+                // .ui.header 
+                //     +i name='rss'
+                //     |activity
+                // +block template='gratigen'
+                // each log_items
+                //     +log_item
+                // +org_stats
 
 template(name='role_edit')
     with current_doc

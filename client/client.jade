@@ -94,15 +94,15 @@ template(name='doc_view')
                             a.section.zoomer(href='/')
                                 |home
                             .divider /
-                            +parent_block
+                            // +parent_block
                             with parent_doc
-                                a.section(href="/d/#{model}/#{_id}")
-                                    img.ui.avatar.image(src="{{c.url image_id }}")
+                                a.section.zoomer.fly_left(href="/d/#{model}/#{_id}")
+                                    img.ui.avatar.image(src="{{c.url image_id width=200 }}")
                                     |#{title}
-                            each _parents
-                                a.section(href="/d/#{model}/#{_id}")
-                                    img.ui.avatar.image(src="{{c.url image_id }}")
-                                    |#{title}
+                            // each _parents
+                            //     a.section(href="/d/#{model}/#{_id}")
+                            //         img.ui.avatar.image(src="{{c.url image_id }}")
+                            //         |#{title}
                             //     .divider /
                             // a.section.zoomer(href="/d/#{model}/#{_id}")
                             //     img.ui.avatar.image(src="{{c.url image_id }}")

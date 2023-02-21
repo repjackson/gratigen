@@ -521,7 +521,8 @@ template(name='textarea_field')
                 // for each field emotional, but need to update the call for field responses
                 if watson_field
                     +watson_field_view
-            +call_watson mode='html' key=key
+            if currentUser.admin_mode
+                +call_watson mode='html' key=key
             div
             //- +tone mode='html'
             if watson
