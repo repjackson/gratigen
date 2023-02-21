@@ -4,6 +4,9 @@ if Meteor.isClient
         @render 'home'
         ), name:'home'
     
+    Template.model_dropdown.helpers
+        current_model_filter: ->
+            Session.get('model_filter')
     Template.smaba.events
         # 'keyup .search_site': _.throttle((e,t)->
         # 'click .search_site': (e,t)->
@@ -24,7 +27,7 @@ if Meteor.isClient
             
             # query = $('.search_site').val()
             search = t.$('.search_site').val().trim().toLowerCase()
-            if search.length > 2
+            if search.length > 3
                 Session.set('current_query', search)
             # console.log 'hi'
             #     # Session.set('current_query', search)
