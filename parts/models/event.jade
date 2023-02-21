@@ -136,6 +136,30 @@ template(name='event_view')
                 +location_field key='location'
                 +textarea_field key='description'
                 .spacer
+
+                .ui.animated.fade.tertiary.circular.large.center.alligned.zoomer.button.launch_modal.add_doc(style="color:green")
+                    .visible.content
+                        // i.big.green.play.dark-mode.icon(class=gicon)
+                        +ilarge name='play-button-circled--v1' color='40C057' cl='ui image'
+
+                    .hidden.content
+                        .ui.massive.header Engage
+                .centered   
+    
+                    +smaba
+                    div
+                    +session_set key='view_mode' value='grid' icon='th' 
+                    +session_set key='view_mode' value='list' icon='list'
+                    +session_set key='view_mode' value='feed' icon='stream'
+                    +session_toggle key='show_map' icon='map'
+                    +session_toggle key='show_calendar' icon='calendar'
+                    .ui.button.view_latest(class=view_latest_class)
+                        i.clock.icon 
+                        |latest
+                    .ui.button.view_bookmarks(class=viewing_bookmarks)
+                        i.bookmark.icon 
+                        |bookmarks
+                div
                 // a(href="/m/room/#{event_room._id}")
                 //     img.ui.small.circular.inline.image.pointer.zoom(src="{{c.url event_room.image_id }}" class=currentUser.darkmode_class)
                 //     .ui.inline.header.pointer.zoom
@@ -549,7 +573,7 @@ template(name='event_crud')
                                             div
                                             +eft_viewer_small
                                             // img(src="{{c.url image_id width=50 height=50}}")
-                                            // div    
+                                            // div
                                             // |!{content}
                                     .two.wide.column
                                         .right.floated

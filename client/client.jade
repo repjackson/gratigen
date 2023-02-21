@@ -131,19 +131,19 @@ template(name='doc_view')
             .one.column.row.subtemplate
                 .column
                     +Template.dynamic template=doc_view_template
-                    +link_field key='link'
-                    +boolean_field key='published' label='published'
-            .two.column.row
-                .column
-                    // +Template.dynamic template=doc_view_template
-                    +image_field key='image_id' label='image' icon='image'
-                    // if currentUser.editing 
-                    +array_field key='tags' label='tags' icon='tags'
-                .column
-                    +link_field
-                    +textarea_field key='body' label='body'
-                    if watson 
-                        +watson_view
+                    // +link_field key='link'
+                    // +boolean_field key='published' label='published'
+            // .two.column.row
+            //     .column
+            //         // +Template.dynamic template=doc_view_template
+            //         +image_field key='image_id' label='image' icon='image'
+            //         // if currentUser.editing 
+            //         +array_field key='tags' label='tags' icon='tags'
+            //     .column
+            //         +link_field
+            //         +textarea_field key='body' label='body'
+            //         if watson 
+            //             +watson_view
         if currentUser.admin_mode 
             .ui.inverted.red.segment
                 .ui.header 

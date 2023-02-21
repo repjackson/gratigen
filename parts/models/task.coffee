@@ -58,6 +58,10 @@ if Meteor.isClient
                 # org_id:@_id
                 parent_ids:$in:[Router.current().params.doc_id]
 
+    Template.grat_small.events
+        'click .tip': ->
+            Docs.update @_id, 
+                $inc:points:1
     Template.checklist.events
         'keyup .quickadd_task':(e)->
             if e.which is 13

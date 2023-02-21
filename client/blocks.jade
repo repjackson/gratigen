@@ -625,6 +625,8 @@ template(name='voting_small')
 template(name='grat_small')
     .ui.icon.basic.circular.button.tip 
         +i name='donate' cl='ui avatar image'
+        if points
+            |#{points}
 template(name='react_small')
     +react_button key='joy' icon='smile'
     +react_button key='sad' icon='sadness'
@@ -707,13 +709,18 @@ template(name='ai')
 
 
 template(name='block')
-    .ui.grid.segment.glow(class=color)
+    // .ui.grid.segment.glow(class=color)
+    .ui.grid.segment.glo(class=color)
         // .one.inverted.column.row.toggle_expanded.zoomer.pointer(title='expand' class=color)
         .inverted.row.toggle_expanded.pointer.zoomer.glow(title='expand')
-            .two.wide.column
-                if icon
-                    +i name=icon color='ffffff' cl="ui inline image"
-            .fourteen.wide.column
+            // .two.wide.column
+            .sixteen.wide.center.aligned.column
+                if is_expanded
+                    if icon
+                        +icolor name=icon color='ffffff' cl="ui mini inline image"
+                else
+                    if icon
+                        +i name=icon color='ffffff' cl="ui avatar image"
                 .ui.inline.header(class=color)
                     // i.large.icon(class=icon)
                     // | #{model}s
@@ -721,6 +728,10 @@ template(name='block')
                         strong #{title}
                     else 
                         |#{template}
+                if is_expanded
+                    i.small.grey.chevron.down.icon
+                else
+                    i.small.grey.chevron.right.icon
         if is_expanded
             .row
                 .sixteen.wide.small.scroll.column
