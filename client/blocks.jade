@@ -72,6 +72,22 @@ template(name='parent_block')
             img.ui.mini.rounded.inline.image(src="{{c.url image_id width=200 height=200 gravity='face' crop='fill'}}")
             |#{title}
             +model_icon
+            
+            
+template(name='parent_avatar')
+    each parent_ids 
+        // .ui.label #{this}
+        with doc_by_id 
+            a.ui.tertiary.basic.button.fly_down(href="/d/#{model}/#{_id}" title=model)
+                img.ui.mini.rounded.inline.image(src="{{c.url image_id width=200 height=200 gravity='face' crop='fill'}}")
+                // |#{title}
+                // +model_icon
+        // .ui.label #{this}
+    with doc_by_id parent_id
+        a.ui.tertiary.basic.button.fly_down(href="/d/#{model}/#{_id}" title=model)
+            img.ui.mini.rounded.inline.image(src="{{c.url image_id width=200 height=200 gravity='face' crop='fill'}}")
+            // |#{title}
+            // +model_icon
 
 
 template(name='give_money')
@@ -606,6 +622,19 @@ template(name='voting_small')
     //- each downvoter_ids
     //-     +user_pill
 
+template(name='grat_small')
+    .ui.icon.basic.circular.button.tip 
+        +i name='donate' cl='ui avatar image'
+template(name='react_small')
+    +react_button key='joy' icon='smile'
+    +react_button key='sad' icon='sadness'
+    +react_button key='upvote' icon='thumbs-up'
+    +react_button key='downvote' icon='thumbs-down'
+
+template(name='react_button')
+    a.ui.basic.compact.circular.icon.button.react
+        +i name=icon
+        |#{reaction_amount}
 
 
 template(name='voting_full')

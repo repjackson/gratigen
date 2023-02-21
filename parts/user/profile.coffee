@@ -29,7 +29,7 @@ if Meteor.isClient
     Template.profile_section.events
         'click .toggle_expanded': (e,t)->
             t.expanded.set !t.expanded.get()
-            $(e.currentTarget).closest('.segment').transition('pulse',500)
+            $(e.currentTarget).closest('.segment').transition('pulse',250)
 
     Template.quickgive_button.helpers 
         give_button_class: ->
@@ -135,7 +135,7 @@ if Meteor.isClient
                     boops: 1
                 $addToSet:
                     booper_ids:Meteor.userId()
-            $(e.currentTarget).closest('.boop').transition('bounce',500)
+            $(e.currentTarget).closest('.boop').transition('bounce',250)
             $('body').toast(
                 showIcon: 'hand point up outline'
                 message: "boop!"

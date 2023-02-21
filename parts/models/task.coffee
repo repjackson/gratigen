@@ -72,7 +72,7 @@ if Meteor.isClient
                 $('.quickadd_task').val('')
         'click .checkbox': (e)->
             # console.log e
-            $(e.currentTarget).closest('.item').transition('pulse',1000)
+            $(e.currentTarget).closest('.item').transition('pulse',100)
             $('body').toast({
                 title: "#{@title} marked completed"
                 # message: 'yeay'
@@ -83,7 +83,7 @@ if Meteor.isClient
             })
         'click .remove': (e,t)->
             if confirm "remove #{@title}"
-                $(e.currentTarget).closest('.content').transition('zoom',1000)
+                # $(e.currentTarget).closest('.content').transition('zoom',1000)
                 Meteor.setTimeout =>
                     Docs.remove @_id
                     $('body').toast({

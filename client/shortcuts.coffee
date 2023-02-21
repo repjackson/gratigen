@@ -8,7 +8,7 @@ globalHotkeys.add
         element = document.body;
         element.classList.toggle("dark-mode");
 
-        $('.grid').transition('pulse', 200)
+        # $('.grid').transition('pulse', 200)
 
 
         Meteor.users.update Meteor.userId(),

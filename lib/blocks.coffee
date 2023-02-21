@@ -310,7 +310,7 @@ if Meteor.isClient
     Template.block.events
         'click .toggle_expanded': (e,t)-> 
             t.expanded.set !t.expanded.get()
-            t.$('.grid').transition('pulse',500)
+            t.$('.grid').transition('pulse',300)
         'click .toggle_editing': (e,t)-> 
             t.editing.set !t.editing.get()
     Template.model_crud.onCreated ->
@@ -331,7 +331,7 @@ if Meteor.isServer
             model:model
             # parent_id:parent_id
             parent_ids:$in:[parent_id]
-        }, limit:20
+        }, limit:42
 
 if Meteor.isClient
     Template.model_crud.helpers 

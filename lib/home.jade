@@ -450,10 +450,10 @@ template(name='home_card')
     // else if _is 'model' 'recipe'
     //     +recipe_card
     // else 
-    .ui.card
+    a.ui.card(href="/d/#{model}/#{_id}")
         .content.smallscroll 
             // a.ui.centered.inline.header.zoomer(href="/d/#{model}/#{_id}")
-            a.ui.centered.inline.header.zoomer.toggle_fullview
+            a.ui.centered.inline.header.zoomer
                 |#{title}
             span.left.floated
                 if icon 
@@ -462,7 +462,8 @@ template(name='home_card')
                     img.ui.avatar.image(src="{{c.url _author.image_id height=200}}" title=_author.username)
                     |#{_author.username}
                 div
-                +parent_block
+                // +parent_block
+                // +parent_avatar
             span.right.floated
                 |#{when}
                 +model_icon

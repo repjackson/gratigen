@@ -23,14 +23,15 @@ template(name='task_item_small')
             //     input(type='checkbox' checked="")
             // i.chevron.down.large.icon.view_more(title='view more')
             // if viewing_full
-            +array_field key='tags' label='tags' icon='tags'
-            a(href="/d/task/#{_id}")
-                // i.chevron.right.icon
-                +edit_button_icon
-            +voting    
+            // +array_field key='tags' label='tags' icon='tags'
+            a.zoomer(href="/d/task/#{_id}" title='edit')
+                i.pencil.icon
+                // +edit_button_icon
+            // +voting 
+            +grat_small
             +single_user_field key='lead_id' label='Lead'
             // +textarea_field key='body'
-            i.remove.link.icon(title='remove task')
+            i.remove.link.icon.zoomer(title='remove task')
             
                 
 template(name='edit_button_icon')
