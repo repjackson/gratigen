@@ -322,7 +322,6 @@ if Meteor.isClient
         'click .toggle_invert': (e,t)->
             element = document.body;
             element.classList.toggle("dark-mode");
-            element.classList.toggle("dark-mode");
 
             # $('.grid').transition('pulse', 500)
 
