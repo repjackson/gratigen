@@ -84,7 +84,20 @@ template(name='post_item')
             .ui.basic.small.label #{this}
         
 
-template(name='post_view')
+template(name='post_view')        
+    .ui.stackable.padded.grid
+        .two.column.row
+            .column
+                // +Template.dynamic template=doc_view_template
+                +image_field key='image_id' label='image' icon='image'
+                // if currentUser.editing 
+                +array_field key='tags' label='tags' icon='tags'
+            .column
+                +link_field
+                +textarea_field key='body' label='body'
+                if watson 
+                    +watson_view
+
     // with current_doc
     //     if youtube_id 
     //         +youtube_field key='youtube_id'
