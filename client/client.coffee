@@ -137,8 +137,9 @@ Template.footer.helpers
 #         Docs.findOne
 #             model:'stats'
 
-# Template.nav.onCreated ->
-#     @autorun => @subscribe 'order_count'
+Template.nav.onCreated ->
+    @autorun => @subscribe 'all_users', ->
+    
 #     @autorun => @subscribe 'product_count'
 #     @autorun => @subscribe 'ingredient_count'
 #     @autorun => @subscribe 'subscription_count'

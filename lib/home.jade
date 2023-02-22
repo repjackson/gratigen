@@ -1,6 +1,12 @@
 template(name='home')
+    // .ui.segment
+        // .cont
+        //     .cont__left
+        //     #dragMe.resizer
+        //     .cont__right
     .ui.padded.divided.celled.stackable.grid
-        .two.wide.scrolling.column
+        .three.wide.scrolling.column
+
             // +session_toggle key='expand_leftbar' icon='horizontal-line'
             // +session_toggle key='add_mode' icon='plus'
             //.ui.icon.button.show_model
@@ -79,83 +85,83 @@ template(name='home')
             // .ui.button create request
             // if currentUser.admin_mode
             //     img.ui.image(src="{{c.url '12_color_code'}}" class=darkmode_class)
-        .eleven.wide.column
-            iframe(style="border: none;border-radius: 10px;" width="100%" height="800px" src="https://home.gratigen.one")
+        .nine.wide.column
+            // iframe(style="border: none;border-radius: 10px;" width="100%" height="800px" src="https://home.gratigen.one")
 
-        //     unless session_get 'fullview_id'
-        //         unless is_searching
-        //             unless currentUser.admin_mode
-        //                 .ui.one.column.grid 
-        //                     .centered.column
+            unless session_get 'fullview_id'
+                unless is_searching
+                    unless currentUser.admin_mode
+                        .ui.one.column.grid 
+                            .centered.column
                             
-        //                         // .ui.fluid.input 
-        //                         //     textarea
-        //                         // // div
-        //                         +online_users
-        //         .ui.center.aligned.column.grid
-        //             // unless currentUser.admin_mode
-        //             .ui.animated.fade.tertiary.circular.large.center.alligned.zoomer.button.launch_modal.add_doc(style="color:green")
-        //                 .visible.content
-        //                     // i.big.green.play.dark-mode.icon(class=gicon)
-        //                     +ilarge name='play-button-circled--v1' color='40C057' cl='ui image'
+                                // .ui.fluid.input 
+                                //     textarea
+                                // // div
+                                +online_users
+                .ui.center.aligned.column.grid
+                    // unless currentUser.admin_mode
+                    .ui.animated.fade.tertiary.circular.large.center.alligned.zoomer.button.launch_modal.add_doc(style="color:green")
+                        .visible.content
+                            // i.big.green.play.dark-mode.icon(class=gicon)
+                            +ilarge name='play-button-circled--v1' color='40C057' cl='ui image'
     
-        //                 .hidden.content
-        //                     .ui.massive.header Engage
-        //             .centered   
-        //                 // .ui.search
-        //                 //     .ui.large.icon.input.search_bar
-        //                 //         input.prompt(type='text' placeholder='add/request/search...')
-        //                 //         i.search.icon
-        //                 //     .results
-        //                 // with model_filter_doc
-        //                 //     a.ui.label.unpick_model(title='remove filter')
-        //                 //         i.remove.icon
-        //                 //         |#{this}
+                        .hidden.content
+                            .ui.massive.header Engage
+                    .centered   
+                        // .ui.search
+                        //     .ui.large.icon.input.search_bar
+                        //         input.prompt(type='text' placeholder='add/request/search...')
+                        //         i.search.icon
+                        //     .results
+                        // with model_filter_doc
+                        //     a.ui.label.unpick_model(title='remove filter')
+                        //         i.remove.icon
+                        //         |#{this}
                             
-        //                 // each model_filters 
-        //                 //     a.ui.label.unpick_model(title='remove filter')
-        //                 //         i.remove.icon
-        //                 //         |#{this}
-        //                 +smaba
-        //                 div
-        //                 +session_set key='view_mode' value='grid' icon='th' 
-        //                 +session_set key='view_mode' value='list' icon='list'
-        //                 +session_set key='view_mode' value='feed' icon='stream'
-        //                 +session_toggle key='show_map' icon='map'
-        //                 +session_toggle key='show_calendar' icon='calendar'
-        //                 .ui.button.view_latest(class=view_latest_class)
-        //                     i.clock.icon 
-        //                     |latest
-        //                 .ui.button.view_bookmarks(class=viewing_bookmarks)
-        //                     i.bookmark.icon 
-        //                     |bookmarks
-        //     .scrolling
-        //         // if session_get 'fullview_id'
-        //         //     .ui.circular.basic.purple.icon.button.clear_fullview 
-        //         //         i.large.remove.icon
-        //         //     with fullview_doc 
-        //         //         .ui.one.cards
-        //         //             +home_card
-        //         if session_is 'view_mode' 'list'
-        //             .ui.divided.selection.items 
-        //                 each doc_results 
-        //                     +home_list_item
-        //         else if session_is 'view_mode' 'grid'
-        //             .ui.three.stackable.cards
-        //                 each doc_results
-        //                     +home_card
-        //         else    
-        //             .ui.ten.wide.column.centered.mobile.hidden
-        //                 .ui.centered.one.cards.scrollin
-        //                     each doc_results
-        //                         +home_card
-        //             .ui.sixteen.wide.column.centered.mobile.only
-        //                 .ui.centered.one.cards.scrolling
-        //                     each doc_results
-        //                         +home_card
-        // // .eight.wide.column.bordered
+                        // each model_filters 
+                        //     a.ui.label.unpick_model(title='remove filter')
+                        //         i.remove.icon
+                        //         |#{this}
+                        +smaba
+                        div
+                        +session_set key='view_mode' value='grid' icon='th' 
+                        +session_set key='view_mode' value='list' icon='list'
+                        +session_set key='view_mode' value='feed' icon='stream'
+                        +session_toggle key='show_map' icon='map'
+                        +session_toggle key='show_calendar' icon='calendar'
+                        .ui.button.view_latest(class=view_latest_class)
+                            i.clock.icon 
+                            |latest
+                        .ui.button.view_bookmarks(class=viewing_bookmarks)
+                            i.bookmark.icon 
+                            |bookmarks
+            .scrolling
+                // if session_get 'fullview_id'
+                //     .ui.circular.basic.purple.icon.button.clear_fullview 
+                //         i.large.remove.icon
+                //     with fullview_doc 
+                //         .ui.one.cards
+                //             +home_card
+                if session_is 'view_mode' 'list'
+                    .ui.divided.selection.items 
+                        each doc_results 
+                            +home_list_item
+                else if session_is 'view_mode' 'grid'
+                    .ui.three.stackable.cards
+                        each doc_results
+                            +home_card
+                else    
+                    .ui.ten.wide.column.centered.mobile.hidden
+                        .ui.centered.one.cards.scrollin
+                            each doc_results
+                                +home_card
+                    .ui.sixteen.wide.column.centered.mobile.only
+                        .ui.centered.one.cards.scrolling
+                            each doc_results
+                                +home_card
+        // .eight.wide.column.bordered
         unless currentUser.admin_mode
-            .three.wide.scrolling.column
+            .four.wide.scrolling.column
                 // iframe(src="https://discord.com/widget?id=1077757754007093248&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts")
                 // +icon_browser
                 // +block template='latest_updated_block' title='latest' icon='time-machine' color='blue'
@@ -454,7 +460,7 @@ template(name='home_card')
                     img.ui.avatar.image(src="{{c.url _author.image_id height=200}}" title=_author.username)
                     |#{_author.username}
                 div
-                +parent_block
+                // +parent_block
                 // +parent_avatar
             span.right.floated
                 |#{when}

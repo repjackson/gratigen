@@ -504,13 +504,13 @@ if Meteor.isClient
         # @autorun => @subscribe 'my_current_thing', ->
         # @autorun => @subscribe 'my_current_thing', Session.get('current_thing_id'),->
         
-        # @autorun => @subscribe 'home_docs',
-        #     Session.get('current_query')
-        #     Session.get('model_filter')
-        #     # model_filters.array()
-        #     picked_tags.array()
-        #     Session.get('view_latest')
-        #     # Session.get('post_title_filter')
+        @autorun => @subscribe 'home_docs',
+            Session.get('current_query')
+            Session.get('model_filter')
+            # model_filters.array()
+            picked_tags.array()
+            Session.get('view_latest')
+            # Session.get('post_title_filter')
         
         # @autorun => @subscribe 'all_markers',->
         # @autorun => @subscribe 'latest_home_docs',model_filters.array(),->
