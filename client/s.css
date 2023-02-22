@@ -12,6 +12,18 @@ body {
     /* background: #0e0e44 !important; */
     /*animation: 1s ease-out 0s 1 fadein;*/
 }
+::-moz-selection { /* Code for Firefox */
+    color: blue !important;
+    /*background: blue !important;*/
+    transform: scale(1.1) !important; /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+}
+
+::selection {
+    color: blue !important;
+    /*background: blue !important;*/
+    transform: scale(1.1) !important; /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+}
+
 .model_item_icon {
     width: 24px !important;
     height: auto !important;

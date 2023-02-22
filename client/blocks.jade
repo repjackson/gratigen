@@ -24,28 +24,34 @@ template(name='gratigen')
 
     // .ui.input
     .ui.header Give Gratitude Points
-    .ui.button Give Gratitude Points
+    .ui.large.circular.basic.button
         i.pink.praying.hands.icon 
+        |Give Gratitude Points
     .ui.header Give Reserve Token
-    .ui.button Give Token
+    .ui.large.circular.basic.button
         i.purple.infinity.icon 
+        |Give Token
 
     .ui.header Give an item
     |service, product, resource
-    .ui.button give item
+    .ui.large.circular.basic.button
         i.green.hands.icon
+        |give item
     .ui.header Give time
     |badge, skill, task, role, resource
-    .ui.button give time
+    .ui.large.circular.basic.button
                 i.blue.clock.icon 
+        |give time
     .ui.header Incentivize an action
     |task, role, resource
-    .ui.button Incetivize Action
+    .ui.large.circular.basic.button
         i.orange.carrot.icon 
+        |Incetivize Action
 
     .ui.header Give Money
-    .ui.button Give Money
+    .ui.large.circular.basic.button
         i.green.money.icon 
+        |Give Money
     // +give_money
     // .ui.inline.input
     //     imput(type='number')
@@ -720,7 +726,7 @@ template(name='block')
                         +icolor name=icon color='ffffff' cl="ui mini inline image"
                 else
                     if icon
-                        +i name=icon color='ffffff' cl="ui avatar image"
+                        +i name=icon color='ffffff' cl="ui mini inline image"
                 .ui.inline.header(class=color)
                     // i.large.icon(class=icon)
                     // | #{model}s
