@@ -741,6 +741,8 @@ template(name='block')
         if is_expanded
             .row
                 .sixteen.wide.small.scroll.column
+                    a.ui.small.basic.icon.compact.fluid.button(href="/p/#{template}")
+                        i.circular.external.icon
                     // i.fullscreen.circular.link.icon.toggle_fullscreen
                     +Template.dynamic template=template
         

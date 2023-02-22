@@ -242,7 +242,7 @@ template(name='shortcut_modal')
 
 template(name='footer')
     .ui.equal.width.stackable.grid 
-        .column
+        .sixteen.wide.column
             // page chat by default, maybe replace individual template calls
             with current_doc
                 +print_this
@@ -259,8 +259,8 @@ template(name='footer')
                 a.ui.large.image.basic.inverted.label(href="/user/#{username}")
                     img.ui.avatar.image(src="{{c.url image_id width=300 height=300 crop='fit'}}")
                     |#{username}
-        .column
-            .ui.header 
+            .ui.inline.header 
+                i.database.icon
                 |#{doc_docs.count} docs 
             each doc_docs
                 +doc_pill
