@@ -5,7 +5,7 @@ if Meteor.isClient
         ), name:'profile'
 
     # Template.profile_section.onRendered ->
-    #     Meteor.setTimeout ->
+    #     Meteor.setTimeout ->tra
     #         $('.accordion').accordion()
     #     , 1000
 
@@ -29,7 +29,7 @@ if Meteor.isClient
     Template.profile_section.events
         'click .toggle_expanded': (e,t)->
             t.expanded.set !t.expanded.get()
-            $(e.currentTarget).closest('.segment').transition('pulse',250)
+            $(e.currentTarget).closest('.segment').transition('pulse',100)
 
     Template.quickgive_button.helpers 
         give_button_class: ->
@@ -128,28 +128,28 @@ if Meteor.isClient
 
 
     Template.profile.events
-        'click .boop': (e)->
-            current_user = Meteor.users.findOne username:Router.current().params.username
-            Meteor.users.update current_user._id, 
-                $inc:
-                    boops: 1
-                $addToSet:
-                    booper_ids:Meteor.userId()
-            $(e.currentTarget).closest('.boop').transition('bounce',250)
-            $('body').toast(
-                showIcon: 'hand point up outline'
-                message: "boop!"
-                showProgress: 'bottom'
-                class: 'success'
-                # displayTime: 'auto',
-                position: "bottom left"
-            )
-            synth = window.speechSynthesis;
+        # 'click .boop': (e)->
+        #     current_user = Meteor.users.findOne username:Router.current().params.username
+        #     Meteor.users.update current_user._id, 
+        #         $inc:
+        #             boops: 1
+        #         $addToSet:
+        #             booper_ids:Meteor.userId()
+        #     $(e.currentTarget).closest('.boop').transition('bounce',250)
+        #     $('body').toast(
+        #         showIcon: 'hand point up outline'
+        #         message: "boop!"
+        #         showProgress: 'bottom'
+        #         class: 'success'
+        #         # displayTime: 'auto',
+        #         position: "bottom left"
+        #     )
+        #     synth = window.speechSynthesis;
         
-            utterThis = new SpeechSynthesisUtterance(@valueOf())
-            # utterThis = new SpeechSynthesisUtterance('wat ah yoo freakin queah, ask the smaht bah!')
-            utterThis = new SpeechSynthesisUtterance('boop')
-            synth.speak(utterThis);
+        #     utterThis = new SpeechSynthesisUtterance(@valueOf())
+        #     # utterThis = new SpeechSynthesisUtterance('wat ah yoo freakin queah, ask the smaht bah!')
+        #     utterThis = new SpeechSynthesisUtterance('boop')
+        #     synth.speak(utterThis);
 
         'click .sponsor': ->
             current_user = Meteor.users.findOne username:Router.current().params.username
