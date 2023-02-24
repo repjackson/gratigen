@@ -348,7 +348,7 @@ template(name='smaba')
             i.remove.large.red.link.icon.clear_search.zoomer(title='clear search')
         else
             i.search.large.grey.link.icon.zoomer(title='search')
-        input.search_site(type='text' autocomplete="off" value=current_site_search placeholder='ask alfred...')
+        input.search_site(type='text' autocomplete="off" value=current_site_search placeholder='ask loom...')
     +model_dropdown
     // tags
     each picked_tags
@@ -356,7 +356,7 @@ template(name='smaba')
             i.remove.icon
             |#{this}
             
-    .ui.cards
+    .ui.one.centered.fluid.cards
         // users
         each user_search_results
             button.ui.button.goto_doc

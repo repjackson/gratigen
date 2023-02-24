@@ -100,6 +100,17 @@ if Meteor.isClient
                     editing:!Meteor.user().editing
                     # editing:true
     Template.org_view.events
+        'click .add_doc': ->
+            new_id = 
+                Docs.insert 
+                    parent_id:Router.current().params.doc_id
+                    model:'post'
+                    published:false
+            Router.go "/add/#{new_id}"
+            Meteor.users.update Meteor.userId(),
+                $set:
+                    editing:true
+                    _doc_id:new_id
         'click .refresh_org_stats': ->
             Meteor.call 'calc_org_stats', Router.current().params.doc_id, ->
     Template.membership_toggle.events
@@ -310,6 +321,7 @@ if Meteor.isClient
 if Meteor.isClient
     Template.org_view.onCreated ->
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
+        @autorun => Meteor.subscribe 'child_docs', Router.current().params.doc_id
 
     Template.org_history.onCreated ->
         @autorun => Meteor.subscribe 'children', 'log_event', Router.current().params.doc_id

@@ -211,10 +211,10 @@
 #     Template.project_crud.onCreated ->
 #         @autorun => @subscribe 'project_search_results', Session.get('project_search'), ->
 #         @autorun => @subscribe 'child_docs', Router.current().params.doc_id,->
-# if Meteor.isServer 
-#     Meteor.publish 'child_docs', (id)->
-#         Docs.find
-#             parent_id:id
+if Meteor.isServer 
+    Meteor.publish 'child_docs', (id)->
+        Docs.find
+            parent_id:id
 
 #     Meteor.publish 'project_search_results', (title_query)->
 #         Docs.find 
