@@ -7,6 +7,12 @@ if Meteor.isClient
     Template.model_dropdown.helpers
         current_model_filter: ->
             Session.get('model_filter')
+    Template.smaba.helpers 
+        doc_search_results: ->
+            match = {}
+            if Router.current().params.doc_id
+                match.parent_id = Router.current().params.doc_id
+            Docs.find match
     Template.smaba.events
         # 'keyup .search_site': _.throttle((e,t)->
         # 'click .search_site': (e,t)->
@@ -508,6 +514,20 @@ if Meteor.isClient
             Session.get('current_query')
             Session.get('model_filter')
             # model_filters.array()
+            null
+            picked_tags.array()
+            Session.get('view_latest')
+            # Session.get('post_title_filter')
+        
+    Template.smaba.onCreated ->
+        # @autorun => @subscribe 'my_current_thing', ->
+        # @autorun => @subscribe 'my_current_thing', Session.get('current_thing_id'),->
+        
+        @autorun => @subscribe 'home_docs',
+            Session.get('current_query')
+            Session.get('model_filter')
+            Router.current().params.doc_id
+            # model_filters.array()
             picked_tags.array()
             Session.get('view_latest')
             # Session.get('post_title_filter')
@@ -519,6 +539,50 @@ if Meteor.isClient
         # @autorun => @subscribe 'post_facets',
         #     picked_tags.array()
         #     Session.get('post_title_filter')
+        
+    # otherwise if on specific doc
+    
+        # @autorun => @subscribe 'model_search_results', @data.model, @query.get(), ->
+        # @autorun => @subscribe 'child_model_docs', @data.model, Router.current().params.doc_id, -> 
+        
+        # Template.home.helpers
+        # model_results: ->
+        #     # query = Session.get("#{Template.currentData().model}_model_search")
+        #     query = Template.instance().query.get()
+        #     console.log 'local model query', query
+        #     if query
+        #         Docs.find 
+        #             model:Template.currentData().model
+        #             title: {$regex:query,$options:'i'}
+
+        # Template.home.helpers 
+        #     child_model_template: -> "#{@model}_card"
+        #     is_editing: -> Template.instance().editing.get()
+        #     is_expanded: -> Template.instance().expanded.get()
+        #     user_template:->
+        #         # like user_tasks
+        #         "user_#{@key}"
+                
+        # model_children: ->
+        #     parent_doc = Docs.findOne Router.current().params.doc_id
+        #     # _id:parent_doc["#{Template.currentData().model}_id"]
+        #     console.log Template.currentData().model
+        #     Docs.find
+        #         model:Template.currentData().model
+        #         # parent_ids:$in:[Router.current().params.doc_id]
+        #         # parent_id:Router.current().params.doc_id
+        #         # _id:$in:parent_doc["#{Template.currentData().model}_ids"]
+        # # picked_model: ->
+        # #     parent_doc = Docs.findOne Router.current().params.doc_id
+        # #     # _id:parent_doc["#{Template.currentData().model}_id"]
+        # #     console.log Template.currentData().model
+        # #     Docs.findOne
+        # #         # model:Template.currentData().model
+        # #         _id:parent_doc["#{Template.currentData().model}_id"]
+        model_search_value: ->
+            Template.instance().query.get()
+            # Session.get("#{Template.currentData().model}_model_search")
+    
 
 if Meteor.isServer
     Meteor.publish 'home_docs_count', (query_object, sort_object)->
@@ -532,12 +596,15 @@ if Meteor.isServer
     Meteor.publish 'home_docs', (
         search=null
         model_filter=null
+        parent_id=null
         view_latest=false
         )->
         match = {}
         essentials = ['post','offer','request','org','project','event','role','task','resource','skill']
         # essentials = ['post']
         # user = Meteor.user()
+        if parent_id 
+            match.parent_id = parent_id
         # console.log Meteor.user().model_filters
         if search 
             match.title = {$regex:search, $options:'i'}  
@@ -572,6 +639,49 @@ if Meteor.isServer
                 efts:1
                 _author_id:1
                 _timestamp:1
+    
+# otherwise if smaba is on document
+# if Meteor.isServer 
+#     # realtime search results for model_crud
+#     Meteor.publish 'model_search_results', (model,query)->
+#         if model and query
+#             match = {model:model}
+#             match.title = {$regex:"#{query}",$options:'i'}
+#             Docs.find match,
+#                 limit:5
+#     Meteor.publish 'related_model_docs', (model,parent_id)->
+#         # console.log 'looking for related model docs', model, parent_id
+
+#         # match publication for related child docs with model_children helper below
+#         if model and parent_id
+#             parent = Docs.findOne parent_id
+#             match = {model:model}
+#             match._id = $in:parent["#{model}_ids"]
+#             # match.title = {$regex:"#{model_title_queary}",$options:'i'}
+#             Docs.find match,
+#                 limit:3
+
+# if Meteor.isServer
+#     Meteor.publish 'child_model_docs', (model, parent_id)->
+#         console.log 'publishing child model docs', model, parent_id
+#         Docs.find {
+#             model:model
+#             # parent_id:parent_id
+#             parent_ids:$in:[parent_id]
+#         }, limit:42
+    
+#     Meteor.publish 'children', (model, parent_id, limit)->
+#         # console.log model
+#         # console.log parent_id
+#         limit = if limit then limit else 10
+#         Docs.find {
+#             model:model
+#             # parent_id:parent_id
+#             parent_ids:$in:[parent_id]
+#         }, limit:limit
+
+    
+    
     
     # Meteor.publish 'post_docs', (
     #     model_filters=[]
