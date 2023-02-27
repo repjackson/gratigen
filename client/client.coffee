@@ -138,7 +138,7 @@ Template.footer.helpers
 #             model:'stats'
 
 Template.nav.onCreated ->
-    @autorun => @subscribe 'all_users', ->
+    # @autorun => @subscribe 'all_users', ->
     
 #     @autorun => @subscribe 'product_count'
 #     @autorun => @subscribe 'ingredient_count'

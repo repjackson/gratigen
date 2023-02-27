@@ -14,5 +14,5 @@ Meteor.publish 'latest_docs', ->
             _updated_timestamp:-1
         limit:10
 
-Meteor.publish 'all_markers', ->
-    Markers.find()
+# Meteor.publish 'all_markers', ->
+#     Markers.find()
