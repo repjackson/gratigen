@@ -63,6 +63,8 @@ meteor@1.9.3
 meteor-base@1.4.0
 meteorhacks:aggregate@1.3.0
 meteorhacks:collection-utils@1.2.0
+meteorhacks:inject-initial@1.0.5
+meteorhacks:zones@1.6.0
 minifiers@1.1.7
 minimongo@1.6.2
 mobile-experience@1.1.0

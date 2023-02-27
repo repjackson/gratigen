@@ -37,3 +37,4 @@ mdg:geolocation
 http
 reactive-var
 mdg:meteor-apm-agent
+meteorhacks:zones
