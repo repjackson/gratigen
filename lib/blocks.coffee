@@ -915,17 +915,17 @@ if Meteor.isClient
             res
 
 if Meteor.isServer
-    Meteor.methods
-        'send_kiosk_message': (message)->
-            parent = Docs.findOne message.parent._id
-            Docs.update message._id,
-                $set:
-                    sent: true
-                    sent_timestamp: Date.now()
-            Docs.insert
-                model:'log_event'
-                log_type:'kiosk_message_sent'
-                text:"kiosk message sent"
+    # Meteor.methods
+    #     'send_kiosk_message': (message)->
+    #         parent = Docs.findOne message.parent._id
+    #         Docs.update message._id,
+    #             $set:
+    #                 sent: true
+    #                 sent_timestamp: Date.now()
+    #         Docs.insert
+    #             model:'log_event'
+    #             log_type:'kiosk_message_sent'
+    #             text:"kiosk message sent"
 
 
     Meteor.publish 'children', (model, parent_id, limit)->
@@ -934,14 +934,17 @@ if Meteor.isServer
         limit = if limit then limit else 10
         Docs.find {
             model:model
-            # parent_id:parent_id
-            parent_ids:$in:[parent_id]
-        }, limit:limit
+            parent_id:parent_id
+            # parent_ids:$in:[parent_id]
+        }, limit:10
         
 if Meteor.isServer 
     Meteor.publish 'coins', ->
-        Docs.find 
+        Docs.find {
             model:'coin'
+            _author_id:Meteor.userId()
+        },{limit:1}
+            
         
 if Meteor.isClient
     Template.give_button.onCreated ->
