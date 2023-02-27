@@ -57,6 +57,28 @@ if Meteor.isClient
         event = Docs.findOne @_id
         Meteor.users.find 
             _id:$in:event.maybe_user_ids
+            
+    Template.registerHelper 'user_maybe_events', () ->
+        user = Meteor.users.findOne username:Router.current().params.username
+        Docs.find
+            model:"event"
+            maybe_user_ids:user._id
+
+if Meteor.isServer
+    Meteor.publish 'user_maybe_events', (username) ->
+        user = Meteor.users.findOne username:username
+        Docs.find
+            model:"event"
+            maybe_user_ids:user._id
+
+if Meteor.isClient
+    Template.user_events.onCreated ->
+        Meteor.subscribe 'user_maybe_events', Router.current().params.username, ->
+        
+        
+
+            
+            
     Template.registerHelper 'not_going', () ->
         event = Docs.findOne @_id
         Meteor.users.find 
@@ -187,7 +209,7 @@ if Meteor.isServer
         @autorun => Meteor.subscribe 'event_from_ticket_id', Router.current().params.doc_id
         @autorun => Meteor.subscribe 'author_from_doc_id', Router.current().params.doc_id
         @autorun => Meteor.subscribe 'doc', Router.current().params.doc_id
-        @autorun => Meteor.subscribe 'all_users'
+        # @autorun => Meteor.subscribe 'all_users'
         
     Template.ticket_view.onRendered ->
 
