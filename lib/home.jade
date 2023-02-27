@@ -84,7 +84,7 @@ template(name='home')
             //     img.ui.image(src="{{c.url '12_color_code'}}" class=darkmode_class)
         .nine.wide.column
             // iframe(style="border: none;border-radius: 10px;" width="100%" height="800px" src="https://home.gratigen.one")
-
+            // +infinite_scroll_example
             unless session_get 'fullview_id'
                 unless is_searching
                     unless currentUser.admin_mode
@@ -105,22 +105,23 @@ template(name='home')
                         .hidden.content
                             .ui.massive.header Engage
                     .centered   
-                        // .ui.search
-                        //     .ui.large.icon.input.search_bar
-                        //         input.prompt(type='text' placeholder='add/request/search...')
-                        //         i.search.icon
-                        //     .results
-                        // with model_filter_doc
-                        //     a.ui.label.unpick_model(title='remove filter')
-                        //         i.remove.icon
-                        //         |#{this}
-                            
-                        // each model_filters 
-                        //     a.ui.label.unpick_model(title='remove filter')
-                        //         i.remove.icon
-                        //         |#{this}
-                        +smaba
-                        div
+                 
+                        // +smaba
+                        +eft_dropdown
+            
+                        .ui.icon.left.action.input
+                            if current_site_search
+                                i.remove.large.red.link.icon.clear_search.zoomer(title='clear search')
+                            else
+                                i.search.large.grey.link.icon.zoomer(title='search')
+                            input.search_site(type='text' autocomplete="off" value=current_site_search placeholder='ask loom...')
+                        +model_dropdown
+                        // tags
+                        each picked_tags
+                            .ui.label
+                                i.remove.icon
+                                |#{this}
+                    div
                         +session_set key='view_mode' value='grid' icon='th' 
                         +session_set key='view_mode' value='list' icon='list'
                         +session_set key='view_mode' value='feed' icon='stream'
@@ -163,6 +164,7 @@ template(name='home')
             // +icon_browser
             // +block template='latest_updated_block' title='latest' icon='time-machine' color='blue'
             +block template='user_avatars' title='users' icon='groups' color='green'
+            +block title='colaborators' icon='groups' color='blue'
             // hm
             div
             // +gmap
@@ -182,7 +184,7 @@ template(name='home')
             // +model_block model='resource' icon='car' color='42E8C4' title='nearest resources'
             // +model_block model='org' icon='groups' color='42E8C4' title='organizations'
             // +my_things
-            +block template='gchat' icon='chat' color='blue'
+            // +block template='gchat' icon='chat' color='blue'
             if session_is 'show_map' true
                 +mapbox
             if session_is 'show_calendar' true 
@@ -226,6 +228,20 @@ template(name='home')
         // +view_chats
         
     
+template(name='infinite_scroll_example')
+    .ui.demo.segment
+    h3.ui.dividing.center.aligned.header Infinite Scroll Example
+    p
+    .ui.divider
+    p
+    .ui.divider
+    p
+    .ui.divider
+    p
+    .ui.divider
+    .ui.large.centered.inline.text.loader
+        | Adding more content...
+
 template(name='discord')
     // iframe(src="https://discord.com/widget?id=1077757754007093248&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts")
     .ui.inverted.segment
@@ -355,8 +371,44 @@ template(name='smaba')
         .ui.label
             i.remove.icon
             |#{this}
-            
-    .ui.one.centered.fluid.cards
+    div
+    +session_set key='view_mode' value='grid' icon='th' 
+    +session_set key='view_mode' value='list' icon='list'
+    +session_set key='view_mode' value='feed' icon='stream'
+    +session_toggle key='show_map' icon='map'
+    +session_toggle key='show_calendar' icon='calendar'
+    .ui.button.view_latest(class=view_latest_class)
+        i.clock.icon 
+        |latest
+    .ui.button.view_bookmarks(class=viewing_bookmarks)
+        i.bookmark.icon 
+        |bookmarks
+    .scrolling
+        // if session_get 'fullview_id'
+        //     .ui.circular.basic.purple.icon.button.clear_fullview 
+        //         i.large.remove.icon
+        //     with fullview_doc 
+        //         .ui.one.cards
+        //             +home_card
+        if session_is 'view_mode' 'list'
+            .ui.divided.selection.items 
+                each doc_results 
+                    +home_list_item
+        else if session_is 'view_mode' 'grid'
+            .ui.three.stackable.cards
+                each doc_results
+                    +home_card
+        else    
+            .ui.ten.wide.column.centered.mobile.hidden
+                .ui.centered.one.cards.scrollin
+                    each doc_results
+                        +home_card
+            .ui.sixteen.wide.column.centered.mobile.only
+                .ui.centered.one.cards.scrolling
+                    each doc_results
+                        +home_card
+
+    // .ui.one.centered.fluid.cards
         // users
         each user_search_results
             button.ui.button.goto_doc
@@ -490,11 +542,12 @@ template(name='home_card')
     //     +event_card
     // else if _is 'model' 'recipe'
     //     +recipe_card
-    // else 
-    a.ui.card(href="/d/#{model}/#{_id}")
+    // else
+    // a.ui.card(href="/d/#{model}/#{_id}")
+    .ui.card
         .content.smallscroll 
-            // a.ui.centered.inline.header.zoomer(href="/d/#{model}/#{_id}")
-            a.ui.centered.inline.header.zoomer
+            // a.ui.centered.inline.header.zoomer
+            a.ui.centered.inline.header.zoomer(href="/d/#{model}/#{_id}")
                 |#{title}
             span.left.floated
                 if icon 
@@ -528,10 +581,12 @@ template(name='home_card')
             |{{nl2br  body}}
             |!{brief}
             |!{content}
-        if link
+        if link_id
             +link_field
         else if youtube_id
             +youtube_view key='youtube_id'
+        else if image_id
+            +image_view
 
             img.ui.fluid.image.toggle_fullview.pointer(src="{{c.url image_id width=500 height=500}}")
         .content 
@@ -574,10 +629,11 @@ template(name='home_card')
                 //     .ui.small.label #{this}
                 if currentUser.admin_mode 
                     +remove_button
+                +give_button
             // if template_exists
             //     +Template.dynamic template=model_template
-        // .extra.content
-        //     +comments
+        .extra.content
+            +comments
       
 template(name='home_list_item')
     // if _is 'model' 'role'

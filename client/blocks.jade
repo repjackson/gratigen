@@ -16,6 +16,14 @@ template(name='viewing_info')
     .ui.small.header 
         |last anon viewed: {{med_date last_anon_viewed_timestamp}}
 
+template(name='give_button')
+    if currentUser.admin_mode
+        .ui.button.mint
+            |mint
+    .ui.button.give 
+        |give 1
+    each doc_coins 
+        |#{_author_username}
 
 template(name='gratigen')
     .ui.large.header Give a Gift of Gratitude
@@ -28,10 +36,10 @@ template(name='gratigen')
         i.pink.praying.hands.icon 
         |Give Gratitude Points
     .ui.header Give Reserve Token
-    .ui.large.circular.basic.button
+    .ui.large.circular.basic.button.give_token
         i.purple.infinity.icon 
         |Give Token
-
+    .ui.small.header.recalc_credit your credit #{currentUser.coin_count}
     .ui.header Give an item
     |service, product, resource
     .ui.large.circular.basic.button
@@ -40,7 +48,7 @@ template(name='gratigen')
     .ui.header Give time
     |badge, skill, task, role, resource
     .ui.large.circular.basic.button
-                i.blue.clock.icon 
+        i.blue.clock.icon 
         |give time
     .ui.header Incentivize an action
     |task, role, resource

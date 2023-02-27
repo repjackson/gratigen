@@ -344,7 +344,7 @@ if Meteor.isClient
 
             # # $('.grid').transition('pulse', 500)
             if Meteor.user().view_searchbar
-                $('.searchbar').transition('shake', 500)
+                $('.searchbar').transition('pulse', 500)
                 Meteor.setTimeout ->
                     Meteor.users.update Meteor.userId(),
                         $set:view_searchbar:false

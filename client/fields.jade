@@ -328,12 +328,14 @@ template(name='ibig')
 // //- template(name='ioffice')
 // //-     img.ui.image(src="https://img.icons8.com/office/30/000000/#{name}.png" class=cl)
 template(name='link_field')
-
+    
+    // .inverted.row.toggle_expanded.pointer.zoomer.
     // if icon
         +i name=icon
         // i.icon(class=icon)
     // .ui.inline.header
         |#{title} #{label}
+
     if currentUser.editing 
         .ui.fluid.input
             input.edit_url(type='url' value=field_value placeholder=key autocomplete="off")
@@ -350,6 +352,7 @@ template(name='site_embed')
 
         
 template(name='image_view')
+
     if field_value
         //- .ui.inline.header
         //-     if icon
@@ -534,13 +537,30 @@ template(name='textarea_field')
                 +watson_view
 
         
-
-
-
-
-
-
-
+   
+template(name='expand_link_field')
+    .ui.segment.vertani
+        .title.toggle_expanded.zoomer.pointer
+            .ui.inline.header.zoomer website
+            if is_expanded
+                i.grey.chevron.down.icon
+            else
+                i.grey.chevron.right.icon
+        if is_expanded
+            // +link_field
+            // if field_value
+                |{{field_value}}
+            // if currentUser.editing 
+            //     .ui.fluid.input
+            //         input.edit_url(type='url' value=field_value placeholder=key autocomplete="off")
+            // .spacer
+            // with field_value 
+            //     a.ui.tertiary.button(href=field_value target='_window')
+            //         |#{field_value}
+            +site_embed data=this label='site browser' icon='globe'
+  
+                
+                
 template(name='clear_value')
     if field_value
         i.remove.link.large.icon.clear_value

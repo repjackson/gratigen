@@ -310,7 +310,7 @@ if Meteor.isClient
     Template.block.events
         'click .toggle_expanded': (e,t)-> 
             t.expanded.set !t.expanded.get()
-            t.$('.grid').transition('shake',100)
+            t.$('.grid').transition('pulse',100)
         'click .toggle_editing': (e,t)-> 
             t.editing.set !t.editing.get()
     Template.model_crud.onCreated ->
@@ -938,8 +938,46 @@ if Meteor.isServer
             parent_ids:$in:[parent_id]
         }, limit:limit
         
+if Meteor.isServer 
+    Meteor.publish 'coins', ->
+        Docs.find 
+            model:'coin'
         
 if Meteor.isClient
+    Template.give_button.onCreated ->
+        @autorun => @subscribe 'coins', ->
+    Template.give_button.helpers 
+        doc_coins: ->
+            Docs.find 
+                model:'coin'
+                
+    Template.give_button.events 
+        'click .give':->
+            found_coin = 
+                Docs.findOne 
+                    model:'coin'
+                    owner_id:Meteor.userId()
+            if found_coin 
+                Docs.update found_coin._id, 
+                    $set:
+                        owner_id:@_author_id
+                    $addToSet:
+                        history:{
+                            _timestamp:Date.now()
+                            parent_id:@_id
+                            parent_title:@title
+                            parent_model:@model
+                            previous_owner_id:Meteor.userId()
+                            new_owner_id:@_author_id
+                        }
+            else 
+                alert 'no coins found'
+        'click .mint':->
+            if confirm 'mint?'
+                Docs.insert 
+                    model:'coin'
+                    
+            
     Template.doc_array_togggle.helpers
         doc_array_toggle_class: ->
             parent = Template.parentData()

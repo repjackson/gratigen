@@ -34,6 +34,9 @@ template(name='role_view')
                 .ui.header #{when}
                 +eft_viewer
                 +parent_block
+                +block template='model_crud' model='skill' title='skills' icon='hammer' color='green'
+                +block template='model_crud' model='badge' title='badges' icon='badge' color='blue'
+
                 //- +array_field key='location_tags' label='location_tags' direct=true
             .five.wide.column
                 .centered.row
@@ -55,9 +58,8 @@ template(name='role_view')
                 +textarea_field key='body' label='description' tagline='what are the characteristics of the person playing this role? what will their days be like?'
                 +textarea_field key='responsibilities' label='responsibilities' tagline='what responsibilities belong to the person playing this role?'
                 +textarea_field key='privaleges' label='privaleges' tagline='what rights and permissions belong to the person playing this role?'
-                +block template='model_crud' model='skill' title='skill' icon='hammer' color='green'
-                +block template='model_crud' model='task' title='task' icon='task' color='red'
-                +block template='model_crud' model='badge' title='badge' icon='badge' color='blue'
+                .ui.centered.row
+                    +smaba
                 
             .six.wide.column
                 +checklist

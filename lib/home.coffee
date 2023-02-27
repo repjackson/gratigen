@@ -112,6 +112,15 @@ if Meteor.isClient
     #             sort:_updated_timestamp:-1
     #             limit:5
     #         }
+    
+# $('.infinite.example .demo.segment').visibility
+#     once: false
+#     observeChanges: true
+#     onBottomVisible: ->
+#     # loads a max of 5 times
+#         window.loadFakeContent()
+#         return    
+
 # if Meteor.isServer
 #     Meteor.publish 'my_bookmarks', ()->
 #         Docs.find {_id: $in: Meteor.user().bookmarked_ids},{
@@ -205,7 +214,7 @@ if Meteor.isClient
                 # match.model = $nin:['model','comment','message'] 
             Docs.find match,
                 sort:_timestamp:-1
-                limit:5
+                limit:20
             
     Template.add_tab.events 
         # 'click .toggle_addmode': ->
@@ -484,10 +493,13 @@ if Meteor.isClient
     #                 title:@data.title
     #                 lat:@data.lat
     #                 lng:@data.lng
+
+
     Template.home_card.events 
         'click .toggle_fullview': ->
             Session.set('fullview_id',@_id)
             $('body').toast({message: 'toggle full view'})
+
 
     #     'click .map_me': ->
     #         # navigator.geolocation.getCurrentPosition (position) =>

@@ -94,7 +94,7 @@ if Meteor.isClient
     Template.edit_button.events
         'click .editing': (e)->
             # console.log 'hi'
-            $('.subtemplate').transition('shake', 250)
+            $('.subtemplate').transition('pulse', 250)
             Meteor.users.update Meteor.userId(),
                 $set:
                     editing:!Meteor.user().editing
